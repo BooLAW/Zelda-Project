@@ -1,0 +1,14 @@
+
+IceCrew:
+	Lead:
+		Asier Arellano
+	Manager:
+		Guillem Arman
+	Code:
+		Pau Bonet
+	Design:
+		Pau Olivé
+	UI:
+		Roger Busquets
+	Art + Audio:
+		Jan Fuentes
