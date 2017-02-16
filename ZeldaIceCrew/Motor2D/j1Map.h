@@ -2,28 +2,28 @@
 #define __j1MAP_H__
 
 #include "PugiXml/src/pugixml.hpp"
+#include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
-#include <string>
-#include <list>
 
 // ----------------------------------------------------
 struct Properties
 {
 	struct Property
 	{
-		std::string name;
+		p2SString name;
 		int value;
 	};
 
 	~Properties()
 	{
-		Property* item;
-		item = list.front();
+		p2List_item<Property*>* item;
+		item = list.start;
 
-		for (std::list<Property*>::iterator prop = list.begin(); prop != list.end(); ++prop)
+		while(item != NULL)
 		{
-			RELEASE(*prop);
+			RELEASE(item->data);
+			item = item->next;
 		}
 
 		list.clear();
@@ -31,13 +31,13 @@ struct Properties
 
 	int Get(const char* name, int default_value = 0) const;
 
-	std::list<Property*>	list;
+	p2List<Property*>	list;
 };
 
 // ----------------------------------------------------
 struct MapLayer
 {
-	std::string	name;
+	p2SString	name;
 	int			width;
 	int			height;
 	uint*		data;
@@ -62,7 +62,7 @@ struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
 
-	std::string			name;
+	p2SString			name;
 	int					firstgid;
 	int					margin;
 	int					spacing;
@@ -93,8 +93,8 @@ struct MapData
 	int					tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
-	std::list<TileSet*>	tilesets;
-	std::list<MapLayer*>layers;
+	p2List<TileSet*>	tilesets;
+	p2List<MapLayer*>	layers;
 };
 
 // ----------------------------------------------------
@@ -131,23 +131,17 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	void TilesToDraw_x(int& x_ini, int& x_end, MapLayer* layer) const;
-	void TilesToDraw_y(int count, int x, int x_end, int& y_ini, int& y_end, MapLayer* layer) const;
-
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 
 	MapData data;
-	SDL_Rect fit_square;
 
 private:
 
 	pugi::xml_document	map_file;
-	std::string			folder;
+	p2SString			folder;
 	bool				map_loaded;
-	int					draw_margin;
-	int					offset;
 };
 
 #endif // __j1MAP_H__

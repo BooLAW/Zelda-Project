@@ -1,0 +1,15 @@
+atlas: gui/atlas_lol.png
+
+Screen Size: 1024, 576
+
+Background: { 0, 1600, 1024, 576 }
+
+First Heroe: {0, 1024, 205, 287}
+There are two rows of 5 heroes each, no spacing between them
+
+window: { 0, 512, 483, 512 }
+
+button: { 645,165,229,69 } 
+button hover: {0,111,229,69}
+brigth button: {410,169,229,69}
+Dark Button: {645,165,229,69}

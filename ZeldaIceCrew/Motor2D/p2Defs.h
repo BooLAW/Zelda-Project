@@ -13,7 +13,7 @@
 // Deletes a buffer
 #define RELEASE( x ) \
     {                        \
-    if( x != NULL && x != nullptr )        \
+    if( x != NULL )        \
 	    {                      \
       delete x;            \
 	  x = NULL;              \
@@ -35,21 +35,11 @@
 #define MIN( a, b ) ( ((a) < (b)) ? (a) : (b) )
 #define MAX( a, b ) ( ((a) > (b)) ? (a) : (b) )
 #define TO_BOOL( a )  ( (a != 0) ? true : false )
-#define NULLRECT {0,0,0,0}
-#define NULLCOLOR {0,0,0,0}
-#define NULLPOINT {0,0}
 
 typedef unsigned int uint;
 typedef unsigned __int32 uint32;
 typedef unsigned __int64 uint64;
 typedef unsigned char uchar;
-
-#define DEGTORAD 0.0174532925199432957f
-#define RADTODEG 57.295779513082320876f
-#define PI       3.1415926535897932384f
-
-#define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
-#define METER_PER_PIXEL 0.02f // this is 1 / PIXELS_PER_METER !
 
 template <class VALUE_TYPE> void SWAP(VALUE_TYPE& a, VALUE_TYPE& b)
 {

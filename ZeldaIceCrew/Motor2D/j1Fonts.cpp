@@ -11,7 +11,7 @@
 
 j1Fonts::j1Fonts() : j1Module()
 {
-	name = "fonts";
+	name.create("fonts");
 }
 
 // Destructor
@@ -32,9 +32,8 @@ bool j1Fonts::Awake(pugi::xml_node& conf)
 	else
 	{
 		const char* path = conf.child("default_font").attribute("file").as_string(DEFAULT_FONT);
-		int size = conf.child("default_font").attribute("size").as_int(DEFAULT_FONT_SIZE);
-		default = Load(path, size);
-		default_15 = Load(path, 15);
+		title = Load(path, conf.child("title_font").attribute("size").as_int(DEFAULT_TITLE_SIZE));
+		default = Load(path, conf.child("default_font").attribute("size").as_int(DEFAULT_FONT_SIZE));
 	}
 
 	return ret;
@@ -44,10 +43,11 @@ bool j1Fonts::Awake(pugi::xml_node& conf)
 bool j1Fonts::CleanUp()
 {
 	LOG("Freeing True Type fonts and library");
+	p2List_item<TTF_Font*>* item;
 
-	for (std::list<TTF_Font*>::iterator it = fonts.begin(); it != fonts.end(); it++)
+	for(item = fonts.start; item != NULL; item = item->next)
 	{
-		TTF_CloseFont(*it);
+		TTF_CloseFont(item->data);
 	}
 
 	fonts.clear();
@@ -67,17 +67,16 @@ TTF_Font* const j1Fonts::Load(const char* path, int size)
 	else
 	{
 		LOG("Successfully loaded font %s size %d", path, size);
-		fonts.push_back(font);
+		fonts.add(font);
 	}
-
 	return font;
 }
 
 // Print text using font
-SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, _TTF_Font* font)
+SDL_Texture* j1Fonts::Print(const char* text, TTF_Font* font, int& width, int& height, SDL_Color color)
 {
 	SDL_Texture* ret = NULL;
-	SDL_Surface* surface = TTF_RenderText_Blended((font) ? font : default, text, color);
+	SDL_Surface* surface = TTF_RenderText_Blended_Wrapped((font) ? font : default, text, color, 300);
 
 	if(surface == NULL)
 	{
@@ -85,23 +84,11 @@ SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, _TTF_Font* font)
 	}
 	else
 	{
-		ret = App->tex->SurfaceToTexture(surface);
+		width = surface->w;
+		height = surface->h;
+		ret = App->tex->LoadSurface(surface);
 		SDL_FreeSurface(surface);
 	}
-
-	return ret;
-}
-
-
-// calculate size of a text
-bool j1Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* font) const
-{
-	bool ret = false;
-
-	if(TTF_SizeText((font) ? font : default, text, &width, &height) != 0)
-		LOG("Unable to calc size of text surface! SDL_ttf Error: %s\n", TTF_GetError());
-	else
-		ret = true;
 
 	return ret;
 }

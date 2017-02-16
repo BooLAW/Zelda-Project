@@ -8,7 +8,7 @@
 
 j1Render::j1Render() : j1Module()
 {
-	name = "renderer";
+	name.create("renderer");
 	background.r = 0;
 	background.g = 0;
 	background.b = 0;
@@ -54,10 +54,9 @@ bool j1Render::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Render::Start()
 {
-	LOG("Start module render");
+	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
-
 	return true;
 }
 
@@ -130,15 +129,10 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 }
 
 // Blit to screen
-bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float _scale, SDL_RendererFlip flip, double angle, int pivot_x, int pivot_y) const
+bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
 {
 	bool ret = true;
-
-	float scale = _scale;
-	if(_scale == -1)
-		scale = App->win->GetScale();
-
-	float speed = (1 * 1) / scale;
+	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * scale;
@@ -167,7 +161,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		p = &pivot;
 	}
 
-	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
+	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;

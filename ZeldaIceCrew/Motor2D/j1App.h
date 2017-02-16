@@ -6,11 +6,6 @@
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
-#include "CollisionFilters.h"
-
-class UI_Window;
-class UI_Text;
-class UI_ColoredRect;
 
 // Modules
 class j1Window;
@@ -24,9 +19,6 @@ class j1Map;
 class j1PathFinding;
 class j1Fonts;
 class j1Gui;
-class j1Console;
-class j1Physics;
-class j1Entity;
 
 class j1App
 {
@@ -64,12 +56,6 @@ public:
 	void SaveGame(const char* file) const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
-	// Load an XML file
-	void LoadXML(const char* path, pugi::xml_document& doc);
-
-	void CapFps(float fps);
-	void EndSDL();
-
 private:
 
 	// Load config file
@@ -94,9 +80,6 @@ private:
 	bool LoadGameNow();
 	bool SavegameNow() const;
 
-	// Frame rate calculations uptade
-	void FrameRateCalculations();
-
 public:
 
 	// Modules
@@ -111,34 +94,21 @@ public:
 	j1PathFinding*		pathfinding = NULL;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
-	j1Console*			console = NULL;
-	j1Physics*			physics = NULL;
-	j1Entity*			entity = NULL;
-
-	// Console logs
-	list<string>        logs;
-
-	bool			    debug_mode = false;
-
-	collision_filters* cf;
 
 private:
 
-	bool                end_program = false;
-
-	list<j1Module*>  	modules;
+	p2List<j1Module*>	modules;
 	int					argc;
 	char**				args;
 
-	string		    	title;
-	string		     	organization;
+	p2SString			title;
+	p2SString			organization;
 
 	mutable bool		want_to_save = false;
 	bool				want_to_load = false;
 	p2SString			load_game;
 	mutable p2SString	save_game;
 
-	int					capped_ms = -1;
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
 	j1Timer				startup_time;
@@ -147,14 +117,9 @@ private:
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
 	float				dt = 0.0f;
-
-	// Debug ui
-	UI_Window*			debug_window = nullptr;
-	UI_ColoredRect*		debug_colored_rect = nullptr;
-	UI_Text*			debug_text = nullptr;
-
+	int					capped_ms = -1;
 };
 
-extern j1App* App;
+extern j1App* App; // No student is asking me about that ... odd :-S
 
 #endif

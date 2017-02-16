@@ -2,19 +2,10 @@
 #define __j1TEXTURES_H__
 
 #include "j1Module.h"
-#include <list>
+#include "p2List.h"
 
 struct SDL_Texture;
 struct SDL_Surface;
-
-struct Texture 
-{
-	SDL_Texture* tex = nullptr;
-	string path;
-
-	Texture();
-	Texture(const char* path);
-};
 
 class j1Textures : public j1Module
 {
@@ -35,15 +26,14 @@ public:
 	bool CleanUp();
 
 	// Load Texture
-	SDL_Texture* const	LoadTexture(const char* path);
-	SDL_Surface* const  LoadSurface(const char* path);
-	bool				UnLoadTexture(SDL_Texture* texture);
-	SDL_Texture* const	SurfaceToTexture(SDL_Surface* surface);
+	SDL_Texture* const	Load(const char* path);
+	bool				UnLoad(SDL_Texture* texture);
+	SDL_Texture* const	LoadSurface(SDL_Surface* surface);
 	void				GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
 
 public:
 
-	std::list<Texture*>	textures;
+	p2List<SDL_Texture*>	textures;
 };
 
 

@@ -1,7 +1,0 @@
-1.Deixar un Mapa de fons per mes endavant començar a moure un personatge
-2.Treure tot lo de programació 2 i passar a utilitzar el SDL
-3.Ficar la GUI del Roger i juntar el Codi
-4.Saber que volem fer com a grup per a no fer feina a cegues
-5.Mentrestant es pot anar ficant el codi de moure a link, ficar walkability i fer lo de carregar nomes la part de mapa que està en pantalla
-
-TORNAR A REPASSAR LES MECANIQUES DEL JOC I DECIDIR SI LES CONSERVEM 100% O NO
