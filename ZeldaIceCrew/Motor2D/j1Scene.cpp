@@ -6,24 +6,28 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
-#include "j1Map.h"
-#include "j1PathFinding.h"
 #include "j1Scene.h"
+#include "MainScene.h"
+#include "j1Console.h"
+
 
 j1Scene::j1Scene() : j1Module()
 {
-	name.create("scene");
+	name = "scene";
 }
 
 // Destructor
 j1Scene::~j1Scene()
-{}
+{
+
+}
 
 // Called before render is available
 bool j1Scene::Awake()
 {
-	LOG("Loading Scene");
 	bool ret = true;
+
+	LOG("Loading SceneManager");
 
 	return ret;
 }
@@ -31,110 +35,57 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	if (App->map->Load("Map1.tmx") == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		if(App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
+	bool ret = false;
 
-		RELEASE_ARRAY(data);
-	}
+	LOG("Start module scene");
 
-	debug_tex = App->tex->Load("maps/path2.png");
+	// Create scenes
+	main_scene = new MainScene();
+	scenes.push_back(main_scene);
+	// -------------
 
-	return true;
+	// Starting scene
+	current_scene = main_scene;
+
+	if(current_scene != nullptr)
+		ret = current_scene->Start();
+
+	return ret;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	bool ret = false;
 
-	// debug pathfing ------------------
-	static iPoint origin;
-	static bool origin_selected = false;
+	if (current_scene != nullptr)
+		ret = current_scene->PreUpdate();
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-
-	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if(origin_selected == true)
-		{
-			App->pathfinding->CreatePath(origin, p);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
-		}
-	}
-
-	return true;
+	return ret;
 }
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	//-----FUNCTIONAL ---------
-	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame("save_game.xml");
+	bool ret = false;
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->SaveGame("save_game.xml");
-	//--------DEBUG-----
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += floor(200.0f * dt);
+	if (current_scene != nullptr)
+		ret = current_scene->Update(dt);
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= floor(200.0f * dt);
-
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += floor(200.0f * dt);
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= floor(200.0f * dt);
-
-	App->map->Draw();
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count(),
-					map_coordinates.x, map_coordinates.y);
-
-	//App->win->SetTitle(title.GetString());
-
-	// Debug pathfinding ------------------------------
-	//int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-
-	App->render->Blit(debug_tex, p.x, p.y);
-
-	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-
-	for(uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		App->render->Blit(debug_tex, pos.x, pos.y);
-	}
-
-	return true;
+	// Blit different layers
+	DoLayerBlit();
+	// ---------------------
+	
+	return ret;
 }
 
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
-	bool ret = true;
+	bool ret = false;
+
+	if (current_scene != nullptr)
+		ret = current_scene->PostUpdate();
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -147,5 +98,42 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	return true;
+	bool ret = false;
+
+	if (current_scene != nullptr)
+		ret = current_scene->CleanUp();
+
+	return ret;
 }
+
+void j1Scene::ChangeScene(Scene * new_scene)
+{
+	LOG("Changing current scene");
+
+	current_scene->CleanUp();
+	current_scene = new_scene;
+	current_scene->Start();
+}
+
+void j1Scene::LayerBlit(int layer, SDL_Texture * texture, iPoint pos, const SDL_Rect section, float scale, SDL_RendererFlip flip, double angle, int pivot_x, int pivot_y)
+{
+	layer_blit lblit(texture, pos, section, scale, flip, angle, pivot_x, pivot_y);
+	layer_list.Push(lblit, layer);
+}
+
+void j1Scene::OnCollision(PhysBody * bodyA, PhysBody * bodyB, b2Fixture * fixtureA, b2Fixture * fixtureB)
+{
+	for(list<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++)
+		(*it)->OnColl(bodyA, bodyB, fixtureA, fixtureB);
+}
+
+void j1Scene::DoLayerBlit()
+{
+	while(layer_list.Count() > 0)
+	{
+		layer_blit current;
+		layer_list.Pop(current);
+		App->render->Blit(current.texture, current.pos.x, current.pos.y, &current.section, current.scale, current.flip, current.angle, current.pivot_x, current.pivot_y);
+	}
+}
+

@@ -9,7 +9,7 @@
 
 j1Input::j1Input() : j1Module()
 {
-	name.create("input");
+	name = "input";
 
 	keyboard = new j1KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
@@ -35,12 +35,18 @@ bool j1Input::Awake(pugi::xml_node& config)
 		ret = false;
 	}
 
+	// GUI -------------------------
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+		LOG("Error on SDL_Init");
+	// -----------------------------
+
 	return ret;
 }
 
 // Called before the first frame
 bool j1Input::Start()
 {
+	LOG("Start module input");
 	SDL_StopTextInput();
 	return true;
 }
@@ -78,6 +84,11 @@ bool j1Input::PreUpdate()
 		if(mouse_buttons[i] == KEY_UP)
 			mouse_buttons[i] = KEY_IDLE;
 	}
+
+	// GUI -------------------------
+	SDL_StartTextInput();
+	input_text.clear();
+	// -----------------------------
 
 	while(SDL_PollEvent(&event) != 0)
 	{
@@ -118,15 +129,30 @@ bool j1Input::PreUpdate()
 			break;
 
 			case SDL_MOUSEMOTION:
+			{
 				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
+			}
 			break;
+
+			// GUI -------------------
+			case SDL_TEXTINPUT:
+			{
+				input_text.insert(input_text.size(), event.text.text);
+			}
+			break;
+
+			// ------------------------
 		}
 	}
+
+	// GUI -------------------------
+	SDL_StopTextInput();
+	// -----------------------------
 
 	return true;
 }
@@ -156,3 +182,4 @@ void j1Input::GetMouseMotion(int& x, int& y)
 	x = mouse_motion_x;
 	y = mouse_motion_y;
 }
+

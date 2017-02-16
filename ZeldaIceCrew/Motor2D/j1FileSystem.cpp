@@ -9,12 +9,11 @@
 
 j1FileSystem::j1FileSystem() : j1Module()
 {
-	name.create("file_system");
+	name = "file_system";
 
 	// need to be created before Awake so other modules can use it
-	char* base_path = SDL_GetBasePath();
+	base_path = SDL_GetBasePath();
 	PHYSFS_init(base_path);
-	SDL_free(base_path);
 
 	// By default we include executable's own directory
 	// without this we won't be able to find config.xml :-(
@@ -40,7 +39,7 @@ bool j1FileSystem::Awake(pugi::xml_node& config)
 	}
 
 	// Ask SDL for a write dir
-	char* write_path = SDL_GetPrefPath(App->GetOrganization(), App->GetTitle());
+	write_path = SDL_GetPrefPath(App->GetOrganization(), App->GetTitle());
 
 	if(PHYSFS_setWriteDir(write_path) == 0)
 		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
@@ -50,8 +49,6 @@ bool j1FileSystem::Awake(pugi::xml_node& config)
 		LOG("Writing directory is %s\n", write_path);
 		AddPath(write_path, GetSaveDirectory());
 	}
-
-	SDL_free(write_path);
 
 	return ret;
 }
@@ -86,6 +83,20 @@ bool j1FileSystem::Exists(const char* file) const
 bool j1FileSystem::IsDirectory(const char* file) const
 {
 	return PHYSFS_isDirectory(file) != 0;
+}
+
+bool j1FileSystem::ChangeWriteDir(const char * file) const
+{
+	bool ret = false;
+
+	if (PHYSFS_setWriteDir(file) == 0)
+		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
+	else
+	{
+		LOG("FileSystem write directory changed to %s", file);
+		ret = true;
+	}
+	return ret;
 }
 
 // Read a whole file and put it in a new buffer

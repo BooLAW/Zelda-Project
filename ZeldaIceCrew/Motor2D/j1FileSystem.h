@@ -26,6 +26,7 @@ public:
 	bool AddPath(const char* path_or_zip, const char* mount_point = NULL);
 	bool Exists(const char* file) const;
 	bool IsDirectory(const char* file) const;
+	bool ChangeWriteDir(const char* file) const;
 	const char* GetSaveDirectory() const
 	{
 		return "save/";
@@ -36,6 +37,10 @@ public:
 	SDL_RWops* Load(const char* file) const;
 
 	unsigned int Save(const char* file, const char* buffer, unsigned int size) const;
+
+public:
+	char* base_path = NULL;
+	char* write_path = NULL;
 
 private:
 
