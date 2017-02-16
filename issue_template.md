@@ -1,11 +1,14 @@
-**Type:**    
+**Type (Module/Team Branch):**    
 
 **Severity:**    
+Crash
+Game Stopping
+Minor/Other
 
-**Actual Result:**    
+**What Happens:**    
 
 **Expected Result:**
 
-**Steps to Reproduce:**    
+**How to reproduce:**    
 
-**Build:**    
+**Build/Date:**    
