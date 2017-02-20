@@ -1,5 +1,7 @@
 #include "EntityManager.h"
+#include "j1Player.h"
 #include "p2Log.h"
+#include "j1Render.h"
 
 //Constructor and destructor
 EntityManager::EntityManager() {
@@ -29,14 +31,17 @@ Entity* EntityManager::CreateEntity(ENTITYTYPE type) {
 
 	Entity* ret = nullptr;
 
-	if (type == player) {
-		ret = new Player();
-	}
-	else if (type == item) {
+	switch (type) {
+	case item:
 		ret = new Item();
+		break;
 	}
+
 	if (ret != nullptr) {
 		entities.PushBack(ret);
+	}
+	else {
+		LOG("ERROR CREATING ENTITY type: %d", type);
 	}
 
 	return ret;
@@ -55,10 +60,17 @@ void Entity::Update(float dt) {
 
 
 }
-void  Player::Update(float dt) {
-	
 
-}
+bool Entity::Draw()
+{
+	bool ret = NULL;
+
+
+
+	return ret;
+
+} // will return NULL if there's an error
+
 void Item::Update(float dt) {
 	
 }

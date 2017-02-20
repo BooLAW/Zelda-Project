@@ -16,6 +16,7 @@
 #include "j1Fonts.h"
 #include "j1Gui.h"
 #include "j1App.h"
+#include "j1Player.h"
 #include "EntityManager.h"
 
 // Constructor
@@ -34,6 +35,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new j1PathFinding();
 	font = new j1Fonts();
 	gui = new j1Gui();
+	player = new j1Player();
 	entitymanager = new EntityManager();
 
 
@@ -48,6 +50,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(font);
 	AddModule(gui);
+	AddModule(player);
 	AddModule(entitymanager);
 	// scene last
 	AddModule(scene);

@@ -5,6 +5,8 @@
 #include "p2DynArray.h"
 #include "j1Timer.h"
 
+class j1Player;
+
 enum ENTITYTYPE { player, item };
 class Entity;
 class EntityManager :public j1Module {
@@ -25,17 +27,20 @@ class Entity {
 public:
 	Entity();
 	Entity(ENTITYTYPE t);
-	~Entity();
+	virtual ~Entity();
+
 	ENTITYTYPE type;
 	virtual void Update(float dt);
 
+	bool Draw();
+
+	struct {
+		int x;
+		int y;
+	} pos;
+
 private:
 
-};
-
-class Player : public  Entity {
-public:
-	void Update(float dt);
 };
 
 class Item : public  Entity {
