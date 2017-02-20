@@ -46,7 +46,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	debug_tex = App->tex->Load("maps/path2.png");
+	debug_tex = App->tex->Load("maps/path.png");
 
 	return true;
 }
