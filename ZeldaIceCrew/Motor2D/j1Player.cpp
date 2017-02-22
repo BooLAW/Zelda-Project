@@ -182,19 +182,36 @@ bool j1Player::Update(float dt)
 	bool ret = true;
 
 	// Logic
-	if (App->input->GetKey(SDL_SCANCODE_W)) {
+	if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
+		pos.y -= pl_speed.y * sqrt(2) / 2;
+		pos.x -= pl_speed.x * sqrt(2) / 2;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
+		pos.y += pl_speed.y * sqrt(2) / 2;
+		pos.x -= pl_speed.x * sqrt(2) / 2;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
+		pos.y += pl_speed.y * sqrt(2) / 2;
+		pos.x += pl_speed.x * sqrt(2) / 2;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
+		pos.y -= pl_speed.y * sqrt(2) / 2;
+		pos.x += pl_speed.x * sqrt(2) / 2;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_W)) {
 		pos.y -= pl_speed.y;
 		curr_dir = Up;
+
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A)) {
+	else if (App->input->GetKey(SDL_SCANCODE_A)) {
 		pos.x -= pl_speed.x;
 		curr_dir = Left;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S)) {
+	else if (App->input->GetKey(SDL_SCANCODE_S)) {
 		pos.y += pl_speed.y;
 		curr_dir = Down;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D)) {
+	else if (App->input->GetKey(SDL_SCANCODE_D)) {
 		pos.x += pl_speed.x;
 		curr_dir = Right;
 	}
