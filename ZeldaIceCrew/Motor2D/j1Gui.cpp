@@ -1,5 +1,5 @@
-#include "p2Defs.h"
-#include "p2Log.h"
+#include "Defs.h"
+#include "Log.h"
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
@@ -71,7 +71,7 @@ const SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
-Element* j1Gui::Create_Element(const char* name, TYPE type, iPoint pos, SDL_Rect rect, p2SString text, _TTF_Font* font)
+Element* j1Gui::Create_Element(const char* name, TYPE type, iPoint pos, SDL_Rect rect, String text, _TTF_Font* font)
 {
 	Element* new_element = nullptr;
 
@@ -201,7 +201,7 @@ void Windowed_Image::Draw()
 }
 // Label ----------------------------------------------------------------------------
 
-Label::Label(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, p2SString text) : Element(name, LABEL, pos, texture, rect), text(text)
+Label::Label(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, String text) : Element(name, LABEL, pos, texture, rect), text(text)
 {}
 
 Label::~Label()
@@ -309,7 +309,7 @@ void Button::Draw()
 
 // Text_Box -------------------------------------------------------------------------------
 
-Text_Box::Text_Box(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, p2SString text) : Interactive(name, TEXT_BOX, pos, texture, rect), text(text)
+Text_Box::Text_Box(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, String text) : Interactive(name, TEXT_BOX, pos, texture, rect), text(text)
 {}
 
 Text_Box::~Text_Box()

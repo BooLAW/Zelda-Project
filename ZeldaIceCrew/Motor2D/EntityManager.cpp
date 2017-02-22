@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 #include "j1Player.h"
-#include "p2Log.h"
+#include "Log.h"
 #include "j1Render.h"
 
 //Constructor and destructor

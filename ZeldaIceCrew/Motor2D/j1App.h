@@ -1,8 +1,8 @@
 #ifndef __j1APP_H__
 #define __j1APP_H__
 
-#include "p2List.h"
-#include "p2Log.h"
+#include "List.h"
+#include "Log.h"
 #include "j1Module.h"
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
@@ -57,7 +57,7 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
+	void GetSaveGames(p2List<String>& list_to_fill) const;
 
 private:
 
@@ -105,13 +105,13 @@ private:
 	int					argc;
 	char**				args;
 
-	p2SString			title;
-	p2SString			organization;
+	String			title;
+	String			organization;
 
 	mutable bool		want_to_save = false;
 	bool				want_to_load = false;
-	p2SString			load_game;
-	mutable p2SString	save_game;
+	String			load_game;
+	mutable String	save_game;
 
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
