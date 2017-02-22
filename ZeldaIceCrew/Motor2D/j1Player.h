@@ -36,6 +36,8 @@ public:
 	};
 
 private:
+	Point<float> pos;
+	Point<float> pl_speed;
 
 	SDL_Texture* Link_Movement = nullptr;
 
