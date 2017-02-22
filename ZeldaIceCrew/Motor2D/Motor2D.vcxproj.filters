@@ -23,7 +23,7 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="p2Log.cpp">
-      <Filter>Programacio 2 ===========</Filter>
+      <Filter>Auxiliar templates and headers</Filter>
     </ClCompile>
     <ClCompile Include="j1Scene.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
@@ -82,22 +82,19 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="p2Defs.h">
-      <Filter>Programacio 2 ===========</Filter>
+      <Filter>Auxiliar templates and headers</Filter>
     </ClInclude>
     <ClInclude Include="p2List.h">
-      <Filter>Programacio 2 ===========</Filter>
+      <Filter>Auxiliar templates and headers</Filter>
     </ClInclude>
     <ClInclude Include="p2Log.h">
-      <Filter>Programacio 2 ===========</Filter>
+      <Filter>Auxiliar templates and headers</Filter>
     </ClInclude>
     <ClInclude Include="p2SString.h">
-      <Filter>Programacio 2 ===========</Filter>
+      <Filter>Auxiliar templates and headers</Filter>
     </ClInclude>
     <ClInclude Include="p2Point.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2DynArray.h">
-      <Filter>Programacio 2 ===========</Filter>
+      <Filter>Auxiliar templates and headers</Filter>
     </ClInclude>
     <ClInclude Include="j1Scene.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
@@ -140,9 +137,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Programacio 2 ===========">
-      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Desenvolupament  ========">
       <UniqueIdentifier>{cb944693-b9d0-484c-bad2-02d5a7cdbec6}</UniqueIdentifier>
     </Filter>
@@ -157,6 +151,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Auxiliar templates and headers">
+      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

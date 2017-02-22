@@ -20,8 +20,6 @@ enum TYPE
 	WINDOWED_IMAGE
 };
 
-// TODO 1: Create your structure of classes
-
 class Element
 {
 public:
@@ -206,7 +204,6 @@ public:
 	
 	const SDL_Texture* GetAtlas() const;
 
-	// TODO 2: Create the factory methods
 	Element* Create_Element(const char* name, TYPE type, iPoint pos, SDL_Rect rect, p2SString text = nullptr, _TTF_Font* font = NULL);
 	void Destroy_Element(const char* name);
 
