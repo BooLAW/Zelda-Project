@@ -1,5 +1,6 @@
 #include "j1Player.h"
 #include "j1Input.h"
+#include "j1Window.h"
 
 j1Player::j1Player()
 {
@@ -13,6 +14,9 @@ bool j1Player::Awake()
 {
 	bool ret = true;
 	LOG("Player Awake Start");
+
+	pos.x = 0;
+	pos.y = 0;
 
 	return ret;
 }
@@ -62,7 +66,7 @@ bool j1Player::Start()
 		sprites[Walk][Down][3] = { 118, 8, 32, 44 };
 		sprites[Walk][Down][4] = { 156, 8, 32, 44 };
 		sprites[Walk][Down][5] = { 194, 6, 32, 46 };
-		sprites[Walk][Down][6] = { 232, 8, 32, 48 };
+		sprites[Walk][Down][6] = { 232, 6, 32, 48 };
 
 		sprites[Walk][Right][0] = { 4  ,112,32,46 };
 		sprites[Walk][Right][1] = { 42 ,110,32,46 };
@@ -111,7 +115,7 @@ bool j1Player::Start()
 			animations[Walk][Up].PushBack(sprites[Walk][Up][4]);
 			animations[Walk][Up].PushBack(sprites[Walk][Up][5]);
 			animations[Walk][Up].PushBack(sprites[Walk][Up][6]);
-			animations[Walk][Up].speed = 0.2f;
+			animations[Walk][Up].speed = 0.1f;
 		}
 
 		// Walking DOWN
@@ -123,7 +127,7 @@ bool j1Player::Start()
 			animations[Walk][Down].PushBack(sprites[Walk][Down][4]);
 			animations[Walk][Down].PushBack(sprites[Walk][Down][5]);
 			animations[Walk][Down].PushBack(sprites[Walk][Down][6]);
-			animations[Walk][Down].speed = 0.2f;
+			animations[Walk][Down].speed = 0.1f;
 		}
 
 		// Walking LEFT
@@ -135,7 +139,7 @@ bool j1Player::Start()
 			animations[Walk][Left].PushBack(sprites[Walk][Left][4]);
 			animations[Walk][Left].PushBack(sprites[Walk][Left][5]);
 			animations[Walk][Left].PushBack(sprites[Walk][Left][6]);
-			animations[Walk][Left].speed = 0.2f;
+			animations[Walk][Left].speed = 0.1f;
 		}
 
 		// Walking RIGHT
@@ -147,7 +151,7 @@ bool j1Player::Start()
 			animations[Walk][Right].PushBack(sprites[Walk][Right][4]);
 			animations[Walk][Right].PushBack(sprites[Walk][Right][5]);
 			animations[Walk][Right].PushBack(sprites[Walk][Right][6]);
-			animations[Walk][Right].speed = 0.2f;
+			animations[Walk][Right].speed = 0.1f;
 		}
 
 	}
@@ -166,9 +170,6 @@ bool j1Player::Start()
 	// !_Animations
 
 	// Variable Settup
-
-	pos.x = 0;
-	pos.y = 0;
 
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
@@ -204,7 +205,6 @@ bool j1Player::Update(float dt)
 	else if (App->input->GetKey(SDL_SCANCODE_W)) {
 		pos.y -= pl_speed.y;
 		curr_dir = Up;
-
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_A)) {
 		pos.x -= pl_speed.x;
@@ -216,27 +216,31 @@ bool j1Player::Update(float dt)
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D)) {
 		pos.x += pl_speed.x;
-		curr_dir = Right;
+		curr_dir = Right;		
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->debug = !App->debug;
 
 	// !_Logic
 
 	// Graphics
-	if (App->input->GetKey(SDL_SCANCODE_W))																		// Walk UP
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+	if (App->input->GetKey(SDL_SCANCODE_W))																					// Walk UP
+		App->render->Blit(Link_Movement, pos.x, pos.y - PL_OFFSET, &animations[Walk][curr_dir].GetCurrentFrame());
 	else
-	if (App->input->GetKey(SDL_SCANCODE_A))																		// Walk Left
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+	if (App->input->GetKey(SDL_SCANCODE_A))																					// Walk Left
+		App->render->Blit(Link_Movement, pos.x, pos.y - PL_OFFSET, &animations[Walk][curr_dir].GetCurrentFrame());
 	else
-	if (App->input->GetKey(SDL_SCANCODE_S))																		// Walk Down
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+	if (App->input->GetKey(SDL_SCANCODE_S))																					// Walk Down
+		App->render->Blit(Link_Movement, pos.x, pos.y - PL_OFFSET, &animations[Walk][curr_dir].GetCurrentFrame());
 	else
-	if (App->input->GetKey(SDL_SCANCODE_D))																		// Walk Right
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+	if (App->input->GetKey(SDL_SCANCODE_D))																					// Walk Right
+		App->render->Blit(Link_Movement, pos.x, pos.y - PL_OFFSET, &animations[Walk][curr_dir].GetCurrentFrame());
 	else
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Idle][curr_dir].GetCurrentFrame());			// Idle
+		App->render->Blit(Link_Movement, pos.x, pos.y - PL_OFFSET, &animations[Idle][curr_dir].GetCurrentFrame());			// Idle
 
 	//!_Graphics
+
+	App->render->SetCamPos(-(pos.x - App->win->screen_surface->w / 2) , -(pos.y - App->win->screen_surface->h / 2));
 
 	return ret;
 }
@@ -244,7 +248,6 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate(float dt)
 {
 	bool ret = true;
-	
 
 	return ret;
 }
@@ -259,4 +262,21 @@ bool j1Player::CleanUp()
 
 
 	return ret;
+}
+
+bool j1Player::SetPosTile(int x, int y)
+{
+	bool ret = true;
+
+	iPoint new_pos = App->map->MapToWorld(x, y);
+
+	pos.x = new_pos.x;
+	pos.y = new_pos.y;
+
+	return true;
+}
+
+Point<float> j1Player::GetPos()
+{
+	return pos;
 }
