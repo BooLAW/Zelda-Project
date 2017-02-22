@@ -24,62 +24,61 @@ bool j1Player::Start()
 
 	// Setting Up all SDL_Rects
 
-	// Idle
 	{
-		sprites[Idle][Up][0].x = 59;
-		sprites[Idle][Up][0].y = 31;
-		sprites[Idle][Up][0].w = 16;
-		sprites[Idle][Up][0].h = 22;
+		sprites[Idle][Up][0].x = 118;
+		sprites[Idle][Up][0].y = 62;
+		sprites[Idle][Up][0].w = 32;
+		sprites[Idle][Up][0].h = 44;
 
-		sprites[Idle][Down][0].x = 59;
-		sprites[Idle][Down][0].y = 4;
-		sprites[Idle][Down][0].w = 16;
-		sprites[Idle][Down][0].h = 22;
+		sprites[Idle][Down][0].x = 118;
+		sprites[Idle][Down][0].y = 8;
+		sprites[Idle][Down][0].w = 32;
+		sprites[Idle][Down][0].h = 44;
 
-		sprites[Idle][Left][0].x = 59;
-		sprites[Idle][Left][0].y = 82;
-		sprites[Idle][Left][0].w = 16;
-		sprites[Idle][Left][0].h = 22;
+		sprites[Idle][Left][0].x = 118;
+		sprites[Idle][Left][0].y = 163;
+		sprites[Idle][Left][0].w = 32;
+		sprites[Idle][Left][0].h = 44;
 
-		sprites[Idle][Right][0].x = 59;
-		sprites[Idle][Right][0].y = 56;
-		sprites[Idle][Right][0].w = 16;
-		sprites[Idle][Right][0].h = 22;
+		sprites[Idle][Right][0].x = 118;
+		sprites[Idle][Right][0].y = 112;
+		sprites[Idle][Right][0].w = 32;
+		sprites[Idle][Right][0].h = 44;
 	}
-	
+
 	//Walk
 	{
-	sprites[Walk][Up][0] = { 2,29,16,24 };
-	sprites[Walk][Up][1] = { 21,30,16,23 };
-	sprites[Walk][Up][2] = { 40,31,16,22 };
-	sprites[Walk][Up][3] = { 59,31,16,22 };
-	sprites[Walk][Up][4] = { 78,31,16,22 };
-	sprites[Walk][Up][5] = { 97,30,16,23 };
-	sprites[Walk][Up][6] = { 116,29,16,24 };
+		sprites[Walk][Up][0] = { 4  ,  58,  32,48 };
+		sprites[Walk][Up][1] = { 42 , 60, 32,46 };
+		sprites[Walk][Up][2] = { 80 , 62, 32,44 };
+		sprites[Walk][Up][3] = { 118, 62, 32,44 };
+		sprites[Walk][Up][4] = { 156, 62, 32,44 };
+		sprites[Walk][Up][5] = { 194, 60, 32,46 };
+		sprites[Walk][Up][6] = { 232,57,32,48 };
 
-	sprites[Walk][Down][0] = { 2,2,16,24 };
-	sprites[Walk][Down][1] = { 21,3,16,24 };
-	sprites[Walk][Down][2] = { 40,4,16,22 };
-	sprites[Walk][Down][3] = { 59,4,16,22 };
-	sprites[Walk][Down][4] = { 78,4,16,22 };
-	sprites[Walk][Down][5] = { 97,3,16,23 };
-	sprites[Walk][Down][6] = { 116,2,16,24 };
+		sprites[Walk][Down][0] = { 4  ,  4, 32, 48 };
+		sprites[Walk][Down][1] = { 42 , 6, 32, 48 };
+		sprites[Walk][Down][2] = { 80 , 8, 32, 44 };
+		sprites[Walk][Down][3] = { 118, 8, 32, 44 };
+		sprites[Walk][Down][4] = { 156, 8, 32, 44 };
+		sprites[Walk][Down][5] = { 194, 6, 32, 46 };
+		sprites[Walk][Down][6] = { 232, 8, 32, 48 };
 
-	sprites[Walk][Right][0] = { 2,56,16,23 };
-	sprites[Walk][Right][1] = { 21,55,16,23 };
-	sprites[Walk][Right][2] = { 40,55,16,24 };
-	sprites[Walk][Right][3] = { 59,56,16,24 };
-	sprites[Walk][Right][4] = { 78,55,16,23 };
-	sprites[Walk][Right][5] = { 97,55,16,24 };
-	sprites[Walk][Right][6] = { 116,56,16,24 };
+		sprites[Walk][Right][0] = { 4  ,112,32,46 };
+		sprites[Walk][Right][1] = { 42 ,110,32,46 };
+		sprites[Walk][Right][2] = { 80 ,110,32,48 };
+		sprites[Walk][Right][3] = { 118,112,32,48 };
+		sprites[Walk][Right][4] = { 156,110,32,46 };
+		sprites[Walk][Right][5] = { 194,110,32,48 };
+		sprites[Walk][Right][6] = { 232,112,32,48 };
 
-	sprites[Walk][Left][0] = { 2,82,16,23 };
-	sprites[Walk][Left][1] = { 21,81,16,24 };
-	sprites[Walk][Left][2] = { 40,81,16,24 };
-	sprites[Walk][Left][3] = { 59,82,16,23 };
-	sprites[Walk][Left][4] = { 78,81,16,24 };
-	sprites[Walk][Left][5] = { 97,81,16,24 };
-	sprites[Walk][Left][6] = { 116,82,17,23 };
+		sprites[Walk][Left][0] = { 4  ,164,32,46 };
+		sprites[Walk][Left][1] = { 42 ,162,32,48 };
+		sprites[Walk][Left][2] = { 80 ,162,32,48 };
+		sprites[Walk][Left][3] = { 118,164,32,46 };
+		sprites[Walk][Left][4] = { 156,162,32,48 };
+		sprites[Walk][Left][5] = { 194,162,32,48 };
+		sprites[Walk][Left][6] = { 232,164,34,46 };
 	}
 
 	// !_SDL_Rects
@@ -112,6 +111,7 @@ bool j1Player::Start()
 			animations[Walk][Up].PushBack(sprites[Walk][Up][4]);
 			animations[Walk][Up].PushBack(sprites[Walk][Up][5]);
 			animations[Walk][Up].PushBack(sprites[Walk][Up][6]);
+			animations[Walk][Up].speed = 0.2f;
 		}
 
 		// Walking DOWN
@@ -123,6 +123,7 @@ bool j1Player::Start()
 			animations[Walk][Down].PushBack(sprites[Walk][Down][4]);
 			animations[Walk][Down].PushBack(sprites[Walk][Down][5]);
 			animations[Walk][Down].PushBack(sprites[Walk][Down][6]);
+			animations[Walk][Down].speed = 0.2f;
 		}
 
 		// Walking LEFT
@@ -134,6 +135,7 @@ bool j1Player::Start()
 			animations[Walk][Left].PushBack(sprites[Walk][Left][4]);
 			animations[Walk][Left].PushBack(sprites[Walk][Left][5]);
 			animations[Walk][Left].PushBack(sprites[Walk][Left][6]);
+			animations[Walk][Left].speed = 0.2f;
 		}
 
 		// Walking RIGHT
@@ -145,6 +147,7 @@ bool j1Player::Start()
 			animations[Walk][Right].PushBack(sprites[Walk][Right][4]);
 			animations[Walk][Right].PushBack(sprites[Walk][Right][5]);
 			animations[Walk][Right].PushBack(sprites[Walk][Right][6]);
+			animations[Walk][Right].speed = 0.2f;
 		}
 
 	}
