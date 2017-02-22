@@ -6,8 +6,11 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1App.h"
+#include "j1Map.h"
 
 #define MAX_SPRITE_FRAMES 8
+
+#define PL_OFFSET 12
 
 enum Direction {
 	FirstDir = 0,
@@ -33,13 +36,6 @@ public:
 	};
 
 private:
-	struct {
-		float x, y;
-	}pos;
-
-	struct {
-		float x, y;
-	}pl_speed;
 
 	SDL_Texture* Link_Movement = nullptr;
 
@@ -59,6 +55,10 @@ private:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+
+public:
+	bool SetPosTile(int x, int y);
+	Point<float> GetPos();
 
 };
 
