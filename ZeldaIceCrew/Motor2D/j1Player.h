@@ -9,12 +9,9 @@
 
 #define MAX_SPRITE_FRAMES 8
 
-#define PL_SPEED_X 1.5
-#define PL_SPEED_Y 2
-
-
 enum Direction {
-	Up = 0,
+	FirstDir = 0,
+	Up,
 	Left,
 	Right,
 	Down,
@@ -24,7 +21,8 @@ enum Direction {
 class j1Player : public j1Module {
 public:
 	enum Sprites {
-		Idle = 1,
+		__FIRST = 0,
+		Idle,
 		Walk,
 		Unknown,
 		__LAST
@@ -35,10 +33,14 @@ private:
 		float x, y;
 	}pos;
 
+	struct {
+		float x, y;
+	}pl_speed;
+
 	SDL_Texture* Link_Movement = nullptr;
 
 	// All player sprites / animations
-	Animation animations[Sprites::__LAST];
+	Animation animations[Sprites::__LAST][Direction::LastDir];
 	SDL_Rect sprites[Sprites::__LAST][Direction::LastDir][MAX_SPRITE_FRAMES];
 
 	unsigned int curr_dir;

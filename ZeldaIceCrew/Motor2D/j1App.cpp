@@ -50,10 +50,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(font);
 	AddModule(gui);
-	AddModule(player);
 	AddModule(entitymanager);
-	// scene last
 	AddModule(scene);
+	AddModule(player);
 
 	// render last to swap buffer
 	AddModule(render);
