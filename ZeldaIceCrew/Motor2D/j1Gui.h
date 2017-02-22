@@ -91,7 +91,7 @@ class Label : public Element
 {
 public:
 
-	Label(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, String text);
+	Label(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, p2SString text);
 	~Label();
 
 	void Update();
@@ -99,7 +99,7 @@ public:
 
 private:
 
-	String text;
+	p2SString text;
 };
 
 // ------------------------------------------------------------------
@@ -132,7 +132,7 @@ private:
 class Text_Box : public Interactive
 {
 public:
-	Text_Box(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, String text);
+	Text_Box(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, p2SString text);
 	~Text_Box();
 
 	void Update();
@@ -140,7 +140,7 @@ public:
 	void Handle_Input() {}
 
 private:
-	String text;
+	p2SString text;
 	uint cursor = 0;
 	bool editing;
 };
@@ -207,7 +207,7 @@ public:
 	const SDL_Texture* GetAtlas() const;
 
 	// TODO 2: Create the factory methods
-	Element* Create_Element(const char* name, TYPE type, iPoint pos, SDL_Rect rect, String text = nullptr, _TTF_Font* font = NULL);
+	Element* Create_Element(const char* name, TYPE type, iPoint pos, SDL_Rect rect, p2SString text = nullptr, _TTF_Font* font = NULL);
 	void Destroy_Element(const char* name);
 
 	bool Element_Moving();
@@ -217,7 +217,7 @@ private:
 	std::deque<Element*> elements;
 	uint curr_id = 0;
 	SDL_Texture* atlas;
-	String atlas_file_name;
+	p2SString atlas_file_name;
 	
 };
 

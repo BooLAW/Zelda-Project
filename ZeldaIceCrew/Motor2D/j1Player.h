@@ -24,7 +24,6 @@ public:
 		__FIRST = 0,
 		Idle,
 		Walk,
-		Pickup,
 		Unknown,
 		__LAST
 	};

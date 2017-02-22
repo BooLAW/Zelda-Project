@@ -81,48 +81,6 @@ bool j1Player::Start()
 	sprites[Walk][Left][5] = { 97,81,16,24 };
 	sprites[Walk][Left][6] = { 116,82,17,23 };
 	}
-	//Walk with blue Shield
-
-	//Pick-up Object
-	//y coordinate for object depends on animation, all x2 because size
-	//Pick up left/right [1.y = +7 / 2.y = +6  / 3.y = +6 / 4.y = +6 / 5.y = +10 / 6.y = +10 ]
-	//Pick up top [1.y = +14 / 2.y = +15  / 3.y = +13 / 4.y = +13 / 5.y = +16 / 6.y = +10 ]
-	//Pick up down [1.y = +0 / 2.y = +0  / 3.y = +1 / 4.y = +10 / 5.y = +12 / 6.y = +10 ]
-	// x for top and down is link.x + link.w/2
-	// for right left [1.x = +10 / 2.x +16/ 3.x = +17 / 4.x = +17 / 5.x = +5 / 6.x = +2 ]
-	{
-		sprites[Pickup][Down][0] = {};
-		sprites[Pickup][Down][1] = {};
-		sprites[Pickup][Down][2] = {};
-		sprites[Pickup][Down][3] = {};
-		sprites[Pickup][Down][4] = {};
-		sprites[Pickup][Down][5] = {};
-
-		sprites[Pickup][Up][0] = {};
-		sprites[Pickup][Up][1] = {};
-		sprites[Pickup][Up][2] = {};
-		sprites[Pickup][Up][3] = {};
-		sprites[Pickup][Up][4] = {};
-		sprites[Pickup][Up][5] = {};
-
-		sprites[Pickup][Left][0] = {};
-		sprites[Pickup][Left][1] = {};
-		sprites[Pickup][Left][2] = {};
-		sprites[Pickup][Left][3] = {};
-		sprites[Pickup][Left][4] = {};
-		sprites[Pickup][Left][5] = {};
-
-		sprites[Pickup][Right][0] = {};
-		sprites[Pickup][Right][1] = {};
-		sprites[Pickup][Right][2] = {};
-		sprites[Pickup][Right][3] = {};
-		sprites[Pickup][Right][4] = {};
-		sprites[Pickup][Right][5] = {};
-	}
-	//Throw Object
-	{}
-	//Pull Object
-	{}
 
 	// !_SDL_Rects
 

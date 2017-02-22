@@ -1,6 +1,6 @@
-#include "Defs.h"
+#include "p2Defs.h"
 #include "j1App.h"
-#include "Log.h"
+#include "p2Log.h"
 #include "j1FileSystem.h"
 #include "PhysFS/include/physfs.h"
 #include "SDL/include/SDL.h"

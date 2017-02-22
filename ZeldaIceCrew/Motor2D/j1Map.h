@@ -11,7 +11,7 @@ struct Properties
 {
 	struct Property
 	{
-		String name;
+		p2SString name;
 		int value;
 	};
 
@@ -37,7 +37,7 @@ struct Properties
 // ----------------------------------------------------
 struct MapLayer
 {
-	String	name;
+	p2SString	name;
 	int			width;
 	int			height;
 	uint*		data;
@@ -62,7 +62,7 @@ struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
 
-	String			name;
+	p2SString			name;
 	int					firstgid;
 	int					margin;
 	int					spacing;
@@ -140,7 +140,7 @@ public:
 private:
 
 	pugi::xml_document	map_file;
-	String			folder;
+	p2SString			folder;
 	bool				map_loaded;
 };
 

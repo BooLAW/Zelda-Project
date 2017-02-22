@@ -1,5 +1,5 @@
-#include "Defs.h"
-#include "Log.h"
+#include "p2Defs.h"
+#include "p2Log.h"
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
@@ -161,9 +161,9 @@ void j1Input::GetMouseMotion(int& x, int& y)
 	y = mouse_motion_y;
 }
 
-String j1Input::GetString()
+p2SString j1Input::GetString()
 {
-	String ret = text;
+	p2SString ret = text;
 	text.Trim();
 	return ret;
 }

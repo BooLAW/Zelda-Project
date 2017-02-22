@@ -1,5 +1,5 @@
-#include "Defs.h"
-#include "Log.h"
+#include "p2Defs.h"
+#include "p2Log.h"
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1FileSystem.h"
@@ -190,7 +190,7 @@ bool j1Map::CleanUp()
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
-	String tmp("%s%s", folder.GetString(), file_name);
+	p2SString tmp("%s%s", folder.GetString(), file_name);
 
 	char* buf;
 	int size = App->fs->Load(tmp.GetString(), &buf);
@@ -291,7 +291,7 @@ bool j1Map::LoadMap()
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
-		String bg_color(map.attribute("backgroundcolor").as_string());
+		p2SString bg_color(map.attribute("backgroundcolor").as_string());
 
 		data.background_color.r = 0;
 		data.background_color.g = 0;
@@ -300,7 +300,7 @@ bool j1Map::LoadMap()
 
 		if(bg_color.Length() > 0)
 		{
-			String red, green, blue;
+			p2SString red, green, blue;
 			bg_color.SubString(1, 2, red);
 			bg_color.SubString(3, 4, green);
 			bg_color.SubString(5, 6, blue);
@@ -317,7 +317,7 @@ bool j1Map::LoadMap()
 			if(v >= 0 && v <= 255) data.background_color.b = v;
 		}
 
-		String orientation(map.attribute("orientation").as_string());
+		p2SString orientation(map.attribute("orientation").as_string());
 
 		if(orientation == "orthogonal")
 		{

@@ -1,5 +1,5 @@
-#include "Defs.h"
-#include "Log.h"
+#include "p2Defs.h"
+#include "p2Log.h"
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Textures.h"
@@ -36,7 +36,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	
-	if (App->map->Load("iso_walk.tmx") == true)
+	if (App->map->Load("maptest.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -105,7 +105,7 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	String title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
 		App->map->data.width, App->map->data.height,
 		App->map->data.tile_width, App->map->data.tile_height,
 		App->map->data.tilesets.count(),
