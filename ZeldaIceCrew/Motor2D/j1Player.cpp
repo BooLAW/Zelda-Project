@@ -52,6 +52,15 @@ bool j1Player::Start()
 
 	// !_Textures
 
+	// Variable Settup
+
+	pos.x = 0;
+	pos.y = 0;
+
+	curr_dir = Down;
+
+	// !_Variables
+
 	return ret;
 }
 
@@ -59,7 +68,24 @@ bool j1Player::Update(float dt)
 {
 	bool ret = true;
 
-	App->render->Blit(Link_Movement, 0, 0, &sprites[Idle][Left][0]);
+	if (App->input->GetKey(SDL_SCANCODE_W)) {
+		curr_dir = Up;
+		pos.y -= PL_SPEED_Y;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_A)) {
+		curr_dir = Left;
+		pos.x -= PL_SPEED_X;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_S)) {
+		curr_dir = Down;
+		pos.y += PL_SPEED_Y;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D)) {
+		curr_dir = Right;
+		pos.x += PL_SPEED_X;
+	}
+
+	App->render->Blit(Link_Movement, pos.x, pos.y, &sprites[Idle][curr_dir][0]);
 
 	return ret;
 }

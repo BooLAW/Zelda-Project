@@ -9,6 +9,10 @@
 
 #define MAX_SPRITE_FRAMES 8
 
+#define PL_SPEED_X 1.5
+#define PL_SPEED_Y 2
+
+
 enum Direction {
 	Up = 0,
 	Left,
@@ -28,7 +32,7 @@ public:
 
 private:
 	struct {
-		int x, y;
+		float x, y;
 	}pos;
 
 	SDL_Texture* Link_Movement = nullptr;
@@ -36,6 +40,8 @@ private:
 	// All player sprites / animations
 	Animation animations[Sprites::__LAST];
 	SDL_Rect sprites[Sprites::__LAST][Direction::LastDir][MAX_SPRITE_FRAMES];
+
+	unsigned int curr_dir;
 
 public:
 	j1Player();
