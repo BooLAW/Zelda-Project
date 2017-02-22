@@ -7,7 +7,6 @@
 #define __j1MODULE_H__
 
 #include "p2SString.h"
-#include "p2DynArray.h"
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;

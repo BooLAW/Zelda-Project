@@ -38,7 +38,7 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
-	for (int i = 0; i < elements.Count(); i++)
+	for (int i = 0; i < elements.size(); i++)
 	{
 		elements[i]->Update();
 	}
@@ -105,13 +105,13 @@ Element* j1Gui::Create_Element(const char* name, TYPE type, iPoint pos, SDL_Rect
 			new_element = new Text_Box(name, pos, texture, rect, text);
 	}
 		
-	elements.PushBack(new_element);
+	elements.push_back(new_element);
 	return new_element;
 }
 
 void j1Gui::Destroy_Element(const char* name)
 {
-	for (int i = 0; i < elements.Count(); i++)
+	for (int i = 0; i < elements.size(); i++)
 		if(elements[i]->name == name)
 			delete (elements[i]);
 }
@@ -120,7 +120,7 @@ bool j1Gui::Element_Moving()
 {
 	bool ret = false;
 
-	for (int i = 0; i < elements.Count(); i++)
+	for (int i = 0; i < elements.size(); i++)
 		if (elements[i]->moving == true) 
 			ret = true;
 
@@ -184,7 +184,7 @@ void Windowed_Image::Update()
 bool Windowed_Image::is_Windowed()
 {
 	bool ret = false;
-	for (int i = 0; i < points.Count(); i++)
+	for (int i = 0; i < points.size(); i++)
 	{
 		if (points[i].x >= Window_Rect.x && points[i].x <= (Window_Rect.x + Window_Rect.w))
 		{
@@ -259,7 +259,7 @@ void Interactive::Move()
 		{
 			if (pos.x + aux.x >= 0 && pos.x + aux.x <= 1024)
 			{
-				for (uint i = 0; i < linked_elements.Count(); i++)
+				for (uint i = 0; i < linked_elements.size(); i++)
 				{
 						linked_elements[i]->pos.x += aux.x;
 					
@@ -271,7 +271,7 @@ void Interactive::Move()
 
 void Interactive::Attach(Element* element)
 {
-	linked_elements.PushBack(element);
+	linked_elements.push_back(element);
 }
 
 // Button -------------------------------------------------------------------------------

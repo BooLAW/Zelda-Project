@@ -2,7 +2,7 @@
 #ifndef _ENTITYMANAGER_H_
 #define _ENTITYMANAGER_H_
 #include "j1Module.h"
-#include "p2DynArray.h"
+#include <deque>
 #include "j1Timer.h"
 
 class j1Player;
@@ -17,9 +17,9 @@ public:
 	Entity* CreateEntity(ENTITYTYPE type);
 	void DestroyEntities();
 private:
-	p2DynArray<Entity*> entities;
+	std::deque<Entity*> entities;
 	j1Timer time;
-
+	
 };
 
 

@@ -2,8 +2,8 @@
 #define __j1PATHFINDING_H__
 
 #include "j1Module.h"
-#include "p2Point.h"
-#include "p2DynArray.h"
+#include "Point.h"
+#include <deque>
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
@@ -33,7 +33,7 @@ public:
 	int CreatePath(const iPoint& origin, const iPoint& destination);
 
 	// To request all tiles involved in the last generated path
-	const p2DynArray<iPoint>* GetLastPath() const;
+	const std::deque<iPoint>* GetLastPath() const;
 
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const iPoint& pos) const;
@@ -52,7 +52,7 @@ private:
 	// all map walkability values [0..255]
 	uchar* map;
 	// we store the created path here
-	p2DynArray<iPoint> last_path;
+	std::deque<iPoint> last_path;
 };
 
 // forward declaration

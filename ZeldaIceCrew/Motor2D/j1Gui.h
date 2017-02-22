@@ -5,6 +5,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Fonts.h"
+#include<deque>
 
 #define CURSOR_WIDTH 2
 
@@ -70,8 +71,8 @@ class Windowed_Image : public Element
 public:
 
 	Windowed_Image(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect);
-	p2DynArray<SDL_Rect> rects;
-	p2DynArray<iPoint> points;
+	std::deque<SDL_Rect> rects;
+	std::deque<iPoint> points;
 	uint cur_rect;
 	SDL_Rect Window_Rect;//the one that is visible
 	iPoint Changer;
@@ -119,7 +120,7 @@ public:
 protected:
 
 	uint tab_id = 0;
-	p2DynArray<Element*> linked_elements;
+	std::deque<Element*> linked_elements;
 
 private:
 	iPoint curr_mouse_pos;
@@ -213,7 +214,7 @@ public:
 
 private:
 
-	p2DynArray<Element*> elements;
+	std::deque<Element*> elements;
 	uint curr_id = 0;
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
