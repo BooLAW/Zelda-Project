@@ -17,7 +17,7 @@
 	    {                      \
       delete x;            \
 	  x = NULL;              \
-	    }                      \
+	    }                 \
     }
 
 // Deletes an array of buffers
