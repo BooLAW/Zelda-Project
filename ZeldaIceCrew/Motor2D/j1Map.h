@@ -17,13 +17,13 @@ struct Properties
 
 	~Properties()
 	{
-		p2List_item<Property*>* item;
-		item = list.start;
+		std::list<Property*>::iterator item;
+		item = list.begin();
 
-		while(item != NULL)
+		while(item != list.end())
 		{
-			RELEASE(item->data);
-			item = item->next;
+			RELEASE((*item));
+			item++;
 		}
 
 		list.clear();
@@ -31,7 +31,7 @@ struct Properties
 
 	int Get(const char* name, int default_value = 0) const;
 
-	p2List<Property*>	list;
+	std::list<Property*>	list;
 };
 
 // ----------------------------------------------------
@@ -93,8 +93,8 @@ struct MapData
 	int					tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
-	p2List<TileSet*>	tilesets;
-	p2List<MapLayer*>	layers;
+	std::list<TileSet*>	tilesets;
+	std::list<MapLayer*>	layers;
 };
 
 // ----------------------------------------------------
