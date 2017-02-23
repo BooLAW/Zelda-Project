@@ -12,6 +12,8 @@
 
 #define PL_OFFSET 12
 
+#define PL_WALK_FPS 0.2f
+
 enum Direction {
 	FirstDir = 0,
 	Up,

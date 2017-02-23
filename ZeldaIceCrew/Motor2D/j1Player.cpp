@@ -176,7 +176,7 @@ bool j1Player::Start()
 			animations[Walk][Up].PushBack(sprites[Walk][Up][4]);
 			animations[Walk][Up].PushBack(sprites[Walk][Up][5]);
 			animations[Walk][Up].PushBack(sprites[Walk][Up][6]);
-			animations[Walk][Up].speed = 0.2f;
+			animations[Walk][Up].speed = PL_WALK_FPS;
 		}
 
 		// Walking DOWN
@@ -188,7 +188,7 @@ bool j1Player::Start()
 			animations[Walk][Down].PushBack(sprites[Walk][Down][4]);
 			animations[Walk][Down].PushBack(sprites[Walk][Down][5]);
 			animations[Walk][Down].PushBack(sprites[Walk][Down][6]);
-			animations[Walk][Down].speed = 0.2f;
+			animations[Walk][Down].speed = PL_WALK_FPS;
 		}
 
 		// Walking LEFT
@@ -200,7 +200,7 @@ bool j1Player::Start()
 			animations[Walk][Left].PushBack(sprites[Walk][Left][4]);
 			animations[Walk][Left].PushBack(sprites[Walk][Left][5]);
 			animations[Walk][Left].PushBack(sprites[Walk][Left][6]);
-			animations[Walk][Left].speed = 0.2f;
+			animations[Walk][Left].speed = PL_WALK_FPS;
 		}
 
 		// Walking RIGHT
@@ -212,7 +212,7 @@ bool j1Player::Start()
 			animations[Walk][Right].PushBack(sprites[Walk][Right][4]);
 			animations[Walk][Right].PushBack(sprites[Walk][Right][5]);
 			animations[Walk][Right].PushBack(sprites[Walk][Right][6]);
-			animations[Walk][Right].speed = 0.2f;
+			animations[Walk][Right].speed = PL_WALK_FPS;
 		}
 
 	}
@@ -306,7 +306,6 @@ bool j1Player::Start()
 
 	}
 
-	//Why?
 	animations[Walk][Down].PushBack(sprites[Idle][Down][0]);
 	animations[Walk][Left].PushBack(sprites[Idle][Left][0]);
 	animations[Walk][Right].PushBack(sprites[Idle][Right][0]);
@@ -314,10 +313,6 @@ bool j1Player::Start()
 	// animations speed settup
 	//This was bad because not all animations are played back in the same speed, every animation requires a speed setup
 	{
-		for (int n_dir = Direction::FirstDir; n_dir < Direction::LastDir; n_dir++) {
-			animations[Walk][n_dir].speed = 0.8f;
-		}
-
 		for (int n_dir = Direction::FirstDir; n_dir < Direction::LastDir; n_dir++) {
 			animations[Pickup][n_dir].speed = 0.2f;
 		}
@@ -347,7 +342,7 @@ bool j1Player::Update(float dt)
 
 	// Logic
 
-	//Movement
+		//Movement
 	{
 		if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
 			pos.y -= pl_speed.y * sqrt(2) / 2;
@@ -367,27 +362,40 @@ bool j1Player::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_W)) {
 			pos.y -= pl_speed.y;
-			curr_dir = Up;
-
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A)) {
 			pos.x -= pl_speed.x;
-			curr_dir = Left;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S)) {
 			pos.y += pl_speed.y;
-			curr_dir = Down;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D)) {
 			pos.x += pl_speed.x;
-			curr_dir = Right;
 		}
 	}
 
-	//Actions
+		// Direction/Atk
 	{
 
-		if (App->input->GetKey(SDL_SCANCODE_J)) {
+		if (App->input->GetKey(SDL_SCANCODE_UP)) {
+			curr_dir = Up;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
+			curr_dir = Down;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
+			curr_dir = Right;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
+			curr_dir = Left;
+		}
+
+	}
+
+		// Actions
+	{
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE)) {
 			//for now perform an action to see animation
 			//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
 
@@ -398,19 +406,19 @@ bool j1Player::Update(float dt)
 	// !_Logic
 
 	// Graphics
-	if (App->input->GetKey(SDL_SCANCODE_W))																		// Walk UP
+	if (App->input->GetKey(SDL_SCANCODE_W)) {																// Walk UP
 		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
-
-	else if (App->input->GetKey(SDL_SCANCODE_A))																		// Walk Left
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A)) {																	// Walk Left
 		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
-
-	else if (App->input->GetKey(SDL_SCANCODE_S))																		// Walk Down
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_S)) {																	// Walk Down
 		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
-
-	else if (App->input->GetKey(SDL_SCANCODE_D))																		// Walk Right
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_D)) {																	// Walk Right
 		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
-
-	else if (App->input->GetKey(SDL_SCANCODE_J)) {
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE)) {
 		//On frames 1 and 2&3 there is a displace required of pos.x in order to blit correctly the animation, numbers above
 		//How to do an if statement depending on frame of animation?
 		//This animation has to trigger completely, can't be because of key repeat, but of key press
