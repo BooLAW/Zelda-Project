@@ -362,15 +362,20 @@ bool j1Player::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_W)) {
 			pos.y -= pl_speed.y;
+			curr_dir = Up;
+
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A)) {
 			pos.x -= pl_speed.x;
+			curr_dir = Left;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S)) {
 			pos.y += pl_speed.y;
+			curr_dir = Down;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D)) {
 			pos.x += pl_speed.x;
+			curr_dir = Right;
 		}
 	}
 
