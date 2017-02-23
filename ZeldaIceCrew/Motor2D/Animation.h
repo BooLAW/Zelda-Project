@@ -43,6 +43,16 @@ public:
 	void Reset()
 	{
 		current_frame = 0;
+		loops = 0;
+	}
+
+	int GetLastFrame() {
+		return last_frame;
+	}
+
+	int GetFrame()
+	{
+		return current_frame;
 	}
 };
 

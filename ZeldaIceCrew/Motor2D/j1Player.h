@@ -12,7 +12,7 @@
 
 #define PL_OFFSET 12
 
-#define PL_WALK_FPS 0.2f
+#define PL_WALK_FPS 0.8f
 
 enum Direction {
 	FirstDir = 0,
@@ -36,6 +36,10 @@ public:
 		Unknown,
 		__LAST
 	};
+
+	float Correct_Pos(float posx, int frame, int curr_dir, int anim);
+	float corr_x[__LAST][LastDir][24];
+	float newpos;
 
 private:
 	Point<float> pos;
@@ -63,6 +67,9 @@ private:
 public:
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
+
+	bool action = false; // Actions: Throw, Pull, Slash,...
+	int action_blit;
 
 };
 

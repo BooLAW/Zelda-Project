@@ -21,6 +21,12 @@ bool j1Player::Start()
 {
 	bool ret = true;
 	LOG("Player Start");
+	
+	//set up correction array
+	for (int i = 0; i <= __LAST; i++)
+		for (int j = 0; j <= LastDir; j++)
+			for (int h = 0; h <= 23; h++)
+				corr_x[i][j][h] = 0;
 
 	// Setting Up all SDL_Rects
 	//When you create rects, always maintain the Highest Y value for the whole set of animations, and keep the same biggest Height, that way the animation is done perfect and only needs to move where it is blitted
@@ -341,105 +347,124 @@ bool j1Player::Update(float dt)
 	bool ret = true;
 
 	// Logic
-
+	if (action == false) {
 		//Movement
-	{
-		if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-			pos.y -= pl_speed.y * sqrt(2) / 2;
-			pos.x -= pl_speed.x * sqrt(2) / 2;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-			pos.y += pl_speed.y * sqrt(2) / 2;
-			pos.x -= pl_speed.x * sqrt(2) / 2;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
-			pos.y += pl_speed.y * sqrt(2) / 2;
-			pos.x += pl_speed.x * sqrt(2) / 2;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
-			pos.y -= pl_speed.y * sqrt(2) / 2;
-			pos.x += pl_speed.x * sqrt(2) / 2;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_W)) {
-			pos.y -= pl_speed.y;
-			curr_dir = Up;
+		{
+			if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
+				pos.y -= pl_speed.y * sqrt(2) / 2;
+				pos.x -= pl_speed.x * sqrt(2) / 2;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
+				pos.y += pl_speed.y * sqrt(2) / 2;
+				pos.x -= pl_speed.x * sqrt(2) / 2;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
+				pos.y += pl_speed.y * sqrt(2) / 2;
+				pos.x += pl_speed.x * sqrt(2) / 2;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
+				pos.y -= pl_speed.y * sqrt(2) / 2;
+				pos.x += pl_speed.x * sqrt(2) / 2;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_W)) {
+				pos.y -= pl_speed.y;
+				curr_dir = Up;
 
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_A)) {
-			pos.x -= pl_speed.x;
-			curr_dir = Left;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_S)) {
-			pos.y += pl_speed.y;
-			curr_dir = Down;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_D)) {
-			pos.x += pl_speed.x;
-			curr_dir = Right;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_A)) {
+				pos.x -= pl_speed.x;
+				curr_dir = Left;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_S)) {
+				pos.y += pl_speed.y;
+				curr_dir = Down;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_D)) {
+				pos.x += pl_speed.x;
+				curr_dir = Right;
+			}
+
+
+			// Direction/Atk
+			// This inherently bad, you are ignoring 4 more buttons (X Y L R)
+			{
+
+				if (App->input->GetKey(SDL_SCANCODE_UP)) {
+					curr_dir = Up;
+				}
+				else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
+					curr_dir = Down;
+				}
+				else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
+					curr_dir = Right;
+				}
+				else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
+					curr_dir = Left;
+				}
+
+			}
 		}
 	}
 
-		// Direction/Atk
+			// Actions
 	{
 
-		if (App->input->GetKey(SDL_SCANCODE_UP)) {
-			curr_dir = Up;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
-			curr_dir = Down;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
-			curr_dir = Right;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
-			curr_dir = Left;
-		}
-
-	}
-
-		// Actions
-	{
-
-		if (App->input->GetKey(SDL_SCANCODE_SPACE)) {
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			//for now perform an action to see animation
 			//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
-
+			action = true;
+			action_blit == Push;
 		}
 
 	}
 
-	// !_Logic
+			// !_Logic
 
-	// Graphics
-	if (App->input->GetKey(SDL_SCANCODE_W)) {																// Walk UP
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_A)) {																	// Walk Left
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_S)) {																	// Walk Down
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_D)) {																	// Walk Right
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE)) {
-		//On frames 1 and 2&3 there is a displace required of pos.x in order to blit correctly the animation, numbers above
-		//How to do an if statement depending on frame of animation?
-		//This animation has to trigger completely, can't be because of key repeat, but of key press
-		//animations depend on action taken
-		//App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Pickup][curr_dir].GetCurrentFrame());
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Push][curr_dir].GetCurrentFrame());
-		//App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Pull][curr_dir].GetCurrentFrame());
-	}
+			// Graphics
+		if (action == false){
+			//Movement
+			if (App->input->GetKey(SDL_SCANCODE_W)) {																// Walk UP
+				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_A)) {																	// Walk Left
+				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_S)) {																	// Walk Down
+				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_D)) {																	// Walk Right
+				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+			}
+			//!_Movement
 
 
-	else
-		App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Idle][curr_dir].GetCurrentFrame());			// Idle
+			else
+				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Idle][curr_dir].GetCurrentFrame());			// Idle
+			
+		}
+	
 
-																												//!_Graphics
+	//Actions
+		else if (action == true) {
+			App->render->Blit(Link_Movement, Correct_Pos(pos.x, animations[action_blit][curr_dir].GetFrame(), curr_dir, action_blit), pos.y, &animations[action_blit][curr_dir].GetCurrentFrame());
+			
+			if (animations[action_blit][curr_dir].Finished()) {
+				action = false;
+				animations[action_blit][curr_dir].Reset();
+			}
+		}
+	//!_Actions																													
+	
+	//!_Graphics
 
 	return ret;
+}
+
+float j1Player::Correct_Pos(float posx, int frame, int curr_dir, int anim)
+{
+
+	return posx - corr_x[anim][curr_dir][frame];
+
 }
 
 bool j1Player::PostUpdate(float dt)
