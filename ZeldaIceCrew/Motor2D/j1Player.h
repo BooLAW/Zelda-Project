@@ -8,11 +8,19 @@
 #include "j1App.h"
 #include "j1Map.h"
 
-#define MAX_SPRITE_FRAMES 8
+#define MAX_SPRITE_FRAMES 30
 
 #define PL_OFFSET 12
+#define PL_OFFSET_X 33
+#define PL_OFFSET_Y 35
+
 
 #define PL_WALK_FPS 0.8f
+
+#define link_width 99
+#define link_height 107
+#define link_y 110
+#define link_x 102
 
 enum Direction {
 	FirstDir = 0,
@@ -36,10 +44,7 @@ public:
 		Unknown,
 		__LAST
 	};
-
-	float Correct_Pos(float posx, int frame, int curr_dir, int anim);
-	float corr_x[__LAST][LastDir][24];
-	float newpos;
+	
 
 private:
 	Point<float> pos;

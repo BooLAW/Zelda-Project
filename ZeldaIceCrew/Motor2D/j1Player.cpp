@@ -21,131 +21,110 @@ bool j1Player::Start()
 {
 	bool ret = true;
 	LOG("Player Start");
+
+	// Setting Up all SDL_Rects x is every 102p, y is every 110p
 	
-	//set up correction array
-	for (int i = 0; i <= __LAST; i++)
-		for (int j = 0; j <= LastDir; j++)
-			for (int h = 0; h <= 23; h++)
-				corr_x[i][j][h] = 0;
-
-	// Setting Up all SDL_Rects
-	//When you create rects, always maintain the Highest Y value for the whole set of animations, and keep the same biggest Height, that way the animation is done perfect and only needs to move where it is blitted
-
+	//Idle
 	{
-		sprites[Idle][Up][0].x = 118;
-		sprites[Idle][Up][0].y = 62;
-		sprites[Idle][Up][0].w = 32;
-		sprites[Idle][Up][0].h = 44;
+		sprites[Idle][Up][0] = {link_x*3, link_y*2, link_width, link_height };
+		
 
-		sprites[Idle][Down][0].x = 118;
-		sprites[Idle][Down][0].y = 8;
-		sprites[Idle][Down][0].w = 32;
-		sprites[Idle][Down][0].h = 44;
+		sprites[Idle][Down][0] = {link_x*3, link_y, link_width, link_height };
 
-		sprites[Idle][Left][0].x = 118;
-		sprites[Idle][Left][0].y = 163;
-		sprites[Idle][Left][0].w = 32;
-		sprites[Idle][Left][0].h = 44;
+		sprites[Idle][Left][0] = {link_x*3, link_y*4, link_width, link_height };
 
-		sprites[Idle][Right][0].x = 118;
-		sprites[Idle][Right][0].y = 112;
-		sprites[Idle][Right][0].w = 32;
-		sprites[Idle][Right][0].h = 44;
+		sprites[Idle][Right][0] = { link_x*3, link_y*3, link_width, link_height };
+
 	}
 
 	//Walk
 	{
-		sprites[Walk][Up][0] = { 4, 58, 32, 48 };
-		sprites[Walk][Up][1] = { 42, 58, 32, 48 };
-		sprites[Walk][Up][2] = { 80 , 58, 32, 48 };
-		sprites[Walk][Up][3] = { 118, 58, 32, 48 };
-		sprites[Walk][Up][4] = { 156, 58, 32, 48 };
-		sprites[Walk][Up][5] = { 194, 58, 32, 48 };
-		sprites[Walk][Up][6] = { 232, 58, 32, 48 };
+		sprites[Walk][Up][0] = { 0, link_y*2, link_width, link_height};
+		sprites[Walk][Up][1] = { link_x, link_y*2, link_width, link_height };
+		sprites[Walk][Up][2] = { link_x*2 , link_y*2, link_width, link_height };
+		sprites[Walk][Up][3] = { link_x*3, link_y*2, link_width, link_height };
+		sprites[Walk][Up][4] = { link_x*4, link_y*2, link_width, link_height };
+		sprites[Walk][Up][5] = { link_x*5, link_y*2, link_width, link_height };
+		sprites[Walk][Up][6] = { link_x*6, link_y*2, link_width, link_height };
 
-		sprites[Walk][Down][0] = { 4  ,  4, 32, 48 };
-		sprites[Walk][Down][1] = { 42 , 4, 32, 48 };
-		sprites[Walk][Down][2] = { 80 , 4, 32, 48 };
-		sprites[Walk][Down][3] = { 118, 4, 32, 48 };
-		sprites[Walk][Down][4] = { 156, 4, 32, 48 };
-		sprites[Walk][Down][5] = { 194, 4, 32, 48 };
-		sprites[Walk][Down][6] = { 232, 4, 32, 48 };
+		sprites[Walk][Down][0] = { 0 ,  link_y, link_width, link_height };
+		sprites[Walk][Down][1] = { link_x, link_y, link_width, link_height };
+		sprites[Walk][Down][2] = { link_x*2, link_y, link_width, link_height };
+		sprites[Walk][Down][3] = { link_x*3, link_y, link_width, link_height };
+		sprites[Walk][Down][4] = { link_x*4, link_y, link_width, link_height };
+		sprites[Walk][Down][5] = { link_x*5, link_y, link_width, link_height };
+		sprites[Walk][Down][6] = { link_x*6, link_y, link_width, link_height };
 
-		sprites[Walk][Right][0] = { 4  ,110,32,48 };
-		sprites[Walk][Right][1] = { 42 ,110,32,48 };
-		sprites[Walk][Right][2] = { 80 ,110,32,48 };
-		sprites[Walk][Right][3] = { 118,110,32,48 };
-		sprites[Walk][Right][4] = { 156,110,32,46 };
-		sprites[Walk][Right][5] = { 194,110,32,48 };
-		sprites[Walk][Right][6] = { 232,110,32,48 };
+		sprites[Walk][Right][0] = { 0  ,link_y*3,link_width,link_height };
+		sprites[Walk][Right][1] = { link_x,link_y*3,link_width,link_height };
+		sprites[Walk][Right][2] = { link_x*2,link_y*3,link_width,link_height };
+		sprites[Walk][Right][3] = { link_x*3,link_y*3,link_width,link_height };
+		sprites[Walk][Right][4] = { link_x*4,link_y*3,link_width,link_height };
+		sprites[Walk][Right][5] = { link_x*5,link_y*3,link_width,link_height };
+		sprites[Walk][Right][6] = { link_x*6,link_y*3,link_width,link_height };
 
-		sprites[Walk][Left][0] = { 4  ,162,32,48 };
-		sprites[Walk][Left][1] = { 42 ,162,32,48 };
-		sprites[Walk][Left][2] = { 80 ,162,32,48 };
-		sprites[Walk][Left][3] = { 118,162,32,48 };
-		sprites[Walk][Left][4] = { 156,162,32,48 };
-		sprites[Walk][Left][5] = { 194,162,32,48 };
-		sprites[Walk][Left][6] = { 234,162,34,48 };
+		sprites[Walk][Left][0] = { 0  ,link_y*4,link_width,link_height };
+		sprites[Walk][Left][1] = { link_x,link_y*4,link_width,link_height };
+		sprites[Walk][Left][2] = { link_x*2,link_y*4,link_width,link_height };
+		sprites[Walk][Left][3] = { link_x*3,link_y*4,link_width,link_height };
+		sprites[Walk][Left][4] = { link_x*4,link_y*4,link_width,link_height };
+		sprites[Walk][Left][5] = { link_x*5,link_y*4,link_width,link_height };
+		sprites[Walk][Left][6] = { link_x*6,link_y*4,link_width,link_height };
 	}
 
 	//Walk with blue Shield
 
 	//Pick-up Object
-	//y coordinate for object depends on animation, all x2 because size
-	//Pick up left/right [1.y = +7 / 2.y = +6  / 3.y = +6 / 4.y = +6 / 5.y = +10 / 6.y = +10 ]
-	//Pick up top [1.y = +14 / 2.y = +15  / 3.y = +13 / 4.y = +13 / 5.y = +16 / 6.y = +10 ]
-	//Pick up down [1.y = +0 / 2.y = +0  / 3.y = +1 / 4.y = +10 / 5.y = +12 / 6.y = +10 ]
-	// x for top and down is link.x + link.w/2
-	// for right left [1.x = +10 / 2.x +16/ 3.x = +17 / 4.x = +17 / 5.x = +5 / 6.x = +2 ]
+	//y coordinate for object depends on animation
+
 	{
-		sprites[Pickup][Down][0] = { 834, 6, 32, 46 };
-		sprites[Pickup][Down][1] = { 880, 6, 60, 46 };	//x - 14
-		sprites[Pickup][Down][2] = { 946, 6, 68, 46 };	//x - 18
-		sprites[Pickup][Down][3] = { 1020, 6, 68, 46 };	//print with x - 18
-		sprites[Pickup][Down][4] = { 1098, 6, 32, 46 };
-		sprites[Pickup][Down][5] = { 1148, 6, 32, 46 };
+		sprites[Pickup][Down][0] = { link_x*12, link_y, link_width, link_height };
+		sprites[Pickup][Down][1] = { link_x*13, link_y, link_width, link_height };
+		sprites[Pickup][Down][2] = { link_x*14, link_y, link_width, link_height };
+		sprites[Pickup][Down][3] = { link_x*15, link_y, link_width, link_height };
+		sprites[Pickup][Down][4] = { link_x*16, link_y, link_width, link_height };
+		sprites[Pickup][Down][5] = { link_x*17, link_y, link_width, link_height };
 
-		sprites[Pickup][Up][0] = { 834, 60, 32, 46 };
-		sprites[Pickup][Up][1] = { 880, 60, 60, 46 };	//x - 12
-		sprites[Pickup][Up][2] = { 946, 60, 68, 46 };	//x - 16
-		sprites[Pickup][Up][3] = { 1020, 60, 68, 46 };	//x - 16
-		sprites[Pickup][Up][4] = { 1098, 60, 32, 46 };
-		sprites[Pickup][Up][5] = { 1148, 60, 32, 46 };
+		sprites[Pickup][Up][0] = { link_x*12, link_y*2, link_width, link_height };
+		sprites[Pickup][Up][1] = { link_x*13, link_y*2, link_width, link_height };
+		sprites[Pickup][Up][2] = { link_x*14, link_y*2, link_width, link_height };
+		sprites[Pickup][Up][3] = { link_x*15, link_y*2, link_width, link_height };	
+		sprites[Pickup][Up][4] = { link_x*16, link_y*2, link_width, link_height };
+		sprites[Pickup][Up][5] = { link_x*17, link_y*2, link_width, link_height };
 
-		//Remember Left animation is invers of right, so have to render taking into account new W and it starts on left
-		sprites[Pickup][Left][0] = { 1098, 164, 50, 46 };
-		sprites[Pickup][Left][1] = { 1020, 164, 62, 46 };	//x - 48
-		sprites[Pickup][Left][2] = { 946, 164, 70, 46 };	//x - 44 from right
-		sprites[Pickup][Left][3] = { 880, 164, 62, 46 };	//x - 44 from right
-		sprites[Pickup][Left][4] = { 819, 164, 50, 46 };
-		sprites[Pickup][Left][5] = { 1148, 164, 34, 46 };
+		sprites[Pickup][Left][0] = { link_x*16, link_y*4, link_width, link_height };
+		sprites[Pickup][Left][1] = { link_x*15, link_y*4, link_width, link_height };
+		sprites[Pickup][Left][2] = { link_x*14, link_y*4, link_width, link_height };
+		sprites[Pickup][Left][3] = { link_x*13, link_y*4, link_width, link_height };
+		sprites[Pickup][Left][4] = { link_x*12, link_y*4, link_width, link_height };
+		sprites[Pickup][Left][5] = { link_x*17, link_y*4, link_width, link_height };
 
-		sprites[Pickup][Right][0] = { 819, 114, 50, 46 };
-		sprites[Pickup][Right][1] = { 882, 114, 62, 46 };	//x - 14
-		sprites[Pickup][Right][2] = { 946, 114, 70, 46 };	//x - 18
-		sprites[Pickup][Right][3] = { 1020, 114, 62, 46 };	//x - 18
-		sprites[Pickup][Right][4] = { 1098, 114, 40, 46 };
-		sprites[Pickup][Right][5] = { 1148, 114, 34, 46 };
+		sprites[Pickup][Right][0] = { link_x*12, link_y*3, link_width, link_height };
+		sprites[Pickup][Right][1] = { link_x*13, link_y*3, link_width, link_height };	
+		sprites[Pickup][Right][2] = { link_x*14, link_y*3, link_width, link_height };	
+		sprites[Pickup][Right][3] = { link_x*15, link_y*3, link_width, link_height };	
+		sprites[Pickup][Right][4] = { link_x*16, link_y*3, link_width, link_height };
+		sprites[Pickup][Right][5] = { link_x*17, link_y*3, link_width, link_height };
 	}
 	//Push Object
 	{
-		sprites[Push][Down][2] = { 1276, 6, 32, 48 };
-		sprites[Push][Down][1] = { 1238, 6, 32, 48 };
-		sprites[Push][Down][0] = { 1198, 6, 32, 48 };
+		sprites[Push][Down][2] = { link_x*18, 6, link_width, link_height };
+		sprites[Push][Down][1] = { link_x*19, 6, link_width, link_height };
+		sprites[Push][Down][0] = { link_x*20, 6, link_width, link_height };
 
-		sprites[Push][Up][2] = { 1276, 60, 32, 48 };
-		sprites[Push][Up][1] = { 1238, 60, 32, 48 };
-		sprites[Push][Up][0] = { 1198, 60, 32, 48 };
+		sprites[Push][Up][2] = { link_x*18, link_y*2, link_width, link_height };
+		sprites[Push][Up][1] = { link_x*19, link_y*2, link_width, link_height };
+		sprites[Push][Up][0] = { link_x*20, link_y*2, link_width, link_height };
 
-		sprites[Push][Left][2] = { 1276, 162, 32, 50 };
-		sprites[Push][Left][1] = { 1238, 162, 32, 50 };
-		sprites[Push][Left][0] = { 1198, 162, 32, 50 };
-		sprites[Push][Left][3] = { 1318, 162, 32, 50 };
+		sprites[Push][Left][2] = { link_x*18, 162, link_width, link_height };
+		sprites[Push][Left][1] = { link_x*19, 162, link_width, link_height };
+		sprites[Push][Left][0] = { link_x*20, 162, link_width, link_height };
+		sprites[Push][Left][3] = { link_x*21, 162, link_width, link_height };
 
-		sprites[Push][Right][2] = { 1276, 110, 32, 50 };
-		sprites[Push][Right][1] = { 1238, 110, 32, 50 };
-		sprites[Push][Right][0] = { 1198, 110, 32, 50 };
-		sprites[Push][Right][3] = { 1318, 110, 32, 50 };
+		sprites[Push][Right][2] = { link_x*18, link_y*3, link_width, link_height };
+		sprites[Push][Right][1] = { link_x*19, link_y*3, link_width, link_height };
+		sprites[Push][Right][0] = { link_x*20, link_y*3, link_width, link_height };
+		sprites[Push][Right][3] = { link_x*21, link_y*3, link_width, link_height };
 
 
 	}
@@ -386,7 +365,7 @@ bool j1Player::Update(float dt)
 
 
 			// Direction/Atk
-			// This inherently bad, you are ignoring 4 more buttons (X Y L R)
+			// This inherently bad, you are ignoring 6 more buttons (X Y L R SELECT START)
 			{
 
 				if (App->input->GetKey(SDL_SCANCODE_UP)) {
@@ -413,7 +392,7 @@ bool j1Player::Update(float dt)
 			//for now perform an action to see animation
 			//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
 			action = true;
-			action_blit == Push;
+			action_blit = Pickup;
 		}
 
 	}
@@ -424,31 +403,31 @@ bool j1Player::Update(float dt)
 		if (action == false){
 			//Movement
 			if (App->input->GetKey(SDL_SCANCODE_W)) {																// Walk UP
-				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Walk][curr_dir].GetCurrentFrame());
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A)) {																	// Walk Left
-				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Walk][curr_dir].GetCurrentFrame());
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_S)) {																	// Walk Down
-				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Walk][curr_dir].GetCurrentFrame());
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_D)) {																	// Walk Right
-				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Walk][curr_dir].GetCurrentFrame());
+				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Walk][curr_dir].GetCurrentFrame());
 			}
 			//!_Movement
 
 
 			else
-				App->render->Blit(Link_Movement, pos.x, pos.y, &animations[Idle][curr_dir].GetCurrentFrame());			// Idle
+				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());			// Idle
 			
 		}
 	
 
 	//Actions
 		else if (action == true) {
-			App->render->Blit(Link_Movement, Correct_Pos(pos.x, animations[action_blit][curr_dir].GetFrame(), curr_dir, action_blit), pos.y, &animations[action_blit][curr_dir].GetCurrentFrame());
+			App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 			
-			if (animations[action_blit][curr_dir].Finished()) {
+			if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
 				action = false;
 				animations[action_blit][curr_dir].Reset();
 			}
@@ -458,13 +437,6 @@ bool j1Player::Update(float dt)
 	//!_Graphics
 
 	return ret;
-}
-
-float j1Player::Correct_Pos(float posx, int frame, int curr_dir, int anim)
-{
-
-	return posx - corr_x[anim][curr_dir][frame];
-
 }
 
 bool j1Player::PostUpdate(float dt)
