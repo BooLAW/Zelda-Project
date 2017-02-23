@@ -79,7 +79,7 @@ struct PathNode
 	int g;
 	int h;
 	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	const PathNode*   parent; // needed to reconstruct the path in the end
 };
 
 // ---------------------------------------------------------------------
@@ -88,14 +88,14 @@ struct PathNode
 struct PathList
 {
 	// Looks for a node in this list and returns it's list node or NULL
-	p2List_item<PathNode>* Find(const iPoint& point) const;
+	std::list<PathNode>::const_iterator Find(const iPoint& point) const;
 
 	// Returns the Pathnode with lowest score in this list or NULL if empty
-	p2List_item<PathNode>* GetNodeLowestScore() const;
+	std::list<PathNode>::const_iterator GetNodeLowestScore() const;
 
 	// -----------
 	// The list itself, note they are not pointers!
-	p2List<PathNode> list;
+	std::list<PathNode> list;
 };
 
 

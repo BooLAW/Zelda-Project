@@ -67,35 +67,35 @@ const std::deque<iPoint>* j1PathFinding::GetLastPath() const
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------
-p2List_item<PathNode>* PathList::Find(const iPoint& point) const
+std::list<PathNode>::const_iterator PathList::Find(const iPoint& point) const
 {
-	p2List_item<PathNode>* item = list.start;
-	while(item)
+	std::list<PathNode>::const_iterator item = list.begin();
+	while(item != list.end())
 	{
-		if(item->data.pos == point)
+		if((*item).pos == point)
 			return item;
-		item = item->next;
+		item++;
 	}
-	return NULL;
+	return item;
 }
 
 // PathList ------------------------------------------------------------------------
 // Returns the Pathnode with lowest score in this list or NULL if empty
 // ---------------------------------------------------------------------------------
-p2List_item<PathNode>* PathList::GetNodeLowestScore() const
+std::list<PathNode>::const_iterator PathList::GetNodeLowestScore() const
 {
-	p2List_item<PathNode>* ret = NULL;
+	std::list<PathNode>::const_iterator ret;
 	int min = 65535;
 
-	p2List_item<PathNode>* item = list.end;
-	while(item)
+	std::list<PathNode>::const_iterator item = list.end();
+	while(item != list.begin())
 	{
-		if(item->data.Score() < min)
+		if((*item).Score() < min)
 		{
-			min = item->data.Score();
+			min = (*item).Score();
 			ret = item;
 		}
-		item = item->prev;
+		item--;
 	}
 	return ret;
 }
@@ -118,29 +118,29 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 {
 	iPoint cell;
-	uint before = list_to_fill.list.count();
+	uint before = list_to_fill.list.size();
 
 	// north
 	cell.create(pos.x, pos.y + 1);
 	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.create(pos.x, pos.y - 1);
 	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.create(pos.x + 1, pos.y);
 	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.create(pos.x - 1, pos.y);
 	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
-	return list_to_fill.list.count();
+	return list_to_fill.list.size();
 }
 
 // PathNode -------------------------------------------------------------------------
@@ -169,8 +169,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	int ret = -1;
 
-	// Nice try :)
-
+	
 	return ret;
 }
 
