@@ -27,6 +27,10 @@ public:
 		__FIRST = 0,
 		Idle,
 		Walk,
+		Pickup,
+		Pull,
+		Walk_Shield,
+		Push,
 		Unknown,
 		__LAST
 	};
