@@ -448,3 +448,18 @@ bool j1Player::CleanUp()
 
 	return ret;
 }
+
+bool j1Player::SetPosTile(int x, int y)
+{
+	bool ret = true;
+
+	pos.x = App->map->MapToWorld(x, y).x;
+	pos.y = App->map->MapToWorld(x, y).y;
+
+	return ret;
+}
+
+Point<float> j1Player::GetPos()
+{
+	return pos;
+}
