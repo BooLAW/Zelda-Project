@@ -73,58 +73,94 @@ bool j1Player::Start()
 	}
 
 	//Walk with blue Shield
+	{
+	
+		sprites[Walk_Shield][Up][0] = { 0, link_y * 6, link_width, link_height };
+		sprites[Walk_Shield][Up][1] = { link_x, link_y * 6, link_width, link_height };
+		sprites[Walk_Shield][Up][2] = { link_x * 2 , link_y * 6, link_width, link_height };
+		sprites[Walk_Shield][Up][3] = { link_x * 3, link_y * 6, link_width, link_height };
+		sprites[Walk_Shield][Up][4] = { link_x * 4, link_y * 6, link_width, link_height };
+		sprites[Walk_Shield][Up][5] = { link_x * 5, link_y * 6, link_width, link_height };
+		sprites[Walk_Shield][Up][6] = { link_x * 6, link_y * 6, link_width, link_height };
 
+		sprites[Walk_Shield][Down][0] = { 0 ,  link_y*5, link_width, link_height };
+		sprites[Walk_Shield][Down][1] = { link_x, link_y*5, link_width, link_height };
+		sprites[Walk_Shield][Down][2] = { link_x * 2, link_y*5, link_width, link_height };
+		sprites[Walk_Shield][Down][3] = { link_x * 3, link_y*5, link_width, link_height };
+		sprites[Walk_Shield][Down][4] = { link_x * 4, link_y*5, link_width, link_height };
+		sprites[Walk_Shield][Down][5] = { link_x * 5, link_y*5, link_width, link_height };
+		sprites[Walk_Shield][Down][6] = { link_x * 6, link_y*5, link_width, link_height };
+
+		sprites[Walk_Shield][Right][0] = { 0  ,link_y * 7,link_width,link_height };
+		sprites[Walk_Shield][Right][1] = { link_x,link_y * 7,link_width,link_height };
+		sprites[Walk_Shield][Right][2] = { link_x * 2,link_y * 7,link_width,link_height };
+		sprites[Walk_Shield][Right][3] = { link_x * 3,link_y * 7,link_width,link_height };
+		sprites[Walk_Shield][Right][4] = { link_x * 4,link_y * 7,link_width,link_height };
+		sprites[Walk_Shield][Right][5] = { link_x * 5,link_y * 7,link_width,link_height };
+		sprites[Walk_Shield][Right][6] = { link_x * 6,link_y * 7,link_width,link_height };
+
+		sprites[Walk_Shield][Left][0] = { 0  ,link_y * 8,link_width,link_height };
+		sprites[Walk_Shield][Left][1] = { link_x,link_y * 8,link_width,link_height };
+		sprites[Walk_Shield][Left][2] = { link_x * 2,link_y * 8,link_width,link_height };
+		sprites[Walk_Shield][Left][3] = { link_x * 3,link_y * 8,link_width,link_height };
+		sprites[Walk_Shield][Left][4] = { link_x * 4,link_y * 8,link_width,link_height };
+		sprites[Walk_Shield][Left][5] = { link_x * 5,link_y * 8,link_width,link_height };
+		sprites[Walk_Shield][Left][6] = { link_x * 6,link_y * 8,link_width,link_height };
+	
+	}
 	//Pick-up Object
 	//y coordinate for object depends on animation
 
 	{
-		sprites[Pickup][Down][0] = { link_x*12, link_y, link_width, link_height };
-		sprites[Pickup][Down][1] = { link_x*13, link_y, link_width, link_height };
-		sprites[Pickup][Down][2] = { link_x*14, link_y, link_width, link_height };
-		sprites[Pickup][Down][3] = { link_x*15, link_y, link_width, link_height };
-		sprites[Pickup][Down][4] = { link_x*16, link_y, link_width, link_height };
-		sprites[Pickup][Down][5] = { link_x*17, link_y, link_width, link_height };
+		sprites[Pickup][Down][0] = { link_x*11, link_y, link_width, link_height };
+		sprites[Pickup][Down][1] = { link_x*12, link_y, link_width, link_height };
+		sprites[Pickup][Down][2] = { link_x*13, link_y, link_width, link_height };
+		sprites[Pickup][Down][3] = { link_x*14, link_y, link_width, link_height };
+		sprites[Pickup][Down][4] = { link_x*15, link_y, link_width, link_height };
+		sprites[Pickup][Down][5] = { link_x*16, link_y, link_width, link_height };
 
-		sprites[Pickup][Up][0] = { link_x*12, link_y*2, link_width, link_height };
-		sprites[Pickup][Up][1] = { link_x*13, link_y*2, link_width, link_height };
-		sprites[Pickup][Up][2] = { link_x*14, link_y*2, link_width, link_height };
-		sprites[Pickup][Up][3] = { link_x*15, link_y*2, link_width, link_height };	
-		sprites[Pickup][Up][4] = { link_x*16, link_y*2, link_width, link_height };
-		sprites[Pickup][Up][5] = { link_x*17, link_y*2, link_width, link_height };
+		sprites[Pickup][Up][0] = { link_x*11, link_y*2, link_width, link_height };
+		sprites[Pickup][Up][1] = { link_x*12, link_y*2, link_width, link_height };
+		sprites[Pickup][Up][2] = { link_x*13, link_y*2, link_width, link_height };
+		sprites[Pickup][Up][3] = { link_x*14, link_y*2, link_width, link_height };	
+		sprites[Pickup][Up][4] = { link_x*15, link_y*2, link_width, link_height };
+		sprites[Pickup][Up][5] = { link_x*16, link_y*2, link_width, link_height };
 
-		sprites[Pickup][Left][0] = { link_x*16, link_y*4, link_width, link_height };
-		sprites[Pickup][Left][1] = { link_x*15, link_y*4, link_width, link_height };
-		sprites[Pickup][Left][2] = { link_x*14, link_y*4, link_width, link_height };
-		sprites[Pickup][Left][3] = { link_x*13, link_y*4, link_width, link_height };
-		sprites[Pickup][Left][4] = { link_x*12, link_y*4, link_width, link_height };
-		sprites[Pickup][Left][5] = { link_x*17, link_y*4, link_width, link_height };
+		sprites[Pickup][Left][4] = { link_x * 11, link_y * 4, link_width, link_height };
+		sprites[Pickup][Left][3] = { link_x * 12, link_y * 4, link_width, link_height };
+		sprites[Pickup][Left][2] = { link_x * 13, link_y * 4, link_width, link_height };
+		sprites[Pickup][Left][1] = { link_x * 14, link_y * 4, link_width, link_height };
+		sprites[Pickup][Left][0] = { link_x*15, link_y*4, link_width, link_height };
+		sprites[Pickup][Left][5] = { link_x*16, link_y*4, link_width, link_height };
 
-		sprites[Pickup][Right][0] = { link_x*12, link_y*3, link_width, link_height };
-		sprites[Pickup][Right][1] = { link_x*13, link_y*3, link_width, link_height };	
-		sprites[Pickup][Right][2] = { link_x*14, link_y*3, link_width, link_height };	
-		sprites[Pickup][Right][3] = { link_x*15, link_y*3, link_width, link_height };	
-		sprites[Pickup][Right][4] = { link_x*16, link_y*3, link_width, link_height };
-		sprites[Pickup][Right][5] = { link_x*17, link_y*3, link_width, link_height };
+		sprites[Pickup][Right][0] = { link_x*11, link_y*3, link_width, link_height };
+		sprites[Pickup][Right][1] = { link_x*12, link_y*3, link_width, link_height };	
+		sprites[Pickup][Right][2] = { link_x*13, link_y*3, link_width, link_height };	
+		sprites[Pickup][Right][3] = { link_x*14, link_y*3, link_width, link_height };	
+		sprites[Pickup][Right][4] = { link_x*15, link_y*3, link_width, link_height };
+		sprites[Pickup][Right][5] = { link_x*16, link_y*3, link_width, link_height };
 	}
+
 	//Push Object
 	{
-		sprites[Push][Down][2] = { link_x*18, 6, link_width, link_height };
-		sprites[Push][Down][1] = { link_x*19, 6, link_width, link_height };
-		sprites[Push][Down][0] = { link_x*20, 6, link_width, link_height };
 
-		sprites[Push][Up][2] = { link_x*18, link_y*2, link_width, link_height };
-		sprites[Push][Up][1] = { link_x*19, link_y*2, link_width, link_height };
-		sprites[Push][Up][0] = { link_x*20, link_y*2, link_width, link_height };
+		sprites[Push][Down][0] = { link_x*19, link_y, link_width, link_height };
+		sprites[Push][Down][1] = { link_x * 18, link_y, link_width, link_height };
+		sprites[Push][Down][2] = { link_x * 17, link_y, link_width, link_height };
 
-		sprites[Push][Left][2] = { link_x*18, 162, link_width, link_height };
-		sprites[Push][Left][1] = { link_x*19, 162, link_width, link_height };
-		sprites[Push][Left][0] = { link_x*20, 162, link_width, link_height };
-		sprites[Push][Left][3] = { link_x*21, 162, link_width, link_height };
+		sprites[Push][Up][0] = { link_x * 19, link_y * 2, link_width, link_height };
+		sprites[Push][Up][1] = { link_x * 18, link_y * 2, link_width, link_height };
+		sprites[Push][Up][2] = { link_x*17, link_y*2, link_width, link_height };
+			
+		sprites[Push][Left][0] = { link_x * 19, link_y*4, link_width, link_height };
+		sprites[Push][Left][1] = { link_x*18, link_y*4, link_width, link_height };
+		sprites[Push][Left][2] = { link_x * 17, link_y*4, link_width, link_height };
+		sprites[Push][Left][3] = { link_x*20, link_y*4, link_width, link_height };
 
-		sprites[Push][Right][2] = { link_x*18, link_y*3, link_width, link_height };
-		sprites[Push][Right][1] = { link_x*19, link_y*3, link_width, link_height };
-		sprites[Push][Right][0] = { link_x*20, link_y*3, link_width, link_height };
-		sprites[Push][Right][3] = { link_x*21, link_y*3, link_width, link_height };
+		sprites[Push][Right][0] = { link_x * 19, link_y * 3, link_width, link_height };
+		sprites[Push][Right][1] = { link_x * 18, link_y * 3, link_width, link_height };
+		sprites[Push][Right][2] = { link_x*17, link_y*3, link_width, link_height };
+		sprites[Push][Right][3] = { link_x*20, link_y*3, link_width, link_height };
 
 
 	}
@@ -299,7 +335,7 @@ bool j1Player::Start()
 	//This was bad because not all animations are played back in the same speed, every animation requires a speed setup
 	{
 		for (int n_dir = Direction::FirstDir; n_dir < Direction::LastDir; n_dir++) {
-			animations[Pickup][n_dir].speed = 0.2f;
+			animations[Pickup][n_dir].speed = 0.18f;
 		}
 	}
 
@@ -425,12 +461,19 @@ bool j1Player::Update(float dt)
 
 	//Actions
 		else if (action == true) {
-			App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
-			
+
 			if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
 				action = false;
 				animations[action_blit][curr_dir].Reset();
+				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
 			}
+			else {
+				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+
+				if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+					animations[action_blit][curr_dir].Reset();
+			}
+
 		}
 	//!_Actions																													
 	
