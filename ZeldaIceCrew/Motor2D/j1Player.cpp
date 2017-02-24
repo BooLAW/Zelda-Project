@@ -383,38 +383,55 @@ bool j1Player::Update(float dt)
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_W)) {
 				pos.y -= pl_speed.y;
-				curr_dir = Up;
+				action_blit = Walk;
+				if (dir_override == false)
+					curr_dir = Up;
 
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A)) {
 				pos.x -= pl_speed.x;
-				curr_dir = Left;
+				action_blit = Walk;
+				if (dir_override == false)
+					curr_dir = Left;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_S)) {
 				pos.y += pl_speed.y;
-				curr_dir = Down;
+				action_blit = Walk;
+				if (dir_override == false)
+					curr_dir = Down;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_D)) {
 				pos.x += pl_speed.x;
-				curr_dir = Right;
+				action_blit = Walk;
+				if (dir_override == false)
+					curr_dir = Right;
 			}
-
+			else
+				action_blit = Idle;
 
 			// Direction/Atk
 			// This inherently bad, you are ignoring 6 more buttons (X Y L R SELECT START)
+			//It would work for gamepad, but not for keyboard
+			//Objects will go here too, then they might trigger action or nah
+
 			{
 
 				if (App->input->GetKey(SDL_SCANCODE_UP)) {
 					curr_dir = Up;
+					dir_override = true;
+					anim_override = true;
 				}
 				else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
 					curr_dir = Down;
+					dir_override = true;
 				}
 				else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
 					curr_dir = Right;
+					dir_override = true;
 				}
 				else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
 					curr_dir = Left;
+					dir_override = true;
 				}
 
 			}
@@ -433,29 +450,25 @@ bool j1Player::Update(float dt)
 
 	}
 
+			//Idle
+	{	
+		//if(App->input->GetKey(SDL_SCANCODE))action_blit = Idle;
+	}
+
 			// !_Logic
 
 			// Graphics
-		if (action == false){
+		if (action == false){/*
 			//Movement
-			if (App->input->GetKey(SDL_SCANCODE_W)) {																// Walk UP
-				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Walk][curr_dir].GetCurrentFrame());
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_A)) {																	// Walk Left
-				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Walk][curr_dir].GetCurrentFrame());
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_S)) {																	// Walk Down
-				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Walk][curr_dir].GetCurrentFrame());
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_D)) {																	// Walk Right
+			if (App->input->GetKey(SDL_SCANCODE_W) || App->input->GetKey(SDL_SCANCODE_A) || App->input->GetKey(SDL_SCANCODE_S) || App->input->GetKey(SDL_SCANCODE_D)) {																// Walk UP
 				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Walk][curr_dir].GetCurrentFrame());
 			}
 			//!_Movement
 
 
 			else
-				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());			// Idle
-			
+				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());			// Idle*/
+			App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 		}
 	
 
@@ -478,7 +491,7 @@ bool j1Player::Update(float dt)
 	//!_Actions																													
 	
 	//!_Graphics
-
+		dir_override = false; // only here till we have some attacks
 	return ret;
 }
 

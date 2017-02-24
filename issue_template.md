@@ -1,4 +1,11 @@
-**Type (Module/Team Branch):**    
+**Type:**    
+UI
+Code
+Mechanics
+Design
+Animation
+Tilesets
+Audio
 
 **Severity:**    
 Crash

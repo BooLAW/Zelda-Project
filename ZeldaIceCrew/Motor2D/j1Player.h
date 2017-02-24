@@ -75,6 +75,8 @@ public:
 
 	bool action = false; // Actions: Throw, Pull, Slash,...
 	int action_blit;
+	bool dir_override = false; // Overrides directions expressed if there is an action that keeps movement but changes view direction being done at the time
+	bool anim_override = false;
 
 };
 
