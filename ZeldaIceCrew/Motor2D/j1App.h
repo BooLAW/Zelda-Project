@@ -57,7 +57,7 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
+	void GetSaveGames(std::list<p2SString>& list_to_fill) const;
 
 private:
 
@@ -101,7 +101,7 @@ public:
 	EntityManager*      entitymanager = NULL;
 private:
 
-	p2List<j1Module*>	modules;
+	std::list<j1Module*>	modules;
 	int					argc;
 	char**				args;
 

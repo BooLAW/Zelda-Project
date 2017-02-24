@@ -2,7 +2,6 @@
 #define __j1MAP_H__
 
 #include "PugiXml/src/pugixml.hpp"
-#include "p2List.h"
 #include "Point.h"
 #include "j1Module.h"
 
