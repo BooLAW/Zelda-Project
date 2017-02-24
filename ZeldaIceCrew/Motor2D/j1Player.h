@@ -36,10 +36,11 @@ public:
 	enum Sprites {
 		__FIRST = 0,
 		Idle,
+		Idle_Shield,
 		Walk,
+		Walk_Shield,
 		Pickup,
 		Pull,
-		Walk_Shield,
 		Push,
 		Unknown,
 		__LAST
@@ -77,6 +78,7 @@ public:
 	int action_blit;
 	bool dir_override = false; // Overrides directions expressed if there is an action that keeps movement but changes view direction being done at the time
 	bool anim_override = false;
+	bool shield = true;
 
 };
 

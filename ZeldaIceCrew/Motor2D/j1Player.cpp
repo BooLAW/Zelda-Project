@@ -27,14 +27,18 @@ bool j1Player::Start()
 	//Idle
 	{
 		sprites[Idle][Up][0] = {link_x*3, link_y*2, link_width, link_height };
-		
-
 		sprites[Idle][Down][0] = {link_x*3, link_y, link_width, link_height };
-
 		sprites[Idle][Left][0] = {link_x*3, link_y*4, link_width, link_height };
-
 		sprites[Idle][Right][0] = { link_x*3, link_y*3, link_width, link_height };
 
+	}
+
+	//Idle Shield
+	{
+		sprites[Idle_Shield][Up][0] = { link_x * 3, link_y * 6, link_width, link_height };
+		sprites[Idle_Shield][Down][0] = { link_x * 3, link_y * 5, link_width, link_height };
+		sprites[Idle_Shield][Left][0] = { link_x * 3, link_y * 8, link_width, link_height };
+		sprites[Idle_Shield][Right][0] = { link_x * 3, link_y * 7, link_width, link_height };
 	}
 
 	//Walk
@@ -185,6 +189,14 @@ bool j1Player::Start()
 		animations[Idle][Right].PushBack(sprites[Idle][Right][0]);
 	}
 
+	//Idle Shield
+	{
+		animations[Idle_Shield][Up].PushBack(sprites[Idle_Shield][Up][0]);
+		animations[Idle_Shield][Down].PushBack(sprites[Idle_Shield][Down][0]);
+		animations[Idle_Shield][Left].PushBack(sprites[Idle_Shield][Left][0]);
+		animations[Idle_Shield][Right].PushBack(sprites[Idle_Shield][Right][0]);
+	}
+
 	// Walking
 	{
 
@@ -234,6 +246,54 @@ bool j1Player::Start()
 			animations[Walk][Right].PushBack(sprites[Walk][Right][5]);
 			animations[Walk][Right].PushBack(sprites[Walk][Right][6]);
 			animations[Walk][Right].speed = PL_WALK_FPS;
+		}
+
+		// Walking Shield UP 
+		{
+			animations[Walk_Shield][Up].PushBack(sprites[Walk_Shield][Up][0]);
+			animations[Walk_Shield][Up].PushBack(sprites[Walk_Shield][Up][1]);
+			animations[Walk_Shield][Up].PushBack(sprites[Walk_Shield][Up][2]);
+			animations[Walk_Shield][Up].PushBack(sprites[Walk_Shield][Up][3]);
+			animations[Walk_Shield][Up].PushBack(sprites[Walk_Shield][Up][4]);
+			animations[Walk_Shield][Up].PushBack(sprites[Walk_Shield][Up][5]);
+			animations[Walk_Shield][Up].PushBack(sprites[Walk_Shield][Up][6]);
+			animations[Walk_Shield][Up].speed = PL_WALK_FPS;
+		}
+
+		// Walking Shield DOWN
+		{
+			animations[Walk_Shield][Down].PushBack(sprites[Walk_Shield][Down][0]);
+			animations[Walk_Shield][Down].PushBack(sprites[Walk_Shield][Down][1]);
+			animations[Walk_Shield][Down].PushBack(sprites[Walk_Shield][Down][2]);
+			animations[Walk_Shield][Down].PushBack(sprites[Walk_Shield][Down][3]);
+			animations[Walk_Shield][Down].PushBack(sprites[Walk_Shield][Down][4]);
+			animations[Walk_Shield][Down].PushBack(sprites[Walk_Shield][Down][5]);
+			animations[Walk_Shield][Down].PushBack(sprites[Walk_Shield][Down][6]);
+			animations[Walk_Shield][Down].speed = PL_WALK_FPS;
+		}
+
+		// Walking Shield LEFT
+		{
+			animations[Walk_Shield][Left].PushBack(sprites[Walk_Shield][Left][0]);
+			animations[Walk_Shield][Left].PushBack(sprites[Walk_Shield][Left][1]);
+			animations[Walk_Shield][Left].PushBack(sprites[Walk_Shield][Left][2]);
+			animations[Walk_Shield][Left].PushBack(sprites[Walk_Shield][Left][3]);
+			animations[Walk_Shield][Left].PushBack(sprites[Walk_Shield][Left][4]);
+			animations[Walk_Shield][Left].PushBack(sprites[Walk_Shield][Left][5]);
+			animations[Walk_Shield][Left].PushBack(sprites[Walk_Shield][Left][6]);
+			animations[Walk_Shield][Left].speed = PL_WALK_FPS;
+		}
+
+		// Walking Shield RIGHT
+		{
+			animations[Walk_Shield][Right].PushBack(sprites[Walk_Shield][Right][0]);
+			animations[Walk_Shield][Right].PushBack(sprites[Walk_Shield][Right][1]);
+			animations[Walk_Shield][Right].PushBack(sprites[Walk_Shield][Right][2]);
+			animations[Walk_Shield][Right].PushBack(sprites[Walk_Shield][Right][3]);
+			animations[Walk_Shield][Right].PushBack(sprites[Walk_Shield][Right][4]);
+			animations[Walk_Shield][Right].PushBack(sprites[Walk_Shield][Right][5]);
+			animations[Walk_Shield][Right].PushBack(sprites[Walk_Shield][Right][6]);
+			animations[Walk_Shield][Right].speed = PL_WALK_FPS;
 		}
 
 	}
@@ -390,7 +450,7 @@ bool j1Player::Update(float dt)
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A)) {
 				pos.x -= pl_speed.x;
-				action_blit = Walk;
+				 action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Left;
 			}
@@ -406,9 +466,11 @@ bool j1Player::Update(float dt)
 				if (dir_override == false)
 					curr_dir = Right;
 			}
-			else
+			else {
 				action_blit = Idle;
+			}
 
+	
 			// Direction/Atk
 			// This inherently bad, you are ignoring 6 more buttons (X Y L R SELECT START)
 			//It would work for gamepad, but not for keyboard
@@ -458,17 +520,15 @@ bool j1Player::Update(float dt)
 			// !_Logic
 
 			// Graphics
-		if (action == false){/*
-			//Movement
-			if (App->input->GetKey(SDL_SCANCODE_W) || App->input->GetKey(SDL_SCANCODE_A) || App->input->GetKey(SDL_SCANCODE_S) || App->input->GetKey(SDL_SCANCODE_D)) {																// Walk UP
-				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Walk][curr_dir].GetCurrentFrame());
-			}
-			//!_Movement
+		if (action == false){
+			//Movement or any action that does not stop movement
 
+			if (shield == true && (action_blit == Idle || action_blit == Walk)) //add cases for actions that can be done with or without shield
+				action_blit++;
 
-			else
-				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());			// Idle*/
 			App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+			//!_Movement ""
+
 		}
 	
 
