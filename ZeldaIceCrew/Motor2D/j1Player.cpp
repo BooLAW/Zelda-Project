@@ -169,7 +169,56 @@ bool j1Player::Start()
 
 	}
 	//Pull Object
-	{}
+	{
+	
+
+	
+	}
+
+	//Sword Slash
+	{
+	
+		sprites[Slash][Down][0] = { link_x*7, link_y * 9, link_width, link_height };
+		sprites[Slash][Down][1] = { link_x * 8, link_y * 9, link_width, link_height };
+		sprites[Slash][Down][2] = { link_x * 9, link_y * 9, link_width, link_height };
+		sprites[Slash][Down][3] = { link_x * 10, link_y * 9, link_width, link_height };
+		sprites[Slash][Down][4] = { link_x * 11, link_y * 9, link_width, link_height };
+		sprites[Slash][Down][5] = { link_x * 12, link_y * 9, link_width, link_height };
+
+		sprites[Slash][Up][0] = { link_x * 7, link_y * 10, link_width, link_height };
+		sprites[Slash][Up][1] = { link_x * 8, link_y * 10, link_width, link_height };
+		sprites[Slash][Up][2] = { link_x * 9, link_y * 10, link_width, link_height };
+		sprites[Slash][Up][3] = { link_x * 10, link_y * 10, link_width, link_height };
+		sprites[Slash][Up][4] = { link_x * 11, link_y * 10, link_width, link_height };
+		sprites[Slash][Up][5] = { link_x * 12, link_y * 10, link_width, link_height };
+		sprites[Slash][Up][6] = { link_x * 13, link_y * 10, link_width, link_height };
+		sprites[Slash][Up][7] = { link_x * 14, link_y * 10, link_width, link_height };
+		sprites[Slash][Up][8] = { link_x * 15, link_y * 10, link_width, link_height };
+
+		sprites[Slash][Left][8] = { link_x * 7, link_y * 12, link_width, link_height };
+		sprites[Slash][Left][7] = { link_x * 8, link_y * 12, link_width, link_height };
+		sprites[Slash][Left][6] = { link_x * 9, link_y * 12, link_width, link_height };
+		sprites[Slash][Left][5] = { link_x * 10, link_y * 12, link_width, link_height };
+		sprites[Slash][Left][4] = { link_x * 11, link_y * 12, link_width, link_height };
+		sprites[Slash][Left][3] = { link_x * 12, link_y * 12, link_width, link_height };
+		sprites[Slash][Left][2] = { link_x * 13, link_y * 12, link_width, link_height };
+		sprites[Slash][Left][1] = { link_x * 14, link_y * 12, link_width, link_height };
+		sprites[Slash][Left][0] = { link_x * 15, link_y * 12, link_width, link_height };
+
+		sprites[Slash][Right][0] = { link_x * 7, link_y * 11, link_width, link_height };
+		sprites[Slash][Right][1] = { link_x * 8, link_y * 11, link_width, link_height };
+		sprites[Slash][Right][2] = { link_x * 9, link_y * 11, link_width, link_height };
+		sprites[Slash][Right][3] = { link_x * 10, link_y * 11, link_width, link_height };
+		sprites[Slash][Right][4] = { link_x * 11, link_y * 11, link_width, link_height };
+		sprites[Slash][Right][5] = { link_x * 12, link_y * 11, link_width, link_height };
+		sprites[Slash][Right][6] = { link_x * 13, link_y * 11, link_width, link_height };
+		sprites[Slash][Right][7] = { link_x * 14, link_y * 11, link_width, link_height };
+		sprites[Slash][Right][8] = { link_x * 15, link_y * 11, link_width, link_height };
+	
+	}
+	//Sword Charge Idle
+
+	//Sword Charge Walk
 
 	// !_SDL_Rects
 
@@ -387,6 +436,59 @@ bool j1Player::Start()
 
 	}
 
+	// Sword Slash
+	{
+		// Slash Down
+		{
+			animations[Slash][Down].PushBack(sprites[Slash][Down][0]);
+			animations[Slash][Down].PushBack(sprites[Slash][Down][1]);
+			animations[Slash][Down].PushBack(sprites[Slash][Down][2]);
+			animations[Slash][Down].PushBack(sprites[Slash][Down][3]);
+			animations[Slash][Down].PushBack(sprites[Slash][Down][4]);
+			animations[Slash][Down].PushBack(sprites[Slash][Down][5]);
+		}
+
+		// Slash Up
+		{
+			animations[Slash][Up].PushBack(sprites[Slash][Up][0]);
+			animations[Slash][Up].PushBack(sprites[Slash][Up][1]);
+			animations[Slash][Up].PushBack(sprites[Slash][Up][2]);
+			animations[Slash][Up].PushBack(sprites[Slash][Up][3]);
+			animations[Slash][Up].PushBack(sprites[Slash][Up][4]);
+			animations[Slash][Up].PushBack(sprites[Slash][Up][5]);
+			animations[Slash][Up].PushBack(sprites[Slash][Up][6]);
+			animations[Slash][Up].PushBack(sprites[Slash][Up][7]);
+			animations[Slash][Up].PushBack(sprites[Slash][Up][8]);
+		}
+
+		// Slash Left
+		{
+			animations[Slash][Left].PushBack(sprites[Slash][Left][0]);
+			animations[Slash][Left].PushBack(sprites[Slash][Left][1]);
+			animations[Slash][Left].PushBack(sprites[Slash][Left][2]);
+			animations[Slash][Left].PushBack(sprites[Slash][Left][3]);
+			animations[Slash][Left].PushBack(sprites[Slash][Left][4]);
+			animations[Slash][Left].PushBack(sprites[Slash][Left][5]);
+			animations[Slash][Left].PushBack(sprites[Slash][Left][6]);
+			animations[Slash][Left].PushBack(sprites[Slash][Left][7]);
+			animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
+		}
+
+		// Slash Right
+		{
+			animations[Slash][Right].PushBack(sprites[Slash][Right][0]);
+			animations[Slash][Right].PushBack(sprites[Slash][Right][1]);
+			animations[Slash][Right].PushBack(sprites[Slash][Right][2]);
+			animations[Slash][Right].PushBack(sprites[Slash][Right][3]);
+			animations[Slash][Right].PushBack(sprites[Slash][Right][4]);
+			animations[Slash][Right].PushBack(sprites[Slash][Right][5]);
+			animations[Slash][Right].PushBack(sprites[Slash][Right][6]);
+			animations[Slash][Right].PushBack(sprites[Slash][Right][7]);
+			animations[Slash][Right].PushBack(sprites[Slash][Right][8]);
+		}
+	
+	}
+
 	animations[Walk][Down].PushBack(sprites[Idle][Down][0]);
 	animations[Walk][Left].PushBack(sprites[Idle][Left][0]);
 	animations[Walk][Right].PushBack(sprites[Idle][Right][0]);
@@ -396,6 +498,9 @@ bool j1Player::Start()
 	{
 		for (int n_dir = Direction::FirstDir; n_dir < Direction::LastDir; n_dir++) {
 			animations[Pickup][n_dir].speed = 0.18f;
+		}
+		for (int n_dir = Direction::FirstDir; n_dir < Direction::LastDir; n_dir++) {
+			animations[Slash][n_dir].speed = 0.4f;
 		}
 	}
 
@@ -428,46 +533,59 @@ bool j1Player::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
 				pos.y -= pl_speed.y * sqrt(2) / 2;
 				pos.x -= pl_speed.x * sqrt(2) / 2;
+				if (anim_override == false)
+					action_blit = Walk;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
 				pos.y += pl_speed.y * sqrt(2) / 2;
 				pos.x -= pl_speed.x * sqrt(2) / 2;
+				if (anim_override == false)
+					action_blit = Walk;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
 				pos.y += pl_speed.y * sqrt(2) / 2;
 				pos.x += pl_speed.x * sqrt(2) / 2;
+				if (anim_override == false)
+					action_blit = Walk;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
 				pos.y -= pl_speed.y * sqrt(2) / 2;
 				pos.x += pl_speed.x * sqrt(2) / 2;
+				if (anim_override == false)
+					action_blit = Walk;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_W)) {
 				pos.y -= pl_speed.y;
-				action_blit = Walk;
+				if (anim_override == false)
+					action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Up;
 
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A)) {
 				pos.x -= pl_speed.x;
+				if (anim_override == false)
 				 action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Left;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_S)) {
 				pos.y += pl_speed.y;
-				action_blit = Walk;
+				if (anim_override == false)
+					action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Down;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_D)) {
 				pos.x += pl_speed.x;
-				action_blit = Walk;
+				if(anim_override == false)
+					action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Right;
 			}
 			else {
-				action_blit = Idle;
+				if (anim_override == false)
+					action_blit = Idle;
 			}
 
 	
@@ -477,25 +595,42 @@ bool j1Player::Update(float dt)
 			//Objects will go here too, then they might trigger action or nah
 
 			{
+				if (anim_override == false) {
 
-				if (App->input->GetKey(SDL_SCANCODE_UP)) {
-					curr_dir = Up;
-					dir_override = true;
-					anim_override = true;
-				}
-				else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
-					curr_dir = Down;
-					dir_override = true;
-				}
-				else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
-					curr_dir = Right;
-					dir_override = true;
-				}
-				else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
-					curr_dir = Left;
-					dir_override = true;
-				}
+					if (App->input->GetKey(SDL_SCANCODE_UP)) {
+						curr_dir = Up;
+						action_blit = Slash;
+						dir_override = true;
+						anim_override = true;
+						pl_speed.x = pl_speed.x / 3;
+						pl_speed.y = pl_speed.y / 3;
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
+						curr_dir = Down;
+						action_blit = Slash;
+						dir_override = true;
+						anim_override = true;
+						pl_speed.x = pl_speed.x / 3;
+						pl_speed.y = pl_speed.y / 3;
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
+						curr_dir = Right;
+						action_blit = Slash;
+						dir_override = true;
+						anim_override = true;
+						pl_speed.x = pl_speed.x / 3;
+						pl_speed.y = pl_speed.y / 3;
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
+						curr_dir = Left;
+						action_blit = Slash;
+						dir_override = true;
+						anim_override = true;
+						pl_speed.x = pl_speed.x / 3;
+						pl_speed.y = pl_speed.y / 3;
+					}
 
+				}
 			}
 		}
 	}
@@ -503,7 +638,7 @@ bool j1Player::Update(float dt)
 			// Actions
 	{
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
 			//for now perform an action to see animation
 			//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
 			action = true;
@@ -525,10 +660,18 @@ bool j1Player::Update(float dt)
 
 			if (shield == true && (action_blit == Idle || action_blit == Walk)) //add cases for actions that can be done with or without shield
 				action_blit++;
-
+			
 			App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 			//!_Movement ""
 
+			if (anim_override == true && animations[action_blit][curr_dir].Finished()) {
+				anim_override = false;
+				dir_override = false;
+				animations[action_blit][curr_dir].Reset();
+				action_blit == Idle;
+				pl_speed.x = pl_speed.x * 3;
+				pl_speed.y = pl_speed.y * 3;
+			}
 		}
 	
 
@@ -551,7 +694,6 @@ bool j1Player::Update(float dt)
 	//!_Actions																													
 	
 	//!_Graphics
-		dir_override = false; // only here till we have some attacks
 	return ret;
 }
 

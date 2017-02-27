@@ -37,11 +37,14 @@ public:
 		__FIRST = 0,
 		Idle,
 		Idle_Shield,
-		Walk,
+		Walk,		
 		Walk_Shield,
+		S_Charge_Idle,
+		S_Charge_Walk,
 		Pickup,
 		Pull,
 		Push,
+		Slash,
 		Unknown,
 		__LAST
 	};
