@@ -120,12 +120,6 @@ bool j1Scene::Update(float dt)
 
 		App->render->Blit(debug_tex, p.x, p.y);
 
-		const std::deque<iPoint>* path = App->pathfinding->GetLastPath();
-
-		for (uint i = 0; i < path->size(); ++i)
-		{
-			iPoint pos = App->map->MapToWorld(path->at(i).x, path->at(i).y);
-		}
 	}
 
 	return true;

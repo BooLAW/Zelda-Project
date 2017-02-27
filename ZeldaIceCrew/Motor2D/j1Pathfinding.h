@@ -3,7 +3,8 @@
 
 #include "j1Module.h"
 #include "Point.h"
-#include <deque>
+#include <list>
+#include <vector>
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
@@ -33,7 +34,7 @@ public:
 	int CreatePath(const iPoint& origin, const iPoint& destination);
 
 	// To request all tiles involved in the last generated path
-	const std::deque<iPoint>* GetLastPath() const;
+	const std::list<iPoint>* GetLastPath() const;
 
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const iPoint& pos) const;
@@ -52,7 +53,7 @@ private:
 	// all map walkability values [0..255]
 	uchar* map;
 	// we store the created path here
-	std::deque<iPoint> last_path;
+	std::list<iPoint> last_path;
 };
 
 // forward declaration
@@ -79,7 +80,7 @@ struct PathNode
 	int g;
 	int h;
 	iPoint pos;
-	const PathNode*   parent; // needed to reconstruct the path in the end
+	const PathNode* parent; // needed to reconstruct the path in the end
 };
 
 // ---------------------------------------------------------------------
@@ -88,14 +89,14 @@ struct PathNode
 struct PathList
 {
 	// Looks for a node in this list and returns it's list node or NULL
-	std::list<PathNode>::const_iterator Find(const iPoint& point) const;
+	PathNode* Find(const iPoint& point);
 
 	// Returns the Pathnode with lowest score in this list or NULL if empty
-	std::list<PathNode>::const_iterator GetNodeLowestScore() const;
+	PathNode* GetNodeLowestScore();
 
 	// -----------
-	// The list itself, note they are not pointers!
-	std::list<PathNode> list;
+	// The list itself
+	std::list<PathNode*> list;
 };
 
 
