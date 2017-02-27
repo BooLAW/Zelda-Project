@@ -509,8 +509,8 @@ bool j1Player::Start()
 
 	// Variable Settup
 
-	pos.x = 0;
-	pos.y = 0;
+	pos.x = 300;
+	pos.y = 350;
 
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
@@ -668,7 +668,7 @@ bool j1Player::Update(float dt)
 				anim_override = false;
 				dir_override = false;
 				animations[action_blit][curr_dir].Reset();
-				action_blit == Idle;
+				action_blit = Idle;
 				pl_speed.x = pl_speed.x * 3;
 				pl_speed.y = pl_speed.y * 3;
 			}

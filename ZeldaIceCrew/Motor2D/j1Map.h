@@ -57,10 +57,26 @@ struct MapLayer
 };
 
 // ----------------------------------------------------
+enum TileTypes
+{
+	TILETYPE_UNKNOWN = 0,
+	TILETYPE_WALKABLE,
+	TILETYPE_NONWALKABLE,
+	TILETYPE_WATER,
+	//add here new tile types
+};
+struct TileData
+{
+	Properties properties;
+	int id;
+	TileTypes type;
+
+};
 struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
-
+	TileData* GetTileType(int tile_id)const;
+	
 	p2SString			name;
 	int					firstgid;
 	int					margin;
@@ -74,6 +90,7 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;
+
 };
 
 enum MapTypes
@@ -93,7 +110,7 @@ struct MapData
 	SDL_Color			background_color;
 	MapTypes			type;
 	std::list<TileSet*>	tilesets;
-	std::list<MapLayer*>	layers;
+	std::list<MapLayer*>layers;
 };
 
 // ----------------------------------------------------

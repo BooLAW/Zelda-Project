@@ -62,8 +62,6 @@ void j1Map::Draw()
 
 int Properties::Get(const char* value, int default_value) const
 {
-	std::list<Property*>::const_iterator item = list.begin();
-
 	for (std::list<Property*>::const_iterator item = list.begin(); item != list.end(); ++item)
 	{
 		if ((*item)->name == value)
@@ -152,6 +150,10 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	return rect;
 }
 
+//TileData* TileSet::GetTileType(int tile_id)const
+//{
+//	
+//}
 // Called before quitting
 bool j1Map::CleanUp()
 {
@@ -456,17 +458,18 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
+
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 {
 	bool ret = false;
 	std::list<MapLayer*>::const_iterator item;
-
+	//iterate each layer
 	for(item = data.layers.begin(); item != data.layers.end(); item++)
 	{
 		MapLayer* layer = (*item);
-
-		if(layer->properties.Get("Navigation", 0) == 0)
-			continue;
+		
+	/*	if(layer->properties.Get("Navigation", 0) == 0)
+			continue;*/
 
 		uchar* map = new uchar[layer->width*layer->height];
 		memset(map, 1, layer->width*layer->height);
@@ -478,15 +481,17 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 				int i = (y*layer->width) + x;
 
 				int tile_id = layer->Get(x, y);
+				//ensure that the tile_id are correct(>0)
 				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
 				
 				if(tileset != NULL)
 				{
 					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
-					/*TileType* ts = tileset->GetTileType(tile_id);
+					
+				/*	TileData* ts = tileset->GetTileType(tile_id);
 					if(ts != NULL)
 					{
-						map[i] = ts->properties.Get("walkable", 1);
+						map[i] = ts->properties.Get("walkable", 0);
 					}*/
 				}
 			}
