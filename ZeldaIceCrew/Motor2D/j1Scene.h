@@ -2,16 +2,12 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "j1Gui.h"
+#include "Scene.h"
 
 struct SDL_Texture;
-//UI forward declarations
-class Image;
-class Label;
-class Text_Box;
-class Button;
-class Window;
-class Selector;
-class Windowed_Image;
+class MenuScene; 
+class MainScene;
 
 class j1Scene : public j1Module
 {
@@ -40,12 +36,31 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Change scene
+	void ChangeScene(Scene* new_scene);
+	Scene* GetCurrentScene();
+
+	// Blit choosing the layer
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB);
+
+	void OnCommand(std::list<std::string>& tokens);
+
+	void OnCVar(std::list<std::string>& tokens);
+
+	void SaveCVar(std::string& cvar_name, pugi::xml_node& node) const;
+
+public:
+	// Scenes
+	MenuScene*			 menu_scene = nullptr; 
+	MainScene*           main_scene = nullptr;
+
 private:
+	// Scenes list
+	list<Scene*>         scenes;
 
-	SDL_Texture* debug_tex;
+	// Current scene
+	Scene*               current_scene = nullptr;
 
-	Window* window;
-	Label* win_title;
 };
 
 #endif // __j1SCENE_H__

@@ -6,13 +6,12 @@
 
 #include "SDL/include/SDL.h"
 #include "SDL_mixer\include\SDL_mixer.h"
-
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
 j1Audio::j1Audio() : j1Module()
 {
 	music = NULL;
-	name.create("audio");
+	name = "audio";
 }
 
 // Destructor
@@ -68,9 +67,8 @@ bool j1Audio::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	std::list<Mix_Chunk*>::iterator item;
-	for(item = fx.begin(); item != fx.end(); item++)
-		Mix_FreeChunk((*item));
+	for(list<Mix_Chunk*>::iterator current = fx.begin(); current != fx.end(); current++)
+		Mix_FreeChunk(*current);
 
 	fx.clear();
 
@@ -169,9 +167,9 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	if(id > 0 && id <= fx.size())
 	{
 		int i = 0;
-		for (std::list<Mix_Chunk*>::iterator current = fx.begin(); current != fx.end(); current++)
+		for (list<Mix_Chunk*>::iterator current = fx.begin(); current != fx.end(); current++)
 		{
-			if (i == id - 1)
+			if (i == id-1)
 			{
 				Mix_PlayChannel(-1, *current, repeat);
 				break;

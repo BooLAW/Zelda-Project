@@ -1,13 +1,17 @@
 #ifndef __j1APP_H__
 #define __j1APP_H__
 
-#include "p2List.h"
-#include "p2Log.h"
 #include "j1Module.h"
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
-//
+#include "CollisionFilters.h"
+
+class UI_Window;
+class UI_Text;
+class UI_ColoredRect;
+class UI_Button;
+
 // Modules
 class j1Window;
 class j1Input;
@@ -20,8 +24,10 @@ class j1Map;
 class j1PathFinding;
 class j1Fonts;
 class j1Gui;
-class j1Player;
-class EntityManager;
+class j1Console;
+class j1Physics;
+class j1Entity;
+class j1Viewports;
 
 class j1App
 {
@@ -57,7 +63,16 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(std::list<p2SString>& list_to_fill) const;
+	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
+
+	// Load an XML file
+	void LoadXML(const char* path, pugi::xml_document& doc);
+	void UnloadXML(pugi::xml_document& doc);
+
+	void CapFps(float fps);
+	void EndSDL();
+
+	void OpenWebPage(char* url);
 
 private:
 
@@ -83,6 +98,9 @@ private:
 	bool LoadGameNow();
 	bool SavegameNow() const;
 
+	// Frame rate calculations uptade
+	void FrameRateCalculations();
+
 public:
 
 	// Modules
@@ -97,22 +115,35 @@ public:
 	j1PathFinding*		pathfinding = NULL;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
-	j1Player*			player = NULL;
-	EntityManager*      entitymanager = NULL;
+	j1Console*			console = NULL;
+	j1Physics*			physics = NULL;
+	j1Entity*			entity = NULL;
+	j1Viewports*        view = NULL;
+
+	// Console logs
+	list<string>        logs;
+
+	bool			    debug_mode = false;
+
+	collision_filters* cf;
+
 private:
 
-	std::list<j1Module*>	modules;
+	bool                end_program = false;
+
+	list<j1Module*>  	modules;
 	int					argc;
 	char**				args;
 
-	p2SString			title;
-	p2SString			organization;
+	string		    	title;
+	string		     	organization;
 
 	mutable bool		want_to_save = false;
 	bool				want_to_load = false;
 	p2SString			load_game;
 	mutable p2SString	save_game;
 
+	int					capped_ms = -1;
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
 	j1Timer				startup_time;
@@ -121,13 +152,16 @@ private:
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
 	float				dt = 0.0f;
-	int					capped_ms = -1;
 
-public:
-	bool				debug = false;
-
+	// Debug ui
+	UI_Window*			debug_window = nullptr;
+	UI_ColoredRect*		debug_colored_rect = nullptr;
+	UI_Text*			debug_text = nullptr;
+	UI_Button*			bug_report_button = nullptr;
+	UI_ColoredRect*		bug_report_button_color = nullptr;
+	UI_Text*			bug_report_text = nullptr;
 };
 
-extern j1App* App; // No student is asking me about that ... odd :-S
+extern j1App* App;
 
 #endif

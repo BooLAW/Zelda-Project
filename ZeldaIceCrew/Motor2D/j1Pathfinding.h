@@ -2,7 +2,8 @@
 #define __j1PATHFINDING_H__
 
 #include "j1Module.h"
-#include "Point.h"
+#include "p2Point.h"
+#include "p2DynArray.h"
 #include <list>
 #include <vector>
 
