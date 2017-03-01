@@ -35,7 +35,7 @@ bool MainScene::Start()
 
 	LOG("Start MainScene");
 
-	Player* p1 = App->entity->player_manager->AddPlayer(entity_name::link, 1, iPoint(300,20), 1);
+	Player* p1 = App->entity->player_manager->AddPlayer(entity_name::link, 1, iPoint(400,600), 1);
 	//Player* p2 = App->entity->player_manager->AddPlayer(entity_name::link, 2, iPoint(300, 20), 2);
 
 

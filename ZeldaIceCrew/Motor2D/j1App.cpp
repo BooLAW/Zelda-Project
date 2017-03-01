@@ -483,7 +483,7 @@ void j1App::FrameRateCalculations()
 		bug_report_button_color->SetColor({ 50, 50, 50, 255 });
 	if (bug_report_button->MouseClickOutLeft())
 	{
-		OpenWebPage("https://github.com/rogerta97/Project2_Zelda/issues");
+		OpenWebPage("https://github.com/BooLAW/Zelda-Project/issues");
 		bug_report_button_color->SetColor({ 30, 30, 30, 255 });
 	}
 

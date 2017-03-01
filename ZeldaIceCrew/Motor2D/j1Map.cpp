@@ -72,7 +72,6 @@ void j1Map::Draw()
 						iPoint pos = MapToWorld(x, y);
 
 						App->view->LayerBlit(1, tileset->texture, pos, r, i); //fps drop a lot !!!!!
-						//App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 					}
 				}
 				count++;
