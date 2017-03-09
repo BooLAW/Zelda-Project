@@ -46,8 +46,8 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-
-	debug_tex = App->tex->Load("maps/path.png");
+	bush1_rect = { 20,20,10,10 };
+	debug_tex = App->tex->Load("textures/mario_test.jpg");
 
 	App->player->SetPosTile(2, 2);
 
@@ -55,7 +55,7 @@ bool j1Scene::Start()
 
 	App->render->ScaleCamBoundaries(300);
 
-	column1 = new element(debug_tex,0,0,20,20,200,200);//test
+	bush1 = App->entitymanager->CreateEntity(bush, debug_tex, &bush1_rect, {200,200});//test
 	
 	return true;
 }
@@ -103,7 +103,7 @@ bool j1Scene::Update(float dt)
 		App->debug = !App->debug;
 
 	App->map->Draw();
-	App->render->Blit(column1->texture, column1->position.x, column1->position.y);
+	App->render->Blit(bush1->tex, bush1->pos.x, bush1->pos.y,bush1->rect);
 	// Debug pathfinding ------------------------------
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -122,9 +122,7 @@ bool j1Scene::Update(float dt)
 		p = App->map->MapToWorld(p.x, p.y);
 		App->win->SetTitle(title.GetString());
 		App->render->Blit(debug_tex, p.x, p.y);
-
 	}
-
 	return true;
 }
 

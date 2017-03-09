@@ -15,6 +15,7 @@ EntityManager::~EntityManager() {
 }
 Entity::Entity() {
 }
+
 Entity::Entity(ENTITYTYPE _t, SDL_Texture * _tex, SDL_Rect * _rect, iPoint _pos)
 {
 	type = _t;
@@ -27,14 +28,7 @@ Entity::Entity(ENTITYTYPE _t, SDL_Texture * _tex, SDL_Rect * _rect, iPoint _pos)
 
 Entity:: ~Entity() {
 }
-bool EntityManager::Update(float dt) {
-
-	for (int i = 0; i < entities.size(); i++) {
-		entities[i]->Update(dt);
-	}
-	return true;
-}
-Entity* EntityManager::CreateEntity(ENTITYTYPE type) {
+Entity* EntityManager::CreateEntity(ENTITYTYPE type, SDL_Texture * _tex, SDL_Rect * _rect, iPoint _pos) {
 
 	Entity* ret = nullptr;
 
@@ -43,12 +37,12 @@ Entity* EntityManager::CreateEntity(ENTITYTYPE type) {
 		ret = new Item();
 		break;
 	case bush:
-		ret = new Bush();
+		ret = new Bush(type,_tex,_rect,_pos);
 		break;
 	default:
 		break;
 	}
-	
+
 	if (ret != nullptr) {
 		entities.push_back(ret);
 	}
@@ -58,6 +52,14 @@ Entity* EntityManager::CreateEntity(ENTITYTYPE type) {
 
 	return ret;
 }
+bool EntityManager::Update(float dt) {
+
+	for (int i = 0; i < entities.size(); i++) {
+		entities[i]->Update(dt);
+	}
+	return true;
+}
+
 
 void EntityManager::DestroyEntities()
 {
@@ -66,6 +68,10 @@ void EntityManager::DestroyEntities()
 			delete entities[i];
 		}
 	}
+} 
+void EntityManager::OnCollision(Collider* c1, Collider* c2)
+{
+
 }
 
 void Entity::Update(float dt) {
@@ -83,13 +89,24 @@ bool Entity::Draw()
 
 } // will return NULL if there's an error
 //ITEM
-void Item::Update(float dt) {
+void Item::Update(float dt) 
+{
 	
 }
 //!ITEM
 
 //BUSH
-void Bush::Update(float dt) {
-
+Bush::Bush(ENTITYTYPE _t, SDL_Texture* _tex, SDL_Rect* _rect, iPoint _pos)
+{
+	type = _t;
+	tex = _tex;
+	rect = _rect;
+	pos.x = _pos.x;
+	pos.y = _pos.y;
+	collider = App->collisions->AddCollider(BUSH_RECT, COLLIDER_BUSH,App->entitymanager);
+}
+void Bush::Update(float dt) 
+{
+	
 }
 //!BUSH

@@ -39,6 +39,9 @@
 #define NULLCOLOR {0,0,0,0}
 #define NULLPOINT {0,0}
 #define COLLIDER_MAX 200
+
+#define BUSH_RECT {200,200,40,40}
+#define LINK_RECT {0,0,32,48}
 typedef unsigned int uint;
 typedef unsigned __int32 uint32;
 typedef unsigned __int64 uint64;

@@ -5,6 +5,7 @@
 #include <deque>
 #include "j1Timer.h"
 #include "Point.h"
+#include "j1Collision.h"
 
 class j1Player;
 struct SDL_Texture;
@@ -16,8 +17,9 @@ public:
 	EntityManager();
 	~EntityManager();
 	bool Update(float dt);
-	Entity* CreateEntity(ENTITYTYPE type);
+	Entity* CreateEntity(ENTITYTYPE type, SDL_Texture* _tex, SDL_Rect* _rect, iPoint _pos);
 	void DestroyEntities();
+	void OnCollision(Collider* c1, Collider* c2);
 private:
 	std::deque<Entity*> entities;
 	j1Timer time;
@@ -52,9 +54,14 @@ public:
 
 class Bush : public  Entity {
 public:
+	Bush();
+	Bush(ENTITYTYPE _t, SDL_Texture* _tex, SDL_Rect* _rect, iPoint _pos);
 	void Update(float dt);
+	void OnCollision(Collider* c1, Collider* c2);
 public:
 	bool slashed = false;
+	bool is_coll;
+	Collider* collider = nullptr;
 
 };
 
