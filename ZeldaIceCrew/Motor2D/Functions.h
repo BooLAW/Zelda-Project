@@ -10,7 +10,7 @@
 // -----------------------------------------
 // -----------------------------------------
 
-		  // USEFULL FUNCTIONS //
+// USEFULL FUNCTIONS //
 
 // -----------------------------------------
 // -----------------------------------------
@@ -31,6 +31,6 @@ void Tokenize(std::string string, const char separator, std::list<std::string>& 
 void ToLowerCase(std::string str);
 
 // Loads an xml and and load it's animations
-void LoadAnimationFromXML(list<SDL_Rect>& rects, const char* file, const char* animation_name);
+void LoadAnimationFromXML(std::list<SDL_Rect>& rects, const char* file, const char* animation_name);
 
 #endif //__FUNCTIONS_H__

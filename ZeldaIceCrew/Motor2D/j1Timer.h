@@ -7,9 +7,8 @@ class j1Timer
 {
 public:
 
-	// Constructors
+	// Constructor
 	j1Timer();
-	~j1Timer();
 
 	void Start();
 	uint32 Read() const;

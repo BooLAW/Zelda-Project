@@ -4,10 +4,9 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Physics.h"
-#include "p2Point.h"
+#include "Point.h"
 #include "math.h"
 #include "Functions.h"
-#include "j1Viewports.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -51,9 +50,9 @@ bool j1Physics::PreUpdate()
 {
 	world->Step(App->GetDT(), 6, 2);
 
-	for(b2Contact* c = world->GetContactList(); c; c = c->GetNext())
+	for (b2Contact* c = world->GetContactList(); c; c = c->GetNext())
 	{
-		if(c->GetFixtureA()->IsSensor() && c->IsTouching())
+		if (c->GetFixtureA()->IsSensor() && c->IsTouching())
 		{
 			PhysBody* pb1 = (PhysBody*)c->GetFixtureA()->GetBody()->GetUserData();
 			PhysBody* pb2 = (PhysBody*)c->GetFixtureB()->GetBody()->GetUserData();
@@ -61,7 +60,7 @@ bool j1Physics::PreUpdate()
 			b2Fixture* fA = c->GetFixtureA();
 			b2Fixture* fB = c->GetFixtureB();
 
-			if(pb1 && pb2 && pb1->listener)
+			if (pb1 && pb2 && pb1->listener)
 				pb1->listener->OnCollision(pb1, pb2, fA, fB);
 		}
 	}
@@ -459,7 +458,7 @@ PhysBody* j1Physics::CreateChain(int x, int y, int* points, int size, float dens
 	b2ChainShape shape;
 	b2Vec2* p = new b2Vec2[size / 2];
 
-	for(uint i = 0; i < size / 2; ++i)
+	for (uint i = 0; i < size / 2; ++i)
 	{
 		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
 		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
@@ -604,7 +603,7 @@ b2RevoluteJoint* j1Physics::CreateAtachJoint(PhysBody * body1, PhysBody * body2,
 
 	rev_joint.lowerAngle = DEGTORAD*angle_between;
 	rev_joint.upperAngle = DEGTORAD*angle_between;
-	
+
 
 	b2RevoluteJoint* rev = (b2RevoluteJoint*)world->CreateJoint(&rev_joint);
 
@@ -614,7 +613,7 @@ b2RevoluteJoint* j1Physics::CreateAtachJoint(PhysBody * body1, PhysBody * body2,
 
 void j1Physics::CleanBodies()
 {
-	while (world->GetBodyList() != nullptr) 
+	while (world->GetBodyList() != nullptr)
 	{
 		world->DestroyBody(world->GetBodyList());
 	}
@@ -631,7 +630,7 @@ void j1Physics::DeleteFixture(b2Fixture* fixture, PhysBody * object)
 }
 
 b2RevoluteJoint* j1Physics::CreateRevoluteJoint(PhysBody * anchor, PhysBody * body, iPoint anchor_offset, iPoint body_offset, bool enable_limit,
-													float max_angle, float min_angle, bool enable_motor, int motor_speed, int max_torque)
+	float max_angle, float min_angle, bool enable_motor, int motor_speed, int max_torque)
 {
 	b2RevoluteJointDef rev_joint;
 	rev_joint.bodyA = anchor->body;
@@ -646,12 +645,12 @@ b2RevoluteJoint* j1Physics::CreateRevoluteJoint(PhysBody * anchor, PhysBody * bo
 	b2Vec2 body_center_diff(PIXEL_TO_METERS(body_offset.x), PIXEL_TO_METERS(body_offset.y));
 	rev_joint.localAnchorB = body_center_diff;
 
-	if (enable_limit) 
+	if (enable_limit)
 	{
 		rev_joint.lowerAngle = DEGTORAD*min_angle;
 		rev_joint.upperAngle = DEGTORAD*max_angle;
 	}
-	if (enable_motor) 
+	if (enable_motor)
 	{
 		rev_joint.motorSpeed = motor_speed;
 		rev_joint.maxMotorTorque = max_torque;
@@ -674,7 +673,7 @@ b2PrismaticJoint * j1Physics::CreatePrismaticJoint(PhysBody * anchor, PhysBody *
 	def.localAnchorA = localA;
 	b2Vec2 localB(PIXEL_TO_METERS(body_offset.x), PIXEL_TO_METERS(body_offset.y));
 	def.localAnchorB = localB;
-	b2Vec2 localAxis(0,1);
+	b2Vec2 localAxis(0, 1);
 	def.localAxisA = localAxis;
 	if (enable_limit) {
 		def.lowerTranslation = PIXEL_TO_METERS(min_trans);
@@ -699,7 +698,7 @@ b2MotorJoint* j1Physics::CreateMotorJoint(b2Body* body, b2Vec2 target)
 	def.maxTorque = 100.0f * body->GetMass();
 	def.maxForce = 100.0f * body->GetMass();
 
-	
+
 
 	return (b2MotorJoint*)world->CreateJoint(&def);
 }
@@ -743,89 +742,89 @@ bool j1Physics::PostUpdate()
 {
 	debug = App->debug_mode;
 
-	if(!debug)
+	if (!debug)
 		return true;
 
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels
-	for(b2Body* b = world->GetBodyList(); b; b = b->GetNext())
+	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 	{
-		for(b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
+		for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
 		{
-			switch(f->GetType())
+			switch (f->GetType())
 			{
 				// Draw circles ------------------------------------------------
-				case b2Shape::e_circle:
+			case b2Shape::e_circle:
+			{
+				b2CircleShape* shape = (b2CircleShape*)f->GetShape();
+				b2Vec2 pos = f->GetBody()->GetPosition();
+
+				float dist = DistanceFromTwoPoints((PIXELS_PER_METER * pos.x), (PIXELS_PER_METER * pos.y), PIXELS_PER_METER * (pos.x + shape->m_p.x), PIXELS_PER_METER * (pos.y + shape->m_p.y));
+
+				float pos_x = 0;
+				float pos_y = 0;
+
+				float angle_between = AngleFromTwoPoints((PIXELS_PER_METER * pos.x), (PIXELS_PER_METER * pos.y), PIXELS_PER_METER * (pos.x + shape->m_p.x), PIXELS_PER_METER * (pos.y + shape->m_p.y));
+
+				pos_x = (PIXELS_PER_METER * pos.x) + sin(-b->GetAngle() - ((angle_between - 90) * DEGTORAD)) * (dist)+App->render->camera.x;
+				pos_y = (PIXELS_PER_METER * pos.y) + cos(-b->GetAngle() - ((angle_between - 90) * DEGTORAD)) * (dist)+App->render->camera.y;
+
+				//App->view->LayerDrawCircle(pos_x, pos_y, METERS_TO_PIXELS(shape->m_radius), 255, 255, 255);
+
+			}
+			break;
+
+			// Draw polygons ------------------------------------------------
+			case b2Shape::e_polygon:
+			{
+				b2PolygonShape* polygonShape = (b2PolygonShape*)f->GetShape();
+				int32 count = polygonShape->GetVertexCount();
+				b2Vec2 prev, v;
+
+				for (int32 i = 0; i < count; ++i)
 				{
-					b2CircleShape* shape = (b2CircleShape*)f->GetShape();
-					b2Vec2 pos = f->GetBody()->GetPosition();
+					v = b->GetWorldPoint(polygonShape->GetVertex(i));
+					if (i > 0)
+						//App->view->LayerDrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 255);
 
-					float dist = DistanceFromTwoPoints((PIXELS_PER_METER * pos.x), (PIXELS_PER_METER * pos.y), PIXELS_PER_METER * (pos.x + shape->m_p.x), PIXELS_PER_METER * (pos.y + shape->m_p.y));
-
-					float pos_x = 0;
-					float pos_y = 0;
-
-					float angle_between = AngleFromTwoPoints((PIXELS_PER_METER * pos.x), (PIXELS_PER_METER * pos.y), PIXELS_PER_METER * (pos.x + shape->m_p.x), PIXELS_PER_METER * (pos.y + shape->m_p.y));
-
-					pos_x = (PIXELS_PER_METER * pos.x) + sin(-b->GetAngle() - ((angle_between - 90) * DEGTORAD)) * (dist) + App->render->camera.x;
-					pos_y = (PIXELS_PER_METER * pos.y) + cos(-b->GetAngle() - ((angle_between - 90) * DEGTORAD)) * (dist) + App->render->camera.y;
-					
-					App->view->LayerDrawCircle(pos_x, pos_y, METERS_TO_PIXELS(shape->m_radius), 255, 255, 255);
-
+					prev = v;
 				}
-				break;
 
-				// Draw polygons ------------------------------------------------
-				case b2Shape::e_polygon:
+				v = b->GetWorldPoint(polygonShape->GetVertex(0));
+				//App->view->LayerDrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 255);
+			}
+			break;
+
+			// Draw chains contour -------------------------------------------
+			case b2Shape::e_chain:
+			{
+				b2ChainShape* shape = (b2ChainShape*)f->GetShape();
+				b2Vec2 prev, v;
+
+				for (int32 i = 0; i < shape->m_count; ++i)
 				{
-					b2PolygonShape* polygonShape = (b2PolygonShape*)f->GetShape();
-					int32 count = polygonShape->GetVertexCount();
-					b2Vec2 prev, v;
-
-					for(int32 i = 0; i < count; ++i)
-					{
-						v = b->GetWorldPoint(polygonShape->GetVertex(i));
-						if(i > 0)
-							App->view->LayerDrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 255);
-
-						prev = v;
-					}
-
-					v = b->GetWorldPoint(polygonShape->GetVertex(0));
-						App->view->LayerDrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 255);
+					v = b->GetWorldPoint(shape->m_vertices[i]);
+					if (i > 0)
+						//App->view->LayerDrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
+					prev = v;
 				}
-				break;
 
-				// Draw chains contour -------------------------------------------
-				case b2Shape::e_chain:
-				{
-					b2ChainShape* shape = (b2ChainShape*)f->GetShape();
-					b2Vec2 prev, v;
+				v = b->GetWorldPoint(shape->m_vertices[0]);
+				//App->view->LayerDrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
+			}
+			break;
 
-					for(int32 i = 0; i < shape->m_count; ++i)
-					{
-						v = b->GetWorldPoint(shape->m_vertices[i]);
-						if(i > 0)
-							App->view->LayerDrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
-						prev = v;
-					}
+			// Draw a single segment(edge) ----------------------------------
+			case b2Shape::e_edge:
+			{
+				b2EdgeShape* shape = (b2EdgeShape*)f->GetShape();
+				b2Vec2 v1, v2;
 
-					v = b->GetWorldPoint(shape->m_vertices[0]);
-					App->view->LayerDrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
-				}
-				break;
-
-				// Draw a single segment(edge) ----------------------------------
-				case b2Shape::e_edge:
-				{
-					b2EdgeShape* shape = (b2EdgeShape*)f->GetShape();
-					b2Vec2 v1, v2;
-
-					v1 = b->GetWorldPoint(shape->m_vertex0);
-					v1 = b->GetWorldPoint(shape->m_vertex1);
-					App->view->LayerDrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), 100, 100, 255);
-				}
-				break;
+				v1 = b->GetWorldPoint(shape->m_vertex0);
+				v1 = b->GetWorldPoint(shape->m_vertex1);
+				//App->view->LayerDrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), 100, 100, 255);
+			}
+			break;
 			}
 
 			//If mouse button 1 is pressed ...
@@ -837,7 +836,7 @@ bool j1Physics::PostUpdate()
 				mouse_y -= App->render->camera.y;
 
 				b2Vec2 mouse(PIXEL_TO_METERS(mouse_x), PIXEL_TO_METERS(mouse_y));
-				if (f->TestPoint(mouse)) 
+				if (f->TestPoint(mouse))
 				{
 					selected = f->GetBody();
 					break;
@@ -851,7 +850,7 @@ bool j1Physics::PostUpdate()
 	// so we can pull it around
 	//If a body was selected, create a mouse joint
 	// using mouse_joint class property
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN && selected != nullptr) 
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN && selected != nullptr)
 	{
 		int mouse_x, mouse_y;
 		App->input->GetMousePosition(mouse_x, mouse_y);
@@ -884,7 +883,7 @@ bool j1Physics::PostUpdate()
 		b2Vec2 mouse_pix(mouse_x, mouse_y);
 
 		mouse_joint->SetTarget(mouse);
-		App->view->LayerDrawLine(mouse_pix.x, mouse_pix.y, METERS_TO_PIXELS(selected->GetPosition().x), METERS_TO_PIXELS(selected->GetPosition().y), 255, 0, 0, 255);
+		//App->view->LayerDrawLine(mouse_pix.x, mouse_pix.y, METERS_TO_PIXELS(selected->GetPosition().x), METERS_TO_PIXELS(selected->GetPosition().y), 255, 0, 0, 255);
 	}
 	//If the player releases the mouse button, destroy the joint
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && selected != nullptr) {
@@ -933,9 +932,9 @@ bool PhysBody::Contains(int x, int y) const
 
 	const b2Fixture* fixture = body->GetFixtureList();
 
-	while(fixture != NULL)
+	while (fixture != NULL)
 	{
-		if(fixture->GetShape()->TestPoint(body->GetTransform(), p) == true)
+		if (fixture->GetShape()->TestPoint(body->GetTransform(), p) == true)
 			return true;
 		fixture = fixture->GetNext();
 	}
@@ -956,9 +955,9 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 
 	const b2Fixture* fixture = body->GetFixtureList();
 
-	while(fixture != NULL)
+	while (fixture != NULL)
 	{
-		if(fixture->GetShape()->RayCast(&output, input, body->GetTransform(), 0) == true)
+		if (fixture->GetShape()->RayCast(&output, input, body->GetTransform(), 0) == true)
 		{
 			// do we want the normal ?
 
@@ -985,9 +984,9 @@ void j1Physics::BeginContact(b2Contact* contact)
 	b2Fixture* fixtureA = contact->GetFixtureA();
 	b2Fixture* fixtureB = contact->GetFixtureB();
 
-	if(physA && physA->listener != NULL)
+	if (physA && physA->listener != NULL)
 		physA->listener->OnCollision(physA, physB, fixtureA, fixtureB);
 
-	if(physB && physB->listener != NULL)
+	if (physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA, fixtureB, fixtureA);
 }

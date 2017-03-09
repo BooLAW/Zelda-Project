@@ -21,7 +21,7 @@ float DistanceFromTwoPoints(float x1, float y1, float x2, float y2)
 	float sign = ((distance_x * distance_x) + (distance_y * distance_y));
 	float dist = abs((distance_x * distance_x) + (distance_y * distance_y));
 
-	if(sign > 0)
+	if (sign > 0)
 		return sqrt(dist);
 	else
 		return -sqrt(dist);
@@ -41,10 +41,10 @@ void Tokenize(std::string string, const char separator, std::list<std::string>& 
 {
 	uint i = 0;
 	const char* str = string.c_str();
-	while (*(str + i) != 0) 
+	while (*(str + i) != 0)
 	{
 		std::string temporal;
-		while (*(str + i) != separator && *(str + i) && *(str + i) != '\n') 
+		while (*(str + i) != separator && *(str + i) && *(str + i) != '\n')
 		{
 			temporal.push_back(*(str + i));
 			i++;
@@ -62,7 +62,7 @@ void ToLowerCase(std::string str)
 }
 
 // Deprecated
-void LoadAnimationFromXML(list<SDL_Rect>& rects, const char * file, const char* animation_name)
+void LoadAnimationFromXML(std::list<SDL_Rect>& rects, const char * file, const char* animation_name)
 {
 	pugi::xml_document doc;
 	pugi::xml_node node;

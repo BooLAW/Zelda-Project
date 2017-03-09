@@ -5,14 +5,11 @@
 #include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "j1Map.h"
-#include "j1Viewports.h"
 #include <math.h>
-#include "j1Window.h"
-#include "Functions.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
-	name = "map";
+	name.create("map");
 }
 
 // Destructor
@@ -25,16 +22,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	LOG("Loading Map Parser");
 	bool ret = true;
 
-	folder = config.child("folder").child_value();
-	draw_margin = config.child("draw_margin").attribute("value").as_int();
-
-	offset = 0;
-
-	fit_square.x = fit_square.y = 0;
-	uint w, h;
-	App->win->GetWindowSize(w, h);
-	fit_square.w = w;
-	fit_square.h = h;
+	folder.create(config.child("folder").child_value());
 
 	return ret;
 }
@@ -44,37 +32,29 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 
-	for (int i = 1; i <= App->view->GetViews(); i++) {
-		fit_square = App->view->GetViewportRect(i);
-		for (std::list<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end(); item++)
+	std::list<MapLayer*>::iterator item = data.layers.begin();
+
+	for(; item != data.layers.end(); item++)
+	{
+		MapLayer* layer = (*item);
+
+		if(layer->properties.Get("Nodraw") != 0)
+			continue;
+
+		for(int y = 0; y < data.height; ++y)
 		{
-			MapLayer* layer = *item;
-
-			if (layer->properties.Get("Nodraw") != 0)
-				continue;
-
-			int x_ini, x_end;
-			TilesToDraw_x(x_ini, x_end, *item);
-			int count = 0;
-			for (int x = x_ini; x < x_end; ++x)
+			for(int x = 0; x < data.width; ++x)
 			{
-				int y_ini, y_end;
-				TilesToDraw_y(count, x, x_end, y_ini, y_end, *item);
-
-				for (int y = y_ini; y < y_end; ++y)
+				int tile_id = layer->Get(x, y);
+				if(tile_id > 0)
 				{
-					int tile_id = layer->Get(x, y);
-					if (tile_id > 0)
-					{
-						TileSet* tileset = GetTilesetFromTileId(tile_id);
+					TileSet* tileset = GetTilesetFromTileId(tile_id);
 
-						SDL_Rect r = tileset->GetTileRect(tile_id);
-						iPoint pos = MapToWorld(x, y);
+					SDL_Rect r = tileset->GetTileRect(tile_id);
+					iPoint pos = MapToWorld(x, y);
 
-						App->view->LayerBlit(1, tileset->texture, pos, r, i); //fps drop a lot !!!!!
-					}
+					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
-				count++;
 			}
 		}
 	}
@@ -94,7 +74,7 @@ int Properties::Get(const char* value, int default_value) const
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
 	std::list<TileSet*>::const_iterator item = data.tilesets.begin();
-	TileSet* set = *item;
+	TileSet* set = (*item);
 
 	while(item != data.tilesets.end())
 	{
@@ -103,7 +83,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 			set = *(--item);
 			break;
 		}
-		set = *item;
+		set = (*item);
 		item++;
 	}
 
@@ -170,6 +150,10 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	return rect;
 }
 
+//TileData* TileSet::GetTileType(int tile_id)const
+//{
+//	
+//}
 // Called before quitting
 bool j1Map::CleanUp()
 {
@@ -181,7 +165,7 @@ bool j1Map::CleanUp()
 
 	while(item != data.tilesets.end())
 	{
-		RELEASE(*item);
+		RELEASE((*item));
 		item++;
 	}
 	data.tilesets.clear();
@@ -192,7 +176,7 @@ bool j1Map::CleanUp()
 
 	while(item2 != data.layers.end())
 	{
-		RELEASE(*item2);
+		RELEASE((*item2));
 		item2++;
 	}
 	data.layers.clear();
@@ -207,7 +191,7 @@ bool j1Map::CleanUp()
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
-	p2SString tmp("%s%s", folder.c_str(), file_name);
+	p2SString tmp("%s%s", folder.GetString(), file_name);
 
 	char* buf;
 	int size = App->fs->Load(tmp.GetString(), &buf);
@@ -267,9 +251,9 @@ bool j1Map::Load(const char* file_name)
 		std::list<TileSet*>::iterator item = data.tilesets.begin();
 		while(item != data.tilesets.end())
 		{
-			TileSet* s = *item;
+			TileSet* s = (*item);
 			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.c_str(), s->firstgid);
+			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
 			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item++;
@@ -278,9 +262,9 @@ bool j1Map::Load(const char* file_name)
 		std::list<MapLayer*>::iterator item_layer = data.layers.begin();
 		while(item_layer != data.layers.end())
 		{
-			MapLayer* l = *item_layer;
+			MapLayer* l = (*item_layer);
 			LOG("Layer ----");
-			LOG("name: %s", l->name.c_str());
+			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer++;
 		}
@@ -308,33 +292,33 @@ bool j1Map::LoadMap()
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
-		std::string bg_color(map.attribute("backgroundcolor").as_string());
+		p2SString bg_color(map.attribute("backgroundcolor").as_string());
 
 		data.background_color.r = 0;
 		data.background_color.g = 0;
 		data.background_color.b = 0;
 		data.background_color.a = 0;
 
-		if(bg_color.length() > 0)
+		if(bg_color.Length() > 0)
 		{
-			std::string red, green, blue;
-			red = bg_color.substr(1, 2);
-			green = bg_color.substr(3, 2);
-			blue = bg_color.substr(5, 2);
+			p2SString red, green, blue;
+			bg_color.SubString(1, 2, red);
+			bg_color.SubString(3, 4, green);
+			bg_color.SubString(5, 6, blue);
 
 			int v = 0;
 
-			sscanf_s(red.c_str(), "%x", &v);
+			sscanf_s(red.GetString(), "%x", &v);
 			if(v >= 0 && v <= 255) data.background_color.r = v;
 
-			sscanf_s(green.c_str(), "%x", &v);
+			sscanf_s(green.GetString(), "%x", &v);
 			if(v >= 0 && v <= 255) data.background_color.g = v;
 
-			sscanf_s(blue.c_str(), "%x", &v);
+			sscanf_s(blue.GetString(), "%x", &v);
 			if(v >= 0 && v <= 255) data.background_color.b = v;
 		}
 
-		std::string orientation(map.attribute("orientation").as_string());
+		p2SString orientation(map.attribute("orientation").as_string());
 
 		if(orientation == "orthogonal")
 		{
@@ -360,7 +344,7 @@ bool j1Map::LoadMap()
 bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
-	set->name = (tileset_node.attribute("name").as_string());
+	set->name.create(tileset_node.attribute("name").as_string());
 	set->firstgid = tileset_node.attribute("firstgid").as_int();
 	set->tile_width = tileset_node.attribute("tilewidth").as_int();
 	set->tile_height = tileset_node.attribute("tileheight").as_int();
@@ -394,7 +378,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	}
 	else
 	{
-		set->texture = App->tex->LoadTexture(PATH(folder.c_str(), image.attribute("source").as_string()));
+		set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
 		int w, h;
 		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
 		set->tex_width = image.attribute("width").as_int();
@@ -439,27 +423,10 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		layer->data = new uint[layer->width*layer->height];
 		memset(layer->data, 0, layer->width*layer->height);
 
-		if (TextCmp(layer_data.attribute("encoding").as_string("no_enc"), "csv"))
+		int i = 0;
+		for(pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"))
 		{
-			std::string data = layer_data.child_value();
-
-			std::list<std::string> tiles;
-			Tokenize(data, ',', tiles);
-
-			int i = 0;
-			for (std::list<std::string>::iterator tile = tiles.begin(); tile != tiles.end(); tile++)
-			{
-				if(*tile != "")
-					layer->data[i++] = atoi(tile->c_str());
-			}
-		}
-		else
-		{
-			int i = 0;
-			for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"))
-			{
-				layer->data[i++] = tile.attribute("gid").as_int(0);
-			}
+			layer->data[i++] = tile.attribute("gid").as_int(0);
 		}
 	}
 
@@ -491,92 +458,18 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-void j1Map::TilesToDraw_x(int & x_ini, int & x_end, MapLayer * layer) const
-{
-	iPoint ini = WorldToMap(fit_square.x, fit_square.y);
-	iPoint end = WorldToMap(fit_square.x + fit_square.w, fit_square.y + fit_square.h);
-	switch (data.type)
-	{
-	case MAPTYPE_UNKNOWN:
-		break;
-	case MAPTYPE_ORTHOGONAL:
-		x_ini = (ini.x - draw_margin > 0) ? (ini.x - draw_margin) : 0;
-		x_end = (end.x + draw_margin < layer->width) ? (end.x + draw_margin) : layer->width;
-		break;
-	case MAPTYPE_ISOMETRIC:
-		x_ini = (ini.x - draw_margin > 0) ? (ini.x - draw_margin) : 0;
-		x_end = (end.x + draw_margin < layer->width) ? (end.x + draw_margin) : layer->width;
-		break;
-	case MAPTYPE_STAGGERED:
-		break;
-	default:
-		break;
-	}
-}
-
-void j1Map::TilesToDraw_y(int count, int x, int x_end, int & y_ini, int & y_end, MapLayer * layer) const
-{
-	iPoint top_right = WorldToMap(fit_square.x + fit_square.w, fit_square.y);
-	iPoint top_left = WorldToMap(fit_square.x, fit_square.y);
-	iPoint bot_right = WorldToMap(fit_square.x + fit_square.w, fit_square.y + fit_square.h);
-	iPoint bot_left = WorldToMap(fit_square.x, fit_square.y + fit_square.h);
-	switch (data.type)
-	{
-	case MAPTYPE_UNKNOWN:
-		break;
-	case MAPTYPE_ORTHOGONAL:
-		y_ini = (top_left.y - draw_margin > 0) ? (top_left.y - draw_margin) : 0;
-		y_end = (bot_right.y + draw_margin < layer->height) ? bot_right.y + draw_margin : layer->height;
-		break;
-	case MAPTYPE_ISOMETRIC: {
-		float screen_prop = (float)fit_square.w / (float)fit_square.h;
-		int diag1 = bot_left.x, diag2 = top_right.x;
-		if (x <= diag1) {
-			y_ini = top_left.y - (count + 1);
-			y_end = top_left.y + count + 2;
-			if (top_left.x <= 0) {
-				y_ini += (top_left.x - 3);
-				y_end -= (top_left.x - 3);
-			}
-		}
-		else if (x > diag1 && x < diag2) {
-			int diff = x - diag1;
-			y_ini = top_left.y - count - diff;
-			y_end = top_left.y + diff;
-		}
-		else {
-			int rev_count = bot_right.x - x;
-			y_ini = bot_right.y - rev_count;
-			y_end = bot_right.y + (rev_count + 1);
-		}
-
-		y_ini -= draw_margin;
-		y_end += draw_margin;
-
-		if (y_ini < 0) y_ini = 0;
-		if (y_end > layer->height) y_end = layer->height;
-
-		break;
-	}
-	case MAPTYPE_STAGGERED:
-		break;
-	default:
-		break;
-	}
-}
 
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 {
 	bool ret = false;
 	std::list<MapLayer*>::const_iterator item;
-	item = data.layers.begin();
-
-	for(; item != data.layers.end(); item++)
+	//iterate each layer
+	for(item = data.layers.begin(); item != data.layers.end(); item++)
 	{
-		MapLayer* layer = *item;
-
-		if(layer->properties.Get("Navigation", 0) == 0)
-			continue;
+		MapLayer* layer = (*item);
+		
+	/*	if(layer->properties.Get("Navigation", 0) == 0)
+			continue;*/
 
 		uchar* map = new uchar[layer->width*layer->height];
 		memset(map, 1, layer->width*layer->height);
@@ -588,15 +481,17 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 				int i = (y*layer->width) + x;
 
 				int tile_id = layer->Get(x, y);
+				//ensure that the tile_id are correct(>0)
 				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
 				
 				if(tileset != NULL)
 				{
 					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
-					/*TileType* ts = tileset->GetTileType(tile_id);
+					
+				/*	TileData* ts = tileset->GetTileType(tile_id);
 					if(ts != NULL)
 					{
-						map[i] = ts->properties.Get("walkable", 1);
+						map[i] = ts->properties.Get("walkable", 0);
 					}*/
 				}
 			}
@@ -612,6 +507,3 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 
 	return ret;
 }
-
-
-

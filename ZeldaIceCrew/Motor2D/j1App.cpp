@@ -17,11 +17,10 @@
 #include "j1Fonts.h"
 #include "j1Gui.h"
 #include "j1App.h"
-#include "j1Console.h"
-#include "j1Physics.h"
-#include "j1Entity.h"
-#include "j1Viewports.h"
-#
+#include "j1Player.h"
+#include "j1Collision.h"
+//#include "j1Console"
+#include "EntityManager.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -39,10 +38,11 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new j1PathFinding();
 	font = new j1Fonts();
 	gui = new j1Gui();
-	console = new j1Console();
-	physics = new j1Physics();
-	entity = new j1Entity();
-	view = new j1Viewports();
+	collisions = new j1Collision();
+	//console = new j1Console();
+	player = new j1Player();
+	entitymanager = new EntityManager();
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -54,25 +54,17 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(font);
-	AddModule(physics);
-	AddModule(console);
-	AddModule(entity);
-	AddModule(view);
-
-	// Scene
-	AddModule(scene);
-
-	// Gui
 	AddModule(gui);
+	AddModule(entitymanager);
+	AddModule(scene);
+	AddModule(collisions);
+	//AddModule(console);
+	AddModule(player);
+	
 
 	// render last to swap buffer
 	AddModule(render);
 
-	console->AddCommand("quit", console, 0, 0, "Exit application");
-	console->AddCommand("save", console, 0, 0, "Save data");
-	console->AddCommand("cap_fps", console, 0, 1, "Cap fps. Min_args: 0 Max_args: 1 Args: num > 0");
-
-	cf = new collision_filters();
 	PERF_PEEK(ptimer);
 }
 
@@ -80,9 +72,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	for (list<j1Module*>::iterator it = modules.begin(); it != modules.end(); it++)
-		RELEASE(*it);
-	
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end(); item++)
+		RELEASE(*item);
+
 	modules.clear();
 }
 
@@ -110,19 +102,19 @@ bool j1App::Awake()
 		// self-config
 		ret = true;
 		app_config = config.child("app");
-		title = app_config.child("title").attribute("name").as_string();
-		organization = app_config.child("organization").child_value();
+		title.create(app_config.child("title").child_value());
+		organization.create(app_config.child("organization").child_value());
 
 		int cap = app_config.attribute("framerate_cap").as_int(-1);
 
 		CapFps(cap);
 	}
 
-	if(ret == true)
+	if (ret == true)
 	{
-		for (list<j1Module*>::iterator it = modules.begin(); it != modules.end(); it++)
-			ret = (*it)->Awake(config.child((*it)->name.c_str()));
-		
+		for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end(); item++)
+			ret = (*item)->Awake(config.child((*item)->name.GetString()));
+
 	}
 
 	PERF_PEEK(ptimer);
@@ -135,24 +127,17 @@ bool j1App::Start()
 {
 	PERF_START(ptimer);
 	bool ret = true;
+	std::list<j1Module*>::iterator item;
+	item = modules.begin();
 
-	for (list<j1Module*>::iterator it = modules.begin(); it != modules.end(); it++)
-		ret = (*it)->Start();
-	
-
+	while(item != modules.end() && ret == true)
+	{
+		ret = (*item)->Start();
+		item++;
+	}
 	startup_time.Start();
 
-	debug_mode = true;
-
-	debug_window = (UI_Window*)App->gui->UI_CreateWin(iPoint(0, 0), 200, 115, 1, false);
-	debug_colored_rect = (UI_ColoredRect*)debug_window->CreateColoredRect(iPoint(0, 0), 200, 115, { 20, 20, 20, 255 }, true);
-	debug_text = (UI_Text*)debug_window->CreateText(iPoint(5, 5), App->font->default_15, 15);
-	
-	bug_report_button_color = (UI_ColoredRect*)debug_window->CreateColoredRect(iPoint(0, 115), 100, 25, { 20, 20, 20, 255 }, true);
-	bug_report_button = (UI_Button*)debug_window->CreateButton(iPoint(0, 115), 100, 25);
-	bug_report_text = (UI_Text*)debug_window->CreateText(iPoint(5, 115), App->font->default_15, 15);
-	bug_report_text->SetText("Report a bug");
-	bug_report_text->click_through = true;
+	//Create here the UI elements
 
 	PERF_PEEK(ptimer);
 
@@ -167,11 +152,7 @@ bool j1App::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug_mode = !debug_mode;
-
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
-	if(input->GetWindowEvent(WE_QUIT) == true || end_program)
+	if(input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 
 	if(ret == true)
@@ -224,18 +205,49 @@ void j1App::FinishUpdate()
 	if(want_to_load == true)
 		LoadGameNow();
 
-	FrameRateCalculations();
+	// Framerate calculations --
+
+	if(last_sec_frame_time.Read() > 1000)
+	{
+		last_sec_frame_time.Start();
+		prev_last_sec_frame_count = last_sec_frame_count;
+		last_sec_frame_count = 0;
+	}
+
+	float avg_fps = float(frame_count) / startup_time.ReadSec();
+	float seconds_since_startup = startup_time.ReadSec();
+	uint32 last_frame_ms = frame_time.Read();
+	uint32 frames_on_last_update = prev_last_sec_frame_count;
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
+			  avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
+	App->win->SetTitle(title);
+
+	if(capped_ms > 0 && last_frame_ms < capped_ms)
+	{
+		j1PerfTimer t;
+		SDL_Delay(capped_ms - last_frame_ms);
+		LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
+	}
+	//!_Framerate calculations
 }
 
 // Call modules before each loop iteration
 bool j1App::PreUpdate()
 {
 	bool ret = true;
+	j1Module* pModule = NULL;
 
-	for (list<j1Module*>::iterator it = modules.begin(); it != modules.end(); it++)
+	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		if((*it)->active)
-			ret = (*it)->PreUpdate();
+		pModule = (*item);
+
+		if(pModule->active == false) {
+			continue;
+		}
+
+		ret = (*item)->PreUpdate();
 	}
 
 	return ret;
@@ -245,11 +257,17 @@ bool j1App::PreUpdate()
 bool j1App::DoUpdate()
 {
 	bool ret = true;
+	j1Module* pModule = NULL;
 
-	for (list<j1Module*>::iterator it = modules.begin(); it != modules.end(); it++)
+	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		if ((*it)->active)
-			ret = (*it)->Update(dt);
+		pModule = (*item);
+
+		if(pModule->active == false) {
+			continue;
+		}
+
+		ret = (*item)->Update(dt);
 	}
 
 	return ret;
@@ -259,11 +277,17 @@ bool j1App::DoUpdate()
 bool j1App::PostUpdate()
 {
 	bool ret = true;
+	j1Module* pModule = NULL;
 
-	for (list<j1Module*>::iterator it = modules.begin(); it != modules.end(); it++)
+	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		if ((*it)->active)
-			ret = (*it)->PostUpdate();
+		pModule = (*item);
+
+		if(pModule->active == false) {
+			continue;
+		}
+
+		ret = (*item)->PostUpdate();
 	}
 
 	return ret;
@@ -275,14 +299,11 @@ bool j1App::CleanUp()
 	PERF_START(ptimer);
 	bool ret = true;
 
-	delete cf;
+	for (std::list<j1Module*>::reverse_iterator item = modules.rbegin(); item != modules.rend(); item++)
+		ret = (*item)->CleanUp();
 
-	// Cleaning up in reverse order
-	for (list<j1Module*>::reverse_iterator it = modules.rbegin(); it != modules.rend(); it++)
-		ret = (*it)->CleanUp();
 
 	PERF_PEEK(ptimer);
-
 	return ret;
 }
 
@@ -304,7 +325,7 @@ const char* j1App::GetArgv(int index) const
 // ---------------------------------------
 const char* j1App::GetTitle() const
 {
-	return title.c_str();
+	return title.GetString();
 }
 
 // ---------------------------------------
@@ -316,7 +337,7 @@ float j1App::GetDT() const
 // ---------------------------------------
 const char* j1App::GetOrganization() const
 {
-	return organization.c_str();
+	return organization.GetString();
 }
 
 // Load / Save
@@ -339,17 +360,16 @@ void j1App::SaveGame(const char* file) const
 }
 
 // ---------------------------------------
-void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
+void j1App::GetSaveGames(std::list<p2SString>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
 }
-
 void j1App::LoadXML(const char * path, pugi::xml_document & doc)
 {
 	char* buf = NULL;
 	int size = App->fs->Load(path, &buf);
 	pugi::xml_parse_result result = doc.load_buffer(buf, size);
-	
+
 	if (buf == NULL)
 		LOG("Error loading '%s', probably wrong XML file name", path);
 	else
@@ -362,13 +382,11 @@ void j1App::UnloadXML(pugi::xml_document & doc)
 {
 	doc.reset();
 }
-
 void j1App::CapFps(float fps)
 {
-	if(fps > 0)
+	if (fps > 0)
 		capped_ms = (1000 / fps);
 }
-
 bool j1App::LoadGameNow()
 {
 	bool ret = false;
@@ -390,18 +408,20 @@ bool j1App::LoadGameNow()
 
 			root = data.child("game_state");
 
-			list<j1Module*>::iterator it;
-			for (it = modules.begin(); it != modules.end(); it++)
+			std::list<j1Module*>::iterator item = modules.begin();
+			ret = true;
+
+			while(item != modules.end() && ret == true)
 			{
-				ret = (*it)->Load(root.child((*it)->name.c_str()));
+				ret = (*item)->Load(root.child((*item)->name.GetString()));
+				item++;
 			}
 
 			data.reset();
 			if(ret == true)
 				LOG("...finished loading");
 			else
-				LOG("...loading process interrupted with error on module %s", (*it)->name.c_str());
-
+				LOG("...loading process interrupted with error on module %s",(*item)->name.GetString());
 		}
 		else
 			LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
@@ -424,11 +444,13 @@ bool j1App::SavegameNow() const
 	pugi::xml_node root;
 	
 	root = data.append_child("game_state");
-	
-	list<j1Module*>::const_iterator it;
-	for (it = modules.begin(); it != modules.end(); it++)
+
+	std::list<j1Module*>::const_iterator item = modules.begin();
+
+	while(item != modules.end() && ret == true)
 	{
-		ret = (*it)->Save(root.child((*it)->name.c_str()));
+		ret = (*item)->Save(root.append_child((*item)->name.GetString()));
+		item++;
 	}
 
 	if(ret == true)
@@ -441,64 +463,12 @@ bool j1App::SavegameNow() const
 		LOG("... finished saving", save_game.GetString());
 	}
 	else
-		LOG("Save process halted from an error in module %s", (*it)->name.c_str());
+		LOG("Save process halted from an error in module %s", (*item)->name.GetString());
 
 	data.reset();
 	want_to_save = false;
 	return ret;
 }
-
-void j1App::FrameRateCalculations()
-{
-	if (last_sec_frame_time.Read() > 1000)
-	{
-		last_sec_frame_time.Start();
-		prev_last_sec_frame_count = last_sec_frame_count;
-		last_sec_frame_count = 0;
-	}
-
-	float avg_fps = float(frame_count) / startup_time.ReadSec();
-	float seconds_since_startup = startup_time.ReadSec();
-	uint32 last_frame_ms = frame_time.Read();
-	uint32 frames_on_last_update = prev_last_sec_frame_count;
-
-	static char title[256];
-	p2SString str("FPS: %i \nAv.FPS: %.2f \nLast Frame Ms: %u \nLast dt: %.3f \nTime since startup: %.2f \nFrame Count: %lu", frames_on_last_update, avg_fps, last_frame_ms, dt, seconds_since_startup, frame_count);
-	string t = str.GetString();
-	debug_text->SetText(t);
-
-	if (capped_ms > 0 && last_frame_ms < capped_ms)
-	{
-		j1PerfTimer t;
-		SDL_Delay(capped_ms - last_frame_ms);
-	}
-
-	// Report a bug button logic
-	if (bug_report_button->MouseEnter())
-		bug_report_button_color->SetColor({ 30, 30, 30, 255 });
-	else if (bug_report_button->MouseOut())
-		bug_report_button_color->SetColor({ 20, 20, 20, 255 });
-
-	if (bug_report_button->MouseClickEnterLeft())
-		bug_report_button_color->SetColor({ 50, 50, 50, 255 });
-	if (bug_report_button->MouseClickOutLeft())
-	{
-		OpenWebPage("https://github.com/BooLAW/Zelda-Project/issues");
-		bug_report_button_color->SetColor({ 30, 30, 30, 255 });
-	}
-
-
-	if (debug_mode && !debug_window->enabled)
-		debug_window->SetEnabledAndChilds(true);
-	if(!debug_mode && debug_window->enabled)
-		debug_window->SetEnabledAndChilds(false);
-}
-
-void j1App::EndSDL()
-{
-	end_program = true;
-}
-
 void j1App::OpenWebPage(char * url)
 {
 	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWMAXIMIZED);

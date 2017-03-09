@@ -2,30 +2,27 @@
 #define __j1MAP_H__
 
 #include "PugiXml/src/pugixml.hpp"
-#include "p2Point.h"
+#include "Point.h"
 #include "j1Module.h"
-#include <string>
-#include <vector>
-#include <list>
-#include "j1Render.h"
 
 // ----------------------------------------------------
 struct Properties
 {
 	struct Property
 	{
-		std::string name;
+		p2SString name;
 		int value;
 	};
 
 	~Properties()
 	{
-		Property* item;
-		item = list.front();
+		std::list<Property*>::iterator item;
+		item = list.begin();
 
-		for (std::list<Property*>::iterator prop = list.begin(); prop != list.end(); ++prop)
+		while(item != list.end())
 		{
-			RELEASE(*prop);
+			RELEASE((*item));
+			item++;
 		}
 
 		list.clear();
@@ -39,7 +36,7 @@ struct Properties
 // ----------------------------------------------------
 struct MapLayer
 {
-	std::string	name;
+	p2SString	name;
 	int			width;
 	int			height;
 	uint*		data;
@@ -60,11 +57,27 @@ struct MapLayer
 };
 
 // ----------------------------------------------------
+enum TileTypes
+{
+	TILETYPE_UNKNOWN = 0,
+	TILETYPE_WALKABLE,
+	TILETYPE_NONWALKABLE,
+	TILETYPE_WATER,
+	//add here new tile types
+};
+struct TileData
+{
+	Properties properties;
+	int id;
+	TileTypes type;
+
+};
 struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
-
-	std::string			name;
+	TileData* GetTileType(int tile_id)const;
+	
+	p2SString			name;
 	int					firstgid;
 	int					margin;
 	int					spacing;
@@ -77,6 +90,7 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;
+
 };
 
 enum MapTypes
@@ -133,23 +147,17 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	void TilesToDraw_x(int& x_ini, int& x_end, MapLayer* layer) const;
-	void TilesToDraw_y(int count, int x, int x_end, int& y_ini, int& y_end, MapLayer* layer) const;
-
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 
 	MapData data;
-	SDL_Rect fit_square;
 
 private:
 
 	pugi::xml_document	map_file;
-	std::string			folder;
+	p2SString			folder;
 	bool				map_loaded;
-	int					draw_margin;
-	int					offset;
 };
 
 #endif // __j1MAP_H__

@@ -7,14 +7,10 @@
 #define __j1MODULE_H__
 
 #include "p2SString.h"
-#include <string>
-#include <list>
-#include <queue>
-#include <iostream>
+#include  "p2Defs.h"
 #include "PugiXml\src\pugixml.hpp"
-
-using namespace std;
-
+#include <list>
+#include <string>
 class j1App;
 class PhysBody;
 class b2Fixture;
@@ -79,12 +75,12 @@ public:
 	{
 		return true;
 	}
-
+	//PHYSICS
 	virtual void OnCollision(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB)
 	{
 
 	}
-
+	//CONSOLE
 	virtual void OnCommand(std::list<std::string>& tokens) {
 
 	}
@@ -96,10 +92,9 @@ public:
 	virtual void SaveCVar(std::string& cvar_name, pugi::xml_node& node) const {
 
 	}
-
 public:
 
-	string	    name;
+	p2SString	name;
 	bool		active;
 
 };

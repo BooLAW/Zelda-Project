@@ -1,6 +1,6 @@
 #pragma once
 #include "j1Module.h"
-#include "p2Point.h"
+#include "Point.h"
 #include "Box2D/Box2D/Box2D.h"
 
 #define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
@@ -12,7 +12,7 @@
 enum class pbody_type;
 enum class fixture_type;
 
-struct path_joint 
+struct path_joint
 {
 	b2MouseJoint* joint;
 	b2Vec2*       path;
@@ -38,7 +38,7 @@ public:
 	int        height = 0;
 	b2Body*    body = nullptr;
 	j1Module*  listener = nullptr;
-	pbody_type type = pbody_type::p_t_null;
+	//pbody_type type = pbody_type::p_t_null;
 };
 
 // Module --------------------------------------
@@ -59,7 +59,7 @@ public:
 	b2Fixture* AddCircleToBody(PhysBody* pbody, int offset_x, int offset_y, int radius, fixture_type type, float density = 1.0f, float rest = 0.0f, float friction = 1.0f);
 	b2Fixture* AddCircleSensorToBody(PhysBody* pbody, int offset_x, int offset_y, int radius, fixture_type type, float density = 1.0f, float rest = 0.0f, float friction = 1.0f);
 
-	PhysBody* CreateRectangle(int x, int y, int width, int height,  float density = 1.0f, float gravity_scale = 1.0f, float rest = 0.0f, float friction = 0.0f, int cat = 1, int mask = 1, int angle = 0);
+	PhysBody* CreateRectangle(int x, int y, int width, int height, float density = 1.0f, float gravity_scale = 1.0f, float rest = 0.0f, float friction = 0.0f, int cat = 1, int mask = 1, int angle = 0);
 	PhysBody* CreateStaticRectangle(int x, int y, int width, int height, float density = 1.0f, float gravity_scale = 1.0f, float rest = 0.0f, int cat = 1, int mask = 1, int angle = 0);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, float density = 1.0f, float gravity_scale = 1.0f, float rest = 0.0f, int cat = 1, int mask = 1, int angle = 0);
 	b2Fixture* AddRectangleToBody(PhysBody* pbody, int offset_x, int offset_y, int width, int height, fixture_type type, float density = 1.0f, float rest = 0.0f, float friction = 1.0f);
@@ -82,13 +82,13 @@ public:
 
 	b2RevoluteJoint* CreateAtachJoint(PhysBody* body1, PhysBody* body2, int distance_between_x, int distance_between_y, float angle_between);
 	b2RevoluteJoint* CreateRevoluteJoint(PhysBody* anchor, PhysBody* body, iPoint anchor_offset, iPoint body_offset, bool enable_limit, float max_angle, float min_angle, bool enable_motor, int motor_speed, int max_torque);
-	b2PrismaticJoint* CreatePrismaticJoint(PhysBody* anchor,PhysBody* body, iPoint anchor_offset, iPoint body_offset, bool enable_limit, float max_trans, float min_trans, bool enable_motor, int motor_speed, int max_force);
+	b2PrismaticJoint* CreatePrismaticJoint(PhysBody* anchor, PhysBody* body, iPoint anchor_offset, iPoint body_offset, bool enable_limit, float max_trans, float min_trans, bool enable_motor, int motor_speed, int max_force);
 	b2MotorJoint* CreateMotorJoint(b2Body* body, b2Vec2 target);
 	path_joint* CreatePathJoint(b2Body* body, int *path, int path_size, int x_offset = 0, int y_offset = 0);
 
 	void DeleteJoint(b2Joint* joint);
 
-	void SetGround(b2Body* body) 
+	void SetGround(b2Body* body)
 	{
 		ground = body;
 	}

@@ -5,9 +5,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <assert.h>
-#include <ctype.h>
 #include "p2Defs.h"
-#include "p2List.h"
 
 #define TMP_STRING_SIZE	4096
 
@@ -317,9 +315,9 @@ public:
 		
 		if(string != NULL)
 		{
-			int len = strlen(string);
+			uint len = strlen(string);
 
-			for(int i = 0; i < (int)(size - len); ++i)
+			for(uint i = 0; i < size - len; ++i)
 			{
 				if(strncmp(string, &str[i], len) == 0)
 				{
@@ -357,57 +355,12 @@ public:
 			return 0;
 	}
 
-	p2SString& insert(unsigned int position, const char* text)
-	{
-		if (position <= size && text != NULL)
-		{
-			int len = strlen(text);
-			make_room(len);
-
-			memcpy(&str[position + len], &str[position], (size + 1) - position);
-			memcpy(&str[position], text, len);
-
-		}
-		return(*this);
-	}
-
-	void make_room(const unsigned int required_space)
-	{
-		if ((strlen(str) + required_space + 1) <= size)
-		{
-			return;
-		}
-		alloc(size + required_space);
-		
-	}
-
-	void Sufix(const char c) {
-		alloc(size + 1);
-		str[size - 1] = '\0';
-		str[size - 2] = c;
-	}
-
 private:
 
 	void Alloc(unsigned int requiered_memory)
 	{
 		size = requiered_memory;
 		str = new char[size];
-	}
-
-	void alloc(uint required_size) 
-	{
-		char* old = str;
-
-		str = new char[required_size];
-		size = required_size;
-
-		if (old)
-			strcpy_s(str, size, old);
-		else
-			Clear();
-
-		RELEASE_ARRAY(old);
 	}
 
 };

@@ -6,30 +6,29 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
+#include "j1Map.h"
+#include "j1PathFinding.h"
+#include "j1Gui.h"
 #include "j1Scene.h"
-#include "MainScene.h"
-#include "MenuScene.h"
-#include "j1Console.h"
+#include "j1Fonts.h"
+#include "j1Player.h"
 
-#define NUMBER_OF_PLAYERS 4
+#define MAX_TABS 2
 
 j1Scene::j1Scene() : j1Module()
 {
-	name = "scene";
+	name.create("scene");
 }
 
 // Destructor
 j1Scene::~j1Scene()
-{
-
-}
+{}
 
 // Called before render is available
 bool j1Scene::Awake()
 {
+	LOG("Loading Scene");
 	bool ret = true;
-
-	LOG("Loading SceneManager");
 
 	return ret;
 }
@@ -37,55 +36,102 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	bool ret = false;
+	
+	if (App->map->Load("FirstMap.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
 
-	LOG("Start module scene");
+		RELEASE_ARRAY(data);
+	}
 
-	// Create scenes
-	menu_scene = new MenuScene(); 
-	scenes.push_back(menu_scene);
-	main_scene = new MainScene();
-	scenes.push_back(main_scene);
-	// -------------
+	debug_tex = App->tex->Load("maps/path.png");
 
-	// Starting scene
-	current_scene = menu_scene;
+	App->player->SetPosTile(2, 2);
 
-	if(current_scene != nullptr)
-		ret = current_scene->Start();
+	App->render->CamBoundOrigin();
 
-	return ret;
+	App->render->ScaleCamBoundaries(300);
+
+	column1 = new element(debug_tex,0,0,20,20,200,200);//test
+	
+	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	bool ret = false;
+	// debug pathfing ------------------
+	if (App->debug == true) {
+		static iPoint origin;
+		static bool origin_selected = false;
 
-	if (current_scene != nullptr)
-		ret = current_scene->PreUpdate();
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
 
-	return ret;
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			if (origin_selected == true)
+			{
+				App->pathfinding->CreatePath(origin, p);
+				origin_selected = false;
+			}
+			else
+			{
+				origin = p;
+				origin_selected = true;
+			}
+		}
+	}
+	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	bool ret = false;
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		App->LoadGame("save_game.xml");
 
-	if (current_scene != nullptr)
-		ret = current_scene->Update(dt);
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		App->SaveGame("save_game.xml");
 	
-	return ret;
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->debug = !App->debug;
+
+	App->map->Draw();
+	App->render->Blit(column1->texture, column1->position.x, column1->position.y);
+	// Debug pathfinding ------------------------------
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
+		App->map->data.width, App->map->data.height,
+		App->map->data.tile_width, App->map->data.tile_height,
+		App->map->data.tilesets.size(),
+		map_coordinates.x, map_coordinates.y);
+
+	//int x, y;
+	if (App->debug == true) {
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
+		p = App->map->MapToWorld(p.x, p.y);
+		App->win->SetTitle(title.GetString());
+		App->render->Blit(debug_tex, p.x, p.y);
+
+	}
+
+	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
-	bool ret = false;
-
-	if (current_scene != nullptr)
-		ret = current_scene->PostUpdate();
+	bool ret = true;
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -98,49 +144,5 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	bool ret = false;
-	if (current_scene != nullptr)
-		ret = current_scene->CleanUp();
-
-	return ret;
+	return true;
 }
-
-void j1Scene::ChangeScene(Scene * new_scene)
-{
-	LOG("Changing current scene");
-
-	Scene* last_scene = current_scene;
-	current_scene = new_scene;
-	last_scene->CleanUp();
-	current_scene->Start();
-}
-
-Scene * j1Scene::GetCurrentScene()
-{
-	return current_scene;
-}
-
-
-void j1Scene::OnCollision(PhysBody * bodyA, PhysBody * bodyB, b2Fixture * fixtureA, b2Fixture * fixtureB)
-{
-	for(list<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++)
-		(*it)->OnColl(bodyA, bodyB, fixtureA, fixtureB);
-}
-
-void j1Scene::OnCommand(std::list<std::string>& tokens)
-{
-	current_scene->OnCommand(tokens);
-}
-
-void j1Scene::OnCVar(std::list<std::string>& tokens)
-{
-	current_scene->OnCVar(tokens);
-}
-
-void j1Scene::SaveCVar(std::string & cvar_name, pugi::xml_node & node) const
-{
-	current_scene->SaveCVar(cvar_name,node);
-}
-
-
-

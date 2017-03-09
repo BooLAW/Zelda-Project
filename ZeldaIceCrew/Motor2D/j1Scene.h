@@ -2,13 +2,38 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
-#include "j1Gui.h"
-#include "Scene.h"
 
 struct SDL_Texture;
-class MenuScene; 
-class MainScene;
+//UI forward declarations
+class Image;
+class Label;
+class Text_Box;
+class Button;
+class Window;
+class Selector;
+class Windowed_Image;
 
+class element {
+public:
+	SDL_Texture* texture = nullptr;
+	PhysBody* physbody = nullptr;
+	SDL_Rect box;
+	iPoint position;
+public:
+	element() {}
+	//call a constructure	
+	element(SDL_Texture* texture, uint rect_x, uint rect_y, uint width, uint height, uint pos_x, uint pos_y)
+	{
+		(this)->texture = texture;
+		box.x = rect_x;
+		box.y = rect_y;
+		box.w = width;
+		box.h = height;
+		position.x = pos_x;
+		position.y = pos_y;
+	}
+	~element() {}
+};
 class j1Scene : public j1Module
 {
 public:
@@ -36,31 +61,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Change scene
-	void ChangeScene(Scene* new_scene);
-	Scene* GetCurrentScene();
-
-	// Blit choosing the layer
-	void OnCollision(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB);
-
-	void OnCommand(std::list<std::string>& tokens);
-
-	void OnCVar(std::list<std::string>& tokens);
-
-	void SaveCVar(std::string& cvar_name, pugi::xml_node& node) const;
-
-public:
-	// Scenes
-	MenuScene*			 menu_scene = nullptr; 
-	MainScene*           main_scene = nullptr;
-
 private:
-	// Scenes list
-	list<Scene*>         scenes;
 
-	// Current scene
-	Scene*               current_scene = nullptr;
+	SDL_Texture* debug_tex;
+	element* column1;
 
+	Window* window;
+	Label* win_title;
 };
 
 #endif // __j1SCENE_H__
