@@ -24,7 +24,7 @@ bool j1Player::Start()
 	LOG("Player Start");
 
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
-	link_coll =App->collisions->AddCollider(LINK_RECT, COLLIDER_PLAYER, this);
+	link_coll = App->collisions->AddCollider(LINK_RECT, COLLIDER_PLAYER, this); 
 	//Idle
 	{
 		sprites[Idle][Up][0] = {link_x*3, link_y*2, link_width, link_height };
@@ -698,7 +698,7 @@ bool j1Player::Update(float dt)
 
 	// MODIFY COLLISION -------------------------------------------------
 
-		link_coll->SetPos(pos.x + 9, pos.y + 1);
+		link_coll->SetPos(pos.x , pos.y );
 	return ret;
 }
 
@@ -742,23 +742,23 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (link_coll == c1  && (c2->type == COLLIDER_WALL || c2->type == COLLIDER_BUSH) && link_coll != nullptr)
 	{
 		//this magic numbers are because of the dispalcement of link box NEED to fix it
-		if (pos.y + 4 >= c2->rect.y + c2->rect.h)
+		if (pos.y + PLAYER_COLL_Y_OFFSET >= c2->rect.y + c2->rect.h)
 		{
 			pos.y = c2->rect.y + c2->rect.h;
 		}
 
-		else if (pos.y + c1->rect.h - 4 <= c2->rect.y)
+		else if (pos.y + c1->rect.h - PLAYER_COLL_Y_OFFSET <= c2->rect.y)
 		{
 			pos.y = c2->rect.y - c1->rect.h;
 		}
 		else if (c1->rect.x + c1->rect.w >= c2->rect.x && c1->rect.x <= c2->rect.x)
 		{
-			pos.x = c2->rect.x - c2->rect.w;
+			pos.x = c2->rect.x - c1->rect.w - PLAYER_COLL_X_OFFSET;
 		}
 		else if (pos.x  <= c2->rect.x + c2->rect.w)
 		{
 			//polish this one 
-			pos.x = c2->rect.x + c2->rect.w;
+			pos.x = c2->rect.x + c2->rect.w - PLAYER_COLL_X_OFFSET;
 		}
 
 		

@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "EntityManager.h"
+#include <vector>
 
 struct SDL_Texture;
 //UI forward declarations
@@ -43,8 +44,8 @@ public:
 private:
 
 	SDL_Texture* debug_tex;
-	Entity* bush1;
-	SDL_Rect bush1_rect;
+	std::vector<Entity*> Bushes;
+	SDL_Rect Bush_Rect;
 
 	Window* window;
 	Label* win_title;

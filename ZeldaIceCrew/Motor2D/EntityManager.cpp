@@ -16,7 +16,7 @@ EntityManager::~EntityManager() {
 Entity::Entity() {
 }
 
-Entity::Entity(ENTITYTYPE _t, SDL_Texture * _tex, SDL_Rect * _rect, iPoint _pos)
+Entity::Entity(ENTITYTYPE _t, SDL_Texture * _tex, SDL_Rect  _rect, iPoint _pos)
 {
 	type = _t;
 	tex = _tex;
@@ -28,7 +28,7 @@ Entity::Entity(ENTITYTYPE _t, SDL_Texture * _tex, SDL_Rect * _rect, iPoint _pos)
 
 Entity:: ~Entity() {
 }
-Entity* EntityManager::CreateEntity(ENTITYTYPE type, SDL_Texture * _tex, SDL_Rect * _rect, iPoint _pos) {
+Entity* EntityManager::CreateEntity(ENTITYTYPE type, SDL_Texture * _tex, SDL_Rect  _rect, iPoint _pos) {
 
 	Entity* ret = nullptr;
 
@@ -96,14 +96,14 @@ void Item::Update(float dt)
 //!ITEM
 
 //BUSH
-Bush::Bush(ENTITYTYPE _t, SDL_Texture* _tex, SDL_Rect* _rect, iPoint _pos)
+Bush::Bush(ENTITYTYPE _t, SDL_Texture* _tex, SDL_Rect _rect, iPoint _pos)
 {
 	type = _t;
 	tex = _tex;
 	rect = _rect;
 	pos.x = _pos.x;
 	pos.y = _pos.y;
-	collider = App->collisions->AddCollider(BUSH_RECT, COLLIDER_BUSH,App->entitymanager);
+	collider = App->collisions->AddCollider({ pos.x,pos.y,rect.w,rect.h }, COLLIDER_BUSH, App->entitymanager);
 }
 void Bush::Update(float dt) 
 {
