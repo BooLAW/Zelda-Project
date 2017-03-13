@@ -47,6 +47,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	bush1_rect = { 20,20,10,10 };
+
 	debug_tex = App->tex->Load("textures/mario_test.jpg");
 
 	App->player->SetPosTile(2, 2);
@@ -121,7 +122,7 @@ bool j1Scene::Update(float dt)
 		p = App->map->WorldToMap(p.x, p.y);
 		p = App->map->MapToWorld(p.x, p.y);
 		App->win->SetTitle(title.GetString());
-		App->render->Blit(debug_tex, p.x, p.y);
+		//App->render->Blit(debug_tex, p.x, p.y);
 	}
 	return true;
 }

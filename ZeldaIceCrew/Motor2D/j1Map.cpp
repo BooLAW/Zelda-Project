@@ -31,14 +31,11 @@ void j1Map::Draw()
 {
 	if(map_loaded == false)
 		return;
-
-	std::list<MapLayer*>::iterator item = data.layers.begin();
-
-	for(; item != data.layers.end(); item++)
+	for(std::list<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end(); item++)
 	{
 		MapLayer* layer = (*item);
 
-		if(layer->properties.Get("Nodraw") != 0)
+		if(layer->properties.Get("NoDraw") == 1)
 			continue;
 
 		for(int y = 0; y < data.height; ++y)
@@ -67,7 +64,6 @@ int Properties::Get(const char* value, int default_value) const
 		if ((*item)->name == value)
 			return (*item)->value;
 	}
-
 	return default_value;
 }
 
@@ -468,8 +464,8 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	{
 		MapLayer* layer = (*item);
 		
-	/*	if(layer->properties.Get("Navigation", 0) == 0)
-			continue;*/
+		if(layer->properties.Get("Navigation",0) == 0)
+			continue;
 
 		uchar* map = new uchar[layer->width*layer->height];
 		memset(map, 1, layer->width*layer->height);
@@ -487,12 +483,6 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 				if(tileset != NULL)
 				{
 					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
-					
-				/*	TileData* ts = tileset->GetTileType(tile_id);
-					if(ts != NULL)
-					{
-						map[i] = ts->properties.Get("walkable", 0);
-					}*/
 				}
 			}
 		}
