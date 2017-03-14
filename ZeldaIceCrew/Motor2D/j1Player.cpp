@@ -741,7 +741,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (link_coll == c1  && (c2->type == COLLIDER_WALL || c2->type == COLLIDER_BUSH) && link_coll != nullptr)
 	{
-		//this magic numbers are because of the dispalcement of link box NEED to fix it
+		
 		if (pos.y + PLAYER_COLL_Y_OFFSET >= c2->rect.y + c2->rect.h)
 		{
 			pos.y = c2->rect.y + c2->rect.h;
@@ -753,12 +753,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		}
 		else if (c1->rect.x + c1->rect.w >= c2->rect.x && c1->rect.x <= c2->rect.x)
 		{
-			pos.x = c2->rect.x - c1->rect.w - PLAYER_COLL_X_OFFSET;
+			pos.x = c2->rect.x - c1->rect.w ;
 		}
 		else if (pos.x  <= c2->rect.x + c2->rect.w)
 		{
 			//polish this one 
-			pos.x = c2->rect.x + c2->rect.w - PLAYER_COLL_X_OFFSET;
+			pos.x = c2->rect.x + c2->rect.w ;
 		}
 
 		
