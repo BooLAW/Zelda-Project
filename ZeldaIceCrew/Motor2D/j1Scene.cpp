@@ -47,7 +47,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	Bush_Rect = { 8*32,2*32,32,32 };
-
+	House_Rect = {0,0,195,195};
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 
 	App->player->SetPosTile(2, 2);
@@ -55,7 +55,7 @@ bool j1Scene::Start()
 	App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
-
+	//we can do that with an iterator that recieves the positions readed from the xml file
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(2, 17)));   
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(2, 18)));   
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(2, 19)));
@@ -75,6 +75,8 @@ bool j1Scene::Start()
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(27, 22)));
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(27, 23)));
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(28, 23)));
+	House = (App->entitymanager->CreateEntity(bush, nullptr, House_Rect, App->map->MapToWorld(9, 11)));
+
 
 	return true;
 }
