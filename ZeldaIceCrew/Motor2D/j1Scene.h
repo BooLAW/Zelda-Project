@@ -1,7 +1,9 @@
-#ifndef __j1SCENE_H__
+ #ifndef __j1SCENE_H__
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "EntityManager.h"
+#include <vector>
 
 struct SDL_Texture;
 //UI forward declarations
@@ -12,28 +14,6 @@ class Button;
 class Window;
 class Selector;
 class Windowed_Image;
-
-class element {
-public:
-	SDL_Texture* texture = nullptr;
-	PhysBody* physbody = nullptr;
-	SDL_Rect box;
-	iPoint position;
-public:
-	element() {}
-	//call a constructure	
-	element(SDL_Texture* texture, uint rect_x, uint rect_y, uint width, uint height, uint pos_x, uint pos_y)
-	{
-		(this)->texture = texture;
-		box.x = rect_x;
-		box.y = rect_y;
-		box.w = width;
-		box.h = height;
-		position.x = pos_x;
-		position.y = pos_y;
-	}
-	~element() {}
-};
 class j1Scene : public j1Module
 {
 public:
@@ -64,7 +44,10 @@ public:
 private:
 
 	SDL_Texture* debug_tex;
-	element* column1;
+	std::vector<Entity*> Bushes;
+	SDL_Rect Bush_Rect;
+	Entity* House;
+	SDL_Rect House_Rect;
 
 	Window* window;
 	Label* win_title;

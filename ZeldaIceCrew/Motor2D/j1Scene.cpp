@@ -46,17 +46,38 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-
-	debug_tex = App->tex->Load("maps/path.png");
+	Bush_Rect = { 8*32,2*32,32,32 };
+	House_Rect = {0,0,195,195};
+	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 
 	App->player->SetPosTile(2, 2);
 
 	App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
+	//we can do that with an iterator that recieves the positions readed from the xml file
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(2, 17)));   
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(2, 18)));   
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(2, 19)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(3, 17)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(3, 18)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(3, 19)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(14, 17)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(15, 17)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(14, 18)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(15, 18)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(10, 4)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(11, 3)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(17, 3)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(19, 4)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(26, 21)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(26, 22)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(27, 22)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(27, 23)));
+	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(28, 23)));
+	House = (App->entitymanager->CreateEntity(bush, nullptr, House_Rect, App->map->MapToWorld(9, 11)));
 
-	column1 = new element(debug_tex,0,0,20,20,200,200);//test
-	
+
 	return true;
 }
 
@@ -103,7 +124,12 @@ bool j1Scene::Update(float dt)
 		App->debug = !App->debug;
 
 	App->map->Draw();
-	App->render->Blit(column1->texture, column1->position.x, column1->position.y);
+
+	for (int i = 0; i < Bushes.size(); i++) {
+		App->render->Blit(Bushes[i]->tex, Bushes[i]->pos.x, Bushes[i]->pos.y, &Bushes[i]->rect);
+
+	}
+	
 	// Debug pathfinding ------------------------------
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -121,10 +147,8 @@ bool j1Scene::Update(float dt)
 		p = App->map->WorldToMap(p.x, p.y);
 		p = App->map->MapToWorld(p.x, p.y);
 		App->win->SetTitle(title.GetString());
-		App->render->Blit(debug_tex, p.x, p.y);
-
+		//App->render->Blit(debug_tex, p.x, p.y);
 	}
-
 	return true;
 }
 

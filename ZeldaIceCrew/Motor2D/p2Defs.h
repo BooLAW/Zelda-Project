@@ -39,6 +39,12 @@
 #define NULLCOLOR {0,0,0,0}
 #define NULLPOINT {0,0}
 #define COLLIDER_MAX 200
+
+#define PLAYER_COLL_X_OFFSET 8
+#define PLAYER_COLL_Y_OFFSET 4
+
+
+#define LINK_RECT {0,0,32,48}
 typedef unsigned int uint;
 typedef unsigned __int32 uint32;
 typedef unsigned __int64 uint64;

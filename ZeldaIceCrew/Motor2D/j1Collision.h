@@ -1,16 +1,18 @@
 #ifndef __ModuleCollision_H__
 #define __ModuleCollision_H__
 
-#define MAX_COLLIDERS 500
+#define MAX_COLLIDERS 50
 
 #include "j1Module.h"
 #include "p2Defs.h"
-
+#include "Animation.h"
+class SDL_Rect;
 enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
 	COLLIDER_WALL,
 	COLLIDER_PLAYER,
+	COLLIDER_BUSH
 
 };
 
@@ -45,10 +47,10 @@ public:
 	~j1Collision();
 
 	bool PreUpdate();
-	bool Update();
+	bool Update(float dt);
 	bool CleanUp();
 
-	//Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Module* callback = nullptr);
+	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	bool EraseCollider(Collider* collider);
 	void DebugDraw();
 

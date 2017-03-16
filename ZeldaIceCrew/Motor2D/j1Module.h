@@ -14,6 +14,7 @@
 class j1App;
 class PhysBody;
 class b2Fixture;
+class Collider;
 
 class j1Module
 {
@@ -75,8 +76,8 @@ public:
 	{
 		return true;
 	}
-	//PHYSICS
-	virtual void OnCollision(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB)
+	//COLLISIONS
+	virtual void OnCollision(Collider* bodyA, Collider* bodyB)
 	{
 
 	}

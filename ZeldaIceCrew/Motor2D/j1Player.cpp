@@ -1,5 +1,6 @@
 #include "j1Player.h"
 #include "j1Input.h"
+#include "j1Collision.h"
 
 j1Player::j1Player()
 {
@@ -23,7 +24,7 @@ bool j1Player::Start()
 	LOG("Player Start");
 
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
-	
+	link_coll = App->collisions->AddCollider(LINK_RECT, COLLIDER_PLAYER, this); 
 	//Idle
 	{
 		sprites[Idle][Up][0] = {link_x*3, link_y*2, link_width, link_height };
@@ -588,7 +589,7 @@ bool j1Player::Update(float dt)
 					action_blit = Idle;
 			}
 
-	
+			last_pos = pos;
 			// Direction/Atk
 			// This inherently bad, you are ignoring 6 more buttons (X Y L R SELECT START)
 			//It would work for gamepad, but not for keyboard
@@ -694,6 +695,10 @@ bool j1Player::Update(float dt)
 	//!_Actions																													
 	
 	//!_Graphics
+
+	// MODIFY COLLISION -------------------------------------------------
+
+		link_coll->SetPos(pos.x , pos.y );
 	return ret;
 }
 
@@ -730,4 +735,40 @@ bool j1Player::SetPosTile(int x, int y)
 Point<float> j1Player::GetPos()
 {
 	return pos;
+}
+
+void j1Player::OnCollision(Collider* c1, Collider* c2)
+{
+	if (link_coll == c1  && (c2->type == COLLIDER_WALL || c2->type == COLLIDER_BUSH) && link_coll != nullptr)
+	{
+		
+		if (pos.y + PLAYER_COLL_Y_OFFSET >= c2->rect.y + c2->rect.h)
+		{
+			pos.y = c2->rect.y + c2->rect.h;
+		}
+
+		else if (pos.y + c1->rect.h - PLAYER_COLL_Y_OFFSET <= c2->rect.y)
+		{
+			pos.y = c2->rect.y - c1->rect.h;
+		}
+		else if (c1->rect.x + c1->rect.w >= c2->rect.x && c1->rect.x <= c2->rect.x)
+		{
+			pos.x = c2->rect.x - c1->rect.w ;
+		}
+		else if (pos.x  <= c2->rect.x + c2->rect.w)
+		{
+			//polish this one 
+			pos.x = c2->rect.x + c2->rect.w ;
+		}
+
+		
+	}
+	// dying collision
+
+	/*if (self == c1 && self != nullptr && self->type == COLLIDER_PLAYER && (c2->type == COLLIDER_ENEMY_SHOT || c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_TRUCK || c2->type == COLLIDER_RED_SOLDIER) && !destroyed)
+	{
+		App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
+		destroyed = true;
+		Disable();
+	}*/
 }

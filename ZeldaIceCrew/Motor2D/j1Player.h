@@ -21,7 +21,7 @@
 #define link_height 107
 #define link_y 110
 #define link_x 102
-
+class Collider;
 enum Direction {
 	FirstDir = 0,
 	Up,
@@ -52,6 +52,7 @@ public:
 
 private:
 	Point<float> pos;
+	Point<float> last_pos;
 	Point<float> pl_speed;
 
 	SDL_Texture* Link_Movement = nullptr;
@@ -72,6 +73,7 @@ private:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+	void OnCollision(Collider* c1, Collider* c2);
 
 public:
 	bool SetPosTile(int x, int y);
@@ -82,6 +84,7 @@ public:
 	bool dir_override = false; // Overrides directions expressed if there is an action that keeps movement but changes view direction being done at the time
 	bool anim_override = false;
 	bool shield = true;
+	Collider* link_coll;
 
 };
 

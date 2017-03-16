@@ -11,7 +11,7 @@ struct Properties
 	struct Property
 	{
 		p2SString name;
-		int value;
+		bool value;
 	};
 
 	~Properties()
