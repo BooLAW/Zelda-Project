@@ -526,7 +526,12 @@ bool j1Player::Start()
 bool j1Player::Update(float dt)
 {
 	bool ret = true;
-
+	//if (alive == false)
+	//{
+	//	DyingRestart();
+	//		action_blit = PickUp;//change to wake Up animation when we have it
+	//	return ret;
+	//}
 	// Logic
 	if (action == false) {
 		//Movement
@@ -764,11 +769,21 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		
 	}
 	// dying collision
-
-	/*if (self == c1 && self != nullptr && self->type == COLLIDER_PLAYER && (c2->type == COLLIDER_ENEMY_SHOT || c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_TRUCK || c2->type == COLLIDER_RED_SOLDIER) && !destroyed)
+	if (link_coll == c1 && link_coll != nullptr && link_coll->type == COLLIDER_PLAYER && (c2->type == COLLIDER_BUSH || c2->type == COLLIDER_ENEMY) && alive)
 	{
-		App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
-		destroyed = true;
-		Disable();
-	}*/
+		curr_life_points -= 1;
+		if (curr_life_points == 0)
+			alive = false;
+		//Add extra particles?
+		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
+		//function to restart in the house()
+	}
+}
+void j1Player::DyingRestart()
+{
+	alive = true;
+	pos = ORIGIN_RESTART;
+	curr_life_points = max_life_points;
+	//add more features to discuss by the designer
+	action = true;
 }
