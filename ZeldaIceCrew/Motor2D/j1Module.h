@@ -93,6 +93,24 @@ public:
 	virtual void SaveCVar(std::string& cvar_name, pugi::xml_node& node) const {
 
 	}
+
+	void Enable()
+	{
+		if (active == false)
+		{
+			active = true;
+			Start();
+		}
+	}
+
+	void Disable()
+	{
+		if (active == true)
+		{
+			active = false;
+			CleanUp();
+		}
+	}
 public:
 
 	p2SString	name;

@@ -24,6 +24,8 @@ class j1Collision;
 //class j1Console;			
 class j1Player;
 class EntityManager;
+class HouseScene;
+class ModuleFadeToBlack;
 
 class j1App
 {
@@ -113,6 +115,8 @@ public:
 	j1Collision*			collisions = NULL;
 	j1Player*			player = NULL;
 	EntityManager*      entitymanager = NULL;
+	HouseScene*			housescene = NULL;
+	ModuleFadeToBlack*  fadetoblack = NULL;
 
 	bool			    debug_mode = false;
 private:

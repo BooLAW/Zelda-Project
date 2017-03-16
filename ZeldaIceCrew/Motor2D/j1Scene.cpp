@@ -12,7 +12,8 @@
 #include "j1Scene.h"
 #include "j1Fonts.h"
 #include "j1Player.h"
-
+#include "HouseScene.h"
+#include "ModuleFadeToBlack.h"
 #define MAX_TABS 2
 
 j1Scene::j1Scene() : j1Module()
@@ -29,7 +30,7 @@ bool j1Scene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
+	App->housescene->active = false;
 	return ret;
 }
 
@@ -37,7 +38,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	
-	if (App->map->Load("FirstMap.tmx") == true)
+	if (App->map->Load("untitled.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -159,6 +160,11 @@ bool j1Scene::PostUpdate()
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		App->fadetoblack->FadeToBlack(App->scene, App->housescene);
+	}
+		
+	
 
 	return ret;
 }
@@ -167,6 +173,7 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
+	App->map->Disable();
+	
 	return true;
 }

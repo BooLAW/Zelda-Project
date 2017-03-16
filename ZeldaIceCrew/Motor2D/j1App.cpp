@@ -19,6 +19,8 @@
 #include "j1App.h"
 #include "j1Player.h"
 #include "j1Collision.h"
+#include "ModuleFadeToBlack.h"
+#include "HouseScene.h"
 //#include "j1Console"
 #include "EntityManager.h"
 
@@ -42,7 +44,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//console = new j1Console();
 	player = new j1Player();
 	entitymanager = new EntityManager();
-
+	housescene = new HouseScene();
+	fadetoblack = new ModuleFadeToBlack();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -56,14 +59,17 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(font);
 	AddModule(gui);
 	AddModule(entitymanager);
+	AddModule(housescene);
 	AddModule(scene);
 	AddModule(collisions);
 	//AddModule(console);
+	
 	AddModule(player);
 	
-
+	AddModule(fadetoblack);
 	// render last to swap buffer
 	AddModule(render);
+	
 
 	PERF_PEEK(ptimer);
 }
