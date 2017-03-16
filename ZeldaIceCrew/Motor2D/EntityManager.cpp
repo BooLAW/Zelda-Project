@@ -13,35 +13,34 @@ EntityManager::~EntityManager() {
 
 
 }
-Entity::Entity() {
-}
 
-Entity::Entity(ENTITYTYPE _t, SDL_Texture * _tex, SDL_Rect  _rect, iPoint _pos)
-{
-	type = _t;
-	tex = _tex;
-	rect = _rect;
-	pos.x = _pos.x;
-	pos.y = _pos.y;
-}
-
-
-Entity:: ~Entity() {
-}
-Entity* EntityManager::CreateEntity(ENTITYTYPE type, SDL_Texture * _tex, SDL_Rect  _rect, iPoint _pos) {
+Entity* EntityManager::CreateEntity(uint type, uint subtype) {
 
 	Entity* ret = nullptr;
 
 	switch (type) {
 	case item:
-		ret = new Item();
+		ret = new Item(subtype);
 		break;
-	case bush:
-		ret = new Bush(type,_tex,_rect,_pos);
+	case drop:
+		ret = new Drop(subtype);
 		break;
-	default:
+	case block:
+		ret = new Block(subtype);
+		break;
+	case enemy:
+		ret = new Enemy(subtype);
+		break;
+	case bomb:
+		ret = new Bomb();
+		break;
+	case unknown:
+		ret = nullptr;
+		LOG("Trying to create an Unknown Entity Type ID: %d", type);
 		break;
 	}
+
+	ret->type = type;
 
 	if (ret != nullptr) {
 		entities.push_back(ret);
@@ -52,6 +51,8 @@ Entity* EntityManager::CreateEntity(ENTITYTYPE type, SDL_Texture * _tex, SDL_Rec
 
 	return ret;
 }
+
+
 bool EntityManager::Update(float dt) {
 
 	for (int i = 0; i < entities.size(); i++) {
@@ -69,44 +70,4 @@ void EntityManager::DestroyEntities()
 		}
 	}
 } 
-void EntityManager::OnCollision(Collider* c1, Collider* c2)
-{
 
-}
-
-void Entity::Update(float dt) {
-
-
-}
-
-bool Entity::Draw()
-{
-	bool ret = NULL;
-
-
-
-	return ret;
-
-} // will return NULL if there's an error
-//ITEM
-void Item::Update(float dt) 
-{
-	
-}
-//!ITEM
-
-//BUSH
-Bush::Bush(ENTITYTYPE _t, SDL_Texture* _tex, SDL_Rect _rect, iPoint _pos)
-{
-	type = _t;
-	tex = _tex;
-	rect = _rect;
-	pos.x = _pos.x;
-	pos.y = _pos.y;
-	collider = App->collisions->AddCollider({ pos.x,pos.y,rect.w,rect.h }, COLLIDER_BUSH, App->entitymanager);
-}
-void Bush::Update(float dt) 
-{
-	
-}
-//!BUSH

@@ -21,7 +21,9 @@
 #define link_height 107
 #define link_y 110
 #define link_x 102
-class Collider;
+
+struct Collider;
+
 enum Direction {
 	FirstDir = 0,
 	Up,
