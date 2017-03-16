@@ -20,6 +20,7 @@ public:
 
 
 public:
+	Drop* CreateDrop(uint type);
 
 
 };

@@ -14,51 +14,20 @@ EntityManager::~EntityManager() {
 
 }
 
-Entity* EntityManager::CreateEntity(uint type, uint subtype) {
-
-	Entity* ret = nullptr;
-
-	switch (type) {
-	case item:
-		ret = new Item(subtype);
-		break;
-	case drop:
-		ret = new Drop(subtype);
-		break;
-	case block:
-		ret = new Block(subtype);
-		break;
-	case enemy:
-		ret = new Enemy(subtype);
-		break;
-	case bomb:
-		ret = new Bomb();
-		break;
-	case unknown:
-		ret = nullptr;
-		LOG("Trying to create an Unknown Entity Type ID: %d", type);
-		break;
-	}
-
-	ret->type = type;
-
-	if (ret != nullptr) {
-		entities.push_back(ret);
-	}
-	else {
-		LOG("ERROR CREATING ENTITY type: %d", type);
-	}
-
-	return ret;
-}
-
-
 bool EntityManager::Update(float dt) {
 
 	for (int i = 0; i < entities.size(); i++) {
 		entities[i]->Update(dt);
 	}
 	return true;
+}
+
+void EntityManager::PushEntity(Entity * ent)
+{
+	if (ent != nullptr)
+		entities.push_back(ent);
+	else
+		LOG("Error Pushing Entity to Entities List");
 }
 
 

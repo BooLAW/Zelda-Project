@@ -20,7 +20,7 @@ public:
 
 
 public:
-
+	Block* CreateBlock(uint type);
 
 };
 

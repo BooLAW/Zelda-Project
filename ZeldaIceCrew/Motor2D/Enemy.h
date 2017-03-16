@@ -1,6 +1,7 @@
 #ifndef __ENEMY_H__
 #define __ENEMY_H__
 
+#include "j1App.h"
 #include "EntityManager.h"
 #include "Entity.h"
 
@@ -20,7 +21,7 @@ public:
 
 
 public:
-
+	Enemy* CreateEnemy(ENEMYTYPE type);
 
 };
 

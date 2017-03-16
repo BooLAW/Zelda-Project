@@ -18,6 +18,10 @@ public:
 	Item(uint subtype);
 	virtual ~Item() {};
 
+
+public:
+	Item* CreateItem(uint type);
+
 };
 
 
