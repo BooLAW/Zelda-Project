@@ -9,11 +9,11 @@ class Entity;
 class Bomb : public Entity {
 public:
 	Bomb() {};
-	~Bomb() {};
+	virtual ~Bomb() {};
 
 
 public:
-
+	Bomb* CreateBomb();
 
 };
 

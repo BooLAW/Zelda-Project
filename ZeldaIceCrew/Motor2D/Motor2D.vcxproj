@@ -76,6 +76,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Drop.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EntityManager.cpp" />

@@ -76,6 +76,7 @@
     <ClCompile Include="Item.cpp">
       <Filter>Desenvolupament  ========\Modules\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Bomb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">

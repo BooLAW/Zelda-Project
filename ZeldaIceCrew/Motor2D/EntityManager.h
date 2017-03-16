@@ -35,8 +35,7 @@ public:
 	~EntityManager();
 	
 	bool Update(float dt);
-
-	Entity* CreateEntity(uint type, uint subtype);
+	void PushEntity(Entity* ent);
 	void DestroyEntities();
 	
 	//virtual void OnCollision(Collider* c1, Collider* c2);
