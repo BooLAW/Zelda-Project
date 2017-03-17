@@ -13,15 +13,62 @@ enum ENEMYTYPE {
 };
 
 class Enemy : public Entity {
+protected:
+	enum DAMAGETYPE {
+		melee = 0,
+		projectile,
+		__LAST_DMGTYPE
+	};
+
+	enum AITYPE {
+		path = 0,
+		chase,
+		distance,
+		no_move,
+		__LAST_AITYPE
+	};
+
 public:
 	Enemy() {};
 	Enemy(uint subtype);
 	virtual ~Enemy() {};
 
 
-
 public:
 	Enemy* CreateEnemy(ENEMYTYPE type);
+
+	virtual bool Start();
+
+	virtual void Spawn() {}
+	virtual bool Update() {
+		return true;
+	}
+	virtual bool Move() {
+		return true;
+	}
+	virtual bool Attack() {
+		return true;
+	}
+
+	virtual bool CleanUp() {
+		return true;
+	}
+
+public:
+	ENEMYTYPE EnemyType;
+
+	struct EnemyStats {
+		uint Hp;
+		uint Speed;
+		uint Power;
+
+		bool Flying = false;
+	
+	} stats;
+
+	bool DmgType[DAMAGETYPE::__LAST_DMGTYPE];
+	AITYPE AIType;
+
 
 };
 
