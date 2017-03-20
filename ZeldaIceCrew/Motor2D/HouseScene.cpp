@@ -12,6 +12,8 @@
 #include "HouseScene.h"
 #include "j1Fonts.h"
 #include "j1Player.h"
+#include "j1Scene.h"
+#include "ModuleFadeToBlack.h"
 
 #define MAX_TABS 2
 
@@ -49,7 +51,7 @@ bool HouseScene::Start()
 	Bush_Rect = { 8 * 32,2 * 32,32,32 };
 	House_Rect = { 0,0,195,195 };
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
-
+	App->player->Enable();
 	App->player->SetPosTile(2, 2);
 
 	App->render->CamBoundOrigin();
@@ -141,6 +143,9 @@ bool HouseScene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		App->fadetoblack->FadeToBlack(App->housescene, App->scene, 2.0f);
+	}
 	return ret;
 }
 

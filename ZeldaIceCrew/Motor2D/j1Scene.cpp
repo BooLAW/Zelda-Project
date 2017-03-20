@@ -173,7 +173,12 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	App->map->Disable();
+	App->tex->UnLoad(debug_tex);
+	App->collisions->CleanUp();
+
+
+	App->player->Disable();
+	App->map->Disable();	
 	
 	return true;
 }

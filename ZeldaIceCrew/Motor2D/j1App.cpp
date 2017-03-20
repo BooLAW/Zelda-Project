@@ -123,6 +123,9 @@ bool j1App::Awake()
 
 	}
 
+	housescene->Disable();
+
+
 	PERF_PEEK(ptimer);
 
 	return ret;
