@@ -71,13 +71,16 @@ private:
 	bool Awake();
 	bool Start();
 	bool Update(float dt);
+	
 	bool PostUpdate(float dt);
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 
 public:
 	bool SetPosTile(int x, int y);
+	bool SetPos(int x, int y);
 	Point<float> GetPos();
+	void SetDirection(Direction dir);
 
 	bool action = false; // Actions: Throw, Pull, Slash,...
 	int action_blit;

@@ -51,8 +51,9 @@ bool j1Scene::Start()
 	House_Rect = {0,0,195,195};
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 
-	App->player->SetPosTile(2, 2);
-
+	App->player->SetPosTile(7, 7);
+	App->render->camera.x = 0;
+	App->render->camera.y = 0;
 	App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
@@ -77,7 +78,7 @@ bool j1Scene::Start()
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(27, 23)));
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(28, 23)));
 	House = (App->entitymanager->CreateEntity(bush, nullptr, House_Rect, App->map->MapToWorld(9, 11)));
-	App->collisions->AddCollider({11*32+16,16*32+16,32,32 }, COLLIDER_HOUSE_DOOR);
+	App->collisions->AddCollider({11*32+16,16*32+16,32,32 }, COLLIDER_HOUSE_ENTRANCE);
 
 	return true;
 }

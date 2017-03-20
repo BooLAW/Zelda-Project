@@ -704,6 +704,9 @@ bool j1Player::Update(float dt)
 		link_coll->SetPos(pos.x , pos.y );
 	return ret;
 }
+void j1Player::SetDirection(Direction dir) {
+	curr_dir = dir;
+}
 
 bool j1Player::PostUpdate(float dt)
 {
@@ -731,6 +734,15 @@ bool j1Player::SetPosTile(int x, int y)
 
 	pos.x = App->map->MapToWorld(x, y).x;
 	pos.y = App->map->MapToWorld(x, y).y;
+
+	return ret;
+}
+bool j1Player::SetPos(int x, int y)
+{
+	bool ret = true;
+
+	pos.x = x;
+	pos.y = y;
 
 	return ret;
 }
@@ -766,7 +778,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		
 		
 	}
-	else if (link_coll == c1 && c2->type == COLLIDER_HOUSE_DOOR) {
+	else if (link_coll == c1 && c2->type == COLLIDER_HOUSE_ENTRANCE) {
 		App->fadetoblack->FadeToBlack(App->scene, App->housescene);
 	}
 	// dying collision

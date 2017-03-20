@@ -48,15 +48,18 @@ bool HouseScene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-	Bush_Rect = { 8 * 32,2 * 32,32,32 };
-	House_Rect = { 0,0,195,195 };
-	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
+	
+	
 	App->player->Enable();
-	App->player->SetPosTile(2, 2);
+	App->player->SetPos(6.5 * 32, 8 * 32);
+	App->player->SetDirection(Up);
+	
 
-	App->render->CamBoundOrigin();
+	
 
+	App->render->MoveCam(256, 128);
 	App->render->ScaleCamBoundaries(300);
+	
 	//we can do that with an iterator that recieves the positions readed from the xml file
 	
 	
@@ -69,6 +72,7 @@ bool HouseScene::Start()
 bool HouseScene::PreUpdate()
 {
 	// debug pathfing ------------------
+	
 	if (App->debug == true) {
 		static iPoint origin;
 		static bool origin_selected = false;
