@@ -12,14 +12,23 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_BUSH] = true;
+	matrix[COLLIDER_WALL][COLLIDER_HOUSE_DOOR] = false;
+
+	matrix[COLLIDER_HOUSE_DOOR][COLLIDER_HOUSE_DOOR] = false;
+	matrix[COLLIDER_HOUSE_DOOR][COLLIDER_WALL] = false;
+	matrix[COLLIDER_HOUSE_DOOR][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_HOUSE_DOOR][COLLIDER_BUSH] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_BUSH] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_HOUSE_DOOR] = true;
+
 
 	matrix[COLLIDER_BUSH][COLLIDER_BUSH] = false;
 	matrix[COLLIDER_BUSH][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_BUSH][COLLIDER_WALL] = true;
+	matrix[COLLIDER_BUSH][COLLIDER_HOUSE_DOOR] = false;
 
 }
 
@@ -108,6 +117,9 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_WALL: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+		case COLLIDER_HOUSE_DOOR:
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
+
 			break;
 
 		}

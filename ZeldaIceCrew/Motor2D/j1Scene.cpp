@@ -38,7 +38,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	
-	if (App->map->Load("untitled.tmx") == true)
+	if (App->map->Load("FirstMap.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -77,7 +77,7 @@ bool j1Scene::Start()
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(27, 23)));
 	Bushes.push_back(App->entitymanager->CreateEntity(bush, debug_tex, Bush_Rect, App->map->MapToWorld(28, 23)));
 	House = (App->entitymanager->CreateEntity(bush, nullptr, House_Rect, App->map->MapToWorld(9, 11)));
-
+	App->collisions->AddCollider({11*32+16,16*32+16,32,32 }, COLLIDER_HOUSE_DOOR);
 
 	return true;
 }

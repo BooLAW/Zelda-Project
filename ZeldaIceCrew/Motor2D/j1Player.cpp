@@ -1,6 +1,9 @@
 #include "j1Player.h"
 #include "j1Input.h"
 #include "j1Collision.h"
+#include "ModuleFadeToBlack.h"
+#include "j1Scene.h"
+#include "HouseScene.h"
 
 j1Player::j1Player()
 {
@@ -760,8 +763,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 			//polish this one 
 			pos.x = c2->rect.x + c2->rect.w ;
 		}
-
 		
+		
+	}
+	else if (link_coll == c1 && c2->type == COLLIDER_HOUSE_DOOR) {
+		App->fadetoblack->FadeToBlack(App->scene, App->housescene);
 	}
 	// dying collision
 
