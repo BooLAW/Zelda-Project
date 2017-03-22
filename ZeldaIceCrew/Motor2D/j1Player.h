@@ -91,7 +91,9 @@ public:
 						 // --status VARs
 	uint max_life_points = 6;
 	uint curr_life_points = 6;
-	uint rupees = 0;
+	uint rupees =100;
+	uint bombs = 100;
+	uint arrows = 100;
 	std::list<Entity*> key_items;
 
 	int action_blit;
