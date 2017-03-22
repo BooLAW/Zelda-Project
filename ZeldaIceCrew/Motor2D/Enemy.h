@@ -4,6 +4,7 @@
 #include "j1App.h"
 #include "EntityManager.h"
 #include "Entity.h"
+#include "j1Collision.h"
 
 class Entity;
 
@@ -40,15 +41,12 @@ public:
 	virtual bool Start();
 
 	virtual void Spawn() {}
-	virtual bool Update() {
-		return true;
-	}
-	virtual bool Move() {
-		return true;
-	}
-	virtual bool Attack() {
-		return true;
-	}
+
+	virtual bool Update();
+
+	virtual bool Move();
+
+	virtual bool Attack();
 
 	virtual bool CleanUp() {
 		return true;
@@ -69,6 +67,7 @@ public:
 	bool DmgType[DAMAGETYPE::__LAST_DMGTYPE];
 	AITYPE AIType;
 
+	Collider* HitBox;
 
 };
 

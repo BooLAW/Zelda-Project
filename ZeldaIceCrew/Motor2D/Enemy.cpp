@@ -40,3 +40,26 @@ bool Enemy::Start()
 
 	return ret;
 }
+
+bool Enemy::Update()
+{
+	bool ret = true;
+
+	Move();
+
+	Attack();
+
+	return ret;
+}
+
+bool Enemy::Move()
+{
+	bool ret = true;
+
+	switch (AIType) {
+
+
+	}
+
+	return ret;
+}
