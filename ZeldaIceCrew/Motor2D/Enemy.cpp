@@ -51,13 +51,13 @@ bool Enemy::Move()
 	}
 
 	if (aux_pos.x > pos.x)
-		curr_dir = Left;
+		curr_dir = Enemy::Direction::Left;
 	else if (aux_pos.x < pos.x)
-		curr_dir = Right;
+		curr_dir = Enemy::Direction::Right;
 	else if (aux_pos.y > pos.y)
-		curr_dir = Down;
+		curr_dir = Enemy::Direction::Down;
 	else if (aux_pos.y < pos.y)
-		curr_dir = Up;
+		curr_dir = Enemy::Direction::Up;
 
 	return ret;
 }
@@ -83,35 +83,35 @@ bool BSoldier::Start()
 {
 	bool ret = true;
 
-	curr_dir = Down;
+	curr_dir = Enemy::Direction::Down;
 
 	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Down][0] = { 30, 251, 44, 68 };
-		sprites[Down][1] = { 132, 249, 44, 70 };
+		sprites[Enemy::Direction::Down][0] = { 30, 251, 44, 68 };
+		sprites[Enemy::Direction::Down][1] = { 132, 249, 44, 70 };
 
-		sprites[Up][0] = { 30, 357, 44, 52 };
-		sprites[Up][1] = { 132, 357, 44, 52 };
+		sprites[Enemy::Direction::Up][0] = { 30, 357, 44, 52 };
+		sprites[Enemy::Direction::Up][1] = { 132, 357, 44, 52 };
 
-		sprites[Left][0] = { 214, 465, 64, 54 };
-		sprites[Left][1] = { 316, 465, 64, 54 };
+		sprites[Enemy::Direction::Left][0] = { 214, 465, 64, 54 };
+		sprites[Enemy::Direction::Left][1] = { 316, 465, 64, 54 };
 
-		sprites[Right][0] = { 30, 465, 64, 54 };
-		sprites[Right][1] = { 132, 465, 64, 54 };
+		sprites[Enemy::Direction::Right][0] = { 30, 465, 64, 54 };
+		sprites[Enemy::Direction::Right][1] = { 132, 465, 64, 54 };
 
-		animations[Down].PushBack(sprites[Down][0]);
-		animations[Down].PushBack(sprites[Down][1]);
+		animations[Enemy::Direction::Down].PushBack(sprites[Down][0]);
+		animations[Enemy::Direction::Down].PushBack(sprites[Down][1]);
 
-		animations[Up].PushBack(sprites[Up][0]);
-		animations[Up].PushBack(sprites[Up][1]);
+		animations[Enemy::Direction::Up].PushBack(sprites[Up][0]);
+		animations[Enemy::Direction::Up].PushBack(sprites[Up][1]);
 
-		animations[Left].PushBack(sprites[Left][0]);
-		animations[Left].PushBack(sprites[Left][1]);
+		animations[Enemy::Direction::Left].PushBack(sprites[Left][0]);
+		animations[Enemy::Direction::Left].PushBack(sprites[Left][1]);
 
-		animations[Right].PushBack(sprites[Right][0]);
-		animations[Right].PushBack(sprites[Right][1]);
+		animations[Enemy::Direction::Right].PushBack(sprites[Right][0]);
+		animations[Enemy::Direction::Right].PushBack(sprites[Right][1]);
 
 
 	}
@@ -122,7 +122,7 @@ bool BSoldier::Start()
 
 	stats.Flying = false;
 
-	for (int i = 0; i < LastDir; i++)
+	for (int i = 0; i < Enemy::Direction::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
 	HitBox = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
