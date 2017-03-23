@@ -8,7 +8,6 @@
 #include "j1Player.h"
 
 #define ENEMY_SPRITES_PER_SPD 0.05f
-#define COLLIDER_OFFSET_Y 
 
 class Entity;
 
@@ -20,6 +19,15 @@ enum ENEMYTYPE {
 class BSoldier;
 
 class Enemy : public Entity {
+protected:
+	enum Direction {
+		Up = 0,
+		Down,
+		Right,
+		Left,
+		LastDir
+	};
+
 protected:
 	enum DAMAGETYPE {
 		melee = 0,
@@ -82,7 +90,7 @@ public:
 
 	Collider* HitBox;
 
-	SDL_Rect sprites[Direction::LastDir][MAX_SPRITE_FRAMES];
+	SDL_Rect sprites[Direction::LastDir][8];
 	Animation animations[Direction::LastDir];
 
 	unsigned int curr_dir;
