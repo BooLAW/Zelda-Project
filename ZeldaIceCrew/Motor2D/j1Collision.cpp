@@ -111,7 +111,9 @@ void j1Collision::DebugDraw()
 		case COLLIDER_WALL: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
-
+		case COLLIDER_ENEMY: // Purple
+			App->render->DrawQuad(colliders[i]->rect, 204, 0, 204, alpha);
+			break;
 		}
 	}
 }

@@ -771,4 +771,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		destroyed = true;
 		Disable();
 	}*/
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY) {
+		// Hit
+		LOG("Player Hit");
+	}
+
 }

@@ -7,6 +7,9 @@
 #include "j1Collision.h"
 #include "j1Player.h"
 
+#define ENEMY_SPRITES_PER_SPD 0.05f
+#define COLLIDER_OFFSET_Y 
+
 class Entity;
 
 enum ENEMYTYPE {
@@ -35,7 +38,9 @@ protected:
 public:
 	Enemy() {};
 	Enemy(uint subtype);
-	virtual ~Enemy() {};
+	virtual ~Enemy() {
+		CleanUp();
+	};
 
 
 public:
@@ -48,20 +53,16 @@ public:
 
 	virtual bool Move();
 
-	virtual bool Attack() {
-		return true;
-	}
+	virtual bool Attack();
 
 	virtual bool CleanUp() {
 		if (HitBox != nullptr)
-			delete HitBox;
+			HitBox->to_delete = true;
 
 		return true;
 	}
 
-	virtual void Draw() {
-		App->render->Blit(Entity::GetTexture(), pos.x, pos.y, &animations[curr_dir].GetCurrentFrame());
-	}
+	virtual void Draw();
 
 public:
 	ENEMYTYPE EnemyType;
@@ -79,7 +80,6 @@ public:
 	bool DmgType[DAMAGETYPE::__LAST_DMGTYPE];
 	AITYPE AIType;
 
-	SDL_Rect HitRect;
 	Collider* HitBox;
 
 	SDL_Rect sprites[Direction::LastDir][MAX_SPRITE_FRAMES];

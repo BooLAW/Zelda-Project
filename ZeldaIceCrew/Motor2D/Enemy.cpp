@@ -15,9 +15,7 @@ bool Enemy::Start()
 
 	stats.Flying = false;
 
-	HitRect = { 0, 0, 16, 16 };
-
-	HitBox = new Collider(HitRect, COLLIDER_ENEMY);
+	HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 	AIType = no_move;	
@@ -28,22 +26,21 @@ bool Enemy::Start()
 
 void Enemy::Update(float dt)
 {
-	LOG("EnemyUpdate");
 	Move();
 
 	Attack();
 
 	Draw();
-
 }
 
 bool Enemy::Move()
 {
 	bool ret = true;
 
+	fPoint aux_pos = pos;
+
 	switch (AIType) {
-	case path:
-		pos.x++;
+	case path:	
 		break;
 	case chase:
 		break;
@@ -51,10 +48,35 @@ bool Enemy::Move()
 		break;
 	case no_move:
 		break;
+	}
 
+	if (aux_pos.x > pos.x)
+		curr_dir = Left;
+	else if (aux_pos.x < pos.x)
+		curr_dir = Right;
+	else if (aux_pos.y > pos.y)
+		curr_dir = Down;
+	else if (aux_pos.y < pos.y)
+		curr_dir = Up;
+
+	return ret;
+}
+
+bool Enemy::Attack()
+{
+	bool ret = true;
+
+	if (DmgType[melee] == true) {
+		HitBox->rect = animations[curr_dir].GetCurrentFrame();
+		HitBox->SetPos(pos.x, pos.y);
 	}
 
 	return ret;
+}
+
+void Enemy::Draw()
+{
+	App->render->Blit(Entity::GetTexture(), pos.x, pos.y, &animations[curr_dir].GetCurrentFrame());
 }
 
 bool BSoldier::Start()
@@ -63,49 +85,35 @@ bool BSoldier::Start()
 
 	curr_dir = Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Npcs.png"));
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Down][0] = { 3, 3, 16, 21 };
-		sprites[Down][1] = { 3, 3, 16, 21 };
-		sprites[Down][2] = { 3, 3, 16, 21 };
-		sprites[Down][3] = { 3, 3, 16, 21 };
+		sprites[Down][0] = { 30, 251, 44, 68 };
+		sprites[Down][1] = { 132, 249, 44, 70 };
 
-		sprites[Up][0] = { 3, 3, 16, 21 };
-		sprites[Up][1] = { 3, 3, 16, 21 };
-		sprites[Up][2] = { 3, 3, 16, 21 };
-		sprites[Up][3] = { 3, 3, 16, 21 };
+		sprites[Up][0] = { 30, 357, 44, 52 };
+		sprites[Up][1] = { 132, 357, 44, 52 };
 
-		sprites[Left][0] = { 3, 3, 16, 21 };
-		sprites[Left][1] = { 3, 3, 16, 21 };
-		sprites[Left][2] = { 3, 3, 16, 21 };
-		sprites[Left][3] = { 3, 3, 16, 21 };
+		sprites[Left][0] = { 214, 465, 64, 54 };
+		sprites[Left][1] = { 316, 465, 64, 54 };
 
-		sprites[Right][0] = { 3, 3, 16, 21 };
-		sprites[Right][1] = { 3, 3, 16, 21 };
-		sprites[Right][2] = { 3, 3, 16, 21 };
-		sprites[Right][3] = { 3, 3, 16, 21 };
+		sprites[Right][0] = { 30, 465, 64, 54 };
+		sprites[Right][1] = { 132, 465, 64, 54 };
 
 		animations[Down].PushBack(sprites[Down][0]);
 		animations[Down].PushBack(sprites[Down][1]);
-		animations[Down].PushBack(sprites[Down][2]);
-		animations[Down].PushBack(sprites[Down][3]);
 
 		animations[Up].PushBack(sprites[Up][0]);
 		animations[Up].PushBack(sprites[Up][1]);
-		animations[Up].PushBack(sprites[Up][2]);
-		animations[Up].PushBack(sprites[Up][3]);
 
 		animations[Left].PushBack(sprites[Left][0]);
 		animations[Left].PushBack(sprites[Left][1]);
-		animations[Left].PushBack(sprites[Left][2]);
-		animations[Left].PushBack(sprites[Left][3]);
 
 		animations[Right].PushBack(sprites[Right][0]);
 		animations[Right].PushBack(sprites[Right][1]);
-		animations[Right].PushBack(sprites[Right][2]);
-		animations[Right].PushBack(sprites[Right][3]);
+
+
 	}
 
 	stats.Hp = 3;
@@ -114,9 +122,10 @@ bool BSoldier::Start()
 
 	stats.Flying = false;
 
-	HitRect = { (int)pos.x, (int)pos.y - 5, 16, 16 };
+	for (int i = 0; i < LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
-	HitBox = new Collider(HitRect, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 
