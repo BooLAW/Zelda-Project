@@ -5,26 +5,6 @@ Enemy::Enemy(uint subtype)
 
 }
 
-Enemy * Enemy::CreateEnemy(ENEMYTYPE subtype)
-{
-	Enemy* ret = nullptr;
-
-	switch (type) {
-	case BlueSoldier:
-		ret = new BSoldier();
-		break;
-	default:
-		LOG("Unknown Enemy Type: %d", type);
-		break;
-	}
-
-	ret->type = enemy;
-
-	App->entitymanager->PushEntity(ret);
-
-	return ret;
-}
-
 bool Enemy::Start()
 {
 	bool ret = true;
@@ -48,7 +28,7 @@ bool Enemy::Start()
 
 void Enemy::Update(float dt)
 {
-
+	LOG("EnemyUpdate");
 	Move();
 
 	Attack();

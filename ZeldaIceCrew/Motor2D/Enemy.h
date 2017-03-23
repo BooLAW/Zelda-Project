@@ -39,13 +39,12 @@ public:
 
 
 public:
-	Enemy* CreateEnemy(ENEMYTYPE subtype);
 
 	virtual bool Start();
 
 	virtual void Spawn() {}
 
-	void Update(float dt);
+	virtual void Update(float dt);
 
 	virtual bool Move();
 

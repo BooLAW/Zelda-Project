@@ -14,6 +14,29 @@ EntityManager::~EntityManager() {
 
 }
 
+Enemy * EntityManager::CreateEnemy(uint subtype)
+{
+	Enemy* ret = nullptr;
+
+	switch (subtype) {
+	case BlueSoldier:
+		ret = new BSoldier();
+		break;
+	default:
+		LOG("Unknown Enemy Type: %d", subtype);
+		break;
+	}
+
+	ret->type = enemy;
+
+	ret->Start();
+
+	App->entitymanager->PushEntity(ret);
+
+	return ret;
+}
+
+
 bool EntityManager::Update(float dt) {
 
 	for (int i = 0; i < entities.size(); i++) {

@@ -51,6 +51,8 @@ private:
 
 	Window* window;
 	Label* win_title;
+
+	Enemy* BS;
 };
 
 #endif // __j1SCENE_H__
