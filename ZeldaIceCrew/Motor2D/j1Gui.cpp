@@ -161,8 +161,8 @@ void GuiImage::Update()
 void GuiText::Update()
 {
 	if (active) {
-		texture = App->font->Print(string.GetString());
-		App->font->CalcSize(string.GetString(), texture_rect.w, texture_rect.h);
+		texture = App->font->Print(str.c_str());
+		App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
 
 		App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 	}
@@ -252,6 +252,6 @@ void GuiInput::Update() {
 
 }
 GuiInput::GuiInput() {
-	text->string = "Hello world";
-	text->pos.create(1920 / 2, 950);
+	//text->string = "Hello world";
+	//text->pos.create(1920 / 2, 950);
 }

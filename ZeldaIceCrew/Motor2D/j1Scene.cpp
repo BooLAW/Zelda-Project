@@ -130,7 +130,16 @@ bool j1Scene::Update(float dt)
 		App->win->SetTitle(title.GetString());
 		//App->render->Blit(debug_tex, p.x, p.y);
 	}
+	//this is for testing must be removed before relising
+	if (App->input->GetKey(SDL_SCANCODE_R)==KEY_DOWN) {
+		App->player->rupees += 1;
+	}
+	///////////
+	rupees_num->str = std::to_string(App->player->rupees);
+	
+	
 	return true;
+
 }
 
 // Called each loop iteration
@@ -176,27 +185,40 @@ void j1Scene::GenerateHUD()
 	
 	rupees_num = (GuiText*)App->gui->CreateElement(GuiType::text);
 	rupees_num->active = true;
-	rupees_num->string.create("%d",App->player->rupees) ;
+	rupees_num->str=std::to_string(App->player->rupees);
 	rupees_num->pos = { 50,40 };
 
 	bombs_num = (GuiText*)App->gui->CreateElement(GuiType::text);
 	bombs_num->active = true;
-	bombs_num->string.create("%d",App->player->bombs);
+	bombs_num->str=std::to_string(App->player->bombs);
 	bombs_num->pos = { 125,40 };
 
 	arrows_num = (GuiText*)App->gui->CreateElement(GuiType::text);
 	arrows_num->active = true;
-	arrows_num->string.create("%d",App->player->arrows);
+	arrows_num->str=std::to_string(App->player->arrows);
 	arrows_num->pos = { 200,40 };
 
 	iPoint heart_pos = { 750,50 };
 	for (uint i = 0; i < App->player->curr_life_points; i++){
-		GuiImage* img;
-		img= (GuiImage*)App->gui->CreateElement(GuiType::image);
-		img->active = true;
-		img->texture_rect = { 897,418,25,25 };
-		img->pos = heart_pos;
-		heart_pos += {30, 0};
+
+		if ((i % 2 == 0)&&(i!=0)) {
+			GuiImage* img;
+			img = (GuiImage*)App->gui->CreateElement(GuiType::image);
+			img->active = true;
+			img->texture_rect = { 897,418,28,28 };
+			img->pos = heart_pos;;
+			heart_pos += {30, 0};
+		}
+		else {
+			if (i == App->player->curr_life_points-1) {
+				GuiImage* img;
+				img = (GuiImage*)App->gui->CreateElement(GuiType::image);
+				img->active = true;
+				img->texture_rect = { 940,416,28,28 };
+				img->pos = heart_pos;
+				heart_pos += {30, 0};
+			}
+		}
 	}
 	
 }

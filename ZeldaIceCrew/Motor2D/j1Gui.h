@@ -50,7 +50,7 @@ class GuiText : public UIElement {
 public:
 	_TTF_Font* font;
 	SDL_Color color;
-	p2SString string;
+	std::string str;
 
 public:
 
