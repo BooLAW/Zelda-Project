@@ -5,13 +5,16 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "j1Collision.h"
+#include "j1Player.h"
 
 class Entity;
 
 enum ENEMYTYPE {
-	BSoldier = 0,
+	BlueSoldier = 0,
 	__LAST
 };
+
+class BSoldier;
 
 class Enemy : public Entity {
 protected:
@@ -36,20 +39,29 @@ public:
 
 
 public:
-	Enemy* CreateEnemy(ENEMYTYPE type);
+	Enemy* CreateEnemy(ENEMYTYPE subtype);
 
 	virtual bool Start();
 
 	virtual void Spawn() {}
 
-	virtual bool Update();
+	void Update(float dt);
 
 	virtual bool Move();
 
-	virtual bool Attack();
+	virtual bool Attack() {
+		return true;
+	}
 
 	virtual bool CleanUp() {
+		if (HitBox != nullptr)
+			delete HitBox;
+
 		return true;
+	}
+
+	virtual void Draw() {
+		App->render->Blit(Entity::GetTexture(), pos.x, pos.y, &animations[curr_dir].GetCurrentFrame());
 	}
 
 public:
@@ -64,10 +76,23 @@ public:
 	
 	} stats;
 
+	ENEMYTYPE subtype;
 	bool DmgType[DAMAGETYPE::__LAST_DMGTYPE];
 	AITYPE AIType;
 
+	SDL_Rect HitRect;
 	Collider* HitBox;
+
+	SDL_Rect sprites[Direction::LastDir][MAX_SPRITE_FRAMES];
+	Animation animations[Direction::LastDir];
+
+	unsigned int curr_dir;
+
+};
+
+class BSoldier : public Enemy {
+public:
+	bool Start();
 
 };
 

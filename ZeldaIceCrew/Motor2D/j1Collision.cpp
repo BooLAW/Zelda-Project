@@ -12,14 +12,16 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_BUSH] = true;
+	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_BUSH] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 
 	matrix[COLLIDER_BUSH][COLLIDER_BUSH] = false;
-	matrix[COLLIDER_BUSH][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_BUSH][COLLIDER_WALL] = true;
+	matrix[COLLIDER_BUSH][COLLIDER_ENEMY] = true;
+
+	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 
 }
 
