@@ -36,7 +36,7 @@ public:
 		rect = rectangle;
 	}
 
-private:
+protected:
 	SDL_Texture* tex;
 	SDL_Rect rect;
 

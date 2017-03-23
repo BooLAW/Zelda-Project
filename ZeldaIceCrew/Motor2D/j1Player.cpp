@@ -826,7 +826,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		
 	}
 	// dying collision
-	if (link_coll == c1 && link_coll != nullptr && link_coll->type == COLLIDER_PLAYER && (c2->type == COLLIDER_BUSH || c2->type == COLLIDER_ENEMY) && alive)
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY) && alive)
 	{
 		curr_life_points -= 1;
 		if (curr_life_points == 0)

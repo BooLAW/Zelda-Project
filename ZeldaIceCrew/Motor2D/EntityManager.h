@@ -40,6 +40,9 @@ public:
 	
 	//virtual void OnCollision(Collider* c1, Collider* c2);
 
+public:
+	Enemy* CreateEnemy(uint subtype);
+
 private:
 	std::deque<Entity*> entities;
 	j1Timer time;
