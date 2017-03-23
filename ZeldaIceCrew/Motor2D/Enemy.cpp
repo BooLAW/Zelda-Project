@@ -1,4 +1,6 @@
 #include "Enemy.h"
+#include "j1Pathfinding.h"
+#include "j1Map.h"
 
 Enemy::Enemy(uint subtype)
 {
@@ -39,16 +41,44 @@ bool Enemy::Move()
 
 	fPoint aux_pos = pos;
 
+	iPoint target;
+
 	switch (AIType) {
-	case path:	
+	case AITYPE::path:	
+		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y };
 		break;
-	case chase:
+	case AITYPE::chase:
 		break;
-	case distance:
+	case AITYPE::distance:
 		break;
-	case no_move:
+	case AITYPE::no_move:
 		break;
 	}
+
+	App->pathfinding->CreatePath({ (int)pos.x, (int)pos.y }, target);
+
+	path_to_follow = *App->pathfinding->GetLastPath();
+
+	if (App->debug_mode == true) {
+		for (std::list<iPoint>::iterator it = path_to_follow.begin(); it != path_to_follow.end(); it++) {
+			App->render->DrawQuad({it._Ptr->_Myval.x, it._Ptr->_Myval.y, App->map->data.tile_width, App->map->data.tile_height }, 255, 0, 0, 80);
+		}
+	}
+
+		if (path_to_follow.size() > 0) {
+
+			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
+				pos.x += stats.Speed;
+			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
+				pos.x -= stats.Speed;
+			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
+				pos.y += stats.Speed;
+			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)
+				pos.y -= stats.Speed;
+			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
+				path_to_follow.pop_back();
+		}
+	
 
 	if (aux_pos.x > pos.x)
 		curr_dir = Enemy::Direction::Left;

@@ -95,6 +95,9 @@ public:
 
 	unsigned int curr_dir;
 
+	// pathfinding related
+	std::list<iPoint> path_to_follow;
+
 };
 
 class BSoldier : public Enemy {

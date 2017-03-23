@@ -649,11 +649,11 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	bool ret = false;
 	std::list<MapLayer*>::const_iterator item;
 	//iterate each layer
-	for(item = data.layers.begin(); item != data.layers.end(); item++)
+	for (item = data.layers.begin(); item != data.layers.end(); item++)
 	{
 		MapLayer* layer = (*item);
-		
-		if(layer->properties.Get("Navigation",0) == 0)
+
+		if (layer->properties.Get("Navigation", 0) == 0)
 			continue;
 
 		uchar* map = new uchar[layer->width*layer->height];
@@ -667,11 +667,16 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 
 				int tile_id = layer->Get(x, y);
 				//ensure that the tile_id are correct(>0)
+				
+				if (tile_id == 10)
+					map[i] = 1;
+
 				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
 				
 				if(tileset != NULL)
 				{
-					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+					//map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+
 				}
 			}
 		}
