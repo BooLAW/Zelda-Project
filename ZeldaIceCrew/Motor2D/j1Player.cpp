@@ -1,7 +1,7 @@
 #include "j1Player.h"
 #include "j1Input.h"
 #include "j1Collision.h"
-
+#include "j1Map.h"
 j1Player::j1Player()
 {
 }
@@ -537,31 +537,68 @@ bool j1Player::Update(float dt)
 		//Movement
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-				pos.y -= pl_speed.y * sqrt(2) / 2;
-				pos.x -= pl_speed.x * sqrt(2) / 2;
+				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Up_L) == 0) //change dir
+				{
+					pos.y -= pl_speed.y * sqrt(2) / 2;
+					pos.x -= pl_speed.x * sqrt(2) / 2;
+
+					App->render->camera.x += pl_speed.x * sqrt(2) / 2;
+					App->render->camera.y += pl_speed.y * sqrt(2) / 2;
+				}
 				if (anim_override == false)
 					action_blit = Walk;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-				pos.y += pl_speed.y * sqrt(2) / 2;
-				pos.x -= pl_speed.x * sqrt(2) / 2;
+				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Down_L) == 0) //change dir
+				{
+					pos.y += pl_speed.y * sqrt(2) / 2;
+					pos.x -= pl_speed.x * sqrt(2) / 2;
+					App->render->camera.x += pl_speed.x * sqrt(2) / 2;
+					App->render->camera.y -= pl_speed.y * sqrt(2) / 2;
+				}
+
 				if (anim_override == false)
 					action_blit = Walk;
+
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
-				pos.y += pl_speed.y * sqrt(2) / 2;
-				pos.x += pl_speed.x * sqrt(2) / 2;
+				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y - pl_speed.y, Down_R) == 0)//change dir
+				{
+					pos.y += pl_speed.y * sqrt(2) / 2;
+					pos.x += pl_speed.x * sqrt(2) / 2;
+
+					App->render->camera.x -= pl_speed.x * sqrt(2) / 2;
+					App->render->camera.y -= pl_speed.y * sqrt(2) / 2;
+				}
+
+
 				if (anim_override == false)
 					action_blit = Walk;
+
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
-				pos.y -= pl_speed.y * sqrt(2) / 2;
-				pos.x += pl_speed.x * sqrt(2) / 2;
+				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y - pl_speed.y, Up_R) == 0)//change dir
+				{
+					pos.y -= pl_speed.y * sqrt(2) / 2;
+					pos.x += pl_speed.x * sqrt(2) / 2;
+					App->render->camera.x -= pl_speed.x * sqrt(2) / 2;
+					App->render->camera.y += pl_speed.y * sqrt(2) / 2;
+				}
+
+
 				if (anim_override == false)
 					action_blit = Walk;
+
+
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_W)) {
-				pos.y -= pl_speed.y;
+				if (App->map->TileCheck(pos.x, pos.y - pl_speed.y, Up) == 0)
+				{
+					pos.y -= pl_speed.y;
+					App->render->camera.y += pl_speed.y;
+				}
+
+
 				if (anim_override == false)
 					action_blit = Walk;
 				if (dir_override == false)
@@ -569,22 +606,42 @@ bool j1Player::Update(float dt)
 
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A)) {
-				pos.x -= pl_speed.x;
+				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Left) == 0)
+				{
+					pos.x -= pl_speed.x;
+					App->render->camera.x += pl_speed.x;
+				}
+
+
 				if (anim_override == false)
-				 action_blit = Walk;
+					action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Left;
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_S)) {
-				pos.y += pl_speed.y;
+			else if (App->input->GetKey(SDL_SCANCODE_S))
+			{
+				if (App->map->TileCheck(pos.x, pos.y + pl_speed.y, Down) == 0)
+				{
+					pos.y += pl_speed.y;
+					App->render->camera.y -= pl_speed.y;
+				}
+
+
 				if (anim_override == false)
 					action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Down;
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_D)) {
-				pos.x += pl_speed.x;
-				if(anim_override == false)
+			else if (App->input->GetKey(SDL_SCANCODE_D))
+			{
+				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y, Right) == 0)
+				{
+					pos.x += pl_speed.x;
+					App->render->camera.x -= pl_speed.x;
+				}
+
+
+				if (anim_override == false)
 					action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Right;

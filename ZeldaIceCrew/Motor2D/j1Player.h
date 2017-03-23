@@ -6,7 +6,6 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1App.h"
-#include "j1Map.h"
 #include "EntityManager.h"
 
 #define MAX_SPRITE_FRAMES 30
@@ -31,6 +30,10 @@ enum Direction {
 	Left,
 	Right,
 	Down,
+	Up_R,
+	Up_L,
+	Down_R,
+	Down_L,
 	LastDir
 };
 
