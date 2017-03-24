@@ -90,9 +90,9 @@ public:
 	bool action = false; // Actions: Throw, Pull, Slash,...
 						 // --status VARs
 	uint max_life_points = 6;
-	uint curr_life_points = 5;
+	uint curr_life_points = 6;
 	uint rupees = 50;
-	uint bombs = 100;
+	uint bombs = 50;
 	uint arrows = 100;
 	std::list<Entity*> key_items;
 

@@ -53,6 +53,7 @@ private:
 	SDL_Rect House_Rect;
 
 	//HUD
+	uint i = 1;
 	Window* window;
 	Label* win_title;
 	GuiImage* rupees;

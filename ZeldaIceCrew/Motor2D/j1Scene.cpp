@@ -134,12 +134,33 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_R)==KEY_DOWN) {
 		App->player->rupees += 1;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+		App->player->curr_life_points-= 1;
+	}
 	///////////
-	rupees_num->str = std::to_string(App->player->rupees);
-	
-	
-	return true;
+	//UI updating
 
+	rupees_num->str = std::to_string(App->player->rupees);
+	bombs_num->str = std::to_string(App->player->bombs);
+	arrows_num->str = std::to_string(App->player->arrows);
+
+	i=1;
+	for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
+		if (i < App->player->curr_life_points) {
+			if ((i % 2 == 0) && (i != 0)) {
+				it._Ptr->_Myval->texture_rect = { 897,418,28,28 };
+			}
+		}
+		if (i == App->player->curr_life_points-1) {
+			it._Ptr->_Myval->texture_rect = { 940,416,28,28 };
+		}
+		if ((i > App->player->curr_life_points) && (i < App->player->max_life_points)) {
+			it._Ptr->_Myval->texture_rect = { 986,416,28,28 };
+		}
+		i++;
+	}
+		return true;
+	
 }
 
 // Called each loop iteration
@@ -199,26 +220,41 @@ void j1Scene::GenerateHUD()
 	arrows_num->pos = { 200,40 };
 
 	iPoint heart_pos = { 750,50 };
-	for (uint i = 0; i < App->player->curr_life_points; i++){
 
-		if ((i % 2 == 0)&&(i!=0)) {
-			GuiImage* img;
-			img = (GuiImage*)App->gui->CreateElement(GuiType::image);
-			img->active = true;
-			img->texture_rect = { 897,418,28,28 };
-			img->pos = heart_pos;;
-			heart_pos += {30, 0};
-		}
-		else {
-			if (i == App->player->curr_life_points-1) {
+	for (uint i = 0; i < App->player->max_life_points; i++){
+		if (i < App->player->curr_life_points) {
+			if ((i % 2 == 0) && (i != 0)) {
 				GuiImage* img;
 				img = (GuiImage*)App->gui->CreateElement(GuiType::image);
 				img->active = true;
-				img->texture_rect = { 940,416,28,28 };
-				img->pos = heart_pos;
+				img->texture_rect = { 897,418,28,28 };
+				img->pos = heart_pos;;
 				heart_pos += {30, 0};
+				lifes.push_back(img);
 			}
 		}
+		 if (i == App->player->curr_life_points - 1) {
+			GuiImage* img;
+			img = (GuiImage*)App->gui->CreateElement(GuiType::image);
+			img->active = true;
+			img->texture_rect = { 940,416,28,28 };
+			img->pos = heart_pos;
+			heart_pos += {30, 0};
+			lifes.push_back(img);
+		}
+			
+		 if(i>App->player->curr_life_points) {
+			 if ((i % 2 == 0) && (i != 0)) {
+				 GuiImage* img;
+				 img = (GuiImage*)App->gui->CreateElement(GuiType::image);
+				 img->active = true;
+				 img->texture_rect = { 986,416,28,28 };
+				 img->pos = heart_pos;
+				 heart_pos += {30, 0};
+				 lifes.push_back(img);
+			 }
+		}
+		
 	}
 	
 }
