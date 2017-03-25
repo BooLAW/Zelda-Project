@@ -102,6 +102,7 @@ public:
 	bool anim_override = false;
 
 	Collider* link_coll;
+	Collider* weapon_coll;
 
 };
 

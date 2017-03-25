@@ -39,7 +39,7 @@ public:
 	void DestroyEntities();
 	void DestroyEnity(Entity* ent);
 	
-	//virtual void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* c1, Collider* c2);
 
 public:
 	Enemy* CreateEnemy(uint subtype);

@@ -70,3 +70,8 @@ void EntityManager::DestroyEnity(Entity * ent)
 	entities.erase(aux);
 }
 
+void EntityManager::OnCollision(Collider * c1, Collider * c2)
+{
+	
+}
+

@@ -30,8 +30,9 @@ bool Enemy::Start()
 void Enemy::Update(float dt)
 {
 
-	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
-		Hit();
+	if(App->player->weapon_coll != nullptr)
+		if (this->HitBox->CheckCollision(App->player->weapon_coll->rect))
+			Hit();
 
 	if (stats.Hp <= 0) {
 		Death();
@@ -78,13 +79,13 @@ bool Enemy::Move()
 
 		if (path_to_follow.size() > 0) {
 
-			if (path_to_follow.begin()._Ptr->_Myval.x + rect.w > pos.x)
+			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
 				if(App->map->TileCheck(pos.x + rect.w + stats.Speed, pos.y, Down_R) == 0)
 					pos.x += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
 				if (App->map->TileCheck(pos.x - stats.Speed, pos.y, Down_R) == 0)
 					pos.x -= stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.y + rect.h > pos.y)
+			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
 				if (App->map->TileCheck(pos.x, pos.y + rect.h + stats.Speed, Down_R) == 0)
 					pos.y += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)

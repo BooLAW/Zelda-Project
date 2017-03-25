@@ -508,6 +508,9 @@ bool j1Player::Start()
 
 	// !_Animations
 
+	SDL_Rect WeaponRect = { 3000, 3000, App->map->data.tile_width, App->map->data.tile_height };
+	weapon_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_PL_WEAPON);
+
 	// Variable Settup
 
 	pos.x = 300;
@@ -715,9 +718,29 @@ bool j1Player::Update(float dt)
 		//if(App->input->GetKey(SDL_SCANCODE))action_blit = Idle;
 	}
 
-			// !_Logic
+	if (action_blit == Slash) {
+		switch (curr_dir) {
+		case Up:
+			weapon_coll->SetPos(pos.x, pos.y - App->map->data.tile_height);
+			break;
+		case Down:
+			weapon_coll->SetPos(pos.x, pos.y + App->map->data.tile_height);
+			break;
+		case Left:
+			weapon_coll->SetPos(pos.x - App->map->data.tile_width, pos.y);
+			break;
+		case Right:
+			weapon_coll->SetPos(pos.x + App->map->data.tile_width, pos.y);
+			break;
+		}
+	
+	}
+	else {
+		weapon_coll->SetPos(3000, 3000);
+	}
+	// !_Logic
 
-			// Graphics
+	// Graphics
 		if (action == false){
 			//Movement or any action that does not stop movement
 
@@ -759,8 +782,9 @@ bool j1Player::Update(float dt)
 	//!_Graphics
 
 	// MODIFY COLLISION -------------------------------------------------
-
 		link_coll->SetPos(pos.x , pos.y );
+
+
 	return ret;
 }
 
