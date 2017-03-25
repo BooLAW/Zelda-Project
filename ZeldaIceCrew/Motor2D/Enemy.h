@@ -10,6 +10,8 @@
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
 
+#define JUMP_WHEN_HIT 2
+
 class Entity;
 
 enum ENEMYTYPE {
@@ -21,7 +23,7 @@ class BSoldier;
 
 class Enemy : public Entity {
 protected:
-	enum Direction {
+	enum EnDirection {
 		Up = 0,
 		Down,
 		Right,
@@ -89,8 +91,8 @@ public:
 
 	Collider* HitBox;
 
-	SDL_Rect sprites[Direction::LastDir][8];
-	Animation animations[Direction::LastDir];
+	SDL_Rect sprites[EnDirection::LastDir][8];
+	Animation animations[EnDirection::LastDir];
 
 	unsigned int curr_dir;
 

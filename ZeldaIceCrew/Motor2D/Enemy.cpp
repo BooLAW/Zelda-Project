@@ -104,13 +104,13 @@ bool Enemy::Move()
 	
 
 	if (target.y < pos.y && (target.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && target.x < pos.x + ENEMY_DIR_CHANGE_OFFSET) )
-		curr_dir = Enemy::Direction::Up;
+		curr_dir = Enemy::EnDirection::Up;
 	else if (target.y > pos.y && (target.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && target.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
-		curr_dir = Enemy::Direction::Down;
+		curr_dir = Enemy::EnDirection::Down;
 	else if (target.x < pos.x)
-		curr_dir = Enemy::Direction::Left;
+		curr_dir = Enemy::EnDirection::Left;
 	else if (target.x > pos.x)
-		curr_dir = Enemy::Direction::Right;
+		curr_dir = Enemy::EnDirection::Right;
 
 	return ret;
 }
@@ -145,7 +145,28 @@ void Enemy::Hit()
 {
 	//stats.Hp -= App->player->power;
 	if (hit == false) {
+		
 		stats.Hp -= 1;
+		
+		switch (App->player->curr_dir) {
+		case Up:
+			if (App->map->TileCheck(pos.x, pos.y - JUMP_WHEN_HIT * App->map->data.tile_height, Direction::Up))
+				pos.y += JUMP_WHEN_HIT * App->map->data.tile_height;
+			break;
+		case Down:
+			if (App->map->TileCheck(pos.x, pos.y + JUMP_WHEN_HIT * App->map->data.tile_height, Direction::Down))
+				pos.y -= JUMP_WHEN_HIT * App->map->data.tile_height;
+			break;
+		case Left:
+			if (App->map->TileCheck(pos.x - JUMP_WHEN_HIT * App->map->data.tile_height, pos.y, Direction::Left))
+				pos.x += JUMP_WHEN_HIT * App->map->data.tile_width;
+			break;
+		case Right:
+			if (App->map->TileCheck(pos.y - JUMP_WHEN_HIT * App->map->data.tile_height, pos.y, Direction::Right))
+				pos.x -= JUMP_WHEN_HIT * App->map->data.tile_width;
+			break;
+		}
+		
 		hit = true;
 	}
 
@@ -160,35 +181,35 @@ bool BSoldier::Start()
 {
 	bool ret = true;
 
-	curr_dir = Enemy::Direction::Down;
+	curr_dir = Enemy::EnDirection::Down;
 
 	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::Direction::Down][0] = { 30, 251, 44, 68 };
-		sprites[Enemy::Direction::Down][1] = { 132, 249, 44, 70 };
+		sprites[Enemy::EnDirection::Down][0] = { 30, 251, 44, 68 };
+		sprites[Enemy::EnDirection::Down][1] = { 132, 249, 44, 70 };
 
-		sprites[Enemy::Direction::Up][0] = { 30, 357, 44, 52 };
-		sprites[Enemy::Direction::Up][1] = { 132, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][0] = { 30, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][1] = { 132, 357, 44, 52 };
 
-		sprites[Enemy::Direction::Left][0] = { 214, 465, 64, 54 };
-		sprites[Enemy::Direction::Left][1] = { 316, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Left][0] = { 214, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Left][1] = { 316, 465, 64, 54 };
 
-		sprites[Enemy::Direction::Right][0] = { 30, 465, 64, 54 };
-		sprites[Enemy::Direction::Right][1] = { 132, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Right][0] = { 30, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Right][1] = { 132, 465, 64, 54 };
 
-		animations[Enemy::Direction::Down].PushBack(sprites[Down][0]);
-		animations[Enemy::Direction::Down].PushBack(sprites[Down][1]);
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
 
-		animations[Enemy::Direction::Up].PushBack(sprites[Up][0]);
-		animations[Enemy::Direction::Up].PushBack(sprites[Up][1]);
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][0]);
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][1]);
 
-		animations[Enemy::Direction::Left].PushBack(sprites[Left][0]);
-		animations[Enemy::Direction::Left].PushBack(sprites[Left][1]);
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][0]);
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][1]);
 
-		animations[Enemy::Direction::Right].PushBack(sprites[Right][0]);
-		animations[Enemy::Direction::Right].PushBack(sprites[Right][1]);
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][0]);
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][1]);
 
 
 	}
@@ -199,7 +220,7 @@ bool BSoldier::Start()
 
 	stats.Flying = false;
 
-	for (int i = 0; i < Enemy::Direction::LastDir; i++)
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
 	HitBox = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);

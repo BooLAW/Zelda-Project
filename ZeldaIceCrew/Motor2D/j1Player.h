@@ -67,7 +67,6 @@ private:
 	Animation animations[Sprites::__LAST][Direction::LastDir];
 	SDL_Rect sprites[Sprites::__LAST][Direction::LastDir][MAX_SPRITE_FRAMES];
 
-	unsigned int curr_dir;
 
 public:
 	j1Player();
@@ -92,6 +91,8 @@ public:
 	bool sword = false;  // as a flag to draw link with the sword sprite
 	bool action = false; // Actions: Throw, Pull, Slash,...
 						 // --status VARs
+	
+	unsigned int curr_dir;
 	uint max_life_points = 6;
 	uint curr_life_points = 6;
 	uint rupees = 0;
