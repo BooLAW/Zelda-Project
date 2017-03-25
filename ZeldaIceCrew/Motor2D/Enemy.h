@@ -8,6 +8,7 @@
 #include "j1Player.h"
 
 #define ENEMY_SPRITES_PER_SPD 0.05f
+#define ENEMY_DIR_CHANGE_OFFSET 50
 
 class Entity;
 

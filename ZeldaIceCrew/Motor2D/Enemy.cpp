@@ -39,15 +39,13 @@ bool Enemy::Move()
 {
 	bool ret = true;
 
-	fPoint aux_pos = pos;
-
 	iPoint target;
 
 	switch (AIType) {
 	case AITYPE::path:	
-		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y };
 		break;
 	case AITYPE::chase:
+		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y };
 		break;
 	case AITYPE::distance:
 		break;
@@ -55,9 +53,11 @@ bool Enemy::Move()
 		break;
 	}
 
-	App->pathfinding->CreatePath({ (int)pos.x, (int)pos.y }, target);
+	//App->pathfinding->CreatePath({ (int)pos.x, (int)pos.y }, target);
+	//
+	//path_to_follow = *App->pathfinding->GetLastPath();
 
-	path_to_follow = *App->pathfinding->GetLastPath();
+	path_to_follow.push_back(target);
 
 	if (App->debug_mode == true) {
 		for (std::list<iPoint>::iterator it = path_to_follow.begin(); it != path_to_follow.end(); it++) {
@@ -77,17 +77,21 @@ bool Enemy::Move()
 				pos.y -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
 				path_to_follow.pop_back();
+		
 		}
+
+		if (AIType == chase)
+			path_to_follow.clear();
 	
 
-	if (aux_pos.x > pos.x)
-		curr_dir = Enemy::Direction::Left;
-	else if (aux_pos.x < pos.x)
-		curr_dir = Enemy::Direction::Right;
-	else if (aux_pos.y > pos.y)
-		curr_dir = Enemy::Direction::Down;
-	else if (aux_pos.y < pos.y)
+	if (target.y < pos.y && (target.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && target.x < pos.x + ENEMY_DIR_CHANGE_OFFSET) )
 		curr_dir = Enemy::Direction::Up;
+	else if (target.y > pos.y && (target.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && target.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+		curr_dir = Enemy::Direction::Down;
+	else if (target.x < pos.x)
+		curr_dir = Enemy::Direction::Left;
+	else if (target.x > pos.x)
+		curr_dir = Enemy::Direction::Right;
 
 	return ret;
 }
@@ -161,7 +165,7 @@ bool BSoldier::Start()
 
 	DmgType[melee] = true;
 
-	AIType = path;
+	AIType = chase;
 
 	subtype = ENEMYTYPE::BlueSoldier;
 
