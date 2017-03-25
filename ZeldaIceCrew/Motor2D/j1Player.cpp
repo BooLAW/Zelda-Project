@@ -513,9 +513,6 @@ bool j1Player::Start()
 
 	// Variable Settup
 
-	pos.x = 300;
-	pos.y = 350;
-
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
 
@@ -733,6 +730,7 @@ bool j1Player::Update(float dt)
 	else {
 		weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
 	}
+
 	// !_Logic
 
 	// Graphics
@@ -802,6 +800,18 @@ bool j1Player::CleanUp()
 	return ret;
 }
 
+void j1Player::SetPos(float x, float y)
+{
+	pos.x = x;
+	pos.y = y;
+}
+
+void j1Player::MovePos(float x, float y)
+{
+	pos.x += x;
+	pos.y += y;
+}
+
 bool j1Player::SetPosTile(int x, int y)
 {
 	bool ret = true;
@@ -843,12 +853,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 
 		
 	}
-	// dying collision
+
+	// Hit collision
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
 	{
 		curr_life_points -= 1;
 		if (curr_life_points == 0)
 			alive = false;
+
 		//Add extra particles?
 		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
 		//function to restart in the house()

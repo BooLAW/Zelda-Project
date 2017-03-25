@@ -81,6 +81,8 @@ private:
 	void OnCollision(Collider* c1, Collider* c2);
 
 public:
+	void SetPos(float x, float y);
+	void MovePos(float x, float y);
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
 	void DyingRestart();

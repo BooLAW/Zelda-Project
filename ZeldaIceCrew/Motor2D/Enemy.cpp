@@ -125,6 +125,30 @@ bool Enemy::Attack()
 		rect = HitBox->rect;
 	}
 
+	if (App->player->link_coll != nullptr)
+		if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
+			App->player->curr_life_points -= stats.Power;
+
+			switch (curr_dir) {
+			case Up:
+				if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height, Direction::Up) == 0)
+					App->player->MovePos(0, -App->map->data.tile_height);
+				break;
+			case Down:
+				if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height, Direction::Down) == 0)
+					App->player->MovePos(0, App->map->data.tile_height);
+				break;
+			case Left:
+				if (App->map->TileCheck(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y, Direction::Left) == 0)
+					App->player->MovePos( -App->map->data.tile_width, 0);
+				break;
+			case Right:
+				if (App->map->TileCheck(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y, Direction::Right) == 0)
+					App->player->MovePos(App->map->data.tile_width, 0);
+				break;
+			}
+		}
+
 	return ret;
 }
 
@@ -162,7 +186,7 @@ void Enemy::Hit()
 				pos.x += JUMP_WHEN_HIT * App->map->data.tile_width;
 			break;
 		case Right:
-			if (App->map->TileCheck(pos.y - JUMP_WHEN_HIT * App->map->data.tile_height, pos.y, Direction::Right))
+			if (App->map->TileCheck(pos.x + JUMP_WHEN_HIT * App->map->data.tile_height, pos.y, Direction::Right))
 				pos.x -= JUMP_WHEN_HIT * App->map->data.tile_width;
 			break;
 		}

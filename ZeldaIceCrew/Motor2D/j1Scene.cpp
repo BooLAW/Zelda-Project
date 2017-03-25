@@ -61,6 +61,7 @@ bool j1Scene::Start()
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
+	App->player->SetPos(500, 100);
 
 	return true;
 }
@@ -141,7 +142,6 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	App->render->DrawQuad({ 500, 100, App->map->data.tile_width, App->map->data.tile_height }, 255, 0, 0, 80);
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
