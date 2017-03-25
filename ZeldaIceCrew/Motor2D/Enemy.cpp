@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "j1Pathfinding.h"
 #include "j1Map.h"
+#include "j1Input.h"
 
 Enemy::Enemy(uint subtype)
 {
@@ -28,11 +29,20 @@ bool Enemy::Start()
 
 void Enemy::Update(float dt)
 {
-	Move();
 
-	Attack();
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+		Hit();
 
-	Draw();
+	if (stats.Hp <= 0) {
+		Death();
+	}
+	else {
+		Move();
+
+		Attack();
+
+		Draw();
+	}
 }
 
 bool Enemy::Move()
@@ -108,9 +118,28 @@ bool Enemy::Attack()
 	return ret;
 }
 
+bool Enemy::CleanUp()
+{
+	if (HitBox != nullptr)
+		HitBox->to_delete = true;
+	App->entitymanager->DestroyEnity(this);
+	return true;
+}
+
 void Enemy::Draw()
 {
 	App->render->Blit(Entity::GetTexture(), pos.x, pos.y, &animations[curr_dir].GetCurrentFrame());
+}
+
+void Enemy::Hit()
+{
+	//stats.Hp -= App->player->power;
+	stats.Hp -= 1;
+}
+
+void Enemy::Death()
+{
+	CleanUp();
 }
 
 bool BSoldier::Start()

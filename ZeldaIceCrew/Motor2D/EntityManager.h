@@ -37,6 +37,7 @@ public:
 	bool Update(float dt);
 	void PushEntity(Entity* ent);
 	void DestroyEntities();
+	void DestroyEnity(Entity* ent);
 	
 	//virtual void OnCollision(Collider* c1, Collider* c2);
 

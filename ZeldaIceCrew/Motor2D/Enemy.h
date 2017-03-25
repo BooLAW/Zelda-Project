@@ -64,14 +64,12 @@ public:
 
 	virtual bool Attack();
 
-	virtual bool CleanUp() {
-		if (HitBox != nullptr)
-			HitBox->to_delete = true;
-
-		return true;
-	}
+	virtual bool CleanUp();
 
 	virtual void Draw();
+
+	virtual void Hit();
+	virtual void Death();
 
 public:
 	ENEMYTYPE EnemyType;

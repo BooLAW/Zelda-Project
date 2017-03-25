@@ -61,5 +61,12 @@ void EntityManager::DestroyEntities()
 			delete entities[i];
 		}
 	}
-} 
+}
+
+void EntityManager::DestroyEnity(Entity * ent)
+{
+	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+
+	entities.erase(aux);
+}
 
