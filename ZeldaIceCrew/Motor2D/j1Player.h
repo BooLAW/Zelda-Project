@@ -95,6 +95,7 @@ public:
 	unsigned int curr_dir;
 	uint max_life_points = 6;
 	uint curr_life_points = 6;
+	uint power;
 	uint rupees = 0;
 	std::list<Entity*> key_items;
 

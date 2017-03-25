@@ -508,7 +508,7 @@ bool j1Player::Start()
 
 	// !_Animations
 
-	SDL_Rect WeaponRect = { 3000, 3000, App->map->data.tile_width, App->map->data.tile_height };
+	SDL_Rect WeaponRect = { FARLANDS.x, FARLANDS.y, App->map->data.tile_width, App->map->data.tile_height };
 	weapon_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_PL_WEAPON);
 
 	// Variable Settup
@@ -518,6 +518,8 @@ bool j1Player::Start()
 
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
+
+	power = 1;
 
 	curr_dir = Down;
 
@@ -545,8 +547,6 @@ bool j1Player::Update(float dt)
 					pos.y -= pl_speed.y * sqrt(2) / 2;
 					pos.x -= pl_speed.x * sqrt(2) / 2;
 
-					App->render->camera.x += pl_speed.x * sqrt(2) / 2;
-					App->render->camera.y += pl_speed.y * sqrt(2) / 2;
 				}
 				if (anim_override == false)
 					action_blit = Walk;
@@ -556,8 +556,7 @@ bool j1Player::Update(float dt)
 				{
 					pos.y += pl_speed.y * sqrt(2) / 2;
 					pos.x -= pl_speed.x * sqrt(2) / 2;
-					App->render->camera.x += pl_speed.x * sqrt(2) / 2;
-					App->render->camera.y -= pl_speed.y * sqrt(2) / 2;
+				
 				}
 
 				if (anim_override == false)
@@ -570,8 +569,6 @@ bool j1Player::Update(float dt)
 					pos.y += pl_speed.y * sqrt(2) / 2;
 					pos.x += pl_speed.x * sqrt(2) / 2;
 
-					App->render->camera.x -= pl_speed.x * sqrt(2) / 2;
-					App->render->camera.y -= pl_speed.y * sqrt(2) / 2;
 				}
 
 
@@ -584,8 +581,7 @@ bool j1Player::Update(float dt)
 				{
 					pos.y -= pl_speed.y * sqrt(2) / 2;
 					pos.x += pl_speed.x * sqrt(2) / 2;
-					App->render->camera.x -= pl_speed.x * sqrt(2) / 2;
-					App->render->camera.y += pl_speed.y * sqrt(2) / 2;
+				
 				}
 
 
@@ -598,7 +594,6 @@ bool j1Player::Update(float dt)
 				if (App->map->TileCheck(pos.x, pos.y - pl_speed.y, Up) == 0)
 				{
 					pos.y -= pl_speed.y;
-					App->render->camera.y += pl_speed.y;
 				}
 
 
@@ -612,7 +607,7 @@ bool j1Player::Update(float dt)
 				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Left) == 0)
 				{
 					pos.x -= pl_speed.x;
-					App->render->camera.x += pl_speed.x;
+			
 				}
 
 
@@ -626,7 +621,7 @@ bool j1Player::Update(float dt)
 				if (App->map->TileCheck(pos.x, pos.y + pl_speed.y, Down) == 0)
 				{
 					pos.y += pl_speed.y;
-					App->render->camera.y -= pl_speed.y;
+					
 				}
 
 
@@ -640,7 +635,7 @@ bool j1Player::Update(float dt)
 				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y, Right) == 0)
 				{
 					pos.x += pl_speed.x;
-					App->render->camera.x -= pl_speed.x;
+					
 				}
 
 
@@ -736,7 +731,7 @@ bool j1Player::Update(float dt)
 	
 	}
 	else {
-		weapon_coll->SetPos(3000, 3000);
+		weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
 	}
 	// !_Logic
 
@@ -783,7 +778,6 @@ bool j1Player::Update(float dt)
 
 	// MODIFY COLLISION -------------------------------------------------
 		link_coll->SetPos(pos.x , pos.y );
-
 
 	return ret;
 }

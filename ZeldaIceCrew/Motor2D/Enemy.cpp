@@ -146,7 +146,7 @@ void Enemy::Hit()
 	//stats.Hp -= App->player->power;
 	if (hit == false) {
 		
-		stats.Hp -= 1;
+		stats.Hp -= App->player->power;
 		
 		switch (App->player->curr_dir) {
 		case Up:
