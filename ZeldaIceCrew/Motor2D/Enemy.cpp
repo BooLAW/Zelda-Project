@@ -75,16 +75,21 @@ bool Enemy::Move()
 		}
 	}
 
+
 		if (path_to_follow.size() > 0) {
 
-			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
-				pos.x += stats.Speed;
+			if (path_to_follow.begin()._Ptr->_Myval.x + rect.w > pos.x)
+				if(App->map->TileCheck(pos.x + rect.w + stats.Speed, pos.y, Down_R) == 0)
+					pos.x += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
-				pos.x -= stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
-				pos.y += stats.Speed;
+				if (App->map->TileCheck(pos.x - stats.Speed, pos.y, Down_R) == 0)
+					pos.x -= stats.Speed;
+			if (path_to_follow.begin()._Ptr->_Myval.y + rect.h > pos.y)
+				if (App->map->TileCheck(pos.x, pos.y + rect.h + stats.Speed, Down_R) == 0)
+					pos.y += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)
-				pos.y -= stats.Speed;
+				if (App->map->TileCheck(pos.x, pos.y - stats.Speed, Down_R) == 0)
+					pos.y -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
 				path_to_follow.pop_back();
 		
@@ -113,6 +118,7 @@ bool Enemy::Attack()
 	if (DmgType[melee] == true) {
 		HitBox->rect = animations[curr_dir].GetCurrentFrame();
 		HitBox->SetPos(pos.x, pos.y);
+		rect = HitBox->rect;
 	}
 
 	return ret;
