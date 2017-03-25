@@ -30,9 +30,12 @@ bool Enemy::Start()
 void Enemy::Update(float dt)
 {
 
-	if(App->player->weapon_coll != nullptr)
-		if (this->HitBox->CheckCollision(App->player->weapon_coll->rect))
+	if (App->player->weapon_coll != nullptr)
+		if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true)
 			Hit();
+	
+	if (App->player->action_blit != j1Player::Slash)
+		hit = false;
 
 	if (stats.Hp <= 0) {
 		Death();
@@ -141,7 +144,11 @@ void Enemy::Draw()
 void Enemy::Hit()
 {
 	//stats.Hp -= App->player->power;
-	stats.Hp -= 1;
+	if (hit == false) {
+		stats.Hp -= 1;
+		hit = true;
+	}
+
 }
 
 void Enemy::Death()

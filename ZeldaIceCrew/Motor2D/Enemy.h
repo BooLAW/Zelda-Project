@@ -97,6 +97,8 @@ public:
 	// pathfinding related
 	std::list<iPoint> path_to_follow;
 
+	bool hit = false;
+
 };
 
 class BSoldier : public Enemy {
