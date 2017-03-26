@@ -7,6 +7,7 @@
 #include "j1Render.h"
 #include "j1App.h"
 #include "j1Map.h"
+#include "EntityManager.h"
 
 #define MAX_SPRITE_FRAMES 30
 
@@ -21,7 +22,9 @@
 #define link_height 107
 #define link_y 110
 #define link_x 102
-class Collider;
+
+struct Collider;
+
 enum Direction {
 	FirstDir = 0,
 	Up,
@@ -78,12 +81,25 @@ private:
 public:
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
-
+	void DyingRestart();
+	// base stats saving file
+	// --status flags 
+	bool alive = true;
+	bool shield = true;
+	bool sword = false;  // as a flag to draw link with the sword sprite
 	bool action = false; // Actions: Throw, Pull, Slash,...
+						 // --status VARs
+	uint max_life_points = 6;
+	uint curr_life_points = 6;
+	uint rupees = 50;
+	uint bombs = 50;
+	uint arrows = 100;
+	std::list<Entity*> key_items;
+
 	int action_blit;
 	bool dir_override = false; // Overrides directions expressed if there is an action that keeps movement but changes view direction being done at the time
 	bool anim_override = false;
-	bool shield = true;
+
 	Collider* link_coll;
 
 };

@@ -52,9 +52,6 @@
     <ClCompile Include="j1Gui.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="EntityManager.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Player.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -64,6 +61,22 @@
     <ClCompile Include="j1Collision.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Drop.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -132,9 +145,6 @@
     <ClInclude Include="j1Gui.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="EntityManager.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Player.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
@@ -146,6 +156,27 @@
     </ClInclude>
     <ClInclude Include="j1Collision.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Drop.h">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Desenvolupament  ========\Modules\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +197,9 @@
     </Filter>
     <Filter Include="Auxiliar templates and headers">
       <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Entity">
+      <UniqueIdentifier>{9bd91d17-c001-4700-be93-4c304c270f02}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
