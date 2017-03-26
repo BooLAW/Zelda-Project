@@ -3,7 +3,8 @@
 
 #include "EntityManager.h"
 
-enum ENTITYTYPE {
+enum ENTITYTYPE
+{
 	drop = 0,
 	item,
 	block,

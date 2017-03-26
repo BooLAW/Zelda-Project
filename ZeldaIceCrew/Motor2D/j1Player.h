@@ -97,8 +97,10 @@ public:
 	unsigned int curr_dir;
 	uint max_life_points = 6;
 	uint curr_life_points = 6;
-	uint power;
-	uint rupees = 0;
+	uint power = 1;
+	uint rupees = 50;
+	uint bombs = 50;
+	uint arrows = 100;
 	std::list<Entity*> key_items;
 
 	int action_blit;
