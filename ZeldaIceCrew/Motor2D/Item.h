@@ -52,7 +52,8 @@ public:
 	virtual void Update(float dt);
 	virtual void Draw(float dt);
 
-	virtual void Start() {};
+	virtual void Start();
+	virtual void SetUpTexture() {};
 
 	virtual void Upgrade() {};
 
@@ -77,7 +78,19 @@ public:
 
 struct PowerGauntlet : public Item {
 public:
-	void Start();
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct PegasusBoots : public Item {
+public:
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct HeartContainer : public Item {
+public:
+	void SetUpTexture();
 	void Upgrade();
 };
 

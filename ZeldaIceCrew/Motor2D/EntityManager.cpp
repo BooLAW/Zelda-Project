@@ -45,10 +45,10 @@ Item * EntityManager::CreateItem(uint subtype)
 		ret = new PowerGauntlet();
 		break;
 	case pegasus_boots:
-		//ret = new PegasusBoots();
+		ret = new PegasusBoots();
 		break;
 	case heart_container:
-		//ret = new HeartContainer();
+		ret = new HeartContainer();
 		break;
 	default:
 		LOG("Unknown Item Type: %d", subtype);

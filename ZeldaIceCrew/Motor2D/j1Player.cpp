@@ -797,7 +797,7 @@ bool j1Player::CleanUp()
 	return ret;
 }
 
-void j1Player::UpgradeSPD(int x)
+void j1Player::UpgradeSPD(float x)
 {
 	pl_speed.x += x;
 	pl_speed.y += x;

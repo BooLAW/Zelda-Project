@@ -54,7 +54,7 @@ private:
 	
 	Enemy* BS;
 
-	Item* PG;
+	std::list<Item*> items;
 
 	//HUD
 	uint i = 1;

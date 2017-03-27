@@ -41,19 +41,51 @@ void Item::Draw(float dt)
 	App->render->Blit(tex, draw_pos.x, draw_pos.y, &rect);
 }
 
-void PowerGauntlet::Start()
+void Item::Start()
 {
 
 	collider = App->collisions->AddCollider({ 0, 0, App->map->data.tile_width, App->map->data.tile_height }, COLLIDER_ITEM);
 
-	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 38, 0, 28, 32 };
-	UI_tex = App->tex->Load("Sprites/Items32x32.png");
-	UI_rect = { 40, 326, 24, 28 };
+	SetUpTexture();
 
 }
 
 void PowerGauntlet::Upgrade()
 {
 	App->player->UpgradePWR(1);
+}
+
+
+void PowerGauntlet::SetUpTexture()
+{
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 36, 0, 32, 32 };
+	UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	UI_rect = { 40, 326, 32, 32 };
+}
+
+void PegasusBoots::SetUpTexture()
+{
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 0, 0, 32, 32 };
+	UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	UI_rect = { 0, 326, 32, 32 };
+}
+
+void PegasusBoots::Upgrade()
+{
+	App->player->UpgradeSPD(1);
+}
+
+void HeartContainer::SetUpTexture()
+{
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 0, 146, 32, 32 };
+	UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	UI_rect = { 180, 362, 32, 32 };
+}
+
+void HeartContainer::Upgrade()
+{
+	App->player->UpgradeHP(2);
 }

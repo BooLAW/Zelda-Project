@@ -82,7 +82,7 @@ private:
 
 public:
 	// Upgrading
-	void UpgradeSPD(int x);
+	void UpgradeSPD(float x);
 	void UpgradePWR(int x);
 	void UpgradeHP(int x);
 

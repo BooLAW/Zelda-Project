@@ -56,11 +56,31 @@ bool j1Scene::Start()
 
 	App->render->ScaleCamBoundaries(300);
 
+	// Enemy Start
+
 	BS = App->entitymanager->CreateEnemy(BlueSoldier);
 	BS->pos = { 20, 20 };
 
-	PG = App->entitymanager->CreateItem(power_gauntlet);
-	PG->SetPositions({ 300.0f, 50.0f });
+	// Items Start
+
+	Item* new_item = nullptr;
+
+	new_item = App->entitymanager->CreateItem(power_gauntlet);
+	new_item->SetPositions({ 300.0f, 50.0f });
+
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 450.0f, 50.0f });
+
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(heart_container);
+	new_item->SetPositions({ 550.0f, 50.0f });
+
+	items.push_back(new_item);
+
+
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
