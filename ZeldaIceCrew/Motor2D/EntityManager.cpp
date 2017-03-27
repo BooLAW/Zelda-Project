@@ -36,6 +36,34 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	return ret;
 }
 
+Item * EntityManager::CreateItem(uint subtype)
+{
+	Item* ret = nullptr;
+
+	switch (subtype) {
+	case power_gauntlet:
+		ret = new PowerGauntlet();
+		break;
+	case pegasus_boots:
+		ret = new PegasusBoots();
+		break;
+	case heart_container:
+		ret = new HeartContainer();
+		break;
+	default:
+		LOG("Unknown Item Type: %d", subtype);
+		break;
+	}
+
+	ret->Start();
+
+	ret->type = item;
+
+	App->entitymanager->PushEntity(ret);
+
+	return ret;
+}
+
 
 bool EntityManager::Update(float dt) {
 
@@ -61,5 +89,17 @@ void EntityManager::DestroyEntities()
 			delete entities[i];
 		}
 	}
-} 
+}
+
+void EntityManager::DestroyEnity(Entity * ent)
+{
+	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+
+	entities.erase(aux);
+}
+
+void EntityManager::OnCollision(Collider * c1, Collider * c2)
+{
+	
+}
 

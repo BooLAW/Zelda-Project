@@ -8,6 +8,9 @@
 #include "j1Player.h"
 
 #define ENEMY_SPRITES_PER_SPD 0.05f
+#define ENEMY_DIR_CHANGE_OFFSET 50
+
+#define JUMP_WHEN_HIT 2
 
 class Entity;
 
@@ -20,7 +23,7 @@ class BSoldier;
 
 class Enemy : public Entity {
 protected:
-	enum Direction {
+	enum EnDirection {
 		Up = 0,
 		Down,
 		Right,
@@ -63,20 +66,18 @@ public:
 
 	virtual bool Attack();
 
-	virtual bool CleanUp() {
-		if (HitBox != nullptr)
-			HitBox->to_delete = true;
-
-		return true;
-	}
+	virtual bool CleanUp();
 
 	virtual void Draw();
+
+	virtual void Hit();
+	virtual void Death();
 
 public:
 	ENEMYTYPE EnemyType;
 
 	struct EnemyStats {
-		uint Hp;
+		int Hp;
 		uint Speed;
 		uint Power;
 
@@ -90,10 +91,15 @@ public:
 
 	Collider* HitBox;
 
-	SDL_Rect sprites[Direction::LastDir][8];
-	Animation animations[Direction::LastDir];
+	SDL_Rect sprites[EnDirection::LastDir][8];
+	Animation animations[EnDirection::LastDir];
 
 	unsigned int curr_dir;
+
+	// pathfinding related
+	std::list<iPoint> path_to_follow;
+
+	bool hit = false;
 
 };
 

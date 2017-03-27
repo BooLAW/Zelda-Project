@@ -67,7 +67,6 @@ private:
 	Animation animations[Sprites::__LAST][Direction::LastDir];
 	SDL_Rect sprites[Sprites::__LAST][Direction::LastDir][MAX_SPRITE_FRAMES];
 
-	unsigned int curr_dir;
 
 public:
 	j1Player();
@@ -82,6 +81,13 @@ private:
 	void OnCollision(Collider* c1, Collider* c2);
 
 public:
+	// Upgrading
+	void UpgradeSPD(float x);
+	void UpgradePWR(int x);
+	void UpgradeHP(int x);
+
+	void SetPos(float x, float y);
+	void MovePos(float x, float y);
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
 	void DyingRestart();
@@ -92,9 +98,14 @@ public:
 	bool sword = false;  // as a flag to draw link with the sword sprite
 	bool action = false; // Actions: Throw, Pull, Slash,...
 						 // --status VARs
+	
+	unsigned int curr_dir;
 	uint max_life_points = 6;
 	uint curr_life_points = 6;
-	uint rupees = 0;
+	uint power = 1;
+	uint rupees = 50;
+	uint bombs = 50;
+	uint arrows = 100;
 	std::list<Entity*> key_items;
 
 	int action_blit;
@@ -102,6 +113,7 @@ public:
 	bool anim_override = false;
 
 	Collider* link_coll;
+	Collider* weapon_coll;
 
 };
 

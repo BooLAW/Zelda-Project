@@ -230,7 +230,7 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 	}
 	if (dir == Right)
 	{
-		iPoint ptemp = WorldToMap(x, y);
+		iPoint ptemp = WorldToMap(x + 20, y);
 
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
@@ -246,7 +246,7 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 	}
 	if (dir == Down)
 	{
-		iPoint ptemp = WorldToMap(x, y);
+		iPoint ptemp = WorldToMap(x, y + 50);
 
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
@@ -266,20 +266,15 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 	}
 	if (dir == Down_L)
 	{
-		iPoint ptemp = WorldToMap(x, y);
-		iPoint ptemp2 = WorldToMap(x, y - 8);
-		iPoint ptemp3 = WorldToMap(x + 8, y);
-
-
+		iPoint ptemp = WorldToMap(x, y + 50);
 
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
+
 		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-		int id_2 = (*item)->Get(ptemp2.x, ptemp2.y);
-		int id_3 = (*item)->Get(ptemp3.x, ptemp3.y);
 
 
-		if (id_1 == red_tile || id_2 == red_tile || id_3 == red_tile)
+		if (id_1 == red_tile)
 		{
 			ret = 1;
 		}
@@ -292,20 +287,14 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 	}
 	if (dir == Down_R)
 	{
-		iPoint ptemp = WorldToMap(x, y);
-		iPoint ptemp2 = WorldToMap(x, y - 8);
-		iPoint ptemp3 = WorldToMap(x - 8, y);
-
-
+		iPoint ptemp = WorldToMap(x + 20, y + 50 );
 
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
+
 		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-		int id_2 = (*item)->Get(ptemp2.x, ptemp2.y);
-		int id_3 = (*item)->Get(ptemp3.x, ptemp3.y);
 
-
-		if (id_1 == red_tile || id_2 == red_tile || id_3 == red_tile)
+		if (id_1 == red_tile)
 		{
 			ret = 1;
 		}
@@ -318,20 +307,13 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 	}
 	if (dir == Up_R)
 	{
-		iPoint ptemp = WorldToMap(x, y);
-		iPoint ptemp2 = WorldToMap(x, y + 8);
-		iPoint ptemp3 = WorldToMap(x - 8, y);
-
-
+		iPoint ptemp = WorldToMap(x + 20, y);
 
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
 		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-		int id_2 = (*item)->Get(ptemp2.x, ptemp2.y);
-		int id_3 = (*item)->Get(ptemp3.x, ptemp3.y);
 
-
-		if (id_1 == red_tile || id_2 == red_tile || id_3 == red_tile)
+		if (id_1 == red_tile)
 		{
 			ret = 1;
 		}
@@ -345,19 +327,13 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 	if (dir == Up_L)
 	{
 		iPoint ptemp = WorldToMap(x, y);
-		iPoint ptemp2 = WorldToMap(x, y + 8);
-		iPoint ptemp3 = WorldToMap(x + 8, y);
-
-
 
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
 		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-		int id_2 = (*item)->Get(ptemp2.x, ptemp2.y);
-		int id_3 = (*item)->Get(ptemp3.x, ptemp3.y);
 
 
-		if (id_1 == red_tile || id_2 == red_tile || id_3 == red_tile)
+		if (id_1 == red_tile)
 		{
 			ret = 1;
 		}
@@ -649,11 +625,11 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	bool ret = false;
 	std::list<MapLayer*>::const_iterator item;
 	//iterate each layer
-	for(item = data.layers.begin(); item != data.layers.end(); item++)
+	for (item = data.layers.begin(); item != data.layers.end(); item++)
 	{
 		MapLayer* layer = (*item);
-		
-		if(layer->properties.Get("Navigation",0) == 0)
+
+		if (layer->properties.Get("Navigation", 0) == 0)
 			continue;
 
 		uchar* map = new uchar[layer->width*layer->height];
@@ -667,11 +643,16 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 
 				int tile_id = layer->Get(x, y);
 				//ensure that the tile_id are correct(>0)
+				
+				if (tile_id == 10)
+					map[i] = 1;
+
 				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
 				
 				if(tileset != NULL)
 				{
-					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+					//map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+
 				}
 			}
 		}

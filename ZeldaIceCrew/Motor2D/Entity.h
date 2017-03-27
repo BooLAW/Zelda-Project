@@ -3,7 +3,8 @@
 
 #include "EntityManager.h"
 
-enum ENTITYTYPE {
+enum ENTITYTYPE
+{
 	drop = 0,
 	item,
 	block,
@@ -18,7 +19,7 @@ public:
 	Entity() {};
 	virtual ~Entity() {};
 	virtual void Update(float dt) {};
-	virtual void Draw() {};
+	virtual void Draw(float dt) {};
 
 public:
 	void SetTexture(SDL_Texture* texture) {
