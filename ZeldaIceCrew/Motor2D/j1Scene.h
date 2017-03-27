@@ -52,7 +52,7 @@ private:
 	Entity* House;
 	SDL_Rect House_Rect;
 	
-	Enemy* BS;
+	std::list<Enemy*> enemies;
 
 	std::list<Item*> items;
 

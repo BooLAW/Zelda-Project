@@ -22,6 +22,12 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	case BlueSoldier:
 		ret = new BSoldier();
 		break;
+	case RedSoldier:
+		ret = new RSoldier();
+		break;
+	case GreenSoldier:
+		ret = new GSoldier();
+		break;
 	default:
 		LOG("Unknown Enemy Type: %d", subtype);
 		break;
