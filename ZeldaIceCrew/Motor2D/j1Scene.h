@@ -56,6 +56,9 @@ private:
 	uint i = 1;
 	Window* window;
 	Label* win_title;
+
+	Enemy* BS;
+
 	GuiImage* rupees;
 	GuiImage* arrows;
 	GuiImage* bombs;

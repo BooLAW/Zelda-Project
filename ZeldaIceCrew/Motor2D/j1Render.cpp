@@ -92,6 +92,9 @@ bool j1Render::Update(float dt) {
 			App->render->camera.x -= floor(200.0f * dt);
 	}
 
+
+	SetCamPos(-(App->player->GetPos().x - camera.w / 2), - (App->player->GetPos().y - camera.h / 2));
+
 	return true;
 }
 
