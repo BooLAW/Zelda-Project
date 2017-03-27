@@ -52,21 +52,9 @@ private:
 	Entity* House;
 	SDL_Rect House_Rect;
 
-	//HUD
-	uint i = 1;
-	Window* window;
-	Label* win_title;
 
 	Enemy* BS;
 
-	GuiImage* rupees;
-	GuiImage* arrows;
-	GuiImage* bombs;
-	GuiImage* life_icon;
-	GuiText* rupees_num;
-	GuiText* arrows_num;
-	GuiText* bombs_num;
-	std::list<GuiImage*>lifes;
 
 };
 

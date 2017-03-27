@@ -56,6 +56,7 @@ bool HUD::Update(float dt)
 
 bool HUD::CleanUp()
 {
+	lifes.clear();
 	return true;
 }
 
