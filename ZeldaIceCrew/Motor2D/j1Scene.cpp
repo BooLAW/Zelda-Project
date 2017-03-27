@@ -56,7 +56,15 @@ bool j1Scene::Start()
 
 	App->render->ScaleCamBoundaries(300);
 
+	BS = App->entitymanager->CreateEnemy(BlueSoldier);
+	BS->pos = { 20, 20 };
+
 	//we can do that with an iterator that recieves the positions readed from the xml file
+
+
+	App->player->SetPos(500, 100);
+	
+
 
 	return true;
 }
