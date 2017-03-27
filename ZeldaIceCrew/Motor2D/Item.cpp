@@ -1,33 +1,59 @@
 #include "Item.h"
+#include "j1App.h"
+#include "j1Map.h"
 
 Item::Item(uint subtype)
 {
+	
+}
 
+void Item::Update(float dt)
+{
+	if (grabbed == false) {
+		if (collider != nullptr)
+			if (collider->rect.x != pos.x || collider->rect.y != pos.y)
+				collider->SetPos(pos.x, pos.y);
+
+		if (collider->CheckCollision(App->player->link_coll->rect)) {
+			Upgrade();
+			PassToInventory();
+		}
+
+		Draw(dt);
+	}
+}
+
+void Item::Draw(float dt)
+{
+	if (floating_up)
+		draw_pos.y -= FLOATING_SPEED * dt;
+	else
+		draw_pos.y += FLOATING_SPEED * dt;
+
+	if (draw_pos.x != pos.x)
+		draw_pos.x = pos.x;
+
+	if (draw_pos.y > pos.y + FLOATING_OFFSET)
+		floating_up = true;
+	if (draw_pos.y < pos.y - FLOATING_OFFSET)
+		floating_up = false;
+
+	App->render->Blit(tex, draw_pos.x, draw_pos.y, &rect);
+}
+
+void PowerGauntlet::Start()
+{
+
+	collider = App->collisions->AddCollider({ 0, 0, App->map->data.tile_width, App->map->data.tile_height }, COLLIDER_ITEM);
+
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 38, 0, 28, 32 };
+	UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	UI_rect = { 40, 326, 24, 28 };
 
 }
 
-Item * Item::CreateItem(uint type)
+void PowerGauntlet::Upgrade()
 {
-	Item* ret = nullptr;
-
-	switch (type) {
-	case PowerGauntlet:
-		// ret = new PowerGauntlet();
-		break;
-	case PegasusBoots:
-		// ret = new PegasusBoots();
-		break;
-	case HeartContainer:
-		// ret = new HeartContainer();
-		break;
-	default:
-		LOG("Unknown Item Type: %d", type);
-		break;
-	}
-
-	ret->type = item;
-
-	App->entitymanager->PushEntity(ret);
-
-	return ret;
+	App->player->UpgradePWR(1);
 }

@@ -77,7 +77,7 @@ public:
 	ENEMYTYPE EnemyType;
 
 	struct EnemyStats {
-		uint Hp;
+		int Hp;
 		uint Speed;
 		uint Power;
 

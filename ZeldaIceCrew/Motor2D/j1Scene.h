@@ -51,13 +51,16 @@ private:
 	SDL_Rect Bush_Rect;
 	Entity* House;
 	SDL_Rect House_Rect;
+	
+	Enemy* BS;
+
+	Item* PG;
 
 	//HUD
 	uint i = 1;
 	Window* window;
 	Label* win_title;
 
-	Enemy* BS;
 
 	GuiImage* rupees;
 	GuiImage* arrows;

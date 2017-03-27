@@ -170,6 +170,8 @@ void Enemy::Hit()
 	//stats.Hp -= App->player->power;
 	if (hit == false) {
 		
+		hit = true;
+		
 		stats.Hp -= App->player->power;
 		
 		switch (App->player->curr_dir) {
@@ -191,7 +193,6 @@ void Enemy::Hit()
 			break;
 		}
 		
-		hit = true;
 	}
 
 }

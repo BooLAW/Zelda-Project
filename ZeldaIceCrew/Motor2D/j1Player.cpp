@@ -797,6 +797,22 @@ bool j1Player::CleanUp()
 	return ret;
 }
 
+void j1Player::UpgradeSPD(int x)
+{
+	pl_speed.x += x;
+	pl_speed.y += x;
+}
+
+void j1Player::UpgradePWR(int x)
+{
+	power += x;
+}
+
+void j1Player::UpgradeHP(int x)
+{
+	max_life_points += x;
+}
+
 void j1Player::SetPos(float x, float y)
 {
 	pos.x = x;

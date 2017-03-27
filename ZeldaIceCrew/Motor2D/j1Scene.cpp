@@ -59,6 +59,9 @@ bool j1Scene::Start()
 	BS = App->entitymanager->CreateEnemy(BlueSoldier);
 	BS->pos = { 20, 20 };
 
+	PG = App->entitymanager->CreateItem(power_gauntlet);
+	PG->SetPositions({ 300.0f, 50.0f });
+
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
 	App->player->SetPos(500, 100);
