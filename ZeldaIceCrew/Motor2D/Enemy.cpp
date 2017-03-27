@@ -73,7 +73,7 @@ bool Enemy::Move()
 
 	path_to_follow.push_back(target);
 
-	if (App->debug_mode == true) {
+	if (App->debug == true) {
 		for (std::list<iPoint>::iterator it = path_to_follow.begin(); it != path_to_follow.end(); it++) {
 			App->render->DrawQuad({it._Ptr->_Myval.x, it._Ptr->_Myval.y, App->map->data.tile_width, App->map->data.tile_height }, 255, 0, 0, 80);
 		}
@@ -83,16 +83,16 @@ bool Enemy::Move()
 		if (path_to_follow.size() > 0) {
 
 			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
-				if(App->map->TileCheck(pos.x + rect.w + stats.Speed, pos.y, Down_R) == 0)
+				if(stats.Flying == true || App->map->TileCheck(pos.x + rect.w + stats.Speed, pos.y, Direction::Right) == 0)
 					pos.x += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
-				if (App->map->TileCheck(pos.x - stats.Speed, pos.y, Down_R) == 0)
+				if (stats.Flying == true || App->map->TileCheck(pos.x - stats.Speed, pos.y, Direction::Left) == 0)
 					pos.x -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
-				if (App->map->TileCheck(pos.x, pos.y + rect.h + stats.Speed, Down_R) == 0)
+				if (stats.Flying == true || App->map->TileCheck(pos.x, pos.y + rect.h + stats.Speed, Direction::Down) == 0)
 					pos.y += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)
-				if (App->map->TileCheck(pos.x, pos.y - stats.Speed, Down_R) == 0)
+				if (stats.Flying == true || App->map->TileCheck(pos.x, pos.y - stats.Speed, Direction::Up) == 0)
 					pos.y -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
 				path_to_follow.pop_back();
@@ -243,7 +243,7 @@ bool BSoldier::Start()
 	stats.Speed = 1.5;
 	stats.Power = 1;
 
-	stats.Flying = false;
+	stats.Flying = true;
 
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
