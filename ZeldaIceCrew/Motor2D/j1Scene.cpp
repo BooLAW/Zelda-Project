@@ -57,7 +57,6 @@ bool j1Scene::Start()
 	App->render->ScaleCamBoundaries(300);
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
-	GenerateHUD();
 
 	return true;
 }
@@ -131,37 +130,9 @@ bool j1Scene::Update(float dt)
 		App->win->SetTitle(title.GetString());
 		//App->render->Blit(debug_tex, p.x, p.y);
 	}
-	//this is for testing must be removed before relising
-	if (App->input->GetKey(SDL_SCANCODE_R)==KEY_DOWN) {
-		App->player->rupees += 1;
-	}
-	if (App->player->curr_life_points != 0) {
-		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
-			App->player->curr_life_points -= 1;
-		}
-	}
-	///////////
-	//UI updating
 
-	rupees_num->str = std::to_string(App->player->rupees);
-	bombs_num->str = std::to_string(App->player->bombs);
-	arrows_num->str = std::to_string(App->player->arrows);
-
-	i=2;
-	for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
-		if (i <= App->player->curr_life_points) {
-			if ((i % 2 == 0)) {
-				it._Ptr->_Myval->texture_rect = { 897,418,28,28 };
-			}
-		
-		if ((i == App->player->curr_life_points) && (i % 2 != 0)) {
-			it._Ptr->_Myval->texture_rect = { 940,416,28,28 };
-		}
-	}
-		if ((i > App->player->curr_life_points) && (i <= App->player->max_life_points)) {
-			it._Ptr->_Myval->texture_rect = { 986,416,28,28 };
-		}
-		i+=2;
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+		App->player->curr_life_points -= 1;
 	}
 		return true;
 	
@@ -186,80 +157,4 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-void j1Scene::GenerateHUD()
-{
-	rupees = (GuiImage*)App->gui->CreateElement(GuiType::image);
-	rupees->texture_rect = { 644,411,32,32 };
-	rupees->active = true;
-	rupees->pos = { 50,10 };
 
-	bombs = (GuiImage*)App->gui->CreateElement(GuiType::image);
-	bombs->texture_rect = { 702,411,32,32 };
-	bombs->active = true;
-	bombs->pos = { 125,10 };
-
-	arrows = (GuiImage*)App->gui->CreateElement(GuiType::image);
-	arrows->texture_rect = { 766,412,57,32 };
-	arrows->active = true;
-	arrows->pos = { 200,10 };
-
-	life_icon = (GuiImage*)App->gui->CreateElement(GuiType::image);
-	life_icon->texture_rect = { 735,462,176,28};
-	life_icon->active = true;
-	life_icon->pos = { 750,10 };
-	
-	rupees_num = (GuiText*)App->gui->CreateElement(GuiType::text);
-	rupees_num->active = true;
-	rupees_num->str=std::to_string(App->player->rupees);
-	rupees_num->pos = { 50,40 };
-
-	bombs_num = (GuiText*)App->gui->CreateElement(GuiType::text);
-	bombs_num->active = true;
-	bombs_num->str=std::to_string(App->player->bombs);
-	bombs_num->pos = { 125,40 };
-
-	arrows_num = (GuiText*)App->gui->CreateElement(GuiType::text);
-	arrows_num->active = true;
-	arrows_num->str=std::to_string(App->player->arrows);
-	arrows_num->pos = { 200,40 };
-
-	iPoint heart_pos = { 750,50 };
-
-	for (uint i = 0; i <= App->player->max_life_points; i++){
-		if (i <= App->player->curr_life_points) {
-			if ((i % 2 == 0) && (i != 0)) {
-				GuiImage* img;
-				img = (GuiImage*)App->gui->CreateElement(GuiType::image);
-				img->active = true;
-				img->texture_rect = { 897,418,28,28 };
-				img->pos = heart_pos;;
-				heart_pos += {30, 0};
-				lifes.push_back(img);
-			}
-
-			if ((i == App->player->curr_life_points) && (i % 2 != 0)) {
-				GuiImage* img;
-				img = (GuiImage*)App->gui->CreateElement(GuiType::image);
-				img->active = true;
-				img->texture_rect = { 940,416,28,28 };
-				img->pos = heart_pos;
-				heart_pos += {30, 0};
-				lifes.push_back(img);
-			}
-		}
-			
-		 if(i>App->player->curr_life_points) {
-			 if ((i % 2 == 0) && (i != 0)) {
-				 GuiImage* img;
-				 img = (GuiImage*)App->gui->CreateElement(GuiType::image);
-				 img->active = true;
-				 img->texture_rect = { 986,416,28,28 };
-				 img->pos = heart_pos;
-				 heart_pos += {30, 0};
-				 lifes.push_back(img);
-			 }
-		}
-		
-	}
-	
-}

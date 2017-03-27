@@ -77,6 +77,9 @@
       <Filter>Desenvolupament  ========\Modules\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="HUD.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -177,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
