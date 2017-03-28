@@ -794,6 +794,10 @@ bool j1Player::CleanUp()
 	// Unloading All Textures
 	App->tex->UnLoad(Link_Movement);
 
+	if (link_coll != nullptr)
+		link_coll->to_delete = true;
+	if (weapon_coll != nullptr)
+		weapon_coll->to_delete = true;
 
 	return ret;
 }

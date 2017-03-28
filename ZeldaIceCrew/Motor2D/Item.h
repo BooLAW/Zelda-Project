@@ -52,6 +52,15 @@ public:
 	virtual void Update(float dt);
 	virtual void Draw(float dt);
 
+	virtual void CleanUp() {
+		if (collider != nullptr)
+			collider->to_delete = true;
+		if (tex != nullptr)
+			App->tex->UnLoad(tex);
+		if (UI_tex != nullptr)
+			App->tex->UnLoad(UI_tex);
+	}
+
 	virtual void Start();
 	virtual void SetUpTexture() {};
 
