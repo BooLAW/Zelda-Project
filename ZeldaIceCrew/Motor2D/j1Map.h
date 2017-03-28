@@ -4,7 +4,8 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "Point.h"
 #include "j1Module.h"
-
+#include "j1Player.h"
+#define NO_WALK_ID 9
 // ----------------------------------------------------
 struct Properties
 {
@@ -138,6 +139,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+	int TileCheck(int x, int y, Direction dir) const;
 
 private:
 

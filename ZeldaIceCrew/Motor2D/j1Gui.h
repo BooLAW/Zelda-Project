@@ -2,220 +2,148 @@
 #define __j1GUI_H__
 
 #include "j1Module.h"
-#include "j1App.h"
-#include "j1Render.h"
 #include "j1Fonts.h"
-#include<deque>
+#include "j1App.h"
+
+#define CREATEIMAGE(path) (GuiImage*)App->gui->CreateElement(GuiType::image, path);
+#define CREATETEXT (GuiText*)App->gui->CreateElement(GuiType::text);
 
 #define CURSOR_WIDTH 2
 
-enum TYPE
+enum GuiType 
 {
-	IMAGE,
-	LABEL,
-	BUTTON,
-	TEXT_BOX,
-	SELECTOR,
-	WINDOW,
-	WINDOWED_IMAGE
+	image = 0,
+	text,
+	button,
+	Input
 };
 
-class Element
-{
+// UI ELEMENT
+class UIElement {
 public:
-
-	Element(const char* name, TYPE type, iPoint pos, SDL_Texture* texture, SDL_Rect rect);
-	virtual ~Element();
-
-	virtual void Update() {}
-	virtual void Draw() {}
-	virtual void Handle_Input() {}
-
-public:
-
-	const char* name;
 	iPoint pos;
-	SDL_Rect rect;
-	TYPE type;
+	GuiType type;
+
+	bool active;
+	bool movable;
+
 	SDL_Texture* texture;
-
-	unsigned int ChangeTab_id(unsigned int id);
-
-	uint tab_id = 0;
-
-	bool moving = false;
-
-};
-
-// ------------------------------------------------------------------
-
-class Image : public Element
-{
+	SDL_Rect texture_rect;
+	p2List<UIElement*> children;
+	UIElement* parent;
 public:
-
-	Image(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect);
-	SDL_Rect OriginalRect;
-	iPoint Changer;
-	void ChangeImage(iPoint& change);
-	~Image();
-
-	void Update();
-	void Draw();
-public:
-};
-//--------------------------------------------
-class Windowed_Image : public Element
-{
-public:
-
-	Windowed_Image(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect);
-	std::deque<SDL_Rect> rects;
-	std::deque<iPoint> points;
-	uint cur_rect;
-	SDL_Rect Window_Rect;//the one that is visible
-	iPoint Changer;
-	void ChangeImage();
-	~Windowed_Image();
-
-	void Update();
-	void Draw();
-	bool is_Windowed();
-public:
-	bool windowed;
-};
-// ------------------------------------------------------------------
-
-class Label : public Element
-{
-public:
-
-	Label(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, p2SString text);
-	~Label();
-
-	void Update();
-	void Draw();
-
-private:
-
-	p2SString text;
-};
-
-// ------------------------------------------------------------------
-
-class Interactive : public Element
-{
-public:
-
-	Interactive(const char* name, TYPE type, iPoint pos, SDL_Texture* texture, SDL_Rect rect);
-	virtual ~Interactive();
-
-	int MouseState();
-	bool IsOnTop();
-	void Move();
-
-	void Attach(Element* element);
+	virtual void Start() {};
+	virtual void Update() {};
 
 protected:
-
-	uint tab_id = 0;
-	std::deque<Element*> linked_elements;
-
-private:
-	iPoint curr_mouse_pos;
-	iPoint prev_mouse_pos;
+	void Move(int x, int y);
 };
 
-// ------------------------------------------------------------------
-
-class Text_Box : public Interactive
-{
+// IMAGE
+class GuiImage : public UIElement {
 public:
-	Text_Box(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect, p2SString text);
-	~Text_Box();
-
-	void Update();
-	void Draw();
-	void Handle_Input() {}
-
-private:
-	p2SString text;
-	uint cursor = 0;
-	bool editing;
-};
-
-// ----------------------------------------------------------------------
-
-class Button : public Interactive
-{
-public: 
-	Button(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect);
-	~Button();
-
-	void Update();
-	void Draw();
-	void Handle_Input() {}
-};
-
-// ----------------------------------------------------------------------
-class Selector : public Image {
-public:
-	iPoint SelectorPosition=iPoint(0,0);
-	iPoint MovementLimitsMin;
-	iPoint MovementLimitsMax;
-	iPoint OriginalPosition;
-	bool activated = false;
-	
-	void MoveUp();
-	void MoveDown();
-	void MoveLeft();
-	void MoveRight();
-	
-	SDL_Rect MoveRect;
-public:
-	Selector(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect);
-	void Draw();
 	void Update();
 };
 
-class Window : public Interactive
-{
+// TEXT BANNER
+class GuiText : public UIElement {
+public:
+	_TTF_Font* font;
+	SDL_Color color;
+	std::string str;
+
 public:
 
-	Window(const char* name, iPoint pos, SDL_Texture* texture, SDL_Rect rect);
-	~Window();
+	GuiText() {}
+	~GuiText() {}
 
+public:
 	void Update();
-	void Draw();
-	void Handle_Input() {}
 };
-// ======================================================================
+
+// BUTTON
+class GuiButton : public UIElement {
+public:
+	enum State {
+		standard = 0,
+		left_clicked,
+		right_clicked,
+		hover,
+		disabled,
+		Unknown
+	} state;
+
+	GuiText* text;
+	GuiImage* image[State::Unknown];
+
+public:
+	GuiButton() {}
+	~GuiButton() {
+		if (text != nullptr)
+			delete text;
+		if (image != nullptr)
+			delete image;
+	}
+
+	void Start();
+	void Update();
+
+};
+class GuiInput : public UIElement {
+public:
+	GuiText* text;
+	bool triggered;
+public:
+	GuiInput();
+	~GuiInput() {};
+	void Start();
+	void Update();
+
+};
+
+// ---------------------------------------------------
 class j1Gui : public j1Module
 {
 public:
+
 	j1Gui();
+
+	// Destructor
 	virtual ~j1Gui();
 
-	bool Awake(pugi::xml_node&);  
-	bool Start();	              
-	bool PreUpdate();             
-	bool PostUpdate();            
-	bool CleanUp();               
-	
-	
+	// Called when before render is available
+	bool Awake(pugi::xml_node&);
+
+	// Call before first frame
+	bool Start();
+
+	// Called before all Updates
+	bool PreUpdate();
+
+	// Called after all Updates
+	bool PostUpdate();
+
+	// Called before quitting
+	bool CleanUp();
+
+	// TODO 2: Create the factory methods
+	// Gui creation functions
+	UIElement* CreateElement(GuiType type);
+	UIElement* CreateElement(GuiType type, const char* path);
+	void DeleteElements();
+
+	SDL_Texture* GetNonConstAtlas() const {
+		return atlas;
+	}
+
 	const SDL_Texture* GetAtlas() const;
-
-	Element* Create_Element(const char* name, TYPE type, iPoint pos, SDL_Rect rect, p2SString text = nullptr, _TTF_Font* font = NULL);
-	void Destroy_Element(const char* name);
-
-	bool Element_Moving();
-
+public:
+	std::list<UIElement*> elements;
 private:
+	
 
-	std::deque<Element*> elements;
-	uint curr_id = 0;
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
-	
 };
 
 #endif // __j1GUI_H__

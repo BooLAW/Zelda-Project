@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "EntityManager.h"
 #include <vector>
+#include "j1Gui.h"
 
 struct SDL_Texture;
 //UI forward declarations
@@ -41,6 +42,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	
+
 private:
 
 	SDL_Texture* debug_tex;
@@ -48,9 +51,14 @@ private:
 	SDL_Rect Bush_Rect;
 	Entity* House;
 	SDL_Rect House_Rect;
+	
+	std::list<Enemy*> enemies;
 
-	Window* window;
-	Label* win_title;
+	std::list<Item*> items;
+
+
+
+
 };
 
 #endif // __j1SCENE_H__

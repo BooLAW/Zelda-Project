@@ -1,7 +1,7 @@
 #include "j1Player.h"
 #include "j1Input.h"
 #include "j1Collision.h"
-
+#include "j1Map.h"
 j1Player::j1Player()
 {
 }
@@ -24,7 +24,6 @@ bool j1Player::Start()
 	LOG("Player Start");
 
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
-	link_coll = App->collisions->AddCollider(LINK_RECT, COLLIDER_PLAYER, this); 
 	//Idle
 	{
 		sprites[Idle][Up][0] = {link_x*3, link_y*2, link_width, link_height };
@@ -508,13 +507,17 @@ bool j1Player::Start()
 
 	// !_Animations
 
+	SDL_Rect WeaponRect = { FARLANDS.x, FARLANDS.y, App->map->data.tile_width, App->map->data.tile_height };
+	weapon_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_PL_WEAPON);
+
 	// Variable Settup
 
-	pos.x = 300;
-	pos.y = 350;
+	link_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 32, 32 }, COLLIDER_PLAYER, this);
 
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
+
+	power = 1;
 
 	curr_dir = Down;
 
@@ -526,37 +529,70 @@ bool j1Player::Start()
 bool j1Player::Update(float dt)
 {
 	bool ret = true;
-
+	//if (alive == false)
+	//{
+	//	DyingRestart();
+	//		action_blit = PickUp;//change to wake Up animation when we have it
+	//	return ret;
+	//}
 	// Logic
 	if (action == false) {
 		//Movement
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-				pos.y -= pl_speed.y * sqrt(2) / 2;
-				pos.x -= pl_speed.x * sqrt(2) / 2;
+				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y- pl_speed.y, Up_L) == 0) //change dir
+				{
+					pos.y -= pl_speed.y * sqrt(2) / 2;
+					pos.x -= pl_speed.x * sqrt(2) / 2;
+				}
 				if (anim_override == false)
 					action_blit = Walk;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-				pos.y += pl_speed.y * sqrt(2) / 2;
-				pos.x -= pl_speed.x * sqrt(2) / 2;
+				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y + pl_speed.y, Down_L) == 0) //change dir
+				{
+					pos.y += pl_speed.y * sqrt(2) / 2;
+					pos.x -= pl_speed.x * sqrt(2) / 2;
+				
+				}
+
 				if (anim_override == false)
 					action_blit = Walk;
+
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
-				pos.y += pl_speed.y * sqrt(2) / 2;
-				pos.x += pl_speed.x * sqrt(2) / 2;
+				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y + pl_speed.y, Down_R) == 0)//change dir
+				{
+					pos.y += pl_speed.y * sqrt(2) / 2;
+					pos.x += pl_speed.x * sqrt(2) / 2;
+
+				}
+
+
 				if (anim_override == false)
 					action_blit = Walk;
+
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
-				pos.y -= pl_speed.y * sqrt(2) / 2;
-				pos.x += pl_speed.x * sqrt(2) / 2;
+				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y - pl_speed.y, Up_R) == 0)//change dir
+				{
+					pos.y -= pl_speed.y * sqrt(2) / 2;
+					pos.x += pl_speed.x * sqrt(2) / 2;
+				}
+
+
 				if (anim_override == false)
 					action_blit = Walk;
+
+
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_W)) {
-				pos.y -= pl_speed.y;
+				if (App->map->TileCheck(pos.x, pos.y - pl_speed.y, Up) == 0)
+				{
+					pos.y -= pl_speed.y;
+				}
+
+
 				if (anim_override == false)
 					action_blit = Walk;
 				if (dir_override == false)
@@ -564,22 +600,41 @@ bool j1Player::Update(float dt)
 
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A)) {
-				pos.x -= pl_speed.x;
+				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Left) == 0)
+				{
+					pos.x -= pl_speed.x;
+				}
+
+
 				if (anim_override == false)
-				 action_blit = Walk;
+					action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Left;
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_S)) {
-				pos.y += pl_speed.y;
+			else if (App->input->GetKey(SDL_SCANCODE_S))
+			{
+				if (App->map->TileCheck(pos.x, pos.y + pl_speed.y, Down) == 0)
+				{
+					pos.y += pl_speed.y;
+					
+				}
+
+
 				if (anim_override == false)
 					action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Down;
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_D)) {
-				pos.x += pl_speed.x;
-				if(anim_override == false)
+			else if (App->input->GetKey(SDL_SCANCODE_D))
+			{
+				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y, Right) == 0)
+				{
+					pos.x += pl_speed.x;
+					
+				}
+
+
+				if (anim_override == false)
 					action_blit = Walk;
 				if (dir_override == false)
 					curr_dir = Right;
@@ -653,9 +708,30 @@ bool j1Player::Update(float dt)
 		//if(App->input->GetKey(SDL_SCANCODE))action_blit = Idle;
 	}
 
-			// !_Logic
+	if (action_blit == Slash) {
+		switch (curr_dir) {
+		case Up:
+			weapon_coll->SetPos(pos.x, pos.y - App->map->data.tile_height);
+			break;
+		case Down:
+			weapon_coll->SetPos(pos.x, pos.y + App->map->data.tile_height);
+			break;
+		case Left:
+			weapon_coll->SetPos(pos.x - App->map->data.tile_width, pos.y);
+			break;
+		case Right:
+			weapon_coll->SetPos(pos.x + App->map->data.tile_width, pos.y);
+			break;
+		}
+	
+	}
+	else {
+		weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
+	}
 
-			// Graphics
+	// !_Logic
+
+	// Graphics
 		if (action == false){
 			//Movement or any action that does not stop movement
 
@@ -697,8 +773,8 @@ bool j1Player::Update(float dt)
 	//!_Graphics
 
 	// MODIFY COLLISION -------------------------------------------------
+		link_coll->SetPos(pos.x , pos.y + 16);
 
-		link_coll->SetPos(pos.x , pos.y );
 	return ret;
 }
 
@@ -720,6 +796,34 @@ bool j1Player::CleanUp()
 
 
 	return ret;
+}
+
+void j1Player::UpgradeSPD(float x)
+{
+	pl_speed.x += x;
+	pl_speed.y += x;
+}
+
+void j1Player::UpgradePWR(int x)
+{
+	power += x;
+}
+
+void j1Player::UpgradeHP(int x)
+{
+	max_life_points += x;
+}
+
+void j1Player::SetPos(float x, float y)
+{
+	pos.x = x;
+	pos.y = y;
+}
+
+void j1Player::MovePos(float x, float y)
+{
+	pos.x += x;
+	pos.y += y;
 }
 
 bool j1Player::SetPosTile(int x, int y)
@@ -763,12 +867,23 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 
 		
 	}
-	// dying collision
 
-	/*if (self == c1 && self != nullptr && self->type == COLLIDER_PLAYER && (c2->type == COLLIDER_ENEMY_SHOT || c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_TRUCK || c2->type == COLLIDER_RED_SOLDIER) && !destroyed)
+	// Hit collision
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
 	{
-		App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
-		destroyed = true;
-		Disable();
-	}*/
+		if (curr_life_points == 0)
+			alive = false;
+
+		//Add extra particles?
+		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
+		//function to restart in the house()
+	}
+}
+void j1Player::DyingRestart()
+{
+	alive = true;
+	pos = ORIGIN_RESTART;
+	curr_life_points = max_life_points;
+	//add more features to discuss by the designer
+	action = true;
 }

@@ -146,6 +146,8 @@ public:
 		return(*this);
 	}
 
+	
+
 	const p2SString& operator= (const char* string)
 	{
 		p2SString t(string);

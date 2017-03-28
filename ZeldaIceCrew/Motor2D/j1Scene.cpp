@@ -56,7 +56,50 @@ bool j1Scene::Start()
 
 	App->render->ScaleCamBoundaries(300);
 
+	// Enemy Start
+	Enemy* new_enemy;
+	new_enemy = App->entitymanager->CreateEnemy(BlueSoldier);
+	new_enemy->pos = { 20, 20 };
+
+	enemies.push_back(new_enemy);
+
+	new_enemy = App->entitymanager->CreateEnemy(RedSoldier);
+	new_enemy->pos = { 60, 30 };
+
+	enemies.push_back(new_enemy);
+
+	new_enemy = App->entitymanager->CreateEnemy(GreenSoldier);
+	new_enemy->pos = { 200, 10 };
+
+	enemies.push_back(new_enemy);
+
+
+	// Items Start
+
+	Item* new_item = nullptr;
+
+	new_item = App->entitymanager->CreateItem(power_gauntlet);
+	new_item->SetPositions({ 300.0f, 50.0f });
+
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 450.0f, 50.0f });
+
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(heart_container);
+	new_item->SetPositions({ 550.0f, 50.0f });
+
+	items.push_back(new_item);
+
+
+
 	//we can do that with an iterator that recieves the positions readed from the xml file
+
+
+	App->player->SetPos(500, 100);
+	
 
 
 	return true;
@@ -95,6 +138,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
@@ -130,7 +174,12 @@ bool j1Scene::Update(float dt)
 		App->win->SetTitle(title.GetString());
 		//App->render->Blit(debug_tex, p.x, p.y);
 	}
-	return true;
+
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+		App->player->curr_life_points -= 1;
+	}
+		return true;
+	
 }
 
 // Called each loop iteration
@@ -151,3 +200,5 @@ bool j1Scene::CleanUp()
 
 	return true;
 }
+
+

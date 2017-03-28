@@ -5,6 +5,7 @@
 #include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Player.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -183,6 +184,170 @@ bool j1Map::CleanUp()
 	return true;
 }
 
+int j1Map::TileCheck(int x, int y, Direction dir) const
+{
+	int ret = 0;
+	//get the key navigation tiles(r)
+	//Note: aqui el que fa es guardarse el numero del tileset en el que estan 2 
+	//tiles clau de la navigation
+	//el de no es pot passar i el detector de canvi d'escena
+	int red_tile = data.tilesets.begin()._Ptr->_Myval->firstgid + NO_WALK_ID;//walkability tile to don't walk
+																			 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
+
+	if (dir == Up)
+	{
+		iPoint ptemp = WorldToMap(x, y);
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
+
+		if (id_1 == red_tile)
+		{
+			ret = 1;
+		}
+		/*	else if (id_1 == blue_tile)
+		{
+		App->scene->switch_map = 1;
+		}*/
+		else
+			ret = 0;
+
+	}
+	if (dir == Left)
+	{
+		iPoint ptemp = WorldToMap(x, y);
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
+
+
+		if (id_1 == red_tile)
+		{
+			ret = 1;
+		}
+		else
+			ret = 0;
+	}
+	if (dir == Right)
+	{
+		iPoint ptemp = WorldToMap(x + 20, y);
+
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
+
+
+		if (id_1 == red_tile)
+		{
+			ret = 1;
+		}
+		else
+			ret = 0;
+	}
+	if (dir == Down)
+	{
+		iPoint ptemp = WorldToMap(x, y + 50);
+
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
+
+
+		if (id_1 == red_tile)
+		{
+			ret = 1;
+		}
+		/*else if (id_1 == blue_tile)
+		{
+		App->scene->switch_map = 2;
+		}*/
+		else
+			ret = 0;
+	}
+	if (dir == Down_L)
+	{
+		iPoint ptemp = WorldToMap(x, y + 50);
+
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+
+		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
+
+
+		if (id_1 == red_tile)
+		{
+			ret = 1;
+		}
+		/*else if (id_1 == blue_tile)
+		{
+		App->scene->switch_map = 2;
+		}*/
+		else
+			ret = 0;
+	}
+	if (dir == Down_R)
+	{
+		iPoint ptemp = WorldToMap(x + 20, y + 50 );
+
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+
+		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
+
+		if (id_1 == red_tile)
+		{
+			ret = 1;
+		}
+		/*else if (id_1 == blue_tile)
+		{
+		App->scene->switch_map = 2;
+		}*/
+		else
+			ret = 0;
+	}
+	if (dir == Up_R)
+	{
+		iPoint ptemp = WorldToMap(x + 20, y);
+
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
+
+		if (id_1 == red_tile)
+		{
+			ret = 1;
+		}
+		/*else if (id_1 == blue_tile)
+		{
+		App->scene->switch_map = 2;
+		}*/
+		else
+			ret = 0;
+	}
+	if (dir == Up_L)
+	{
+		iPoint ptemp = WorldToMap(x, y);
+
+		std::list<MapLayer*>::const_iterator item = data.layers.end();
+		item--;
+		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
+
+
+		if (id_1 == red_tile)
+		{
+			ret = 1;
+		}
+		/*else if (id_1 == blue_tile)
+		{
+		App->scene->switch_map = 2;
+		}*/
+		else
+			ret = 0;
+	}
+
+	//retornarem 0 si podem caminar o si es una blue tile
+	return ret;
+}
 // Load new map
 bool j1Map::Load(const char* file_name)
 {
@@ -460,11 +625,11 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	bool ret = false;
 	std::list<MapLayer*>::const_iterator item;
 	//iterate each layer
-	for(item = data.layers.begin(); item != data.layers.end(); item++)
+	for (item = data.layers.begin(); item != data.layers.end(); item++)
 	{
 		MapLayer* layer = (*item);
-		
-		if(layer->properties.Get("Navigation",0) == 0)
+
+		if (layer->properties.Get("Navigation", 0) == 0)
 			continue;
 
 		uchar* map = new uchar[layer->width*layer->height];
@@ -478,11 +643,16 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 
 				int tile_id = layer->Get(x, y);
 				//ensure that the tile_id are correct(>0)
+				
+				if (tile_id == 10)
+					map[i] = 1;
+
 				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
 				
 				if(tileset != NULL)
 				{
-					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+					//map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+
 				}
 			}
 		}

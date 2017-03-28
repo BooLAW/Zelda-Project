@@ -3,6 +3,8 @@
 
 #define MAX_COLLIDERS 50
 
+#define FARLANDS iPoint({5000, 5000})
+
 #include "j1Module.h"
 #include "p2Defs.h"
 #include "Animation.h"
@@ -12,7 +14,10 @@ enum COLLIDER_TYPE
 	COLLIDER_NONE = -1,
 	COLLIDER_WALL,
 	COLLIDER_PLAYER,
-	COLLIDER_BUSH
+	COLLIDER_BUSH,
+	COLLIDER_ENEMY,
+	COLLIDER_PL_WEAPON,
+	COLLIDER_ITEM
 
 };
 
