@@ -3,7 +3,8 @@
 
 #include "EntityManager.h"
 
-enum ENTITYTYPE {
+enum ENTITYTYPE
+{
 	drop = 0,
 	item,
 	block,
@@ -36,7 +37,7 @@ public:
 		rect = rectangle;
 	}
 
-private:
+protected:
 	SDL_Texture* tex;
 	SDL_Rect rect;
 

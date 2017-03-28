@@ -4,24 +4,108 @@
 #include "j1App.h"
 #include "EntityManager.h"
 #include "Entity.h"
+#include "j1Collision.h"
+#include "j1Player.h"
+
+#define ENEMY_SPRITES_PER_SPD 0.05f
+#define ENEMY_DIR_CHANGE_OFFSET 50
+
+#define JUMP_WHEN_HIT 2
 
 class Entity;
 
 enum ENEMYTYPE {
-	BSoldier = 0,
+	BlueSoldier = 0,
 	__LAST
 };
 
+class BSoldier;
+
 class Enemy : public Entity {
+protected:
+	enum EnDirection {
+		Up = 0,
+		Down,
+		Right,
+		Left,
+		LastDir
+	};
+
+protected:
+	enum DAMAGETYPE {
+		melee = 0,
+		projectile,
+		__LAST_DMGTYPE
+	};
+
+	enum AITYPE {
+		path = 0,
+		chase,
+		distance,
+		no_move,
+		__LAST_AITYPE
+	};
+
 public:
 	Enemy() {};
 	Enemy(uint subtype);
-	virtual ~Enemy() {};
-
+	virtual ~Enemy() {
+		CleanUp();
+	};
 
 
 public:
-	Enemy* CreateEnemy(ENEMYTYPE type);
+
+	virtual bool Start();
+
+	virtual void Spawn() {}
+
+	virtual void Update(float dt);
+
+	virtual bool Move();
+
+	virtual bool Attack();
+
+	virtual bool CleanUp();
+
+	virtual void Draw();
+
+	virtual void Hit();
+	virtual void Death();
+
+public:
+	ENEMYTYPE EnemyType;
+
+	struct EnemyStats {
+		uint Hp;
+		uint Speed;
+		uint Power;
+
+		bool Flying = false;
+	
+	} stats;
+
+	ENEMYTYPE subtype;
+	bool DmgType[DAMAGETYPE::__LAST_DMGTYPE];
+	AITYPE AIType;
+
+	Collider* HitBox;
+
+	SDL_Rect sprites[EnDirection::LastDir][8];
+	Animation animations[EnDirection::LastDir];
+
+	unsigned int curr_dir;
+
+	// pathfinding related
+	std::list<iPoint> path_to_follow;
+
+	bool hit = false;
+
+};
+
+class BSoldier : public Enemy {
+public:
+	bool Start();
 
 };
 
