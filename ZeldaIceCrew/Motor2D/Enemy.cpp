@@ -61,6 +61,7 @@ bool Enemy::Move()
 		break;
 	case AITYPE::chase:
 		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y };
+		path_to_follow.push_back(target);
 		break;
 	case AITYPE::distance:
 		break;
@@ -72,7 +73,6 @@ bool Enemy::Move()
 	//
 	//path_to_follow = *App->pathfinding->GetLastPath();
 
-	path_to_follow.push_back(target);
 
 	if (App->debug == true) {
 		for (std::list<iPoint>::iterator it = path_to_follow.begin(); it != path_to_follow.end(); it++) {
@@ -161,7 +161,18 @@ bool Enemy::CleanUp()
 
 void Enemy::Draw()
 {
-	App->render->Blit(Entity::GetTexture(), pos.x, pos.y, &animations[curr_dir].GetCurrentFrame());
+
+	if (curr_dir == EnDirection::Left)
+		inverse_draw = true;
+	else
+		inverse_draw = false;
+
+	SDL_Rect draw_rect = animations[curr_dir].GetCurrentFrame();
+	fPoint aux_pos = pos;
+	if (inverse_draw == true)
+		aux_pos.x = pos.x - draw_rect.w + HitBox->rect.w;
+
+	App->render->Blit(Entity::GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
 }
 
 void Enemy::Hit()
@@ -329,17 +340,17 @@ bool GSoldier::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 30, 251, 44, 68 };
-		sprites[Enemy::EnDirection::Down][1] = { 132, 249, 44, 70 };
+		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 30, 357, 44, 52 };
-		sprites[Enemy::EnDirection::Up][1] = { 132, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 214, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Left][1] = { 316, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 64, 56 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 30, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Right][1] = { 132, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
 
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);

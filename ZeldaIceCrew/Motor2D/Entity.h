@@ -40,6 +40,7 @@ public:
 protected:
 	SDL_Texture* tex;
 	SDL_Rect rect;
+	bool inverse_draw = false;
 
 public:
 	fPoint pos;
