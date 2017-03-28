@@ -25,8 +25,8 @@ public:
 		if(tex != nullptr)
 			App->tex->UnLoad(tex);
 	}
-	
-	virtual void Draw() {};
+	virtual void Draw(float dt) {};
+
 
 public:
 
@@ -48,6 +48,7 @@ public:
 protected:
 	SDL_Texture* tex;
 	SDL_Rect rect;
+	bool inverse_draw = false;
 
 public:
 	fPoint pos;

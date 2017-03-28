@@ -76,8 +76,14 @@
     <ClCompile Include="Item.cpp">
       <Filter>Desenvolupament  ========\Modules\Entity</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="HUD.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+=======
     <ClCompile Include="Bomb.cpp">
       <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+>>>>>>> origin/UI
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Desenvolupament  ========\Modules\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

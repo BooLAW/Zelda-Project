@@ -81,6 +81,11 @@ private:
 	void OnCollision(Collider* c1, Collider* c2);
 
 public:
+	// Upgrading
+	void UpgradeSPD(float x);
+	void UpgradePWR(int x);
+	void UpgradeHP(int x);
+
 	void SetPos(float x, float y);
 	void MovePos(float x, float y);
 	bool SetPosTile(int x, int y);

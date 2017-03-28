@@ -16,6 +16,8 @@ class Entity;
 
 enum ENEMYTYPE {
 	BlueSoldier = 0,
+	RedSoldier,
+	GreenSoldier,
 	__LAST
 };
 
@@ -86,9 +88,9 @@ public:
 	ENEMYTYPE EnemyType;
 
 	struct EnemyStats {
-		uint Hp;
-		uint Speed;
-		uint Power;
+		int		Hp;
+		float	Speed;
+		uint	Power;
 
 		bool Flying = false;
 	
@@ -113,6 +115,18 @@ public:
 };
 
 class BSoldier : public Enemy {
+public:
+	bool Start();
+
+};
+
+class RSoldier : public Enemy {
+public:
+	bool Start();
+
+};
+
+class GSoldier : public Enemy {
 public:
 	bool Start();
 

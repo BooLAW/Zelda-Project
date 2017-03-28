@@ -48,6 +48,7 @@ public:
 
 public:
 	Enemy* CreateEnemy(uint subtype);
+	Item* CreateItem(uint subtype);
 
 private:
 	std::deque<Entity*> entities;

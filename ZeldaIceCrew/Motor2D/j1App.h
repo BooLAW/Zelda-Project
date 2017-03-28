@@ -21,6 +21,7 @@ class j1PathFinding;
 class j1Fonts;
 class j1Gui;
 class j1Collision;
+class HUD;
 //class j1Console;			
 class j1Player;
 class EntityManager;
@@ -113,7 +114,7 @@ public:
 	j1Collision*			collisions = NULL;
 	j1Player*			player = NULL;
 	EntityManager*      entitymanager = NULL;
-
+	HUD*				hud = NULL;
 	bool			    debug_mode = false;
 private:
 

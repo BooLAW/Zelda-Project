@@ -44,9 +44,12 @@ bool j1Gui::PreUpdate()
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
-	for (p2List_item<UIElement*>* it = elements.start; it != NULL; it = it->next) {
-		if (it->data->active)
-			it->data->Update();
+
+
+	for (std::list<UIElement*>::const_iterator it = elements.cbegin(); it != elements.cend(); it++) {
+
+		if (it._Ptr->_Myval->active)
+			it._Ptr->_Myval->Update();
 	}
 	return true;
 }
@@ -92,7 +95,7 @@ UIElement * j1Gui::CreateElement(GuiType type)
 		ret->texture = atlas;
 		ret->active = true;
 		ret->Start();
-		elements.add(ret);
+		elements.push_back(ret);
 	}
 
 	return ret;
@@ -128,7 +131,7 @@ UIElement * j1Gui::CreateElement(GuiType type, const char* path)
 		ret->texture = App->tex->Load(path);
 		ret->active = true;
 		ret->Start();
-		elements.add(ret);
+		elements.push_back(ret);
 	}
 
 	return ret;
@@ -136,9 +139,9 @@ UIElement * j1Gui::CreateElement(GuiType type, const char* path)
 
 void j1Gui::DeleteElements()
 {
-	for (p2List_item<UIElement*>* it = elements.start; it != NULL; it = it->next) {
-		if (it != nullptr)
-			delete it->data;
+	for (std::list<UIElement*>::const_iterator it = elements.cbegin(); it != elements.cend(); it++) {
+		if (it._Ptr->_Myval != nullptr)
+			delete it._Ptr->_Myval;
 	}
 }
 
@@ -254,4 +257,51 @@ void GuiInput::Update() {
 GuiInput::GuiInput() {
 	//text->string = "Hello world";
 	//text->pos.create(1920 / 2, 950);
+}
+
+void Window::CleanUp()
+{
+	if (!win_elements.empty()) {
+		win_elements.clear();
+	}
+}
+
+void Window::AddElement(UIElement * element)
+{
+	if (element != nullptr) {
+		if (!win_elements.empty()) {
+			if (win_elements.end()._Ptr->_Myval->pos.x + element->texture_rect.w + offset_x < pos.x + this->texture_rect.w - offset_x) {
+				element->pos.x = win_elements.end()._Ptr->_Myval->pos.x + element->texture_rect.w + offset_x;
+				element->pos.y = win_elements.end()._Ptr->_Myval->pos.y;
+				win_elements.push_back(element);
+			}
+			else {
+				element->pos.x = pos.x + offset_x;
+				element->pos.y = win_elements.end()._Ptr->_Myval->pos.y + offset_y + element->texture_rect.h;
+				win_elements.push_back(element);
+			}
+		}
+		else {
+			element->pos.x = pos.x + offset_x;
+			element->pos.y = pos.y + offset_y;
+			win_elements.push_back(element);
+		}
+	}
+	
+}
+
+bool Window::Inside(UIElement*element)
+{
+	if ((element->pos.x < pos.x + this->texture_rect.w) && (element->pos.x > pos.x) && (element->pos.y > pos.y) && (element->pos.y < pos.y + this->texture_rect.h)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void Window::SetOffset(int x, int y)
+{
+	offset_x = x;
+	offset_y = y;
 }

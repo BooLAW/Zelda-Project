@@ -24,7 +24,6 @@ bool j1Player::Start()
 	LOG("Player Start");
 
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
-	link_coll = App->collisions->AddCollider(LINK_RECT, COLLIDER_PLAYER, this); 
 	//Idle
 	{
 		sprites[Idle][Up][0] = {link_x*3, link_y*2, link_width, link_height };
@@ -513,6 +512,8 @@ bool j1Player::Start()
 
 	// Variable Settup
 
+	link_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 32, 32 }, COLLIDER_PLAYER, this);
+
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
 
@@ -539,17 +540,16 @@ bool j1Player::Update(float dt)
 		//Movement
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Up_L) == 0) //change dir
+				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y- pl_speed.y, Up_L) == 0) //change dir
 				{
 					pos.y -= pl_speed.y * sqrt(2) / 2;
 					pos.x -= pl_speed.x * sqrt(2) / 2;
-
 				}
 				if (anim_override == false)
 					action_blit = Walk;
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Down_L) == 0) //change dir
+				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y + pl_speed.y, Down_L) == 0) //change dir
 				{
 					pos.y += pl_speed.y * sqrt(2) / 2;
 					pos.x -= pl_speed.x * sqrt(2) / 2;
@@ -561,7 +561,7 @@ bool j1Player::Update(float dt)
 
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
-				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y - pl_speed.y, Down_R) == 0)//change dir
+				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y + pl_speed.y, Down_R) == 0)//change dir
 				{
 					pos.y += pl_speed.y * sqrt(2) / 2;
 					pos.x += pl_speed.x * sqrt(2) / 2;
@@ -578,7 +578,6 @@ bool j1Player::Update(float dt)
 				{
 					pos.y -= pl_speed.y * sqrt(2) / 2;
 					pos.x += pl_speed.x * sqrt(2) / 2;
-				
 				}
 
 
@@ -604,7 +603,6 @@ bool j1Player::Update(float dt)
 				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Left) == 0)
 				{
 					pos.x -= pl_speed.x;
-			
 				}
 
 
@@ -775,7 +773,7 @@ bool j1Player::Update(float dt)
 	//!_Graphics
 
 	// MODIFY COLLISION -------------------------------------------------
-		link_coll->SetPos(pos.x , pos.y );
+		link_coll->SetPos(pos.x , pos.y + 16);
 
 	return ret;
 }
@@ -798,6 +796,22 @@ bool j1Player::CleanUp()
 
 
 	return ret;
+}
+
+void j1Player::UpgradeSPD(float x)
+{
+	pl_speed.x += x;
+	pl_speed.y += x;
+}
+
+void j1Player::UpgradePWR(int x)
+{
+	power += x;
+}
+
+void j1Player::UpgradeHP(int x)
+{
+	max_life_points += x;
 }
 
 void j1Player::SetPos(float x, float y)
@@ -857,7 +871,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	// Hit collision
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
 	{
-		curr_life_points -= 1;
 		if (curr_life_points == 0)
 			alive = false;
 
