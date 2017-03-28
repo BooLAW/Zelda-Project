@@ -152,14 +152,6 @@ bool Enemy::Attack()
 	return ret;
 }
 
-bool Enemy::CleanUp()
-{
-	if (HitBox != nullptr)
-		HitBox->to_delete = true;
-	App->entitymanager->DestroyEnity(this);
-	return true;
-}
-
 void Enemy::Draw()
 {
 	App->render->Blit(Entity::GetTexture(), pos.x, pos.y, &animations[curr_dir].GetCurrentFrame());

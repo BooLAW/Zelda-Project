@@ -66,12 +66,21 @@ public:
 
 	virtual bool Attack();
 
-	virtual bool CleanUp();
-
 	virtual void Draw();
 
 	virtual void Hit();
 	virtual void Death();
+
+	virtual void CleanUp() {
+		if (tex != nullptr)
+			App->tex->UnLoad(tex);
+
+		if(HitBox != nullptr)
+			HitBox->to_delete = true;
+
+		path_to_follow.clear();
+
+	}
 
 public:
 	ENEMYTYPE EnemyType;
