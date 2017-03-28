@@ -19,7 +19,7 @@ public:
 	Entity() {};
 	virtual ~Entity() {};
 	virtual void Update(float dt) {};
-	virtual void Draw() {};
+	virtual void Draw(float dt) {};
 
 public:
 	void SetTexture(SDL_Texture* texture) {
@@ -40,6 +40,7 @@ public:
 protected:
 	SDL_Texture* tex;
 	SDL_Rect rect;
+	bool inverse_draw = false;
 
 public:
 	fPoint pos;

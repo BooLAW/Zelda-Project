@@ -44,7 +44,7 @@
 #define PLAYER_COLL_Y_OFFSET 4
 
 #define ORIGIN_RESTART {300,350}
-#define LINK_RECT {0,0,32,48}
+#define LINK_RECT {0,0,32,32}
 typedef unsigned int uint;
 typedef unsigned __int32 uint32;
 typedef unsigned __int64 uint64;

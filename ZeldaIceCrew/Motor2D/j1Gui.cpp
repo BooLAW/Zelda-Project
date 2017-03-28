@@ -44,9 +44,12 @@ bool j1Gui::PreUpdate()
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
-	for (p2List_item<UIElement*>* it = elements.start; it != NULL; it = it->next) {
-		if (it->data->active)
-			it->data->Update();
+
+
+	for (std::list<UIElement*>::const_iterator it = elements.cbegin(); it != elements.cend(); it++) {
+
+		if (it._Ptr->_Myval->active)
+			it._Ptr->_Myval->Update();
 	}
 	return true;
 }
@@ -92,7 +95,7 @@ UIElement * j1Gui::CreateElement(GuiType type)
 		ret->texture = atlas;
 		ret->active = true;
 		ret->Start();
-		elements.add(ret);
+		elements.push_back(ret);
 	}
 
 	return ret;
@@ -128,7 +131,7 @@ UIElement * j1Gui::CreateElement(GuiType type, const char* path)
 		ret->texture = App->tex->Load(path);
 		ret->active = true;
 		ret->Start();
-		elements.add(ret);
+		elements.push_back(ret);
 	}
 
 	return ret;
@@ -136,9 +139,9 @@ UIElement * j1Gui::CreateElement(GuiType type, const char* path)
 
 void j1Gui::DeleteElements()
 {
-	for (p2List_item<UIElement*>* it = elements.start; it != NULL; it = it->next) {
-		if (it != nullptr)
-			delete it->data;
+	for (std::list<UIElement*>::const_iterator it = elements.cbegin(); it != elements.cend(); it++) {
+		if (it._Ptr->_Myval != nullptr)
+			delete it._Ptr->_Myval;
 	}
 }
 
