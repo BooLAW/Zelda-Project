@@ -190,7 +190,7 @@ void Enemy::Hit()
 
 void Enemy::Death()
 {
-	CleanUp();
+	App->entitymanager->DestroyEnity(this);
 }
 
 bool BSoldier::Start()
