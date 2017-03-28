@@ -4,9 +4,8 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "j1Textures.h"
+
 class Entity;
-
-
 
 enum BLOCKTYPE {
 	bush = 0,
@@ -41,17 +40,17 @@ public:
 	virtual bool isPickable() { return false; };
 	virtual bool isOpenable() { return false; };
 
-	void Push() {};
-	void Pull() {};
-	void Light() {};
-	void Break() {};
-	void Pick() {};
-	void Open() {};
-	void Throw() {};
+	virtual void Push() {};
+	virtual void Pull() {};
+	virtual void Light() {};
+	virtual void Break() {};
+	virtual void Pick() {};
+	virtual void Open() {};
+	virtual void Throw() {};
 };
 
 class Bush : public Block {
-	SDL_rect size = { 0,0,40,40 };
+	SDL_Rect size = { 0,0,40,40 };
 	//Collision box is 3/4 down, why?
 	//Block moves down to Link position then the animation goes through
 
@@ -63,13 +62,14 @@ class Bush : public Block {
 		return true;
 	}
 
-	void Pick();
-	void Throw();
 	void Break();
+	void Throw();
+	void Pick();
+
 };
 
 class Pot : public Block {
-	SDL_rect size = { 0,0,40,40 };
+	SDL_Rect size = { 0,0,40,40 };
 	//Collision box is 3/4 down, why?
 	//Block moves down to Link position then the animation goes through
 
@@ -80,23 +80,26 @@ class Pot : public Block {
 	bool isBreakable() {
 		return true;
 	}
-
-	void Pick();
-	void Throw();
+	
 	void Break();
+	void Throw();
+	void Pick();
+
 };
 
 class Statue : public Block {
-	SDL_rect size = { 0,0,40,80 };
+	SDL_Rect size = { 0,0,40,80 };
 
 	bool isPushable() {
 		return true;
 	}
 
+	void Push();
+
 };
 
 class Torch_Bowl : public Block {
-	SDL_rect size = { 0,0,40,40 };
+	SDL_Rect size = { 0,0,40,40 };
 
 	bool isLitable() {
 		return true;
@@ -106,7 +109,7 @@ class Torch_Bowl : public Block {
 };
 
 class Torch_Pillar : public Block {
-	SDL_rect size = { 0,0,40,80 };
+	SDL_Rect size = { 0,0,40,80 };
 
 	bool isLitable() {
 		return true;
@@ -116,7 +119,7 @@ class Torch_Pillar : public Block {
 };
 
 class Slab : public Block {
-	SDL_rect size = { 0,0,40,40 };
+	SDL_Rect size = { 0,0,40,40 };
 
 	bool isPushable() {
 		return true;
@@ -126,6 +129,8 @@ class Slab : public Block {
 		return true;
 	}
 
-	void Move_Block();
+	void Push();
+	void Pull();
+
 };
 #endif // !__BLOCK_H__

@@ -42,33 +42,66 @@ Block * Block::CreateBlock(uint type)
 	return ret;
 }
 
-void Block::Push() {
-	//Changes position
+void Slab::Push() {
+	//Changes position, does not require input but movement
 	//position
 
 
 }
 
-void Block::Light() {
+void Statue::Push() {
+	//Changes position, does not require input but movement
+	//position
+
+
+}
+
+void Slab::Pull() {
+	//Changes position, by pulling, requires input
+}
+
+void Torch_Bowl::Light() {
 	//changes the spire blitted, from idle to lit
 
 
 }
 
-void Block::Break() {
+void Torch_Pillar::Light() {
+	//changes the spire blitted, from idle to lit
+
+
+}
+
+void Bush::Break() {
 	//triggers break animation (for whatever reason) and calls destructor
 
 
 }
 
-void Block::Pick() {
+void Pot::Break() {
+	//triggers break animation (for whatever reason) and calls destructor
+
+
+}
+
+void Bush::Pick() {
 	//triggers pick animation, then put pick state
 
 
 }
 
-void Block::Open() {
-	//triggers open animation, then put open state which can't be opened or closed and gives an item or wahtever it is supposed to give
+void Pot::Pick() {
+	//triggers pick animation, then put pick state
 
+
+}
+
+void Bush::Throw() {
+	//throws if something is held
+
+}
+
+void Pot::Throw() {
+	//throws if something is held
 
 }
