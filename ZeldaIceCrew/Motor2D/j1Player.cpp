@@ -772,7 +772,7 @@ bool j1Player::Update(float dt)
 	//!_Graphics
 
 	// MODIFY COLLISION -------------------------------------------------
-		link_coll->SetPos(pos.x , pos.y );
+		link_coll->SetPos(pos.x , pos.y + 16);
 
 	return ret;
 }
