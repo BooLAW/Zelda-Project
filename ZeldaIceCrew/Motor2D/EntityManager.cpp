@@ -56,6 +56,22 @@ Item * EntityManager::CreateItem(uint subtype)
 	case heart_container:
 		ret = new HeartContainer();
 		break;
+	case drop_heart:
+		ret = new DropHeart();
+		break;
+	case drop_potion:
+		ret = new DropPotion();
+		break;
+	case drop_rupee:
+		ret = new DropRupee();
+		break;
+	case drop_fiverupee:
+		ret = new DropFiveRupee();
+		break;
+	case drop_tenrupee:
+		ret = new DropTenRupee();
+		break;
+
 	default:
 		LOG("Unknown Item Type: %d", subtype);
 		break;

@@ -15,7 +15,6 @@
 #include "Bomb.h"
 #include "Item.h"
 #include "Block.h"
-#include "Drop.h"
 #include "Enemy.h"
 
 class Entity;

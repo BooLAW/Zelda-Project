@@ -3,9 +3,6 @@
 
 #include "EntityManager.h"
 #include "Entity.h"
-#include "j1Textures.h"
-
-class Entity;
 
 enum BLOCKTYPE {
 	bush = 0,

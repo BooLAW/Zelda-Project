@@ -16,7 +16,13 @@ class Entity;
 enum ITEMTYPE {
 	power_gauntlet = 0,
 	pegasus_boots,
-	heart_container
+	heart_container,
+	drop_heart,
+	drop_bomb,
+	drop_potion,
+	drop_rupee,
+	drop_fiverupee,
+	drop_tenrupee
 };
 
 class Item : public Entity {
@@ -102,5 +108,32 @@ public:
 	void SetUpTexture();
 	void Upgrade();
 };
+
+struct DropHeart : public Item {
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct DropPotion : public Item {
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct DropRupee : public Item {
+
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct DropFiveRupee : public Item {
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct DropTenRupee : public Item {
+	void SetUpTexture();
+	void Upgrade();
+};
+
 
 #endif // !__ITEM_H__

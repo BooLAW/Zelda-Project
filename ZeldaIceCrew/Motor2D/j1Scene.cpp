@@ -78,7 +78,7 @@ bool j1Scene::Start()
 
 	Item* new_item = nullptr;
 
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
+	new_item = App->entitymanager->CreateItem(drop_tenrupee);
 	new_item->SetPositions({ 300.0f, 50.0f });
 
 	items.push_back(new_item);
@@ -93,6 +93,15 @@ bool j1Scene::Start()
 
 	items.push_back(new_item);
 
+	new_item = App->entitymanager->CreateItem(drop_rupee);
+	new_item->SetPositions({ 600.0f, 50.0f });
+
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(drop_fiverupee);
+	new_item->SetPositions({ 650.0f, 50.0f });
+
+	items.push_back(new_item);
 
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
