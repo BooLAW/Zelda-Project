@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Gui.h"
 
 #include "j1Collision.h"
 
@@ -77,8 +78,11 @@ public:
 		draw_pos = point;
 	}
 
-private:
+protected:
 	bool grabbed = false;
+
+	uint price = NULL;
+	GuiText* priceTag;
 
 public:
 	Collider*		collider;

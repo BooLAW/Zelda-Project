@@ -15,11 +15,14 @@ void Item::Update(float dt)
 				collider->SetPos(pos.x, pos.y);
 
 		if (collider->CheckCollision(App->player->link_coll->rect)) {
-			Upgrade();
-			if (type == ENTITYTYPE::drop)
-				CleanUp();
-			else 
-				PassToInventory();
+			if (App->player->rupees >= this->price) {
+				App->player->rupees -= price;
+				Upgrade();
+				if (type == ENTITYTYPE::drop)
+					CleanUp();
+				else
+					PassToInventory();
+			}
 		}
 
 		Draw(dt);
