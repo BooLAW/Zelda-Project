@@ -24,7 +24,6 @@ bool j1Player::Start()
 	LOG("Player Start");
 
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
-	link_coll = App->collisions->AddCollider(LINK_RECT, COLLIDER_PLAYER, this); 
 	//Idle
 	{
 		sprites[Idle][Up][0] = {link_x*3, link_y*2, link_width, link_height };
@@ -513,6 +512,8 @@ bool j1Player::Start()
 
 	// Variable Settup
 
+	link_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 32, 32 }, COLLIDER_PLAYER, this);
+
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
 
@@ -870,7 +871,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	// Hit collision
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
 	{
-		curr_life_points -= 1;
 		if (curr_life_points == 0)
 			alive = false;
 
