@@ -57,9 +57,22 @@ bool j1Scene::Start()
 	App->render->ScaleCamBoundaries(300);
 
 	// Enemy Start
+	Enemy* new_enemy;
+	new_enemy = App->entitymanager->CreateEnemy(BlueSoldier);
+	new_enemy->pos = { 20, 20 };
 
-	BS = App->entitymanager->CreateEnemy(BlueSoldier);
-	BS->pos = { 20, 20 };
+	enemies.push_back(new_enemy);
+
+	new_enemy = App->entitymanager->CreateEnemy(RedSoldier);
+	new_enemy->pos = { 60, 30 };
+
+	enemies.push_back(new_enemy);
+
+	new_enemy = App->entitymanager->CreateEnemy(GreenSoldier);
+	new_enemy->pos = { 200, 10 };
+
+	enemies.push_back(new_enemy);
+
 
 	// Items Start
 
