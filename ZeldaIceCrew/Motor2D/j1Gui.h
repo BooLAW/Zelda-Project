@@ -101,6 +101,23 @@ public:
 
 };
 
+class Window : public UIElement {
+public:
+	void Update();
+	void CleanUp();
+	void AddElement(UIElement* element);
+	bool Inside(UIElement*element);
+	void Scroll();
+	void SetOffset(int x, int y);
+	
+private:
+	std::list<UIElement*>win_elements;
+	int offset_x;
+	int offset_y;
+	
+
+};
+
 // ---------------------------------------------------
 class j1Gui : public j1Module
 {

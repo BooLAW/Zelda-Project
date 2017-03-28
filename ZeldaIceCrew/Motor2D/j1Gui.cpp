@@ -258,3 +258,50 @@ GuiInput::GuiInput() {
 	//text->string = "Hello world";
 	//text->pos.create(1920 / 2, 950);
 }
+
+void Window::CleanUp()
+{
+	if (!win_elements.empty()) {
+		win_elements.clear();
+	}
+}
+
+void Window::AddElement(UIElement * element)
+{
+	if (element != nullptr) {
+		if (!win_elements.empty()) {
+			if (win_elements.end()._Ptr->_Myval->pos.x + element->texture_rect.w + offset_x < pos.x + this->texture_rect.w - offset_x) {
+				element->pos.x = win_elements.end()._Ptr->_Myval->pos.x + element->texture_rect.w + offset_x;
+				element->pos.y = win_elements.end()._Ptr->_Myval->pos.y;
+				win_elements.push_back(element);
+			}
+			else {
+				element->pos.x = pos.x + offset_x;
+				element->pos.y = win_elements.end()._Ptr->_Myval->pos.y + offset_y + element->texture_rect.h;
+				win_elements.push_back(element);
+			}
+		}
+		else {
+			element->pos.x = pos.x + offset_x;
+			element->pos.y = pos.y + offset_y;
+			win_elements.push_back(element);
+		}
+	}
+	
+}
+
+bool Window::Inside(UIElement*element)
+{
+	if ((element->pos.x < pos.x + this->texture_rect.w) && (element->pos.x > pos.x) && (element->pos.y > pos.y) && (element->pos.y < pos.y + this->texture_rect.h)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void Window::SetOffset(int x, int y)
+{
+	offset_x = x;
+	offset_y = y;
+}
