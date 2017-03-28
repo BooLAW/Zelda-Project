@@ -42,7 +42,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void GenerateHUD();
+	
 
 private:
 
@@ -56,20 +56,9 @@ private:
 
 	std::list<Item*> items;
 
-	//HUD
-	uint i = 1;
-	Window* window;
-	Label* win_title;
 
 
-	GuiImage* rupees;
-	GuiImage* arrows;
-	GuiImage* bombs;
-	GuiImage* life_icon;
-	GuiText* rupees_num;
-	GuiText* arrows_num;
-	GuiText* bombs_num;
-	std::list<GuiImage*>lifes;
+
 };
 
 #endif // __j1SCENE_H__

@@ -137,9 +137,10 @@ public:
 	}
 
 	const SDL_Texture* GetAtlas() const;
-
+public:
+	std::list<UIElement*> elements;
 private:
-	p2List<UIElement*> elements;
+	
 
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
