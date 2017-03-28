@@ -151,14 +151,6 @@ bool Enemy::Attack()
 	return ret;
 }
 
-bool Enemy::CleanUp()
-{
-	if (HitBox != nullptr)
-		HitBox->to_delete = true;
-	App->entitymanager->DestroyEnity(this);
-	return true;
-}
-
 void Enemy::Draw()
 {
 
@@ -209,7 +201,7 @@ void Enemy::Hit()
 
 void Enemy::Death()
 {
-	CleanUp();
+	App->entitymanager->DestroyEnity(this);
 }
 
 bool BSoldier::Start()

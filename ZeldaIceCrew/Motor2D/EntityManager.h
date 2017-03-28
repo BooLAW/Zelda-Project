@@ -34,6 +34,11 @@ public:
 	EntityManager();
 	~EntityManager();
 	
+	bool CleanUp() {
+		DestroyEntities();
+		return true;
+	}
+
 	bool Update(float dt);
 	void PushEntity(Entity* ent);
 	void DestroyEntities();

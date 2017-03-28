@@ -92,6 +92,7 @@ void EntityManager::DestroyEntities()
 {
 	for (uint i = 0; i < entities.size(); i++) {
 		if (entities[i] != nullptr) {
+			entities[i]->CleanUp();
 			delete entities[i];
 		}
 	}
@@ -99,6 +100,8 @@ void EntityManager::DestroyEntities()
 
 void EntityManager::DestroyEnity(Entity * ent)
 {
+	ent->CleanUp();
+
 	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
 
 	entities.erase(aux);
