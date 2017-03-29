@@ -12,12 +12,12 @@
 #include "j1Scene.h"
 #include "j1Fonts.h"
 #include "j1Player.h"
-
+#include "Scene.h"
 #define MAX_TABS 2
 
-j1Scene::j1Scene() : j1Module()
+j1Scene::j1Scene() 
 {
-	name.create("scene");
+	
 }
 
 // Destructor
@@ -47,7 +47,6 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	Bush_Rect = { 8*32,2*32,32,32 };
-	House_Rect = {0,0,195,195};
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 
 	App->player->SetPosTile(2, 2);
