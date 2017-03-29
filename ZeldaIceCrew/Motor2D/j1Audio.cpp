@@ -135,62 +135,6 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 	return ret;
 }
 
-bool j1Audio::StopMusic()
-{
-	bool ret = true;
-	if (music != NULL)
-	{
-		Mix_PauseMusic();
-		if (Mix_PausedMusic == 0)
-		{
-			LOG("Music wasn't paused. Mix_GetError(): %s", Mix_GetError());
-			ret = false;
-		}
-		else
-		{
-			LOG("Music Paused");
-		}
-	}
-	return ret;
-}
-
-bool j1Audio::ResumeMusic()
-{
-	bool ret = true;
-	if (music != NULL)
-	{
-		Mix_ResumeMusic();
-		if (Mix_Playing(-1) == 0)
-		{
-			LOG("Music is now playing.");
-			ret = false;
-		}
-		else
-		{
-			LOG("Music dosent play. Mix_GetError(): %s", Mix_GetError());
-		}
-	}
-	return ret;
-}
-
-void j1Audio::VolumeMusic(int volume)
-{
-	if (music != NULL)
-	{
-		LOG("volume was    : %d\n", Mix_VolumeMusic(MIX_MAX_VOLUME / 2));
-		Mix_VolumeMusic(volume);
-		LOG("volume is now : %d\n", Mix_VolumeMusic(-1));
-	}
-}
-
-void j1Audio::FadeMusic(int ms)
-{
-	if (music != NULL)
-	{
-		Mix_FadeOutMusic((int)(ms * 1000.0f));
-	}
-}
-
 // Load WAV
 unsigned int j1Audio::LoadFx(const char* path)
 {

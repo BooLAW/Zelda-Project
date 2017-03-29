@@ -18,7 +18,7 @@
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
-} 
+}
 
 // Destructor
 j1Scene::~j1Scene()
@@ -36,8 +36,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->audio->PlayMusic("audio/music/Overworld.ogg");
-
+	
 	if (App->map->Load("FirstMap.tmx") == true)
 	{
 		int w, h;
