@@ -7,6 +7,19 @@ Item::Item(uint subtype)
 	
 }
 
+void Item::PassToInventory()
+{
+	if (collider != nullptr)
+		collider->to_delete = true;
+	if (tex != nullptr)
+		App->tex->UnLoad(tex);
+
+	App->player->inventory.push_back(this);
+
+	grabbed = true;
+
+}
+
 void Item::Update(float dt)
 {
 	if (grabbed == false) {

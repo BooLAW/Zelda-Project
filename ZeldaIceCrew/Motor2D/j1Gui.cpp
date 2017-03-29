@@ -60,6 +60,7 @@ bool j1Gui::CleanUp()
 	LOG("Freeing GUI");
 
 	DeleteElements();
+	App->tex->UnLoad(atlas);
 
 	return true;
 }
@@ -87,8 +88,11 @@ UIElement * j1Gui::CreateElement(GuiType type)
 		ret->type = button;
 		break;
 
+	case GuiType::window:
+		ret = new Window();
+		ret->type = window;
+		break;
 	}
-
 	if (ret != nullptr) {
 		ret->pos.x = 0;
 		ret->pos.y = 0;
@@ -122,7 +126,10 @@ UIElement * j1Gui::CreateElement(GuiType type, const char* path)
 		ret = new GuiButton();
 		ret->type = button;
 		break;
-
+	case GuiType::window:
+		ret = new Window();
+		ret->type = window;
+		break;
 	}
 
 	if (ret != nullptr) {
@@ -237,8 +244,8 @@ void UIElement::Move(int x, int y) {
 	pos.x += x;
 	pos.y += y;
 
-	for (p2List_item<UIElement*>*it = children.start; it != NULL; it = it->next) {
-		it->data->Move(x, y);
+	for (std::list<UIElement*>::const_iterator it = children.cbegin(); it != children.cend(); it++) {
+		it._Ptr->_Myval->Move(x, y);
 	}
 
 
@@ -257,6 +264,26 @@ void GuiInput::Update() {
 GuiInput::GuiInput() {
 	//text->string = "Hello world";
 	//text->pos.create(1920 / 2, 950);
+}
+
+Window::Window()
+{
+}
+
+Window::~Window()
+{
+}
+
+void Window::Update()
+{
+	if (active) {
+		App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+				if (Inside(it._Ptr->_Myval)) {
+					it._Ptr->_Myval->active = true;
+				}
+			}
+		}
 }
 
 void Window::CleanUp()
@@ -298,6 +325,10 @@ bool Window::Inside(UIElement*element)
 	else {
 		return false;
 	}
+}
+
+void Window::Scroll()
+{
 }
 
 void Window::SetOffset(int x, int y)

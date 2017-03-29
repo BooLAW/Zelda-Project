@@ -7,12 +7,14 @@
 #include "j1Textures.h"
 #include "j1Gui.h"
 
+
 #include "j1Collision.h"
 
 #define FLOATING_OFFSET 3.0f
 #define FLOATING_SPEED 20.0f
 
 class Entity;
+
 
 enum ITEMTYPE {
 	power_gauntlet = 0,
@@ -44,17 +46,7 @@ public:
 			App->tex->UnLoad(tex);
 	}
 
-	virtual void PassToInventory() {
-		if (collider != nullptr)
-			collider->to_delete = true;
-		if (tex != nullptr)
-			App->tex->UnLoad(tex);
-
-		// App->player->inventory.push_back(this);
-
-		grabbed = true;
-
-	}
+	virtual void PassToInventory();
 
 	virtual void Update(float dt);
 	virtual void Draw(float dt);
