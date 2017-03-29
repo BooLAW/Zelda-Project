@@ -32,12 +32,15 @@ bool Enemy::Start()
 void Enemy::SetRewards()
 {
 	memset(reward_pool, 0, N_ITEMS);
-
+	
+	// Standard Reward Pool
 	reward_pool[drop_heart] = 30;
 	reward_pool[drop_potion] = 5;
 	reward_pool[drop_rupee] = 45;
 	reward_pool[drop_fiverupee] = 15;
 	reward_pool[drop_tenrupee] = 5;
+
+	SortRewardProbs();
 
 }
 
@@ -51,16 +54,12 @@ void Enemy::Update(float dt)
 	if (App->player->action_blit != j1Player::Slash)
 		hit = false;
 
-	if (stats.Hp <= 0) {
-		Death();
-	}
-	else {
 		Move();
 
 		Attack();
 
 		Draw();
-	}
+	
 }
 
 bool Enemy::Move()
@@ -182,13 +181,18 @@ void Enemy::Draw()
 
 void Enemy::Hit()
 {
-	//stats.Hp -= App->player->power;
+
+	if (stats.Hp <= 0) {
+		Death();
+	}
+
 	if (hit == false) {
 		
 		hit = true;
 		
 		stats.Hp -= App->player->power;
 		
+
 		switch (App->player->curr_dir) {
 		case Up:
 			if (App->map->TileCheck(pos.x, pos.y - JUMP_WHEN_HIT * App->map->data.tile_height, Direction::Up) == 0)
@@ -230,10 +234,13 @@ void Enemy::Reward()
 	int target = -1;
 
 	for (uint i = 0; i < N_ITEMS; i++) {
-		if (prob <= aux + reward_pool[i] && prob > aux)
+		if (prob <= aux + reward_pool[i] && prob > aux) {
 			target = i;
-		else
+			break;
+		}
+		else {
 			aux += reward_pool[i];
+		}
 	}
 
 	if (target != -1) {

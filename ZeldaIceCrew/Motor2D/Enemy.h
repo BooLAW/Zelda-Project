@@ -78,6 +78,21 @@ public:
 	virtual void Death();
 	virtual void Reward();
 
+	void SortRewardProbs() {
+		uint total = 0;
+
+		for (int i = 0; i < N_ITEMS; i++) {
+			total += reward_pool[i];
+		}
+
+		if (total != 100) {
+			for (int i = 0; i < N_ITEMS; i++) {
+				reward_pool[i] = (reward_pool[i] * 100) / total;
+			}
+		}
+
+	}
+
 	virtual void CleanUp() {
 		if (tex != nullptr)
 			App->tex->UnLoad(tex);
