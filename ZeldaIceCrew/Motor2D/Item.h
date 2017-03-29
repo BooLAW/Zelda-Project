@@ -19,12 +19,15 @@ enum ITEMTYPE {
 	power_gauntlet = 0,
 	pegasus_boots,
 	heart_container,
+	__FIRSTDROP,
 	drop_heart,
 	drop_bomb,
 	drop_potion,
 	drop_rupee,
 	drop_fiverupee,
-	drop_tenrupee
+	drop_tenrupee,
+	__LASTDROP,
+	__LASTITEMTYPE
 };
 
 class Item : public Entity {
@@ -78,11 +81,12 @@ protected:
 public:
 	Collider*		collider;
 	
-	SDL_Texture*	UI_tex;
+	SDL_Texture*	UI_tex = nullptr;
 	SDL_Rect		UI_rect;
 
 	fPoint draw_pos = pos;
 	bool floating_up = false;
+	bool set = false;
 
 };
 

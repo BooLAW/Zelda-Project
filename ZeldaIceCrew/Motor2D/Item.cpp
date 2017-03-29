@@ -32,10 +32,15 @@ void Item::Update(float dt)
 				App->player->rupees -= price;
 				Upgrade();
 				if (type == ENTITYTYPE::drop)
-					CleanUp();
+					App->entitymanager->DestroyEnity(this);
 				else
 					PassToInventory();
 			}
+		}
+
+		if (set == false) {
+			draw_pos = pos;
+			set = true;
 		}
 
 		Draw(dt);
@@ -115,7 +120,7 @@ void DropHeart::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 180, 40, 28, 26 };
+	rect = { 180, 40, 32, 26 };
 }
 
 void DropHeart::Upgrade()

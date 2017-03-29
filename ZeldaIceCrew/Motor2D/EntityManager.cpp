@@ -85,10 +85,15 @@ Item * EntityManager::CreateItem(uint subtype)
 		break;
 	}
 
-	ret->Start();
+	if (ret != nullptr) {
+    
+		ret->type = item;
+		
+		ret->Start();
 
+		App->entitymanager->PushEntity(ret);
 
-	App->entitymanager->PushEntity(ret);
+	}
 
 	return ret;
 }
