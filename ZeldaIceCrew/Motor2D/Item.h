@@ -5,7 +5,7 @@
 #include "Entity.h"
 #include "j1App.h"
 #include "j1Textures.h"
-#include "j1Gui.h"
+#include "HUD.h"
 
 #include "j1Collision.h"
 
@@ -13,7 +13,7 @@
 #define FLOATING_SPEED 20.0f
 
 class Entity;
-
+class GuiText;
 
 enum ITEMTYPE {
 	power_gauntlet = 0,

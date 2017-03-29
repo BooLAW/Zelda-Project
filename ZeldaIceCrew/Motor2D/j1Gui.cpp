@@ -165,6 +165,7 @@ void GuiImage::Update()
 	if (active) {
 		App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 	}
+
 	
 }
 
@@ -284,6 +285,11 @@ void Window::Update()
 				}
 			}
 		}
+	else {
+		for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+			it._Ptr->_Myval->active = false;
+		}
+	}
 }
 
 void Window::CleanUp()
@@ -297,14 +303,14 @@ void Window::AddElement(UIElement * element)
 {
 	if (element != nullptr) {
 		if (!win_elements.empty()) {
-			if (win_elements.end()._Ptr->_Myval->pos.x + element->texture_rect.w + offset_x < pos.x + this->texture_rect.w - offset_x) {
-				element->pos.x = win_elements.end()._Ptr->_Myval->pos.x + element->texture_rect.w + offset_x;
-				element->pos.y = win_elements.end()._Ptr->_Myval->pos.y;
+			if (win_elements.back()->pos.x + element->texture_rect.w + offset_x < pos.x + texture_rect.w - offset_x) {
+				element->pos.x = win_elements.back()->pos.x + element->texture_rect.w + offset_x;
+				element->pos.y = win_elements.back()->pos.y;
 				win_elements.push_back(element);
 			}
 			else {
 				element->pos.x = pos.x + offset_x;
-				element->pos.y = win_elements.end()._Ptr->_Myval->pos.y + offset_y + element->texture_rect.h;
+				element->pos.y = win_elements.back()->pos.y + offset_y + element->texture_rect.h;
 				win_elements.push_back(element);
 			}
 		}

@@ -45,9 +45,7 @@ private:
 	SDL_Rect Bush_Rect;
 	Entity* House;
 	SDL_Rect House_Rect;
-	
 	std::list<Enemy*> enemies;
-
 	std::list<Item*> items;
 
 

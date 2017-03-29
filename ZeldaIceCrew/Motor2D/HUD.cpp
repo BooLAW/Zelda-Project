@@ -1,5 +1,5 @@
 #include "HUD.h"
-
+#include "Item.h"
 bool HUD::Start()
 {
 	bool ret = true;
@@ -40,7 +40,7 @@ bool HUD::Start()
 	arrows_num->pos = { 200,40 };
 
 	inv = (Window*)App->gui->CreateElement(GuiType::window);
-	inv->active = true;
+	inv->active = false;
 	inv->pos = { 50,100 };
 	inv->texture_rect = {0,0,430,351};
 
@@ -56,6 +56,8 @@ bool HUD::Start()
 			inv->AddElement(img);
 		}
 	}
+
+	inv->SetOffset(30,30);
 
 	return ret;
 }
@@ -130,4 +132,15 @@ void HUD::UpdateHP()
 	lifes.clear();
 
 	GenerateHP();
+}
+
+void HUD::AddItem(Item* obj)
+{
+	if (obj != nullptr) {
+		GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
+		img->texture_rect = obj->UI_rect;
+		img->texture = obj->UI_tex;
+		img->active = false;
+		App->hud->inv->AddElement(img);
+	}
 }
