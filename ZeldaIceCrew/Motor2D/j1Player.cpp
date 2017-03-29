@@ -815,16 +815,29 @@ void j1Player::UpgradeSPD(float x)
 {
 	pl_speed.x += x;
 	pl_speed.y += x;
+
+	if (pl_speed.x > MAX_SPD) {
+		pl_speed.x = MAX_SPD;
+		pl_speed.y = MAX_SPD;
+	}
+
 }
 
 void j1Player::UpgradePWR(int x)
 {
 	power += x;
+
+	if (power > MAX_PWR)
+		power = MAX_PWR;
+
 }
 
 void j1Player::UpgradeHP(int x)
 {
 	max_life_points += x;
+	
+	if (max_life_points > MAX_HP)
+		max_life_points = MAX_HP;
 }
 
 void j1Player::SetPos(float x, float y)

@@ -16,6 +16,9 @@
 #define PL_OFFSET_X 33
 #define PL_OFFSET_Y 35
 
+#define MAX_SPD 5
+#define MAX_HP 24
+#define MAX_PWR 99
 
 #define PL_WALK_FPS 0.8f
 
