@@ -45,6 +45,10 @@ void Item::Update(float dt)
 
 		Draw(dt);
 	}
+
+	if (priceTag != nullptr)
+		priceTag->pos = { (int)this->pos.x, (int)this->pos.y};
+
 }
 
 void Item::Draw(float dt)
@@ -73,6 +77,7 @@ void Item::Start()
 	if(tex != nullptr)
 		collider = App->collisions->AddCollider({ 0, 0, rect.w, rect.h }, COLLIDER_ITEM);
 
+	priceTag = (GuiText*)App->gui->CreateElement(GuiType::text);
 
 }
 

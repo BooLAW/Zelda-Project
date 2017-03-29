@@ -65,6 +65,12 @@ public:
 	virtual void Start();
 	virtual void SetUpTexture() {};
 
+	void SetPrice(uint p) {
+		price = p;
+
+		price > 0 ? priceTag->str = std::to_string(price) : priceTag->str = "";
+	}
+
 	virtual void Upgrade() {};
 
 	void SetPositions(fPoint point) {

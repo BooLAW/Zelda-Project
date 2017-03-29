@@ -84,6 +84,7 @@ bool j1Scene::Start()
 
 	new_item = App->entitymanager->CreateItem(pegasus_boots);
 	new_item->SetPositions({ 450.0f, 50.0f });
+	new_item->SetPrice(20);
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(heart_container);
