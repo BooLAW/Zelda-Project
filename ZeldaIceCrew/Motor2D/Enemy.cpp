@@ -182,9 +182,6 @@ void Enemy::Draw()
 void Enemy::Hit()
 {
 
-	if (stats.Hp <= 0) {
-		Death();
-	}
 
 	if (hit == false) {
 		
@@ -192,6 +189,10 @@ void Enemy::Hit()
 		
 		stats.Hp -= App->player->power;
 		
+		if (stats.Hp <= 0) {
+			Death();
+			return;
+		}
 
 		switch (App->player->curr_dir) {
 		case Up:
@@ -330,17 +331,17 @@ bool RSoldier::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 30, 251, 44, 68 };
-		sprites[Enemy::EnDirection::Down][1] = { 132, 249, 44, 70 };
+		sprites[Enemy::EnDirection::Down][0] = { 438, 251, 44, 68 };
+		sprites[Enemy::EnDirection::Down][1] = { 540, 249, 44, 70 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 30, 357, 44, 52 };
-		sprites[Enemy::EnDirection::Up][1] = { 132, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][0] = { 438, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][1] = { 540, 357, 44, 52 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 214, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Left][1] = { 316, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Left][0] = { 420, 575, 64, 54 };
+		sprites[Enemy::EnDirection::Left][1] = { 528, 577, 58, 52 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 30, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Right][1] = { 132, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Right][0] = { 438, 467, 58, 52 };
+		sprites[Enemy::EnDirection::Right][1] = { 540, 465, 64, 54 };
 
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
@@ -358,7 +359,7 @@ bool RSoldier::Start()
 	}
 
 	stats.Hp = 5;
-	stats.Speed = 1;
+	stats.Speed = 0.75;
 	stats.Power = 2;
 
 	stats.Flying = false;

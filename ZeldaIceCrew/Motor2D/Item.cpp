@@ -68,9 +68,11 @@ void Item::Draw(float dt)
 void Item::Start()
 {
 
-	collider = App->collisions->AddCollider({ 0, 0, App->map->data.tile_width, App->map->data.tile_height }, COLLIDER_ITEM);
-
 	SetUpTexture();
+	
+	if(tex != nullptr)
+		collider = App->collisions->AddCollider({ 0, 0, rect.w, rect.h }, COLLIDER_ITEM);
+
 
 }
 
@@ -147,7 +149,7 @@ void DropRupee::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 144, 146, 28, 32 };
+	rect = { 116, 254, 16, 28 };
 }
 
 void DropRupee::Upgrade()
@@ -162,7 +164,7 @@ void DropFiveRupee::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 144, 146, 28, 32 };
+	rect = { 224, 254, 16, 28 };
 }
 
 void DropFiveRupee::Upgrade()
@@ -176,7 +178,7 @@ void DropTenRupee::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 144, 146, 28, 32 };
+	rect = { 316, 254, 16, 28 };
 }
 
 void DropTenRupee::Upgrade()

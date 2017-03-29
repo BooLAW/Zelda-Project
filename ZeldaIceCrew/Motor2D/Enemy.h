@@ -13,7 +13,7 @@
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
 
-#define JUMP_WHEN_HIT 2
+#define JUMP_WHEN_HIT 1
 
 class Entity;
 
