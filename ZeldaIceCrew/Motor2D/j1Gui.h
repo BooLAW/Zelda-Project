@@ -109,6 +109,7 @@ public:
 	~Window();
 	void Update();
 	void CleanUp();
+	void Disable();
 	void AddElement(UIElement* element);
 	bool Inside(UIElement*element);
 	void Scroll();

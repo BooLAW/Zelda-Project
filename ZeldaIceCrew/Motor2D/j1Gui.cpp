@@ -285,18 +285,23 @@ void Window::Update()
 				}
 			}
 		}
-	else {
-		for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
-			it._Ptr->_Myval->active = false;
-		}
-	}
 }
+
 
 void Window::CleanUp()
 {
 	if (!win_elements.empty()) {
 		win_elements.clear();
 	}
+}
+
+void Window::Disable()
+{
+	active = false;
+	for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+		it._Ptr->_Myval->active = false;
+	}
+	
 }
 
 void Window::AddElement(UIElement * element)
