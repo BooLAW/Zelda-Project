@@ -81,7 +81,35 @@ bool j1Scene::Start()
 	new_item = App->entitymanager->CreateItem(drop_tenrupee);
 	new_item->SetPositions({ 300.0f, 50.0f });
 	items.push_back(new_item);
+	//////////////////
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 450.0f, 30.0f });
+	items.push_back(new_item);
 
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 450.0f, 70.0f });
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 450.0f, 90.0f });
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 450.0f, 110.0f });
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 450.0f, 130.0f });
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 450.0f, 150.0f });
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 450.0f, 170.0f });
+	items.push_back(new_item);
+	/////////////////
 	new_item = App->entitymanager->CreateItem(pegasus_boots);
 	new_item->SetPositions({ 450.0f, 50.0f });
 	items.push_back(new_item);

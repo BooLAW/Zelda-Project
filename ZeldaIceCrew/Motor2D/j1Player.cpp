@@ -775,7 +775,7 @@ bool j1Player::Update(float dt)
 					App->hud->inv->active = true;
 				}
 				else{
-					App->hud->inv->active = false;
+					App->hud->inv->disable();
 
 			}
 		}
