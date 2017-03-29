@@ -8,8 +8,8 @@
 #include "j1App.h"
 #include "EntityManager.h"
 #include "j1Gui.h"
-#include "j1Player.h"
 
+class Item;
 class HUD :public j1Module {
 private:
 
@@ -19,7 +19,7 @@ private:
 	void GenerateHP();
 	void UpdateHP();
 public:
-
+	void AddItem(Item* obj);
 	GuiImage* rupees;
 	GuiImage* arrows;
 	GuiImage* bombs;

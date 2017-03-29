@@ -769,17 +769,16 @@ bool j1Player::Update(float dt)
 
 		}
 	//!_Actions	
-		if (!App->hud->inv->active) {
-			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
-				App->hud->inv->active = true;
-			}
-		}
-		else {
-			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
-				App->hud->inv->active = false;
-			}
-		}
 	
+			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+				if (!App->hud->inv->active) {
+					App->hud->inv->active = true;
+				}
+				else{
+					App->hud->inv->active = false;
+
+			}
+		}
 	//!_Graphics
 
 	// MODIFY COLLISION -------------------------------------------------

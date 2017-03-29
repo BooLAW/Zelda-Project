@@ -80,27 +80,22 @@ bool j1Scene::Start()
 
 	new_item = App->entitymanager->CreateItem(drop_tenrupee);
 	new_item->SetPositions({ 300.0f, 50.0f });
-
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(pegasus_boots);
 	new_item->SetPositions({ 450.0f, 50.0f });
-
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(heart_container);
 	new_item->SetPositions({ 550.0f, 50.0f });
-
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(drop_rupee);
 	new_item->SetPositions({ 600.0f, 50.0f });
-
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(drop_fiverupee);
 	new_item->SetPositions({ 650.0f, 50.0f });
-
 	items.push_back(new_item);
 
 

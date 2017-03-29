@@ -49,27 +49,35 @@ Item * EntityManager::CreateItem(uint subtype)
 	switch (subtype) {
 	case power_gauntlet:
 		ret = new PowerGauntlet();
+		ret->type = item;
 		break;
 	case pegasus_boots:
 		ret = new PegasusBoots();
+		ret->type = item;
 		break;
 	case heart_container:
 		ret = new HeartContainer();
+		ret->type = item;
 		break;
 	case drop_heart:
 		ret = new DropHeart();
+		ret->type = drop;
 		break;
 	case drop_potion:
 		ret = new DropPotion();
+		ret->type = drop;
 		break;
 	case drop_rupee:
 		ret = new DropRupee();
+		ret->type = drop;
 		break;
 	case drop_fiverupee:
 		ret = new DropFiveRupee();
+		ret->type = drop;
 		break;
 	case drop_tenrupee:
 		ret = new DropTenRupee();
+		ret->type = drop;
 		break;
 
 	default:
@@ -79,7 +87,6 @@ Item * EntityManager::CreateItem(uint subtype)
 
 	ret->Start();
 
-	ret->type = item;
 
 	App->entitymanager->PushEntity(ret);
 

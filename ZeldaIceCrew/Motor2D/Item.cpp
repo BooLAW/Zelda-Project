@@ -15,7 +15,7 @@ void Item::PassToInventory()
 		App->tex->UnLoad(tex);
 
 	App->player->inventory.push_back(this);
-
+	App->hud->AddItem(this);
 	grabbed = true;
 
 }
@@ -98,10 +98,12 @@ void PegasusBoots::Upgrade()
 
 void HeartContainer::SetUpTexture()
 {
+	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 0, 146, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
 	UI_rect = { 180, 362, 32, 32 };
+	
 }
 
 void HeartContainer::Upgrade()
