@@ -1,6 +1,5 @@
 #include "HUD.h"
 #include "Item.h"
-#include "j1Player.h"
 bool HUD::Start()
 {
 	bool ret = true;
@@ -45,7 +44,7 @@ bool HUD::Start()
 	inv->pos = { 50,100 };
 	inv->texture_rect = {0,0,430,351};
 
-	
+
 	GenerateHP();
 
 	if (!App->player->inventory.empty()) {
@@ -59,7 +58,6 @@ bool HUD::Start()
 	}
 
 	inv->SetOffset(30,30);
-
 
 	return ret;
 }

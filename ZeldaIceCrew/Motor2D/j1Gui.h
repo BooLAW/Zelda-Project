@@ -105,19 +105,14 @@ public:
 
 class Window : public UIElement {
 public:
-	Window() {};
-	~Window() {};
+	Window();
+	~Window();
 	void Update();
-	void disable();
 	void CleanUp();
 	void AddElement(UIElement* element);
 	bool Inside(UIElement*element);
 	void Scroll();
 	void SetOffset(int x, int y);
-	UIElement* last();
-	UIElement* first();
-	//UIElement* current();
-	//UIElement* next(); 
 	
 private:
 	std::list<UIElement*>win_elements;

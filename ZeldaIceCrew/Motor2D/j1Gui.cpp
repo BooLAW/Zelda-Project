@@ -31,10 +31,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load("gui/HUD.png");
-	for (std::list<UIElement*>::const_iterator it = elements.cbegin(); it != elements.cend(); it++) {
-		it._Ptr->_Myval->Start();
-	}
-	
+
 	return true;
 }
 
@@ -95,7 +92,6 @@ UIElement * j1Gui::CreateElement(GuiType type)
 		ret = new Window();
 		ret->type = window;
 		break;
-
 	}
 	if (ret != nullptr) {
 		ret->pos.x = 0;
@@ -271,14 +267,13 @@ GuiInput::GuiInput() {
 	//text->pos.create(1920 / 2, 950);
 }
 
+Window::Window()
+{
+}
 
-
-
-
-
-
-
-
+Window::~Window()
+{
+}
 
 void Window::Update()
 {
@@ -290,15 +285,10 @@ void Window::Update()
 				}
 			}
 		}
-
-}
-
-void Window::disable()
-{
-	active = false;
-	
-	for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
-		it._Ptr->_Myval->active = false;
+	else {
+		for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+			it._Ptr->_Myval->active = false;
+		}
 	}
 }
 
@@ -352,46 +342,3 @@ void Window::SetOffset(int x, int y)
 	offset_x = x;
 	offset_y = y;
 }
-
-UIElement * Window::last()
-{
-	if(!win_elements.empty())
-	return win_elements.back();
-}
-
-UIElement * Window::first()
-{
-	if (!win_elements.empty())
-	return win_elements.front();
-	else return nullptr;
-}
-
-/*UIElement * Window::current()
-{
-	/*if (!win_elements.empty()) {
-		for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
-			if (it._Ptr->_Myval->pos == selector->pos) {
-				return it._Ptr->_Myval;
-			}
-		}
-	}
-}*/
-
-
-/*UIElement * Window::next()
-{
-	/*if(!win_elements.empty()){
-		for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
-			if (it._Ptr->_Myval->pos == selector->pos) {
-				it++;
-				if (it._Ptr != nullptr) {
-					return it._Ptr->_Myval;
-				}
-			}
-		}
-	}
-}*/
-
-
-
-
