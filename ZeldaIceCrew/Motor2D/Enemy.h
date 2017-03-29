@@ -8,6 +8,8 @@
 
 #include "Item.h"
 
+#define N_ITEMS 11
+
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
 
@@ -60,6 +62,7 @@ public:
 public:
 
 	virtual bool Start();
+	virtual void SetRewards();
 
 	virtual void Spawn() {}
 
@@ -114,7 +117,7 @@ public:
 
 	bool hit = false;
 
-	bool reward_pool[11];
+	uint reward_pool[N_ITEMS];
 
 };
 

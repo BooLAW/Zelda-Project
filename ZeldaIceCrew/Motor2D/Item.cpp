@@ -103,7 +103,6 @@ void PegasusBoots::Upgrade()
 
 void HeartContainer::SetUpTexture()
 {
-	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 0, 146, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");

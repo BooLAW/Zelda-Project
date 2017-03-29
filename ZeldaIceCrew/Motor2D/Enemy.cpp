@@ -29,6 +29,18 @@ bool Enemy::Start()
 
 }
 
+void Enemy::SetRewards()
+{
+	memset(reward_pool, 0, N_ITEMS);
+
+	reward_pool[drop_heart] = 30;
+	reward_pool[drop_potion] = 5;
+	reward_pool[drop_rupee] = 45;
+	reward_pool[drop_fiverupee] = 15;
+	reward_pool[drop_tenrupee] = 5;
+
+}
+
 void Enemy::Update(float dt)
 {
 
@@ -209,30 +221,32 @@ void Enemy::Death()
 
 void Enemy::Reward()
 {
+
 	srand(time(NULL));
+
+	uint aux = 0;
+	uint prob = (rand() % 100) + 1;
 	
-	uint count = 0;
+	int target = -1;
 
-	for (int i = 0; i < __LASTITEMTYPE; i++) {
-		if (reward_pool[i] == true)
-			count++;
+	for (uint i = 0; i < N_ITEMS; i++) {
+		if (prob <= aux + reward_pool[i] && prob > aux)
+			target = i;
+		else
+			aux += reward_pool[i];
 	}
 
-	uint prob = (rand() % count) + 1;
+	if (target != -1) {
 
-	uint target;
+		Item* newitem;
 
-	for (target = 0; target < __LASTITEMTYPE; target++) {
-		if (reward_pool[target] == true)
-			prob--;
-		if (prob <= 0)
-			break;
+		newitem = App->entitymanager->CreateItem(target);
+		if (newitem != nullptr)
+			newitem->pos = { pos.x, pos.y };
+
 	}
-
-	Item* newitem;
-
-	newitem = App->entitymanager->CreateItem(target);
-	newitem->pos = { pos.x, pos.y };
+	else
+		LOG("NO REWARD FAGGOT");
 
 }
 
@@ -240,10 +254,7 @@ bool BSoldier::Start()
 {
 	bool ret = true;
 
-	memset(reward_pool, false, __LASTITEMTYPE);
-	for (int i = __FIRSTDROP; i < __LASTDROP; i++) {
-		reward_pool[i] = true;
-	}
+	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
 
@@ -304,10 +315,7 @@ bool RSoldier::Start()
 {
 	bool ret = true;
 
-	memset(reward_pool, false, __LASTITEMTYPE);
-	for (int i = __FIRSTDROP; i < __LASTDROP; i++) {
-		reward_pool[i] = true;
-	}
+	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
 
@@ -368,10 +376,7 @@ bool GSoldier::Start()
 {
 	bool ret = true;
 
-	memset(reward_pool, false, __LASTITEMTYPE);
-	for (int i = __FIRSTDROP; i < __LASTDROP; i++) {
-		reward_pool[i] = true;
-	}
+	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
 
