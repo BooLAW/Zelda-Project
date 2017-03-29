@@ -15,7 +15,9 @@ enum GuiType
 	image = 0,
 	text,
 	button,
-	Input
+	Input,
+	window
+
 };
 
 // UI ELEMENT
@@ -29,7 +31,7 @@ public:
 
 	SDL_Texture* texture;
 	SDL_Rect texture_rect;
-	p2List<UIElement*> children;
+	std::list<UIElement*> children;
 	UIElement* parent;
 public:
 	virtual void Start() {};
@@ -103,6 +105,8 @@ public:
 
 class Window : public UIElement {
 public:
+	Window();
+	~Window();
 	void Update();
 	void CleanUp();
 	void AddElement(UIElement* element);

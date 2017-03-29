@@ -14,6 +14,7 @@
 
 class Entity;
 
+
 enum ITEMTYPE {
 	power_gauntlet = 0,
 	pegasus_boots,
@@ -47,17 +48,7 @@ public:
 			App->tex->UnLoad(tex);
 	}
 
-	virtual void PassToInventory() {
-		if (collider != nullptr)
-			collider->to_delete = true;
-		if (tex != nullptr)
-			App->tex->UnLoad(tex);
-
-	//	App->player->key_items.push_back(this);
-
-		grabbed = true;
-
-	}
+	virtual void PassToInventory();
 
 	virtual void Update(float dt);
 	virtual void Draw(float dt);

@@ -768,7 +768,17 @@ bool j1Player::Update(float dt)
 			}
 
 		}
-	//!_Actions																													
+	//!_Actions	
+		if (!App->hud->inv->active) {
+			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+				App->hud->inv->active = true;
+			}
+		}
+		else {
+			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+				App->hud->inv->active = false;
+			}
+		}
 	
 	//!_Graphics
 

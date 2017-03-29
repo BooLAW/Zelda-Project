@@ -6,7 +6,6 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1App.h"
-#include "j1Map.h"
 #include "EntityManager.h"
 #include "j1Gui.h"
 #include "j1Player.h"
@@ -29,6 +28,7 @@ public:
 	GuiText* arrows_num;
 	GuiText* bombs_num;
 	std::list<GuiImage*>lifes;
+	Window* inv;
 };
 
 

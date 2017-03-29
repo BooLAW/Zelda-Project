@@ -7,6 +7,8 @@
 #include "j1Render.h"
 #include "j1App.h"
 #include "EntityManager.h"
+#include "HUD.h"
+#include "Item.h"
 
 #define MAX_SPRITE_FRAMES 30
 
@@ -23,6 +25,7 @@
 #define link_x 102
 
 struct Collider;
+class Item;
 
 enum Direction {
 	FirstDir = 0,
@@ -107,7 +110,7 @@ public:
 	uint max_rupees = 99;
 	uint bombs = 50;
 	uint arrows = 100;
-	std::list<Entity*> key_items;
+	std::list<Item*> inventory;
 
 	int action_blit;
 	bool dir_override = false; // Overrides directions expressed if there is an action that keeps movement but changes view direction being done at the time
