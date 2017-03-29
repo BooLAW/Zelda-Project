@@ -15,8 +15,19 @@ void Item::Update(float dt)
 				collider->SetPos(pos.x, pos.y);
 
 		if (collider->CheckCollision(App->player->link_coll->rect)) {
-			Upgrade();
-			PassToInventory();
+			if (App->player->rupees >= this->price) {
+				App->player->rupees -= price;
+				Upgrade();
+				if (type == ENTITYTYPE::drop)
+					App->entitymanager->DestroyEnity(this);
+				else
+					PassToInventory();
+			}
+		}
+
+		if (set == false) {
+			draw_pos = pos;
+			set = true;
 		}
 
 		Draw(dt);
@@ -88,4 +99,75 @@ void HeartContainer::SetUpTexture()
 void HeartContainer::Upgrade()
 {
 	App->player->UpgradeHP(2);
+}
+
+void DropHeart::SetUpTexture()
+{
+	type = ENTITYTYPE::drop;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 180, 40, 32, 26 };
+}
+
+void DropHeart::Upgrade()
+{
+	App->player->curr_life_points += 2;
+	if (App->player->curr_life_points > App->player->max_life_points)
+		App->player->curr_life_points = App->player->max_life_points;
+}
+
+void DropPotion::SetUpTexture()
+{
+	type = ENTITYTYPE::drop;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 144, 146, 28, 32 };
+}
+
+void DropPotion::Upgrade()
+{
+	App->player->curr_life_points += 6;
+	if (App->player->curr_life_points > App->player->max_life_points)
+		App->player->curr_life_points = App->player->max_life_points;
+}
+
+void DropRupee::SetUpTexture()
+{
+	type = ENTITYTYPE::drop;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 144, 146, 28, 32 };
+}
+
+void DropRupee::Upgrade()
+{
+	App->player->rupees += 1;
+	if (App->player->rupees > App->player->max_rupees)
+		App->player->rupees = App->player->max_rupees;
+
+}
+
+void DropFiveRupee::SetUpTexture()
+{
+	type = ENTITYTYPE::drop;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 144, 146, 28, 32 };
+}
+
+void DropFiveRupee::Upgrade()
+{
+	App->player->rupees += 5;
+	if (App->player->rupees > App->player->max_rupees)
+		App->player->rupees = App->player->max_rupees;
+}
+
+void DropTenRupee::SetUpTexture()
+{
+	type = ENTITYTYPE::drop;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 144, 146, 28, 32 };
+}
+
+void DropTenRupee::Upgrade()
+{
+	App->player->rupees += 10;
+	if (App->player->rupees > App->player->max_rupees)
+		App->player->rupees = App->player->max_rupees;
 }

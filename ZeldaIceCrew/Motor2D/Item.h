@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Gui.h"
 
 #include "j1Collision.h"
 
@@ -16,7 +17,16 @@ class Entity;
 enum ITEMTYPE {
 	power_gauntlet = 0,
 	pegasus_boots,
-	heart_container
+	heart_container,
+	__FIRSTDROP,
+	drop_heart,
+	drop_bomb,
+	drop_potion,
+	drop_rupee,
+	drop_fiverupee,
+	drop_tenrupee,
+	__LASTDROP,
+	__LASTITEMTYPE
 };
 
 class Item : public Entity {
@@ -43,7 +53,7 @@ public:
 		if (tex != nullptr)
 			App->tex->UnLoad(tex);
 
-		// App->player->inventory.push_back(this);
+	//	App->player->key_items.push_back(this);
 
 		grabbed = true;
 
@@ -51,6 +61,15 @@ public:
 
 	virtual void Update(float dt);
 	virtual void Draw(float dt);
+
+	virtual void CleanUp() {
+		if (collider != nullptr)
+			collider->to_delete = true;
+		if (tex != nullptr)
+			App->tex->UnLoad(tex);
+		if (UI_tex != nullptr)
+			App->tex->UnLoad(UI_tex);
+	}
 
 	virtual void Start();
 	virtual void SetUpTexture() {};
@@ -62,17 +81,21 @@ public:
 		draw_pos = point;
 	}
 
-private:
+protected:
 	bool grabbed = false;
+
+	uint price = NULL;
+	GuiText* priceTag;
 
 public:
 	Collider*		collider;
 	
-	SDL_Texture*	UI_tex;
+	SDL_Texture*	UI_tex = nullptr;
 	SDL_Rect		UI_rect;
 
 	fPoint draw_pos = pos;
 	bool floating_up = false;
+	bool set = false;
 
 };
 
@@ -93,5 +116,32 @@ public:
 	void SetUpTexture();
 	void Upgrade();
 };
+
+struct DropHeart : public Item {
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct DropPotion : public Item {
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct DropRupee : public Item {
+
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct DropFiveRupee : public Item {
+	void SetUpTexture();
+	void Upgrade();
+};
+
+struct DropTenRupee : public Item {
+	void SetUpTexture();
+	void Upgrade();
+};
+
 
 #endif // !__ITEM_H__

@@ -8,13 +8,7 @@
 
 struct SDL_Texture;
 //UI forward declarations
-class Image;
-class Label;
-class Text_Box;
-class Button;
-class Window;
-class Selector;
-class Windowed_Image;
+
 class j1Scene : public j1Module
 {
 public:

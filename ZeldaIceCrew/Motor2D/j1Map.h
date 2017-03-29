@@ -76,7 +76,7 @@ struct TileData
 struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
-	TileData* GetTileType(int tile_id)const;
+	TileData* GetTileType(int tile_id)const {};
 	
 	p2SString			name;
 	int					firstgid;

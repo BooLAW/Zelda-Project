@@ -2,6 +2,7 @@
 #include "j1Pathfinding.h"
 #include "j1Map.h"
 #include "j1Input.h"
+#include <time.h>
 
 Enemy::Enemy(uint subtype)
 {
@@ -201,12 +202,48 @@ void Enemy::Hit()
 
 void Enemy::Death()
 {
+	Reward();
+
 	App->entitymanager->DestroyEnity(this);
+}
+
+void Enemy::Reward()
+{
+	srand(time(NULL));
+	
+	uint count = 0;
+
+	for (int i = 0; i < __LASTITEMTYPE; i++) {
+		if (reward_pool[i] == true)
+			count++;
+	}
+
+	uint prob = (rand() % count) + 1;
+
+	uint target;
+
+	for (target = 0; target < __LASTITEMTYPE; target++) {
+		if (reward_pool[target] == true)
+			prob--;
+		if (prob <= 0)
+			break;
+	}
+
+	Item* newitem;
+
+	newitem = App->entitymanager->CreateItem(target);
+	newitem->pos = { pos.x, pos.y };
+
 }
 
 bool BSoldier::Start()
 {
 	bool ret = true;
+
+	memset(reward_pool, false, __LASTITEMTYPE);
+	for (int i = __FIRSTDROP; i < __LASTDROP; i++) {
+		reward_pool[i] = true;
+	}
 
 	curr_dir = Enemy::EnDirection::Down;
 
@@ -267,6 +304,11 @@ bool RSoldier::Start()
 {
 	bool ret = true;
 
+	memset(reward_pool, false, __LASTITEMTYPE);
+	for (int i = __FIRSTDROP; i < __LASTDROP; i++) {
+		reward_pool[i] = true;
+	}
+
 	curr_dir = Enemy::EnDirection::Down;
 
 	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
@@ -325,6 +367,11 @@ bool RSoldier::Start()
 bool GSoldier::Start()
 {
 	bool ret = true;
+
+	memset(reward_pool, false, __LASTITEMTYPE);
+	for (int i = __FIRSTDROP; i < __LASTDROP; i++) {
+		reward_pool[i] = true;
+	}
 
 	curr_dir = Enemy::EnDirection::Down;
 

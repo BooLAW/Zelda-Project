@@ -5,7 +5,8 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "j1Collision.h"
-#include "j1Player.h"
+
+#include "Item.h"
 
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
@@ -72,6 +73,7 @@ public:
 
 	virtual void Hit();
 	virtual void Death();
+	virtual void Reward();
 
 	virtual void CleanUp() {
 		if (tex != nullptr)
@@ -97,7 +99,7 @@ public:
 	} stats;
 
 	ENEMYTYPE subtype;
-	bool DmgType[DAMAGETYPE::__LAST_DMGTYPE];
+	bool DmgType[__LAST_DMGTYPE];
 	AITYPE AIType;
 
 	Collider* HitBox;
@@ -111,6 +113,8 @@ public:
 	std::list<iPoint> path_to_follow;
 
 	bool hit = false;
+
+	bool reward_pool[11];
 
 };
 
