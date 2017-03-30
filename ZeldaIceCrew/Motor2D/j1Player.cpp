@@ -658,6 +658,12 @@ bool j1Player::Update(float dt)
 					if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
 						App->hud->inv->Move_Sel_backwards();
 					}
+					if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+						App->hud->inv->Move_Sel_up();
+					}
+					if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+						App->hud->inv->Move_Sel_down();
+					}
 				}
 				if (anim_override == false) {
 					if(!App->hud->inv->active){

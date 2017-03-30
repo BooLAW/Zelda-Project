@@ -463,6 +463,37 @@ void Window::Move_Sel_backwards()
 	selected = Prev();
 }
 
+void Window::Move_Sel_up()
+{
+
+	if (!win_elements.empty()) {
+		if (selected->pos.y != win_elements.front()->pos.y) {
+			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+				if (selected != nullptr) {
+					if ((selected->pos.y == it._Ptr->_Myval->pos.y + offset_y + it._Ptr->_Myval->texture_rect.h) && (selected->pos.x == it._Ptr->_Myval->pos.x)) {
+						selected = it._Ptr->_Myval;
+					}
+				}
+			}
+		}
+	}
+}
+
+void Window::Move_Sel_down()
+{
+	if (!win_elements.empty()) {
+		if (selected->pos.y != win_elements.front()->pos.y) {
+			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+				if (selected != nullptr) {
+					if ((selected->pos.y == it._Ptr->_Myval->pos.y - offset_y - it._Ptr->_Myval->texture_rect.h) && (selected->pos.x == it._Ptr->_Myval->pos.x)) {
+						selected = it._Ptr->_Myval;
+					}
+				}
+			}
+		}
+	}
+}
+
 void Window::Select(UIElement * el)
 {
 	selected = el;

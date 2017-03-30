@@ -123,6 +123,8 @@ public:
 	void Start_Sel(SDL_Rect rect);
 	bool Empty();
 	void Move_Sel_backwards();
+	void Move_Sel_up();
+	void Move_Sel_down();
 	void Select(UIElement* el);
 
 	
