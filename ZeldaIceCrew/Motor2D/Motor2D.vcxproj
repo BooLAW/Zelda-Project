@@ -95,6 +95,7 @@
     <ClCompile Include="j1Pathfinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Player.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="VillageScene.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />

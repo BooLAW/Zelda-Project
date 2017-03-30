@@ -5,8 +5,13 @@
 #include "j1Render.h"
 #include "PugiXml\src\pugixml.hpp"
 
+#include "EntityManager.h"
+
 #include <string>
 #include <list>
+
+class Item;
+class Enemy;
 
 class Scene
 {
@@ -19,7 +24,24 @@ public:
 	virtual bool PreUpdate() { return true; };
 	virtual bool Update(float dt) { return true; };
 	virtual bool PostUpdate() { return true; };
-	virtual bool CleanUp() { return true; };
+	virtual bool CleanUp();
+
+	virtual void DestroyItem(Item* ent) {
+		if (ent != nullptr) {
+			for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
+				if(it._Ptr->_Myval == ent)
+					items.erase(it);
+			}
+		}
+	};
+	virtual void DestroyEnemy(Enemy* ent) {
+		if (ent != nullptr) {
+			for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+				if (it._Ptr->_Myval == ent)
+					enemies.erase(it);
+			}
+		}
+	};
 
 	virtual bool Load(pugi::xml_node&)
 	{
@@ -34,6 +56,10 @@ public:
 protected:
 
 	bool change_scene = false;
+
+public:
+	std::list<Enemy*> enemies;
+	std::list<Item*> items;
 
 };
 

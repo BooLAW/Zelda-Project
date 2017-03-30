@@ -11,6 +11,7 @@ class VillageScene;
 class HouseScene;
 //add the forward declaration for each new scene
 
+class Scene;
 
 class SceneManager : public j1Module
 {

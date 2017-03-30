@@ -2,6 +2,7 @@
 #include "j1Input.h"
 #include "j1Collision.h"
 #include "j1Map.h"
+#include "ModuleParticles.h"
 j1Player::j1Player()
 {
 }
@@ -655,6 +656,7 @@ bool j1Player::Update(float dt)
 
 					if (App->input->GetKey(SDL_SCANCODE_UP)) {
 						curr_dir = Up;
+						App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
 						action_blit = Slash;
 						dir_override = true;
 						anim_override = true;
@@ -663,6 +665,7 @@ bool j1Player::Update(float dt)
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
 						curr_dir = Down;
+						App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
 						action_blit = Slash;
 						dir_override = true;
 						anim_override = true;
@@ -671,6 +674,7 @@ bool j1Player::Update(float dt)
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
 						curr_dir = Right;
+						App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
 						action_blit = Slash;
 						dir_override = true;
 						anim_override = true;
@@ -679,6 +683,7 @@ bool j1Player::Update(float dt)
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
 						curr_dir = Left;
+						App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
 						action_blit = Slash;
 						dir_override = true;
 						anim_override = true;
@@ -709,6 +714,7 @@ bool j1Player::Update(float dt)
 	}
 
 	if (action_blit == Slash) {
+
 		switch (curr_dir) {
 		case Up:
 			weapon_coll->rect = { (int)pos.x, (int)link_coll->rect.y - link_coll->rect.h, WPN_COL_H, WPN_COL_W };

@@ -49,7 +49,7 @@ bool VillageScene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-	Bush_Rect = { 8*32,2*32,32,32 };
+	//Bush_Rect = { 8*32,2*32,32,32 };
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 
 	App->player->SetPosTile(2, 2);
@@ -159,10 +159,10 @@ bool VillageScene::Update(float dt)
 
 	App->map->Draw();
 
-	for (int i = 0; i < Bushes.size(); i++) {
-		App->render->Blit(Bushes[i]->GetTexture(), Bushes[i]->pos.x, Bushes[i]->pos.y, &Bushes[i]->GetRect());
-
-	}
+	//for (int i = 0; i < Bushes.size(); i++) {
+	////	App->render->Blit(Bushes[i]->GetTexture(), Bushes[i]->pos.x, Bushes[i]->pos.y, &Bushes[i]->GetRect());
+	//
+	//}
 	
 	// Debug pathfinding ------------------------------
 	int x, y;

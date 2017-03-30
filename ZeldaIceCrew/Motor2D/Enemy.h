@@ -5,6 +5,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "j1Collision.h"
+#include "SceneManager.h"
 
 #include "Item.h"
 
@@ -93,16 +94,7 @@ public:
 
 	}
 
-	virtual void CleanUp() {
-		if (tex != nullptr)
-			App->tex->UnLoad(tex);
-
-		if(HitBox != nullptr)
-			HitBox->to_delete = true;
-
-		path_to_follow.clear();
-
-	}
+	virtual void CleanUp();
 
 public:
 	ENEMYTYPE EnemyType;

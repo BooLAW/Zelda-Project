@@ -258,6 +258,19 @@ void Enemy::Reward()
 
 }
 
+void Enemy::CleanUp()
+{
+	if (tex != nullptr)
+		App->tex->UnLoad(tex);
+
+	if (HitBox != nullptr)
+		HitBox->to_delete = true;
+
+	path_to_follow.clear();
+
+	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
+}
+
 bool BSoldier::Start()
 {
 	bool ret = true;

@@ -38,11 +38,9 @@ public:
 private:
 
 	SDL_Texture* debug_tex;
-	std::vector<Entity*> Bushes;
-	SDL_Rect Bush_Rect;
-public:
-	std::list<Enemy*> enemies;
-	std::list<Item*> items;
+	//std::vector<Entity*> Bushes;
+	//SDL_Rect Bush_Rect;
+
 
 
 
