@@ -27,16 +27,19 @@ bool HUD::Start()
 
 	rupees_num = (GuiText*)App->gui->CreateElement(GuiType::text);
 	rupees_num->active = true;
+	rupees_num->movable = true;
 	rupees_num->str = std::to_string(App->player->rupees);
 	rupees_num->pos = { 50,40 };
 
 	bombs_num = (GuiText*)App->gui->CreateElement(GuiType::text);
 	bombs_num->active = true;
+	bombs_num->movable = true;
 	bombs_num->str = std::to_string(App->player->bombs);
 	bombs_num->pos = { 125,40 };
 
 	arrows_num = (GuiText*)App->gui->CreateElement(GuiType::text);
 	arrows_num->active = true;
+	arrows_num->movable = true;
 	arrows_num->str = std::to_string(App->player->arrows);
 	arrows_num->pos = { 200,40 };
 
@@ -44,7 +47,6 @@ bool HUD::Start()
 	inv->active = false;
 	inv->pos = { 50,100 };
 	inv->texture_rect = {0,0,430,351};
-	inv->Set_Sel_Rect({ 594,402,47,47 });
 
 
 
@@ -139,11 +141,19 @@ void HUD::UpdateHP()
 
 void HUD::AddItem(Item* obj)
 {
+
 	if (obj != nullptr) {
 		GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
 		img->texture_rect = obj->UI_rect;
 		img->texture = obj->UI_tex;
 		img->active = false;
-		App->hud->inv->AddElement(img);
+
+		if (inv->Empty()) {
+			inv->Start_Sel({594,402,47,47});
+			App->hud->inv->AddElement(img);
+		}
+		else {
+			App->hud->inv->AddElement(img);
+		}
 	}
 }

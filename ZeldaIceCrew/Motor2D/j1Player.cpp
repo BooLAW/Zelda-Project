@@ -654,36 +654,56 @@ bool j1Player::Update(float dt)
 				if (anim_override == false) {
 
 					if (App->input->GetKey(SDL_SCANCODE_UP)) {
-						curr_dir = Up;
-						action_blit = Slash;
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						if (App->hud->inv->active) {
+							App->hud->inv->Move_Sel_y_up();
+						}
+						else {
+							curr_dir = Up;
+							action_blit = Slash;
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / 3;
+							pl_speed.y = pl_speed.y / 3;
+						}
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
-						curr_dir = Down;
-						action_blit = Slash;
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						if (App->hud->inv->active) {
+							App->hud->inv->Move_Sel_y_down();
+						}
+						else {
+							curr_dir = Down;
+							action_blit = Slash;
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / 3;
+							pl_speed.y = pl_speed.y / 3;
+						}
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
-						curr_dir = Right;
-						action_blit = Slash;
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						if (App->hud->inv->active) {
+							App->hud->inv->Move_Sel_x_forward();
+						}
+						else {
+							curr_dir = Right;
+							action_blit = Slash;
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / 3;
+							pl_speed.y = pl_speed.y / 3;
+						}
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
-						curr_dir = Left;
-						action_blit = Slash;
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						if (App->hud->inv->active) {
+							App->hud->inv->Move_Sel_x_backwards();
+						}
+						else {
+							curr_dir = Left;
+							action_blit = Slash;
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / 3;
+							pl_speed.y = pl_speed.y / 3;
+						}
 					}
 
 				}
