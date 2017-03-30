@@ -31,10 +31,17 @@ void Item::Update(float dt)
 			if (App->player->rupees >= this->price) {
 				App->player->rupees -= price;
 				Upgrade();
-				if (type == ENTITYTYPE::drop)
+				if (type == ENTITYTYPE::drop) {
 					App->entitymanager->DestroyEnity(this);
-				else
-					PassToInventory();
+				}
+				else {
+					if (App->player->Find_inv(this)) {
+						App->entitymanager->DestroyEnity(this);
+					}
+					else {
+						PassToInventory();
+					}
+				}
 			}
 		}
 
@@ -69,7 +76,6 @@ void Item::Start()
 {
 
 	collider = App->collisions->AddCollider({ 0, 0, App->map->data.tile_width, App->map->data.tile_height }, COLLIDER_ITEM);
-
 	SetUpTexture();
 
 }
@@ -86,6 +92,7 @@ void PowerGauntlet::SetUpTexture()
 	rect = { 36, 0, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
 	UI_rect = { 40, 326, 32, 32 };
+	description = "Gauntlet test description";
 }
 
 void PegasusBoots::SetUpTexture()
@@ -94,6 +101,7 @@ void PegasusBoots::SetUpTexture()
 	rect = { 0, 0, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
 	UI_rect = { 0, 326, 32, 32 };
+	description = "Boots test description";
 }
 
 void PegasusBoots::Upgrade()

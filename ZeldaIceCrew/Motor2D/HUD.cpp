@@ -3,6 +3,8 @@
 #include "j1Player.h"
 bool HUD::Start()
 {
+
+	icon_tex= App->tex->Load("Sprites/Items32x32.png");
 	bool ret = true;
 
 	rupees = (GuiImage*)App->gui->CreateElement(GuiType::image);
@@ -48,6 +50,50 @@ bool HUD::Start()
 	inv->pos = { 50,100 };
 	inv->texture_rect = {0,0,430,351};
 
+	descriptions_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	descriptions_rect->movable = true;
+	descriptions_rect->pos = { inv->pos.x, inv->pos.y + inv->texture_rect.h + 1 };
+	descriptions_rect->texture_rect = { 697,591,434,115 };
+	descriptions_rect->active = false;
+
+	item_description = (GuiText*)App->gui->CreateElement(GuiType::text);
+	item_description->active = false;
+	item_description->movable = true;
+	item_description->pos = { descriptions_rect->pos.x + 15, descriptions_rect->pos.y + 5 };
+
+	stats_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	stats_rect->movable = true;
+	stats_rect->active = false;
+	stats_rect->pos = { descriptions_rect->pos.x + descriptions_rect->texture_rect.w + 1,descriptions_rect->pos.y };
+	stats_rect->texture_rect = { 498,223,218,116 };
+
+	speed = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	speed->pos = { stats_rect->pos.x + 10, stats_rect->pos.y + 5 };
+	speed->active = false;
+	speed->movable = true;
+	speed->texture = icon_tex;
+	speed->texture_rect = { 0, 326, 32, 32 };
+
+	speed_num = (GuiText*)App->gui->CreateElement(GuiType::text);
+	speed_num->active = false;
+	speed_num->movable = true;
+	speed_num->pos = { speed->pos.x + 40,speed->pos.y };
+
+	power= (GuiImage*)App->gui->CreateElement(GuiType::image);
+	power->pos = { stats_rect->pos.x + 10, stats_rect->pos.y + speed->texture_rect.h + 20 };
+	power->active = false;
+	power->movable = true;
+	power->texture = icon_tex;
+	power->texture_rect= { 40, 326, 32, 32 };
+
+	power_num = (GuiText*)App->gui->CreateElement(GuiType::text);
+	power_num->active = false;
+	power_num->movable = true;
+	power_num->pos = { power->pos.x + 40,power->pos.y };
+
+
+
+
 
 
 	GenerateHP();
@@ -72,7 +118,31 @@ bool HUD::Update(float dt)
 	rupees_num->str = std::to_string(App->player->rupees);
 	bombs_num->str = std::to_string(App->player->bombs);
 	arrows_num->str = std::to_string(App->player->arrows);
+	speed_num->str = std::to_string(App->player->pl_speed.x);
+	power_num->str = std::to_string(App->player->power);
 
+	if (inv->active) {
+		descriptions_rect->active = true;
+		stats_rect->active = true;
+		speed->active = true;
+		speed_num->active = true;
+		power->active = true;
+		power_num->active = true;
+		if (inv->Selected() != nullptr) {
+			item_description->active = true;
+			item_description->str = inv->Selected()->obj->description;
+
+		}
+	}
+	else {
+		descriptions_rect->active = false;
+		item_description->active = false;
+		stats_rect->active = false;
+		speed->active = false;
+		speed_num->active = false;
+		power->active = false;
+		power_num->active = false;
+	}
 	UpdateHP();
 	
 	return true;
@@ -80,6 +150,7 @@ bool HUD::Update(float dt)
 
 bool HUD::CleanUp()
 {
+	App->tex->UnLoad(icon_tex);
 	lifes.clear();
 	return true;
 }
@@ -147,6 +218,7 @@ void HUD::AddItem(Item* obj)
 		img->texture_rect = obj->UI_rect;
 		img->texture = obj->UI_tex;
 		img->active = false;
+		img->obj = obj;
 
 		if (inv->Empty()) {
 			inv->Start_Sel({594,402,47,47});

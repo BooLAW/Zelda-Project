@@ -5,10 +5,12 @@
 #include "j1Fonts.h"
 #include "j1App.h"
 
+
 #define CREATEIMAGE(path) (GuiImage*)App->gui->CreateElement(GuiType::image, path);
 #define CREATETEXT (GuiText*)App->gui->CreateElement(GuiType::text);
 
 #define CURSOR_WIDTH 2
+class Item;
 
 enum GuiType 
 {
@@ -25,7 +27,7 @@ class UIElement {
 public:
 	iPoint pos;
 	GuiType type;
-
+	Item* obj;
 	bool active;
 	bool movable;
 
@@ -126,7 +128,7 @@ public:
 	void Move_Sel_up();
 	void Move_Sel_down();
 	void Select(UIElement* el);
-
+	UIElement* Selected();
 	
 private:
 	GuiImage* selector;

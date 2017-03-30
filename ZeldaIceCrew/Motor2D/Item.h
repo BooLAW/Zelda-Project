@@ -81,6 +81,7 @@ protected:
 public:
 	Collider*		collider;
 	
+	std::string description;
 	SDL_Texture*	UI_tex = nullptr;
 	SDL_Rect		UI_rect;
 

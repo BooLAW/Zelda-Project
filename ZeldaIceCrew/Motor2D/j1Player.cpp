@@ -923,3 +923,19 @@ void j1Player::DyingRestart()
 	//add more features to discuss by the designer
 	action = true;
 }
+
+bool j1Player::Find_inv(Item* item)
+{
+	if (inventory.empty()) {
+		return false;
+	}
+	else {
+		std::list<Item*>::iterator it = std::find(inventory.begin(), inventory.end(), item);
+
+		if (it._Ptr->_Myval != nullptr)
+			return true;
+		else
+			return false;
+	}
+		
+}

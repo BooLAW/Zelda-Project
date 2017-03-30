@@ -62,7 +62,6 @@ public:
 private:
 	Point<float> pos;
 	Point<float> last_pos;
-	Point<float> pl_speed;
 
 	SDL_Texture* Link_Movement = nullptr;
 
@@ -94,6 +93,7 @@ public:
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
 	void DyingRestart();
+	bool Find_inv(Item *item);
 	// base stats saving file
 	// --status flags 
 	bool alive = true;
@@ -101,7 +101,7 @@ public:
 	bool sword = false;  // as a flag to draw link with the sword sprite
 	bool action = false; // Actions: Throw, Pull, Slash,...
 						 // --status VARs
-	
+	Point<float> pl_speed;
 	unsigned int curr_dir;
 	uint max_life_points = 6;
 	uint curr_life_points = 6;
