@@ -115,15 +115,14 @@ public:
 	void Scroll();
 	void SetOffset(int x, int y);
 	void Set_Sel_Rect(SDL_Rect rect);
-	void Move_Sel_x_forward();
+	void Move_Sel_forward();
 	UIElement* Next();
+	UIElement* Prev();
 	UIElement* current();
-	void Move_Sel_y_down();
 	void Sel_First();
 	void Start_Sel(SDL_Rect rect);
 	bool Empty();
-	void Move_Sel_x_backwards();
-	void Move_Sel_y_up();
+	void Move_Sel_backwards();
 	void Select(UIElement* el);
 
 	

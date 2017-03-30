@@ -651,59 +651,56 @@ bool j1Player::Update(float dt)
 			//Objects will go here too, then they might trigger action or nah
 
 			{
+				if (App->hud->inv->active) {
+					if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+						App->hud->inv->Move_Sel_forward();
+					}
+					if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+						App->hud->inv->Move_Sel_backwards();
+					}
+				}
 				if (anim_override == false) {
-
+					if(!App->hud->inv->active){
 					if (App->input->GetKey(SDL_SCANCODE_UP)) {
-						if (App->hud->inv->active) {
-							App->hud->inv->Move_Sel_y_up();
-						}
-						else {
 							curr_dir = Up;
 							action_blit = Slash;
 							dir_override = true;
 							anim_override = true;
 							pl_speed.x = pl_speed.x / 3;
 							pl_speed.y = pl_speed.y / 3;
-						}
+						
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
-						if (App->hud->inv->active) {
-							App->hud->inv->Move_Sel_y_down();
-						}
-						else {
+						
 							curr_dir = Down;
 							action_blit = Slash;
 							dir_override = true;
 							anim_override = true;
 							pl_speed.x = pl_speed.x / 3;
 							pl_speed.y = pl_speed.y / 3;
-						}
+						
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
-						if (App->hud->inv->active) {
-							App->hud->inv->Move_Sel_x_forward();
-						}
-						else {
+						
 							curr_dir = Right;
 							action_blit = Slash;
 							dir_override = true;
 							anim_override = true;
 							pl_speed.x = pl_speed.x / 3;
 							pl_speed.y = pl_speed.y / 3;
-						}
+						
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
-						if (App->hud->inv->active) {
-							App->hud->inv->Move_Sel_x_backwards();
-						}
-						else {
+						
+						
 							curr_dir = Left;
 							action_blit = Slash;
 							dir_override = true;
 							anim_override = true;
 							pl_speed.x = pl_speed.x / 3;
 							pl_speed.y = pl_speed.y / 3;
-						}
+						
+					}
 					}
 
 				}
