@@ -8,7 +8,8 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "SceneManager.h"
-#include "j1Scene.h"
+#include "VillageScene.h"
+#include "HouseScene.h"
 
 #define NUMBER_OF_PLAYERS 4
 
@@ -41,13 +42,15 @@ bool SceneManager::Start()
 	LOG("Start module scene");
 
 	// Create scenes
-	village_scene = new j1Scene();
+	village_scene = new VillageScene();
+	house_scene = new HouseScene();
+
 	scenes.push_back(village_scene);
+	scenes.push_back(house_scene);
 
 	// -------------
 
-	// Starting scene
-	current_scene = village_scene;
+	current_scene = house_scene;
 
 	if (current_scene != nullptr)
 		ret = current_scene->Start();
@@ -107,9 +110,9 @@ void SceneManager::ChangeScene(Scene * new_scene)
 {
 	LOG("Changing current scene");
 
-	Scene* last_scene = current_scene;
+	Scene* prev_scene = current_scene;
 	current_scene = new_scene;
-	last_scene->CleanUp();
+	prev_scene->CleanUp();
 	current_scene->Start();
 }
 

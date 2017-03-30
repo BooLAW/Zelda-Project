@@ -1,6 +1,9 @@
 #include "Item.h"
 #include "j1App.h"
 #include "j1Map.h"
+#include "SceneManager.h"
+#include "HouseScene.h"
+#include "VillageScene.h"
 
 Item::Item(uint subtype)
 {
@@ -32,7 +35,17 @@ void Item::Update(float dt)
 				App->player->rupees -= price;
 				Upgrade();
 				if (type == ENTITYTYPE::drop)
+				{
 					App->entitymanager->DestroyEnity(this);
+				
+					/*Scene* curr_scene = App->scene_manager->GetCurrentScene();
+					if (curr_scene == App->scene_manager->village_scene)
+						App->scene_manager->village_scene->items.erase();
+					else if (curr_scene == App->scene_manager->village_scene)
+					{
+						App->scene_manager->village_scene->items.erase(),
+					}*/
+				}
 				else
 					PassToInventory();
 			}

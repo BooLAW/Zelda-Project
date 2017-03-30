@@ -7,8 +7,8 @@
 #include "Scene.h"
 
 struct SDL_Texture;
-class j1Scene;
-class MainScene;
+class VillageScene;
+class HouseScene;
 //add the forward declaration for each new scene
 
 
@@ -44,13 +44,10 @@ public:
 	Scene* GetCurrentScene();
 
 public:
-	// Scenes
-	j1Scene*					 village_scene = nullptr;//we need to change the name to villageScene
-	
+	VillageScene*					 village_scene = nullptr;//we need to change the name to villageScene
+	HouseScene*					 house_scene = nullptr;
 private:
-	// Scenes list
 	std::list<Scene*>				 scenes;
-	// Current scene
 	Scene*						 current_scene = nullptr;
 
 };

@@ -1,5 +1,5 @@
-#ifndef __j1SCENE_H__
-#define __j1SCENE_H__
+#ifndef __VILLAGESCENE_H__
+#define __VILLAGESCENE_H__
 
 #include "EntityManager.h"
 #include <vector>
@@ -8,14 +8,14 @@
 struct SDL_Texture;
 //UI forward declarations
 
-class j1Scene : public Scene
+class VillageScene : public Scene
 {
 public:
 
-	j1Scene();
+	VillageScene();
 
 	// Destructor
-	virtual ~j1Scene();
+	virtual ~VillageScene();
 
 	// Called before render is available
 	bool Awake();
@@ -40,6 +40,7 @@ private:
 	SDL_Texture* debug_tex;
 	std::vector<Entity*> Bushes;
 	SDL_Rect Bush_Rect;
+public:
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
 
