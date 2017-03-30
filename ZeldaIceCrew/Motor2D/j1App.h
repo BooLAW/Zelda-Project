@@ -25,6 +25,7 @@ class HUD;
 //class j1Console;			
 class j1Player;
 class EntityManager;
+class ModuleParticles;
 
 class j1App
 {
@@ -115,6 +116,8 @@ public:
 	j1Player*			player = NULL;
 	EntityManager*      entitymanager = NULL;
 	HUD*				hud = NULL;
+	ModuleParticles*	particle = NULL;
+
 	bool			    debug_mode = false;
 private:
 

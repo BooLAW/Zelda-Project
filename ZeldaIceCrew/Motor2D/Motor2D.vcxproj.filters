@@ -28,6 +28,7 @@
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ModuleParticles.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -66,5 +67,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="ModuleParticles.h" />
   </ItemGroup>
 </Project>
