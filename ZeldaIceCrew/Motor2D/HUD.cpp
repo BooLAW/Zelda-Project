@@ -44,6 +44,8 @@ bool HUD::Start()
 	inv->active = false;
 	inv->pos = { 50,100 };
 	inv->texture_rect = {0,0,430,351};
+	inv->Set_Sel_Rect({ 594,402,47,47 });
+
 
 
 	GenerateHP();

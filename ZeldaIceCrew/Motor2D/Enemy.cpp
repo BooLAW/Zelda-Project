@@ -209,7 +209,7 @@ void Enemy::Death()
 
 void Enemy::Reward()
 {
-	srand(time(NULL));
+	/*srand(time(NULL));
 	
 	uint count = 0;
 
@@ -233,7 +233,7 @@ void Enemy::Reward()
 
 	newitem = App->entitymanager->CreateItem(target);
 	newitem->pos = { pos.x, pos.y };
-
+	*/
 }
 
 bool BSoldier::Start()

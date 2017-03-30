@@ -114,8 +114,15 @@ public:
 	bool Inside(UIElement*element);
 	void Scroll();
 	void SetOffset(int x, int y);
+	void Set_Sel_Rect(SDL_Rect rect);
+	void Move_Sel_x();
+	UIElement* Next();
+	void Move_Sel_y();
+	void Sel_First();
 	
 private:
+	GuiImage* selector;
+	UIElement* selected;
 	std::list<UIElement*>win_elements;
 	int offset_x;
 	int offset_y;
