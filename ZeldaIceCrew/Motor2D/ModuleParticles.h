@@ -34,6 +34,7 @@ struct Particle
 
 	virtual void Start() {};
 	virtual bool Update(float dt);
+	virtual bool stdUpdate(float dt);
 	virtual void CleanUp();
 	virtual void Draw(float dt) {}; 
 };
@@ -66,7 +67,11 @@ public:
 };
 
 struct Arrow : public Particle {
+	
+	bool hit = false;
+
 	void Start();
+	bool Update(float dt);
 };
 
 #endif // __MODULEPARTICLES_H__

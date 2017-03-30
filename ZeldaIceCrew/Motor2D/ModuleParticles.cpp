@@ -94,6 +94,11 @@ Particle::Particle()
 
 bool Particle::Update(float dt)
 {
+	return stdUpdate(dt);
+}
+
+bool Particle::stdUpdate(float dt)
+{
 	bool ret = true;
 
 
@@ -129,7 +134,6 @@ void Particle::CleanUp()
 
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
 	LOG("\nparticle col\n");
-
 	
 }
 
@@ -159,6 +163,24 @@ void Arrow::Start()
 
 	
 	HitBox = { (int)position.x, (int)position.y, g_rect[0].w, g_rect[0].h };
-	App->particle->AddParticle(this, COLLIDER_ARROW, 4000, NULL);
+	App->particle->AddParticle(this, COLLIDER_ARROW, 3000, NULL);
 
+}
+
+bool Arrow::Update(float dt)
+{
+		
+	std::list<Enemy*>*ents = &App->scene_manager->GetCurrentScene()->enemies;
+	
+	for (std::list<Enemy*>::iterator it = ents->begin(); it != ents->end(); it++) {
+		if (collider->CheckCollision(it._Ptr->_Myval->HitBox->rect)) {
+				hit = true;
+				LOG("ENEMY HIT");
+				App->particle->DestroyParticle(this);
+				it._Ptr->_Myval->Hit(curr_dir, App->player->power);
+			}
+		}
+
+
+	return stdUpdate(dt);
 }

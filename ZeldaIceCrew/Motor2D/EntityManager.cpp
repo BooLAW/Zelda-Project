@@ -126,14 +126,13 @@ void EntityManager::DestroyEntities()
 
 void EntityManager::DestroyEnity(Entity * ent)
 {
-	
+
 	if(ent != nullptr)
 		ent->CleanUp();
 
-	for (std::deque<Entity*>::iterator it = entities.begin(); it != entities.end(); it++) {
-		if ((*it) == ent)
-			entities.erase(it);
-	}
+	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+
+	entities.erase(aux);
 }
 
 void EntityManager::OnCollision(Collider * c1, Collider * c2)

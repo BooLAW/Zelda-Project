@@ -14,7 +14,7 @@
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
 
-#define JUMP_WHEN_HIT 1
+#define JUMP_WHEN_HIT 48
 
 class Entity;
 
@@ -75,7 +75,7 @@ public:
 
 	virtual void Draw();
 
-	virtual void Hit();
+	virtual void Hit(uint dir, uint dmg);
 	virtual void Death();
 	virtual void Reward();
 
