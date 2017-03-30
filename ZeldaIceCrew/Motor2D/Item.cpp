@@ -183,7 +183,7 @@ void DropTenRupee::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 316, 254, 16, 28 };
+	rect = { 332, 254, 16, 28 };
 }
 
 void DropTenRupee::Upgrade()
