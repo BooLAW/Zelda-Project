@@ -1,6 +1,9 @@
 #include "Item.h"
 #include "j1App.h"
 #include "j1Map.h"
+#include "SceneManager.h"
+#include "HouseScene.h"
+#include "VillageScene.h"
 
 Item::Item(uint subtype)
 {
@@ -32,7 +35,17 @@ void Item::Update(float dt)
 				App->player->rupees -= price;
 				Upgrade();
 				if (type == ENTITYTYPE::drop)
+				{
 					App->entitymanager->DestroyEnity(this);
+				
+					/*Scene* curr_scene = App->scene_manager->GetCurrentScene();
+					if (curr_scene == App->scene_manager->village_scene)
+						App->scene_manager->village_scene->items.erase();
+					else if (curr_scene == App->scene_manager->village_scene)
+					{
+						App->scene_manager->village_scene->items.erase(),
+					}*/
+				}
 				else
 					PassToInventory();
 			}
@@ -45,6 +58,10 @@ void Item::Update(float dt)
 
 		Draw(dt);
 	}
+
+	if (priceTag != nullptr)
+		priceTag->pos = { (int)this->pos.x, (int)this->pos.y};
+
 }
 
 void Item::Draw(float dt)
@@ -68,9 +85,12 @@ void Item::Draw(float dt)
 void Item::Start()
 {
 
-	collider = App->collisions->AddCollider({ 0, 0, App->map->data.tile_width, App->map->data.tile_height }, COLLIDER_ITEM);
-
 	SetUpTexture();
+	
+	if(tex != nullptr)
+		collider = App->collisions->AddCollider({ 0, 0, rect.w, rect.h }, COLLIDER_ITEM);
+
+	priceTag = (GuiText*)App->gui->CreateElement(GuiType::text);
 
 }
 
@@ -103,7 +123,6 @@ void PegasusBoots::Upgrade()
 
 void HeartContainer::SetUpTexture()
 {
-	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 0, 146, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
@@ -148,7 +167,7 @@ void DropRupee::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 144, 146, 28, 32 };
+	rect = { 116, 254, 16, 28 };
 }
 
 void DropRupee::Upgrade()
@@ -163,7 +182,7 @@ void DropFiveRupee::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 144, 146, 28, 32 };
+	rect = { 224, 254, 16, 28 };
 }
 
 void DropFiveRupee::Upgrade()
@@ -177,7 +196,7 @@ void DropTenRupee::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 144, 146, 28, 32 };
+	rect = { 332, 254, 16, 28 };
 }
 
 void DropTenRupee::Upgrade()

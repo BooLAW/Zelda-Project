@@ -507,7 +507,7 @@ bool j1Player::Start()
 
 	// !_Animations
 
-	SDL_Rect WeaponRect = { FARLANDS.x, FARLANDS.y, App->map->data.tile_width, App->map->data.tile_height };
+	SDL_Rect WeaponRect = { FARLANDS.x, FARLANDS.y, WPN_COL_W, WPN_COL_H };
 	weapon_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_PL_WEAPON);
 
 	// Variable Settup
@@ -711,16 +711,16 @@ bool j1Player::Update(float dt)
 	if (action_blit == Slash) {
 		switch (curr_dir) {
 		case Up:
-			weapon_coll->SetPos(pos.x, pos.y - App->map->data.tile_height);
+			weapon_coll->rect = { (int)pos.x, (int)link_coll->rect.y - link_coll->rect.h, WPN_COL_H, WPN_COL_W };
 			break;
 		case Down:
-			weapon_coll->SetPos(pos.x, pos.y + App->map->data.tile_height);
+			weapon_coll->rect = { (int)pos.x, (int)link_coll->rect.y + link_coll->rect.h - 8, WPN_COL_H, WPN_COL_W };
 			break;
 		case Left:
-			weapon_coll->SetPos(pos.x - App->map->data.tile_width, pos.y);
+			weapon_coll->rect = { (int)pos.x - WPN_COL_W, (int)pos.y + WPN_COL_OFFSET_Y, WPN_COL_W, WPN_COL_H };
 			break;
 		case Right:
-			weapon_coll->SetPos(pos.x + App->map->data.tile_width, pos.y);
+			weapon_coll->rect = { (int)pos.x + App->player->link_coll->rect.w, (int)pos.y + WPN_COL_OFFSET_Y, WPN_COL_W, WPN_COL_H };
 			break;
 		}
 	
@@ -815,16 +815,29 @@ void j1Player::UpgradeSPD(float x)
 {
 	pl_speed.x += x;
 	pl_speed.y += x;
+
+	if (pl_speed.x > MAX_SPD) {
+		pl_speed.x = MAX_SPD;
+		pl_speed.y = MAX_SPD;
+	}
+
 }
 
 void j1Player::UpgradePWR(int x)
 {
 	power += x;
+
+	if (power > MAX_PWR)
+		power = MAX_PWR;
+
 }
 
 void j1Player::UpgradeHP(int x)
 {
 	max_life_points += x;
+	
+	if (max_life_points > MAX_HP)
+		max_life_points = MAX_HP;
 }
 
 void j1Player::SetPos(float x, float y)

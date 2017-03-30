@@ -6,6 +6,7 @@
 #include "j1App.h"
 #include "j1Textures.h"
 #include "HUD.h"
+#include "j1Gui.h"
 
 #include "j1Collision.h"
 
@@ -64,6 +65,12 @@ public:
 
 	virtual void Start();
 	virtual void SetUpTexture() {};
+
+	void SetPrice(uint p) {
+		price = p;
+
+		price > 0 ? priceTag->str = std::to_string(price) : priceTag->str = "";
+	}
 
 	virtual void Upgrade() {};
 

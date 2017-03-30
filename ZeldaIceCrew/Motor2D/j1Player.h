@@ -16,6 +16,9 @@
 #define PL_OFFSET_X 33
 #define PL_OFFSET_Y 35
 
+#define MAX_SPD 5
+#define MAX_HP 24
+#define MAX_PWR 99
 
 #define PL_WALK_FPS 0.8f
 
@@ -23,6 +26,11 @@
 #define link_height 107
 #define link_y 110
 #define link_x 102
+
+#define WPN_COL_W 24
+#define WPN_COL_H 32
+#define WPN_COL_OFFSET_X 8
+#define WPN_COL_OFFSET_Y 8
 
 struct Collider;
 class Item;

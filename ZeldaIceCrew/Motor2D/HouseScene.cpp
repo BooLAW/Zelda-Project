@@ -9,23 +9,24 @@
 #include "j1Map.h"
 #include "j1PathFinding.h"
 #include "j1Gui.h"
-#include "j1Scene.h"
+#include "HouseScene.h"
 #include "j1Fonts.h"
 #include "j1Player.h"
-
+#include "VillageScene.h"
+#include "Scene.h"
+#include "SceneManager.h"
 #define MAX_TABS 2
 
-j1Scene::j1Scene() : j1Module()
+HouseScene::HouseScene() 
 {
-	name.create("scene");
 }
 
 // Destructor
-j1Scene::~j1Scene()
+HouseScene::~HouseScene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake()
+bool HouseScene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -34,10 +35,10 @@ bool j1Scene::Awake()
 }
 
 // Called before the first frame
-bool j1Scene::Start()
+bool HouseScene::Start()
 {
-	
-	if (App->map->Load("FirstMap.tmx") == true)
+
+	if (App->map->Load("House.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -46,63 +47,13 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-	Bush_Rect = { 8*32,2*32,32,32 };
-	House_Rect = {0,0,195,195};
-	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
-
-	App->player->SetPosTile(2, 2);
-
-	App->render->CamBoundOrigin();
-
+	
+	App->player->SetPos(6.5 * 32, 8 * 32);
+	App->render->MoveCam(256, 128);
 	App->render->ScaleCamBoundaries(300);
-
-	// Enemy Start
-	Enemy* new_enemy;
-	new_enemy = App->entitymanager->CreateEnemy(BlueSoldier);
-	new_enemy->pos = { 20, 20 };
-
-	enemies.push_back(new_enemy);
-
-	new_enemy = App->entitymanager->CreateEnemy(RedSoldier);
-	new_enemy->pos = { 60, 30 };
-
-	enemies.push_back(new_enemy);
-
-	new_enemy = App->entitymanager->CreateEnemy(GreenSoldier);
-	new_enemy->pos = { 200, 10 };
-
-	enemies.push_back(new_enemy);
-
-
-	// Items Start
-
-	Item* new_item = nullptr;
-
-	new_item = App->entitymanager->CreateItem(drop_tenrupee);
-	new_item->SetPositions({ 300.0f, 50.0f });
-	items.push_back(new_item);
-
-	new_item = App->entitymanager->CreateItem(pegasus_boots);
-	new_item->SetPositions({ 450.0f, 50.0f });
-	items.push_back(new_item);
-
-	new_item = App->entitymanager->CreateItem(heart_container);
-	new_item->SetPositions({ 550.0f, 50.0f });
-	items.push_back(new_item);
-
-	new_item = App->entitymanager->CreateItem(drop_rupee);
-	new_item->SetPositions({ 600.0f, 50.0f });
-	items.push_back(new_item);
-
-	new_item = App->entitymanager->CreateItem(drop_fiverupee);
-	new_item->SetPositions({ 650.0f, 50.0f });
-	items.push_back(new_item);
-
-
+	
 	//we can do that with an iterator that recieves the positions readed from the xml file
-
-
-	App->player->SetPos(500, 100);
+	
 	
 
 
@@ -110,9 +61,10 @@ bool j1Scene::Start()
 }
 
 // Called each loop iteration
-bool j1Scene::PreUpdate()
+bool HouseScene::PreUpdate()
 {
 	// debug pathfing ------------------
+	
 	if (App->debug == true) {
 		static iPoint origin;
 		static bool origin_selected = false;
@@ -140,25 +92,20 @@ bool j1Scene::PreUpdate()
 }
 
 // Called each loop iteration
-bool j1Scene::Update(float dt)
+bool HouseScene::Update(float dt)
 {
-	
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
+
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
 	
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		App->debug = !App->debug;
 
 	App->map->Draw();
 
-	for (int i = 0; i < Bushes.size(); i++) {
-		App->render->Blit(Bushes[i]->GetTexture(), Bushes[i]->pos.x, Bushes[i]->pos.y, &Bushes[i]->GetRect());
-
-	}
-	
 	// Debug pathfinding ------------------------------
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -178,31 +125,26 @@ bool j1Scene::Update(float dt)
 		App->win->SetTitle(title.GetString());
 		//App->render->Blit(debug_tex, p.x, p.y);
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
-		App->player->curr_life_points -= 1;
-	}
-		return true;
-	
+	return true;
 }
 
 // Called each loop iteration
-bool j1Scene::PostUpdate()
+bool HouseScene::PostUpdate()
 {
 	bool ret = true;
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
 	return ret;
 }
 
 // Called before quitting
-bool j1Scene::CleanUp()
+bool HouseScene::CleanUp()
 {
-	LOG("Freeing scene");
-
+	LOG("Freeing house scene");
+	
+	App->map->CleanUp();
+	
 	return true;
 }
-
-
