@@ -27,6 +27,11 @@
 #define link_y 110
 #define link_x 102
 
+#define WPN_COL_W 24
+#define WPN_COL_H 32
+#define WPN_COL_OFFSET_X 8
+#define WPN_COL_OFFSET_Y 8
+
 struct Collider;
 class Item;
 
