@@ -40,18 +40,18 @@ void Bow::Attack()
 
 	switch (curr_dir) {
 	case Up:
-		pos.x += 16;
+		pos.x += 8;
 		break;
 	case Down:
-		pos.x += 16;
+		pos.x += 8;
 		pos.y += 32;
 		break;
 	case Left:
-		pos.y += 16;
+		pos.y += 4;
 		break;
 	case Right:
 		pos.x += App->player->link_coll->rect.w;
-		pos.y += 16;
+		pos.y += 4;
 		break;
 	}
 

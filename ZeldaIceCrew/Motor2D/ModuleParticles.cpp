@@ -146,8 +146,11 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
 
 void Arrow::Start()
 {
-	graphics = App->tex->Load("Sprites/Items32x32.png");
-	g_rect[0] = { 328, 290, 14, 30 };
+	graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	g_rect[Up] = { 2, 2, 34, 34 };
+	g_rect[Down] = { 38, 2, 34, 34 };
+	g_rect[Right] = { 74, 2, 34, 34 };
+	g_rect[Left] = { 110, 2, 34, 34 };
 	
 	switch (curr_dir) {
 	case Up:
@@ -164,11 +167,10 @@ void Arrow::Start()
 		break;
 	}
 
-	for(int k = 0; k < LastDir; k++)
-		for (int i = 0; i < MAX_FRAMES_PARTICLES; i++)
-			anim[k].PushBack(g_rect[0]);
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[k]);
+	}
 
-	
 	HitBox = { (int)position.x, (int)position.y, g_rect[0].w, g_rect[0].h };
 	App->particle->AddParticle(this, COLLIDER_ARROW, 3000, NULL);
 
@@ -176,7 +178,9 @@ void Arrow::Start()
 
 bool Arrow::Update(float dt)
 {
-		
+
+	HitBox = { (int)position.x, (int)position.y, g_rect[curr_dir].w, g_rect[curr_dir].h };
+
 	std::list<Enemy*>*ents = &App->scene_manager->GetCurrentScene()->enemies;
 	
 	for (std::list<Enemy*>::iterator it = ents->begin(); it != ents->end(); it++) {
