@@ -1,6 +1,6 @@
 
 #include "ModuleParticles.h"
-
+#include "j1Collision.h"
 #include "SDL/include/SDL_timer.h"
 
 ModuleParticles::ModuleParticles()
@@ -28,18 +28,18 @@ bool ModuleParticles::Update(float dt)
 {
 	for (uint i = 0; i < particles.size(); i++) {
 		if (particles[i]->Update(dt) == false)
-			DestroyParticle(*particles[i]);
+			DestroyParticle(particles[i]);
 	}
 	return true;
 }
 
-Particle * ModuleParticles::CreateParticle(uint p_type)
+Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 {
 	Particle* ret = nullptr;
 
 	switch (p_type) {
 	case p_arrow:
-		//ret = new Particle();
+		ret = new Arrow();
 		break;
 	default:
 		LOG("Unknown Particle Type");
@@ -47,6 +47,9 @@ Particle * ModuleParticles::CreateParticle(uint p_type)
 	}
 
 	if (ret != nullptr) {
+		ret->position.x = x;
+		ret->position.y = y;
+		ret->curr_dir = (Direction)dir;
 		ret->Start();
 		particles.push_back(ret);
 	}
@@ -54,15 +57,12 @@ Particle * ModuleParticles::CreateParticle(uint p_type)
 	return ret;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay)
+void ModuleParticles::AddParticle(Particle* particle, COLLIDER_TYPE collider_type, Uint32 life, Uint32 delay)
 {
-	
-	Particle* p = new Particle(particle);
-	p->born = SDL_GetTicks() + delay;
-	p->position.x = x;
-	p->position.y = y;
+	particle->born = SDL_GetTicks() + delay;
+	particle->life = life;
 	if (collider_type != COLLIDER_NONE)
-		p->collider = App->collisions->AddCollider({ (int)p->position.x, (int)p->position.y, p->g_rect.w, p->g_rect.h }, collider_type, this);
+		particle->collider = App->collisions->AddCollider({ (int)particle->position.x, (int)particle->position.y, particle->HitBox.w, particle->HitBox.h }, collider_type, this);
 
 }
 
@@ -76,16 +76,13 @@ void ModuleParticles::DestroyParticles()
 	}
 }
 
-void ModuleParticles::DestroyParticle(Particle & particle)
+void ModuleParticles::DestroyParticle(Particle* particle)
 {
-
-	particle.CleanUp();
-	
-	std::deque<Particle*>::iterator aux = std::find(particles.begin(), particles.end(), &particle);
-	
-	particles.erase(aux);
-
-
+	if (particle != nullptr) {
+		particle->CleanUp();
+		std::deque<Particle*>::iterator aux = std::find(particles.begin(), particles.end(), particle);
+		particles.erase(aux);
+	}
 }
 
 Particle::Particle()
@@ -94,15 +91,16 @@ Particle::Particle()
 	speed.SetToZero();
 }
 
-Particle::Particle(const Particle& p) : 
-anim(p.anim), position(p.position), speed(p.speed),
-fx(p.fx), born(p.born), life(p.life)
-{}
-
 
 bool Particle::Update(float dt)
 {
+	return stdUpdate(dt);
+}
+
+bool Particle::stdUpdate(float dt)
+{
 	bool ret = true;
+
 
 	if(life > 0 || life == -1)
 	{
@@ -110,15 +108,17 @@ bool Particle::Update(float dt)
 			ret = false;
 	}
 	else
-		if(anim.Finished())
+		if(anim[curr_dir].Finished())
 			ret = false;
+
 
 	position.x += speed.x;
 	position.y += speed.y;
 
 	collider->SetPos(position.x, position.y);
+	
+	App->render->Blit(graphics, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
 
-	LOG("Particles update end");
 	return ret;
 }
 
@@ -126,16 +126,61 @@ void Particle::CleanUp()
 {
 	if (graphics != nullptr)
 		App->tex->UnLoad(graphics);
+
+	collider->to_delete = true;
+
 }
 
 
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
 	LOG("\nparticle col\n");
-
 	
 }
 
 void Arrow::Start()
 {
+	graphics = App->tex->Load("Sprites/Items32x32.png");
+	g_rect[0] = { 328, 290, 14, 30 };
+	
+	switch (curr_dir) {
+	case Up:
+		speed = { 0, -ARROW_SPEED };
+		break;
+	case Down:
+		speed = { 0, ARROW_SPEED };
+		break;
+	case Left:
+		speed = { -ARROW_SPEED, 0 };
+		break;
+	case Right:
+		speed = { ARROW_SPEED, 0 };
+		break;
+	}
 
+	for(int k = 0; k < LastDir; k++)
+		for (int i = 0; i < MAX_FRAMES_PARTICLES; i++)
+			anim[k].PushBack(g_rect[0]);
+
+	
+	HitBox = { (int)position.x, (int)position.y, g_rect[0].w, g_rect[0].h };
+	App->particle->AddParticle(this, COLLIDER_ARROW, 3000, NULL);
+
+}
+
+bool Arrow::Update(float dt)
+{
+		
+	std::list<Enemy*>*ents = &App->scene_manager->GetCurrentScene()->enemies;
+	
+	for (std::list<Enemy*>::iterator it = ents->begin(); it != ents->end(); it++) {
+		if (collider->CheckCollision(it._Ptr->_Myval->HitBox->rect)) {
+				hit = true;
+				LOG("ENEMY HIT");
+				App->particle->DestroyParticle(this);
+				it._Ptr->_Myval->Hit(curr_dir, App->player->power);
+			}
+		}
+
+
+	return stdUpdate(dt);
 }

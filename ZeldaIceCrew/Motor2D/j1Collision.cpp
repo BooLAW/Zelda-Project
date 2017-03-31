@@ -133,6 +133,9 @@ void j1Collision::DebugDraw()
 		case COLLIDER_ITEM:
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
+		case COLLIDER_ARROW:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
 		}
 	}
 }

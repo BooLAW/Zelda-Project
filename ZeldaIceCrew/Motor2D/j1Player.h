@@ -8,7 +8,9 @@
 #include "j1App.h"
 #include "EntityManager.h"
 #include "HUD.h"
+#include "p2Defs.h"
 #include "Item.h"
+#include "Weapon.h"
 #include "j1Audio.h"
 
 #define MAX_SPRITE_FRAMES 30
@@ -33,21 +35,11 @@
 #define WPN_COL_OFFSET_X 8
 #define WPN_COL_OFFSET_Y 8
 
+#define PL_SPD_ATK 6
+
 struct Collider;
 class Item;
-
-enum Direction {
-	FirstDir = 0,
-	Up,
-	Left,
-	Right,
-	Down,
-	Up_R,
-	Up_L,
-	Down_R,
-	Down_L,
-	LastDir
-};
+class Weapon;
 
 class j1Player : public j1Module {
 public:
@@ -62,6 +54,7 @@ public:
 		Pickup,
 		Pull,
 		Push,
+		Weapon_atk,
 		Slash,
 		Unknown,
 		__LAST
@@ -121,6 +114,18 @@ public:
 	uint arrows = 100;
 	j1PerfTimer inmortal_timer;
 	std::list<Item*> inventory;
+
+  // Weapon Related
+	bool Slashing = false;
+	enum { 
+		No_Change = 0,
+		Q_Change,
+		E_Change
+	} change_weapon = No_Change;
+
+	Weapon* curr_weapon;
+	std::list<Weapon*> weapons;
+
 	//audio
 	uint sword_fx;
 	uint low_hp;
@@ -128,6 +133,8 @@ public:
 	uint hurt;
 	uint open_inv_fx;
 	uint close_inv_fx;
+  // !_audio
+  
 	int action_blit;
 	bool dir_override = false; // Overrides directions expressed if there is an action that keeps movement but changes view direction being done at the time
 	bool anim_override = false;

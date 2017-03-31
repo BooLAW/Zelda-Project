@@ -5,6 +5,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "j1Collision.h"
+#include "SceneManager.h"
 
 #include "Item.h"
 
@@ -13,7 +14,7 @@
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
 
-#define JUMP_WHEN_HIT 1
+#define JUMP_WHEN_HIT 48
 
 class Entity;
 
@@ -74,7 +75,7 @@ public:
 
 	virtual void Draw();
 
-	virtual void Hit();
+	virtual void Hit(uint dir, uint dmg);
 	virtual void Death();
 	virtual void Reward();
 
@@ -93,16 +94,7 @@ public:
 
 	}
 
-	virtual void CleanUp() {
-		if (tex != nullptr)
-			App->tex->UnLoad(tex);
-
-		if(HitBox != nullptr)
-			HitBox->to_delete = true;
-
-		path_to_follow.clear();
-
-	}
+	virtual void CleanUp();
 
 public:
 	ENEMYTYPE EnemyType;

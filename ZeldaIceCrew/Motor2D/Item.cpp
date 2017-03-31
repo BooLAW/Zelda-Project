@@ -19,6 +19,9 @@ void Item::PassToInventory()
 
 	App->player->inventory.push_back(this);
 	App->hud->AddItem(this);
+
+	App->scene_manager->GetCurrentScene()->DestroyItem(this);
+
 	grabbed = true;
 
 }
@@ -81,6 +84,18 @@ void Item::Draw(float dt)
 		floating_up = false;
 
 	App->render->Blit(tex, draw_pos.x, draw_pos.y, &rect);
+}
+
+void Item::CleanUp()
+{
+	if (collider != nullptr)
+		collider->to_delete = true;
+	if (tex != nullptr)
+		App->tex->UnLoad(tex);
+	if (UI_tex != nullptr)
+		App->tex->UnLoad(UI_tex);
+
+	App->scene_manager->GetCurrentScene()->DestroyItem(this);
 }
 
 void Item::Start()

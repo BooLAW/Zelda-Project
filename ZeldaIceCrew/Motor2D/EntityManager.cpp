@@ -126,7 +126,9 @@ void EntityManager::DestroyEntities()
 
 void EntityManager::DestroyEnity(Entity * ent)
 {
-	ent->CleanUp();
+
+	if(ent != nullptr)
+		ent->CleanUp();
 
 	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
 

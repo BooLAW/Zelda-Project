@@ -43,6 +43,8 @@ public:
 	void DestroyEntities();
 	void DestroyEnity(Entity* ent);
 	
+	std::deque<Entity*>* GetEntities() { return &entities; };
+
 	void OnCollision(Collider* c1, Collider* c2);
 
 public:

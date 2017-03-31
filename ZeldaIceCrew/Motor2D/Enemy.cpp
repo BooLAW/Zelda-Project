@@ -49,11 +49,11 @@ void Enemy::Update(float dt)
 
 	if (App->player->weapon_coll != nullptr)
 		if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
-			Hit();
+			Hit(App->player->curr_dir, App->player->power);
 			App->audio->PlayFx(hit_fx);
 		}
 	
-	if (App->player->action_blit != j1Player::Slash)
+	if (App->player->action_blit != j1Player::Weapon_atk)
 		hit = false;
 
 		Move();
@@ -182,7 +182,7 @@ void Enemy::Draw()
 	App->render->Blit(Entity::GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
 }
 
-void Enemy::Hit()
+void Enemy::Hit(uint dir, uint dmg)
 {
 
 
@@ -190,29 +190,34 @@ void Enemy::Hit()
 		
 		hit = true;
 		
-		stats.Hp -= App->player->power;
+		LOG("HP: %d DMG: %d", stats.Hp, dmg);
+
+		stats.Hp -= dmg;
 		
+		LOG("HP: %d", stats.Hp, dmg);
+
 		if (stats.Hp <= 0) {
+			LOG("ENEMY DEATH");
 			Death();
 			return;
 		}
 
-		switch (App->player->curr_dir) {
-		case Up:
-			if (App->map->TileCheck(pos.x, pos.y - JUMP_WHEN_HIT * App->map->data.tile_height, Direction::Up) == 0)
-				pos.y += JUMP_WHEN_HIT * App->map->data.tile_height;
+		switch (dir) {
+		case Direction::Up:
+			if (App->map->TileCheck(pos.x, pos.y - JUMP_WHEN_HIT, Direction::Up) == 0)
+				pos.y -= JUMP_WHEN_HIT;
 			break;
-		case Down:
-			if (App->map->TileCheck(pos.x, pos.y + JUMP_WHEN_HIT * App->map->data.tile_height, Direction::Down) == 0)
-				pos.y -= JUMP_WHEN_HIT * App->map->data.tile_height;
+		case Direction::Down:
+			if (App->map->TileCheck(pos.x, pos.y + JUMP_WHEN_HIT, Direction::Down) == 0)
+				pos.y += JUMP_WHEN_HIT;
 			break;
-		case Left:
-			if (App->map->TileCheck(pos.x - JUMP_WHEN_HIT * App->map->data.tile_height, pos.y, Direction::Left) == 0)
-				pos.x += JUMP_WHEN_HIT * App->map->data.tile_width;
+		case Direction::Left:
+			if (App->map->TileCheck(pos.x - JUMP_WHEN_HIT, pos.y, Direction::Left) == 0)
+				pos.x -= JUMP_WHEN_HIT;
 			break;
-		case Right:
-			if (App->map->TileCheck(pos.x + JUMP_WHEN_HIT * App->map->data.tile_height, pos.y, Direction::Right) == 0)
-				pos.x -= JUMP_WHEN_HIT * App->map->data.tile_width;
+		case Direction::Right:
+			if (App->map->TileCheck(pos.x + JUMP_WHEN_HIT, pos.y, Direction::Right) == 0)
+				pos.x += JUMP_WHEN_HIT;
 			break;
 		}
 		
@@ -259,6 +264,19 @@ void Enemy::Reward()
 	else
 		LOG("NO REWARD FAGGOT");
 
+}
+
+void Enemy::CleanUp()
+{
+	if (tex != nullptr)
+		App->tex->UnLoad(tex);
+
+	if (HitBox != nullptr)
+		HitBox->to_delete = true;
+
+	path_to_follow.clear();
+
+	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 
 bool BSoldier::Start()
