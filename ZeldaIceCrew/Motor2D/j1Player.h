@@ -11,6 +11,7 @@
 #include "p2Defs.h"
 #include "Item.h"
 #include "Weapon.h"
+#include "j1Audio.h"
 
 #define MAX_SPRITE_FRAMES 30
 
@@ -101,7 +102,7 @@ public:
 	bool shield = true;
 	bool sword = false;  // as a flag to draw link with the sword sprite
 	bool action = false; // Actions: Throw, Pull, Slash,...
-						 // --status VARs
+	bool inmortal = false;					 // --status VARs
 	
 	unsigned int curr_dir;
 	uint max_life_points = 6;
@@ -111,8 +112,10 @@ public:
 	uint max_rupees = 99;
 	uint bombs = 50;
 	uint arrows = 100;
+	j1PerfTimer inmortal_timer;
 	std::list<Item*> inventory;
 
+  // Weapon Related
 	bool Slashing = false;
 	enum { 
 		No_Change = 0,
@@ -123,6 +126,15 @@ public:
 	Weapon* curr_weapon;
 	std::list<Weapon*> weapons;
 
+	//audio
+	uint sword_fx;
+	uint low_hp;
+	uint die_fx;
+	uint hurt;
+	uint open_inv_fx;
+	uint close_inv_fx;
+  // !_audio
+  
 	int action_blit;
 	bool dir_override = false; // Overrides directions expressed if there is an action that keeps movement but changes view direction being done at the time
 	bool anim_override = false;

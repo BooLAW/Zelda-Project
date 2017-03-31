@@ -122,6 +122,7 @@ public:
 	// pathfinding related
 	std::list<iPoint> path_to_follow;
 
+	uint hit_fx;
 	bool hit = false;
 
 	uint reward_pool[N_ITEMS];

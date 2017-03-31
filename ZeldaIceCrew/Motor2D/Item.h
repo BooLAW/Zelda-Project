@@ -84,7 +84,7 @@ public:
 	
 	SDL_Texture*	UI_tex = nullptr;
 	SDL_Rect		UI_rect;
-
+	uint fx;
 	fPoint draw_pos = pos;
 	bool floating_up = false;
 	bool set = false;

@@ -36,7 +36,7 @@ public:
 	bool CleanUp();
 
 private:
-
+	bool ESC = false;
 	SDL_Texture* debug_tex;
 	//std::vector<Entity*> Bushes;
 	//SDL_Rect Bush_Rect;

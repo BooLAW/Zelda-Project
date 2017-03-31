@@ -196,8 +196,11 @@ bool VillageScene::PostUpdate()
 {
 	bool ret = true;
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
 		ret = false;
+		ESC = true;
+	}
 
 	return ret;
 }
@@ -207,21 +210,25 @@ bool VillageScene::CleanUp()
 {
 	LOG("Freeing village scene");
 
-	App->map->CleanUp();
-
-	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
+	if (ESC != true)
 	{
-		App->entitymanager->DestroyEnity(*it);
-	}
-	enemies.clear();
-	for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++)
-	{
-		App->entitymanager->DestroyEnity(*it);
-	}
-	items.clear();
+		App->map->CleanUp();
 
-	if (debug_tex != NULL)
-		App->tex->UnLoad(debug_tex);
+		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
+		{
+			App->entitymanager->DestroyEnity(*it);
+		}
+		enemies.clear();
+		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++)
+		{
+			App->entitymanager->DestroyEnity(*it);
+		}
+		items.clear();
+
+		if (debug_tex != NULL)
+			App->tex->UnLoad(debug_tex);
+	}
+	
 
 
 	return true;
