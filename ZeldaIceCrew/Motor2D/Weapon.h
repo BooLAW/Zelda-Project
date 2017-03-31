@@ -16,6 +16,10 @@ public:
 	virtual void Start() {};
 	virtual void Attack() {};
 
+	virtual void CleanUp() {
+		App->tex->UnLoad(graphics);
+	}
+
 	virtual const SDL_Texture* GetTexture() {
 		return graphics;
 	}
@@ -40,6 +44,12 @@ protected:
 //	void Start();
 //	void Attack();
 //};
+
+struct Sword : public Weapon {
+public:
+	void Start();
+	void Attack();
+};
 
 struct Bow : public Weapon {
 public:

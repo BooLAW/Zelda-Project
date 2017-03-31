@@ -53,8 +53,8 @@ public:
 		Pickup,
 		Pull,
 		Push,
-		Slash,
 		Weapon_atk,
+		Slash,
 		Unknown,
 		__LAST
 	};
@@ -112,6 +112,8 @@ public:
 	uint bombs = 50;
 	uint arrows = 100;
 	std::list<Item*> inventory;
+
+	bool Slashing = false;
 
 	Weapon* curr_weapon;
 	std::list<Weapon*> weapons;

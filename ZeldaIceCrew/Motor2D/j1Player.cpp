@@ -176,47 +176,6 @@ bool j1Player::Start()
 	
 	}
 
-	//Sword Slash
-	{
-	
-		sprites[Slash][Down][0] = { link_x*7, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][1] = { link_x * 8, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][2] = { link_x * 9, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][3] = { link_x * 10, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][4] = { link_x * 11, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][5] = { link_x * 12, link_y * 9, link_width, link_height };
-
-		sprites[Slash][Up][0] = { link_x * 7, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][1] = { link_x * 8, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][2] = { link_x * 9, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][3] = { link_x * 10, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][4] = { link_x * 11, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][5] = { link_x * 12, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][6] = { link_x * 13, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][7] = { link_x * 14, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][8] = { link_x * 15, link_y * 10, link_width, link_height };
-
-		sprites[Slash][Left][8] = { link_x * 7, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][7] = { link_x * 8, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][6] = { link_x * 9, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][5] = { link_x * 10, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][4] = { link_x * 11, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][3] = { link_x * 12, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][2] = { link_x * 13, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][1] = { link_x * 14, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][0] = { link_x * 15, link_y * 12, link_width, link_height };
-
-		sprites[Slash][Right][0] = { link_x * 7, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][1] = { link_x * 8, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][2] = { link_x * 9, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][3] = { link_x * 10, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][4] = { link_x * 11, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][5] = { link_x * 12, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][6] = { link_x * 13, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][7] = { link_x * 14, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][8] = { link_x * 15, link_y * 11, link_width, link_height };
-	
-	}
 	//Sword Charge Idle
 
 	//Sword Charge Walk
@@ -510,7 +469,14 @@ bool j1Player::Start()
 
 	// Weapon SetUp
 
-	weapons.push_back(new Bow());
+	Weapon* newW = new Bow();
+	newW->Start();
+	weapons.push_front(newW);
+
+	newW = new Sword();
+	newW->Start();
+	weapons.push_front(newW);
+
 	curr_weapon = weapons.begin()._Ptr->_Myval;
 
 	// !_Weapon SetUp
@@ -673,6 +639,7 @@ bool j1Player::Update(float dt)
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
 						curr_dir = Down;
+						action = false;
 						action_blit = Weapon_atk;
 						if (curr_weapon != nullptr)
 							curr_weapon->Attack();
@@ -707,14 +674,26 @@ bool j1Player::Update(float dt)
 		}
 	}
 
-			// Actions
+	if (Slashing == true) {
+		curr_weapon->Attack();
+		if (action_blit != Weapon_atk) {
+			Slashing = false;
+			weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
+		}
+	}
+
+	// Actions
 	{
 
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
 		for (int i = 0; i < LastDir; i++) {
 			animations[Weapon_atk][i] = curr_weapon->anim[i];
-			animations[Weapon_atk][i].speed = curr_weapon->anim[i].speed;
 		}
+		animations[Weapon_atk][Up].speed = curr_weapon->anim[Up].speed;
+		animations[Weapon_atk][Down].speed = curr_weapon->anim[Up].speed;
+		animations[Weapon_atk][Left].speed = curr_weapon->anim[Up].speed;
+		animations[Weapon_atk][Right].speed = curr_weapon->anim[Up].speed;
+		LOG("XXX: %f", animations[Weapon_atk][Up].speed);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
@@ -731,27 +710,6 @@ bool j1Player::Update(float dt)
 		//if(App->input->GetKey(SDL_SCANCODE))action_blit = Idle;
 	}
 
-	if (action_blit == Slash) {
-
-		switch (curr_dir) {
-		case Up:
-			weapon_coll->rect = { (int)pos.x, (int)link_coll->rect.y - link_coll->rect.h, WPN_COL_H, WPN_COL_W };
-			break;
-		case Down:
-			weapon_coll->rect = { (int)pos.x, (int)link_coll->rect.y + link_coll->rect.h - 8, WPN_COL_H, WPN_COL_W };
-			break;
-		case Left:
-			weapon_coll->rect = { (int)pos.x - WPN_COL_W, (int)pos.y + WPN_COL_OFFSET_Y, WPN_COL_W, WPN_COL_H };
-			break;
-		case Right:
-			weapon_coll->rect = { (int)pos.x + App->player->link_coll->rect.w, (int)pos.y + WPN_COL_OFFSET_Y, WPN_COL_W, WPN_COL_H };
-			break;
-		}
-	
-	}
-	else {
-		weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
-	}
 
 	// !_Logic
 
@@ -781,6 +739,7 @@ bool j1Player::Update(float dt)
 
 			if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
 				action = false;
+				LOG("ACTIO=N FALSE");
 				animations[action_blit][curr_dir].Reset();
 				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
 			}
@@ -831,6 +790,13 @@ bool j1Player::CleanUp()
 		link_coll->to_delete = true;
 	if (weapon_coll != nullptr)
 		weapon_coll->to_delete = true;
+
+	for (std::list<Weapon*>::iterator it = weapons.begin(); it != weapons.end(); it++) {
+		if (it._Ptr->_Myval != nullptr)
+			it._Ptr->_Myval->CleanUp();
+	}
+
+	weapons.clear();
 
 	return ret;
 }
