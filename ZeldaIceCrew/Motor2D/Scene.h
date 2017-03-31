@@ -8,7 +8,6 @@
 #include <string>
 #include <list>
 
-//class PhysBody;
 class Scene
 {
 public:
@@ -32,19 +31,9 @@ public:
 		return true;
 	}
 
-	virtual void OnColl(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB) {};
-
-	virtual void OnCommand(std::list<std::string>& tokens) {}
-
-	virtual void OnCVar(std::list<std::string>& tokens) {}
-
-	virtual void SaveCVar(std::string& cvar_name, pugi::xml_node& node) const {}
-
-	virtual bool isDone() { return change_scene; }
-
 protected:
 
-	bool change_scene = false; 
+	bool change_scene = false;
 
 };
 

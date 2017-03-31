@@ -86,8 +86,6 @@ Item * EntityManager::CreateItem(uint subtype)
 	}
 
 	if (ret != nullptr) {
-    
-		ret->type = item;
 		
 		ret->Start();
 

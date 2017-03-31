@@ -29,6 +29,21 @@ bool Enemy::Start()
 
 }
 
+void Enemy::SetRewards()
+{
+	memset(reward_pool, 0, N_ITEMS);
+	
+	// Standard Reward Pool
+	reward_pool[drop_heart] = 30;
+	reward_pool[drop_potion] = 5;
+	reward_pool[drop_rupee] = 45;
+	reward_pool[drop_fiverupee] = 15;
+	reward_pool[drop_tenrupee] = 5;
+
+	SortRewardProbs();
+
+}
+
 void Enemy::Update(float dt)
 {
 
@@ -39,16 +54,12 @@ void Enemy::Update(float dt)
 	if (App->player->action_blit != j1Player::Slash)
 		hit = false;
 
-	if (stats.Hp <= 0) {
-		Death();
-	}
-	else {
 		Move();
 
 		Attack();
 
 		Draw();
-	}
+	
 }
 
 bool Enemy::Move()
@@ -170,13 +181,19 @@ void Enemy::Draw()
 
 void Enemy::Hit()
 {
-	//stats.Hp -= App->player->power;
+
+
 	if (hit == false) {
 		
 		hit = true;
 		
 		stats.Hp -= App->player->power;
 		
+		if (stats.Hp <= 0) {
+			Death();
+			return;
+		}
+
 		switch (App->player->curr_dir) {
 		case Up:
 			if (App->map->TileCheck(pos.x, pos.y - JUMP_WHEN_HIT * App->map->data.tile_height, Direction::Up) == 0)
@@ -209,30 +226,35 @@ void Enemy::Death()
 
 void Enemy::Reward()
 {
+
 	srand(time(NULL));
+
+	uint aux = 0;
+	uint prob = (rand() % 100) + 1;
 	
-	uint count = 0;
+	int target = -1;
 
-	for (int i = 0; i < __LASTITEMTYPE; i++) {
-		if (reward_pool[i] == true)
-			count++;
-	}
-
-	uint prob = (rand() % count) + 1;
-
-	uint target;
-
-	for (target = 0; target < __LASTITEMTYPE; target++) {
-		if (reward_pool[target] == true)
-			prob--;
-		if (prob <= 0)
+	for (uint i = 0; i < N_ITEMS; i++) {
+		if (prob <= aux + reward_pool[i] && prob > aux) {
+			target = i;
 			break;
+		}
+		else {
+			aux += reward_pool[i];
+		}
 	}
 
-	Item* newitem;
+	if (target != -1) {
 
-	newitem = App->entitymanager->CreateItem(target);
-	newitem->pos = { pos.x, pos.y };
+		Item* newitem;
+
+		newitem = App->entitymanager->CreateItem(target);
+		if (newitem != nullptr)
+			newitem->pos = { pos.x, pos.y };
+
+	}
+	else
+		LOG("NO REWARD FAGGOT");
 
 }
 
@@ -240,10 +262,7 @@ bool BSoldier::Start()
 {
 	bool ret = true;
 
-	memset(reward_pool, false, __LASTITEMTYPE);
-	for (int i = __FIRSTDROP; i < __LASTDROP; i++) {
-		reward_pool[i] = true;
-	}
+	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
 
@@ -304,10 +323,7 @@ bool RSoldier::Start()
 {
 	bool ret = true;
 
-	memset(reward_pool, false, __LASTITEMTYPE);
-	for (int i = __FIRSTDROP; i < __LASTDROP; i++) {
-		reward_pool[i] = true;
-	}
+	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
 
@@ -315,17 +331,17 @@ bool RSoldier::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 30, 251, 44, 68 };
-		sprites[Enemy::EnDirection::Down][1] = { 132, 249, 44, 70 };
+		sprites[Enemy::EnDirection::Down][0] = { 438, 251, 44, 68 };
+		sprites[Enemy::EnDirection::Down][1] = { 540, 249, 44, 70 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 30, 357, 44, 52 };
-		sprites[Enemy::EnDirection::Up][1] = { 132, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][0] = { 438, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][1] = { 540, 357, 44, 52 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 214, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Left][1] = { 316, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Left][0] = { 420, 575, 64, 54 };
+		sprites[Enemy::EnDirection::Left][1] = { 528, 577, 58, 52 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 30, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Right][1] = { 132, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Right][0] = { 438, 467, 58, 52 };
+		sprites[Enemy::EnDirection::Right][1] = { 540, 465, 64, 54 };
 
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
@@ -343,7 +359,7 @@ bool RSoldier::Start()
 	}
 
 	stats.Hp = 5;
-	stats.Speed = 1;
+	stats.Speed = 0.75;
 	stats.Power = 2;
 
 	stats.Flying = false;
@@ -368,10 +384,7 @@ bool GSoldier::Start()
 {
 	bool ret = true;
 
-	memset(reward_pool, false, __LASTITEMTYPE);
-	for (int i = __FIRSTDROP; i < __LASTDROP; i++) {
-		reward_pool[i] = true;
-	}
+	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
 

@@ -9,23 +9,26 @@
 #include "j1Map.h"
 #include "j1PathFinding.h"
 #include "j1Gui.h"
-#include "j1Scene.h"
+#include "VillageScene.h"
 #include "j1Fonts.h"
 #include "j1Player.h"
+#include "Scene.h"
+#include "SceneManager.h"
+#include "HouseScene.h"
 
 #define MAX_TABS 2
 
-j1Scene::j1Scene() : j1Module()
+VillageScene::VillageScene()
 {
-	name.create("scene");
+	
 }
 
 // Destructor
-j1Scene::~j1Scene()
+VillageScene::~VillageScene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake()
+bool VillageScene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -34,7 +37,7 @@ bool j1Scene::Awake()
 }
 
 // Called before the first frame
-bool j1Scene::Start()
+bool VillageScene::Start()
 {
 	
 	if (App->map->Load("FirstMap.tmx") == true)
@@ -47,7 +50,6 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	Bush_Rect = { 8*32,2*32,32,32 };
-	House_Rect = {0,0,195,195};
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 
 	App->player->SetPosTile(2, 2);
@@ -84,6 +86,7 @@ bool j1Scene::Start()
 
 	new_item = App->entitymanager->CreateItem(pegasus_boots);
 	new_item->SetPositions({ 450.0f, 50.0f });
+	new_item->SetPrice(20);
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(heart_container);
@@ -110,7 +113,7 @@ bool j1Scene::Start()
 }
 
 // Called each loop iteration
-bool j1Scene::PreUpdate()
+bool VillageScene::PreUpdate()
 {
 	// debug pathfing ------------------
 	if (App->debug == true) {
@@ -140,7 +143,7 @@ bool j1Scene::PreUpdate()
 }
 
 // Called each loop iteration
-bool j1Scene::Update(float dt)
+bool VillageScene::Update(float dt)
 {
 	
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
@@ -151,6 +154,8 @@ bool j1Scene::Update(float dt)
 	
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->debug = !App->debug;
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		App->scene_manager->ChangeScene(App->scene_manager->house_scene);
 
 	App->map->Draw();
 
@@ -187,20 +192,44 @@ bool j1Scene::Update(float dt)
 }
 
 // Called each loop iteration
-bool j1Scene::PostUpdate()
+bool VillageScene::PostUpdate()
 {
 	bool ret = true;
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
 		ret = false;
+		ESC = true;
+	}
 
 	return ret;
 }
 
 // Called before quitting
-bool j1Scene::CleanUp()
+bool VillageScene::CleanUp()
 {
-	LOG("Freeing scene");
+	LOG("Freeing village scene");
+
+	if (ESC != true)
+	{
+		App->map->CleanUp();
+
+		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
+		{
+			App->entitymanager->DestroyEnity(*it);
+		}
+		enemies.clear();
+		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++)
+		{
+			App->entitymanager->DestroyEnity(*it);
+		}
+		items.clear();
+
+		if (debug_tex != NULL)
+			App->tex->UnLoad(debug_tex);
+	}
+	
+
 
 	return true;
 }

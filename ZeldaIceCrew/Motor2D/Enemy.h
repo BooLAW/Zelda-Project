@@ -8,10 +8,12 @@
 
 #include "Item.h"
 
+#define N_ITEMS 11
+
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
 
-#define JUMP_WHEN_HIT 2
+#define JUMP_WHEN_HIT 1
 
 class Entity;
 
@@ -60,6 +62,7 @@ public:
 public:
 
 	virtual bool Start();
+	virtual void SetRewards();
 
 	virtual void Spawn() {}
 
@@ -74,6 +77,21 @@ public:
 	virtual void Hit();
 	virtual void Death();
 	virtual void Reward();
+
+	void SortRewardProbs() {
+		uint total = 0;
+
+		for (int i = 0; i < N_ITEMS; i++) {
+			total += reward_pool[i];
+		}
+
+		if (total != 100) {
+			for (int i = 0; i < N_ITEMS; i++) {
+				reward_pool[i] = (reward_pool[i] * 100) / total;
+			}
+		}
+
+	}
 
 	virtual void CleanUp() {
 		if (tex != nullptr)
@@ -114,7 +132,7 @@ public:
 
 	bool hit = false;
 
-	bool reward_pool[11];
+	uint reward_pool[N_ITEMS];
 
 };
 

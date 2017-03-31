@@ -1,5 +1,7 @@
 #include "HUD.h"
 #include "Item.h"
+#include "j1Player.h"
+
 bool HUD::Start()
 {
 	bool ret = true;
