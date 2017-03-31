@@ -31,6 +31,7 @@
     <ClCompile Include="HouseScene.cpp" />
     <ClCompile Include="VillageScene.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -71,5 +72,6 @@
     <ClInclude Include="ModuleParticles.h" />
     <ClInclude Include="HouseScene.h" />
     <ClInclude Include="VillageScene.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
 </Project>

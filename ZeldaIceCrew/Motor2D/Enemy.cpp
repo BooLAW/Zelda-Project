@@ -51,7 +51,7 @@ void Enemy::Update(float dt)
 		if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true)
 			Hit(App->player->curr_dir, App->player->power);
 	
-	if (App->player->action_blit != j1Player::Slash)
+	if (App->player->action_blit != j1Player::Weapon_atk)
 		hit = false;
 
 		Move();

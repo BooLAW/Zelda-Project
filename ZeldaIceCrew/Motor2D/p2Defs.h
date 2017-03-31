@@ -10,6 +10,20 @@
 #endif
 #define NULL  0
 
+
+enum Direction {
+	FirstDir = 0,
+	Up,
+	Left,
+	Right,
+	Down,
+	Up_R,
+	Up_L,
+	Down_R,
+	Down_L,
+	LastDir
+};
+
 // Deletes a buffer
 #define RELEASE( x ) \
     {                        \

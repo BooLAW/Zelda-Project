@@ -508,6 +508,13 @@ bool j1Player::Start()
 
 	// !_Animations
 
+	// Weapon SetUp
+
+	weapons.push_back(new Bow());
+	curr_weapon = weapons.begin()._Ptr->_Myval;
+
+	// !_Weapon SetUp
+
 	SDL_Rect WeaponRect = { FARLANDS.x, FARLANDS.y, WPN_COL_W, WPN_COL_H };
 	weapon_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_PL_WEAPON);
 
@@ -656,39 +663,43 @@ bool j1Player::Update(float dt)
 
 					if (App->input->GetKey(SDL_SCANCODE_UP)) {
 						curr_dir = Up;
-						App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
-						action_blit = Slash;
+						action_blit = Weapon_atk;
+						if (curr_weapon != nullptr)
+							curr_weapon->Attack();
 						dir_override = true;
 						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						pl_speed.x = pl_speed.x / PL_SPD_ATK;
+						pl_speed.y = pl_speed.y / PL_SPD_ATK;
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
 						curr_dir = Down;
-						App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
-						action_blit = Slash;
+						action_blit = Weapon_atk;
+						if (curr_weapon != nullptr)
+							curr_weapon->Attack();
 						dir_override = true;
 						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						pl_speed.x = pl_speed.x / PL_SPD_ATK;
+						pl_speed.y = pl_speed.y / PL_SPD_ATK;
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
 						curr_dir = Right;
-						App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
-						action_blit = Slash;
+						action_blit = Weapon_atk;
+						if (curr_weapon != nullptr)
+							curr_weapon->Attack();
 						dir_override = true;
 						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						pl_speed.x = pl_speed.x / PL_SPD_ATK;
+						pl_speed.y = pl_speed.y / PL_SPD_ATK;
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
 						curr_dir = Left;
-						App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
-						action_blit = Slash;
+						action_blit = Weapon_atk;
+						if (curr_weapon != nullptr)
+							curr_weapon->Attack();
 						dir_override = true;
 						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						pl_speed.x = pl_speed.x / PL_SPD_ATK;
+						pl_speed.y = pl_speed.y / PL_SPD_ATK;
 					}
 
 				}
@@ -699,7 +710,14 @@ bool j1Player::Update(float dt)
 			// Actions
 	{
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+		for (int i = 0; i < LastDir; i++) {
+			animations[Weapon_atk][i] = curr_weapon->anim[i];
+			animations[Weapon_atk][i].speed = curr_weapon->anim[i].speed;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
 			//for now perform an action to see animation
 			//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
 			action = true;
@@ -752,8 +770,8 @@ bool j1Player::Update(float dt)
 				dir_override = false;
 				animations[action_blit][curr_dir].Reset();
 				action_blit = Idle;
-				pl_speed.x = pl_speed.x * 3;
-				pl_speed.y = pl_speed.y * 3;
+				pl_speed.x = pl_speed.x * PL_SPD_ATK;
+				pl_speed.y = pl_speed.y * PL_SPD_ATK;
 			}
 		}
 	
