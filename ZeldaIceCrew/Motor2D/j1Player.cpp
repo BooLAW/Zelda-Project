@@ -2,6 +2,7 @@
 #include "j1Input.h"
 #include "j1Collision.h"
 #include "j1Map.h"
+#include "ModuleParticles.h"
 j1Player::j1Player()
 {
 }
@@ -24,7 +25,6 @@ bool j1Player::Start()
 	LOG("Player Start");
 
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
-	link_coll = App->collisions->AddCollider(LINK_RECT, COLLIDER_PLAYER, this); 
 	//Idle
 	{
 		sprites[Idle][Up][0] = {link_x*3, link_y*2, link_width, link_height };
@@ -176,47 +176,6 @@ bool j1Player::Start()
 	
 	}
 
-	//Sword Slash
-	{
-	
-		sprites[Slash][Down][0] = { link_x*7, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][1] = { link_x * 8, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][2] = { link_x * 9, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][3] = { link_x * 10, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][4] = { link_x * 11, link_y * 9, link_width, link_height };
-		sprites[Slash][Down][5] = { link_x * 12, link_y * 9, link_width, link_height };
-
-		sprites[Slash][Up][0] = { link_x * 7, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][1] = { link_x * 8, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][2] = { link_x * 9, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][3] = { link_x * 10, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][4] = { link_x * 11, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][5] = { link_x * 12, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][6] = { link_x * 13, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][7] = { link_x * 14, link_y * 10, link_width, link_height };
-		sprites[Slash][Up][8] = { link_x * 15, link_y * 10, link_width, link_height };
-
-		sprites[Slash][Left][8] = { link_x * 7, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][7] = { link_x * 8, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][6] = { link_x * 9, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][5] = { link_x * 10, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][4] = { link_x * 11, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][3] = { link_x * 12, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][2] = { link_x * 13, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][1] = { link_x * 14, link_y * 12, link_width, link_height };
-		sprites[Slash][Left][0] = { link_x * 15, link_y * 12, link_width, link_height };
-
-		sprites[Slash][Right][0] = { link_x * 7, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][1] = { link_x * 8, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][2] = { link_x * 9, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][3] = { link_x * 10, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][4] = { link_x * 11, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][5] = { link_x * 12, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][6] = { link_x * 13, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][7] = { link_x * 14, link_y * 11, link_width, link_height };
-		sprites[Slash][Right][8] = { link_x * 15, link_y * 11, link_width, link_height };
-	
-	}
 	//Sword Charge Idle
 
 	//Sword Charge Walk
@@ -505,13 +464,21 @@ bool j1Player::Start()
 		}
 	}
 
-
+	sword_fx = App->audio->LoadFx("Audio/Fx/Fighter_sword_1.wav");
+	low_hp = App->audio->LoadFx("Audio/Fx/low_hp.wav");
+	die_fx = App->audio->LoadFx("Audio/Fx/link_dies.wav");
+	open_inv_fx = App->audio->LoadFx("Audio/Fx/menu_open.wav");
+	close_inv_fx = App->audio->LoadFx("Audio/Fx/menu_close.wav");
+	hurt = App->audio->LoadFx("Audio/FX/link_hurt");
 	// !_Animations
 
-	SDL_Rect WeaponRect = { FARLANDS.x, FARLANDS.y, App->map->data.tile_width, App->map->data.tile_height };
+
+	SDL_Rect WeaponRect = { FARLANDS.x, FARLANDS.y, WPN_COL_W, WPN_COL_H };
 	weapon_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_PL_WEAPON);
 
 	// Variable Settup
+
+	link_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 32, 32 }, COLLIDER_PLAYER, this);
 
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
@@ -521,6 +488,19 @@ bool j1Player::Start()
 	curr_dir = Down;
 
 	// !_Variables
+	
+	// Weapon SetUp
+
+	AddWeapon(t_sword);
+
+	curr_weapon = weapons.begin()._Ptr->_Myval;
+	for (int i = 0; i < LastDir; i++) {
+		animations[Weapon_atk][i] = curr_weapon->anim[i];
+		animations[Weapon_atk][i] = curr_weapon->anim[i];
+	}
+	
+
+	// !_Weapon SetUp
 
 	return ret;
 }
@@ -654,35 +634,48 @@ bool j1Player::Update(float dt)
 
 					if (App->input->GetKey(SDL_SCANCODE_UP)) {
 						curr_dir = Up;
-						action_blit = Slash;
+						action_blit = Weapon_atk;
+						if (curr_weapon != nullptr)
+							curr_weapon->Attack();
+						App->audio->PlayFx(sword_fx);
 						dir_override = true;
 						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						pl_speed.x = pl_speed.x / PL_SPD_ATK;
+						pl_speed.y = pl_speed.y / PL_SPD_ATK;
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
 						curr_dir = Down;
-						action_blit = Slash;
+						action = false;
+						action_blit = Weapon_atk;
+						if (curr_weapon != nullptr)
+							curr_weapon->Attack();
+						App->audio->PlayFx(sword_fx);
 						dir_override = true;
 						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						pl_speed.x = pl_speed.x / PL_SPD_ATK;
+						pl_speed.y = pl_speed.y / PL_SPD_ATK;
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
 						curr_dir = Right;
-						action_blit = Slash;
+						action_blit = Weapon_atk;
+						if (curr_weapon != nullptr)
+							curr_weapon->Attack();
+						App->audio->PlayFx(sword_fx);
 						dir_override = true;
 						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						pl_speed.x = pl_speed.x / PL_SPD_ATK;
+						pl_speed.y = pl_speed.y / PL_SPD_ATK;
 					}
 					else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
 						curr_dir = Left;
-						action_blit = Slash;
+						action_blit = Weapon_atk;
+						if (curr_weapon != nullptr)
+							curr_weapon->Attack();
+						App->audio->PlayFx(sword_fx);
 						dir_override = true;
 						anim_override = true;
-						pl_speed.x = pl_speed.x / 3;
-						pl_speed.y = pl_speed.y / 3;
+						pl_speed.x = pl_speed.x / PL_SPD_ATK;
+						pl_speed.y = pl_speed.y / PL_SPD_ATK;
 					}
 
 				}
@@ -690,10 +683,56 @@ bool j1Player::Update(float dt)
 		}
 	}
 
-			// Actions
+	if (Slashing == true) {
+		curr_weapon->Attack();
+		if (action_blit != Weapon_atk) {
+			Slashing = false;
+			weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
+		}
+	}
+
+	// Actions
 	{
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+		change_weapon = Q_Change;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		change_weapon = E_Change;
+	}
+
+	if (change_weapon == true && action_blit != Weapon_atk) {
+		std::list<Weapon*>::iterator aux_it = std::find(weapons.begin(), weapons.end(), curr_weapon);
+
+		switch (change_weapon) {
+		case Q_Change:
+			if (aux_it == weapons.begin()) {
+				aux_it = weapons.end();
+				aux_it--;
+			}
+			else
+				aux_it--;
+			break;
+		case E_Change:
+			if (++aux_it == weapons.end()) {
+				aux_it = weapons.begin();
+			}
+			break;
+
+		}
+
+		curr_weapon = aux_it._Ptr->_Myval;
+
+		for (int i = 0; i < LastDir; i++) {
+			animations[Weapon_atk][i] = curr_weapon->anim[i];
+			animations[Weapon_atk][i] = curr_weapon->anim[i];
+		}
+
+		change_weapon = No_Change;
+
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
 			//for now perform an action to see animation
 			//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
 			action = true;
@@ -707,26 +746,6 @@ bool j1Player::Update(float dt)
 		//if(App->input->GetKey(SDL_SCANCODE))action_blit = Idle;
 	}
 
-	if (action_blit == Slash) {
-		switch (curr_dir) {
-		case Up:
-			weapon_coll->SetPos(pos.x, pos.y - App->map->data.tile_height);
-			break;
-		case Down:
-			weapon_coll->SetPos(pos.x, pos.y + App->map->data.tile_height);
-			break;
-		case Left:
-			weapon_coll->SetPos(pos.x - App->map->data.tile_width, pos.y);
-			break;
-		case Right:
-			weapon_coll->SetPos(pos.x + App->map->data.tile_width, pos.y);
-			break;
-		}
-	
-	}
-	else {
-		weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
-	}
 
 	// !_Logic
 
@@ -745,8 +764,8 @@ bool j1Player::Update(float dt)
 				dir_override = false;
 				animations[action_blit][curr_dir].Reset();
 				action_blit = Idle;
-				pl_speed.x = pl_speed.x * 3;
-				pl_speed.y = pl_speed.y * 3;
+				pl_speed.x = pl_speed.x * PL_SPD_ATK;
+				pl_speed.y = pl_speed.y * PL_SPD_ATK;
 			}
 		}
 	
@@ -756,6 +775,7 @@ bool j1Player::Update(float dt)
 
 			if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
 				action = false;
+				LOG("ACTIO=N FALSE");
 				animations[action_blit][curr_dir].Reset();
 				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
 			}
@@ -767,12 +787,31 @@ bool j1Player::Update(float dt)
 			}
 
 		}
-	//!_Actions																													
+	//!_Actions	
 	
+			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+				if (!App->hud->inv->active) {
+					App->hud->inv->active = true;
+					App->audio->PlayFx(open_inv_fx);
+				}
+				else{
+
+					App->hud->inv->active = false;
+					App->audio->PlayFx(close_inv_fx);
+			}
+		}
 	//!_Graphics
+
 
 	// MODIFY COLLISION -------------------------------------------------
 		link_coll->SetPos(pos.x , pos.y + 16);
+		if ((App->player->curr_life_points <= 2)&&(App->player->curr_life_points!=0)) {
+			App->audio->PlayFx(low_hp);
+		}
+		if (App->player->curr_life_points == 0) {
+			//Here he should change the scene to the room scene
+			App->audio->PlayFx(die_fx);
+		}
 
 	return ret;
 }
@@ -792,7 +831,17 @@ bool j1Player::CleanUp()
 
 	// Unloading All Textures
 	App->tex->UnLoad(Link_Movement);
+	if (link_coll != nullptr)
+		link_coll->to_delete = true;
+	if (weapon_coll != nullptr)
+		weapon_coll->to_delete = true;
 
+	for (std::list<Weapon*>::iterator it = weapons.begin(); it != weapons.end(); it++) {
+		if (it._Ptr->_Myval != nullptr)
+			it._Ptr->_Myval->CleanUp();
+	}
+
+	weapons.clear();
 
 	return ret;
 }
@@ -801,16 +850,51 @@ void j1Player::UpgradeSPD(float x)
 {
 	pl_speed.x += x;
 	pl_speed.y += x;
+
+	if (pl_speed.x > MAX_SPD) {
+		pl_speed.x = MAX_SPD;
+		pl_speed.y = MAX_SPD;
+	}
+
 }
 
 void j1Player::UpgradePWR(int x)
 {
 	power += x;
+
+	if (power > MAX_PWR)
+		power = MAX_PWR;
+
 }
 
 void j1Player::UpgradeHP(int x)
 {
 	max_life_points += x;
+	
+	if (max_life_points > MAX_HP)
+		max_life_points = MAX_HP;
+}
+
+void j1Player::AddWeapon(uint weapon_t)
+{
+	Weapon* w = nullptr;
+
+	switch (weapon_t) {
+	case t_sword:
+		w = new Sword();
+		break;
+	case t_bow:
+		w = new Bow();
+		break;
+	}
+
+	if (w != nullptr) {
+		//if (std::find(weapons.begin(), weapons.end(), w) != weapons.end()) {
+			w->Start();
+			weapons.push_back(w);
+		//}
+	}
+
 }
 
 void j1Player::SetPos(float x, float y)
@@ -870,7 +954,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	// Hit collision
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
 	{
-		curr_life_points -= 1;
 		if (curr_life_points == 0)
 			alive = false;
 

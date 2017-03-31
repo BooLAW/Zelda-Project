@@ -2,6 +2,8 @@
 #define __ENTITY_H__
 
 #include "EntityManager.h"
+#include "j1App.h"
+#include "j1Textures.h"
 
 enum ENTITYTYPE
 {
@@ -19,9 +21,15 @@ public:
 	Entity() {};
 	virtual ~Entity() {};
 	virtual void Update(float dt) {};
+	virtual void CleanUp() {
+		if(tex != nullptr)
+			App->tex->UnLoad(tex);
+	}
 	virtual void Draw(float dt) {};
 
+
 public:
+
 	void SetTexture(SDL_Texture* texture) {
 		tex = texture;
 		if (tex == nullptr)

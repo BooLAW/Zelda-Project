@@ -12,7 +12,6 @@
 #include <list>
 #include <string>
 class j1App;
-class PhysBody;
 class b2Fixture;
 class Collider;
 

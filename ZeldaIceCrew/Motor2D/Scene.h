@@ -5,10 +5,14 @@
 #include "j1Render.h"
 #include "PugiXml\src\pugixml.hpp"
 
+#include "EntityManager.h"
+
 #include <string>
 #include <list>
 
-//class PhysBody;
+class Item;
+class Enemy;
+
 class Scene
 {
 public:
@@ -20,7 +24,24 @@ public:
 	virtual bool PreUpdate() { return true; };
 	virtual bool Update(float dt) { return true; };
 	virtual bool PostUpdate() { return true; };
-	virtual bool CleanUp() { return true; };
+	virtual bool CleanUp();
+
+	virtual void DestroyItem(Item* ent) {
+		if (ent != nullptr) {
+			for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
+				if(it._Ptr->_Myval == ent)
+					items.erase(it);
+			}
+		}
+	};
+	virtual void DestroyEnemy(Enemy* ent) {
+		if (ent != nullptr) {
+			for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+				if (it._Ptr->_Myval == ent)
+					enemies.erase(it);
+			}
+		}
+	};
 
 	virtual bool Load(pugi::xml_node&)
 	{
@@ -32,19 +53,13 @@ public:
 		return true;
 	}
 
-	virtual void OnColl(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB) {};
-
-	virtual void OnCommand(std::list<std::string>& tokens) {}
-
-	virtual void OnCVar(std::list<std::string>& tokens) {}
-
-	virtual void SaveCVar(std::string& cvar_name, pugi::xml_node& node) const {}
-
-	virtual bool isDone() { return change_scene; }
-
 protected:
 
-	bool change_scene = false; 
+	bool change_scene = false;
+
+public:
+	std::list<Enemy*> enemies;
+	std::list<Item*> items;
 
 };
 

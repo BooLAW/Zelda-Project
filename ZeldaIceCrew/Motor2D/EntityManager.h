@@ -15,7 +15,6 @@
 #include "Bomb.h"
 #include "Item.h"
 #include "Block.h"
-#include "Drop.h"
 #include "Enemy.h"
 
 class Entity;
@@ -34,11 +33,18 @@ public:
 	EntityManager();
 	~EntityManager();
 	
+	bool CleanUp() {
+		DestroyEntities();
+		return true;
+	}
+
 	bool Update(float dt);
 	void PushEntity(Entity* ent);
 	void DestroyEntities();
 	void DestroyEnity(Entity* ent);
 	
+	std::deque<Entity*>* GetEntities() { return &entities; };
+
 	void OnCollision(Collider* c1, Collider* c2);
 
 public:

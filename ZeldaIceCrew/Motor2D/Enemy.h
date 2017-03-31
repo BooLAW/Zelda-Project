@@ -5,12 +5,16 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "j1Collision.h"
-#include "j1Player.h"
+#include "SceneManager.h"
+
+#include "Item.h"
+
+#define N_ITEMS 15
 
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
 
-#define JUMP_WHEN_HIT 2
+#define JUMP_WHEN_HIT 48
 
 class Entity;
 
@@ -59,6 +63,7 @@ public:
 public:
 
 	virtual bool Start();
+	virtual void SetRewards();
 
 	virtual void Spawn() {}
 
@@ -67,13 +72,30 @@ public:
 	virtual bool Move();
 
 	virtual bool Attack();
-
-	virtual bool CleanUp();
+	virtual void HitPlayer();
 
 	virtual void Draw();
 
-	virtual void Hit();
+	virtual void Hit(uint dir, uint dmg);
 	virtual void Death();
+	virtual void Reward();
+
+	void SortRewardProbs() {
+		uint total = 0;
+
+		for (int i = 0; i < N_ITEMS; i++) {
+			total += reward_pool[i];
+		}
+
+		if (total != 100) {
+			for (int i = 0; i < N_ITEMS; i++) {
+				reward_pool[i] = (reward_pool[i] * 100) / total;
+			}
+		}
+
+	}
+
+	virtual void CleanUp();
 
 public:
 	ENEMYTYPE EnemyType;
@@ -88,7 +110,7 @@ public:
 	} stats;
 
 	ENEMYTYPE subtype;
-	bool DmgType[DAMAGETYPE::__LAST_DMGTYPE];
+	bool DmgType[__LAST_DMGTYPE];
 	AITYPE AIType;
 
 	Collider* HitBox;
@@ -101,7 +123,10 @@ public:
 	// pathfinding related
 	std::list<iPoint> path_to_follow;
 
+	uint hit_fx;
 	bool hit = false;
+
+	uint reward_pool[N_ITEMS];
 
 };
 
@@ -121,6 +146,25 @@ class GSoldier : public Enemy {
 public:
 	bool Start();
 
+};
+
+class BossChainBall : public Enemy {
+public:
+	bool Start();
+	bool Attack();
+	void SetRewards();
+
+	void CleanUp();
+
+public:
+	uint ball_pos[9] =
+	{
+	0, 0, 0,
+	0, 0, 0,
+	0, 0, 0
+	};
+
+	Collider* ball_collider;
 };
 
 #endif // !__ENEMY_H__

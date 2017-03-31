@@ -49,23 +49,54 @@ Item * EntityManager::CreateItem(uint subtype)
 	switch (subtype) {
 	case power_gauntlet:
 		ret = new PowerGauntlet();
+		ret->type = item;
 		break;
 	case pegasus_boots:
 		ret = new PegasusBoots();
+		ret->type = item;
 		break;
 	case heart_container:
 		ret = new HeartContainer();
+		ret->type = item;
 		break;
+	case drop_heart:
+		ret = new DropHeart();
+		ret->type = drop;
+		break;
+	case drop_potion:
+		ret = new DropPotion();
+		ret->type = drop;
+		break;
+	case drop_rupee:
+		ret = new DropRupee();
+		ret->type = drop;
+		break;
+	case drop_fiverupee:
+		ret = new DropFiveRupee();
+		ret->type = drop;
+		break;
+	case drop_tenrupee:
+		ret = new DropTenRupee();
+		ret->type = drop;
+		break;
+	case weapon_sword:
+		ret = new ItemSword();
+		ret->type = item;
+	case weapon_bow:
+		ret = new ItemBow();
+		ret->type = item;
 	default:
 		LOG("Unknown Item Type: %d", subtype);
 		break;
 	}
 
-	ret->Start();
+	if (ret != nullptr) {
+		
+		ret->Start();
 
-	ret->type = item;
+		App->entitymanager->PushEntity(ret);
 
-	App->entitymanager->PushEntity(ret);
+	}
 
 	return ret;
 }
@@ -92,6 +123,7 @@ void EntityManager::DestroyEntities()
 {
 	for (uint i = 0; i < entities.size(); i++) {
 		if (entities[i] != nullptr) {
+			entities[i]->CleanUp();
 			delete entities[i];
 		}
 	}
@@ -99,6 +131,10 @@ void EntityManager::DestroyEntities()
 
 void EntityManager::DestroyEnity(Entity * ent)
 {
+
+	if(ent != nullptr)
+		ent->CleanUp();
+
 	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
 
 	entities.erase(aux);

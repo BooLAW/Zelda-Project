@@ -1,4 +1,6 @@
 #include "HUD.h"
+#include "Item.h"
+#include "j1Player.h"
 
 bool HUD::Start()
 {
@@ -39,7 +41,27 @@ bool HUD::Start()
 	arrows_num->str = std::to_string(App->player->arrows);
 	arrows_num->pos = { 200,40 };
 
+	inv = (Window*)App->gui->CreateElement(GuiType::window);
+	inv->active = false;
+	inv->pos = { 50,100 };
+	inv->texture_rect = {0,0,430,351};
+
+
 	GenerateHP();
+
+	if (!App->player->inventory.empty()) {
+		for (std::list<Item*>::const_iterator it = App->player->inventory.cbegin(); it != App->player->inventory.cend(); it++) {
+			GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
+			img->texture = it._Ptr->_Myval->UI_tex;
+			img->texture_rect = it._Ptr->_Myval->UI_rect;
+
+			inv->AddElement(img);
+		}
+	}
+
+	inv->SetOffset(30,30);
+
+	
 
 	return ret;
 }
@@ -51,6 +73,7 @@ bool HUD::Update(float dt)
 	arrows_num->str = std::to_string(App->player->arrows);
 
 	UpdateHP();
+	
 	return true;
 }
 
@@ -113,4 +136,15 @@ void HUD::UpdateHP()
 	lifes.clear();
 
 	GenerateHP();
+}
+
+void HUD::AddItem(Item* obj)
+{
+	if (obj != nullptr) {
+		GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
+		img->texture_rect = obj->UI_rect;
+		img->texture = obj->UI_tex;
+		img->active = false;
+		App->hud->inv->AddElement(img);
+	}
 }

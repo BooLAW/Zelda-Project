@@ -4,24 +4,24 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
-class Entity;
-
-
-
 enum BLOCKTYPE {
 	bush = 0,
 	pot,
 	statue,
 	torch_bowl,
-	torch_pilar,
+	torch_pillar,
 	slabs,
 	last_
 };
 
 class Block : public Entity {
 public:
+	iPoint position;
+
+
+public:
 	Block() {};
-	Block(uint subtype);
+	Block(uint subtype, iPoint pos);
 	virtual ~Block() {};
 
 
@@ -29,51 +29,95 @@ public:
 public:
 	Block* CreateBlock(uint type);
 
-	virtual bool isPushable() { return true; };
-	virtual bool isPullable() { return true; };
-	virtual bool isTalked() { return true; };
-	virtual bool isLit() { return true; };
-	virtual bool isBreakable() { return true; };
-	virtual bool isPickable() { return true; };
-	virtual bool isOpenable() { return true; };
+	virtual bool isPushable() { return false; };
+	virtual bool isPullable() { return false; };
+	virtual bool isTalked() { return false; };
+	virtual bool isLitable() { return false; };
+	virtual bool isBreakable() { return false; };
+	virtual bool isPickable() { return false; };
+	virtual bool isOpenable() { return false; };
+
+	virtual void Push() {};
+	virtual void Pull() {};
+	virtual void Light() {};
+	virtual void Break() {};
+	virtual void Pick() {};
+	virtual void Open() {};
+	virtual void Throw() {};
 };
 
 class Bush : public Block {
-	//Start que passi tota la info que toca, 
-	bool isBreakabled() {
-		return false;
+	SDL_Rect size = { 0,0,40,40 };
+	//Collision box is 3/4 down, why?
+	//Block moves down to Link position then the animation goes through
+
+	bool isBreakable() {
+		return true;
 	}
 
 	bool isPickable() {
 		return true;
 	}
+
+	void Break();
+	void Throw();
+	void Pick();
+
 };
 
 class Pot : public Block {
+	SDL_Rect size = { 0,0,40,40 };
+	//Collision box is 3/4 down, why?
+	//Block moves down to Link position then the animation goes through
+
 	bool isPickable() {
 		return true;
 	}
+
+	bool isBreakable() {
+		return true;
+	}
+	
+	void Break();
+	void Throw();
+	void Pick();
+
 };
 
 class Statue : public Block {
+	SDL_Rect size = { 0,0,40,80 };
+
 	bool isPushable() {
 		return true;
 	}
+
+	void Push();
+
 };
 
 class Torch_Bowl : public Block {
-	bool isLit() {
+	SDL_Rect size = { 0,0,40,40 };
+
+	bool isLitable() {
 		return true;
 	}
+
+	void Light();
 };
 
 class Torch_Pillar : public Block {
-	bool isLit() {
+	SDL_Rect size = { 0,0,40,80 };
+
+	bool isLitable() {
 		return true;
 	}
+
+	void Light();
 };
 
 class Slab : public Block {
+	SDL_Rect size = { 0,0,40,40 };
+
 	bool isPushable() {
 		return true;
 	}
@@ -81,5 +125,10 @@ class Slab : public Block {
 	bool isPullable() {
 		return true;
 	}
+
+	void Push();
+	void Pull();
+
 };
+
 #endif // !__BLOCK_H__
