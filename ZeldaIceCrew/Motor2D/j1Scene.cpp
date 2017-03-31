@@ -85,56 +85,7 @@ bool j1Scene::Start()
 	new_item = App->entitymanager->CreateItem(pegasus_boots);
 	new_item->SetPositions({ 450.0f, 50.0f });
 	items.push_back(new_item);
-	///////////////////////////////////
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 470.0f, 50.0f });
-	items.push_back(new_item);				  
-											 
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 490.0f, 50.0f });
-	items.push_back(new_item);				 
-											 
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 510.0f, 50.0f });
-	items.push_back(new_item);				  
-											  
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 530.0f, 50.0f });
-	items.push_back(new_item);				 
-											 
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 550.0f, 50.0f });
-	items.push_back(new_item);				  
-											  
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 570.0f, 50.0f });
-	items.push_back(new_item);				 
-											  
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 590.0f, 50.0f });
-	items.push_back(new_item);				  
-											  
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 610.0f, 50.0f });
-	items.push_back(new_item);				  
-											  
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 630.0f, 50.0f });
-	items.push_back(new_item);				  
-											  
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 650.0f, 50.0f });
-	items.push_back(new_item);				 
-											  
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 670.0f, 50.0f });
-	items.push_back(new_item);				  
-											  
-	new_item = App->entitymanager->CreateItem(power_gauntlet);
-	new_item->SetPositions({ 690.0f, 50.0f });
-	items.push_back(new_item);
 
-	//////////////////////////////////
 	new_item = App->entitymanager->CreateItem(heart_container);
 	new_item->SetPositions({ 550.0f, 50.0f });
 	items.push_back(new_item);

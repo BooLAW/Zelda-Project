@@ -926,16 +926,12 @@ void j1Player::DyingRestart()
 
 bool j1Player::Find_inv(Item* item)
 {
-	if (inventory.empty()) {
-		return false;
-	}
-	else {
-		std::list<Item*>::iterator it = std::find(inventory.begin(), inventory.end(), item);
-
-		if (it._Ptr->_Myval != nullptr)
+	for (std::list<Item*>::const_iterator it = inventory.cbegin(); it != inventory.cend(); it++) {
+		if (item->Subtype() == it._Ptr->_Myval->Subtype()) {
 			return true;
-		else
-			return false;
+		}
+		
 	}
+	 return false;
 		
 }

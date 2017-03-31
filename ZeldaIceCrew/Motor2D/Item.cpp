@@ -85,6 +85,11 @@ void PowerGauntlet::Upgrade()
 	App->player->UpgradePWR(1);
 }
 
+ITEMTYPE PowerGauntlet::Subtype()
+{
+	return power_gauntlet;
+}
+
 
 void PowerGauntlet::SetUpTexture()
 {
@@ -109,6 +114,11 @@ void PegasusBoots::Upgrade()
 	App->player->UpgradeSPD(1);
 }
 
+ITEMTYPE PegasusBoots::Subtype()
+{
+	return pegasus_boots;
+}
+
 void HeartContainer::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
@@ -122,6 +132,11 @@ void HeartContainer::SetUpTexture()
 void HeartContainer::Upgrade()
 {
 	App->player->UpgradeHP(2);
+}
+
+ITEMTYPE HeartContainer::Subtype()
+{
+	return heart_container;
 }
 
 void DropHeart::SetUpTexture()
@@ -138,6 +153,11 @@ void DropHeart::Upgrade()
 		App->player->curr_life_points = App->player->max_life_points;
 }
 
+ITEMTYPE DropHeart::Subtype()
+{
+	return drop_heart;
+}
+
 void DropPotion::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
@@ -150,6 +170,11 @@ void DropPotion::Upgrade()
 	App->player->curr_life_points += 6;
 	if (App->player->curr_life_points > App->player->max_life_points)
 		App->player->curr_life_points = App->player->max_life_points;
+}
+
+ITEMTYPE DropPotion::Subtype()
+{
+	return drop_potion;
 }
 
 void DropRupee::SetUpTexture()
@@ -167,6 +192,11 @@ void DropRupee::Upgrade()
 
 }
 
+ITEMTYPE DropRupee::Subtype()
+{
+	return drop_rupee;
+}
+
 void DropFiveRupee::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
@@ -181,6 +211,11 @@ void DropFiveRupee::Upgrade()
 		App->player->rupees = App->player->max_rupees;
 }
 
+ITEMTYPE DropFiveRupee::Subtype()
+{
+	return drop_fiverupee;
+}
+
 void DropTenRupee::SetUpTexture()
 {
 	type = ENTITYTYPE::drop;
@@ -193,4 +228,9 @@ void DropTenRupee::Upgrade()
 	App->player->rupees += 10;
 	if (App->player->rupees > App->player->max_rupees)
 		App->player->rupees = App->player->max_rupees;
+}
+
+ITEMTYPE DropTenRupee::Subtype()
+{
+	return drop_tenrupee;
 }

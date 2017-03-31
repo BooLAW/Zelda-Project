@@ -66,6 +66,9 @@ public:
 	virtual void SetUpTexture() {};
 
 	virtual void Upgrade() {};
+	virtual ITEMTYPE Subtype() {
+		return __LASTITEMTYPE;
+	};
 
 	void SetPositions(fPoint point) {
 		pos = point;
@@ -95,44 +98,54 @@ struct PowerGauntlet : public Item {
 public:
 	void SetUpTexture();
 	void Upgrade();
+	ITEMTYPE Subtype();
+
 };
 
 struct PegasusBoots : public Item {
 public:
 	void SetUpTexture();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct HeartContainer : public Item {
 public:
 	void SetUpTexture();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct DropHeart : public Item {
 	void SetUpTexture();
 	void Upgrade();
+	ITEMTYPE Subtype();
+
 };
 
 struct DropPotion : public Item {
 	void SetUpTexture();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct DropRupee : public Item {
 
 	void SetUpTexture();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct DropFiveRupee : public Item {
 	void SetUpTexture();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct DropTenRupee : public Item {
 	void SetUpTexture();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 
