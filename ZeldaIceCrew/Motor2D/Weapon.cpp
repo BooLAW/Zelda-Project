@@ -5,31 +5,27 @@ void Bow::Start()
 {
 	SetTexture("Sprites/Link_Movement.png");
 
-	sprites[Up][0] = { 0, 0, 32, 32 };
-	sprites[Up][1] = { 0, 0, 32, 32 };
-	sprites[Up][2] = { 0, 0, 32, 32 };
+	sprites[Down][0] = { link_x * 16, link_y * 9, link_width, link_height };
+	sprites[Down][1] = { link_x * 17, link_y * 9, link_width, link_height };
+	sprites[Down][2] = { link_x * 18, link_y * 9, link_width, link_height };
 
-	sprites[Down][0] = { 0, 0, 32, 32 };
-	sprites[Down][1] = { 0, 0, 32, 32 };
-	sprites[Down][2] = { 0, 0, 32, 32 };
+	sprites[Up][0] = { link_x * 16, link_y * 10, link_width, link_height };
+	sprites[Up][1] = { link_x * 17, link_y * 10, link_width, link_height };
+	sprites[Up][2] = { link_x * 18, link_y * 10, link_width, link_height };
 
-	sprites[Left][0] = { 0, 0, 32, 32 };
-	sprites[Left][1] = { 0, 0, 32, 32 };
-	sprites[Left][2] = { 0, 0, 32, 32 };
+	sprites[Right][0] = { link_x * 16, link_y * 11, link_width, link_height };
+	sprites[Right][1] = { link_x * 17, link_y * 11, link_width, link_height };
+	sprites[Right][2] = { link_x * 18, link_y * 11, link_width, link_height };
 
-	sprites[Right][0] = { 0, 0, 32, 32 };
-	sprites[Right][1] = { 0, 0, 32, 32 };
-	sprites[Right][2] = { 0, 0, 32, 32 };
+	sprites[Left][0] = { link_x * 16, link_y * 12, link_width, link_height };
+	sprites[Left][1] = { link_x * 17, link_y * 12, link_width, link_height };
+	sprites[Left][2] = { link_x * 18, link_y * 12, link_width, link_height };
 
 	for (int i = 0; i < LastDir; i++) {
-		for(int k = 0; k < MAX_FRAMES; k++)
+		for(int k = 0; k < 3; k++)
 			anim[i].PushBack(sprites[i][k]);
+		anim[i].speed = 0.1;
 	}
-
-	anim[Up].speed = 0.8;
-	anim[Down].speed = 0.8;
-	anim[Left].speed = 0.8;
-	anim[Right].speed = 0.8;
 
 	curr_dir = App->player->curr_dir;
 
@@ -40,7 +36,26 @@ void Bow::Attack()
 
 	curr_dir = App->player->curr_dir;
 
-	App->particle->CreateParticle(p_arrow, App->player->GetPos().x, App->player->GetPos().y, curr_dir);
+	fPoint pos = App->player->GetPos();
+
+	switch (curr_dir) {
+	case Up:
+		pos.x += 16;
+		break;
+	case Down:
+		pos.x += 16;
+		pos.y += 32;
+		break;
+	case Left:
+		pos.y += 16;
+		break;
+	case Right:
+		pos.x += App->player->link_coll->rect.w;
+		pos.y += 16;
+		break;
+	}
+
+	App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
 
 };
 

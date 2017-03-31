@@ -701,7 +701,7 @@ bool j1Player::Update(float dt)
 		change_weapon = E_Change;
 	}
 
-	if (change_weapon != No_Change && action_blit != Weapon_atk) {
+	if (change_weapon == true && action_blit != Weapon_atk) {
 		std::list<Weapon*>::iterator aux_it = std::find(weapons.begin(), weapons.end(), curr_weapon);
 
 		switch (change_weapon) {

@@ -7,6 +7,8 @@
 #define MAX_FRAMES_PARTICLES 8
 #define ARROW_SPEED 6.0f
 
+#define MAX_PARTICLES 100
+
 enum PARTICLETYPE {
 	p_arrow = 0,
 	__LAST_PARTICLE

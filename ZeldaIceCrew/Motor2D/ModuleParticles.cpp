@@ -35,23 +35,30 @@ bool ModuleParticles::Update(float dt)
 
 Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 {
+	
 	Particle* ret = nullptr;
+	
+	if (particles.size() < MAX_PARTICLES) {
 
-	switch (p_type) {
-	case p_arrow:
-		ret = new Arrow();
-		break;
-	default:
-		LOG("Unknown Particle Type");
-		break;
+		switch (p_type) {
+		case p_arrow:
+			ret = new Arrow();
+			break;
+		default:
+			LOG("Unknown Particle Type");
+			break;
+		}
+
+		if (ret != nullptr) {
+			ret->position.x = x;
+			ret->position.y = y;
+			ret->curr_dir = (Direction)dir;
+			ret->Start();
+			particles.push_back(ret);
+		}
 	}
-
-	if (ret != nullptr) {
-		ret->position.x = x;
-		ret->position.y = y;
-		ret->curr_dir = (Direction)dir;
-		ret->Start();
-		particles.push_back(ret);
+	else {
+		LOG("NO MORE PARTICLE SPACE");
 	}
 
 	return ret;
