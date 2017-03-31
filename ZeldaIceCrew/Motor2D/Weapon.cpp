@@ -97,7 +97,7 @@ void Sword::Start()
 		anim[i].speed = 0.4;
 	}
 
-	anim[Down].speed = anim[Down].speed * 9 / 6;
+	anim[Down].speed = anim[Down].speed * 6 / 9;
 
 	curr_dir = App->player->curr_dir;
 }

@@ -467,19 +467,6 @@ bool j1Player::Start()
 
 	// !_Animations
 
-	// Weapon SetUp
-
-	Weapon* newW = new Bow();
-	newW->Start();
-	weapons.push_front(newW);
-
-	newW = new Sword();
-	newW->Start();
-	weapons.push_front(newW);
-
-	curr_weapon = weapons.begin()._Ptr->_Myval;
-
-	// !_Weapon SetUp
 
 	SDL_Rect WeaponRect = { FARLANDS.x, FARLANDS.y, WPN_COL_W, WPN_COL_H };
 	weapon_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_PL_WEAPON);
@@ -496,6 +483,21 @@ bool j1Player::Start()
 	curr_dir = Down;
 
 	// !_Variables
+	
+	// Weapon SetUp
+
+	Weapon* newW = new Sword();
+	newW->Start();
+	weapons.push_front(newW);
+
+	curr_weapon = weapons.begin()._Ptr->_Myval;
+	for (int i = 0; i < LastDir; i++) {
+		animations[Weapon_atk][i] = curr_weapon->anim[i];
+		animations[Weapon_atk][i] = curr_weapon->anim[i];
+	}
+	
+
+	// !_Weapon SetUp
 
 	return ret;
 }
@@ -686,14 +688,41 @@ bool j1Player::Update(float dt)
 	{
 
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+		change_weapon = Q_Change;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		change_weapon = E_Change;
+	}
+
+	if (change_weapon != No_Change && action_blit != Weapon_atk) {
+		std::list<Weapon*>::iterator aux_it = std::find(weapons.begin(), weapons.end(), curr_weapon);
+
+		switch (change_weapon) {
+		case Q_Change:
+			if (aux_it == weapons.begin()) {
+				aux_it = weapons.end();
+				aux_it--;
+			}
+			else
+				aux_it--;
+			break;
+		case E_Change:
+			if (++aux_it == weapons.end()) {
+				aux_it = weapons.begin();
+			}
+			break;
+
+		}
+
+		curr_weapon = aux_it._Ptr->_Myval;
+
 		for (int i = 0; i < LastDir; i++) {
 			animations[Weapon_atk][i] = curr_weapon->anim[i];
+			animations[Weapon_atk][i] = curr_weapon->anim[i];
 		}
-		animations[Weapon_atk][Up].speed = curr_weapon->anim[Up].speed;
-		animations[Weapon_atk][Down].speed = curr_weapon->anim[Up].speed;
-		animations[Weapon_atk][Left].speed = curr_weapon->anim[Up].speed;
-		animations[Weapon_atk][Right].speed = curr_weapon->anim[Up].speed;
-		LOG("XXX: %f", animations[Weapon_atk][Up].speed);
+
+		change_weapon = No_Change;
+
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {

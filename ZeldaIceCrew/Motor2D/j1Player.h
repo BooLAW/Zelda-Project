@@ -114,6 +114,11 @@ public:
 	std::list<Item*> inventory;
 
 	bool Slashing = false;
+	enum { 
+		No_Change = 0,
+		Q_Change,
+		E_Change
+	} change_weapon = No_Change;
 
 	Weapon* curr_weapon;
 	std::list<Weapon*> weapons;
