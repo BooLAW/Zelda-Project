@@ -81,6 +81,7 @@ void ModuleParticles::DestroyParticles()
 			RELEASE(particles[i]);
 		} 
 	}
+	particles.clear();
 }
 
 void ModuleParticles::DestroyParticle(Particle* particle)

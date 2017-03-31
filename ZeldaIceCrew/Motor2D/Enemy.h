@@ -9,7 +9,7 @@
 
 #include "Item.h"
 
-#define N_ITEMS 11
+#define N_ITEMS 15
 
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
@@ -72,6 +72,7 @@ public:
 	virtual bool Move();
 
 	virtual bool Attack();
+	virtual void HitPlayer();
 
 	virtual void Draw();
 
@@ -145,6 +146,25 @@ class GSoldier : public Enemy {
 public:
 	bool Start();
 
+};
+
+class BossChainBall : public Enemy {
+public:
+	bool Start();
+	bool Attack();
+	void SetRewards();
+
+	void CleanUp();
+
+public:
+	uint ball_pos[9] =
+	{
+	0, 0, 0,
+	0, 0, 0,
+	0, 0, 0
+	};
+
+	Collider* ball_collider;
 };
 
 #endif // !__ENEMY_H__
