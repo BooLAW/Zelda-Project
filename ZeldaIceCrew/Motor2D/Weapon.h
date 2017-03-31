@@ -5,6 +5,13 @@
 #include "p2Defs.h"
 #include "j1Player.h"
 
+enum WEAPONTYPE {
+	t_noweapon = 0,
+	t_sword,
+	t_bow,
+	__LAST_WEAPONTYPE
+};
+
 class Weapon {
 public:
 	Weapon() { Start(); }

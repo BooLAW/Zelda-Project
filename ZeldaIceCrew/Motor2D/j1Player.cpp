@@ -491,9 +491,7 @@ bool j1Player::Start()
 	
 	// Weapon SetUp
 
-	Weapon* newW = new Sword();
-	newW->Start();
-	weapons.push_front(newW);
+	AddWeapon(t_sword);
 
 	curr_weapon = weapons.begin()._Ptr->_Myval;
 	for (int i = 0; i < LastDir; i++) {
@@ -875,6 +873,28 @@ void j1Player::UpgradeHP(int x)
 	
 	if (max_life_points > MAX_HP)
 		max_life_points = MAX_HP;
+}
+
+void j1Player::AddWeapon(uint weapon_t)
+{
+	Weapon* w = nullptr;
+
+	switch (weapon_t) {
+	case t_sword:
+		w = new Sword();
+		break;
+	case t_bow:
+		w = new Bow();
+		break;
+	}
+
+	if (w != nullptr) {
+		//if (std::find(weapons.begin(), weapons.end(), w) != weapons.end()) {
+			w->Start();
+			weapons.push_back(w);
+		//}
+	}
+
 }
 
 void j1Player::SetPos(float x, float y)

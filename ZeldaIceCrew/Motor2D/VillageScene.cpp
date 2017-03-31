@@ -101,6 +101,10 @@ bool VillageScene::Start()
 	new_item->SetPositions({ 650.0f, 50.0f });
 	items.push_back(new_item);
 
+	new_item = App->entitymanager->CreateItem(weapon_sword);
+	new_item->SetPositions({ 700.0f, 50.0f });
+	items.push_back(new_item);
+
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
 

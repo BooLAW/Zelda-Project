@@ -91,6 +91,8 @@ public:
 	void UpgradePWR(int x);
 	void UpgradeHP(int x);
 
+	void AddWeapon(uint weapon_t);
+
 	void SetPos(float x, float y);
 	void MovePos(float x, float y);
 	bool SetPosTile(int x, int y);

@@ -101,7 +101,7 @@ void Item::CleanUp()
 void Item::Start()
 {
 
-	SetUpTexture();
+	SetUp();
 	
 	if(tex != nullptr)
 		collider = App->collisions->AddCollider({ 0, 0, rect.w, rect.h }, COLLIDER_ITEM);
@@ -116,7 +116,7 @@ void PowerGauntlet::Upgrade()
 }
 
 
-void PowerGauntlet::SetUpTexture()
+void PowerGauntlet::SetUp()
 {
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 36, 0, 32, 32 };
@@ -126,7 +126,7 @@ void PowerGauntlet::SetUpTexture()
 
 }
 
-void PegasusBoots::SetUpTexture()
+void PegasusBoots::SetUp()
 {
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 0, 0, 32, 32 };
@@ -140,7 +140,7 @@ void PegasusBoots::Upgrade()
 	App->player->UpgradeSPD(1);
 }
 
-void HeartContainer::SetUpTexture()
+void HeartContainer::SetUp()
 {
 
 	tex = App->tex->Load("Sprites/Items32x32.png");
@@ -156,7 +156,7 @@ void HeartContainer::Upgrade()
 	App->player->UpgradeHP(2);
 }
 
-void DropHeart::SetUpTexture()
+void DropHeart::SetUp()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
@@ -172,7 +172,7 @@ void DropHeart::Upgrade()
 		App->player->curr_life_points = App->player->max_life_points;
 }
 
-void DropPotion::SetUpTexture()
+void DropPotion::SetUp()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
@@ -188,7 +188,7 @@ void DropPotion::Upgrade()
 		App->player->curr_life_points = App->player->max_life_points;
 }
 
-void DropRupee::SetUpTexture()
+void DropRupee::SetUp()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
@@ -204,7 +204,7 @@ void DropRupee::Upgrade()
 
 }
 
-void DropFiveRupee::SetUpTexture()
+void DropFiveRupee::SetUp()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
@@ -218,7 +218,7 @@ void DropFiveRupee::Upgrade()
 		App->player->rupees = App->player->max_rupees;
 }
 
-void DropTenRupee::SetUpTexture()
+void DropTenRupee::SetUp()
 {
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
@@ -230,4 +230,34 @@ void DropTenRupee::Upgrade()
 	App->player->rupees += 10;
 	if (App->player->rupees > App->player->max_rupees)
 		App->player->rupees = App->player->max_rupees;
+}
+
+void ItemBow::SetUp()
+{
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 74, 32, 32 };
+	UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	UI_rect = { 362, 326, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void ItemBow::Upgrade()
+{
+	App->player->AddWeapon(t_bow);
+}
+
+void ItemSword::SetUp()
+{
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 252, 41, 32, 32 };
+	UI_tex = tex;
+	UI_rect = rect;
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void ItemSword::Upgrade()
+{
+	App->player->AddWeapon(t_sword);
 }

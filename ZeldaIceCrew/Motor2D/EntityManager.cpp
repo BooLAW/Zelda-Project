@@ -79,7 +79,12 @@ Item * EntityManager::CreateItem(uint subtype)
 		ret = new DropTenRupee();
 		ret->type = drop;
 		break;
-
+	case weapon_sword:
+		ret = new ItemSword();
+		ret->type = item;
+	case weapon_bow:
+		ret = new ItemBow();
+		ret->type = item;
 	default:
 		LOG("Unknown Item Type: %d", subtype);
 		break;

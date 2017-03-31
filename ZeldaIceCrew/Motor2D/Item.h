@@ -29,6 +29,10 @@ enum ITEMTYPE {
 	drop_fiverupee,
 	drop_tenrupee,
 	__LASTDROP,
+	__FIRSTWEAPON,
+	weapon_sword,
+	weapon_bow,
+	__LASTWEAPON,
 	__LASTITEMTYPE
 };
 
@@ -58,7 +62,7 @@ public:
 	virtual void CleanUp();
 
 	virtual void Start();
-	virtual void SetUpTexture() {};
+	virtual void SetUp() {};
 
 	void SetPrice(uint p) {
 		price = p;
@@ -93,45 +97,55 @@ public:
 
 struct PowerGauntlet : public Item {
 public:
-	void SetUpTexture();
+	void SetUp();
 	void Upgrade();
 };
 
 struct PegasusBoots : public Item {
 public:
-	void SetUpTexture();
+	void SetUp();
 	void Upgrade();
 };
 
 struct HeartContainer : public Item {
 public:
-	void SetUpTexture();
+	void SetUp();
 	void Upgrade();
 };
 
 struct DropHeart : public Item {
-	void SetUpTexture();
+	void SetUp();
 	void Upgrade();
 };
 
 struct DropPotion : public Item {
-	void SetUpTexture();
+	void SetUp();
 	void Upgrade();
 };
 
 struct DropRupee : public Item {
 
-	void SetUpTexture();
+	void SetUp();
 	void Upgrade();
 };
 
 struct DropFiveRupee : public Item {
-	void SetUpTexture();
+	void SetUp();
 	void Upgrade();
 };
 
 struct DropTenRupee : public Item {
-	void SetUpTexture();
+	void SetUp();
+	void Upgrade();
+};
+
+struct ItemSword : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct ItemBow : public Item {
+	void SetUp();
 	void Upgrade();
 };
 
