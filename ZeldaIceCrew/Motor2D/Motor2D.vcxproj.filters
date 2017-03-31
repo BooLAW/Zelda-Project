@@ -26,12 +26,26 @@
     <ClCompile Include="j1Textures.cpp" />
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
-    <ClCompile Include="HouseScene.cpp" />
-    <ClCompile Include="VillageScene.cpp" />
-    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="HouseScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="VillageScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -66,12 +80,31 @@
     <ClInclude Include="p2SString.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="ModuleParticles.h" />
-    <ClInclude Include="HouseScene.h" />
-    <ClInclude Include="VillageScene.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="HouseScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="VillageScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{80083b47-fca8-4844-92ea-f78b63004e4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

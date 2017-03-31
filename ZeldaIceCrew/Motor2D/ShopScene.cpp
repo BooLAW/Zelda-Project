@@ -9,25 +9,27 @@
 #include "j1Map.h"
 #include "j1PathFinding.h"
 #include "j1Gui.h"
-#include "HouseScene.h"
+#include "VillageScene.h"
 #include "j1Fonts.h"
 #include "j1Player.h"
-#include "VillageScene.h"
 #include "Scene.h"
 #include "SceneManager.h"
-#include "DungeonScene.h"
+#include "HouseScene.h"
+#include "ShopScene.h"
+
 #define MAX_TABS 2
 
-HouseScene::HouseScene() 
+ShopScene::ShopScene()
 {
+
 }
 
 // Destructor
-HouseScene::~HouseScene()
+ShopScene::~ShopScene()
 {}
 
 // Called before render is available
-bool HouseScene::Awake()
+bool ShopScene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -36,10 +38,10 @@ bool HouseScene::Awake()
 }
 
 // Called before the first frame
-bool HouseScene::Start()
+bool ShopScene::Start()
 {
 
-	if (App->map->Load("House.tmx") == true)
+	if (App->map->Load("Shop.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -48,24 +50,34 @@ bool HouseScene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-	
-	App->player->SetPos(6.5 * 32, 8 * 32);
-	App->render->MoveCam(256, 128);
+	App->player->SetPosTile(2, 2);
+
+	App->render->CamBoundOrigin();
+
 	App->render->ScaleCamBoundaries(300);
-	
+	// Enemy Start
+
+
+
+	// Items Start
+
+
+
+
 	//we can do that with an iterator that recieves the positions readed from the xml file
+
+
 	
-	
+
 
 
 	return true;
 }
 
 // Called each loop iteration
-bool HouseScene::PreUpdate()
+bool ShopScene::PreUpdate()
 {
 	// debug pathfing ------------------
-	
 	if (App->debug == true) {
 		static iPoint origin;
 		static bool origin_selected = false;
@@ -93,19 +105,26 @@ bool HouseScene::PreUpdate()
 }
 
 // Called each loop iteration
-bool HouseScene::Update(float dt)
+bool ShopScene::Update(float dt)
 {
+
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->debug = !App->debug;
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-		App->scene_manager->ChangeScene(App->scene_manager->dungeon_scene);
-	
+		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
 
 	App->map->Draw();
+
+	//for (int i = 0; i < Bushes.size(); i++) {
+	////	App->render->Blit(Bushes[i]->GetTexture(), Bushes[i]->pos.x, Bushes[i]->pos.y, &Bushes[i]->GetRect());
+	//
+	//}
 
 	// Debug pathfinding ------------------------------
 	int x, y;
@@ -126,26 +145,53 @@ bool HouseScene::Update(float dt)
 		App->win->SetTitle(title.GetString());
 		//App->render->Blit(debug_tex, p.x, p.y);
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+		App->player->curr_life_points -= 1;
+	}
 	return true;
+
 }
 
 // Called each loop iteration
-bool HouseScene::PostUpdate()
+bool ShopScene::PostUpdate()
 {
 	bool ret = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
 		ret = false;
+		ESC = true;
+	}
 
 	return ret;
 }
 
 // Called before quitting
-bool HouseScene::CleanUp()
+bool ShopScene::CleanUp()
 {
-	LOG("Freeing house scene");
-	
-	App->map->CleanUp();
-	
+	LOG("Freeing village scene");
+
+	if (ESC != true)
+	{
+		App->map->CleanUp();
+
+		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
+		{
+			App->entitymanager->DestroyEnity(*it);
+		}
+		enemies.clear();
+		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++)
+		{
+			App->entitymanager->DestroyEnity(*it);
+		}
+		items.clear();
+
+		if (debug_tex != NULL)
+			App->tex->UnLoad(debug_tex);
+	}
+
+
+
 	return true;
 }

@@ -191,7 +191,7 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 	//Note: aqui el que fa es guardarse el numero del tileset en el que estan 2 
 	//tiles clau de la navigation
 	//el de no es pot passar i el detector de canvi d'escena
-	int red_tile = data.tilesets.begin()._Ptr->_Myval->firstgid + NO_WALK_ID;//walkability tile to don't walk
+	int red_tile = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid;//walkability tile to don't walk
 																			 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
 
 	if (dir == Up)

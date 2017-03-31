@@ -10,6 +10,8 @@
 #include "SceneManager.h"
 #include "VillageScene.h"
 #include "HouseScene.h"
+#include "DungeonScene.h"
+#include "ShopScene.h"
 
 #define NUMBER_OF_PLAYERS 4
 
@@ -44,13 +46,17 @@ bool SceneManager::Start()
 	// Create scenes
 	village_scene = new VillageScene();
 	house_scene = new HouseScene();
+	dungeon_scene = new DungeonScene();
+	shop_scene = new ShopScene();
 
 	scenes.push_back(village_scene);
 	scenes.push_back(house_scene);
+	scenes.push_back(dungeon_scene);
+	scenes.push_back(shop_scene);
 
 	// -------------
 
-	current_scene = house_scene;
+	current_scene = shop_scene;
 
 	if (current_scene != nullptr)
 		ret = current_scene->Start();

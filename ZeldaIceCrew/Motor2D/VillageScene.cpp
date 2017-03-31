@@ -15,6 +15,7 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "HouseScene.h"
+#include "DungeonScene.h"
 
 #define MAX_TABS 2
 
@@ -40,7 +41,7 @@ bool VillageScene::Awake()
 bool VillageScene::Start()
 {
 	
-	if (App->map->Load("FirstMap.tmx") == true)
+	if (App->map->Load("Overworld.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -109,7 +110,7 @@ bool VillageScene::Start()
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
 
-	App->player->SetPos(500, 100);
+	App->player->SetPos(600, 100);
 	
 
 
