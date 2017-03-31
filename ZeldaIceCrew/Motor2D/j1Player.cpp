@@ -504,7 +504,12 @@ bool j1Player::Start()
 		}
 	}
 
-
+	sword_fx = App->audio->LoadFx("Audio/Fx/Fighter_sword_1.wav");
+	low_hp = App->audio->LoadFx("Audio/Fx/low_hp.wav");
+	die_fx = App->audio->LoadFx("Audio/Fx/link_dies.wav");
+	open_inv_fx = App->audio->LoadFx("Audio/Fx/menu_open.wav");
+	close_inv_fx = App->audio->LoadFx("Audio/Fx/menu_close.wav");
+	hurt = App->audio->LoadFx("Audio/FX/link_hurt");
 	// !_Animations
 
 	SDL_Rect WeaponRect = { FARLANDS.x, FARLANDS.y, WPN_COL_W, WPN_COL_H };
@@ -656,6 +661,7 @@ bool j1Player::Update(float dt)
 					if (App->input->GetKey(SDL_SCANCODE_UP)) {
 						curr_dir = Up;
 						action_blit = Slash;
+						App->audio->PlayFx(sword_fx);
 						dir_override = true;
 						anim_override = true;
 						pl_speed.x = pl_speed.x / 3;
@@ -664,6 +670,7 @@ bool j1Player::Update(float dt)
 					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
 						curr_dir = Down;
 						action_blit = Slash;
+						App->audio->PlayFx(sword_fx);
 						dir_override = true;
 						anim_override = true;
 						pl_speed.x = pl_speed.x / 3;
@@ -672,6 +679,7 @@ bool j1Player::Update(float dt)
 					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
 						curr_dir = Right;
 						action_blit = Slash;
+						App->audio->PlayFx(sword_fx);
 						dir_override = true;
 						anim_override = true;
 						pl_speed.x = pl_speed.x / 3;
@@ -680,6 +688,7 @@ bool j1Player::Update(float dt)
 					else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
 						curr_dir = Left;
 						action_blit = Slash;
+						App->audio->PlayFx(sword_fx);
 						dir_override = true;
 						anim_override = true;
 						pl_speed.x = pl_speed.x / 3;
@@ -773,16 +782,26 @@ bool j1Player::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
 				if (!App->hud->inv->active) {
 					App->hud->inv->active = true;
+					App->audio->PlayFx(open_inv_fx);
 				}
 				else{
-					App->hud->inv->active = false;
 
+					App->hud->inv->active = false;
+					App->audio->PlayFx(close_inv_fx);
 			}
 		}
 	//!_Graphics
 
+
 	// MODIFY COLLISION -------------------------------------------------
 		link_coll->SetPos(pos.x , pos.y + 16);
+		if ((App->player->curr_life_points <= 2)&&(App->player->curr_life_points!=0)) {
+			App->audio->PlayFx(low_hp);
+		}
+		if (App->player->curr_life_points == 0) {
+			//Here he should change the scene to the room scene
+			App->audio->PlayFx(die_fx);
+		}
 
 	return ret;
 }
@@ -802,7 +821,6 @@ bool j1Player::CleanUp()
 
 	// Unloading All Textures
 	App->tex->UnLoad(Link_Movement);
-
 	if (link_coll != nullptr)
 		link_coll->to_delete = true;
 	if (weapon_coll != nullptr)

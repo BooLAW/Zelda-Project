@@ -61,6 +61,8 @@ bool HUD::Start()
 
 	inv->SetOffset(30,30);
 
+	
+
 	return ret;
 }
 

@@ -34,6 +34,7 @@ void Item::Update(float dt)
 			if (App->player->rupees >= this->price) {
 				App->player->rupees -= price;
 				Upgrade();
+				App->audio->PlayFx(this->fx);
 				if (type == ENTITYTYPE::drop)
 				{
 					App->entitymanager->DestroyEnity(this);
@@ -106,6 +107,8 @@ void PowerGauntlet::SetUpTexture()
 	rect = { 36, 0, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
 	UI_rect = { 40, 326, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+
 }
 
 void PegasusBoots::SetUpTexture()
@@ -114,6 +117,7 @@ void PegasusBoots::SetUpTexture()
 	rect = { 0, 0, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
 	UI_rect = { 0, 326, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
 void PegasusBoots::Upgrade()
@@ -123,11 +127,13 @@ void PegasusBoots::Upgrade()
 
 void HeartContainer::SetUpTexture()
 {
+
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 0, 146, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
 	UI_rect = { 180, 362, 32, 32 };
-	
+	fx = App->audio->LoadFx("Audio/Fx/heart_container_1.wav");
+
 }
 
 void HeartContainer::Upgrade()
@@ -140,6 +146,8 @@ void DropHeart::SetUpTexture()
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 180, 40, 32, 26 };
+	fx = App->audio->LoadFx("Audio/Fx/heart.wav");
+	
 }
 
 void DropHeart::Upgrade()
@@ -154,6 +162,8 @@ void DropPotion::SetUpTexture()
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 144, 146, 28, 32 };
+
+
 }
 
 void DropPotion::Upgrade()
@@ -168,6 +178,7 @@ void DropRupee::SetUpTexture()
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 116, 254, 16, 28 };
+
 }
 
 void DropRupee::Upgrade()

@@ -24,7 +24,7 @@ bool Enemy::Start()
 	memset(DmgType, false, __LAST_DMGTYPE);
 	AIType = no_move;	
 	type = ENEMYTYPE::__LAST;
-
+	hit_fx = App->audio->LoadFx("Audio/Fx/enemy_hit.wav");
 	return ret;
 
 }
@@ -48,8 +48,10 @@ void Enemy::Update(float dt)
 {
 
 	if (App->player->weapon_coll != nullptr)
-		if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true)
+		if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
 			Hit();
+			App->audio->PlayFx(hit_fx);
+		}
 	
 	if (App->player->action_blit != j1Player::Slash)
 		hit = false;
@@ -138,6 +140,7 @@ bool Enemy::Attack()
 
 	if (App->player->link_coll != nullptr)
 		if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
+			App->audio->PlayFx(App->player->hurt);
 			App->player->curr_life_points -= stats.Power;
 
 			switch (curr_dir) {
