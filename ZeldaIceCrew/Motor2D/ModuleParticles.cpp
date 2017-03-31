@@ -172,7 +172,7 @@ void Arrow::Start()
 	}
 
 	HitBox = { (int)position.x, (int)position.y, g_rect[0].w, g_rect[0].h };
-	App->particle->AddParticle(this, COLLIDER_ARROW, 3000, NULL);
+	App->particle->AddParticle(this, COLLIDER_ARROW, 1500, NULL);
 
 }
 
