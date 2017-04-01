@@ -48,6 +48,9 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera.h = App->win->screen_surface->h;
 		camera.x = 0;
 		camera.y = 0;
+
+		culling_cam = camera;
+
 	}
 
 	// Variables
@@ -80,26 +83,30 @@ bool j1Render::Update(float dt) {
 
 	if (App->debug == true) {
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-			App->render->camera.y += floor(200.0f * dt);
+			App->render->MoveCam(0, 200.0f * dt);
 
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-			App->render->camera.y -= floor(200.0f * dt);
+			App->render->MoveCam(0, -200.0f * dt);
 
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-			App->render->camera.x += floor(200.0f * dt);
+			App->render->MoveCam(-200.0f * dt, 0);
 
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-			App->render->camera.x -= floor(200.0f * dt);
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) 
+			App->render->MoveCam(200.0f * dt, 0);
 	}
 
 
 	SetCamPos(-(App->player->GetPos().x - camera.w / 2), - (App->player->GetPos().y - camera.h / 2));
+
+	DrawQuad(culling_cam, 255, 0, 0, 100, false);
 
 	return true;
 }
 
 bool j1Render::PostUpdate()
 {
+
+	SDL_Rect cam = App->render->culling_cam;
 
 	if (sprites_toDraw.size() > 1) {
 		for (int it = 0; it < sprites_toDraw.size() - 1; it++) {
@@ -110,7 +117,9 @@ bool j1Render::PostUpdate()
 	}
 
 	for (int it = 0; it < sprites_toDraw.size(); it++) {
-		App->render->Blit(sprites_toDraw[it]->texture, sprites_toDraw[it]->pos.x, sprites_toDraw[it]->pos.y, sprites_toDraw[it]->rect);
+		if(sprites_toDraw[it]->pos.x + sprites_toDraw[it]->rect->w >= cam.x && sprites_toDraw[it]->pos.x <= cam.x + cam.w)
+			if(sprites_toDraw[it]->pos.y + sprites_toDraw[it]->rect->h > cam.y && sprites_toDraw[it]->pos.y < cam.y + cam.h)
+				App->render->Blit(sprites_toDraw[it]->texture, sprites_toDraw[it]->pos.x, sprites_toDraw[it]->pos.y, sprites_toDraw[it]->rect);
 		RELEASE(sprites_toDraw[it]);
 	}
 
@@ -158,12 +167,16 @@ void j1Render::MoveCam(float x, float y)
 {
 	camera.x += x;
 	camera.y += y;
+	culling_cam.x -= x;
+	culling_cam.y += y;
 }
 
 void j1Render::SetCamPos(float x, float y)
 {
 	camera.x = floor(x);
 	camera.y = floor(y);
+	culling_cam.x = -floor(x);
+	culling_cam.y = -floor(y);
 }
 
 void j1Render::SetCamBoundaries(SDL_Rect rect)

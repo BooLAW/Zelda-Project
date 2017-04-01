@@ -60,9 +60,9 @@ bool VillageScene::Start()
 	App->render->ScaleCamBoundaries(300);
 
 	// Enemy Start
-	Enemy* new_enemy = nullptr;
-	new_enemy = App->entitymanager->CreateEnemy(t_hinox);
-	new_enemy->pos = { 600, 300 };
+	//Enemy* new_enemy = nullptr;
+	//new_enemy = App->entitymanager->CreateEnemy(t_boss_ballandchain);
+	//new_enemy->pos = { 600, 300 };
 	//
 	//enemies.push_back(new_enemy);
 	//
