@@ -31,6 +31,8 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	case t_hinox:
 		ret = new Hinox();
 		break;
+	case t_boss_ballandchain:
+		ret = new BossChainBall();
 	default:
 		LOG("Unknown Enemy Type: %d", subtype);
 		break;

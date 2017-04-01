@@ -3,6 +3,7 @@
 #include "j1Map.h"
 #include "j1Input.h"
 #include <time.h>
+#include <math.h>
 
 Enemy::Enemy(uint subtype)
 {
@@ -151,6 +152,33 @@ void Enemy::HitPlayer()
 {
 	App->audio->PlayFx(App->player->hurt);
 	App->player->curr_life_points -= stats.Power;
+
+	switch (curr_dir) {
+	case Up:
+		if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height, Direction::Up) == 0)
+			App->player->MovePos(0, -App->map->data.tile_height);
+		break;
+	case Down:
+		if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height, Direction::Down) == 0)
+			App->player->MovePos(0, App->map->data.tile_height);
+		break;
+	case Left:
+		if (App->map->TileCheck(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y, Direction::Left) == 0)
+			App->player->MovePos(-App->map->data.tile_width, 0);
+		break;
+	case Right:
+		if (App->map->TileCheck(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y, Direction::Right) == 0)
+			App->player->MovePos(App->map->data.tile_width, 0);
+		break;
+	}
+}
+
+void Enemy::HitPlayer(uint dmg)
+{
+	if(dmg != NULL)
+		App->audio->PlayFx(App->player->hurt);
+
+	App->player->curr_life_points -= dmg;
 
 	switch (curr_dir) {
 	case Up:
@@ -525,7 +553,10 @@ bool BossChainBall::Start()
 
 	AIType = chase;
 
-	subtype = ENEMYTYPE::t_greensoldier;
+	subtype = ENEMYTYPE::t_boss_ballandchain;
+
+	SDL_Rect ball_rect = { 0, 0, 32, 32 };
+	ball_collider = App->collisions->AddCollider(ball_rect, COLLIDER_ENEMY_PROJECTILE);
 
 	return ret;
 }
@@ -533,9 +564,70 @@ bool BossChainBall::Start()
 bool BossChainBall::Attack()
 {
 
+	bool ret = true;
 
+	if (DmgType[melee] == true) {
+		HitBox->SetPos(pos.x, pos.y);
+	}
 
-	return true;
+	
+
+	switch (state) {
+	case no_ball_start:
+		ball_collider->SetPos(FARLANDS.x, FARLANDS.y);
+		ball_timer.Start();
+		state = no_ball;
+		break;
+	case no_ball:
+		if (ball_timer.ReadSec() >= 3)
+			state = circle_ball_start;
+		break;
+	case circle_ball_start:
+		ball_r = 64;
+		ball_centre = pos;
+		ball_x = ball_centre.x - ball_r;
+		ball_y = ball_centre.y;
+		ball_speed = 0.1;
+		ball_p = 0;
+		round_counter = 0;
+		state = circle_ball;
+		break;
+	case circle_ball:
+		
+		ball_centre = pos;
+
+		if (ball_p >= 2 * PI) {
+			ball_p = 0;
+			round_counter++;
+		}
+
+		ball_x = ball_r * cos(ball_p) + ball_centre.x;
+		ball_y = ball_r * sin(ball_p) + ball_centre.y;
+
+		ball_p += ball_speed;
+
+		ball_collider->SetPos(ball_x, ball_y);
+		
+		if (round_counter >= 5)
+			state = no_ball_start;
+
+		break;
+	case attack_ball_start:
+		break;
+	case attack_ball:
+		break;
+	}
+
+	if (App->player->link_coll != nullptr) {
+		if (this->ball_collider->CheckCollision(App->player->link_coll->rect) == true) {
+			HitPlayer();
+		}
+		if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
+			HitPlayer(NULL);
+		}
+	}
+
+	return ret;
 }
 
 void BossChainBall::SetRewards()
@@ -603,7 +695,7 @@ bool Hinox::Start()
 	stats.Speed = 0.5;
 	stats.Power = 1;
 
-	jump_hit = 0;
+	jump_hit = 4;
 
 	stats.Flying = false;
 

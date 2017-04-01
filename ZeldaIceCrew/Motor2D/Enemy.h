@@ -21,6 +21,7 @@ enum ENEMYTYPE {
 	t_redsoldier,
 	t_greensoldier,
 	t_hinox,
+	t_boss_ballandchain,
 	__LAST_ENEMYTYPE
 };
 
@@ -72,6 +73,7 @@ public:
 
 	virtual bool Attack();
 	virtual void HitPlayer();
+	virtual void HitPlayer(uint dmg);
 
 	virtual void Draw();
 
@@ -158,13 +160,27 @@ public:
 	void CleanUp();
 
 public:
-	uint ball_pos[9] =
-	{
-	0, 0, 0,
-	0, 0, 0,
-	0, 0, 0
-	};
+	j1Timer ball_timer;
 
+	enum {
+		no_ball_start = -2,
+		no_ball = -1,
+		circle_ball_start,
+		circle_ball,
+		attack_ball_start,
+		attack_ball,
+		__LAST_BALL_STATE
+	}state;
+
+	Animation ball_anim[__LAST_BALL_STATE][EnDirection::LastDir];
+
+	uint ball_r;
+	fPoint ball_centre;
+	float ball_x;
+	float ball_y;
+	float ball_p;
+	float ball_speed;
+	uint round_counter;
 	Collider* ball_collider;
 };
 
