@@ -678,17 +678,17 @@ bool Hinox::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Down][0] = { 636, 239, 56, 60 };
+		sprites[Enemy::EnDirection::Down][1] = { 739, 239, 56, 60 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Up][0] = { 635, 349, 56, 60 };
+		sprites[Enemy::EnDirection::Up][1] = { 738, 349, 56, 60 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 64, 56 };
+		sprites[Enemy::EnDirection::Left][0] = { 647, 463, 38, 56 };
+		sprites[Enemy::EnDirection::Left][1] = { 748, 461, 38, 58 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Right][0] = { 648, 571, 38, 58 };
+		sprites[Enemy::EnDirection::Right][1] = { 749, 573, 38, 56 };
 
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
@@ -707,9 +707,9 @@ bool Hinox::Start()
 
 	stats.Hp = 30;
 	stats.Speed = 0.5;
-	stats.Power = 1;
+	stats.Power = 1.5;
 
-	jump_hit = 4;
+	jump_hit = 8;
 
 	stats.Flying = false;
 
