@@ -706,8 +706,8 @@ bool Hinox::Start()
 	}
 
 	stats.Hp = 30;
-	stats.Speed = 0.5;
-	stats.Power = 1.5;
+	stats.Speed = 0.75;
+	stats.Power = 1;
 
 	jump_hit = 8;
 
