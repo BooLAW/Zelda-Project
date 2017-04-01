@@ -812,6 +812,7 @@ bool j1Player::Update(float dt)
 		}*/
 		if (App->player->curr_life_points == 0) {
 			//Here he should change the scene to the room scene
+			DyingRestart();
 			App->audio->PlayFx(die_fx);
 		}
 
@@ -979,6 +980,13 @@ void j1Player::DyingRestart()
 {
 	alive = true;
 	pos = ORIGIN_RESTART;
+	App->scene_manager->ChangeScene((Scene*)App->scene_manager->house_scene);
+	App->hud->inv->CleanUp();
+	max_life_points = 6;
+	power = 1;
+	rupees = floor(rupees / 2);
+	bombs = 0;
+	arrows = 0;
 	curr_life_points = max_life_points;
 	//add more features to discuss by the designer
 	action = true;
