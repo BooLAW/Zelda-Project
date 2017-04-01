@@ -100,6 +100,22 @@ bool j1Render::Update(float dt) {
 
 bool j1Render::PostUpdate()
 {
+
+	if (sprites_toDraw.size() > 1) {
+		for (int it = 0; it < sprites_toDraw.size() - 1; it++) {
+			if (sprites_toDraw[it]->priority > sprites_toDraw[it + 1]->priority) {
+				SWAP(sprites_toDraw[it], sprites_toDraw[it + 1]);
+			}
+		}
+	}
+
+	for (int it = 0; it < sprites_toDraw.size(); it++) {
+		App->render->Blit(sprites_toDraw[it]->texture, sprites_toDraw[it]->pos.x, sprites_toDraw[it]->pos.y, sprites_toDraw[it]->rect);
+		RELEASE(sprites_toDraw[it]);
+	}
+
+	sprites_toDraw.clear();
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
@@ -177,6 +193,24 @@ void j1Render::ScaleCamBoundaries(int scale)
 	cam_boundaries.y -= scale;
 	cam_boundaries.w += 2 * scale;
 	cam_boundaries.h += 2 * scale;
+}
+
+void j1Render::toDraw(SDL_Texture * texture, float priority, int x, int y, SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y)
+{
+	Sprite* aux = new Sprite();
+	aux->pos.x = x;
+	aux->pos.y = y;
+	aux->texture = texture;
+	aux->rect = section;
+	aux->priority = priority;
+
+	aux->speed = speed;
+	aux->angle = angle;
+	aux->pivot_x = pivot_x;
+	aux->pivot_y = pivot_y;
+
+	App->render->sprites_toDraw.push_back(aux);
+
 }
 
 void j1Render::SetViewPort(const SDL_Rect& rect)

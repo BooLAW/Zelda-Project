@@ -180,12 +180,13 @@ void Enemy::Draw()
 	else
 		inverse_draw = false;
 
-	SDL_Rect draw_rect = animations[curr_dir].GetCurrentFrame();
+	SDL_Rect* draw_rect = &animations[curr_dir].GetCurrentFrame();
 	fPoint aux_pos = pos;
 	if (inverse_draw == true)
-		aux_pos.x = pos.x - draw_rect.w + HitBox->rect.w;
+		aux_pos.x = pos.x - draw_rect->w + HitBox->rect.w;
 
-	App->render->Blit(Entity::GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
+	//App->render->Blit(GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
+	App->render->toDraw(GetTexture(), aux_pos.y + draw_rect->h, aux_pos.x, aux_pos.y, draw_rect);
 }
 
 void Enemy::Hit(uint dir, uint dmg)

@@ -125,7 +125,7 @@ bool Particle::stdUpdate(float dt)
 
 	collider->SetPos(position.x, position.y);
 	
-	App->render->Blit(graphics, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
+	App->render->toDraw(graphics, position.y + anim[curr_dir].GetCurrentFrame().h, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
 
 	return ret;
 }

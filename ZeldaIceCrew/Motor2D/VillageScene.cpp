@@ -62,17 +62,17 @@ bool VillageScene::Start()
 	// Enemy Start
 	Enemy* new_enemy;
 	new_enemy = App->entitymanager->CreateEnemy(BlueSoldier);
-	new_enemy->pos = { 20, 20 };
+	new_enemy->pos = { 225, 300 };
 
 	enemies.push_back(new_enemy);
 
 	new_enemy = App->entitymanager->CreateEnemy(RedSoldier);
-	new_enemy->pos = { 60, 30 };
+	new_enemy->pos = { 250, 300 };
 
 	enemies.push_back(new_enemy);
 
 	new_enemy = App->entitymanager->CreateEnemy(GreenSoldier);
-	new_enemy->pos = { 200, 10 };
+	new_enemy->pos = { 200, 300 };
 
 	enemies.push_back(new_enemy);
 
@@ -82,28 +82,28 @@ bool VillageScene::Start()
 	Item* new_item = nullptr;
 
 	new_item = App->entitymanager->CreateItem(drop_tenrupee);
-	new_item->SetPositions({ 300.0f, 50.0f });
+	new_item->SetPositions({ 300.0f, 300.0f });
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(pegasus_boots);
-	new_item->SetPositions({ 450.0f, 50.0f });
+	new_item->SetPositions({ 450.0f, 300.0f });
 	new_item->SetPrice(20);
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(heart_container);
-	new_item->SetPositions({ 550.0f, 50.0f });
+	new_item->SetPositions({ 550.0f, 300.0f });
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(drop_rupee);
-	new_item->SetPositions({ 600.0f, 50.0f });
+	new_item->SetPositions({ 600.0f, 300.0f });
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(drop_fiverupee);
-	new_item->SetPositions({ 650.0f, 50.0f });
+	new_item->SetPositions({ 650.0f, 300.0f });
 	items.push_back(new_item);
 
 	new_item = App->entitymanager->CreateItem(weapon_sword);
-	new_item->SetPositions({ 700.0f, 50.0f });
+	new_item->SetPositions({ 700.0f, 300.0f });
 	items.push_back(new_item);
 
 

@@ -457,10 +457,10 @@ bool j1Player::Start()
 	//This was bad because not all animations are played back in the same speed, every animation requires a speed setup
 	{
 		for (int n_dir = Direction::FirstDir; n_dir < Direction::LastDir; n_dir++) {
-			animations[Pickup][n_dir].speed = 0.18f;
+			animations[Pickup][n_dir].speed = 0.09f;
 		}
 		for (int n_dir = Direction::FirstDir; n_dir < Direction::LastDir; n_dir++) {
-			animations[Slash][n_dir].speed = 0.4f;
+			animations[Slash][n_dir].speed = 0.0002f;
 		}
 	}
 
@@ -756,7 +756,7 @@ bool j1Player::Update(float dt)
 			if (shield == true && (action_blit == Idle || action_blit == Walk)) //add cases for actions that can be done with or without shield
 				action_blit++;
 			
-			App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+			App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 			//!_Movement ""
 
 			if (anim_override == true && animations[action_blit][curr_dir].Finished()) {
@@ -777,10 +777,10 @@ bool j1Player::Update(float dt)
 				action = false;
 				LOG("ACTIO=N FALSE");
 				animations[action_blit][curr_dir].Reset();
-				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
+				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[Idle][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
 			}
 			else {
-				App->render->Blit(Link_Movement, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 
 				if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 					animations[action_blit][curr_dir].Reset();
