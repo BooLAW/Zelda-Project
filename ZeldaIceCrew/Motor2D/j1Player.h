@@ -35,6 +35,8 @@
 #define WPN_COL_OFFSET_X 8
 #define WPN_COL_OFFSET_Y 8
 
+#define PL_FARLANDS iPoint({-5000, -5000});
+
 #define PL_SPD_ATK 6
 
 struct Collider;
@@ -98,13 +100,16 @@ public:
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
 	void DyingRestart();
+
+	void PlayerInmortal(float time);
+
 	// base stats saving file
 	// --status flags 
 	bool alive = true;
 	bool shield = true;
 	bool sword = false;  // as a flag to draw link with the sword sprite
-	bool action = false; // Actions: Throw, Pull, Slash,...
-	bool inmortal = false;					 // --status VARs
+	bool action = false; // Actions: Throw, Pull, Slash,...	
+						 // --status VARs
 	
 	unsigned int curr_dir;
 	uint max_life_points = 6;
@@ -114,8 +119,12 @@ public:
 	uint max_rupees = 99;
 	uint bombs = 50;
 	uint arrows = 100;
-	j1PerfTimer inmortal_timer;
 	std::list<Item*> inventory;
+
+	j1PerfTimer inmortal_timer;
+	float inmortal_time = 0;
+	bool inmortal = false;
+
 
   // Weapon Related
 	bool Slashing = false;

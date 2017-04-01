@@ -171,6 +171,9 @@ void Enemy::HitPlayer()
 			App->player->MovePos(App->map->data.tile_width, 0);
 		break;
 	}
+
+	App->player->PlayerInmortal(HIT_INM_TIME);
+
 }
 
 void Enemy::HitPlayer(uint dmg)
@@ -198,6 +201,10 @@ void Enemy::HitPlayer(uint dmg)
 			App->player->MovePos(App->map->data.tile_width, 0);
 		break;
 	}
+
+	if (dmg != NULL)
+		App->player->PlayerInmortal(HIT_INM_TIME);
+
 }
 
 void Enemy::Draw()

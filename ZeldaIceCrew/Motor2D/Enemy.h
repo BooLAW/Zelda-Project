@@ -14,6 +14,8 @@
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
 
+#define HIT_INM_TIME 2000
+
 class Entity;
 
 enum ENEMYTYPE {

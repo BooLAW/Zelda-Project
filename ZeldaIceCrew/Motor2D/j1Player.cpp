@@ -514,6 +514,8 @@ bool j1Player::Update(float dt)
 	//		action_blit = PickUp;//change to wake Up animation when we have it
 	//	return ret;
 	//}
+	
+
 	// Logic
 	if (action == false) {
 		//Movement
@@ -813,6 +815,14 @@ bool j1Player::Update(float dt)
 			App->audio->PlayFx(die_fx);
 		}
 
+	if (inmortal == true) {
+		iPoint col_pos = PL_FARLANDS;
+		link_coll->SetPos(col_pos.x, col_pos.y);
+		App->render->DrawQuad({(int)pos.x - 2, (int)pos.y - 8, 36, 56 }, 255, 255, 255, 80);
+		if (inmortal_timer.ReadMs() >= inmortal_time)
+			inmortal = false;
+	}
+
 	return ret;
 }
 
@@ -969,4 +979,11 @@ void j1Player::DyingRestart()
 	curr_life_points = max_life_points;
 	//add more features to discuss by the designer
 	action = true;
+}
+
+void j1Player::PlayerInmortal(float time)
+{
+	inmortal = true;
+	inmortal_time = time;
+	inmortal_timer.Start();
 }
