@@ -23,7 +23,7 @@ bool Enemy::Start()
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 	AIType = no_move;	
-	type = ENEMYTYPE::__LAST;
+	type = ENEMYTYPE::__LAST_ENEMYTYPE;
 	hit_fx = App->audio->LoadFx("Audio/Fx/enemy_hit.wav");
 	return ret;
 
@@ -211,20 +211,20 @@ void Enemy::Hit(uint dir, uint dmg)
 
 		switch (dir) {
 		case Direction::Up:
-			if (App->map->TileCheck(pos.x, pos.y - JUMP_WHEN_HIT, Direction::Up) == 0)
-				pos.y -= JUMP_WHEN_HIT;
+			if (App->map->TileCheck(pos.x, pos.y - jump_hit, Direction::Up) == 0)
+				pos.y -= jump_hit;
 			break;
 		case Direction::Down:
-			if (App->map->TileCheck(pos.x, pos.y + JUMP_WHEN_HIT, Direction::Down) == 0)
-				pos.y += JUMP_WHEN_HIT;
+			if (App->map->TileCheck(pos.x, pos.y + jump_hit, Direction::Down) == 0)
+				pos.y += jump_hit;
 			break;
 		case Direction::Left:
-			if (App->map->TileCheck(pos.x - JUMP_WHEN_HIT, pos.y, Direction::Left) == 0)
-				pos.x -= JUMP_WHEN_HIT;
+			if (App->map->TileCheck(pos.x - jump_hit, pos.y, Direction::Left) == 0)
+				pos.x -= jump_hit;
 			break;
 		case Direction::Right:
-			if (App->map->TileCheck(pos.x + JUMP_WHEN_HIT, pos.y, Direction::Right) == 0)
-				pos.x += JUMP_WHEN_HIT;
+			if (App->map->TileCheck(pos.x + jump_hit, pos.y, Direction::Right) == 0)
+				pos.x += jump_hit;
 			break;
 		}
 		
@@ -342,7 +342,7 @@ bool BSoldier::Start()
 
 	AIType = chase;
 
-	subtype = ENEMYTYPE::BlueSoldier;
+	subtype = ENEMYTYPE::t_bluesoldier;
 
 	return ret;
 }
@@ -403,7 +403,7 @@ bool RSoldier::Start()
 
 	AIType = chase;
 
-	subtype = ENEMYTYPE::RedSoldier;
+	subtype = ENEMYTYPE::t_redsoldier;
 
 	return ret;
 }
@@ -464,7 +464,7 @@ bool GSoldier::Start()
 
 	AIType = chase;
 
-	subtype = ENEMYTYPE::GreenSoldier;
+	subtype = ENEMYTYPE::t_greensoldier;
 
 	return ret;
 }
@@ -525,7 +525,7 @@ bool BossChainBall::Start()
 
 	AIType = chase;
 
-	subtype = ENEMYTYPE::GreenSoldier;
+	subtype = ENEMYTYPE::t_greensoldier;
 
 	return ret;
 }
@@ -558,4 +558,91 @@ void BossChainBall::CleanUp()
 		ball_collider->to_delete = true;
 
 	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
+}
+
+bool Hinox::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
+
+		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
+
+		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 64, 56 };
+
+		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
+
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
+
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][0]);
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][1]);
+
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][0]);
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][1]);
+
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][0]);
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][1]);
+
+
+	}
+
+	stats.Hp = 30;
+	stats.Speed = 0.5;
+	stats.Power = 1;
+
+	jump_hit = 0;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 36, 56 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[melee] = true;
+
+	AIType = chase;
+
+	subtype = ENEMYTYPE::t_hinox;
+
+	return ret;
+}
+
+void Hinox::SetRewards()
+{
+	reward_pool[heart_container] = 75;
+	reward_pool[power_gauntlet] = 10;
+	reward_pool[drop_tenrupee] = 15;
+}
+
+bool Hinox::Attack()
+{
+	bool ret = true;
+
+	if (DmgType[melee] == true) {
+		HitBox->rect = { (int)pos.x, (int)pos.y, animations[curr_dir].GetCurrentFrame().w, animations[curr_dir].GetCurrentFrame().h };
+	}
+
+	if (App->player->link_coll != nullptr)
+		if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
+			HitPlayer();
+		}
+
+
+	return ret;
 }

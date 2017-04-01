@@ -19,14 +19,17 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	Enemy* ret = nullptr;
 
 	switch (subtype) {
-	case BlueSoldier:
+	case t_bluesoldier:
 		ret = new BSoldier();
 		break;
-	case RedSoldier:
+	case t_redsoldier:
 		ret = new RSoldier();
 		break;
-	case GreenSoldier:
+	case t_greensoldier:
 		ret = new GSoldier();
+		break;
+	case t_hinox:
+		ret = new Hinox();
 		break;
 	default:
 		LOG("Unknown Enemy Type: %d", subtype);

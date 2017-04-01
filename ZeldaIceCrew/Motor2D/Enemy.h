@@ -14,15 +14,14 @@
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
 
-#define JUMP_WHEN_HIT 48
-
 class Entity;
 
 enum ENEMYTYPE {
-	BlueSoldier = 0,
-	RedSoldier,
-	GreenSoldier,
-	__LAST
+	t_bluesoldier = 0,
+	t_redsoldier,
+	t_greensoldier,
+	t_hinox,
+	__LAST_ENEMYTYPE
 };
 
 class BSoldier;
@@ -120,6 +119,8 @@ public:
 
 	unsigned int curr_dir;
 
+	uint jump_hit = 48;
+
 	// pathfinding related
 	std::list<iPoint> path_to_follow;
 
@@ -165,6 +166,14 @@ public:
 	};
 
 	Collider* ball_collider;
+};
+
+class Hinox : public Enemy {
+public:
+	bool Start();
+	void SetRewards();
+
+	bool Attack();
 };
 
 #endif // !__ENEMY_H__
