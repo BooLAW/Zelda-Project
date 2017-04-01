@@ -59,9 +59,42 @@ bool DungeonScene::Start()
 	App->render->ScaleCamBoundaries(300);
 
 	// Enemy Start
+	
+	//Enemy* new_enemy = nullptr;
+	//new_enemy = App->entitymanager->CreateEnemy(t_boss_ballandchain);
+	//new_enemy->pos = { 600, 300 };
+	//
+	//enemies.push_back(new_enemy);
+
+	/// LLISTA D'ENEMICS:
+		// t_bluesoldier,
+		// t_redsoldier,
+		// t_greensoldier,
+		// t_hinox,
+		// t_boss_ballandchain,
 
 
 	// Items Start
+
+	//Item* new_item = nullptr;
+	//
+	//new_item = App->entitymanager->CreateItem(drop_tenrupee);
+	//new_item->SetPositions({ 300.0f, 300.0f });
+	//items.push_back(new_item);
+	
+	/// LLISTA DE OBJECTES:
+		//power_gauntlet,
+		//pegasus_boots,
+		//heart_container,
+		//drop_heart,
+		//drop_bomb,
+		//drop_potion,
+		//drop_rupee,
+		//drop_fiverupee,
+		//drop_tenrupee,
+		//weapon_sword,
+		//weapon_bow,
+
 
 
 	//we can do that with an iterator that recieves the positions readed from the xml file

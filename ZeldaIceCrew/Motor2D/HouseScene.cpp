@@ -55,7 +55,6 @@ bool HouseScene::Start()
 	
 	//we can do that with an iterator that recieves the positions readed from the xml file
 	
-	
 
 
 	return true;
