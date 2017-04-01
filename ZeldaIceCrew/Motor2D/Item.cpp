@@ -193,6 +193,7 @@ void DropRupee::SetUp()
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 116, 254, 16, 28 };
+	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 
 }
 
@@ -209,6 +210,7 @@ void DropFiveRupee::SetUp()
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 224, 254, 16, 28 };
+	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 }
 
 void DropFiveRupee::Upgrade()
@@ -223,6 +225,7 @@ void DropTenRupee::SetUp()
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 332, 254, 16, 28 };
+	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 }
 
 void DropTenRupee::Upgrade()

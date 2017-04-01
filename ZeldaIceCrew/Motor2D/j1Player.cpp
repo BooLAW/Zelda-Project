@@ -805,9 +805,9 @@ bool j1Player::Update(float dt)
 
 	// MODIFY COLLISION -------------------------------------------------
 		link_coll->SetPos(pos.x , pos.y + 16);
-		if ((App->player->curr_life_points <= 2)&&(App->player->curr_life_points!=0)) {
+		/*if ((App->player->curr_life_points <= 2)&&(App->player->curr_life_points!=0)) {
 			App->audio->PlayFx(low_hp);
-		}
+		}*/
 		if (App->player->curr_life_points == 0) {
 			//Here he should change the scene to the room scene
 			App->audio->PlayFx(die_fx);
