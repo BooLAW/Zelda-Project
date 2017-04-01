@@ -150,60 +150,67 @@ bool Enemy::Attack()
 
 void Enemy::HitPlayer()
 {
-	App->audio->PlayFx(App->player->hurt);
-	App->player->curr_life_points -= stats.Power;
 
-	switch (curr_dir) {
-	case Up:
-		if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height, Direction::Up) == 0)
-			App->player->MovePos(0, -App->map->data.tile_height);
-		break;
-	case Down:
-		if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height, Direction::Down) == 0)
-			App->player->MovePos(0, App->map->data.tile_height);
-		break;
-	case Left:
-		if (App->map->TileCheck(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y, Direction::Left) == 0)
-			App->player->MovePos(-App->map->data.tile_width, 0);
-		break;
-	case Right:
-		if (App->map->TileCheck(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y, Direction::Right) == 0)
-			App->player->MovePos(App->map->data.tile_width, 0);
-		break;
+	if (App->player->inmortal == false) {
+
+		App->audio->PlayFx(App->player->hurt);
+		App->player->curr_life_points -= stats.Power;
+
+		switch (curr_dir) {
+		case Up:
+			if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height, Direction::Up) == 0)
+				App->player->MovePos(0, -App->map->data.tile_height);
+			break;
+		case Down:
+			if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height, Direction::Down) == 0)
+				App->player->MovePos(0, App->map->data.tile_height);
+			break;
+		case Left:
+			if (App->map->TileCheck(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y, Direction::Left) == 0)
+				App->player->MovePos(-App->map->data.tile_width, 0);
+			break;
+		case Right:
+			if (App->map->TileCheck(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y, Direction::Right) == 0)
+				App->player->MovePos(App->map->data.tile_width, 0);
+			break;
+		}
+
+		App->player->PlayerInmortal(HIT_INM_TIME);
 	}
-
-	App->player->PlayerInmortal(HIT_INM_TIME);
-
 }
 
 void Enemy::HitPlayer(uint dmg)
 {
-	if(dmg != NULL)
-		App->audio->PlayFx(App->player->hurt);
 
-	App->player->curr_life_points -= dmg;
+	if (App->player->inmortal == false) {
 
-	switch (curr_dir) {
-	case Up:
-		if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height, Direction::Up) == 0)
-			App->player->MovePos(0, -App->map->data.tile_height);
-		break;
-	case Down:
-		if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height, Direction::Down) == 0)
-			App->player->MovePos(0, App->map->data.tile_height);
-		break;
-	case Left:
-		if (App->map->TileCheck(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y, Direction::Left) == 0)
-			App->player->MovePos(-App->map->data.tile_width, 0);
-		break;
-	case Right:
-		if (App->map->TileCheck(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y, Direction::Right) == 0)
-			App->player->MovePos(App->map->data.tile_width, 0);
-		break;
+		if (dmg != NULL)
+			App->audio->PlayFx(App->player->hurt);
+
+		App->player->curr_life_points -= dmg;
+
+		switch (curr_dir) {
+		case Up:
+			if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height, Direction::Up) == 0)
+				App->player->MovePos(0, -App->map->data.tile_height);
+			break;
+		case Down:
+			if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height, Direction::Down) == 0)
+				App->player->MovePos(0, App->map->data.tile_height);
+			break;
+		case Left:
+			if (App->map->TileCheck(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y, Direction::Left) == 0)
+				App->player->MovePos(-App->map->data.tile_width, 0);
+			break;
+		case Right:
+			if (App->map->TileCheck(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y, Direction::Right) == 0)
+				App->player->MovePos(App->map->data.tile_width, 0);
+			break;
+		}
+
+		if (dmg != NULL)
+			App->player->PlayerInmortal(HIT_INM_TIME);
 	}
-
-	if (dmg != NULL)
-		App->player->PlayerInmortal(HIT_INM_TIME);
 
 }
 

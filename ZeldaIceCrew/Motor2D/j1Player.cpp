@@ -815,12 +815,15 @@ bool j1Player::Update(float dt)
 			App->audio->PlayFx(die_fx);
 		}
 
+	if (App->debug_mode == true) {
+			inmortal = true;
+	}
+
 	if (inmortal == true) {
-		iPoint col_pos = PL_FARLANDS;
-		link_coll->SetPos(col_pos.x, col_pos.y);
 		App->render->DrawQuad({(int)pos.x - 2, (int)pos.y - 8, 36, 56 }, 255, 255, 255, 80);
-		if (inmortal_timer.ReadMs() >= inmortal_time)
-			inmortal = false;
+		if(App->debug_mode == false)
+			if (inmortal_timer.ReadMs() >= inmortal_time)
+				inmortal = false;
 	}
 
 	return ret;
