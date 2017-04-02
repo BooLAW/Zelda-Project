@@ -27,8 +27,9 @@ bool ModuleParticles::CleanUp()
 bool ModuleParticles::Update(float dt)
 {
 	for (uint i = 0; i < particles.size(); i++) {
-		if (particles[i]->Update(dt) == false)
-			DestroyParticle(particles[i]);
+		if(particles[i] != nullptr)
+			if (particles[i]->Update(dt) == false)
+				DestroyParticle(particles[i]);
 	}
 	return true;
 }

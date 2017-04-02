@@ -54,7 +54,11 @@ bool HouseScene::Start()
 	App->render->ScaleCamBoundaries(300);
 	
 	//we can do that with an iterator that recieves the positions readed from the xml file
+<<<<<<< HEAD
 	overworld_door = App->collisions->AddCollider({ 13*16,20*16,32,10 }, COLLIDER_TO_OVERWORLD_HOUSE, App->scene_manager);
+=======
+	
+>>>>>>> origin/Develop
 
 
 	return true;
