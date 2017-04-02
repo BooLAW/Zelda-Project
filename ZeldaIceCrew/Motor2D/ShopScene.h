@@ -35,8 +35,10 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
+public:
+	bool to_overworld = false;
 private:
+	Collider* overworld_door;
 	bool ESC = false;
 	SDL_Texture* debug_tex;
 	//std::vector<Entity*> Bushes;

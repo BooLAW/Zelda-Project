@@ -50,6 +50,8 @@ bool ShopScene::Start()
 
 		RELEASE_ARRAY(data);
 	}
+	overworld_door = App->collisions->AddCollider({ 15* 16,20 * 16,24,20 }, COLLIDER_TO_OVERWORLD_SHOP, App->scene_manager);
+
 	App->player->SetPosTile(2, 2);
 
 	App->render->CamBoundOrigin();
@@ -118,7 +120,11 @@ bool ShopScene::Update(float dt)
 		App->debug = !App->debug;
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
-
+	if (to_overworld == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
+		to_overworld = false;
+	}
 	App->map->Draw();
 
 	//for (int i = 0; i < Bushes.size(); i++) {
@@ -171,7 +177,7 @@ bool ShopScene::PostUpdate()
 bool ShopScene::CleanUp()
 {
 	LOG("Freeing village scene");
-
+	App->collisions->EraseCollider(overworld_door);
 	if (ESC != true)
 	{
 		App->map->CleanUp();

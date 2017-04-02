@@ -42,8 +42,13 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
+public:
+	bool down = false;
+	bool up = false;
+	bool right = false;
+	bool left = false;
 private:
+	Collider* boss_door;
 
 	SDL_Texture* debug_tex;
 	bool ESC = false;

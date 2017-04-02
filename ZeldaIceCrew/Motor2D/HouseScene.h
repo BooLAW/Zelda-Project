@@ -40,9 +40,11 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
+public:
+	bool to_overworld = false;
 private:
-
+	Collider* overworld_door;
+	
 	SDL_Texture* debug_tex;
 	std::vector<Entity*> Bushes;
 	SDL_Rect Bush_Rect;

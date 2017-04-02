@@ -54,8 +54,7 @@ bool HouseScene::Start()
 	App->render->ScaleCamBoundaries(300);
 	
 	//we can do that with an iterator that recieves the positions readed from the xml file
-	
-	
+	overworld_door = App->collisions->AddCollider({ 13*16,20*16,32,10 }, COLLIDER_TO_OVERWORLD_HOUSE, App->scene_manager);
 
 
 	return true;
@@ -104,6 +103,11 @@ bool HouseScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		App->scene_manager->ChangeScene(App->scene_manager->dungeon_scene);
 	
+	if (to_overworld == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
+		to_overworld = false;
+	}
 
 	App->map->Draw();
 
@@ -146,6 +150,7 @@ bool HouseScene::CleanUp()
 	LOG("Freeing house scene");
 	
 	App->map->CleanUp();
-	
+	App->collisions->EraseCollider(overworld_door);
+
 	return true;
 }

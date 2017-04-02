@@ -3,6 +3,12 @@
 #include "j1Collision.h"
 #include "j1Map.h"
 #include "ModuleParticles.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "DungeonScene.h"
+#include "VillageScene.h"
+#include "ShopScene.h"
+#include "HouseScene.h"
 j1Player::j1Player()
 {
 }
@@ -961,8 +967,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 			//polish this one 
 			pos.x = c2->rect.x + c2->rect.w ;
 		}
-
-		
 	}
 
 	// Hit collision
@@ -975,6 +979,31 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
 		//function to restart in the house()
 	}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_DUNGEON && alive == true)
+		App->scene_manager->village_scene->to_dungeon = true;
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_SHOP && alive == true)
+		App->scene_manager->village_scene->to_shop = true;
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_HOUSE && alive == true)
+		App->scene_manager->village_scene->to_house = true;
+
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_HOUSE && alive == true)
+		App->scene_manager->house_scene->to_overworld = true;
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_SHOP && alive == true)
+		App->scene_manager->shop_scene->to_overworld = true;
+
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_UP && alive == true)
+		App->scene_manager->dungeon_scene->up = true;
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_DOWN && alive == true)
+		App->scene_manager->dungeon_scene->down = true;
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_LEFT && alive == true)
+		App->scene_manager->dungeon_scene->left = true;
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_RIGHT && alive == true)
+		App->scene_manager->dungeon_scene->right = true;
+
+		//Add extra particles?
+		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
+		//function to restart in the house()
+
 }
 void j1Player::DyingRestart()
 {

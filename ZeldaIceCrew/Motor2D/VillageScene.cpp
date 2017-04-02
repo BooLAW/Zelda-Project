@@ -16,6 +16,7 @@
 #include "SceneManager.h"
 #include "HouseScene.h"
 #include "DungeonScene.h"
+#include "ShopScene.h"
 
 #define MAX_TABS 2
 
@@ -52,6 +53,13 @@ bool VillageScene::Start()
 	}
 	//Bush_Rect = { 8*32,2*32,32,32 };
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
+	//Colliders
+	iPoint coll_pos = App->render->ScreenToWorld(24, 106);
+	house_door = App->collisions->AddCollider({24*16,106*16,24,20}, COLLIDER_TO_HOUSE, App->scene_manager);
+	iPoint coll2_pos = App->render->ScreenToWorld(55, 49);
+	shop_door = App->collisions->AddCollider({ 54*16,49*16,24,20 }, COLLIDER_TO_SHOP, App->scene_manager);
+	iPoint coll3_pos = App->render->ScreenToWorld(37, 6);
+	dungeon_door = App->collisions->AddCollider({ 38*16,6*16,128,20 }, COLLIDER_TO_DUNGEON, App->scene_manager);
 
 	App->player->SetPosTile(2, 2);
 
@@ -159,8 +167,26 @@ bool VillageScene::Update(float dt)
 	
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->debug = !App->debug;
+
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		App->scene_manager->ChangeScene(App->scene_manager->house_scene);
+
+	if (to_house == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->house_scene);
+		to_house = false;
+	}
+	if (to_shop == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
+		to_shop = false;
+	}
+	if (to_dungeon == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->dungeon_scene);
+		to_dungeon = false;
+	}
+		
 
 	App->map->Draw();
 
@@ -229,6 +255,11 @@ bool VillageScene::CleanUp()
 			App->entitymanager->DestroyEnity(*it);
 		}
 		items.clear();
+
+		App->collisions->EraseCollider(house_door);
+		App->collisions->EraseCollider(shop_door);
+		App->collisions->EraseCollider(dungeon_door);
+
 
 		if (debug_tex != NULL)
 			App->tex->UnLoad(debug_tex);

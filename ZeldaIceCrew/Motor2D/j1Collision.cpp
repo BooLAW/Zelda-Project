@@ -21,6 +21,20 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PL_WEAPON] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_ITEM] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_DUNGEON] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_SHOP] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_HOUSE] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_OVERWORLD_SHOP] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_OVERWORLD_HOUSE] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_UP] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_DOWN] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_RIGHT] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_LEFT] = true;
+
+
+
+	
+
 
 	matrix[COLLIDER_BUSH][COLLIDER_BUSH] = false;
 	matrix[COLLIDER_BUSH][COLLIDER_ENEMY] = true;
@@ -138,6 +152,36 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_ENEMY_PROJECTILE:
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
+			break;
+		case COLLIDER_TO_DUNGEON:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_TO_OVERWORLD_HOUSE:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_TO_OVERWORLD_SHOP:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_DUNGEON_DOWN:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_DUNGEON_UP:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_DUNGEON_RIGHT:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_DUNGEON_LEFT:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_TO_HOUSE:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_TO_SHOP:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+
+
 		}
 	}
 }

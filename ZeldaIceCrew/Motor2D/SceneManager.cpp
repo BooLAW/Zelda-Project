@@ -56,7 +56,7 @@ bool SceneManager::Start()
 
 	// -------------
 
-	current_scene = shop_scene;
+	current_scene = village_scene;
 
 	if (current_scene != nullptr)
 		ret = current_scene->Start();

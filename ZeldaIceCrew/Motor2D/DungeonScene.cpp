@@ -57,6 +57,9 @@ bool DungeonScene::Start()
 	App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
+	//Door Colliders
+		//Boss room
+	boss_door = App->collisions->AddCollider({ 32 * 16,32 * 16,32,10 }, COLLIDER_DUNGEON_DOWN, App->scene_manager);
 
 	// Enemy Start
 
@@ -119,6 +122,34 @@ bool DungeonScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
 
+	if (up == true)
+	{
+		App->render->camera.y += 1024;
+	//	App->render->culling_cam.y += 1024;
+		up = false;
+	}
+	if (down == true)
+	{
+		App->render->camera.y += 1024;
+	//	App->render->culling_cam.y -= 1024;
+		App->player->MovePos(500, 100);
+
+
+		down = false;
+	}
+	if (right == true)
+	{
+		App->render->camera.x += 576;
+	//	App->render->culling_cam.x += 576;
+
+		right = false;
+	}
+	if (left == true)
+	{
+		App->render->camera.x -= 576;
+	//	App->render->culling_cam.x -= 576;
+		left = false;
+	}
 	App->map->Draw();
 
 	//for (int i = 0; i < Bushes.size(); i++) {
