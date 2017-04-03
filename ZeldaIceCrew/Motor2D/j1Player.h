@@ -94,7 +94,11 @@ public:
 	void UpgradeSPD(float x);
 	void UpgradePWR(int x);
 	void UpgradeHP(int x);
-
+	//Update Functions
+	void Movement();
+	void Slash_();
+	void PickUp_();
+	void ChangeWeapon();
 	void AddWeapon(uint weapon_t);
 
 	void SetPos(float x, float y);
