@@ -169,6 +169,7 @@ public:
 	UIElement* CreateElement(GuiType type);
 	UIElement* CreateElement(GuiType type, const char* path);
 	void DeleteElements();
+	void DeleteElement(UIElement* del);
 	SDL_Texture* GetNonConstAtlas() const {
 		return atlas;
 	}

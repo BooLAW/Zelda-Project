@@ -699,54 +699,72 @@ bool j1Player::Update(float dt)
 				//Objects will go here too, then they might trigger action or nah
 
 				{
-					if (anim_override == false) {
+					if (!App->hud->inv->active) {
+						if (anim_override == false) {
 
-						if (App->input->GetKey(SDL_SCANCODE_UP)) {
-							curr_dir = Up;
-							action_blit = Weapon_atk;
-							if (curr_weapon != nullptr)
-								curr_weapon->Attack();
-							App->audio->PlayFx(sword_fx);
-							dir_override = true;
-							anim_override = true;
-							pl_speed.x = pl_speed.x / PL_SPD_ATK;
-							pl_speed.y = pl_speed.y / PL_SPD_ATK;
-						}
-						else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
-							curr_dir = Down;
-							action = false;
-							action_blit = Weapon_atk;
-							if (curr_weapon != nullptr)
-								curr_weapon->Attack();
-							App->audio->PlayFx(sword_fx);
-							dir_override = true;
-							anim_override = true;
-							pl_speed.x = pl_speed.x / PL_SPD_ATK;
-							pl_speed.y = pl_speed.y / PL_SPD_ATK;
-						}
-						else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
-							curr_dir = Right;
-							action_blit = Weapon_atk;
-							if (curr_weapon != nullptr)
-								curr_weapon->Attack();
-							App->audio->PlayFx(sword_fx);
-							dir_override = true;
-							anim_override = true;
-							pl_speed.x = pl_speed.x / PL_SPD_ATK;
-							pl_speed.y = pl_speed.y / PL_SPD_ATK;
-						}
-						else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
-							curr_dir = Left;
-							action_blit = Weapon_atk;
-							if (curr_weapon != nullptr)
-								curr_weapon->Attack();
-							App->audio->PlayFx(sword_fx);
-							dir_override = true;
-							anim_override = true;
-							pl_speed.x = pl_speed.x / PL_SPD_ATK;
-							pl_speed.y = pl_speed.y / PL_SPD_ATK;
-						}
+							if (App->input->GetKey(SDL_SCANCODE_UP)) {
+								curr_dir = Up;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+							}
+							else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
+								curr_dir = Down;
+								action = false;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+							}
+							else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
+								curr_dir = Right;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+							}
+							else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
+								curr_dir = Left;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+							}
 
+						}
+					}
+					////////////// Do not remove this AGAIN!!!!!!!
+					else {
+
+						if (App->input->GetKey(SDL_SCANCODE_UP)==KEY_DOWN) {
+							App->hud->inv->Move_Sel_up();
+						}
+						else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+							App->hud->inv->Move_Sel_down();
+						}
+						else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+							App->hud->inv->Move_Sel_forward();
+						}
+						else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+							App->hud->inv->Move_Sel_backwards();
+						}
 					}
 				}
 			}

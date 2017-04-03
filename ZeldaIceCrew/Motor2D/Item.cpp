@@ -34,7 +34,7 @@ void Item::Update(float dt)
 			if (App->player->rupees >= this->price) {
 				App->player->rupees -= price;
 				App->audio->PlayFx(this->fx);
-				this->priceTag->active = false;
+				App->gui->DeleteElement(this->priceTag);
 				if (type == ENTITYTYPE::drop) {
 					Upgrade();
 					App->entitymanager->DestroyEnity(this);
@@ -54,7 +54,6 @@ void Item::Update(float dt)
 				}
 			}
 		}
-
 		if (set == false) {
 			draw_pos = pos;
 			set = true;

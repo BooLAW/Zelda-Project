@@ -155,6 +155,14 @@ void j1Gui::DeleteElements()
 	}
 }
 
+void j1Gui::DeleteElement(UIElement * del)
+{
+
+	std::list<UIElement*>::iterator aux = std::find(elements.begin(), elements.end(), del);
+
+	elements.erase(aux);
+}
+
 // const getter for atlas
 const SDL_Texture* j1Gui::GetAtlas() const
 {
