@@ -114,7 +114,7 @@ bool DungeonScene::Start()
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
 
-	App->player->SetPos(500, 400);
+	App->player->SetPos(500, 400 + ROOM_H * 3);
 	App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
 	App->audio->SetVolumeMusic(40);
 
@@ -176,7 +176,10 @@ bool DungeonScene::Update(float dt)
 			}
 		}
 		else {
-			boss_music = false;
+			if (boss_music == true) {
+				App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
+				boss_music = false;
+			}
 		}
 	}
 

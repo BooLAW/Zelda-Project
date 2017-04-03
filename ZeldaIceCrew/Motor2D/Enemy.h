@@ -16,6 +16,8 @@
 
 #define HIT_INM_TIME 2000
 
+#define ENEMY_STD_OFFSET_Y 24
+
 class Entity;
 
 enum ENEMYTYPE {

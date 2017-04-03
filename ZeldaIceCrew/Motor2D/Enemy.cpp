@@ -35,13 +35,13 @@ void Enemy::SetRewards()
 	memset(reward_pool, 0, N_ITEMS);
 	
 	// Standard Reward Pool
-	reward_pool[drop_heart] = 30;
-	reward_pool[drop_potion] = 5;
-	reward_pool[drop_rupee] = 45;
-	reward_pool[drop_fiverupee] = 15;
-	reward_pool[drop_tenrupee] = 5;
+	reward_pool[drop_heart] = 5;
+	reward_pool[drop_potion] = 0;
+	reward_pool[drop_rupee] = 50;
+	reward_pool[drop_fiverupee] = 10;
+	reward_pool[drop_tenrupee] = 0;
 
-	SortRewardProbs();
+	//SortRewardProbs();
 
 }
 
@@ -142,7 +142,7 @@ bool Enemy::Attack()
 	bool ret = true;
 
 	if (DmgType[melee] == true) {
-		HitBox->SetPos(pos.x, pos.y);
+		HitBox->SetPos(pos.x, pos.y + ENEMY_STD_OFFSET_Y);
 	}
 
 	if (App->player->link_coll != nullptr)
@@ -230,8 +230,8 @@ void Enemy::Draw()
 
 	SDL_Rect* draw_rect = &animations[curr_dir].GetCurrentFrame();
 	fPoint aux_pos = pos;
-	//if (inverse_draw == true)
-		//aux_pos.x = pos.x - draw_rect->w + HitBox->rect.w;
+	if (inverse_draw == true)
+		aux_pos.x = pos.x - draw_rect->w + HitBox->rect.w;
 
 	//App->render->Blit(GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
 	App->render->toDraw(GetTexture(), aux_pos.y + draw_rect->h, aux_pos.x, aux_pos.y, draw_rect);
@@ -248,7 +248,7 @@ void Enemy::Hit(uint dir, uint dmg)
 		LOG("HP: %d DMG: %d", stats.Hp, dmg);
 
 		stats.Hp -= dmg;
-		
+
 		LOG("HP: %d", stats.Hp, dmg);
 
 		if (stats.Hp <= 0) {
@@ -382,7 +382,7 @@ bool BSoldier::Start()
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 36, 56 }, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ 0, 0, 36, 32 }, COLLIDER_ENEMY);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 
@@ -443,7 +443,7 @@ bool RSoldier::Start()
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 36, 56 }, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ 0, 0, 36, 32 }, COLLIDER_ENEMY);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 
@@ -475,7 +475,7 @@ bool GSoldier::Start()
 		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
 
 		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 64, 56 };
+		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 36, 56 };
 
 		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
 		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
@@ -504,7 +504,7 @@ bool GSoldier::Start()
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 36, 56 }, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ 0, 0, 36, 32 }, COLLIDER_ENEMY);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 
@@ -612,7 +612,7 @@ bool BossChainBall::Start()
 
 	stats.Flying = false;
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 36, 56 }, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ 0, 0, 36, 32 }, COLLIDER_ENEMY);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 
@@ -634,7 +634,7 @@ bool BossChainBall::Attack()
 	bool ret = true;
 
 	if (DmgType[melee] == true) {
-		HitBox->SetPos(pos.x, pos.y);
+		HitBox->SetPos(pos.x, pos.y + ENEMY_STD_OFFSET_Y);
 	}
 
 	
@@ -780,7 +780,7 @@ bool Hinox::Start()
 
 	}
 
-	stats.Hp = 30;
+	stats.Hp = 15;
 	stats.Speed = 0.75;
 	stats.Power = 1;
 
@@ -791,7 +791,7 @@ bool Hinox::Start()
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 36, 56 }, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ 0, 0, 36, 40 }, COLLIDER_ENEMY);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 
@@ -806,9 +806,12 @@ bool Hinox::Start()
 
 void Hinox::SetRewards()
 {
-	reward_pool[heart_container] = 75;
-	reward_pool[power_gauntlet] = 10;
-	reward_pool[drop_tenrupee] = 15;
+	reward_pool[heart_container] = 2;
+	reward_pool[power_gauntlet] = 25;
+	reward_pool[drop_rupee] = 35;
+	reward_pool[drop_fiverupee] = 10;
+	reward_pool[drop_tenrupee] = 5;
+	reward_pool[drop_heart] = 23;
 }
 
 bool Hinox::Attack()
@@ -816,7 +819,7 @@ bool Hinox::Attack()
 	bool ret = true;
 
 	if (DmgType[melee] == true) {
-		HitBox->rect = { (int)pos.x, (int)pos.y, animations[curr_dir].GetCurrentFrame().w, animations[curr_dir].GetCurrentFrame().h };
+		HitBox->rect = { (int)pos.x, (int)pos.y + 24, animations[curr_dir].GetCurrentFrame().w, animations[curr_dir].GetCurrentFrame().h - 24 };
 	}
 
 	if (App->player->link_coll != nullptr)
