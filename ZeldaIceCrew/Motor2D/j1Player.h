@@ -119,6 +119,8 @@ public:
 						 // --status VARs
 	
 	unsigned int curr_dir;
+	uint		 walk_dir;
+
 	uint max_life_points = 6;
 	uint curr_life_points = 6;
 	uint power = 1;

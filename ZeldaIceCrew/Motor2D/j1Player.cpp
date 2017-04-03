@@ -868,26 +868,69 @@ Point<float> j1Player::GetPos()
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (link_coll == c1  && (c2->type == COLLIDER_WALL || c2->type == COLLIDER_BLOCK) && link_coll != nullptr)
-	{
-		
-		if (pos.y + PLAYER_COLL_Y_OFFSET >= c2->rect.y + c2->rect.h)
-		{
-			pos.y = c2->rect.y + c2->rect.h;
+	{	
+
+		SDL_Rect r = c2->rect;
+
+		switch (walk_dir) {
+		case Up:
+			pos.y = r.y + r.h - 16;
+			break;
+		case Down:
+			pos.y = r.y - link_coll->rect.h - 16;
+			break;
+		case Left:
+			pos.x = r.x + r.w;
+			break;
+		case Right:
+			pos.x = r.x - link_coll->rect.w;
+			break;
+		case Up_L:
+			if (pos.x > r.x) {
+				pos.x = r.x + r.w;
+			}
+			else {
+				pos.y = r.y + r.h - 16;
+			}
+			break;
+		case Up_R:
+			if(pos.x < r.x)
+				pos.x = r.x - link_coll->rect.w;
+			else
+				pos.y = r.y + r.h - 16;
+			break;
+		case Down_L:
+			if (pos.x < r.x)
+				pos.x = r.x + r.w;
+			else
+				pos.y = r.y - link_coll->rect.h - 16;
+			break;
+		case Down_R:
+			if (pos.x > r.x)
+				pos.x = r.x - link_coll->rect.w;
+			else
+				pos.y = r.y - link_coll->rect.h - 16;
+			break;
 		}
 
-		else if (pos.y + c1->rect.h - PLAYER_COLL_Y_OFFSET <= c2->rect.y)
-		{
-			pos.y = c2->rect.y - c1->rect.h;
-		}
-		else if (c1->rect.x + c1->rect.w >= c2->rect.x && c1->rect.x <= c2->rect.x)
-		{
-			pos.x = c2->rect.x - c1->rect.w ;
-		}
-		else if (pos.x  <= c2->rect.x + c2->rect.w)
-		{
-			//polish this one 
-			pos.x = c2->rect.x + c2->rect.w ;
-		}
+		//if (pos.y + PLAYER_COLL_Y_OFFSET >= c2->rect.y + c2->rect.h)
+		//{
+		//	pos.y = c2->rect.y + c2->rect.h;
+		//}
+		//
+		//else if (pos.y + c1->rect.h - PLAYER_COLL_Y_OFFSET <= c2->rect.y)
+		//{
+		//	pos.y = c2->rect.y - c1->rect.h;
+		//}
+		//else if (c1->rect.x + c1->rect.w >= c2->rect.x && c1->rect.x <= c2->rect.x)
+		//{
+		//	pos.x = c2->rect.x - c1->rect.w ;
+		//}
+		//else if (pos.x  <= c2->rect.x + c2->rect.w)
+		//{
+		//	//polish this one 
+		//	pos.x = c2->rect.x + c2->rect.w ;
+		//}
 	}
 
 	// Hit collision
@@ -960,6 +1003,7 @@ void j1Player::Movement()
 		if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
 			if (App->map->TileCheck(pos.x - pl_speed.x, pos.y - pl_speed.y, Up_L) == 0) //change dir
 			{
+				walk_dir = Up_L;
 				pos.y -= pl_speed.y * sqrt(2) / 2;
 				pos.x -= pl_speed.x * sqrt(2) / 2;
 			}
@@ -969,6 +1013,7 @@ void j1Player::Movement()
 		else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
 			if (App->map->TileCheck(pos.x - pl_speed.x, pos.y + pl_speed.y, Down_L) == 0) //change dir
 			{
+				walk_dir = Down_L;
 				pos.y += pl_speed.y * sqrt(2) / 2;
 				pos.x -= pl_speed.x * sqrt(2) / 2;
 
@@ -979,6 +1024,7 @@ void j1Player::Movement()
 		else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
 			if (App->map->TileCheck(pos.x + pl_speed.x, pos.y + pl_speed.y, Down_R) == 0)//change dir
 			{
+				walk_dir = Down_R;
 				pos.y += pl_speed.y * sqrt(2) / 2;
 				pos.x += pl_speed.x * sqrt(2) / 2;
 			}
@@ -989,6 +1035,7 @@ void j1Player::Movement()
 		else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
 			if (App->map->TileCheck(pos.x + pl_speed.x, pos.y - pl_speed.y, Up_R) == 0)//change dir
 			{
+				walk_dir = Up_R;
 				pos.y -= pl_speed.y * sqrt(2) / 2;
 				pos.x += pl_speed.x * sqrt(2) / 2;
 			}
@@ -1002,8 +1049,10 @@ void j1Player::Movement()
 			}
 			if (anim_override == false)
 				action_blit = Walk;
-			if (dir_override == false)
+			if (dir_override == false) {
 				curr_dir = Up;
+				walk_dir = Up;
+			}
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A)) {
@@ -1013,8 +1062,10 @@ void j1Player::Movement()
 			}
 			if (anim_override == false)
 				action_blit = Walk;
-			if (dir_override == false)
+			if (dir_override == false) {
 				curr_dir = Left;
+				walk_dir = Left;
+			}
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S))
 		{
@@ -1024,8 +1075,10 @@ void j1Player::Movement()
 			}
 			if (anim_override == false)
 				action_blit = Walk;
-			if (dir_override == false)
+			if (dir_override == false) {
 				curr_dir = Down;
+				walk_dir = Down;
+			}
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D))
 		{
@@ -1035,8 +1088,10 @@ void j1Player::Movement()
 			}
 			if (anim_override == false)
 				action_blit = Walk;
-			if (dir_override == false)
+			if (dir_override == false) {
 				curr_dir = Right;
+				walk_dir = Right;
+			}
 		}
 		else {
 			if (anim_override == false)
