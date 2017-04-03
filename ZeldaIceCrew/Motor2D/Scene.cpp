@@ -36,6 +36,24 @@ bool Scene::CleanUp()
 	return true;
 }
 
+Item * Scene::AddItem(uint subtype, float x, float y)
+{
+	Item* ret = App->entitymanager->CreateItem(subtype);
+	ret->pos = { x, y };
+
+	items.push_back(ret);
+
+	return ret;
+}
+
+Block * Scene::AddBlock(uint subtype, float x, float y)
+{
+	Block* nb = App->entitymanager->CreateBlock(subtype);
+	nb->pos = { x, y };
+
+	return nb;
+}
+
 Doorway * Scene::AddDoorway(uint subtype, uint dir, int x, int y)
 {
 	Doorway* dw = App->entitymanager->CreateDoorway(subtype, dir);

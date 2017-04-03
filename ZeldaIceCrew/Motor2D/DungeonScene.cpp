@@ -95,6 +95,23 @@ bool DungeonScene::Start()
 	AddEnemy(t_redsoldier, 800 + ROOM_W, 75 + ROOM_H);
 	AddEnemy(t_redsoldier, 850 + ROOM_W, 425 + ROOM_H);
 
+	// Block Start
+	// ROOM 0x1
+	// PUZZLE 0x1 01
+	AddItem(heart_container, 75 + 32 * 2, 65 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 0, 65 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 1, 65 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 3, 65 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 4, 65 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 1, 65 + 32 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 1, 65 + 32 * 2 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 0, 65 + 32 * 2 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 2, 65 + 32 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 2, 65 + 32 * 3 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 3, 65 + 32 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 3, 65 + 32 * 2 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 4, 65 + 32 * 2 + ROOM_H * 1);
+
 	// Items Start
 
 	//Item* new_item = nullptr;

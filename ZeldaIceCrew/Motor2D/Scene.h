@@ -70,8 +70,11 @@ public:
 		return true;
 	}
 
+	
+	Item* AddItem(uint subtype, float x, float y);
+	Block* AddBlock(uint subtype, float x, float y);
 	Doorway* AddDoorway(uint subtype, uint dir, int x, int y);
-	virtual Enemy* AddEnemy(int subtype, float x, float y);
+	Enemy* AddEnemy(int subtype, float x, float y);
 	virtual bool IsEnemy(Enemy* en);
 
 protected:

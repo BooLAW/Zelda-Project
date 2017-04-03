@@ -224,7 +224,7 @@ bool Statue::Start() {
 
 		animations[bush][idle].PushBack(sprites[bush][idle][0]);
 	}
-	HitBox = App->collisions->AddCollider({ 0, 0, 32, 49 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
 
 	subtype = statue;
 	return ret;
