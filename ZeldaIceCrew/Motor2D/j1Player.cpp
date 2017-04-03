@@ -890,21 +890,17 @@ bool j1Player::Update(float dt)
 		}
 		//!_Actions	
 
-<<<<<<< HEAD
-					App->hud->inv->active = false;
-					App->hud->inv->Disable();
-					App->audio->PlayFx(close_inv_fx);
-=======
-		if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+
+
+
+		if (App->input->GetKey(SDL_SCANCODE_TAB)== KEY_DOWN) {
 			if (!App->hud->inv->active) {
 				App->hud->inv->active = true;
 				App->audio->PlayFx(open_inv_fx);
 			}
 			else {
-
 				App->hud->inv->active = false;
 				App->audio->PlayFx(close_inv_fx);
->>>>>>> origin/Develop
 			}
 		}
 		//!_Graphics

@@ -151,6 +151,7 @@ bool HUD::Update(float dt)
 		}
 	}
 	else {
+		inv->Disable();
 		descriptions_rect->active = false;
 		item_description->active = false;
 		stats_rect->active = false;
