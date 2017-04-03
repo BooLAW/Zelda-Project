@@ -585,7 +585,6 @@ bool j1Player::Update(float dt)
 	
 
 	// Logic
-<<<<<<< HEAD
 	if (App->debug_mode == false) {
 		if (action == false) {
 			//Movement
@@ -598,26 +597,6 @@ bool j1Player::Update(float dt)
 					}
 					if (anim_override == false)
 						action_blit = Walk;
-=======
-	if (action == false) {
-		//Movement
-		{
-			if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y - pl_speed.y, Up_L) == 0) //change dir
-				{
-					pos.y -= pl_speed.y * sqrt(2) / 2;
-					pos.x -= pl_speed.x * sqrt(2) / 2;
-				}
-				if (anim_override == false)
-					action_blit = Walk;
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y + pl_speed.y, Down_L) == 0) //change dir
-				{
-					pos.y += pl_speed.y * sqrt(2) / 2;
-					pos.x -= pl_speed.x * sqrt(2) / 2;
-
->>>>>>> origin/Develop
 				}
 				else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
 					if (App->map->TileCheck(pos.x - pl_speed.x, pos.y + pl_speed.y, Down_L) == 0) //change dir
@@ -675,26 +654,11 @@ bool j1Player::Update(float dt)
 					{
 						pos.x -= pl_speed.x;
 					}
-
-
-<<<<<<< HEAD
 					if (anim_override == false)
 						action_blit = Walk;
 					if (dir_override == false)
 						curr_dir = Left;
-=======
-				if (anim_override == false)
-					action_blit = Walk;
-				if (dir_override == false)
-					curr_dir = Left;
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_S))
-			{
-				if (App->map->TileCheck(pos.x, pos.y + pl_speed.y, Down) == 0)
-				{
-					pos.y += pl_speed.y;
 
->>>>>>> origin/Develop
 				}
 				else if (App->input->GetKey(SDL_SCANCODE_S))
 				{
@@ -704,25 +668,10 @@ bool j1Player::Update(float dt)
 
 					}
 
-<<<<<<< HEAD
-
 					if (anim_override == false)
 						action_blit = Walk;
 					if (dir_override == false)
 						curr_dir = Down;
-=======
-				if (anim_override == false)
-					action_blit = Walk;
-				if (dir_override == false)
-					curr_dir = Down;
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_D))
-			{
-				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y, Right) == 0)
-				{
-					pos.x += pl_speed.x;
-
->>>>>>> origin/Develop
 				}
 				else if (App->input->GetKey(SDL_SCANCODE_D))
 				{
@@ -749,12 +698,7 @@ bool j1Player::Update(float dt)
 				//It would work for gamepad, but not for keyboard
 				//Objects will go here too, then they might trigger action or nah
 
-<<<<<<< HEAD
 				{
-=======
-			{
-				if(!App->hud->inv->active){
->>>>>>> origin/Develop
 					if (anim_override == false) {
 
 						if (App->input->GetKey(SDL_SCANCODE_UP)) {
@@ -802,27 +746,8 @@ bool j1Player::Update(float dt)
 							pl_speed.x = pl_speed.x / PL_SPD_ATK;
 							pl_speed.y = pl_speed.y / PL_SPD_ATK;
 						}
-<<<<<<< HEAD
 
 					}
-=======
-					}
-
-				}
-				else {
-					if (App->input->GetKey(SDL_SCANCODE_UP)==KEY_DOWN) {
-						App->hud->inv->Move_Sel_up();
-					}
-					else if (App->input->GetKey(SDL_SCANCODE_DOWN)==KEY_DOWN) {
-						App->hud->inv->Move_Sel_down();
-					}
-					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)==KEY_DOWN) {
-						App->hud->inv->Move_Sel_forward();
-					}
-					else if (App->input->GetKey(SDL_SCANCODE_LEFT)==KEY_DOWN) {
-						App->hud->inv->Move_Sel_backwards();
-					}
->>>>>>> origin/Develop
 				}
 			}
 		}
