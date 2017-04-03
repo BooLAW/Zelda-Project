@@ -12,6 +12,7 @@
 
 class Item;
 class Enemy;
+class Block;
 
 class Scene
 {
