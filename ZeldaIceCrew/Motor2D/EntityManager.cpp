@@ -106,12 +106,52 @@ Item * EntityManager::CreateItem(uint subtype)
 	return ret;
 }
 
+Block * EntityManager::CreateBlock(uint type)
+{
+	Block* ret = nullptr;
+	
+		switch (type) {
+		case bush:
+			ret = new Bush();
+			break;
+		case pot:
+			ret = new Pot();
+			break;
+		case statue:
+			ret = new Statue();
+			break;
+		case torch_bowl:
+			ret = new Torch_Bowl();
+			break;
+		/*case torch_pillar:
+			ret = new Torch_Pillar();
+			break;*/
+		case slabs:
+			ret = new Slab();
+			break;
+		default:
+			LOG("Unknown Block Type: %d", type);
+			break;
+									
+	}
+	
+	ret->type = block;
+	
+	ret->Start();
+	
+	App->entitymanager->PushEntity(ret);
+	
+	return ret;
+}
 
 bool EntityManager::Update(float dt) {
 
 	for (int i = 0; i < entities.size(); i++) {
 		entities[i]->Update(dt);
 	}
+
+	App->player->action_coll->SetPos(FARLANDS.x, FARLANDS.y);
+
 	return true;
 }
 

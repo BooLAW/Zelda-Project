@@ -11,13 +11,13 @@ j1Collision::j1Collision()
 
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_WALL][COLLIDER_BUSH] = true;
+	matrix[COLLIDER_WALL][COLLIDER_BLOCK] = true;
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_WALL][COLLIDER_PL_WEAPON] = false;
 	matrix[COLLIDER_WALL][COLLIDER_ITEM] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_BUSH] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_BLOCK] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PL_WEAPON] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_ITEM] = true;
@@ -33,13 +33,17 @@ j1Collision::j1Collision()
 
 
 
-	
+	matrix[COLLIDER_ACTION][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_ACTION][COLLIDER_ACTION] = false;
+	matrix[COLLIDER_ACTION][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_ACTION][COLLIDER_WALL] = true;
 
 
-	matrix[COLLIDER_BUSH][COLLIDER_BUSH] = false;
-	matrix[COLLIDER_BUSH][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_BUSH][COLLIDER_PL_WEAPON] = true;
-	matrix[COLLIDER_BUSH][COLLIDER_ITEM] = false;
+	matrix[COLLIDER_BLOCK][COLLIDER_BLOCK] = false;
+	matrix[COLLIDER_BLOCK][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_BLOCK][COLLIDER_PL_WEAPON] = true;
+	matrix[COLLIDER_BLOCK][COLLIDER_ITEM] = false;
+	matrix[COLLIDER_BLOCK][COLLIDER_ACTION] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_PL_WEAPON] = true;
@@ -129,11 +133,14 @@ void j1Collision::DebugDraw()
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
-		case COLLIDER_BUSH: // red
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
-			break;
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
+		case COLLIDER_BLOCK: // red
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case COLLIDER_ACTION:
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 		case COLLIDER_WALL: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);

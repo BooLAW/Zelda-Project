@@ -178,7 +178,25 @@ bool j1Player::Start()
 	//Pull Object
 	{
 	
-
+		sprites[Pull][Down][0] = { link_x * 7, link_y, link_width, link_height };
+		sprites[Pull][Down][1] = { link_x * 8, link_y, link_width, link_height };
+		sprites[Pull][Down][2] = { link_x * 9, link_y, link_width, link_height };
+		sprites[Pull][Down][3] = { link_x * 10, link_y, link_width, link_height };
+		
+		sprites[Pull][Up][0] = { link_x * 7, link_y * 2, link_width, link_height };
+		sprites[Pull][Up][1] = { link_x * 8, link_y * 2, link_width, link_height };
+		sprites[Pull][Up][2] = { link_x * 9, link_y * 2, link_width, link_height };
+		sprites[Pull][Up][3] = { link_x * 10, link_y * 2, link_width, link_height };
+		
+		sprites[Pull][Left][0] = { link_x * 7, link_y * 4, link_width, link_height };
+		sprites[Pull][Left][1] = { link_x * 8, link_y * 4, link_width, link_height };
+		sprites[Pull][Left][2] = { link_x * 9, link_y * 4, link_width, link_height };
+		sprites[Pull][Left][3] = { link_x * 10, link_y * 4, link_width, link_height };
+		
+		sprites[Pull][Right][3] = { link_x * 7, link_y * 3, link_width, link_height };
+		sprites[Pull][Right][2] = { link_x * 8, link_y * 3, link_width, link_height };
+		sprites[Pull][Right][1] = { link_x * 9, link_y * 3, link_width, link_height };
+		sprites[Pull][Right][0] = { link_x * 10, link_y * 3, link_width, link_height };
 	
 	}
 
@@ -402,6 +420,44 @@ bool j1Player::Start()
 
 	}
 
+	// Pull Objects
+	
+	{
+		
+					// Pull UP 
+		{
+			animations[Pull][Up].PushBack(sprites[Pull][Up][1]);
+			animations[Pull][Up].PushBack(sprites[Pull][Up][2]);
+			animations[Pull][Up].PushBack(sprites[Pull][Up][3]);
+			animations[Pull][Up].speed = 0.2f;
+		}
+		
+					// Pull DOWN
+		{
+			animations[Pull][Down].PushBack(sprites[Pull][Down][1]);
+			animations[Pull][Down].PushBack(sprites[Pull][Down][2]);
+			animations[Pull][Down].PushBack(sprites[Pull][Down][3]);
+			animations[Pull][Down].speed = 0.2f;
+		}
+		
+					// Pull LEFT
+		{
+			animations[Pull][Left].PushBack(sprites[Pull][Left][1]);
+			animations[Pull][Left].PushBack(sprites[Pull][Left][2]);
+			animations[Pull][Left].PushBack(sprites[Pull][Left][3]);
+			animations[Pull][Left].speed = 0.2f;
+		}
+		
+					// Pull RIGHT
+		{
+			animations[Pull][Right].PushBack(sprites[Pull][Right][3]);
+			animations[Pull][Right].PushBack(sprites[Pull][Right][2]);
+			animations[Pull][Right].PushBack(sprites[Pull][Right][1]);
+			animations[Pull][Right].speed = 0.2f;
+		}
+		
+	}
+
 	// Sword Slash
 	{
 		// Slash Down
@@ -485,6 +541,7 @@ bool j1Player::Start()
 	// Variable Settup
 
 	link_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 32, 32 }, COLLIDER_PLAYER, this);
+	action_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_ACTION);
 
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
@@ -505,6 +562,11 @@ bool j1Player::Start()
 		animations[Weapon_atk][i] = curr_weapon->anim[i];
 	}
 	
+	for (int i = 0; i < 5; i++) {
+		push[i] = false;
+		pull[i] = false;
+		
+	}
 
 	// !_Weapon SetUp
 
@@ -527,7 +589,7 @@ bool j1Player::Update(float dt)
 		//Movement
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y- pl_speed.y, Up_L) == 0) //change dir
+				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y - pl_speed.y, Up_L) == 0) //change dir
 				{
 					pos.y -= pl_speed.y * sqrt(2) / 2;
 					pos.x -= pl_speed.x * sqrt(2) / 2;
@@ -540,7 +602,7 @@ bool j1Player::Update(float dt)
 				{
 					pos.y += pl_speed.y * sqrt(2) / 2;
 					pos.x -= pl_speed.x * sqrt(2) / 2;
-				
+
 				}
 
 				if (anim_override == false)
@@ -603,7 +665,7 @@ bool j1Player::Update(float dt)
 				if (App->map->TileCheck(pos.x, pos.y + pl_speed.y, Down) == 0)
 				{
 					pos.y += pl_speed.y;
-					
+
 				}
 
 
@@ -617,7 +679,7 @@ bool j1Player::Update(float dt)
 				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y, Right) == 0)
 				{
 					pos.x += pl_speed.x;
-					
+
 				}
 
 
@@ -718,68 +780,82 @@ bool j1Player::Update(float dt)
 	// Actions
 	{
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
-		change_weapon = Q_Change;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
-		change_weapon = E_Change;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+			change_weapon = Q_Change;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+			change_weapon = E_Change;
+		}
 
-	if (change_weapon == true && action_blit != Weapon_atk) {
-		std::list<Weapon*>::iterator aux_it = std::find(weapons.begin(), weapons.end(), curr_weapon);
+		if (change_weapon == true && action_blit != Weapon_atk) {
+			std::list<Weapon*>::iterator aux_it = std::find(weapons.begin(), weapons.end(), curr_weapon);
 
-		switch (change_weapon) {
-		case Q_Change:
-			if (aux_it == weapons.begin()) {
-				aux_it = weapons.end();
-				aux_it--;
+			switch (change_weapon) {
+			case Q_Change:
+				if (aux_it == weapons.begin()) {
+					aux_it = weapons.end();
+					aux_it--;
+				}
+				else
+					aux_it--;
+				break;
+			case E_Change:
+				if (++aux_it == weapons.end()) {
+					aux_it = weapons.begin();
+				}
+				break;
+
 			}
-			else
-				aux_it--;
-			break;
-		case E_Change:
-			if (++aux_it == weapons.end()) {
-				aux_it = weapons.begin();
+
+			curr_weapon = aux_it._Ptr->_Myval;
+
+			for (int i = 0; i < LastDir; i++) {
+				animations[Weapon_atk][i] = curr_weapon->anim[i];
+				animations[Weapon_atk][i] = curr_weapon->anim[i];
 			}
-			break;
+
+			change_weapon = No_Change;
 
 		}
 
-		curr_weapon = aux_it._Ptr->_Myval;
-
-		for (int i = 0; i < LastDir; i++) {
-			animations[Weapon_atk][i] = curr_weapon->anim[i];
-			animations[Weapon_atk][i] = curr_weapon->anim[i];
-		}
-
-		change_weapon = No_Change;
-
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
 			//for now perform an action to see animation
 			//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
-			action = true;
-			action_blit = Pickup;
+			action_test = true;
+			switch (curr_dir) {
+			case Up:
+				action_coll->SetPos(pos.x, pos.y - App->map->data.tile_height + 20);
+				break;
+			case Left:
+				action_coll->SetPos(pos.x - App->map->data.tile_width, pos.y);
+				break;
+			case Right:
+				action_coll->SetPos(pos.x + App->map->data.tile_width, pos.y);
+				break;
+			case Down:
+				action_coll->SetPos(pos.x, pos.y + App->map->data.tile_height);
+				break;
+
+			}
 		}
 
-	}
-
-			//Idle
-	{	
-		//if(App->input->GetKey(SDL_SCANCODE))action_blit = Idle;
-	}
 
 
-	// !_Logic
+		//Idle
+		{
+			//if(App->input->GetKey(SDL_SCANCODE))action_blit = Idle;
+		}
 
-	// Graphics
-		if (action == false){
+
+		// !_Logic
+
+		// Graphics
+		if (action == false) {
 			//Movement or any action that does not stop movement
 
 			if (shield == true && (action_blit == Idle || action_blit == Walk)) //add cases for actions that can be done with or without shield
 				action_blit++;
-			
+
 			App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 			//!_Movement ""
 
@@ -792,14 +868,15 @@ bool j1Player::Update(float dt)
 				pl_speed.y = pl_speed.y * PL_SPD_ATK;
 			}
 		}
-	
 
-	//Actions
+
+		//Actions
 		else if (action == true) {
 
 			if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
 				action = false;
-				LOG("ACTIO=N FALSE");
+				LOG("ACTION = FALSE");
+				action_test = false;
 				animations[action_blit][curr_dir].Reset();
 				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[Idle][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
 			}
@@ -811,25 +888,30 @@ bool j1Player::Update(float dt)
 			}
 
 		}
-	//!_Actions	
-	
-			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
-				if (!App->hud->inv->active) {
-					App->hud->inv->active = true;
-					App->audio->PlayFx(open_inv_fx);
-				}
-				else{
+		//!_Actions	
 
+<<<<<<< HEAD
 					App->hud->inv->active = false;
 					App->hud->inv->Disable();
 					App->audio->PlayFx(close_inv_fx);
+=======
+		if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+			if (!App->hud->inv->active) {
+				App->hud->inv->active = true;
+				App->audio->PlayFx(open_inv_fx);
+			}
+			else {
+
+				App->hud->inv->active = false;
+				App->audio->PlayFx(close_inv_fx);
+>>>>>>> origin/Develop
 			}
 		}
-	//!_Graphics
+		//!_Graphics
 
 
-	// MODIFY COLLISION -------------------------------------------------
-		link_coll->SetPos(pos.x , pos.y + 16);
+		// MODIFY COLLISION -------------------------------------------------
+		link_coll->SetPos(pos.x, pos.y + 16);
 		/*if ((App->player->curr_life_points <= 2)&&(App->player->curr_life_points!=0)) {
 			App->audio->PlayFx(low_hp);
 		}*/
@@ -839,17 +921,17 @@ bool j1Player::Update(float dt)
 			App->audio->PlayFx(die_fx);
 		}
 
-	if (App->debug_mode == true) {
+		if (App->debug_mode == true) {
 			inmortal = true;
-	}
+		}
 
-	if (inmortal == true) {
-		App->render->DrawQuad({(int)pos.x - 2, (int)pos.y - 8, 36, 56 }, 255, 255, 255, 80);
-		if(App->debug_mode == false)
-			if (inmortal_timer.ReadMs() >= inmortal_time)
-				inmortal = false;
+		if (inmortal == true) {
+			App->render->DrawQuad({ (int)pos.x - 2, (int)pos.y - 8, 36, 56 }, 255, 255, 255, 80);
+			if (App->debug_mode == false)
+				if (inmortal_timer.ReadMs() >= inmortal_time)
+					inmortal = false;
+		}
 	}
-
 	return ret;
 }
 
@@ -962,7 +1044,7 @@ Point<float> j1Player::GetPos()
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (link_coll == c1  && (c2->type == COLLIDER_WALL || c2->type == COLLIDER_BUSH) && link_coll != nullptr)
+	if (link_coll == c1  && (c2->type == COLLIDER_WALL || c2->type == COLLIDER_BLOCK) && link_coll != nullptr)
 	{
 		
 		if (pos.y + PLAYER_COLL_Y_OFFSET >= c2->rect.y + c2->rect.h)
@@ -1021,6 +1103,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		//function to restart in the house()
 
 }
+
 void j1Player::DyingRestart()
 {
 	alive = true;

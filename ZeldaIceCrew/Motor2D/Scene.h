@@ -60,6 +60,7 @@ protected:
 public:
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
+	std::list<Block*> blocks;
 
 
 };

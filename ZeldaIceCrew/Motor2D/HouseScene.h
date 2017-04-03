@@ -46,8 +46,8 @@ private:
 	Collider* overworld_door;
 	
 	SDL_Texture* debug_tex;
-	std::vector<Entity*> Bushes;
-	SDL_Rect Bush_Rect;
+//	std::vector<Entity*> Bushes;
+//	SDL_Rect Bush_Rect;
 	Entity* House;
 	SDL_Rect House_Rect;
 	
