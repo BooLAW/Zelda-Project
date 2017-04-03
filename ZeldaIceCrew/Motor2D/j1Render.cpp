@@ -96,7 +96,7 @@ bool j1Render::Update(float dt) {
 	}
 
 
-	SetCamPos(-(App->player->GetPos().x - camera.w / 2), - (App->player->GetPos().y - camera.h / 2));
+	SetCamPos(0, - (App->player->GetPos().y - camera.h / 2));
 
 	DrawQuad(culling_cam, 255, 0, 0, 100, false);
 
