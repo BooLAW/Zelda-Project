@@ -515,37 +515,75 @@ bool BossChainBall::Start()
 {
 	bool ret = true;
 
+	int cb_n = 0;
+
 	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Mace knight.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Down][0] = { 2, 226 * 10 + 2, 211, 224 };
+		sprites[Enemy::EnDirection::Down][1] = { 218, 226 * 10 + 2, 208, 224 };
+		sprites[Enemy::EnDirection::Down][2] = { 2, 226 * 10 + 2, 211, 224 };
+		sprites[Enemy::EnDirection::Down][3] = { 434, 226 * 10 + 2, 205, 224 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Up][0] = { 2, 226 * 6 + 2, 211, 224 };
+		sprites[Enemy::EnDirection::Up][1] = { 215, 226 * 6 + 2, 211, 224 };
+		sprites[Enemy::EnDirection::Up][2] = { 2, 226 * 6 + 2, 211, 224 };
+		sprites[Enemy::EnDirection::Up][3] = { 215 * 2 - 2, 226 * 6 + 2, 211, 224 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 64, 56 };
+		sprites[Enemy::EnDirection::Left][0] = { 2, 2, 211, 224 };
+		sprites[Enemy::EnDirection::Left][1] = { 215, 4, 211, 222 };
+		sprites[Enemy::EnDirection::Left][2] = { 2, 2, 211, 224 };
+		sprites[Enemy::EnDirection::Left][3] = { 215 * 2 - 2, 4, 211, 222 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Right][0] = { 2, 2, 211, 224 };
+		sprites[Enemy::EnDirection::Right][1] = { 215, 4, 211, 222 };
+		sprites[Enemy::EnDirection::Right][2] = { 2, 2, 211, 224 };
+		sprites[Enemy::EnDirection::Right][3] = { 215 * 2 - 2, 4, 211, 222 };
 
-		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
-		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
 
-		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][0]);
-		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][1]);
+		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 5 - 2, 226 * 9 + 2, 211, 224 };
+		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 4 - 2, 226 * 9 + 2, 211, 224 };
+		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 3 - 2, 226 * 9 + 2, 211, 224 };
+		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 2 - 2, 226 * 9 + 2, 211, 224 };
+		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 1 - 2, 226 * 9 + 2, 211, 224 };
+		//ball_rect[circle_ball][Up][cb_n++] = { 2, 226 * 9 + 2, 211, 224 };
+		//
+		//cb_n = 0;
+		//
+		//ball_rect[circle_ball][Down][cb_n++] = { 215 * 4 - 6, 226 * 12 + 2, 211, 224 };
+		//ball_rect[circle_ball][Down][cb_n++] = { 215 * 4 - 6, 226 * 13 + 2, 211, 216 };
+		//ball_rect[circle_ball][Down][cb_n++] = { 215 * 3 - 4, 226 * 13 + 2, 211, 224 };
+		//ball_rect[circle_ball][Down][cb_n++] = { 215 * 2 - 2, 226 * 13 + 2, 211, 224 };
+		//ball_rect[circle_ball][Down][cb_n++] = { 215 * 1, 226 * 13 + 2, 211, 224 };
+		//ball_rect[circle_ball][Down][cb_n++] = { 2, 226 * 13 + 2, 211, 224 };
+		//ball_rect[circle_ball][Down][cb_n++] = { 2, 226 * 12 + 2, 211, 224 };
+		//ball_rect[circle_ball][Down][cb_n++] = { 215 * 5 - 8, 226 * 10 + 2, 211, 224 };
+		//
+		//cb_n = 0;
+		//
+		//ball_rect[circle_ball][Left][cb_n++] = { 215 * 5, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Left][cb_n++] = { 215 * 4, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Left][cb_n++] = { 215 * 3, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Left][cb_n++] = { 215 * 2, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Left][cb_n++] = { 215 * 1, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Left][cb_n++] = { 2, 226 * 3 + 2, 211, 224 };
+		//
+		//cb_n = 0;
+		//
+		//ball_rect[circle_ball][Right][cb_n++] = { 215 * 5, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Right][cb_n++] = { 215 * 4, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Right][cb_n++] = { 215 * 3, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Right][cb_n++] = { 215 * 2, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Right][cb_n++] = { 215 * 1, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Right][cb_n++] = { 2, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Right][cb_n++] = { 215 * 1, 226 * 3 + 2, 211, 224 };
+		//ball_rect[circle_ball][Right][cb_n++] = { 215 * 5, 226 * 3 + 2, 211, 224 };
 
-		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][0]);
-		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][1]);
-
-		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][0]);
-		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][1]);
 
 
 	}
@@ -554,10 +592,19 @@ bool BossChainBall::Start()
 	stats.Speed = 1;
 	stats.Power = 2;
 
-	stats.Flying = false;
-
-	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+	for (int i = 0; i < EnDirection::LastDir; i++) {
+		for (int k = 0; k < 4; k++)
+			animations[i].PushBack(sprites[i][k]);
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+	}
+
+	//for (int i = 0; i < EnDirection::LastDir; i++) {
+	//	for (int k = 0; k < cb_n; k++)
+	//		ball_anim[circle_ball][i].PushBack(ball_rect[circle_ball][i][k]);
+	//	ball_anim[circle_ball][i].speed = 0.01;
+	//}
+
+	stats.Flying = false;
 
 	HitBox = App->collisions->AddCollider({ 0, 0, 36, 56 }, COLLIDER_ENEMY);
 
@@ -648,6 +695,29 @@ void BossChainBall::SetRewards()
 {
 	reward_pool[pegasus_boots] = 95;
 	reward_pool[weapon_bow] = 5;
+}
+
+void BossChainBall::Draw()
+{
+	SDL_Rect* draw_rect;
+	
+	switch (state) {
+	//case circle_ball:
+	//	draw_rect = &ball_anim[circle_ball][curr_dir].GetCurrentFrame();
+	//	break;
+	default:
+		draw_rect = &animations[curr_dir].GetCurrentFrame();
+		break;
+	}
+
+	fPoint aux_pos = pos;
+	aux_pos.x -= 86;
+	aux_pos.y -= 86;
+
+	//App->render->Blit(GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
+	App->render->toDraw(GetTexture(), pos.y + HitBox->rect.h, aux_pos.x, aux_pos.y, draw_rect);
+	App->render->DrawQuad({ ball_collider->rect.x, ball_collider->rect.y, 32, 32 }, 255, 255, 255, 90);
+
 }
 
 void BossChainBall::CleanUp()

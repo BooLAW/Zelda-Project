@@ -159,6 +159,8 @@ public:
 	bool Attack();
 	void SetRewards();
 
+	void Draw();
+
 	void CleanUp();
 
 public:
@@ -174,6 +176,7 @@ public:
 		__LAST_BALL_STATE
 	}state;
 
+	SDL_Rect ball_rect[__LAST_BALL_STATE][EnDirection::LastDir][30];
 	Animation ball_anim[__LAST_BALL_STATE][EnDirection::LastDir];
 
 	uint ball_r;
