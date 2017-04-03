@@ -19,9 +19,6 @@ void Item::PassToInventory()
 
 	App->player->inventory.push_back(this);
 	App->hud->AddItem(this);
-
-	App->scene_manager->GetCurrentScene()->DestroyItem(this);
-
 	grabbed = true;
 
 }
@@ -37,21 +34,17 @@ void Item::Update(float dt)
 			if (App->player->rupees >= this->price) {
 				App->player->rupees -= price;
 				Upgrade();
-				App->audio->PlayFx(this->fx);
-				if (type == ENTITYTYPE::drop)
-				{
+				if (type == ENTITYTYPE::drop) {
 					App->entitymanager->DestroyEnity(this);
-				
-					/*Scene* curr_scene = App->scene_manager->GetCurrentScene();
-					if (curr_scene == App->scene_manager->village_scene)
-						App->scene_manager->village_scene->items.erase();
-					else if (curr_scene == App->scene_manager->village_scene)
-					{
-						App->scene_manager->village_scene->items.erase(),
-					}*/
 				}
-				else
-					PassToInventory();
+				else {
+					if (App->player->Find_inv(this)) {
+						App->entitymanager->DestroyEnity(this);
+					}
+					else {
+						PassToInventory();
+					}
+				}
 			}
 		}
 
@@ -115,6 +108,11 @@ void PowerGauntlet::Upgrade()
 	App->player->UpgradePWR(1);
 }
 
+ITEMTYPE PowerGauntlet::Subtype()
+{
+	return power_gauntlet;
+}
+
 
 void PowerGauntlet::SetUp()
 {
@@ -123,7 +121,7 @@ void PowerGauntlet::SetUp()
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
 	UI_rect = { 40, 326, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-
+	description = "Gauntlet test description";
 }
 
 void PegasusBoots::SetUp()
@@ -133,11 +131,16 @@ void PegasusBoots::SetUp()
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
 	UI_rect = { 0, 326, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "Boots test description";
 }
 
 void PegasusBoots::Upgrade()
 {
 	App->player->UpgradeSPD(1);
+}
+ITEMTYPE PegasusBoots::Subtype()
+{
+	return pegasus_boots;
 }
 
 void HeartContainer::SetUp()
@@ -154,6 +157,10 @@ void HeartContainer::SetUp()
 void HeartContainer::Upgrade()
 {
 	App->player->UpgradeHP(2);
+}
+ITEMTYPE HeartContainer::Subtype()
+{
+	return heart_container;
 }
 
 void DropHeart::SetUp()
@@ -172,6 +179,11 @@ void DropHeart::Upgrade()
 		App->player->curr_life_points = App->player->max_life_points;
 }
 
+ITEMTYPE DropHeart::Subtype()
+{
+	return drop_heart;
+}
+
 void DropPotion::SetUp()
 {
 	type = ENTITYTYPE::drop;
@@ -187,7 +199,10 @@ void DropPotion::Upgrade()
 	if (App->player->curr_life_points > App->player->max_life_points)
 		App->player->curr_life_points = App->player->max_life_points;
 }
-
+ITEMTYPE DropPotion::Subtype()
+{
+	return drop_potion;
+}
 void DropRupee::SetUp()
 {
 	type = ENTITYTYPE::drop;
@@ -204,6 +219,10 @@ void DropRupee::Upgrade()
 		App->player->rupees = App->player->max_rupees;
 
 }
+ITEMTYPE DropRupee::Subtype()
+{
+	return drop_rupee;
+}
 
 void DropFiveRupee::SetUp()
 {
@@ -218,6 +237,10 @@ void DropFiveRupee::Upgrade()
 	App->player->rupees += 5;
 	if (App->player->rupees > App->player->max_rupees)
 		App->player->rupees = App->player->max_rupees;
+}
+ITEMTYPE DropFiveRupee::Subtype()
+{
+	return drop_fiverupee;
 }
 
 void DropTenRupee::SetUp()
@@ -235,6 +258,12 @@ void DropTenRupee::Upgrade()
 		App->player->rupees = App->player->max_rupees;
 }
 
+ITEMTYPE DropTenRupee::Subtype()
+{
+	return drop_tenrupee;
+}
+
+
 void ItemBow::SetUp()
 {
 	type = ENTITYTYPE::item;
@@ -250,6 +279,11 @@ void ItemBow::Upgrade()
 	App->player->AddWeapon(t_bow);
 }
 
+ITEMTYPE ItemBow::Subtype()
+{
+	return weapon_bow;
+}
+
 void ItemSword::SetUp()
 {
 	type = ENTITYTYPE::item;
@@ -263,4 +297,9 @@ void ItemSword::SetUp()
 void ItemSword::Upgrade()
 {
 	App->player->AddWeapon(t_sword);
+}
+
+ITEMTYPE ItemSword::Subtype()
+{
+	return weapon_sword;
 }

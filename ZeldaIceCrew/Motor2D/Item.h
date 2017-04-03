@@ -71,7 +71,9 @@ public:
 	}
 
 	virtual void Upgrade() {};
-
+	virtual ITEMTYPE Subtype() {
+		return __LASTITEMTYPE;
+	};
 	void SetPositions(fPoint point) {
 		pos = point;
 		draw_pos = point;
@@ -92,6 +94,7 @@ public:
 	fPoint draw_pos = pos;
 	bool floating_up = false;
 	bool set = false;
+	std::string description;
 
 };
 
@@ -99,54 +102,64 @@ struct PowerGauntlet : public Item {
 public:
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct PegasusBoots : public Item {
 public:
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct HeartContainer : public Item {
 public:
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct DropHeart : public Item {
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct DropPotion : public Item {
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct DropRupee : public Item {
 
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct DropFiveRupee : public Item {
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct DropTenRupee : public Item {
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct ItemSword : public Item {
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 struct ItemBow : public Item {
 	void SetUp();
 	void Upgrade();
+	ITEMTYPE Subtype();
 };
 
 

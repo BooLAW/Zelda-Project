@@ -66,7 +66,7 @@ public:
 private:
 	Point<float> pos;
 	Point<float> last_pos;
-	Point<float> pl_speed;
+
 
 	SDL_Texture* Link_Movement = nullptr;
 
@@ -100,7 +100,7 @@ public:
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
 	void DyingRestart();
-
+	bool Find_inv(Item *item);
 	void PlayerInmortal(float time);
 
 	// base stats saving file
@@ -120,7 +120,7 @@ public:
 	uint bombs = 50;
 	uint arrows = 100;
 	std::list<Item*> inventory;
-
+	Point<float> pl_speed;
 	j1PerfTimer inmortal_timer;
 	float inmortal_time = 0;
 	bool inmortal = false;

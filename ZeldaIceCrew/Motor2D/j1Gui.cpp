@@ -166,16 +166,24 @@ void GuiImage::Update()
 		App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 	}
 
-	
+
 }
 
 void GuiText::Update()
 {
 	if (active) {
-		texture = App->font->Print(str.c_str());
-		App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
+		if (movable) {
+			texture = App->font->Print(str.c_str());
+			App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
 
-		App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+			App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+		}
+		else {
+			texture = App->font->Print(str.c_str());
+			App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
+
+			App->render->Blit(texture, pos.x, pos.y, &texture_rect);
+		}
 	}
 }
 
@@ -269,8 +277,8 @@ GuiInput::GuiInput() {
 
 Window::Window()
 {
-}
 
+}
 Window::~Window()
 {
 }
@@ -279,24 +287,42 @@ void Window::Update()
 {
 	if (active) {
 		App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
-			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
-				if (Inside(it._Ptr->_Myval)) {
-					it._Ptr->_Myval->active = true;
-				}
+		if (selector != nullptr) {
+			selector->active = true;
+			if (selected != nullptr) {
+				selector->pos.x = selected->pos.x - 5;
+				selector->pos.y = selected->pos.y - 5;
 			}
 		}
-	else {
+
 		for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
-			it._Ptr->_Myval->active = false;
+			if (Inside(it._Ptr->_Myval)) {
+				it._Ptr->_Myval->active = true;
+			}
 		}
 	}
 }
+
 
 void Window::CleanUp()
 {
 	if (!win_elements.empty()) {
 		win_elements.clear();
 	}
+}
+
+void Window::Disable()
+{
+	active = false;
+	if (!win_elements.empty()) {
+		selector->active = false;
+		selected = win_elements.front();
+		for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+			it._Ptr->_Myval->active = false;
+		}
+	}
+
+
 }
 
 void Window::AddElement(UIElement * element)
@@ -318,9 +344,10 @@ void Window::AddElement(UIElement * element)
 			element->pos.x = pos.x + offset_x;
 			element->pos.y = pos.y + offset_y;
 			win_elements.push_back(element);
+			selected = element;
 		}
 	}
-	
+
 }
 
 bool Window::Inside(UIElement*element)
@@ -341,4 +368,141 @@ void Window::SetOffset(int x, int y)
 {
 	offset_x = x;
 	offset_y = y;
+}
+
+void Window::Set_Sel_Rect(SDL_Rect rect)
+{
+	selector->texture_rect = rect;
+}
+
+void Window::Move_Sel_forward()
+{
+	selected = Next();
+}
+
+UIElement * Window::Next()
+{
+	if (!win_elements.empty()) {
+		if (selected == win_elements.back()) {
+			return win_elements.back();
+		}
+		else {
+			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+				if (selected == it._Ptr->_Myval) {
+					if (selected == win_elements.back()) {
+						return win_elements.back();
+					}
+					else {
+						it++;
+						if (it._Ptr != nullptr)
+							return it._Ptr->_Myval;
+						else
+							return win_elements.back();
+					}
+				}
+			}
+		}
+	}
+}
+
+UIElement * Window::Prev()
+{
+	if (!win_elements.empty()) {
+		if (selected == win_elements.front()) {
+			return win_elements.front();
+		}
+		for (std::list<UIElement*>::const_iterator it = win_elements.cend(); it != win_elements.cbegin(); it--) {
+			if (selected == it._Ptr->_Myval) {
+				if (selected == win_elements.front()) {
+					return win_elements.front();
+				}
+				else {
+					it--;
+					if (it._Ptr != nullptr)
+						return it._Ptr->_Myval;
+					else
+						return win_elements.back();
+				}
+			}
+
+
+		}
+	}
+	return nullptr;
+}
+
+UIElement * Window::current()
+{
+	return selected;
+}
+
+
+void Window::Sel_First()
+{
+	if (!win_elements.empty())
+		selected = win_elements.front();
+}
+
+void Window::Start_Sel(SDL_Rect rect)
+{
+	selected = nullptr;
+	selector = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	selector->pos.x = this->pos.x + offset_x - 5;
+	selector->pos.y = this->pos.y + offset_y - 5;
+	selector->active = false;
+	Set_Sel_Rect(rect);
+}
+
+bool Window::Empty()
+{
+	return win_elements.empty();
+}
+
+void Window::Move_Sel_backwards()
+{
+	selected = Prev();
+}
+
+void Window::Move_Sel_up()
+{
+
+	if (!win_elements.empty()) {
+		if (selected->pos.y != win_elements.front()->pos.y) {
+			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+				if (selected != nullptr) {
+					if ((selected->pos.y == it._Ptr->_Myval->pos.y + offset_y + it._Ptr->_Myval->texture_rect.h) && (selected->pos.x == it._Ptr->_Myval->pos.x)) {
+						selected = it._Ptr->_Myval;
+					}
+				}
+			}
+		}
+	}
+}
+
+void Window::Move_Sel_down()
+{
+	if (!win_elements.empty()) {
+		if (selected->pos.y != win_elements.back()->pos.y) {
+			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+				if (selected != nullptr) {
+					if ((selected->pos.y <= it._Ptr->_Myval->pos.y - offset_y - it._Ptr->_Myval->texture_rect.h) && (selected->pos.x == it._Ptr->_Myval->pos.x)) {
+						selected = it._Ptr->_Myval;
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+void Window::Select(UIElement * el)
+{
+	selected = el;
+}
+
+UIElement * Window::Selected()
+{
+	if (selected != nullptr)
+		return selected;
+	else return nullptr;
 }

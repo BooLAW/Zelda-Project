@@ -10,6 +10,7 @@
 
 #define CURSOR_WIDTH 2
 
+class Item;
 enum GuiType 
 {
 	image = 0,
@@ -28,7 +29,7 @@ public:
 
 	bool active;
 	bool movable;
-
+	Item* obj;
 	SDL_Texture* texture;
 	SDL_Rect texture_rect;
 	std::list<UIElement*> children;
@@ -109,12 +110,28 @@ public:
 	~Window();
 	void Update();
 	void CleanUp();
+	void Disable();
 	void AddElement(UIElement* element);
 	bool Inside(UIElement*element);
 	void Scroll();
 	void SetOffset(int x, int y);
+	void Set_Sel_Rect(SDL_Rect rect);
+	void Move_Sel_forward();
+	UIElement* Next();
+	UIElement* Prev();
+	UIElement* current();
+	void Sel_First();
+	void Start_Sel(SDL_Rect rect);
+	bool Empty();
+	void Move_Sel_backwards();
+	void Move_Sel_up();
+	void Move_Sel_down();
+	void Select(UIElement* el);
+	UIElement* Selected();
 	
 private:
+	GuiImage* selector;
+	UIElement* selected;
 	std::list<UIElement*>win_elements;
 	int offset_x;
 	int offset_y;

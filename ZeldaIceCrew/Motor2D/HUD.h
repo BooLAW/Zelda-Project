@@ -20,6 +20,7 @@ private:
 	void UpdateHP();
 public:
 	void AddItem(Item* obj);
+	SDL_Texture* icon_tex;
 	GuiImage* rupees;
 	GuiImage* arrows;
 	GuiImage* bombs;
@@ -29,6 +30,13 @@ public:
 	GuiText* bombs_num;
 	std::list<GuiImage*>lifes;
 	Window* inv;
+	GuiImage* descriptions_rect;
+	GuiText* item_description;
+	GuiImage* stats_rect;
+	GuiImage* speed;
+	GuiImage* power;
+	GuiText* speed_num;
+	GuiText* power_num;
 };
 
 

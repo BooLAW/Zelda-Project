@@ -1027,3 +1027,16 @@ void j1Player::PlayerInmortal(float time)
 	inmortal_time = time;
 	inmortal_timer.Start();
 }
+
+bool j1Player::Find_inv(Item* item)
+{
+	for (std::list<Item*>::const_iterator it = inventory.cbegin(); it != inventory.cend(); it++) {
+		if (item->Subtype() == it._Ptr->_Myval->Subtype()) {
+			return true;
+		}
+
+	}
+	return false;
+
+}
+
