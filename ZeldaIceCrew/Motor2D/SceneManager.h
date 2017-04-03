@@ -53,7 +53,7 @@ public:
 	ShopScene*						shop_scene = nullptr;
 private:
 	std::list<Scene*>				 scenes;
-	Scene*						 current_scene = nullptr;
+	Scene*							 current_scene = nullptr;
 
 };					
 

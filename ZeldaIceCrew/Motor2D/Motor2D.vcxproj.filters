@@ -46,6 +46,7 @@
     <ClCompile Include="ShopScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Doorway.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -101,6 +102,7 @@
     <ClInclude Include="ShopScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Doorway.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

@@ -40,15 +40,8 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
-	// Called before quitting
-	bool CleanUp();
-public:
-	bool down = false;
-	bool up = false;
-	bool right = false;
-	bool left = false;
+
 private:
-	Collider* boss_door;
 
 	bool boss_music = false;
 
@@ -56,6 +49,7 @@ private:
 	bool chain_boss_defeated = false;
 
 	Enemy* ChainBoss = nullptr;
+	Doorway* ChainBoss_dw = nullptr;
 
 	SDL_Texture* debug_tex;
 	bool ESC = false;

@@ -12,6 +12,7 @@ enum ENTITYTYPE
 	block,
 	enemy,
 	bomb,
+	doorway,
 	unknown
 };
 

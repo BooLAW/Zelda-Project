@@ -97,7 +97,8 @@ bool j1Render::Update(float dt) {
 	else {
 		//if (camera.x > App->scene_manager->GetCurrentScene()->camera_limit.x && camera.x < App->scene_manager->GetCurrentScene()->camera_limit.x + App->scene_manager->GetCurrentScene()->camera_limit.w)
 		//	if (camera.y > App->scene_manager->GetCurrentScene()->camera_limit.y && camera.y < App->scene_manager->GetCurrentScene()->camera_limit.y + App->scene_manager->GetCurrentScene()->camera_limit.y)
-				SetCamPos(-(App->player->GetPos().x - camera.w / 2), -(App->player->GetPos().y - camera.h / 2));
+		if(App->scene_manager->GetCurrentScene()->follow_cam == true)
+			SetCamPos(-(App->player->GetPos().x - camera.w / 2), -(App->player->GetPos().y - camera.h / 2));
 
 	}
 	return true;
@@ -105,6 +106,9 @@ bool j1Render::Update(float dt) {
 
 bool j1Render::PostUpdate()
 {
+
+	culling_cam.x = -camera.x;
+	culling_cam.y = -camera.y;
 
 	SDL_Rect cam = App->render->culling_cam;
 

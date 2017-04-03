@@ -122,6 +122,7 @@ bool VillageScene::Start()
 
 
 	App->player->SetPos(600, 500);
+	App->render->SetCamPos(-(App->player->GetPos().x - App->render->camera.w / 2), -(App->player->GetPos().y - App->render->camera.h / 2));
 	
 	App->audio->PlayMusic("Audio/Music/Forest_Theme.ogg");
 	App->audio->SetVolumeMusic(60);

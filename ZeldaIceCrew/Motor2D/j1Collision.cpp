@@ -26,10 +26,8 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_TO_HOUSE] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_TO_OVERWORLD_SHOP] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_TO_OVERWORLD_HOUSE] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_UP] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_DOWN] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_RIGHT] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_LEFT] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_DOORWAY] = true;
+
 
 
 
@@ -169,16 +167,7 @@ void j1Collision::DebugDraw()
 		case COLLIDER_TO_OVERWORLD_SHOP:
 			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
 			break;
-		case COLLIDER_DUNGEON_DOWN:
-			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
-			break;
-		case COLLIDER_DUNGEON_UP:
-			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
-			break;
-		case COLLIDER_DUNGEON_RIGHT:
-			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
-			break;
-		case COLLIDER_DUNGEON_LEFT:
+		case COLLIDER_DUNGEON_DOORWAY:
 			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
 			break;
 		case COLLIDER_TO_HOUSE:

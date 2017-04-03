@@ -1,7 +1,11 @@
 #include "Scene.h"
+#include "j1Map.h"
 
 bool Scene::CleanUp()
 {
+
+	App->map->CleanUp();
+
 	if (items.empty() == false) {
 		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
 			if(it._Ptr->_Myval != nullptr)
@@ -20,7 +24,28 @@ bool Scene::CleanUp()
 	if (blocks.empty() == false) {
 		blocks.clear();
 	}
+
+	for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
+	{
+		if(it._Ptr->_Myval != nullptr)
+			it._Ptr->_Myval->CleanUp();
+		//RELEASE(*it);
+	}
+	doorways.clear();
+
 	return true;
+}
+
+Doorway * Scene::AddDoorway(uint subtype, uint dir, int x, int y)
+{
+	Doorway* dw = App->entitymanager->CreateDoorway(subtype, dir);
+
+	dw->SetRoomPos(x, y);
+	//dw->pos = { (float)x, (float)y };
+
+	doorways.push_back(dw);
+
+	return dw;
 }
 
 Enemy* Scene::AddEnemy(int subtype, float x, float y)

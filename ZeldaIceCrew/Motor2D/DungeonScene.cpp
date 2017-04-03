@@ -46,22 +46,29 @@ bool DungeonScene::Start()
 
 	if (App->map->Load("Dungeon.tmx") == true)
 	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-
-		RELEASE_ARRAY(data);
+		//int w, h;
+		//uchar* data = NULL;
+		//if (App->map->CreateWalkabilityMap(w, h, &data))
+		//	App->pathfinding->SetMap(w, h, data);
+		//
+		//RELEASE_ARRAY(data);
 	}
-	//Bush_Rect = { 8*32,2*32,32,32 };
-	App->player->SetPosTile(2, 2);
 
 	App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
 	//Door Colliders
 		//Boss room
-	boss_door = App->collisions->AddCollider({ 32 * 16,32 * 16,32,10 }, COLLIDER_DUNGEON_DOWN, App->scene_manager);
+	
+	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 3);
+	Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 2);
+	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 2);
+	Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 1);
+	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 1);
+	ChainBoss_dw = Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 0);
+	Scene::AddDoorway(dw_dungeon, Direction::Right, 0, 1);
+	Scene::AddDoorway(dw_dungeon, Direction::Left, 1, 1);
+
 
 	// Enemy Start
 	
@@ -114,10 +121,14 @@ bool DungeonScene::Start()
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
 
+	App->render->camera.x = 0;
+	App->render->camera.y = -ROOM_H * 3;
+
 	App->player->SetPos(500, 400 + ROOM_H * 3);
 	App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
 	App->audio->SetVolumeMusic(40);
 
+	follow_cam = false;
 
 	return true;
 }
@@ -135,19 +146,19 @@ bool DungeonScene::PreUpdate()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->map->WorldToMap(p.x, p.y);
 
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-		{
-			if (origin_selected == true)
-			{
-				App->pathfinding->CreatePath(origin, p);
-				origin_selected = false;
-			}
-			else
-			{
-				origin = p;
-				origin_selected = true;
-			}
-		}
+		//if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		//{
+		//	if (origin_selected == true)
+		//	{
+		//		App->pathfinding->CreatePath(origin, p);
+		//		origin_selected = false;
+		//	}
+		//	else
+		//	{
+		//		origin = p;
+		//		origin_selected = true;
+		//	}
+		//}
 	}
 	return true;
 }
@@ -162,6 +173,9 @@ bool DungeonScene::Update(float dt)
 	if (chain_boss_defeated == false) {
 		if (IsInside(App->player->link_coll->rect, { 0, 0, ROOM_W, ROOM_H }) == true) {
 			
+			if (chain_boss_defeated == false)
+				ChainBoss_dw->open = false;
+
 			if (boss_music == false) {
 				App->audio->PlayMusic("Audio/Music/Hyrule_Castle.ogg");
 				boss_music = true;
@@ -194,34 +208,6 @@ bool DungeonScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
 
-	if (up == true)
-	{
-		App->render->camera.y += 1024;
-	//	App->render->culling_cam.y += 1024;
-		up = false;
-	}
-	if (down == true)
-	{
-		App->render->camera.y += 1024;
-	//	App->render->culling_cam.y -= 1024;
-		App->player->MovePos(500, 100);
-
-
-		down = false;
-	}
-	if (right == true)
-	{
-		App->render->camera.x += 576;
-	//	App->render->culling_cam.x += 576;
-
-		right = false;
-	}
-	if (left == true)
-	{
-		App->render->camera.x -= 576;
-	//	App->render->culling_cam.x -= 576;
-		left = false;
-	}
 	App->map->Draw();
 
 	// Debug pathfinding ------------------------------
@@ -259,34 +245,8 @@ bool DungeonScene::PostUpdate()
 		ESC = true;
 	}
 
+	if (ESC == true)
+		this->CleanUp();
+
 	return ret;
-}
-
-// Called before quitting
-bool DungeonScene::CleanUp()
-{
-	LOG("Freeing village scene");
-
-	if (ESC != true)
-	{
-		App->map->CleanUp();
-
-		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
-		{
-			App->entitymanager->DestroyEnity(*it);
-		}
-		enemies.clear();
-		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++)
-		{
-			App->entitymanager->DestroyEnity(*it);
-		}
-		items.clear();
-
-		if (debug_tex != NULL)
-			App->tex->UnLoad(debug_tex);
-	}
-
-
-
-	return true;
 }

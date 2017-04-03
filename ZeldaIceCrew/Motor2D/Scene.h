@@ -5,6 +5,7 @@
 #include "j1Render.h"
 #include "PugiXml\src\pugixml.hpp"
 
+#include "Doorway.h"
 #include "EntityManager.h"
 
 #include <string>
@@ -13,9 +14,13 @@
 #define ROOM_W 1024
 #define ROOM_H 576
 
+#define ROOM_CHANGE_X 175.0f
+#define ROOM_CHANGE_Y 175.0f
+
 class Item;
 class Enemy;
 class Block;
+class Doorway;
 
 class Scene
 {
@@ -65,6 +70,7 @@ public:
 		return true;
 	}
 
+	Doorway* AddDoorway(uint subtype, uint dir, int x, int y);
 	virtual Enemy* AddEnemy(int subtype, float x, float y);
 	virtual bool IsEnemy(Enemy* en);
 
@@ -75,9 +81,12 @@ protected:
 public:
 	SDL_Rect camera_limit = App->render->camera;
 
+	bool follow_cam = true;
+
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
 	std::list<Block*> blocks;
+	std::list<Doorway*> doorways;
 
 
 };
