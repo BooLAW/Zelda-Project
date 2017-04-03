@@ -91,8 +91,6 @@ void Item::CleanUp()
 		collider->to_delete = true;
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
-	if (UI_tex != nullptr)
-		App->tex->UnLoad(UI_tex);
 
 	App->scene_manager->GetCurrentScene()->DestroyItem(this);
 }
