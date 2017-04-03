@@ -4,7 +4,6 @@
 void Bow::Start()
 {
 	SetTexture("Sprites/Link_Movement.png");
-
 	sprites[Down][0] = { link_x * 16, link_y * 9, link_width, link_height };
 	sprites[Down][1] = { link_x * 17, link_y * 9, link_width, link_height };
 	sprites[Down][2] = { link_x * 18, link_y * 9, link_width, link_height };
@@ -28,12 +27,12 @@ void Bow::Start()
 	}
 
 	curr_dir = App->player->curr_dir;
-
+	UI_rect = { 362, 326, 32, 32 };
 };
 
 void Bow::Attack()
 {
-
+	
 	curr_dir = App->player->curr_dir;
 
 	fPoint pos = App->player->GetPos();
@@ -57,12 +56,17 @@ void Bow::Attack()
 
 	App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
 
-};
+}
+ITEMTYPE Bow::Subtype()
+{
+	return ITEMTYPE::weapon_bow;
+}
+;
 
 void Sword::Start()
 {
 	SetTexture("Sprites/Link_Movement.png");
-
+	UI_rect = { 219,364,26,26 };
 	sprites[Down][0] = { link_x * 7, link_y * 9, link_width, link_height };
 	sprites[Down][1] = { link_x * 8, link_y * 9, link_width, link_height };
 	sprites[Down][2] = { link_x * 9, link_y * 9, link_width, link_height };
@@ -138,4 +142,14 @@ void Sword::Attack()
 			break;
 	}
 
+}
+
+ITEMTYPE Sword::Subtype()
+{
+	return ITEMTYPE();
+}
+
+ITEMTYPE Weapon::Subtype()
+{
+	return ITEMTYPE::weapon_sword;
 }

@@ -12,6 +12,7 @@
 
 class Item;
 class Enemy;
+class Block;
 
 class Scene
 {
@@ -62,6 +63,8 @@ public:
 
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
+	std::list<Block*> blocks;
+
 
 };
 

@@ -20,7 +20,7 @@ private:
 	void UpdateHP();
 public:
 	void AddItem(Item* obj);
-	SDL_Texture* icon_tex;
+	SDL_Texture* items;
 	GuiImage* rupees;
 	GuiImage* arrows;
 	GuiImage* bombs;
@@ -37,6 +37,8 @@ public:
 	GuiImage* power;
 	GuiText* speed_num;
 	GuiText* power_num;
+	GuiImage* weapon_rect;
+	GuiImage* pl_weapon;
 };
 
 

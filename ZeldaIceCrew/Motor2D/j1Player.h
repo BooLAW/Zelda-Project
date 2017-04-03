@@ -54,20 +54,22 @@ public:
 		S_Charge_Idle,
 		S_Charge_Walk,
 		Pickup,
+		Hold_sth,
 		Pull,
 		Push,
 		Weapon_atk,
 		Slash,
+		Light,
 		Unknown,
 		__LAST
 	};
 	
 
-private:
+public:
 	Point<float> pos;
 	Point<float> last_pos;
 
-
+private:
 	SDL_Texture* Link_Movement = nullptr;
 
 	// All player sprites / animations
@@ -101,6 +103,7 @@ public:
 	Point<float> GetPos();
 	void DyingRestart();
 	bool Find_inv(Item *item);
+	bool Find_weapon(Item* item);
 	void PlayerInmortal(float time);
 
 	// base stats saving file
@@ -149,10 +152,13 @@ public:
 	int action_blit;
 	bool dir_override = false; // Overrides directions expressed if there is an action that keeps movement but changes view direction being done at the time
 	bool anim_override = false;
+	bool push[5];
+	bool pull[5];
+	bool action_test = false;
 
 	Collider* link_coll;
 	Collider* weapon_coll;
-
+	Collider* action_coll;
 };
 
 #endif // !__PLAYER_H__

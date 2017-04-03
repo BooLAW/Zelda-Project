@@ -16,5 +16,9 @@ bool Scene::CleanUp()
 		}
 		enemies.clear();
 	}
+
+	if (blocks.empty() == false) {
+		blocks.clear();
+	}
 	return true;
 }
