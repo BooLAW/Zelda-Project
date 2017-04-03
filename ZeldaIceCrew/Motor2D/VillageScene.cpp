@@ -41,7 +41,7 @@ bool VillageScene::Awake()
 // Called before the first frame
 bool VillageScene::Start()
 {
-	
+
 	if (App->map->Load("Overworld.tmx") == true)
 	{
 		int w, h;
@@ -124,6 +124,7 @@ bool VillageScene::Start()
 	App->player->SetPos(600, 500);
 	
 	App->audio->PlayMusic("Audio/Music/Forest_Theme.ogg");
+	App->audio->SetVolumeMusic(60);
 
 	return true;
 }

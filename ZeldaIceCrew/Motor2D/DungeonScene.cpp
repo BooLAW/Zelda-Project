@@ -105,6 +105,7 @@ bool DungeonScene::Start()
 
 	App->player->SetPos(500, 100);
 	App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
+	App->audio->SetVolumeMusic(40);
 
 
 	return true;
