@@ -208,6 +208,19 @@ void j1Render::ScaleCamBoundaries(int scale)
 	cam_boundaries.h += 2 * scale;
 }
 
+bool j1Render::IsCameraCull(SDL_Rect rect)
+{
+	bool ret = true;
+
+	SDL_Rect cam = culling_cam;
+
+	if (rect.x + rect.w >= cam.x && rect.x <= cam.x + cam.w)
+		if (rect.y + rect.h > cam.y && rect.y < cam.y + cam.h)
+			ret = false;
+
+	return ret;
+}
+
 void j1Render::toDraw(SDL_Texture * texture, float priority, int x, int y, SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y)
 {
 	Sprite* aux = new Sprite();

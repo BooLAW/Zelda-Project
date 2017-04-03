@@ -10,6 +10,9 @@
 #include <string>
 #include <list>
 
+#define ROOM_W 1024
+#define ROOM_H 576
+
 class Item;
 class Enemy;
 class Block;
@@ -26,6 +29,14 @@ public:
 	virtual bool Update(float dt) { return true; };
 	virtual bool PostUpdate() { return true; };
 	virtual bool CleanUp();
+
+	bool IsInside(SDL_Rect r1, SDL_Rect r2) {
+		if (r1.x + r1.w > r2.x && r1.x < r2.x + r2.w)
+			if (r1.y + r1.h > r2.y && r1.y < r2.y + r2.h)
+				return true;
+
+		return false;
+	}
 
 	virtual void DestroyItem(Item* ent) {
 		if (ent != nullptr) {
@@ -53,6 +64,9 @@ public:
 	{
 		return true;
 	}
+
+	virtual Enemy* AddEnemy(int subtype, float x, float y);
+	virtual bool IsEnemy(Enemy* en);
 
 protected:
 

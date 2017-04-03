@@ -584,6 +584,11 @@ bool j1Player::Update(float dt)
 	//}
 	
 
+	if(App->debug_mode == true)
+		if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_DOWN) {
+			App->player->SetPos(-App->render->camera.x + App->render->camera.w / 2, -App->render->camera.y + App->render->camera.h / 2);
+		}
+
 	// Logic
 	if (App->debug_mode == false) {
 		if (action == false) {

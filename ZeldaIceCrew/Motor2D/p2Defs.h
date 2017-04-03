@@ -11,6 +11,7 @@
 #endif
 #define NULL  0
 
+struct SDL_Rect;
 
 enum Direction {
 	FirstDir = 0,

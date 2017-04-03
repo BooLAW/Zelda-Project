@@ -48,20 +48,26 @@ void Enemy::SetRewards()
 void Enemy::Update(float dt)
 {
 
-	if (App->player->weapon_coll != nullptr)
-		if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
-			Hit(App->player->curr_dir, App->player->power);
-			App->audio->PlayFx(hit_fx);
-		}
-	
-	if (App->player->action_blit != j1Player::Weapon_atk)
-		hit = false;
+	if (App->render->IsCameraCull(this->HitBox->rect) == 0) {
 
+		if (App->player->weapon_coll != nullptr)
+			if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
+				Hit(App->player->curr_dir, App->player->power);
+				App->audio->PlayFx(hit_fx);
+			}
+
+		if (App->player->action_blit != j1Player::Weapon_atk)
+			hit = false;
+
+	if(App->debug_mode == false)
 		Move();
 
 		Attack();
 
 		Draw();
+
+	}
+
 	
 }
 
@@ -224,8 +230,8 @@ void Enemy::Draw()
 
 	SDL_Rect* draw_rect = &animations[curr_dir].GetCurrentFrame();
 	fPoint aux_pos = pos;
-	if (inverse_draw == true)
-		aux_pos.x = pos.x - draw_rect->w + HitBox->rect.w;
+	//if (inverse_draw == true)
+		//aux_pos.x = pos.x - draw_rect->w + HitBox->rect.w;
 
 	//App->render->Blit(GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
 	App->render->toDraw(GetTexture(), aux_pos.y + draw_rect->h, aux_pos.x, aux_pos.y, draw_rect);
@@ -588,7 +594,7 @@ bool BossChainBall::Start()
 
 	}
 
-	stats.Hp = 30;
+	stats.Hp = 60;
 	stats.Speed = 1;
 	stats.Power = 2;
 

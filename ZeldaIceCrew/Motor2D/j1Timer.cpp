@@ -15,7 +15,14 @@ j1Timer::j1Timer()
 // ---------------------------------------------
 void j1Timer::Start()
 {
-	started_at = SDL_GetTicks();
+	if (flag == false) {
+		started_at = SDL_GetTicks();
+	}
+}
+
+void j1Timer::Stop()
+{
+	flag = false;
 }
 
 // ---------------------------------------------

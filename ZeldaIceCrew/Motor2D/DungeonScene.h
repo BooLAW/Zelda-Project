@@ -50,6 +50,13 @@ public:
 private:
 	Collider* boss_door;
 
+	bool boss_music = false;
+
+	j1Timer boss_minions_spawn_time;
+	bool chain_boss_defeated = false;
+
+	Enemy* ChainBoss = nullptr;
+
 	SDL_Texture* debug_tex;
 	bool ESC = false;
 	Window* window;

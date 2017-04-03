@@ -68,6 +68,8 @@ public:
 	void ScaleCamBoundaries(int x, int y, int w, int h);
 	void ScaleCamBoundaries(int scale);
 
+	bool IsCameraCull(SDL_Rect rect);
+
 	void toDraw(SDL_Texture* texture, float priority, int x, int y, SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
 
 public:

@@ -55,6 +55,7 @@ private:
 	std::list<Scene*>				 scenes;
 	Scene*						 current_scene = nullptr;
 
-};
+};					
+
 
 #endif // __SCENEMANAGER_H__

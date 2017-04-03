@@ -41,6 +41,8 @@ bool DungeonScene::Awake()
 // Called before the first frame
 bool DungeonScene::Start()
 {
+	boss_music = false;
+	chain_boss_defeated = false;
 
 	if (App->map->Load("Dungeon.tmx") == true)
 	{
@@ -71,11 +73,20 @@ bool DungeonScene::Start()
 		// t_hinox,
 		// t_boss_ballandchain,
 
-	//Enemy* new_enemy = nullptr;
-	//new_enemy = App->entitymanager->CreateEnemy(t_boss_ballandchain);
-	//new_enemy->pos = { 600, 300 };
-	//
-	//enemies.push_back(new_enemy);
+	// ROOM 0x2
+	AddEnemy(t_bluesoldier, 200, 124 + ROOM_H * 2);
+	AddEnemy(t_bluesoldier, 800, 124 + ROOM_H * 2);
+	AddEnemy(t_hinox, 500, 74 + ROOM_H * 2);
+	// ROOM 0x1
+	AddEnemy(t_greensoldier, 150, 74 + ROOM_H);
+	AddEnemy(t_greensoldier, ROOM_W - 150, 74 + ROOM_H);
+	// ROOM 0x0
+	ChainBoss = AddEnemy(t_boss_ballandchain, 500, 120);
+	// ROOM 1x1
+	AddEnemy(t_greensoldier, 200 + ROOM_W, 75 + ROOM_H);
+	AddEnemy(t_greensoldier, 200 + ROOM_W, 425 + ROOM_H);
+	AddEnemy(t_redsoldier, 800 + ROOM_W, 75 + ROOM_H);
+	AddEnemy(t_redsoldier, 850 + ROOM_W, 425 + ROOM_H);
 
 	// Items Start
 
@@ -103,7 +114,7 @@ bool DungeonScene::Start()
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
 
-	App->player->SetPos(500, 100);
+	App->player->SetPos(500, 400);
 	App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
 	App->audio->SetVolumeMusic(40);
 
@@ -144,6 +155,30 @@ bool DungeonScene::PreUpdate()
 // Called each loop iteration
 bool DungeonScene::Update(float dt)
 {
+
+	if (chain_boss_defeated == false && IsEnemy(ChainBoss) == false)
+		chain_boss_defeated = true;
+
+	if (chain_boss_defeated == false) {
+		if (IsInside(App->player->link_coll->rect, { 0, 0, ROOM_W, ROOM_H }) == true) {
+			
+			if (boss_music == false) {
+				App->audio->PlayMusic("Audio/Music/Hyrule_Castle.ogg");
+				boss_music = true;
+			}
+
+			boss_minions_spawn_time.Start();
+			boss_minions_spawn_time.SetFlag(true);
+			if (boss_minions_spawn_time.ReadSec() >= 5) {
+				AddEnemy(t_greensoldier, 200, 124);
+				AddEnemy(t_greensoldier, 800, 124);
+				boss_minions_spawn_time.SetFlag(false);
+			}
+		}
+		else {
+			boss_music = false;
+		}
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
