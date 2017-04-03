@@ -94,12 +94,12 @@ bool j1Render::Update(float dt) {
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) 
 			App->render->MoveCam(200.0f * dt, 0);
 	}
+	else {
+		//if (camera.x > App->scene_manager->GetCurrentScene()->camera_limit.x && camera.x < App->scene_manager->GetCurrentScene()->camera_limit.x + App->scene_manager->GetCurrentScene()->camera_limit.w)
+		//	if (camera.y > App->scene_manager->GetCurrentScene()->camera_limit.y && camera.y < App->scene_manager->GetCurrentScene()->camera_limit.y + App->scene_manager->GetCurrentScene()->camera_limit.y)
+				SetCamPos(-(App->player->GetPos().x - camera.w / 2), -(App->player->GetPos().y - camera.h / 2));
 
-
-	SetCamPos(0, - (App->player->GetPos().y - camera.h / 2));
-
-	DrawQuad(culling_cam, 255, 0, 0, 100, false);
-
+	}
 	return true;
 }
 
@@ -165,10 +165,10 @@ void j1Render::SetBackgroundColor(SDL_Color color)
 
 void j1Render::MoveCam(float x, float y)
 {
-	camera.x += x;
+	camera.x -= x;
 	camera.y += y;
-	culling_cam.x -= x;
-	culling_cam.y += y;
+	culling_cam.x += x;
+	culling_cam.y -= y;
 }
 
 void j1Render::SetCamPos(float x, float y)

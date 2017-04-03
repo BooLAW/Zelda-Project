@@ -21,6 +21,7 @@ enum ITEMTYPE {
 	power_gauntlet = 0,
 	pegasus_boots,
 	heart_container,
+	boss_key,
 	__FIRSTDROP,
 	drop_heart,
 	drop_bomb,
@@ -72,7 +73,7 @@ public:
 
 	virtual void Upgrade() {};
 	virtual ITEMTYPE Subtype() {
-		return __LASTITEMTYPE;
+		return subtype;
 	};
 	void SetPositions(fPoint point) {
 		pos = point;
@@ -81,6 +82,8 @@ public:
 
 protected:
 	bool grabbed = false;
+
+	ITEMTYPE subtype;
 
 	uint price = NULL;
 	GuiText* priceTag;
@@ -102,64 +105,60 @@ struct PowerGauntlet : public Item {
 public:
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
 };
 
 struct PegasusBoots : public Item {
 public:
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
 };
 
 struct HeartContainer : public Item {
 public:
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
+};
+
+struct BossKey : public Item {
+public:
+	void SetUp();
+	void Upgrade();
 };
 
 struct DropHeart : public Item {
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
 };
 
 struct DropPotion : public Item {
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
 };
 
 struct DropRupee : public Item {
 
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
 };
 
 struct DropFiveRupee : public Item {
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
 };
 
 struct DropTenRupee : public Item {
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
 };
 
 struct ItemSword : public Item {
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
 };
 
 struct ItemBow : public Item {
 	void SetUp();
 	void Upgrade();
-	ITEMTYPE Subtype();
 };
 
 

@@ -64,6 +64,10 @@ Item * EntityManager::CreateItem(uint subtype)
 		ret = new HeartContainer();
 		ret->type = item;
 		break;
+	case boss_key:
+		ret = new BossKey();
+		ret->type = item;
+		break;
 	case drop_heart:
 		ret = new DropHeart();
 		ret->type = drop;

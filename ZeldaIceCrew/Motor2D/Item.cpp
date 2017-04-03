@@ -108,14 +108,9 @@ void PowerGauntlet::Upgrade()
 	App->player->UpgradePWR(1);
 }
 
-ITEMTYPE PowerGauntlet::Subtype()
-{
-	return power_gauntlet;
-}
-
-
 void PowerGauntlet::SetUp()
 {
+	subtype = power_gauntlet;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 36, 0, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
@@ -126,6 +121,7 @@ void PowerGauntlet::SetUp()
 
 void PegasusBoots::SetUp()
 {
+	subtype = pegasus_boots;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 0, 0, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
@@ -138,14 +134,10 @@ void PegasusBoots::Upgrade()
 {
 	App->player->UpgradeSPD(1);
 }
-ITEMTYPE PegasusBoots::Subtype()
-{
-	return pegasus_boots;
-}
 
 void HeartContainer::SetUp()
 {
-
+	subtype = heart_container;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 0, 146, 32, 32 };
 	UI_tex = App->tex->Load("Sprites/Items32x32.png");
@@ -158,13 +150,10 @@ void HeartContainer::Upgrade()
 {
 	App->player->UpgradeHP(2);
 }
-ITEMTYPE HeartContainer::Subtype()
-{
-	return heart_container;
-}
 
 void DropHeart::SetUp()
 {
+	subtype = drop_heart;
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 180, 40, 32, 26 };
@@ -179,17 +168,12 @@ void DropHeart::Upgrade()
 		App->player->curr_life_points = App->player->max_life_points;
 }
 
-ITEMTYPE DropHeart::Subtype()
-{
-	return drop_heart;
-}
-
 void DropPotion::SetUp()
 {
+	subtype = drop_potion;
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 144, 146, 28, 32 };
-
 
 }
 
@@ -199,12 +183,10 @@ void DropPotion::Upgrade()
 	if (App->player->curr_life_points > App->player->max_life_points)
 		App->player->curr_life_points = App->player->max_life_points;
 }
-ITEMTYPE DropPotion::Subtype()
-{
-	return drop_potion;
-}
+
 void DropRupee::SetUp()
 {
+	subtype = drop_rupee;
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 116, 254, 16, 28 };
@@ -219,13 +201,10 @@ void DropRupee::Upgrade()
 		App->player->rupees = App->player->max_rupees;
 
 }
-ITEMTYPE DropRupee::Subtype()
-{
-	return drop_rupee;
-}
 
 void DropFiveRupee::SetUp()
 {
+	subtype = drop_fiverupee;
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 224, 254, 16, 28 };
@@ -238,13 +217,10 @@ void DropFiveRupee::Upgrade()
 	if (App->player->rupees > App->player->max_rupees)
 		App->player->rupees = App->player->max_rupees;
 }
-ITEMTYPE DropFiveRupee::Subtype()
-{
-	return drop_fiverupee;
-}
 
 void DropTenRupee::SetUp()
 {
+	subtype = drop_tenrupee;
 	type = ENTITYTYPE::drop;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 332, 254, 16, 28 };
@@ -258,14 +234,10 @@ void DropTenRupee::Upgrade()
 		App->player->rupees = App->player->max_rupees;
 }
 
-ITEMTYPE DropTenRupee::Subtype()
-{
-	return drop_tenrupee;
-}
-
 
 void ItemBow::SetUp()
 {
+	subtype = weapon_bow;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 362, 74, 32, 32 };
@@ -279,13 +251,9 @@ void ItemBow::Upgrade()
 	App->player->AddWeapon(t_bow);
 }
 
-ITEMTYPE ItemBow::Subtype()
-{
-	return weapon_bow;
-}
-
 void ItemSword::SetUp()
 {
+	subtype = weapon_sword;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 252, 41, 32, 32 };
@@ -299,7 +267,19 @@ void ItemSword::Upgrade()
 	App->player->AddWeapon(t_sword);
 }
 
-ITEMTYPE ItemSword::Subtype()
+
+void BossKey::SetUp()
 {
-	return weapon_sword;
+	subtype = boss_key;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void BossKey::Upgrade()
+{
+	App->scene_manager->ChangeScene(App->scene_manager->house_scene);
 }

@@ -693,8 +693,7 @@ bool BossChainBall::Attack()
 
 void BossChainBall::SetRewards()
 {
-	reward_pool[pegasus_boots] = 95;
-	reward_pool[weapon_bow] = 5;
+	reward_pool[boss_key] = 100;
 }
 
 void BossChainBall::Draw()

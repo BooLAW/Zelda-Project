@@ -58,6 +58,8 @@ protected:
 	bool change_scene = false;
 
 public:
+	SDL_Rect camera_limit = App->render->camera;
+
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
 

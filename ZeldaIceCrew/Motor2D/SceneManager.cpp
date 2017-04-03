@@ -109,6 +109,13 @@ bool SceneManager::CleanUp()
 	if (current_scene != nullptr)
 		ret = current_scene->CleanUp();
 
+	for (std::list<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++) {
+		it._Ptr->_Myval->CleanUp();
+		RELEASE(it._Ptr->_Myval);
+	}
+
+	scenes.clear();
+
 	return ret;
 }
 

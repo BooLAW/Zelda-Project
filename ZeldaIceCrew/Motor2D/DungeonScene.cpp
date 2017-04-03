@@ -63,11 +63,6 @@ bool DungeonScene::Start()
 
 	// Enemy Start
 	
-	//Enemy* new_enemy = nullptr;
-	//new_enemy = App->entitymanager->CreateEnemy(t_boss_ballandchain);
-	//new_enemy->pos = { 600, 300 };
-	//
-	//enemies.push_back(new_enemy);
 
 	/// LLISTA D'ENEMICS:
 		// t_bluesoldier,
@@ -76,6 +71,11 @@ bool DungeonScene::Start()
 		// t_hinox,
 		// t_boss_ballandchain,
 
+	//Enemy* new_enemy = nullptr;
+	//new_enemy = App->entitymanager->CreateEnemy(t_boss_ballandchain);
+	//new_enemy->pos = { 600, 300 };
+	//
+	//enemies.push_back(new_enemy);
 
 	// Items Start
 
@@ -185,11 +185,6 @@ bool DungeonScene::Update(float dt)
 	}
 	App->map->Draw();
 
-	//for (int i = 0; i < Bushes.size(); i++) {
-	////	App->render->Blit(Bushes[i]->GetTexture(), Bushes[i]->pos.x, Bushes[i]->pos.y, &Bushes[i]->GetRect());
-	//
-	//}
-
 	// Debug pathfinding ------------------------------
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -210,9 +205,6 @@ bool DungeonScene::Update(float dt)
 		//App->render->Blit(debug_tex, p.x, p.y);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
-		App->player->curr_life_points -= 1;
-	}
 	return true;
 
 }

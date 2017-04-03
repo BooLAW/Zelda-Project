@@ -523,174 +523,175 @@ bool j1Player::Update(float dt)
 	
 
 	// Logic
-	if (action == false) {
-		//Movement
-		{
-			if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y- pl_speed.y, Up_L) == 0) //change dir
-				{
-					pos.y -= pl_speed.y * sqrt(2) / 2;
-					pos.x -= pl_speed.x * sqrt(2) / 2;
-				}
-				if (anim_override == false)
-					action_blit = Walk;
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y + pl_speed.y, Down_L) == 0) //change dir
-				{
-					pos.y += pl_speed.y * sqrt(2) / 2;
-					pos.x -= pl_speed.x * sqrt(2) / 2;
-				
-				}
-
-				if (anim_override == false)
-					action_blit = Walk;
-
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
-				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y + pl_speed.y, Down_R) == 0)//change dir
-				{
-					pos.y += pl_speed.y * sqrt(2) / 2;
-					pos.x += pl_speed.x * sqrt(2) / 2;
-
-				}
-
-
-				if (anim_override == false)
-					action_blit = Walk;
-
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
-				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y - pl_speed.y, Up_R) == 0)//change dir
-				{
-					pos.y -= pl_speed.y * sqrt(2) / 2;
-					pos.x += pl_speed.x * sqrt(2) / 2;
-				}
-
-
-				if (anim_override == false)
-					action_blit = Walk;
-
-
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_W)) {
-				if (App->map->TileCheck(pos.x, pos.y - pl_speed.y, Up) == 0)
-				{
-					pos.y -= pl_speed.y;
-				}
-
-
-				if (anim_override == false)
-					action_blit = Walk;
-				if (dir_override == false)
-					curr_dir = Up;
-
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_A)) {
-				if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Left) == 0)
-				{
-					pos.x -= pl_speed.x;
-				}
-
-
-				if (anim_override == false)
-					action_blit = Walk;
-				if (dir_override == false)
-					curr_dir = Left;
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_S))
+	if (App->debug_mode == false) {
+		if (action == false) {
+			//Movement
 			{
-				if (App->map->TileCheck(pos.x, pos.y + pl_speed.y, Down) == 0)
-				{
-					pos.y += pl_speed.y;
-					
+				if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
+					if (App->map->TileCheck(pos.x - pl_speed.x, pos.y - pl_speed.y, Up_L) == 0) //change dir
+					{
+						pos.y -= pl_speed.y * sqrt(2) / 2;
+						pos.x -= pl_speed.x * sqrt(2) / 2;
+					}
+					if (anim_override == false)
+						action_blit = Walk;
 				}
+				else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
+					if (App->map->TileCheck(pos.x - pl_speed.x, pos.y + pl_speed.y, Down_L) == 0) //change dir
+					{
+						pos.y += pl_speed.y * sqrt(2) / 2;
+						pos.x -= pl_speed.x * sqrt(2) / 2;
 
+					}
 
-				if (anim_override == false)
-					action_blit = Walk;
-				if (dir_override == false)
-					curr_dir = Down;
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_D))
-			{
-				if (App->map->TileCheck(pos.x + pl_speed.x, pos.y, Right) == 0)
-				{
-					pos.x += pl_speed.x;
-					
+					if (anim_override == false)
+						action_blit = Walk;
+
 				}
+				else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
+					if (App->map->TileCheck(pos.x + pl_speed.x, pos.y + pl_speed.y, Down_R) == 0)//change dir
+					{
+						pos.y += pl_speed.y * sqrt(2) / 2;
+						pos.x += pl_speed.x * sqrt(2) / 2;
+
+					}
 
 
-				if (anim_override == false)
-					action_blit = Walk;
-				if (dir_override == false)
-					curr_dir = Right;
-			}
-			else {
-				if (anim_override == false)
-					action_blit = Idle;
-			}
+					if (anim_override == false)
+						action_blit = Walk;
 
-			last_pos = pos;
-			// Direction/Atk
-			// This inherently bad, you are ignoring 6 more buttons (X Y L R SELECT START)
-			//It would work for gamepad, but not for keyboard
-			//Objects will go here too, then they might trigger action or nah
+				}
+				else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
+					if (App->map->TileCheck(pos.x + pl_speed.x, pos.y - pl_speed.y, Up_R) == 0)//change dir
+					{
+						pos.y -= pl_speed.y * sqrt(2) / 2;
+						pos.x += pl_speed.x * sqrt(2) / 2;
+					}
 
-			{
-				if (anim_override == false) {
 
-					if (App->input->GetKey(SDL_SCANCODE_UP)) {
+					if (anim_override == false)
+						action_blit = Walk;
+
+
+				}
+				else if (App->input->GetKey(SDL_SCANCODE_W)) {
+					if (App->map->TileCheck(pos.x, pos.y - pl_speed.y, Up) == 0)
+					{
+						pos.y -= pl_speed.y;
+					}
+
+
+					if (anim_override == false)
+						action_blit = Walk;
+					if (dir_override == false)
 						curr_dir = Up;
-						action_blit = Weapon_atk;
-						if (curr_weapon != nullptr)
-							curr_weapon->Attack();
-						App->audio->PlayFx(sword_fx);
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / PL_SPD_ATK;
-						pl_speed.y = pl_speed.y / PL_SPD_ATK;
-					}
-					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
-						curr_dir = Down;
-						action = false;
-						action_blit = Weapon_atk;
-						if (curr_weapon != nullptr)
-							curr_weapon->Attack();
-						App->audio->PlayFx(sword_fx);
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / PL_SPD_ATK;
-						pl_speed.y = pl_speed.y / PL_SPD_ATK;
-					}
-					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
-						curr_dir = Right;
-						action_blit = Weapon_atk;
-						if (curr_weapon != nullptr)
-							curr_weapon->Attack();
-						App->audio->PlayFx(sword_fx);
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / PL_SPD_ATK;
-						pl_speed.y = pl_speed.y / PL_SPD_ATK;
-					}
-					else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
-						curr_dir = Left;
-						action_blit = Weapon_atk;
-						if (curr_weapon != nullptr)
-							curr_weapon->Attack();
-						App->audio->PlayFx(sword_fx);
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / PL_SPD_ATK;
-						pl_speed.y = pl_speed.y / PL_SPD_ATK;
+
+				}
+				else if (App->input->GetKey(SDL_SCANCODE_A)) {
+					if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Left) == 0)
+					{
+						pos.x -= pl_speed.x;
 					}
 
+
+					if (anim_override == false)
+						action_blit = Walk;
+					if (dir_override == false)
+						curr_dir = Left;
+				}
+				else if (App->input->GetKey(SDL_SCANCODE_S))
+				{
+					if (App->map->TileCheck(pos.x, pos.y + pl_speed.y, Down) == 0)
+					{
+						pos.y += pl_speed.y;
+
+					}
+
+
+					if (anim_override == false)
+						action_blit = Walk;
+					if (dir_override == false)
+						curr_dir = Down;
+				}
+				else if (App->input->GetKey(SDL_SCANCODE_D))
+				{
+					if (App->map->TileCheck(pos.x + pl_speed.x, pos.y, Right) == 0)
+					{
+						pos.x += pl_speed.x;
+
+					}
+
+
+					if (anim_override == false)
+						action_blit = Walk;
+					if (dir_override == false)
+						curr_dir = Right;
+				}
+				else {
+					if (anim_override == false)
+						action_blit = Idle;
+				}
+
+				last_pos = pos;
+				// Direction/Atk
+				// This inherently bad, you are ignoring 6 more buttons (X Y L R SELECT START)
+				//It would work for gamepad, but not for keyboard
+				//Objects will go here too, then they might trigger action or nah
+
+				{
+					if (anim_override == false) {
+
+						if (App->input->GetKey(SDL_SCANCODE_UP)) {
+							curr_dir = Up;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						}
+						else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
+							curr_dir = Down;
+							action = false;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						}
+						else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
+							curr_dir = Right;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						}
+						else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
+							curr_dir = Left;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						}
+
+					}
 				}
 			}
 		}
 	}
-
 	if (Slashing == true) {
 		curr_weapon->Attack();
 		if (action_blit != Weapon_atk) {
