@@ -61,6 +61,7 @@ public:
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
 
+
 };
 
 #endif

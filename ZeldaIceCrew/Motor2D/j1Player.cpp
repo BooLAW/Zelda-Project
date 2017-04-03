@@ -638,54 +638,70 @@ bool j1Player::Update(float dt)
 			//Objects will go here too, then they might trigger action or nah
 
 			{
-				if (anim_override == false) {
+				if(!App->hud->inv->active){
+					if (anim_override == false) {
 
-					if (App->input->GetKey(SDL_SCANCODE_UP)) {
-						curr_dir = Up;
-						action_blit = Weapon_atk;
-						if (curr_weapon != nullptr)
-							curr_weapon->Attack();
-						App->audio->PlayFx(sword_fx);
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / PL_SPD_ATK;
-						pl_speed.y = pl_speed.y / PL_SPD_ATK;
-					}
-					else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
-						curr_dir = Down;
-						action = false;
-						action_blit = Weapon_atk;
-						if (curr_weapon != nullptr)
-							curr_weapon->Attack();
-						App->audio->PlayFx(sword_fx);
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / PL_SPD_ATK;
-						pl_speed.y = pl_speed.y / PL_SPD_ATK;
-					}
-					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
-						curr_dir = Right;
-						action_blit = Weapon_atk;
-						if (curr_weapon != nullptr)
-							curr_weapon->Attack();
-						App->audio->PlayFx(sword_fx);
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / PL_SPD_ATK;
-						pl_speed.y = pl_speed.y / PL_SPD_ATK;
-					}
-					else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
-						curr_dir = Left;
-						action_blit = Weapon_atk;
-						if (curr_weapon != nullptr)
-							curr_weapon->Attack();
-						App->audio->PlayFx(sword_fx);
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / PL_SPD_ATK;
-						pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						if (App->input->GetKey(SDL_SCANCODE_UP)) {
+							curr_dir = Up;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						}
+						else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
+							curr_dir = Down;
+							action = false;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						}
+						else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
+							curr_dir = Right;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						}
+						else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
+							curr_dir = Left;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						}
 					}
 
+				}
+				else {
+					if (App->input->GetKey(SDL_SCANCODE_UP)==KEY_DOWN) {
+						App->hud->inv->Move_Sel_up();
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_DOWN)==KEY_DOWN) {
+						App->hud->inv->Move_Sel_down();
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_RIGHT)==KEY_DOWN) {
+						App->hud->inv->Move_Sel_forward();
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_LEFT)==KEY_DOWN) {
+						App->hud->inv->Move_Sel_backwards();
+					}
 				}
 			}
 		}
@@ -805,6 +821,7 @@ bool j1Player::Update(float dt)
 				else{
 
 					App->hud->inv->active = false;
+					App->hud->inv->Disable();
 					App->audio->PlayFx(close_inv_fx);
 			}
 		}
@@ -898,7 +915,6 @@ void j1Player::UpgradeHP(int x)
 void j1Player::AddWeapon(uint weapon_t)
 {
 	Weapon* w = nullptr;
-
 	switch (weapon_t) {
 	case t_sword:
 		w = new Sword();
@@ -1031,6 +1047,18 @@ void j1Player::PlayerInmortal(float time)
 bool j1Player::Find_inv(Item* item)
 {
 	for (std::list<Item*>::const_iterator it = inventory.cbegin(); it != inventory.cend(); it++) {
+		if (item->Subtype() == it._Ptr->_Myval->Subtype()) {
+			return true;
+		}
+
+	}
+	return false;
+
+}
+
+bool j1Player::Find_weapon(Item* item)
+{
+	for (std::list<Weapon*>::const_iterator it = weapons.cbegin(); it !=weapons.cend(); it++) {
 		if (item->Subtype() == it._Ptr->_Myval->Subtype()) {
 			return true;
 		}

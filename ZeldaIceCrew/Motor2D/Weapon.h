@@ -20,7 +20,9 @@ public:
 	}
 
 public:
-	virtual void Start() {};
+	virtual void Start() {
+		UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	};
 	virtual void Attack() {};
 
 	virtual void CleanUp() {
@@ -36,11 +38,14 @@ public:
 	virtual void SetDir(uint dir) {
 		curr_dir = dir;
 	}
-
+	virtual ITEMTYPE Subtype();
 public:
 	SDL_Texture* graphics;
 	SDL_Rect sprites[Direction::LastDir][MAX_FRAMES];
 	Animation anim[Direction::LastDir];
+	SDL_Texture*	UI_tex = nullptr;
+	SDL_Rect		UI_rect;
+
 
 protected:
 	uint curr_dir;
@@ -56,13 +61,14 @@ struct Sword : public Weapon {
 public:
 	void Start();
 	void Attack();
+	ITEMTYPE Subtype();
 };
 
 struct Bow : public Weapon {
 public:
 	void Start();
 	void Attack();
-
+	ITEMTYPE Subtype();
 };
 
 #endif //!__WEAPON_H__

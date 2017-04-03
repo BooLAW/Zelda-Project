@@ -57,7 +57,7 @@ bool HouseScene::Start()
 		overworld_door = App->collisions->AddCollider({ 13 * 16,20 * 16,32,10 }, COLLIDER_TO_OVERWORLD_HOUSE, App->scene_manager);
 	
 
-
+		App->audio->PlayMusic("Home.ogg");
 	return true;
 }
 

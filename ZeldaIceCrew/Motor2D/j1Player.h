@@ -101,6 +101,7 @@ public:
 	Point<float> GetPos();
 	void DyingRestart();
 	bool Find_inv(Item *item);
+	bool Find_weapon(Item* item);
 	void PlayerInmortal(float time);
 
 	// base stats saving file

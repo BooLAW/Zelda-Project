@@ -4,7 +4,7 @@
 bool HUD::Start()
 {
 
-	icon_tex = App->tex->Load("Sprites/Items32x32.png");
+	items = App->tex->Load("Sprites/Items32x32.png");
 	bool ret = true;
 
 	rupees = (GuiImage*)App->gui->CreateElement(GuiType::image);
@@ -71,7 +71,7 @@ bool HUD::Start()
 	speed->pos = { stats_rect->pos.x + 10, stats_rect->pos.y + 5 };
 	speed->active = false;
 	speed->movable = true;
-	speed->texture = icon_tex;
+	speed->texture = App->hud->items;
 	speed->texture_rect = { 0, 326, 32, 32 };
 
 	speed_num = (GuiText*)App->gui->CreateElement(GuiType::text);
@@ -83,7 +83,7 @@ bool HUD::Start()
 	power->pos = { stats_rect->pos.x + 10, stats_rect->pos.y + speed->texture_rect.h + 20 };
 	power->active = false;
 	power->movable = true;
-	power->texture = icon_tex;
+	power->texture = App->hud->items;
 	power->texture_rect = { 40, 326, 32, 32 };
 
 	power_num = (GuiText*)App->gui->CreateElement(GuiType::text);
@@ -91,7 +91,19 @@ bool HUD::Start()
 	power_num->movable = true;
 	power_num->pos = { power->pos.x + 40,power->pos.y };
 
+	weapon_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	weapon_rect->pos = { 900,500 };
+	weapon_rect->active = true;
+	weapon_rect->movable = true;
+	weapon_rect->texture_rect = { 539,402,46,48 };
 
+	pl_weapon= (GuiImage*)App->gui->CreateElement(GuiType::image);
+	pl_weapon->pos.x = weapon_rect->pos.x + 10;
+	pl_weapon->pos.y = weapon_rect->pos.y + 10;
+	pl_weapon->active = true;
+	pl_weapon->movable = true;
+	pl_weapon->texture = App->hud->items;
+	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
 
 
 
@@ -108,6 +120,8 @@ bool HUD::Start()
 		}
 	}
 
+
+	
 	inv->SetOffset(30, 30);
 
 	return ret;
@@ -120,7 +134,7 @@ bool HUD::Update(float dt)
 	arrows_num->str = std::to_string(App->player->arrows);
 	speed_num->str = std::to_string(App->player->pl_speed.x);
 	power_num->str = std::to_string(App->player->power);
-
+	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
 	if (inv->active) {
 		descriptions_rect->active = true;
 		stats_rect->active = true;
@@ -128,9 +142,11 @@ bool HUD::Update(float dt)
 		speed_num->active = true;
 		power->active = true;
 		power_num->active = true;
-		if (inv->Selected() != nullptr) {
-			item_description->active = true;
-			item_description->str = inv->Selected()->obj->description;
+		if(!inv->Empty()){
+			if (inv->Selected() != nullptr) {
+				item_description->active = true;
+				item_description->str = inv->Selected()->obj->description;
+			}
 
 		}
 	}
@@ -150,7 +166,7 @@ bool HUD::Update(float dt)
 
 bool HUD::CleanUp()
 {
-	App->tex->UnLoad(icon_tex);
+	App->tex->UnLoad(items);
 	lifes.clear();
 	return true;
 }
@@ -216,7 +232,7 @@ void HUD::AddItem(Item* obj)
 	if (obj != nullptr) {
 		GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
 		img->texture_rect = obj->UI_rect;
-		img->texture = obj->UI_tex;
+		img->texture = items;
 		img->active = false;
 		img->obj = obj;
 

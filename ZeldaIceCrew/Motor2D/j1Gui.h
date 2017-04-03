@@ -54,7 +54,7 @@ public:
 	_TTF_Font* font;
 	SDL_Color color;
 	std::string str;
-
+	void Start();
 public:
 
 	GuiText() {}
@@ -169,7 +169,6 @@ public:
 	UIElement* CreateElement(GuiType type);
 	UIElement* CreateElement(GuiType type, const char* path);
 	void DeleteElements();
-
 	SDL_Texture* GetNonConstAtlas() const {
 		return atlas;
 	}

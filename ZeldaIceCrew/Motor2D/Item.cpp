@@ -33,15 +33,22 @@ void Item::Update(float dt)
 		if (collider->CheckCollision(App->player->link_coll->rect)) {
 			if (App->player->rupees >= this->price) {
 				App->player->rupees -= price;
-				Upgrade();
+				App->audio->PlayFx(this->fx);
+				this->priceTag->active = false;
 				if (type == ENTITYTYPE::drop) {
+					Upgrade();
 					App->entitymanager->DestroyEnity(this);
 				}
 				else {
 					if (App->player->Find_inv(this)) {
+						Upgrade();
+						App->entitymanager->DestroyEnity(this);
+					}
+					else if (App->player->Find_weapon(this)) {
 						App->entitymanager->DestroyEnity(this);
 					}
 					else {
+						Upgrade();
 						PassToInventory();
 					}
 				}
@@ -118,7 +125,7 @@ void PowerGauntlet::SetUp()
 {
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 36, 0, 32, 32 };
-	UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	UI_tex = App->hud->items;
 	UI_rect = { 40, 326, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Gauntlet test description";
@@ -128,7 +135,7 @@ void PegasusBoots::SetUp()
 {
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 0, 0, 32, 32 };
-	UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	UI_tex = App->hud->items;
 	UI_rect = { 0, 326, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Boots test description";
@@ -148,7 +155,7 @@ void HeartContainer::SetUp()
 
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 0, 146, 32, 32 };
-	UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	UI_tex = App->hud->items;
 	UI_rect = { 180, 362, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/heart_container_1.wav");
 
@@ -269,14 +276,16 @@ void ItemBow::SetUp()
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 362, 74, 32, 32 };
-	UI_tex = App->tex->Load("Sprites/Items32x32.png");
+	UI_tex = App->hud->items;
 	UI_rect = { 362, 326, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
 void ItemBow::Upgrade()
 {
-	App->player->AddWeapon(t_bow);
+	if (!App->player->Find_weapon(this)) {
+		App->player->AddWeapon(t_bow);
+	}
 }
 
 ITEMTYPE ItemBow::Subtype()
@@ -289,14 +298,17 @@ void ItemSword::SetUp()
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
 	rect = { 252, 41, 32, 32 };
-	UI_tex = tex;
+	UI_tex = App->hud->items;
 	UI_rect = rect;
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "";
 }
 
 void ItemSword::Upgrade()
 {
-	App->player->AddWeapon(t_sword);
+	if (!App->player->Find_weapon(this)) {
+		App->player->AddWeapon(t_sword);
+	}
 }
 
 ITEMTYPE ItemSword::Subtype()

@@ -31,7 +31,10 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load("gui/HUD.png");
-
+	
+	for (std::list<UIElement*>::const_iterator it = elements.cbegin(); it != elements.cend(); it++) {
+		it._Ptr->_Myval->Start();
+	}
 	return true;
 }
 
@@ -163,10 +166,15 @@ const SDL_Texture* j1Gui::GetAtlas() const
 void GuiImage::Update()
 {
 	if (active) {
-		App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+		App->render->toDraw(texture,10, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 	}
 
 
+}
+
+void GuiText::Start()
+{
+	font = App->font->Load("fonts/ReturnofGanon.ttf");
 }
 
 void GuiText::Update()
@@ -176,13 +184,15 @@ void GuiText::Update()
 			texture = App->font->Print(str.c_str());
 			App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
 
-			App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+			
+				App->render->toDraw(texture, 10, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+			
 		}
 		else {
 			texture = App->font->Print(str.c_str());
 			App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
 
-			App->render->Blit(texture, pos.x, pos.y, &texture_rect);
+			App->render->toDraw(texture,10, pos.x, pos.y, &texture_rect);
 		}
 	}
 }
@@ -286,7 +296,7 @@ Window::~Window()
 void Window::Update()
 {
 	if (active) {
-		App->render->Blit(texture, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+		App->render->toDraw(texture, 10, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 		if (selector != nullptr) {
 			selector->active = true;
 			if (selected != nullptr) {

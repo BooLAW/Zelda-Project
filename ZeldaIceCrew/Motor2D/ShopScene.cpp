@@ -57,6 +57,8 @@ bool ShopScene::Start()
 	App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
+
+	App->audio->PlayMusic("Audio/Music/Shop.ogg");
 	// Enemy Start
 
 
