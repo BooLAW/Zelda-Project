@@ -143,7 +143,7 @@ bool DungeonScene::Start()
 
 	App->player->SetPos(500, 400 + ROOM_H * 3);
 	App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
-	App->audio->SetVolumeMusic(40);
+	App->audio->SetVolumeMusic(80);
 
 	follow_cam = false;
 
