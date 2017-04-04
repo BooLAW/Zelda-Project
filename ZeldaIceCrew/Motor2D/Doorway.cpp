@@ -67,7 +67,7 @@ bool DwDungeon::Cross()
 bool DwHouse::Cross()
 {
 	App->scene_manager->ChangeScene(App->scene_manager->village_scene);
-	App->player->MovePos(-235, 1165);
+	App->player->MovePos(-235, 1200);
 	return true;
 }
 
