@@ -87,7 +87,7 @@ void Block::Reward()
 
 void Block::Update(float dt)
 {
-	HitBox->SetPos(pos.x, pos.y);
+	HitBox->SetPos(pos.x, pos.y + sprites[subtype][idle][0].h - 32);
 
 	/*if (App->player->link_coll != nullptr) {
 
@@ -161,7 +161,7 @@ bool Bush::Start() {
 	bool ret = true;
 	SetRewards();
 	anim = idle;
-
+	subtype = bush;
 	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
 	{
 		sprites[bush][idle][0] = { 0,0,32,32 };
@@ -181,7 +181,7 @@ bool Pot::Start() {
 	bool ret = true;
 	SetRewards();
 	anim = idle;
-
+	subtype = pot;
 	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
 	{
 		sprites[pot][idle][0] = { 32,32,32,32 };
@@ -201,6 +201,7 @@ bool Slab::Start() {
 	bool ret = true;
 	front = true;
 	back = true;
+	subtype = slabs;
 	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
 	anim = idle;
 	{
@@ -218,6 +219,7 @@ bool Slab::Start() {
 bool Statue::Start() {
 	bool ret = true;
 	front = true;
+	subtype = statue;
 	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
 	anim = idle;
 	{
@@ -235,6 +237,7 @@ bool Statue::Start() {
 
 bool Torch_Bowl::Start() {
 	bool ret = true;
+	subtype = torch_bowl;
 	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
 	anim = idle;
 
@@ -247,18 +250,18 @@ bool Torch_Bowl::Start() {
 void Block::Move() {
 	App->player->action_blit = App->player->Pull;
 	App->player->action = true;
-	HitBox->SetPos(pos.x, pos.y);
+	HitBox->SetPos(pos.x, pos.y + sprites[subtype][idle][0].h - 32);
 	if (App->player->curr_dir == Up) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_W)) {
 			App->player->action_blit = App->player->Push;
-			if (CheckSpace(pos.x, pos.y - App->player->pl_speed.y / 4)) {
+			if (CheckSpace(HitBox->rect.x, HitBox->rect.y - App->player->pl_speed.y / 4)) {
 				App->player->pos.y -= App->player->pl_speed.y / 4;
 				pos.y -= App->player->pl_speed.y / 4;
 			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_S)) {
 			App->player->action_blit = App->player->Pull;
-			if (CheckSpace(pos.x, pos.y + App->player->pl_speed.y / 4)) {
+			if (CheckSpace(HitBox->rect.x, HitBox->rect.y + App->player->pl_speed.y / 4)) {
 				App->player->pos.y += App->player->pl_speed.y / 4;
 				pos.y += App->player->pl_speed.y / 4;
 			}
@@ -268,14 +271,14 @@ void Block::Move() {
 	else if (App->player->curr_dir == Left) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_A)) {
 			App->player->action_blit = App->player->Push;
-			if (CheckSpace(pos.x - App->player->pl_speed.x / 4, pos.y)) {
+			if (CheckSpace(HitBox->rect.x - App->player->pl_speed.x / 4, HitBox->rect.y)) {
 				App->player->pos.x -= App->player->pl_speed.x / 4;
 				pos.x -= App->player->pl_speed.x / 4;
 			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_D)) {
 			App->player->action_blit = App->player->Pull;
-			if (CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y)) {
+			if (CheckSpace(HitBox->rect.x + App->player->pl_speed.x / 4, HitBox->rect.y)) {
 				App->player->pos.x += App->player->pl_speed.x / 4;
 				pos.x += App->player->pl_speed.x / 4;
 			}
@@ -286,14 +289,14 @@ void Block::Move() {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_D)) {
 			App->player->action_blit = App->player->Push;
 			bool test = CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y);
-			if (!CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y)) {
+			if (CheckSpace(HitBox->rect.x + App->player->pl_speed.x / 4, HitBox->rect.y)) {
 				App->player->pos.x += App->player->pl_speed.x / 4;
 				pos.x += App->player->pl_speed.x / 4;
 			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_A)) {
 			App->player->action_blit = App->player->Pull;
-			if (!CheckSpace(pos.x - App->player->pl_speed.x / 4, pos.y)) {
+			if (CheckSpace(HitBox->rect.x - App->player->pl_speed.x / 4, HitBox->rect.y)) {
 				App->player->pos.x -= App->player->pl_speed.x / 4;
 				pos.x -= App->player->pl_speed.x / 4;
 			}
@@ -303,14 +306,14 @@ void Block::Move() {
 	else if (App->player->curr_dir == Down) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_S)) {
 			App->player->action_blit = App->player->Push;
- 		if (!CheckSpace(pos.x, pos.y + App->player->pl_speed.y / 4)) {
+ 		if (CheckSpace(HitBox->rect.x, HitBox->rect.y + App->player->pl_speed.y / 4)) {
 				App->player->pos.y += App->player->pl_speed.y / 4;
 				pos.y += App->player->pl_speed.y / 4;
 			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_W)) {
 			App->player->action_blit = App->player->Pull;
-			if (!CheckSpace(pos.x, pos.y - App->player->pl_speed.y / 4)) {
+			if (CheckSpace(HitBox->rect.x, HitBox->rect.y - App->player->pl_speed.y / 4)) {
 				App->player->pos.y -= App->player->pl_speed.y / 4;
 				pos.y -= App->player->pl_speed.y / 4;
 			}

@@ -100,18 +100,18 @@ bool DungeonScene::Start()
 	// ROOM 0x1
 	// PUZZLE 0x1 01
 	AddItem(heart_container, 75 + 32 * 2, 65 + ROOM_H * 1);
-	AddBlock(slabs, 75 + 32 * 0, 65 + ROOM_H * 1);
+	AddBlock(slabs, 75 + 32 * 0,     65 + ROOM_H * 1);
 	AddBlock(slabs, 75 + 32 * 1 + 1, 65 + ROOM_H * 1);
 	AddBlock(slabs, 75 + 32 * 3 + 3, 65 + ROOM_H * 1);
 	AddBlock(slabs, 75 + 32 * 4 + 4, 65 + ROOM_H * 1);
 	AddBlock(slabs, 75 + 32 * 1 + 1, 65 + 32 + ROOM_H * 1);
-	AddBlock(slabs, 75 + 32 * 1 + 1, 65 + 32 * 2 + ROOM_H * 1);
-	AddBlock(slabs, 75 + 32 * 0, 65 + 32 * 2 + ROOM_H * 1);
 	AddBlock(slabs, 75 + 32 * 2 + 2, 65 + 32 + ROOM_H * 1);
-	AddBlock(slabs, 75 + 32 * 2 + 2, 65 + 32 * 3 + ROOM_H * 1);
 	AddBlock(slabs, 75 + 32 * 3 + 3, 65 + 32 + ROOM_H * 1);
-	AddBlock(slabs, 75 + 32 * 3 + 3, 65 + 32 * 2 + ROOM_H * 1);
+	AddBlock(slabs, 75 + 32 * 0,     65 + 32 * 2 + ROOM_H * 1);
 	AddBlock(slabs, 75 + 32 * 4 + 4, 65 + 32 * 2 + ROOM_H * 1);
+	AddBlock(slabs, 75 + 32 * 1 + 1, 65 + 32 * 3 + ROOM_H * 1);
+	AddBlock(slabs, 75 + 32 * 2 + 2, 65 + 32 * 3 + ROOM_H * 1);
+	AddBlock(slabs, 75 + 32 * 3 + 3, 65 + 32 * 3 + ROOM_H * 1);
 
 	// Items Start
 
