@@ -38,6 +38,12 @@ bool Entity::CheckSpace(float new_x, float new_y)
 			}
 		}
 
+		// Player Check
+		if (ret != false) {
+			if (scene->IsInside(r, App->player->mov_coll->rect))
+				ret = false;
+		}
+
 	}
 
 	return ret;

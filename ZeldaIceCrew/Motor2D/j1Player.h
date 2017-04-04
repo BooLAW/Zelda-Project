@@ -17,7 +17,7 @@
 
 #define PL_OFFSET 12
 #define PL_OFFSET_X 33
-#define PL_OFFSET_Y 35
+#define PL_OFFSET_Y 51
 
 #define MAX_SPD 5
 #define MAX_HP 24
@@ -110,6 +110,8 @@ public:
 	bool Find_weapon(Item* item);
 	void PlayerInmortal(float time);
 
+	bool CheckSpace(float new_x, float new_y);
+
 	// base stats saving file
 	// --status flags 
 	bool alive = true;
@@ -134,6 +136,7 @@ public:
 	float inmortal_time = 0;
 	bool inmortal = false;
 
+	Collider* mov_coll = nullptr;
 
   // Weapon Related
 	bool Slashing = false;

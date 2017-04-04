@@ -542,6 +542,7 @@ bool j1Player::Start()
 
 	link_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 32, 32 }, COLLIDER_PLAYER, this);
 	action_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_ACTION);
+	mov_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 24, 24 }, COLLIDER_PLAYER, this);
 
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
@@ -700,7 +701,8 @@ bool j1Player::Update(float dt)
 		//!_Graphics
 
 		// MODIFY COLLISION -------------------------------------------------
-		link_coll->SetPos(pos.x, pos.y + 16);
+		link_coll->SetPos(pos.x, pos.y);
+		mov_coll->SetPos(pos.x + (link_coll->rect.w / 2 - mov_coll->rect.w / 2), pos.y + (link_coll->rect.h / 2 - mov_coll->rect.h / 2));
 		/*if ((App->player->curr_life_points <= 2)&&(App->player->curr_life_points!=0)) {
 			App->audio->PlayFx(low_hp);
 		}*/
@@ -743,6 +745,10 @@ bool j1Player::CleanUp()
 		link_coll->to_delete = true;
 	if (weapon_coll != nullptr)
 		weapon_coll->to_delete = true;
+	if (action_coll != nullptr)
+		action_coll->to_delete = true;
+	if (mov_coll != nullptr)
+		mov_coll->to_delete = true;
 
 	for (std::list<Weapon*>::iterator it = weapons.begin(); it != weapons.end(); it++) {
 		if (it._Ptr->_Myval != nullptr)
@@ -929,6 +935,46 @@ void j1Player::PlayerInmortal(float time)
 	inmortal_timer.Start();
 }
 
+bool j1Player::CheckSpace(float new_x, float new_y)
+{
+	bool ret = true;
+
+	// TileCheck
+	ret = !App->map->TileCheck(new_x, new_y, Up);
+
+	if (ret != false) {
+		SDL_Rect r = mov_coll->rect;
+		r.x = new_x;
+		r.y = new_y;
+
+		Scene* scene = App->scene_manager->GetCurrentScene();
+
+		// Enemy Check
+		if (inmortal == false) {
+			for (std::list<Enemy*>::iterator it = scene->enemies.begin(); it != scene->enemies.end(); it++) {
+				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+					ret = false;
+					break;
+				}
+			}
+		}
+
+		// Block Check
+		if (ret != false) {
+
+			for (std::list<Block*>::iterator it = scene->blocks.begin(); it != scene->blocks.end(); it++) {
+				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+					ret = false;
+					break;
+				}
+			}
+		}
+
+	}
+
+	return ret;
+}
+
 bool j1Player::Find_inv(Item* item)
 {
 	for (std::list<Item*>::const_iterator it = inventory.cbegin(); it != inventory.cend(); it++) {
@@ -958,7 +1004,7 @@ void j1Player::Movement()
 	//Movement
 	
 		if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-			if (App->map->TileCheck(pos.x - pl_speed.x, pos.y - pl_speed.y, Up_L) == 0) //change dir
+			if (CheckSpace(pos.x - pl_speed.x, pos.y - pl_speed.y)) //change dir
 			{
 				walk_dir = Up_L;
 				pos.y -= pl_speed.y * sqrt(2) / 2;
@@ -968,7 +1014,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-			if (App->map->TileCheck(pos.x - pl_speed.x, pos.y + pl_speed.y, Down_L) == 0) //change dir
+			if (CheckSpace(pos.x - pl_speed.x, pos.y + pl_speed.y)) //change dir
 			{
 				walk_dir = Down_L;
 				pos.y += pl_speed.y * sqrt(2) / 2;
@@ -979,7 +1025,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
-			if (App->map->TileCheck(pos.x + pl_speed.x, pos.y + pl_speed.y, Down_R) == 0)//change dir
+			if (CheckSpace(pos.x + pl_speed.x, pos.y + pl_speed.y))//change dir
 			{
 				walk_dir = Down_R;
 				pos.y += pl_speed.y * sqrt(2) / 2;
@@ -990,7 +1036,7 @@ void j1Player::Movement()
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
-			if (App->map->TileCheck(pos.x + pl_speed.x, pos.y - pl_speed.y, Up_R) == 0)//change dir
+			if (CheckSpace(pos.x + pl_speed.x, pos.y - pl_speed.y))//change dir
 			{
 				walk_dir = Up_R;
 				pos.y -= pl_speed.y * sqrt(2) / 2;
@@ -1000,7 +1046,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_W)) {
-			if (App->map->TileCheck(pos.x, pos.y - pl_speed.y, Up) == 0)
+			if (CheckSpace(pos.x, pos.y - pl_speed.y))
 			{
 				pos.y -= pl_speed.y;
 			}
@@ -1013,7 +1059,7 @@ void j1Player::Movement()
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A)) {
-			if (App->map->TileCheck(pos.x - pl_speed.x, pos.y, Left) == 0)
+			if (CheckSpace(pos.x - pl_speed.x, pos.y))
 			{
 				pos.x -= pl_speed.x;
 			}
@@ -1026,7 +1072,7 @@ void j1Player::Movement()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S))
 		{
-			if (App->map->TileCheck(pos.x, pos.y + pl_speed.y, Down) == 0)
+			if (CheckSpace(pos.x, pos.y + pl_speed.y))
 			{
 				pos.y += pl_speed.y;
 			}
@@ -1039,7 +1085,7 @@ void j1Player::Movement()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D))
 		{
-			if (App->map->TileCheck(pos.x + pl_speed.x, pos.y, Right) == 0)
+			if (CheckSpace(pos.x + pl_speed.x, pos.y))
 			{
 				pos.x += pl_speed.x;
 			}

@@ -164,19 +164,19 @@ void Enemy::HitPlayer()
 
 		switch (curr_dir) {
 		case Up:
-			if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height, Direction::Up) == 0)
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height))
 				App->player->MovePos(0, -App->map->data.tile_height);
 			break;
 		case Down:
-			if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height, Direction::Down) == 0)
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height))
 				App->player->MovePos(0, App->map->data.tile_height);
 			break;
 		case Left:
-			if (App->map->TileCheck(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y, Direction::Left) == 0)
+			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y))
 				App->player->MovePos(-App->map->data.tile_width, 0);
 			break;
 		case Right:
-			if (App->map->TileCheck(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y, Direction::Right) == 0)
+			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y))
 				App->player->MovePos(App->map->data.tile_width, 0);
 			break;
 		}
@@ -197,19 +197,19 @@ void Enemy::HitPlayer(uint dmg)
 
 		switch (curr_dir) {
 		case Up:
-			if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height, Direction::Up) == 0)
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height))
 				App->player->MovePos(0, -App->map->data.tile_height);
 			break;
 		case Down:
-			if (App->map->TileCheck(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height, Direction::Down) == 0)
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height))
 				App->player->MovePos(0, App->map->data.tile_height);
 			break;
 		case Left:
-			if (App->map->TileCheck(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y, Direction::Left) == 0)
+			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y))
 				App->player->MovePos(-App->map->data.tile_width, 0);
 			break;
 		case Right:
-			if (App->map->TileCheck(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y, Direction::Right) == 0)
+			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y))
 				App->player->MovePos(App->map->data.tile_width, 0);
 			break;
 		}
