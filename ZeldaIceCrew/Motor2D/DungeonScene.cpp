@@ -68,6 +68,7 @@ bool DungeonScene::Start()
 	ChainBoss_dw = Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 0);
 	Scene::AddDoorway(dw_dungeon, Direction::Right, 0, 1);
 	Scene::AddDoorway(dw_dungeon, Direction::Left, 1, 1);
+	
 
 
 	// Enemy Start
@@ -226,26 +227,6 @@ bool DungeonScene::Update(float dt)
 		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
 
 	App->map->Draw();
-
-	// Debug pathfinding ------------------------------
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.size(),
-		map_coordinates.x, map_coordinates.y);
-
-	//int x, y;
-	if (App->debug == true) {
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-		p = App->map->MapToWorld(p.x, p.y);
-		App->win->SetTitle(title.GetString());
-		//App->render->Blit(debug_tex, p.x, p.y);
-	}
 
 	return true;
 

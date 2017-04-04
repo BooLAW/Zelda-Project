@@ -1,7 +1,7 @@
 #include "Doorway.h"
 #include "j1Player.h"
 #include "Entity.h"
-
+#include "VillageScene.h"
 void Doorway::Start()
 {
 	open = true;
@@ -62,9 +62,13 @@ bool DwDungeon::Cross()
 		App->player->MovePos(ROOM_CHANGE_X, 0);
 		break;
 	}
-	
 	return true;
-
+}
+bool DwHouse::Cross()
+{
+	App->scene_manager->ChangeScene(App->scene_manager->village_scene);
+	App->player->MovePos(-235, 1165);
+	return true;
 }
 
 void DwDungeon::SetRoomPos(int x, int y)
@@ -83,6 +87,11 @@ void DwDungeon::SetRoomPos(int x, int y)
 		pos = { (float)DOORWAY_RIGHT.x + ROOM_W * x, (float)DOORWAY_RIGHT.y + ROOM_H * y };
 		break;
 	}
+};
+void DwHouse::SetRoomPos(int x, int y)
+{
+	pos = { (float) x, (float) y };
+
 };
 
 void Doorway::CleanUp()

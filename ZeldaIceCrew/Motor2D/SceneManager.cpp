@@ -56,7 +56,7 @@ bool SceneManager::Start()
 
 	// -------------
 
-	current_scene = dungeon_scene;
+	current_scene = house_scene;
 
 	if (current_scene != nullptr)
 		ret = current_scene->Start();

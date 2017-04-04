@@ -55,7 +55,8 @@ bool HouseScene::Start()
 	
 	//we can do that with an iterator that recieves the positions readed from the xml file
 		overworld_door = App->collisions->AddCollider({ 13 * 16,20 * 16,32,10 }, COLLIDER_TO_OVERWORLD_HOUSE, App->scene_manager);
-	
+		Scene::AddDoorway(dw_house, Direction::Down, 13*16,20*16);
+
 		App->render->camera.x = 0;
 		App->render->camera.x = 0;
 
@@ -114,25 +115,6 @@ bool HouseScene::Update(float dt)
 
 	App->map->Draw();
 
-	// Debug pathfinding ------------------------------
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.size(),
-		map_coordinates.x, map_coordinates.y);
-
-	//int x, y;
-	if (App->debug == true) {
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-		p = App->map->MapToWorld(p.x, p.y);
-		App->win->SetTitle(title.GetString());
-		//App->render->Blit(debug_tex, p.x, p.y);
-	}
 	return true;
 }
 

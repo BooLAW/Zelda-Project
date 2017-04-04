@@ -14,6 +14,9 @@ class Entity;
 
 enum DOORWAYTYPE {
 	dw_dungeon = 0,
+	dw_shop,
+	dw_overworld,
+	dw_house,
 	dw_free,
 	__LAST_DOORWAYTYPE
 };
@@ -43,7 +46,12 @@ public:
 	bool Cross();
 
 	void SetRoomPos(int x, int y);
-
 };
 
+class DwHouse : public Doorway {
+public:
+	bool Cross();
+
+	void SetRoomPos(int x, int y);
+};
 #endif // !_DOORWAY_H__

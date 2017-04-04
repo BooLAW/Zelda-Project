@@ -181,7 +181,7 @@ private:
 	
 
 	SDL_Texture* atlas;
-	p2SString atlas_file_name;
+	std::string atlas_file_name;
 };
 
 #endif // __j1GUI_H__
