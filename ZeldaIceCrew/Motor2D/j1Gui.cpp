@@ -193,14 +193,14 @@ void GuiText::Update()
 			App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
 
 			
-				App->render->toDraw(texture, 10, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+				App->render->toDraw(texture, 0, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 			
 		}
 		else {
 			texture = App->font->Print(str.c_str());
 			App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
 
-			App->render->toDraw(texture,10, pos.x, pos.y, &texture_rect);
+			App->render->toDraw(texture,0, pos.x, pos.y, &texture_rect);
 		}
 	}
 }
@@ -346,6 +346,7 @@ void Window::Disable()
 void Window::AddElement(UIElement * element)
 {
 	if (element != nullptr) {
+		element-> max_prior = true;
 		if (!win_elements.empty()) {
 			if (win_elements.back()->pos.x + element->texture_rect.w + offset_x < pos.x + texture_rect.w - offset_x) {
 				element->pos.x = win_elements.back()->pos.x + element->texture_rect.w + offset_x;

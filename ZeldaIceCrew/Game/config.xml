@@ -11,7 +11,7 @@
   </renderer>
 
   <fonts>
-    <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="24"/>
+    <default_font file="fonts/ReturnofGanon.ttf" size="24"/>
   </fonts>
 
   <gui>

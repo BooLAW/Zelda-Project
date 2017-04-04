@@ -16,7 +16,7 @@ struct Sprite {
 	float speed;
 	double angle;
 	int pivot_x, pivot_y;
-
+	bool max_priority = false;
 	float priority;
 };
 
@@ -70,7 +70,7 @@ public:
 
 	bool IsCameraCull(SDL_Rect rect);
 
-	void toDraw(SDL_Texture* texture, float priority, int x, int y, SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
+	void toDraw(SDL_Texture* texture, float priority, int x, int y, SDL_Rect* section = NULL, bool prior = false, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
 
 public:
 
@@ -86,6 +86,7 @@ private:
 
 	// Sprites Drawing
 	std::deque<Sprite*> sprites_toDraw;
+	std::deque<Sprite*> max_prior_sprites;
 };
 
 #endif // __j1RENDER_H__

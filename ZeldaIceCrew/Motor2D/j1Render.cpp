@@ -127,7 +127,15 @@ bool j1Render::PostUpdate()
 		RELEASE(sprites_toDraw[it]);
 	}
 
+	for (int it = 0; it < max_prior_sprites.size(); it++) {
+		if (max_prior_sprites[it]->pos.x + max_prior_sprites[it]->rect->w >= cam.x && max_prior_sprites[it]->pos.x <= cam.x + cam.w)
+			if (max_prior_sprites[it]->pos.y + max_prior_sprites[it]->rect->h > cam.y && max_prior_sprites[it]->pos.y < cam.y + cam.h)
+				App->render->Blit(max_prior_sprites[it]->texture, max_prior_sprites[it]->pos.x, max_prior_sprites[it]->pos.y, max_prior_sprites[it]->rect);
+		RELEASE(max_prior_sprites[it]);
+	}
+
 	sprites_toDraw.clear();
+	max_prior_sprites.clear();
 
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
@@ -225,7 +233,7 @@ bool j1Render::IsCameraCull(SDL_Rect rect)
 	return ret;
 }
 
-void j1Render::toDraw(SDL_Texture * texture, float priority, int x, int y, SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y)
+void j1Render::toDraw(SDL_Texture * texture, float priority, int x, int y, SDL_Rect* section, bool prior , float speed, double angle, int pivot_x, int pivot_y)
 {
 	Sprite* aux = new Sprite();
 	aux->pos.x = x;
@@ -239,7 +247,13 @@ void j1Render::toDraw(SDL_Texture * texture, float priority, int x, int y, SDL_R
 	aux->pivot_x = pivot_x;
 	aux->pivot_y = pivot_y;
 
-	App->render->sprites_toDraw.push_back(aux);
+	if (prior == true) {
+		App->render->max_prior_sprites.push_back(aux);
+	}
+	else {
+
+		App->render->sprites_toDraw.push_back(aux);
+	}
 
 }
 

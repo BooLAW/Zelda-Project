@@ -34,6 +34,7 @@ public:
 	SDL_Rect texture_rect;
 	std::list<UIElement*> children;
 	UIElement* parent;
+	bool max_prior = false;
 public:
 	virtual void Start() {};
 	virtual void Update() {};
