@@ -182,7 +182,6 @@ bool EntityManager::Update(float dt) {
 		entities[i]->Update(dt);
 	}
 
-	App->player->action_coll->SetPos(FARLANDS.x, FARLANDS.y);
 
 	return true;
 }

@@ -152,7 +152,8 @@ void Block::Draw()
 	SDL_Rect draw_rect = animations[subtype][anim].GetCurrentFrame();
 	fPoint aux_pos = pos;
 
-	App->render->Blit(Entity::GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
+	//App->render->Blit(Entity::GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
+	App->render->toDraw(tex, pos.y + animations[subtype][anim].GetCurrentFrame().h, pos.x, pos.y, &animations[subtype][anim].GetCurrentFrame());
 }
 
 
@@ -220,11 +221,11 @@ bool Statue::Start() {
 	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
 	anim = idle;
 	{
-		sprites[bush][idle][0] = { 64,0,32,49 };
+		sprites[statue][idle][0] = { 64,0,32,49 };
 
 		//sprites[bush][broke][] = ;
 
-		animations[bush][idle].PushBack(sprites[bush][idle][0]);
+		animations[statue][idle].PushBack(sprites[statue][idle][0]);
 	}
 	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
 
@@ -284,14 +285,15 @@ void Block::Move() {
 	else if (App->player->curr_dir == Right) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_D)) {
 			App->player->action_blit = App->player->Push;
-			if (CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y)) {
+			bool test = CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y);
+			if (!CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y)) {
 				App->player->pos.x += App->player->pl_speed.x / 4;
 				pos.x += App->player->pl_speed.x / 4;
 			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_A)) {
 			App->player->action_blit = App->player->Pull;
-			if (CheckSpace(pos.x - App->player->pl_speed.x / 4, pos.y)) {
+			if (!CheckSpace(pos.x - App->player->pl_speed.x / 4, pos.y)) {
 				App->player->pos.x -= App->player->pl_speed.x / 4;
 				pos.x -= App->player->pl_speed.x / 4;
 			}
@@ -301,14 +303,14 @@ void Block::Move() {
 	else if (App->player->curr_dir == Down) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_S)) {
 			App->player->action_blit = App->player->Push;
-			if (CheckSpace(pos.x, pos.y + App->player->pl_speed.y / 4)) {
+ 		if (!CheckSpace(pos.x, pos.y + App->player->pl_speed.y / 4)) {
 				App->player->pos.y += App->player->pl_speed.y / 4;
 				pos.y += App->player->pl_speed.y / 4;
 			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_W)) {
 			App->player->action_blit = App->player->Pull;
-			if (CheckSpace(pos.x, pos.y - App->player->pl_speed.y / 4)) {
+			if (!CheckSpace(pos.x, pos.y - App->player->pl_speed.y / 4)) {
 				App->player->pos.y -= App->player->pl_speed.y / 4;
 				pos.y -= App->player->pl_speed.y / 4;
 			}
@@ -363,6 +365,7 @@ void Bush::Pick() {
 	App->player->action_blit = App->player->Pickup;
 	App->player->action = true;
 	picked = true;
+	Reward();
 	App->collisions->EraseCollider(this->HitBox);
 	this->pos = App->player->GetPos();
 

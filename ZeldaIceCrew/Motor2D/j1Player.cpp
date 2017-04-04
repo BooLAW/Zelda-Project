@@ -389,7 +389,7 @@ bool j1Player::Start()
 			animations[Push][Up].PushBack(sprites[Push][Up][0]);
 			animations[Push][Up].PushBack(sprites[Push][Up][1]);
 			animations[Push][Up].PushBack(sprites[Push][Up][2]);
-			animations[Push][Up].speed = 0.2f;
+			animations[Push][Up].speed = 0.05f;
 		}
 
 		// Push DOWN
@@ -397,7 +397,7 @@ bool j1Player::Start()
 			animations[Push][Down].PushBack(sprites[Push][Down][0]);
 			animations[Push][Down].PushBack(sprites[Push][Down][1]);
 			animations[Push][Down].PushBack(sprites[Push][Down][2]);
-			animations[Push][Down].speed = 0.2f;
+			animations[Push][Down].speed = 0.05f;
 		}
 
 		// Push LEFT
@@ -406,7 +406,7 @@ bool j1Player::Start()
 			animations[Push][Left].PushBack(sprites[Push][Left][1]);
 			animations[Push][Left].PushBack(sprites[Push][Left][2]);
 			animations[Push][Left].PushBack(sprites[Push][Left][3]);
-			animations[Push][Left].speed = 0.2f;
+			animations[Push][Left].speed = 0.05f;
 		}
 
 		// Push RIGHT
@@ -415,7 +415,7 @@ bool j1Player::Start()
 			animations[Push][Right].PushBack(sprites[Push][Right][1]);
 			animations[Push][Right].PushBack(sprites[Push][Right][2]);
 			animations[Push][Right].PushBack(sprites[Push][Right][3]);
-			animations[Push][Right].speed = 0.2f;
+			animations[Push][Right].speed = 0.05f;
 		}
 
 	}
@@ -429,7 +429,7 @@ bool j1Player::Start()
 			animations[Pull][Up].PushBack(sprites[Pull][Up][1]);
 			animations[Pull][Up].PushBack(sprites[Pull][Up][2]);
 			animations[Pull][Up].PushBack(sprites[Pull][Up][3]);
-			animations[Pull][Up].speed = 0.2f;
+			animations[Pull][Up].speed = 0.05f;
 		}
 		
 					// Pull DOWN
@@ -437,7 +437,7 @@ bool j1Player::Start()
 			animations[Pull][Down].PushBack(sprites[Pull][Down][1]);
 			animations[Pull][Down].PushBack(sprites[Pull][Down][2]);
 			animations[Pull][Down].PushBack(sprites[Pull][Down][3]);
-			animations[Pull][Down].speed = 0.2f;
+			animations[Pull][Down].speed = 0.05f;
 		}
 		
 					// Pull LEFT
@@ -445,7 +445,7 @@ bool j1Player::Start()
 			animations[Pull][Left].PushBack(sprites[Pull][Left][1]);
 			animations[Pull][Left].PushBack(sprites[Pull][Left][2]);
 			animations[Pull][Left].PushBack(sprites[Pull][Left][3]);
-			animations[Pull][Left].speed = 0.2f;
+			animations[Pull][Left].speed = 0.05f;
 		}
 		
 					// Pull RIGHT
@@ -453,7 +453,7 @@ bool j1Player::Start()
 			animations[Pull][Right].PushBack(sprites[Pull][Right][3]);
 			animations[Pull][Right].PushBack(sprites[Pull][Right][2]);
 			animations[Pull][Right].PushBack(sprites[Pull][Right][1]);
-			animations[Pull][Right].speed = 0.2f;
+			animations[Pull][Right].speed = 0.05f;
 		}
 		
 	}
@@ -541,7 +541,7 @@ bool j1Player::Start()
 	// Variable Settup
 
 	link_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 32, 32 }, COLLIDER_PLAYER, this);
-	action_coll = App->collisions->AddCollider(WeaponRect, COLLIDER_ACTION);
+	action_coll = App->collisions->AddCollider({ FARLANDS.x,FARLANDS.y, WPN_COL_W / 4, WPN_COL_H / 4 }, COLLIDER_ACTION);
 	mov_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 24, 24 }, COLLIDER_PLAYER, this);
 
 	pl_speed.x = 2.5;
@@ -616,26 +616,30 @@ bool j1Player::Update(float dt)
 			change_weapon = E_Change;
 		}
 		ChangeWeapon();
+
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
 			//for now perform an action to see animation
 			//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
 			action_test = true;
 			switch (curr_dir) {
 			case Up:
-				action_coll->SetPos(pos.x, pos.y - App->map->data.tile_height + 20);
+				App->player->action_coll->rect = { (int)App->player->GetPos().x, (int)App->player->link_coll->rect.y - WPN_COL_W / 4, WPN_COL_H / 4, WPN_COL_W / 4 };
+				break; 
+			case Down:
+				App->player->action_coll->rect = { (int)App->player->GetPos().x, (int)App->player->link_coll->rect.y + App->player->link_coll->rect.h, WPN_COL_H / 4, WPN_COL_W / 4  };
 				break;
 			case Left:
-				action_coll->SetPos(pos.x - App->map->data.tile_width, pos.y);
+				App->player->action_coll->rect = { (int)App->player->GetPos().x - WPN_COL_W / 4, (int)App->player->GetPos().y + (App->player->link_coll->rect.w / 2) - (WPN_COL_H / 8), WPN_COL_W / 4, WPN_COL_H / 4 };
 				break;
 			case Right:
-				action_coll->SetPos(pos.x + App->map->data.tile_width, pos.y);
-				break;
-			case Down:
-				action_coll->SetPos(pos.x, pos.y + App->map->data.tile_height);
+				App->player->action_coll->rect = { (int)App->player->GetPos().x + App->player->link_coll->rect.w, (int)App->player->GetPos().y + (App->player->link_coll->rect.w / 2) - (WPN_COL_H / 8), WPN_COL_W / 4, WPN_COL_H / 4 };
 				break;
 
 			}
 		}
+
+		else
+			action_coll->SetPos(FARLANDS.x, FARLANDS.y);
 
 
 
