@@ -23,7 +23,7 @@ void Bow::Start()
 	for (int i = 0; i < LastDir; i++) {
 		for(int k = 0; k < 3; k++)
 			anim[i].PushBack(sprites[i][k]);
-		anim[i].speed = 0.1;
+		anim[i].speed = 0.075;
 	}
 
 	curr_dir = App->player->curr_dir;
@@ -98,7 +98,7 @@ void Sword::Start()
 			for (int k = 0; k < 9; k++)
 				anim[i].PushBack(sprites[i][k]);
 		
-		anim[i].speed = 0.4;
+		anim[i].speed = 0.35;
 	}
 
 	anim[Down].speed = anim[Down].speed * 6 / 9;
