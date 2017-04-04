@@ -193,8 +193,6 @@ class Hinox : public Enemy {
 public:
 	bool Start();
 	void SetRewards();
-
-	bool Attack();
 };
 
 #endif // !__ENEMY_H__

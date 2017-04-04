@@ -87,6 +87,7 @@ void Block::Reward()
 
 void Block::Update(float dt)
 {
+	if(HitBox != nullptr)
 	HitBox->SetPos(pos.x, pos.y + sprites[subtype][idle][0].h - 32);
 
 	/*if (App->player->link_coll != nullptr) {

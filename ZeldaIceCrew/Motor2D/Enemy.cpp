@@ -142,7 +142,7 @@ bool Enemy::Attack()
 	bool ret = true;
 
 	if (DmgType[melee] == true) {
-		HitBox->SetPos(pos.x, pos.y + ENEMY_STD_OFFSET_Y);
+		HitBox->SetPos(pos.x + animations[curr_dir].GetCurrentFrame().w / 6, pos.y + ENEMY_STD_OFFSET_Y);
 	}
 
 	if (App->player->link_coll != nullptr)
@@ -809,21 +809,4 @@ void Hinox::SetRewards()
 	reward_pool[drop_fiverupee] = 10;
 	reward_pool[drop_tenrupee] = 5;
 	reward_pool[drop_heart] = 23;
-}
-
-bool Hinox::Attack()
-{
-	bool ret = true;
-
-	if (DmgType[melee] == true) {
-		HitBox->rect = { (int)pos.x, (int)pos.y + 24, animations[curr_dir].GetCurrentFrame().w, animations[curr_dir].GetCurrentFrame().h - 24 };
-	}
-
-	if (App->player->link_coll != nullptr)
-		if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
-			HitPlayer();
-		}
-
-
-	return ret;
-}
+};

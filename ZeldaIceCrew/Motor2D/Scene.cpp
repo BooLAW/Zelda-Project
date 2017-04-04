@@ -22,6 +22,10 @@ bool Scene::CleanUp()
 	}
 
 	if (blocks.empty() == false) {
+		for (std::list<Block*>::iterator it = blocks.begin(); it != blocks.end(); it++) {
+			if (it._Ptr->_Myval != nullptr)
+				App->entitymanager->DestroyEnity((*it));
+		}
 		blocks.clear();
 	}
 
