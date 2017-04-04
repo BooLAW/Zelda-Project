@@ -47,8 +47,8 @@ public:
 
 public:
 	virtual void Clear() {
-		if (collider != nullptr)
-			collider->to_delete = true;
+		if (HitBox != nullptr)
+			HitBox->to_delete = true;
 		if (UI_tex != nullptr)
 			App->tex->UnLoad(UI_tex);
 		if (tex != nullptr)
@@ -89,7 +89,6 @@ protected:
 	GuiText* priceTag;
 
 public:
-	Collider*		collider;
 	
 	SDL_Texture*	UI_tex = nullptr;
 	SDL_Rect		UI_rect;

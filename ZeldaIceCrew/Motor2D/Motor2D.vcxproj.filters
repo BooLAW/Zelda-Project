@@ -47,6 +47,7 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Doorway.cpp" />
+    <ClCompile Include="Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />

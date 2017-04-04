@@ -12,10 +12,13 @@ Item::Item(uint subtype)
 
 void Item::PassToInventory()
 {
-	if (collider != nullptr)
-		collider->to_delete = true;
+	if (HitBox != nullptr)
+		HitBox->to_delete = true;
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
+
+	if (priceTag != nullptr)
+		priceTag->active = false;
 
 	App->player->inventory.push_back(this);
 	App->hud->AddItem(this);
@@ -26,11 +29,11 @@ void Item::PassToInventory()
 void Item::Update(float dt)
 {
 	if (grabbed == false) {
-		if (collider != nullptr)
-			if (collider->rect.x != pos.x || collider->rect.y != pos.y)
-				collider->SetPos(pos.x, pos.y);
+		if (HitBox != nullptr)
+			if (HitBox->rect.x != pos.x || HitBox->rect.y != pos.y)
+				HitBox->SetPos(pos.x, pos.y);
 
-		if (collider->CheckCollision(App->player->link_coll->rect)) {
+		if (HitBox->CheckCollision(App->player->link_coll->rect)) {
 			if (App->player->rupees >= this->price) {
 				App->player->rupees -= price;
 				App->audio->PlayFx(this->fx);
@@ -87,10 +90,15 @@ void Item::Draw(float dt)
 
 void Item::CleanUp()
 {
-	if (collider != nullptr)
-		collider->to_delete = true;
+	if (HitBox != nullptr)
+		HitBox->to_delete = true;
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
+	if (UI_tex != nullptr)
+		App->tex->UnLoad(UI_tex);
+
+	if (priceTag != nullptr)
+		priceTag->active = false;
 
 	App->scene_manager->GetCurrentScene()->DestroyItem(this);
 }
@@ -101,7 +109,7 @@ void Item::Start()
 	SetUp();
 	
 	if(tex != nullptr)
-		collider = App->collisions->AddCollider({ 0, 0, rect.w, rect.h }, COLLIDER_ITEM);
+		HitBox = App->collisions->AddCollider({ 0, 0, rect.w, rect.h }, COLLIDER_ITEM);
 
 	priceTag = (GuiText*)App->gui->CreateElement(GuiType::text);
 

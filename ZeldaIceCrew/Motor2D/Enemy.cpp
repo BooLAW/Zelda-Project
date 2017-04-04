@@ -105,16 +105,16 @@ bool Enemy::Move()
 		if (path_to_follow.size() > 0) {
 
 			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
-				if(stats.Flying == true || App->map->TileCheck(pos.x + rect.w + stats.Speed, pos.y, Direction::Right) == 0)
+				if(stats.Flying == true || CheckSpace(pos.x + stats.Speed, pos.y))
 					pos.x += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
-				if (stats.Flying == true || App->map->TileCheck(pos.x - stats.Speed, pos.y, Direction::Left) == 0)
+				if (stats.Flying == true || CheckSpace(pos.x - stats.Speed, pos.y))
 					pos.x -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
-				if (stats.Flying == true || App->map->TileCheck(pos.x, pos.y + rect.h + stats.Speed, Direction::Down) == 0)
+				if (stats.Flying == true || CheckSpace(pos.x, pos.y + stats.Speed))
 					pos.y += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)
-				if (stats.Flying == true || App->map->TileCheck(pos.x, pos.y - stats.Speed, Direction::Up) == 0)
+				if (stats.Flying == true || CheckSpace(pos.x, pos.y - stats.Speed))
 					pos.y -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
 				path_to_follow.pop_back();
@@ -259,19 +259,19 @@ void Enemy::Hit(uint dir, uint dmg)
 
 		switch (dir) {
 		case Direction::Up:
-			if (App->map->TileCheck(pos.x, pos.y - jump_hit, Direction::Up) == 0)
+			if (CheckSpace(pos.x, pos.y - jump_hit))
 				pos.y -= jump_hit;
 			break;
 		case Direction::Down:
-			if (App->map->TileCheck(pos.x, pos.y + jump_hit, Direction::Down) == 0)
+			if (CheckSpace(pos.x, pos.y + jump_hit))
 				pos.y += jump_hit;
 			break;
 		case Direction::Left:
-			if (App->map->TileCheck(pos.x - jump_hit, pos.y, Direction::Left) == 0)
+			if (CheckSpace(pos.x - jump_hit, pos.y))
 				pos.x -= jump_hit;
 			break;
 		case Direction::Right:
-			if (App->map->TileCheck(pos.x + jump_hit, pos.y, Direction::Right) == 0)
+			if (CheckSpace(pos.x + jump_hit, pos.y))
 				pos.x += jump_hit;
 			break;
 		}
@@ -320,6 +320,7 @@ void Enemy::Reward()
 		LOG("NO REWARD FAGGOT");
 
 }
+
 
 void Enemy::CleanUp()
 {

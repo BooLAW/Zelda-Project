@@ -870,49 +870,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (link_coll == c1  && (c2->type == COLLIDER_WALL || c2->type == COLLIDER_BLOCK) && link_coll != nullptr)
 	{	
 
-		SDL_Rect r = c2->rect;
-
-		switch (walk_dir) {
-		case Up:
-			pos.y = r.y + r.h - 16;
-			break;
-		case Down:
-			pos.y = r.y - link_coll->rect.h - 16;
-			break;
-		case Left:
-			pos.x = r.x + r.w;
-			break;
-		case Right:
-			pos.x = r.x - link_coll->rect.w;
-			break;
-		case Up_L:
-			if (pos.x > r.x) {
-				pos.x = r.x + r.w;
-			}
-			else {
-				pos.y = r.y + r.h - 16;
-			}
-			break;
-		case Up_R:
-			if(pos.x < r.x)
-				pos.x = r.x - link_coll->rect.w;
-			else
-				pos.y = r.y + r.h - 16;
-			break;
-		case Down_L:
-			if (pos.x < r.x)
-				pos.x = r.x + r.w;
-			else
-				pos.y = r.y - link_coll->rect.h - 16;
-			break;
-		case Down_R:
-			if (pos.x > r.x)
-				pos.x = r.x - link_coll->rect.w;
-			else
-				pos.y = r.y - link_coll->rect.h - 16;
-			break;
-		}
-
 		//if (pos.y + PLAYER_COLL_Y_OFFSET >= c2->rect.y + c2->rect.h)
 		//{
 		//	pos.y = c2->rect.y + c2->rect.h;

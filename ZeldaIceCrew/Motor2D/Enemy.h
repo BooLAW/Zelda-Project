@@ -118,8 +118,6 @@ public:
 	bool DmgType[__LAST_DMGTYPE];
 	AITYPE AIType;
 
-	Collider* HitBox;
-
 	SDL_Rect sprites[EnDirection::LastDir][8];
 	Animation animations[EnDirection::LastDir];
 

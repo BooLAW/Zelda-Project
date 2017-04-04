@@ -28,7 +28,6 @@ enum BLOCKANIM {
 class Block : public Entity {
 public:
 	//fPoint position;
-	Collider* HitBox;
 	uint reward_pool[N_ITEMS];
 	BLOCKTYPE subtype;
 	BLOCKANIM anim;
