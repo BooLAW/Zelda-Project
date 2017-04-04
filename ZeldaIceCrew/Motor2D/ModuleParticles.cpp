@@ -124,6 +124,7 @@ bool Particle::stdUpdate(float dt)
 	position.x += speed.x;
 	position.y += speed.y;
 
+	if(collider != nullptr)
 	collider->SetPos(position.x, position.y);
 	
 	App->render->toDraw(graphics, position.y + anim[curr_dir].GetCurrentFrame().h, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
@@ -136,7 +137,8 @@ void Particle::CleanUp()
 	if (graphics != nullptr)
 		App->tex->UnLoad(graphics);
 
-	collider->to_delete = true;
+	if(collider != nullptr)
+		collider->to_delete = true;
 
 }
 
@@ -186,6 +188,7 @@ bool Arrow::Update(float dt)
 	std::list<Enemy*>*ents = &App->scene_manager->GetCurrentScene()->enemies;
 	
 	for (std::list<Enemy*>::iterator it = ents->begin(); it != ents->end(); it++) {
+		if(it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
 		if (collider->CheckCollision(it._Ptr->_Myval->HitBox->rect)) {
 				hit = true;
 				LOG("ENEMY HIT");

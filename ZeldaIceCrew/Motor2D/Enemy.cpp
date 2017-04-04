@@ -81,7 +81,7 @@ bool Enemy::Move()
 	case AITYPE::path:	
 		break;
 	case AITYPE::chase:
-		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y };
+		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y - PL_OFFSET_Y / 2};
 		path_to_follow.push_back(target);
 		break;
 	case AITYPE::distance:
@@ -105,16 +105,16 @@ bool Enemy::Move()
 		if (path_to_follow.size() > 0) {
 
 			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
-				if(stats.Flying == true || CheckSpace(pos.x + stats.Speed, pos.y))
+				if(stats.Flying == true || CheckSpace(HitBox->rect.x + stats.Speed, HitBox->rect.y))
 					pos.x += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
-				if (stats.Flying == true || CheckSpace(pos.x - stats.Speed, pos.y))
+				if (stats.Flying == true || CheckSpace(HitBox->rect.x - stats.Speed, HitBox->rect.y))
 					pos.x -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
-				if (stats.Flying == true || CheckSpace(pos.x, pos.y + stats.Speed))
+				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y + stats.Speed))
 					pos.y += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)
-				if (stats.Flying == true || CheckSpace(pos.x, pos.y - stats.Speed))
+				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed))
 					pos.y -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
 				path_to_follow.pop_back();

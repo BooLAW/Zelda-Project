@@ -29,30 +29,31 @@ void Item::PassToInventory()
 void Item::Update(float dt)
 {
 	if (grabbed == false) {
-		if (HitBox != nullptr)
+		if (HitBox != nullptr) {
 			if (HitBox->rect.x != pos.x || HitBox->rect.y != pos.y)
 				HitBox->SetPos(pos.x, pos.y);
 
-		if (HitBox->CheckCollision(App->player->link_coll->rect)) {
-			if (App->player->rupees >= this->price) {
-				App->player->rupees -= price;
-				App->audio->PlayFx(this->fx);
-				App->gui->DeleteElement(this->priceTag);
-				if (type == ENTITYTYPE::drop) {
-					Upgrade();
-					App->entitymanager->DestroyEnity(this);
-				}
-				else {
-					if (App->player->Find_inv(this)) {
+			if (HitBox->CheckCollision(App->player->link_coll->rect)) {
+				if (App->player->rupees >= this->price) {
+					App->player->rupees -= price;
+					App->audio->PlayFx(this->fx);
+					App->gui->DeleteElement(this->priceTag);
+					if (type == ENTITYTYPE::drop) {
 						Upgrade();
-						App->entitymanager->DestroyEnity(this);
-					}
-					else if (App->player->Find_weapon(this)) {
 						App->entitymanager->DestroyEnity(this);
 					}
 					else {
-						Upgrade();
-						PassToInventory();
+						if (App->player->Find_inv(this)) {
+							Upgrade();
+							App->entitymanager->DestroyEnity(this);
+						}
+						else if (App->player->Find_weapon(this)) {
+							App->entitymanager->DestroyEnity(this);
+						}
+						else {
+							Upgrade();
+							PassToInventory();
+						}
 					}
 				}
 			}

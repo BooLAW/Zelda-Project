@@ -37,22 +37,7 @@ void Bow::Attack()
 
 	fPoint pos = App->player->GetPos();
 
-	switch (curr_dir) {
-	case Up:
-		pos.x += 8;
-		break;
-	case Down:
-		pos.x += 8;
-		pos.y += 32;
-		break;
-	case Left:
-		pos.y += 4;
-		break;
-	case Right:
-		pos.x += App->player->link_coll->rect.w;
-		pos.y += 4;
-		break;
-	}
+	pos.y = App->player->link_coll->rect.y - 8;
 
 	App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
 

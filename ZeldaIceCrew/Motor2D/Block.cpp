@@ -104,6 +104,7 @@ void Block::Update(float dt)
 		{
 			if (App->player->weapon_coll != nullptr && App->player->weapon_coll->rect.x != FARLANDS.x) {
 
+				if(HitBox != nullptr)
 				if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
 					if (this->isBreakable()) {
 						this->Break();
@@ -112,6 +113,7 @@ void Block::Update(float dt)
 			}
 
 			if (App->player->action_coll != nullptr && App->player->action_coll->rect.x != FARLANDS.x) {
+				if(HitBox != nullptr)
 				if (HitBox->CheckCollision(App->player->action_coll->rect) == true) {
 					if (this->isPickable()) {
 						this->Pick();

@@ -38,6 +38,7 @@ void Doorway::Update(float dt)
 
 	collider->SetPos(pos.x, pos.y);
 
+	if(App->player->link_coll != nullptr)
 	if (collider->CheckCollision(App->player->link_coll->rect) == true)
 		Cross();
 };

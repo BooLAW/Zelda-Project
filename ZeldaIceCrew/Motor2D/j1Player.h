@@ -23,7 +23,7 @@
 #define MAX_HP 24
 #define MAX_PWR 99
 
-#define PL_WALK_FPS 0.8f
+#define PL_WALK_FPS 0.2f
 
 #define link_width 99
 #define link_height 107
