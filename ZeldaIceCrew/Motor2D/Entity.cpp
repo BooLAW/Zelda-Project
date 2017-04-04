@@ -17,11 +17,13 @@ bool Entity::CheckSpace(float new_x, float new_y)
 
 		// Enemy Check
 		for (std::list<Enemy*>::iterator it = scene->enemies.begin(); it != scene->enemies.end(); it++) {
-			if (it._Ptr->_Myval == this)
-				continue;
-			if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
-				ret = false;
-				break;
+			if (it._Ptr->_Myval != nullptr) {
+				if (it._Ptr->_Myval == this)
+					continue;
+				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+					ret = false;
+					break;
+				}
 			}
 		}
 
@@ -29,11 +31,13 @@ bool Entity::CheckSpace(float new_x, float new_y)
 		if (ret != false) {
 		
 			for (std::list<Block*>::iterator it = scene->blocks.begin(); it != scene->blocks.end(); it++) {
-				if (it._Ptr->_Myval == this)
-					continue;
-				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
-					ret = false;
-					break;
+				if (it._Ptr->_Myval != nullptr) {
+					if (it._Ptr->_Myval == this)
+						continue;
+					if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+						ret = false;
+						break;
+					}
 				}
 			}
 		}

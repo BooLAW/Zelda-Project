@@ -248,52 +248,68 @@ void Block::Move() {
 	if (App->player->curr_dir == Up) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_W)) {
 			App->player->action_blit = App->player->Push;
-			App->player->pos.y -= App->player->pl_speed.y / 4;
-			pos.y -= App->player->pl_speed.y / 4;
+			if (CheckSpace(pos.x, pos.y - App->player->pl_speed.y / 4)) {
+				App->player->pos.y -= App->player->pl_speed.y / 4;
+				pos.y -= App->player->pl_speed.y / 4;
+			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_S)) {
 			App->player->action_blit = App->player->Pull;
-			App->player->pos.y += App->player->pl_speed.y / 4;
-			pos.y += App->player->pl_speed.y / 4;
+			if (CheckSpace(pos.x, pos.y + App->player->pl_speed.y / 4)) {
+				App->player->pos.y += App->player->pl_speed.y / 4;
+				pos.y += App->player->pl_speed.y / 4;
+			}
 		}
 	}
 
 	else if (App->player->curr_dir == Left) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_A)) {
 			App->player->action_blit = App->player->Push;
-			App->player->pos.x -= App->player->pl_speed.x / 4;
-			pos.x -= App->player->pl_speed.x / 4;
+			if (CheckSpace(pos.x - App->player->pl_speed.x / 4, pos.y)) {
+				App->player->pos.x -= App->player->pl_speed.x / 4;
+				pos.x -= App->player->pl_speed.x / 4;
+			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_D)) {
 			App->player->action_blit = App->player->Pull;
-			App->player->pos.x += App->player->pl_speed.x / 4;
-			pos.x += App->player->pl_speed.x / 4;
+			if (CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y)) {
+				App->player->pos.x += App->player->pl_speed.x / 4;
+				pos.x += App->player->pl_speed.x / 4;
+			}
 		}
 	}
 
 	else if (App->player->curr_dir == Right) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_D)) {
 			App->player->action_blit = App->player->Push;
-			App->player->pos.x += App->player->pl_speed.x / 4;
-			pos.x += App->player->pl_speed.x / 4;
+			if (CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y)) {
+				App->player->pos.x += App->player->pl_speed.x / 4;
+				pos.x += App->player->pl_speed.x / 4;
+			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_A)) {
 			App->player->action_blit = App->player->Pull;
-			App->player->pos.x -= App->player->pl_speed.x / 4;
-			pos.x -= App->player->pl_speed.x / 4;
+			if (CheckSpace(pos.x - App->player->pl_speed.x / 4, pos.y)) {
+				App->player->pos.x -= App->player->pl_speed.x / 4;
+				pos.x -= App->player->pl_speed.x / 4;
+			}
 		}
 	}
 
 	else if (App->player->curr_dir == Down) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_S)) {
 			App->player->action_blit = App->player->Push;
-			App->player->pos.y += App->player->pl_speed.y / 4;
-			pos.y += App->player->pl_speed.y / 4;
+			if (CheckSpace(pos.x, pos.y + App->player->pl_speed.y / 4)) {
+				App->player->pos.y += App->player->pl_speed.y / 4;
+				pos.y += App->player->pl_speed.y / 4;
+			}
 		}
 		else if (back == true && App->input->GetKey(SDL_SCANCODE_W)) {
 			App->player->action_blit = App->player->Pull;
-			App->player->pos.y -= App->player->pl_speed.y / 4;
-			pos.y -= App->player->pl_speed.y / 4;
+			if (CheckSpace(pos.x, pos.y - App->player->pl_speed.y / 4)) {
+				App->player->pos.y -= App->player->pl_speed.y / 4;
+				pos.y -= App->player->pl_speed.y / 4;
+			}
 		}
 	}
 

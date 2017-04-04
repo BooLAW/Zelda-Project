@@ -51,6 +51,8 @@ Block * Scene::AddBlock(uint subtype, float x, float y)
 	Block* nb = App->entitymanager->CreateBlock(subtype);
 	nb->pos = { x, y };
 
+	blocks.push_back(nb);
+
 	return nb;
 }
 

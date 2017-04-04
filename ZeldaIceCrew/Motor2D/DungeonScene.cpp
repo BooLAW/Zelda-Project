@@ -85,7 +85,7 @@ bool DungeonScene::Start()
 	AddEnemy(t_bluesoldier, 800, 124 + ROOM_H * 2);
 	AddEnemy(t_hinox, 500, 74 + ROOM_H * 2);
 	// ROOM 0x1
-	AddEnemy(t_greensoldier, 150, 74 + ROOM_H);
+	AddEnemy(t_greensoldier, 250, 74 + ROOM_H);
 	AddEnemy(t_greensoldier, ROOM_W - 150, 74 + ROOM_H);
 	// ROOM 0x0
 	ChainBoss = AddEnemy(t_boss_ballandchain, 500, 120);
@@ -100,17 +100,17 @@ bool DungeonScene::Start()
 	// PUZZLE 0x1 01
 	AddItem(heart_container, 75 + 32 * 2, 65 + ROOM_H * 1);
 	AddBlock(statue, 75 + 32 * 0, 65 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 1, 65 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 3, 65 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 4, 65 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 1, 65 + 32 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 1, 65 + 32 * 2 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 1 + 1, 65 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 3 + 3, 65 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 4 + 4, 65 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 1 + 1, 65 + 32 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 1 + 1, 65 + 32 * 2 + ROOM_H * 1);
 	AddBlock(statue, 75 + 32 * 0, 65 + 32 * 2 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 2, 65 + 32 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 2, 65 + 32 * 3 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 3, 65 + 32 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 3, 65 + 32 * 2 + ROOM_H * 1);
-	AddBlock(statue, 75 + 32 * 4, 65 + 32 * 2 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 2 + 2, 65 + 32 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 2 + 2, 65 + 32 * 3 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 3 + 3, 65 + 32 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 3 + 3, 65 + 32 * 2 + ROOM_H * 1);
+	AddBlock(statue, 75 + 32 * 4 + 4, 65 + 32 * 2 + ROOM_H * 1);
 
 	// Items Start
 
