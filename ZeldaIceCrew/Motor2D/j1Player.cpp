@@ -921,7 +921,9 @@ void j1Player::DyingRestart()
 	alive = true;
 	pos = ORIGIN_RESTART;
 	App->scene_manager->ChangeScene((Scene*)App->scene_manager->house_scene);
-	App->hud->inv->CleanUp();
+	App->hud->inv->clear();
+	App->hud->inv->selected = nullptr;
+	App->player->inventory.clear();
 	max_life_points = 6;
 	power = 1;
 	rupees = floor(rupees / 2);

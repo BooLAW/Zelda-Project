@@ -124,15 +124,15 @@ public:
 	void Sel_First();
 	void Start_Sel(SDL_Rect rect);
 	bool Empty();
+	void clear();
 	void Move_Sel_backwards();
 	void Move_Sel_up();
 	void Move_Sel_down();
 	void Select(UIElement* el);
 	UIElement* Selected();
-	
+	UIElement* selected;
 private:
 	GuiImage* selector;
-	UIElement* selected;
 	std::list<UIElement*>win_elements;
 	int offset_x;
 	int offset_y;

@@ -306,8 +306,8 @@ void Window::Update()
 	if (active) {
 		App->render->toDraw(texture, 10, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 		if (selector != nullptr) {
-			selector->active = true;
-			if (selected != nullptr) {
+			if (this->selected != nullptr) {
+				selector->active = true;
 				selector->pos.x = selected->pos.x - 5;
 				selector->pos.y = selected->pos.y - 5;
 			}
@@ -327,6 +327,7 @@ void Window::CleanUp()
 	if (!win_elements.empty()) {
 		win_elements.clear();
 	}
+	selected = nullptr;
 }
 
 void Window::Disable()
@@ -334,7 +335,9 @@ void Window::Disable()
 	active = false;
 	if (!win_elements.empty()) {
 		selector->active = false;
-		selected = win_elements.front();
+		if (selected != nullptr) {
+			selected = win_elements.front();
+		}
 		for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
 			it._Ptr->_Myval->active = false;
 		}
@@ -396,27 +399,31 @@ void Window::Set_Sel_Rect(SDL_Rect rect)
 
 void Window::Move_Sel_forward()
 {
-	selected = Next();
+	if (selected != nullptr) {
+		selected = Next();
+	}
 }
 
 UIElement * Window::Next()
 {
-	if (!win_elements.empty()) {
-		if (selected == win_elements.back()) {
-			return win_elements.back();
-		}
-		else {
-			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
-				if (selected == it._Ptr->_Myval) {
-					if (selected == win_elements.back()) {
-						return win_elements.back();
-					}
-					else {
-						it++;
-						if (it._Ptr != nullptr)
-							return it._Ptr->_Myval;
-						else
+	if(selected!=nullptr){
+		if (!win_elements.empty()) {
+			if (selected == win_elements.back()) {
+				return win_elements.back();
+			}
+			else {
+				for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+					if (selected == it._Ptr->_Myval) {
+						if (selected == win_elements.back()) {
 							return win_elements.back();
+						}
+						else {
+							it++;
+							if (it._Ptr != nullptr)
+								return it._Ptr->_Myval;
+							else
+								return win_elements.back();
+						}
 					}
 				}
 			}
@@ -426,25 +433,27 @@ UIElement * Window::Next()
 
 UIElement * Window::Prev()
 {
-	if (!win_elements.empty()) {
-		if (selected == win_elements.front()) {
-			return win_elements.front();
-		}
-		for (std::list<UIElement*>::const_iterator it = win_elements.cend(); it != win_elements.cbegin(); it--) {
-			if (selected == it._Ptr->_Myval) {
-				if (selected == win_elements.front()) {
-					return win_elements.front();
-				}
-				else {
-					it--;
-					if (it._Ptr != nullptr)
-						return it._Ptr->_Myval;
-					else
-						return win_elements.back();
-				}
+	if (selected != nullptr) {
+		if (!win_elements.empty()) {
+			if (selected == win_elements.front()) {
+				return win_elements.front();
 			}
+			for (std::list<UIElement*>::const_iterator it = win_elements.cend(); it != win_elements.cbegin(); it--) {
+				if (selected == it._Ptr->_Myval) {
+					if (selected == win_elements.front()) {
+						return win_elements.front();
+					}
+					else {
+						it--;
+						if (it._Ptr != nullptr)
+							return it._Ptr->_Myval;
+						else
+							return win_elements.back();
+					}
+				}
 
 
+			}
 		}
 	}
 	return nullptr;
@@ -477,20 +486,31 @@ bool Window::Empty()
 	return win_elements.empty();
 }
 
+void Window::clear()
+{
+	if (!win_elements.empty()) {
+		win_elements.clear();
+	}
+	selected = nullptr;
+}
+
 void Window::Move_Sel_backwards()
 {
-	selected = Prev();
+	if (selected != nullptr) {
+		selected = Prev();
+	}
 }
 
 void Window::Move_Sel_up()
 {
-
-	if (!win_elements.empty()) {
-		if (selected->pos.y != win_elements.front()->pos.y) {
-			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
-				if (selected != nullptr) {
-					if ((selected->pos.y == it._Ptr->_Myval->pos.y + offset_y + it._Ptr->_Myval->texture_rect.h) && (selected->pos.x == it._Ptr->_Myval->pos.x)) {
-						selected = it._Ptr->_Myval;
+	if (selected != nullptr) {
+		if (!win_elements.empty()) {
+			if (selected->pos.y != win_elements.front()->pos.y) {
+				for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+					if (selected != nullptr) {
+						if ((selected->pos.y == it._Ptr->_Myval->pos.y + offset_y + it._Ptr->_Myval->texture_rect.h) && (selected->pos.x == it._Ptr->_Myval->pos.x)) {
+							selected = it._Ptr->_Myval;
+						}
 					}
 				}
 			}
@@ -500,13 +520,15 @@ void Window::Move_Sel_up()
 
 void Window::Move_Sel_down()
 {
-	if (!win_elements.empty()) {
-		if (selected->pos.y != win_elements.back()->pos.y) {
-			for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
-				if (selected != nullptr) {
-					if ((selected->pos.y <= it._Ptr->_Myval->pos.y - offset_y - it._Ptr->_Myval->texture_rect.h) && (selected->pos.x == it._Ptr->_Myval->pos.x)) {
-						selected = it._Ptr->_Myval;
-						break;
+	if(selected!=nullptr){
+		if (!win_elements.empty()) {
+			if (selected->pos.y != win_elements.back()->pos.y) {
+				for (std::list<UIElement*>::const_iterator it = win_elements.cbegin(); it != win_elements.cend(); it++) {
+					if (selected != nullptr) {
+						if ((selected->pos.y <= it._Ptr->_Myval->pos.y - offset_y - it._Ptr->_Myval->texture_rect.h) && (selected->pos.x == it._Ptr->_Myval->pos.x)) {
+							selected = it._Ptr->_Myval;
+							break;
+						}
 					}
 				}
 			}
