@@ -308,12 +308,8 @@ void Enemy::Reward()
 	}
 
 	if (target != -1) {
-
-		Item* newitem;
-
-		newitem = App->entitymanager->CreateItem(target);
-		if (newitem != nullptr)
-			newitem->pos = { pos.x, pos.y };
+	
+		App->scene_manager->GetCurrentScene()->AddItem(target, pos.x + HitBox->rect.w / 2 - 16, pos.y + +HitBox->rect.h / 2 - 16);
 
 	}
 	else
