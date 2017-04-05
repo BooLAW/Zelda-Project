@@ -2,6 +2,9 @@
 #include "j1Player.h"
 #include "Entity.h"
 #include "VillageScene.h"
+#include "DungeonScene.h"
+#include "HouseScene.h"
+#include "ShopScene.h"
 void Doorway::Start()
 {
 	open = true;
@@ -65,13 +68,42 @@ bool DwDungeon::Cross()
 	}
 	return true;
 }
+bool DwOverworld::Cross()
+{
+	switch (direction) {
+	case Direction::Up:
+		//go to dungeon
+		App->scene_manager->ChangeScene(App->scene_manager->dungeon_scene);
+		App->player->MovePos(80, 80);
+		break;
+	case Direction::Down:
+		//go to house
+		App->scene_manager->ChangeScene(App->scene_manager->house_scene);
+		App->player->MovePos(10, 10);
+		break;
+	case Direction::Left:
+		//nothing in  the demo
+		break;
+	case Direction::Right:
+		//go shop
+		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
+		App->player->MovePos(10, 10);
+		break;
+	}
+	return true;
+}
 bool DwHouse::Cross()
 {
 	App->scene_manager->ChangeScene(App->scene_manager->village_scene);
-	App->player->MovePos(-235, 1200);
+	App->player->MovePos(-235, 1290);
 	return true;
 }
-
+bool DwShop::Cross()
+{
+	App->scene_manager->ChangeScene(App->scene_manager->village_scene);
+	App->player->MovePos(265, 350);
+	return true;
+}
 void DwDungeon::SetRoomPos(int x, int y)
 {
 	switch (direction) {
@@ -94,7 +126,16 @@ void DwHouse::SetRoomPos(int x, int y)
 	pos = { (float) x, (float) y };
 
 };
+void DwShop::SetRoomPos(int x, int y)
+{
+	pos = { (float)x, (float)y };
 
+};
+void DwOverworld::SetRoomPos(int x, int y)
+{
+	pos = { (float)x, (float)y };
+
+};
 void Doorway::CleanUp()
 {
 	if(collider != nullptr)

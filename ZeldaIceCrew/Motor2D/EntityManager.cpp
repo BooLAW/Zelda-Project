@@ -159,6 +159,12 @@ Doorway * EntityManager::CreateDoorway(uint subtype, uint dir)
 	case dw_house:
 		ret = new DwHouse();
 		break;
+	case dw_shop:
+		ret = new DwShop();
+		break;
+	case dw_overworld:
+		ret = new DwOverworld();
+		break;
 	case dw_free:
 		break;
 	default:

@@ -53,5 +53,18 @@ public:
 	bool Cross();
 
 	void SetRoomPos(int x, int y);
+
+};
+class DwShop : public Doorway {
+public:
+	bool Cross();
+
+	void SetRoomPos(int x, int y);
+};
+class DwOverworld : public Doorway {
+public:
+	bool Cross();
+
+	void SetRoomPos(int x, int y);
 };
 #endif // !_DOORWAY_H__

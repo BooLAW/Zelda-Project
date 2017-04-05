@@ -41,11 +41,6 @@ public:
 private:
 	bool ESC = false;
 	SDL_Texture* debug_tex;
-	Collider* house_door;
-	Collider* shop_door;
-	Collider* dungeon_door;
-
-
 	//std::vector<Entity*> Bushes;
 	//SDL_Rect Bush_Rect;
 

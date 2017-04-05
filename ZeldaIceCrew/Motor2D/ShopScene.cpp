@@ -50,26 +50,21 @@ bool ShopScene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-	overworld_door = App->collisions->AddCollider({ 15* 16,20 * 16,24,20 }, COLLIDER_TO_OVERWORLD_SHOP, App->scene_manager);
+	Scene::AddDoorway(dw_shop, Direction::Down, 14 * 16, 20 * 16);
 
-	App->player->SetPosTile(2, 2);
+	App->player->SetPosTile(10, 10);
 
 	App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
 
 	App->audio->PlayMusic("Audio/Music/Shop.ogg");
+
 	// Enemy Start
-
-
 
 	// Items Start
 
-
-
-
 	//we can do that with an iterator that recieves the positions readed from the xml file
-
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -123,19 +118,8 @@ bool ShopScene::Update(float dt)
 		App->debug = !App->debug;
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
-	if (to_overworld == true)
-	{
-		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
-		to_overworld = false;
-	}
+
 	App->map->Draw();
-
-	//for (int i = 0; i < Bushes.size(); i++) {
-	////	App->render->Blit(Bushes[i]->GetTexture(), Bushes[i]->pos.x, Bushes[i]->pos.y, &Bushes[i]->GetRect());
-	//
-	//}
-
-
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
 		App->player->curr_life_points -= 1;
 	}
@@ -161,7 +145,6 @@ bool ShopScene::PostUpdate()
 bool ShopScene::CleanUp()
 {
 	LOG("Freeing village scene");
-	App->collisions->EraseCollider(overworld_door);
 	if (ESC != true)
 	{
 		App->map->CleanUp();
@@ -180,8 +163,6 @@ bool ShopScene::CleanUp()
 		if (debug_tex != NULL)
 			App->tex->UnLoad(debug_tex);
 	}
-
-
 
 	return true;
 }

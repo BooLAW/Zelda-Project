@@ -40,7 +40,6 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
-
 private:
 
 	bool boss_music = false;
