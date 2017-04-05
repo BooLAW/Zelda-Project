@@ -10,7 +10,7 @@
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
-	name.create("map");
+	name = "map";
 }
 
 // Destructor
@@ -23,7 +23,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	LOG("Loading Map Parser");
 	bool ret = true;
 
-	folder.create(config.child("folder").child_value());
+	folder = config.child("folder").child_value();
 
 	return ret;
 }
@@ -359,7 +359,7 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
-	p2SString tmp("%s%s", folder.GetString(), file_name);
+	p2SString tmp("%s%s", folder.c_str(), file_name);
 
 	char* buf;
 	int size = App->fs->Load(tmp.GetString(), &buf);
@@ -421,7 +421,7 @@ bool j1Map::Load(const char* file_name)
 		{
 			TileSet* s = (*item);
 			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
+			LOG("name: %s firstgid: %d", s->name.c_str(), s->firstgid);
 			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item++;
@@ -432,7 +432,7 @@ bool j1Map::Load(const char* file_name)
 		{
 			MapLayer* l = (*item_layer);
 			LOG("Layer ----");
-			LOG("name: %s", l->name.GetString());
+			LOG("name: %s", l->name.c_str());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer++;
 		}
@@ -512,7 +512,7 @@ bool j1Map::LoadMap()
 bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
-	set->name.create(tileset_node.attribute("name").as_string());
+	set->name = (tileset_node.attribute("name").as_string());
 	set->firstgid = tileset_node.attribute("firstgid").as_int();
 	set->tile_width = tileset_node.attribute("tilewidth").as_int();
 	set->tile_height = tileset_node.attribute("tileheight").as_int();
@@ -546,7 +546,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	}
 	else
 	{
-		set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+		set->texture = App->tex->Load(PATH(folder.c_str(), image.attribute("source").as_string()));
 		int w, h;
 		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
 		set->tex_width = image.attribute("width").as_int();

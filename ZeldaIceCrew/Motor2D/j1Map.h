@@ -37,7 +37,7 @@ struct Properties
 // ----------------------------------------------------
 struct MapLayer
 {
-	p2SString	name;
+	std::string	name;
 	int			width;
 	int			height;
 	uint*		data;
@@ -78,7 +78,7 @@ struct TileSet
 	SDL_Rect GetTileRect(int id) const;
 	TileData* GetTileType(int tile_id)const {};
 	
-	p2SString			name;
+	std::string			name;
 	int					firstgid;
 	int					margin;
 	int					spacing;
@@ -158,7 +158,7 @@ public:
 private:
 
 	pugi::xml_document	map_file;
-	p2SString			folder;
+	std::string			folder;
 	bool				map_loaded;
 };
 

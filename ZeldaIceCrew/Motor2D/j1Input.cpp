@@ -161,9 +161,9 @@ void j1Input::GetMouseMotion(int& x, int& y)
 	y = mouse_motion_y;
 }
 
-p2SString j1Input::GetString()
+std::string j1Input::GetString()
 {
-	p2SString ret = text;
-	text.Trim();
+	std::string ret = text;
+	text.shrink_to_fit();
 	return ret;
 }
