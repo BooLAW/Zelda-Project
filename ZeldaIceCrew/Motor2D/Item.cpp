@@ -111,7 +111,7 @@ void Item::Start()
 		HitBox = App->collisions->AddCollider({ 0, 0, rect.w, rect.h }, COLLIDER_ITEM);
 
 	priceTag = (GuiText*)App->gui->CreateElement(GuiType::text);
-
+	priceTag->movable = false;
 }
 
 void PowerGauntlet::Upgrade()

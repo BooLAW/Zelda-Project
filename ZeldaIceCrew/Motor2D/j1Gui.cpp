@@ -41,6 +41,12 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
+	for (std::list<UIElement*>::const_iterator it = elements.cbegin(); it != elements.cend(); it++) {
+
+		if (it._Ptr->_Myval->active)
+			it._Ptr->_Myval->PreUpdate();
+	}
+	
 	return true;
 }
 
@@ -77,29 +83,34 @@ UIElement * j1Gui::CreateElement(GuiType type)
 	case GuiType::image:
 		ret = new GuiImage();
 		ret->type = image;
+		ret->texture = atlas;
 		break;
 
 	case GuiType::text:
 		ret = new GuiText();
 		ret->type = text;
+		ret->texture = nullptr;
 		ret->texture_rect.x = 0;
 		ret->texture_rect.y = 0;
+
 		break;
 
 	case GuiType::button:
 		ret = new GuiButton();
 		ret->type = button;
+		ret->texture = atlas;
 		break;
 
 	case GuiType::window:
 		ret = new Window();
 		ret->type = window;
+		ret->texture = atlas;
 		break;
 	}
 	if (ret != nullptr) {
 		ret->pos.x = 0;
 		ret->pos.y = 0;
-		ret->texture = atlas;
+		//ret->texture = atlas;
 		ret->active = true;
 		ret->Start();
 		elements.push_back(ret);
@@ -123,6 +134,7 @@ UIElement * j1Gui::CreateElement(GuiType type, const char* path)
 	case GuiType::text:
 		ret = new GuiText();
 		ret->type = text;
+		ret->texture = nullptr;
 		break;
 
 	case GuiType::button:
@@ -171,10 +183,15 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
+void GuiImage::Start()
+{
+	//this->texture = atlas;
+}
+
 void GuiImage::Update()
 {
 	if (active) {
-		App->render->toDraw(texture,10, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+		App->render->toDraw(texture,10000, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 	}
 
 
@@ -182,26 +199,28 @@ void GuiImage::Update()
 
 void GuiText::Start()
 {
-	font = App->font->Load("fonts/ReturnofGanon.ttf");
+	//font = App->font->Load("fonts/ReturnofGanon.ttf");
 }
+
+
 
 void GuiText::Update()
 {
+	if (texture != nullptr) {
+		App->tex->UnLoad(this->texture);
+	}
 	if (active) {
-		if (movable) {
-			texture = App->font->Print(str.c_str());
-			App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
 
-			
-				App->render->toDraw(texture, 0, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+		this->texture = App->font->Print(str.c_str());
+		App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
+		if (movable) {
+				App->render->toDraw(texture, 10000, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 			
 		}
 		else {
-			texture = App->font->Print(str.c_str());
-			App->font->CalcSize(str.c_str(), texture_rect.w, texture_rect.h);
-
 			App->render->toDraw(texture,0, pos.x, pos.y, &texture_rect);
 		}
+		
 	}
 }
 
@@ -304,7 +323,7 @@ Window::~Window()
 void Window::Update()
 {
 	if (active) {
-		App->render->toDraw(texture, 10, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+		App->render->toDraw(texture, 9999, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 		if (selector != nullptr) {
 			if (this->selected != nullptr) {
 				selector->active = true;

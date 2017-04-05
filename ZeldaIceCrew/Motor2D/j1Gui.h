@@ -38,7 +38,8 @@ public:
 public:
 	virtual void Start() {};
 	virtual void Update() {};
-
+	virtual void PreUpdate() {}
+	virtual void PostUpdate() {}
 protected:
 	void Move(int x, int y);
 };
@@ -46,6 +47,7 @@ protected:
 // IMAGE
 class GuiImage : public UIElement {
 public:
+	void Start();
 	void Update();
 };
 
@@ -58,7 +60,7 @@ public:
 	void Start();
 public:
 
-	GuiText() {}
+	GuiText() {};
 	~GuiText() {}
 
 public:
@@ -101,7 +103,9 @@ public:
 	GuiInput();
 	~GuiInput() {};
 	void Start();
+	//void PreUpdate();
 	void Update();
+	//void PostUpdate();
 
 };
 
