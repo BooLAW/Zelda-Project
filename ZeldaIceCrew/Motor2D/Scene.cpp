@@ -80,7 +80,7 @@ Enemy* Scene::AddEnemy(int subtype, float x, float y)
 	new_enemy = App->entitymanager->CreateEnemy(subtype);
 	new_enemy->pos = { x, y };
 
-	enemies.push_back(new_enemy);
+	this->enemies.push_back(new_enemy);
 
 	return new_enemy;
 }

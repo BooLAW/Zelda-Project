@@ -45,6 +45,8 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 
 	App->entitymanager->PushEntity(ret);
 
+	LOG("CREATE ENEMY");
+
 	return ret;
 }
 
