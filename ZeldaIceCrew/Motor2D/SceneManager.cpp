@@ -130,7 +130,6 @@ void SceneManager::ChangeScene(Scene * new_scene)
 	prev_scene->CleanUp();
 	LOG("CLEANUP PREV");
 	current_scene->Start();
-	current_scene->follow_cam = false;
 	LOG("START NEXT");
 }
 

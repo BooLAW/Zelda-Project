@@ -57,8 +57,11 @@ bool HouseScene::Start()
 	//we can do that with an iterator that recieves the positions readed from the xml file
 	//	Scene::AddDoorway(dw_house, Direction::Down, 13*16,20*16);
 
-		App->render->camera.x = 0;
-		App->render->camera.x = 0;
+	follow_cam = true;
+
+
+		App->render->camera.x = -App->render->camera.w / 2;
+		App->render->camera.y = -App->render->camera.h / 2;
 
 		App->audio->PlayMusic("Home.ogg");
 	return true;

@@ -77,8 +77,10 @@ bool ShopScene::Start()
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
-	App->render->camera.x = 0;
-	App->render->camera.y = 0;
+	follow_cam = true;
+
+	//App->render->camera.x = -App->render->camera.w / 2;
+	//App->render->camera.y = -App->render->camera.h / 2;
 
 
 

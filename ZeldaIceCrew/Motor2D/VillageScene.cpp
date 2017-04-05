@@ -42,6 +42,8 @@ bool VillageScene::Awake()
 bool VillageScene::Start()
 {
 
+	App->render->cam_travel = false;
+
 	if (App->map->Load("Overworld.tmx") == true)
 	{
 		// int w, h;
@@ -113,10 +115,9 @@ bool VillageScene::Start()
 	//items.push_back(new_item);
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
+	
+	follow_cam = true;
 
-	App->render->cam_travel = false;
-	
-	
 	App->audio->PlayMusic("Audio/Music/Forest_Theme.ogg");
 	App->audio->SetVolumeMusic(60);
 
@@ -157,7 +158,8 @@ bool VillageScene::PreUpdate()
 // Called each loop iteration
 bool VillageScene::Update(float dt)
 {
-	App->render->cam_travel = false;
+
+	//App->render->SetCamPos( 0, -(App->player->GetPos().y - App->render->camera.h / 2));
 
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");

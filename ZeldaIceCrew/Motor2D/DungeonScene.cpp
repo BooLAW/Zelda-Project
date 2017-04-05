@@ -225,12 +225,14 @@ bool DungeonScene::Update(float dt)
 				boss_music = true;
 			}
 
-			boss_minions_spawn_time.Start();
-			boss_minions_spawn_time.SetFlag(true);
-			if (boss_minions_spawn_time.ReadSec() >= 5) {
-				AddEnemy(t_greensoldier, 150, 150);
-				AddEnemy(t_greensoldier, 850, 150);
-				boss_minions_spawn_time.SetFlag(false);
+			if (App->render->cam_travel == false) {
+				boss_minions_spawn_time.Start();
+				boss_minions_spawn_time.SetFlag(true);
+				if (boss_minions_spawn_time.ReadSec() >= 5) {
+					AddEnemy(t_greensoldier, 150, 150);
+					AddEnemy(t_greensoldier, 850, 150);
+					boss_minions_spawn_time.SetFlag(false);
+				}
 			}
 		}
 		else {

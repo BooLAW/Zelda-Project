@@ -117,6 +117,7 @@ bool j1Render::PostUpdate()
 
 	if (sprites_toDraw.size() > 1) {
 		for (int it = 0; it < sprites_toDraw.size() - 1; it++) {
+			if(sprites_toDraw[it] != nullptr)
 			if (sprites_toDraw[it]->priority > sprites_toDraw[it + 1]->priority) {
 				SWAP(sprites_toDraw[it], sprites_toDraw[it + 1]);
 			}
