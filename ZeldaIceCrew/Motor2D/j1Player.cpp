@@ -979,7 +979,6 @@ bool j1Player::CheckSpace(float new_x, float new_y)
 
 		// Block Check
 		if (ret != false) {
-
 			for (std::list<Block*>::iterator it = scene->blocks.begin(); it != scene->blocks.end(); it++) {
 				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
 					ret = false;
@@ -1032,7 +1031,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-			if (CheckSpace(pos.x - pl_speed.x, pos.y + pl_speed.y)) //change dir
+			if (CheckSpace(pos.x - pl_speed.x, (pos.y + 34) + pl_speed.y)) //change dir
 			{
 				walk_dir = Down_L;
 				pos.y += pl_speed.y * sqrt(2) / 2;
@@ -1043,7 +1042,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
-			if (CheckSpace(pos.x + pl_speed.x, pos.y + pl_speed.y))//change dir
+			if (CheckSpace((pos.x + 32) + pl_speed.x, (pos.y + 32) + pl_speed.y))//change dir
 			{
 				walk_dir = Down_R;
 				pos.y += pl_speed.y * sqrt(2) / 2;
@@ -1054,7 +1053,7 @@ void j1Player::Movement()
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
-			if (CheckSpace(pos.x + pl_speed.x, pos.y - pl_speed.y))//change dir
+			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y - pl_speed.y))//change dir
 			{
 				walk_dir = Up_R;
 				pos.y -= pl_speed.y * sqrt(2) / 2;
@@ -1090,7 +1089,7 @@ void j1Player::Movement()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S))
 		{
-			if (CheckSpace(pos.x, pos.y + pl_speed.y))
+			if (CheckSpace(pos.x, (pos.y+32) + pl_speed.y))
 			{
 				pos.y += pl_speed.y;
 			}
@@ -1103,7 +1102,7 @@ void j1Player::Movement()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D))
 		{
-			if (CheckSpace(pos.x + pl_speed.x, pos.y))
+			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y))
 			{
 				pos.x += pl_speed.x;
 			}

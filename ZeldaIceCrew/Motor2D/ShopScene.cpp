@@ -61,6 +61,16 @@ bool ShopScene::Start()
 
 	App->audio->PlayMusic("Audio/Music/Shop.ogg");
 
+	Item* new_item = nullptr;
+	new_item = App->entitymanager->CreateItem(weapon_sword);
+	new_item->SetPositions({ 350.0f, 190.0f });
+	new_item->SetPrice(30);
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 150.0f, 190.0f });
+	new_item->SetPrice(30);
+	items.push_back(new_item);
 	// Enemy Start
 
 	// Items Start
@@ -179,4 +189,5 @@ bool ShopScene::CleanUp()
 		}
 		doorways.clear();
 	}
+	return true;
 }

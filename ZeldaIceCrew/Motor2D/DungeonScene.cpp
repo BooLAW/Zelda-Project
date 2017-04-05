@@ -156,7 +156,8 @@ bool DungeonScene::Start()
 	App->audio->SetVolumeMusic(60);
 
 	follow_cam = false;
-
+	App->render->cam_travel = true;
+	App->render->camera = { 0, 0 };
 	return true;
 }
 
@@ -193,6 +194,13 @@ bool DungeonScene::PreUpdate()
 // Called each loop iteration
 bool DungeonScene::Update(float dt)
 {
+
+	if (App->render->cam_travel) {
+		if ( - App->render->camera.y >=(App->player->room.y ) * ROOM_H)
+			App->render->cam_travel = false;
+		else
+			App->render->camera.y -= 5;
+	}
 
 	if (chain_boss_defeated == false && IsEnemy(ChainBoss) == false)
 		chain_boss_defeated = true;
@@ -232,6 +240,7 @@ bool DungeonScene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->debug = !App->debug;
+	 
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
 
@@ -254,7 +263,10 @@ bool DungeonScene::PostUpdate()
 
 	if (ESC == true) {
 		this->CleanUp();
+<<<<<<< HEAD
 		LOG("ESC CLEANUP");
+=======
+>>>>>>> origin/Develop
 	}
 
 	return ret;

@@ -94,7 +94,7 @@ bool j1Render::Update(float dt) {
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) 
 			App->render->MoveCam(200.0f * dt, 0);
 	}
-	else {
+	else if(cam_travel == false) {
 		//if (camera.x > App->scene_manager->GetCurrentScene()->camera_limit.x && camera.x < App->scene_manager->GetCurrentScene()->camera_limit.x + App->scene_manager->GetCurrentScene()->camera_limit.w)
 		//	if (camera.y > App->scene_manager->GetCurrentScene()->camera_limit.y && camera.y < App->scene_manager->GetCurrentScene()->camera_limit.y + App->scene_manager->GetCurrentScene()->camera_limit.y)
 		if(App->scene_manager->GetCurrentScene()->follow_cam == true)

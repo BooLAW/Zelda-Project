@@ -124,7 +124,7 @@ public:
 	uint		 walk_dir;
 
 	uint max_life_points = 6;
-	uint curr_life_points = 6;
+	int curr_life_points = 6;
 	uint power = 1;
 	uint rupees = 50;
 	uint max_rupees = 99;

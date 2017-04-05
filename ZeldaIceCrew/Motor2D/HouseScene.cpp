@@ -38,7 +38,7 @@ bool HouseScene::Awake()
 // Called before the first frame
 bool HouseScene::Start()
 {
-
+	App->render->cam_travel = false;
 	if (App->map->Load("House.tmx") == true)
 	{
 		//int w, h;
@@ -161,4 +161,5 @@ bool HouseScene::CleanUp()
 		}
 		doorways.clear();
 	}
+	return true;
 }

@@ -29,7 +29,7 @@ bool Scene::CleanUp()
 		blocks.clear();
 	}
 
-	if (doorways.empty() == false) {
+	/*if (doorways.empty() == false) {
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
 		{
 			if (it._Ptr->_Myval != nullptr)
@@ -37,7 +37,7 @@ bool Scene::CleanUp()
 			//RELEASE(*it);
 		}
 		doorways.clear();
-	}
+	}*/
 
 	return true;
 }

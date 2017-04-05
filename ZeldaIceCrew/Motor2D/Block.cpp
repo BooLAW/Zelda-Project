@@ -268,7 +268,6 @@ void Block::Move() {
 			}
 		}
 	}
-
 	else if (App->player->curr_dir == Left) {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_A)) {
 			App->player->action_blit = App->player->Push;
@@ -290,7 +289,7 @@ void Block::Move() {
 		if (front == true && App->input->GetKey(SDL_SCANCODE_D)) {
 			App->player->action_blit = App->player->Push;
 			bool test = CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y);
-			if (CheckSpace(HitBox->rect.x + App->player->pl_speed.x / 4, HitBox->rect.y)) {
+			if (CheckSpace(HitBox->rect.x  + App->player->pl_speed.x / 4, HitBox->rect.y)) {
 				App->player->pos.x += App->player->pl_speed.x / 4;
 				pos.x += App->player->pl_speed.x / 4;
 			}

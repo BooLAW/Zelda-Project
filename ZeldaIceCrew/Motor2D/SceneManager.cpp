@@ -124,7 +124,8 @@ bool SceneManager::CleanUp()
 void SceneManager::ChangeScene(Scene * new_scene)
 {
 	LOG("Changing current scene");
-
+	App->render->cam_travel = false;
+	
 	Scene* prev_scene = current_scene;
 	current_scene = new_scene;
 	prev_scene->CleanUp();

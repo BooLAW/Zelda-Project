@@ -174,9 +174,7 @@ bool VillageScene::Update(float dt)
 	////	App->render->Blit(Bushes[i]->GetTexture(), Bushes[i]->pos.x, Bushes[i]->pos.y, &Bushes[i]->GetRect());
 	//
 	//}
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
-		App->player->curr_life_points -= 1;
-	}
+	
 		return true;
 	
 }
@@ -209,7 +207,7 @@ bool VillageScene::CleanUp()
 		}
 		items.clear();
 	}
-	if (enemies.empty() == false) {
+	if (this->enemies.empty() == false) {
 		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
 			if (it._Ptr->_Myval != nullptr)
 				App->entitymanager->DestroyEnity((*it));
@@ -225,7 +223,7 @@ bool VillageScene::CleanUp()
 		blocks.clear();
 	}
 
-	if (doorways.empty() == false) {
+	/*if (doorways.empty() == false) {
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
 		{
 			if (it._Ptr->_Myval != nullptr)
@@ -233,6 +231,7 @@ bool VillageScene::CleanUp()
 			//RELEASE(*it);
 		}
 		doorways.clear();
-	}
+	}*/
+	return true;
 }
 
