@@ -41,12 +41,12 @@ bool HouseScene::Start()
 
 	if (App->map->Load("House.tmx") == true)
 	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-
-		RELEASE_ARRAY(data);
+		//int w, h;
+		//uchar* data = NULL;
+		//if (App->map->CreateWalkabilityMap(w, h, &data))
+		//	App->pathfinding->SetMap(w, h, data);
+		//
+		//RELEASE_ARRAY(data);
 	}
 	
 	App->player->SetPos(6.5 * 32, 8 * 32);

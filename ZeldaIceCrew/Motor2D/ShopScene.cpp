@@ -43,12 +43,12 @@ bool ShopScene::Start()
 
 	if (App->map->Load("Shop.tmx") == true)
 	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-
-		RELEASE_ARRAY(data);
+		//int w, h;
+		//uchar* data = NULL;
+		//if (App->map->CreateWalkabilityMap(w, h, &data))
+		//	App->pathfinding->SetMap(w, h, data);
+		//
+		//RELEASE_ARRAY(data);
 	}
 	Scene::AddDoorway(dw_shop, Direction::Down, 14 * 16, 20 * 16);
 

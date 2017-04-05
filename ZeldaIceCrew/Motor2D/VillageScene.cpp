@@ -44,12 +44,12 @@ bool VillageScene::Start()
 
 	if (App->map->Load("Overworld.tmx") == true)
 	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-
-		RELEASE_ARRAY(data);
+		// int w, h;
+		//uchar* data = NULL;
+		//if (App->map->CreateWalkabilityMap(w, h, &data))
+		//	App->pathfinding->SetMap(w, h, data);
+		//
+		//RELEASE_ARRAY(data);
 	}
 	//Bush_Rect = { 8*32,2*32,32,32 };
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
