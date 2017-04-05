@@ -47,13 +47,13 @@ void Enemy::SetRewards()
 
 void Enemy::Update(float dt)
 {
-	if (App->render->IsCameraCull(this->HitBox->rect) == 0)
-		active = false;
-	else
+	if (App->render->IsCameraCull(this->HitBox->rect) == 0 && active != false)
 		active = true;
+	else
+		active = false;
 	LOG("ENEMY UPDATE");
 	if (HitBox != nullptr) {
-		if (active == true) {
+		if (App->render->IsCameraCull(this->HitBox->rect) == 0) {
 			if (App->player->weapon_coll != nullptr)
 				if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
 					Hit(App->player->curr_dir, App->player->power);
@@ -63,8 +63,9 @@ void Enemy::Update(float dt)
 			if (App->player->action_blit != j1Player::Weapon_atk)
 				hit = false;
 
-			if (App->debug_mode == false)
-				Move();
+			if(active == true)
+				if (App->debug_mode == false)
+					Move();
 
 			Attack();
 

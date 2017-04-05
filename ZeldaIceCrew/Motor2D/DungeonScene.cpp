@@ -75,7 +75,7 @@ bool DungeonScene::Start()
 	room3_up = App->collisions->AddCollider({ ROOM_W / 2 + 0, 50 + 1 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
 	room5_down = App->collisions->AddCollider({ ROOM_W / 2 + 0, ROOM_H - 50 + 0 * ROOM_H,32,16 }, COLLIDER_DUNGEON_DOWN, App->player);
 	room3_right = App->collisions->AddCollider({ ROOM_W - 50 + 0, ROOM_H / 2 + 1 * ROOM_H,16,32 }, COLLIDER_DUNGEON_RIGHT, App->player);
-	room4_left = App->collisions->AddCollider({ 50 + 1 * ROOM_W , ROOM_H / 2 + 3 * ROOM_H,16,32 }, COLLIDER_DUNGEON_LEFT, App->player);
+	room4_left = App->collisions->AddCollider({ 50 + 1 * ROOM_W , ROOM_H / 2 + 1 * ROOM_H,16,32 }, COLLIDER_DUNGEON_LEFT, App->player);
 	
 
 
@@ -102,6 +102,10 @@ bool DungeonScene::Start()
 	AddEnemy(t_greensoldier, 200 + ROOM_W, 425 + ROOM_H);
 	AddEnemy(t_redsoldier, 800 + ROOM_W, 75 + ROOM_H);
 	AddEnemy(t_redsoldier, 850 + ROOM_W, 425 + ROOM_H);
+
+	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+		it._Ptr->_Myval->active = false;
+	}
 
 	// Block Start
 	// ROOM 0x1
@@ -195,12 +199,18 @@ bool DungeonScene::PreUpdate()
 bool DungeonScene::Update(float dt)
 {
 
-	if (App->render->cam_travel) {
-		if ( - App->render->camera.y >=(App->player->room.y ) * ROOM_H)
+
+	if (App->render->cam_travel == true) {
+		if (-App->render->camera.y >= (App->player->room.y) * ROOM_H) {
 			App->render->cam_travel = false;
+		}
 		else
 			App->render->camera.y -= 5;
 	}
+	else
+		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+			it._Ptr->_Myval->active = true;
+		}
 
 	if (chain_boss_defeated == false && IsEnemy(ChainBoss) == false)
 		chain_boss_defeated = true;
@@ -263,10 +273,6 @@ bool DungeonScene::PostUpdate()
 
 	if (ESC == true) {
 		this->CleanUp();
-<<<<<<< HEAD
-		LOG("ESC CLEANUP");
-=======
->>>>>>> origin/Develop
 	}
 
 	return ret;
