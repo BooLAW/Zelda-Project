@@ -36,7 +36,7 @@ public:
 	bool CleanUp();
 
 public:
-	bool to_overworld = false;
+	bool to_overworld_shop = false;
 private:
 	Collider* to_overworld_coll = nullptr;
 

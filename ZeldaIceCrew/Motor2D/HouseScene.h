@@ -42,7 +42,7 @@ public:
 
 
 public:
-	bool to_overworld = false;
+	bool to_overworld_house = false;
 private:
 	Collider* to_overworld_coll = nullptr;
 	SDL_Texture* debug_tex;

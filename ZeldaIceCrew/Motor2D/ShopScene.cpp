@@ -51,7 +51,7 @@ bool ShopScene::Start()
 		//RELEASE_ARRAY(data);
 	}
 	//Scene::AddDoorway(dw_shop, Direction::Down, 14 * 16, 20 * 16);
-	to_overworld_coll = App->collisions->AddCollider({ 14 * 16,20 * 16,32,16 }, COLLIDER_TO_OVERWORLD_SHOP, App->player);
+	to_overworld_coll = App->collisions->AddCollider({ 15 * 16,20 * 16 ,32,16 }, COLLIDER_TO_OVERWORLD_SHOP, App->player);
 
 	App->player->SetPosTile(10, 10);
 

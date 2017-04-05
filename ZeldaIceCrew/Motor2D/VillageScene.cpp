@@ -60,8 +60,9 @@ bool VillageScene::Start()
 	//Scene::AddDoorway(dw_overworld, Direction::Right, 55 * 16, 50 * 16);//shop doorway
 	//Scene::AddDoorway(dw_overworld, Direction::Down, 23 * 16, 106 * 16);//house doorway
 	to_house_coll = App->collisions->AddCollider({ 23 * 16,106 * 16,32,16 }, COLLIDER_TO_HOUSE, App->player);
-	to_dungeon_coll = App->collisions->AddCollider({ 40 * 16,6 * 16,32,16 }, COLLIDER_TO_DUNGEON, App->player);
-	to_shop_coll = App->collisions->AddCollider({ 55 * 16,50 * 16,32,16 }, COLLIDER_TO_SHOP, App->player);
+	to_dungeon_coll = App->collisions->AddCollider({ 39 * 16,6 * 16,32 * 4,16 }, COLLIDER_TO_DUNGEON, App->player);
+	to_shop_coll = App->collisions->AddCollider({ 54 * 16,50 * 16,32,16 }, COLLIDER_TO_SHOP, App->player);
+
 
 	App->render->CamBoundOrigin();
 

@@ -48,7 +48,7 @@ bool HouseScene::Start()
 		//
 		//RELEASE_ARRAY(data);
 	}
-	to_overworld_coll = App->collisions->AddCollider({ 14*16,18*16,32,16 }, COLLIDER_TO_OVERWORLD_HOUSE, App->player);
+	to_overworld_coll = App->collisions->AddCollider({ 13 * 16,18 * 16,32,16 }, COLLIDER_TO_OVERWORLD_HOUSE, App->player);
 
 	App->player->SetPos(6.5 * 32, 8 * 32);
 	App->render->MoveCam(256, 128);

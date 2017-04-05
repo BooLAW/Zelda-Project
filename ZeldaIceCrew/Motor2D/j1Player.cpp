@@ -870,12 +870,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_HOUSE && alive == true)
 	{
 		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
-		App->scene_manager->house_scene->to_overworld = true;
+		App->scene_manager->house_scene->to_overworld_house = true;
+		App->player->SetPos(370, 1720);
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_SHOP && alive == true)
 	{
 		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
-		App->scene_manager->shop_scene->to_overworld = true;
+		App->scene_manager->shop_scene->to_overworld_shop = true;
+		App->player->SetPos(850, 850);
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_DUNGEON && alive == true)
 	{
