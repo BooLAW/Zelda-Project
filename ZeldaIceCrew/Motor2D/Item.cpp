@@ -297,5 +297,6 @@ void BossKey::SetUp()
 
 void BossKey::Upgrade()
 {
+	App->player->curr_life_points = App->player->max_life_points;
 	App->scene_manager->ChangeScene(App->scene_manager->house_scene);
 }

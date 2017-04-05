@@ -90,6 +90,7 @@ bool DungeonScene::Start()
 		// t_boss_ballandchain,
 
 	// ROOM 0x2
+	AddEnemy(t_bluesoldier, 200, 124 + ROOM_H * 2);
 	AddEnemy(t_bluesoldier, 800, 124 + ROOM_H * 2);
 	AddEnemy(t_hinox, 500, 74 + ROOM_H * 2);
 	// ROOM 0x1

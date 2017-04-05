@@ -57,11 +57,10 @@ bool HouseScene::Start()
 	//we can do that with an iterator that recieves the positions readed from the xml file
 	//	Scene::AddDoorway(dw_house, Direction::Down, 13*16,20*16);
 
-	follow_cam = true;
+	follow_cam = false;
 
-
-		App->render->camera.x = -App->render->camera.w / 2;
-		App->render->camera.y = -App->render->camera.h / 2;
+	App->render->camera.x = 0;
+	App->render->camera.y = 0;
 
 		App->audio->PlayMusic("Audio/music/Home.ogg");
 	return true;
@@ -72,6 +71,9 @@ bool HouseScene::PreUpdate()
 {
 	// debug pathfing ------------------
 	
+	
+
+
 	if (App->debug == true) {
 		static iPoint origin;
 		static bool origin_selected = false;
@@ -126,6 +128,7 @@ bool HouseScene::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
 
 	return ret;
 }

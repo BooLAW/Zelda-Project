@@ -79,8 +79,8 @@ bool ShopScene::Start()
 
 	follow_cam = true;
 
-	//App->render->camera.x = -App->render->camera.w / 2;
-	//App->render->camera.y = -App->render->camera.h / 2;
+	App->render->camera.x = 0;
+	App->render->camera.y = 0;
 
 
 
@@ -120,6 +120,7 @@ bool ShopScene::PreUpdate()
 // Called each loop iteration
 bool ShopScene::Update(float dt)
 {
+
 	App->render->cam_travel = false;
 
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
@@ -135,10 +136,9 @@ bool ShopScene::Update(float dt)
 		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
 	}
 
+	follow_cam = true;
+
 	App->map->Draw();
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
-		App->player->curr_life_points -= 1;
-	}
 	return true;
 
 }

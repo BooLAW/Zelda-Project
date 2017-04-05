@@ -129,6 +129,8 @@ bool VillageScene::Start()
 // Called each loop iteration
 bool VillageScene::PreUpdate()
 {
+
+	follow_cam = true;
 	// debug pathfing ------------------
 	if (App->debug == true) {
 		static iPoint origin;
