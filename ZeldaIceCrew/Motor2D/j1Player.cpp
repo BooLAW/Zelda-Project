@@ -896,12 +896,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_LEFT && alive == true)
 	{
 		App->player->pos.x -= ROOM_CHANGE_X;
-		App->player->room.x++;
+		App->player->room.x--;
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_RIGHT && alive == true)
 	{
 		App->player->pos.x += ROOM_CHANGE_X;
-		App->player->room.x--;
+		App->player->room.x++;
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_SHOP && alive == true)
 	{
