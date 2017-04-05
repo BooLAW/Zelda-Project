@@ -186,7 +186,8 @@ Doorway * EntityManager::CreateDoorway(uint subtype, uint dir)
 bool EntityManager::Update(float dt) {
 
 	for (int i = 0; i < entities.size(); i++) {
-		entities[i]->Update(dt);
+		if(entities[i] != nullptr)
+			entities[i]->Update(dt);
 	}
 
 

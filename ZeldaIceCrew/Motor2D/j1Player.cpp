@@ -917,7 +917,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	// Hit collision
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
 	{
-		if (curr_life_points == 0)
+		if (curr_life_points <= 0)
 			alive = false;
 
 		//Add extra particles?

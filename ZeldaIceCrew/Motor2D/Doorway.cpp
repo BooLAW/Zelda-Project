@@ -140,6 +140,11 @@ void DwOverworld::SetRoomPos(int x, int y)
 };
 void Doorway::CleanUp()
 {
-	if(collider != nullptr)
+	if (collider != nullptr) {
 		collider->to_delete = true;
+		LOG("DOORWAY TO DELETE");
+	}
+	tex = nullptr;
+	LOG("DOORWAY CLEANUP");
+
 };

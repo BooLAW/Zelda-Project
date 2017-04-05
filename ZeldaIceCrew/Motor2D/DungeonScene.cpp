@@ -60,6 +60,7 @@ bool DungeonScene::Start()
 	//Door Colliders
 		//Boss room
 	
+<<<<<<< HEAD
 	/*Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 3); 1
 	Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 2); 2
 	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 2); 2
@@ -77,6 +78,17 @@ bool DungeonScene::Start()
 	room3_right = App->collisions->AddCollider({ ROOM_W - 50 + 0, ROOM_H / 2 + 1 * ROOM_H,16,32 }, COLLIDER_DUNGEON_RIGHT, App->player);
 	room4_left = App->collisions->AddCollider({ 50 + 1 * ROOM_W , ROOM_H / 2 + 3 * ROOM_H,16,32 }, COLLIDER_DUNGEON_LEFT, App->player);
 
+=======
+	//Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 3);
+	//Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 2);
+	//Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 2);
+	//Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 1);
+	//Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 1);
+	//ChainBoss_dw = Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 0);
+	//Scene::AddDoorway(dw_dungeon, Direction::Right, 0, 1);
+	//Scene::AddDoorway(dw_dungeon, Direction::Left, 1, 1);
+	
+>>>>>>> origin/Develop
 
 
 	// Enemy Start
@@ -299,12 +311,12 @@ bool DungeonScene::CleanUp()
 
 		if (ChainBoss_dw != nullptr) {
 			ChainBoss_dw->CleanUp();
-			ChainBoss_dw = nullptr;
+			RELEASE(ChainBoss_dw);
 		}
 
 		if (ChainBoss != nullptr) {
 			ChainBoss->CleanUp();
-			ChainBoss = nullptr;
+			RELEASE(ChainBoss)
 		}
 
 		return true;
