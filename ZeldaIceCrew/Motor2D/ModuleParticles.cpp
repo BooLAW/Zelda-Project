@@ -189,7 +189,7 @@ bool Arrow::Update(float dt)
 	
 	for (std::list<Enemy*>::iterator it = ents->begin(); it != ents->end(); it++) {
 		if(it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
-		if (collider->CheckCollision(it._Ptr->_Myval->HitBox->rect)) {
+		if (collider->CheckCollision(it._Ptr->_Myval->HitBox->rect)&& hit==false) {
 				hit = true;
 				LOG("ENEMY HIT");
 				App->particle->DestroyParticle(this);
