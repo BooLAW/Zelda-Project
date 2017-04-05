@@ -60,14 +60,14 @@ bool DungeonScene::Start()
 	//Door Colliders
 		//Boss room
 	
-	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 3);
-	Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 2);
-	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 2);
-	Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 1);
-	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 1);
-	ChainBoss_dw = Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 0);
-	Scene::AddDoorway(dw_dungeon, Direction::Right, 0, 1);
-	Scene::AddDoorway(dw_dungeon, Direction::Left, 1, 1);
+	//Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 3);
+	//Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 2);
+	//Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 2);
+	//Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 1);
+	//Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 1);
+	//ChainBoss_dw = Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 0);
+	//Scene::AddDoorway(dw_dungeon, Direction::Right, 0, 1);
+	//Scene::AddDoorway(dw_dungeon, Direction::Left, 1, 1);
 	
 
 
@@ -291,12 +291,12 @@ bool DungeonScene::CleanUp()
 
 		if (ChainBoss_dw != nullptr) {
 			ChainBoss_dw->CleanUp();
-			ChainBoss_dw = nullptr;
+			RELEASE(ChainBoss_dw);
 		}
 
 		if (ChainBoss != nullptr) {
 			ChainBoss->CleanUp();
-			ChainBoss = nullptr;
+			RELEASE(ChainBoss)
 		}
 
 		return true;
