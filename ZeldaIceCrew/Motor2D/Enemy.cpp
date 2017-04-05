@@ -48,24 +48,26 @@ void Enemy::SetRewards()
 void Enemy::Update(float dt)
 {
 
-	if (App->render->IsCameraCull(this->HitBox->rect) == 0) {
+	if (HitBox != nullptr) {
+		if (App->render->IsCameraCull(this->HitBox->rect) == 0) {
 
-		if (App->player->weapon_coll != nullptr)
-			if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
-				Hit(App->player->curr_dir, App->player->power);
-				App->audio->PlayFx(hit_fx);
-			}
+			if (App->player->weapon_coll != nullptr)
+				if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
+					Hit(App->player->curr_dir, App->player->power);
+					App->audio->PlayFx(hit_fx);
+				}
 
-		if (App->player->action_blit != j1Player::Weapon_atk)
-			hit = false;
+			if (App->player->action_blit != j1Player::Weapon_atk)
+				hit = false;
 
-	if(App->debug_mode == false)
-		Move();
+			if (App->debug_mode == false)
+				Move();
 
-		Attack();
+			Attack();
 
-		Draw();
+			Draw();
 
+		}
 	}
 
 	

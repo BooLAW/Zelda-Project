@@ -106,8 +106,6 @@ bool SceneManager::CleanUp()
 	LOG("Freeing scene");
 
 	bool ret = false;
-	if (current_scene != nullptr)
-		ret = current_scene->CleanUp();
 
 	for (std::list<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++) {
 		it._Ptr->_Myval->CleanUp();
@@ -115,6 +113,10 @@ bool SceneManager::CleanUp()
 	}
 
 	scenes.clear();
+
+	if (current_scene != nullptr)
+		ret = current_scene->CleanUp();
+
 
 	return ret;
 }

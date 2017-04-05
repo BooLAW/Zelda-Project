@@ -33,6 +33,7 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 		break;
 	case t_boss_ballandchain:
 		ret = new BossChainBall();
+		break;
 	default:
 		LOG("Unknown Enemy Type: %d", subtype);
 		break;

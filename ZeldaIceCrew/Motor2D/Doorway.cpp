@@ -65,6 +65,7 @@ bool DwDungeon::Cross()
 		break;
 	}
 
+	LOG("PLAYER CROSS");
 	LOG("PLAYER ROOM: %d %d", App->player->room.x, App->player->room.y);
 
 	return true;
