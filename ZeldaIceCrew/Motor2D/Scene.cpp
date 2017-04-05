@@ -28,15 +28,15 @@ bool Scene::CleanUp()
 		}
 		blocks.clear();
 	}
-
-	for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
-	{
-		if(it._Ptr->_Myval != nullptr)
-			it._Ptr->_Myval->CleanUp();
-		//RELEASE(*it);
+	if (blocks.empty() == false) {
+		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
+		{
+			if (it._Ptr->_Myval != nullptr)
+				it._Ptr->_Myval->CleanUp();
+			//RELEASE(*it);
+		}
+		doorways.clear();
 	}
-	doorways.clear();
-
 	return true;
 }
 

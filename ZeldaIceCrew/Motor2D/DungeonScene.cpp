@@ -234,7 +234,6 @@ bool DungeonScene::Update(float dt)
 	return true;
 
 }
-
 // Called each loop iteration
 bool DungeonScene::PostUpdate()
 {
@@ -245,7 +244,6 @@ bool DungeonScene::PostUpdate()
 		ret = false;
 		ESC = true;
 	}
-
 	if (ESC == true)
 		this->CleanUp();
 

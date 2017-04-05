@@ -32,12 +32,6 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
-	// Called before quitting
-	bool CleanUp();
-public:
-	bool to_house = false;
-	bool to_dungeon = false;
-	bool to_shop = false;
 private:
 	bool ESC = false;
 	SDL_Texture* debug_tex;
