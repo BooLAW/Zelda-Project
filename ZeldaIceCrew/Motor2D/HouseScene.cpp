@@ -51,7 +51,9 @@ bool HouseScene::Start()
 	to_overworld_coll = App->collisions->AddCollider({ 13 * 16,18 * 16,32,16 }, COLLIDER_TO_OVERWORLD_HOUSE, App->player);
 
 	App->player->SetPos(6.5 * 32, 8 * 32);
-	App->render->MoveCam(256, 128);
+	App->render->camera.x = 256;
+	App->render->camera.y = 128;
+	
 	App->render->ScaleCamBoundaries(300);
 	
 	//we can do that with an iterator that recieves the positions readed from the xml file
