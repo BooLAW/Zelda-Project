@@ -187,15 +187,19 @@ bool Arrow::Update(float dt)
 
 	std::list<Enemy*>*ents = &App->scene_manager->GetCurrentScene()->enemies;
 	
-	for (std::list<Enemy*>::iterator it = ents->begin(); it != ents->end(); it++) {
-		if(it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
-		if (collider->CheckCollision(it._Ptr->_Myval->HitBox->rect)&& hit==false) {
+	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) {
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr) {
+			Collider* aux = collider;
+			aux->rect.x += 16;
+			aux->rect.y += 16;
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false) {
 				hit = true;
 				LOG("ENEMY HIT");
 				App->particle->DestroyParticle(this);
 				it._Ptr->_Myval->Hit(curr_dir, App->player->power);
 			}
 		}
+	}
 
 
 	return stdUpdate(dt);
