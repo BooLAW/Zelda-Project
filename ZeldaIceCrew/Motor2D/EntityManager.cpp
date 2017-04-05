@@ -221,6 +221,7 @@ void EntityManager::DestroyEnity(Entity * ent)
 	//RELEASE(ent);
 	entities.erase(aux);
 }
+
 void EntityManager::OnCollision(Collider * c1, Collider * c2)
 {
 	

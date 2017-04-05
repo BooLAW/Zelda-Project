@@ -142,27 +142,27 @@ bool ShopScene::PostUpdate()
 }
 
 // Called before quitting
-//bool ShopScene::CleanUp()
-//{
-//	LOG("Freeing village scene");
-//	if (ESC != true)
-//	{
-//		App->map->CleanUp();
-//
-//		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
-//		{
-//			App->entitymanager->DestroyEnity(*it);
-//		}
-//		enemies.clear();
-//		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++)
-//		{
-//			App->entitymanager->DestroyEnity(*it);
-//		}
-//		items.clear();
-//
-//		if (debug_tex != NULL)
-//			App->tex->UnLoad(debug_tex);
-//	}
-//
-//	return true;
-//}
+bool ShopScene::CleanUp()
+{
+	LOG("Freeing village scene");
+	if (ESC != true)
+	{
+		App->map->CleanUp();
+
+		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
+		{
+			App->entitymanager->DestroyEnity(*it);
+		}
+		enemies.clear();
+		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++)
+		{
+			App->entitymanager->DestroyEnity(*it);
+		}
+		items.clear();
+
+		if (debug_tex != NULL)
+			App->tex->UnLoad(debug_tex);
+	}
+
+	return true;
+}

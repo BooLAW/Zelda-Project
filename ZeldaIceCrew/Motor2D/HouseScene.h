@@ -38,6 +38,9 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
+	// Called before quitting
+	bool CleanUp();
+
 private:	
 	SDL_Texture* debug_tex;
 //	std::vector<Entity*> Bushes;

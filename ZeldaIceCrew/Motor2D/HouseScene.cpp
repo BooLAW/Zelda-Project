@@ -54,9 +54,7 @@ bool HouseScene::Start()
 	App->render->ScaleCamBoundaries(300);
 	
 	//we can do that with an iterator that recieves the positions readed from the xml file
-	Doorway* new_doorway = nullptr;
-	new_doorway = Scene::AddDoorway(dw_house, Direction::Down, 13*16,20*16);
-	doorways.push_back(new_doorway);
+		Scene::AddDoorway(dw_house, Direction::Down, 13*16,20*16);
 
 		App->render->camera.x = 0;
 		App->render->camera.x = 0;
@@ -126,10 +124,10 @@ bool HouseScene::PostUpdate()
 }
 
 // Called before quitting
-//bool HouseScene::CleanUp()
-//{
-//	LOG("Freeing house scene");
-//	
-//	App->map->CleanUp();
-//	return true;
-//}
+bool HouseScene::CleanUp()
+{
+	LOG("Freeing house scene");
+	
+	App->map->CleanUp();
+	return true;
+}
