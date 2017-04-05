@@ -54,9 +54,9 @@ bool VillageScene::Start()
 	//Bush_Rect = { 8*32,2*32,32,32 };
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 	//Colliders
-	Scene::AddDoorway(dw_overworld, Direction::Up, 40 * 16, 6 * 16);//dungeon doorway
-	Scene::AddDoorway(dw_overworld, Direction::Right, 55 * 16, 50 * 16);//shop doorway
-	Scene::AddDoorway(dw_overworld, Direction::Down, 23 * 16, 106 * 16);//house doorway
+	//Scene::AddDoorway(dw_overworld, Direction::Up, 40 * 16, 6 * 16);//dungeon doorway
+	//Scene::AddDoorway(dw_overworld, Direction::Right, 55 * 16, 50 * 16);//shop doorway
+	//Scene::AddDoorway(dw_overworld, Direction::Down, 23 * 16, 106 * 16);//house doorway
 
 	App->player->SetPosTile(2, 2);
 

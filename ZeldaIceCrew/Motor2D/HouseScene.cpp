@@ -54,7 +54,7 @@ bool HouseScene::Start()
 	App->render->ScaleCamBoundaries(300);
 	
 	//we can do that with an iterator that recieves the positions readed from the xml file
-		Scene::AddDoorway(dw_house, Direction::Down, 13*16,20*16);
+	//	Scene::AddDoorway(dw_house, Direction::Down, 13*16,20*16);
 
 		App->render->camera.x = 0;
 		App->render->camera.x = 0;

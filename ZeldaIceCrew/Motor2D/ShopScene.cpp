@@ -50,7 +50,7 @@ bool ShopScene::Start()
 		//
 		//RELEASE_ARRAY(data);
 	}
-	Scene::AddDoorway(dw_shop, Direction::Down, 14 * 16, 20 * 16);
+	//Scene::AddDoorway(dw_shop, Direction::Down, 14 * 16, 20 * 16);
 
 	App->player->SetPosTile(10, 10);
 
