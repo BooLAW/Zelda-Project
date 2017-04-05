@@ -19,11 +19,6 @@ bool HUD::Start()
 	bombs->pos = { 125,10 };
 	bombs->max_prior = true;
 
-	arrows = (GuiImage*)App->gui->CreateElement(GuiType::image);
-	arrows->texture_rect = { 766,412,57,32 };
-	arrows->active = true;
-	arrows->pos = { 200,10 };
-	arrows->max_prior = true;
 
 	life_icon = (GuiImage*)App->gui->CreateElement(GuiType::image);
 	life_icon->texture_rect = { 735,462,176,28 };
@@ -43,11 +38,6 @@ bool HUD::Start()
 	bombs_num->str = std::to_string(App->player->bombs);
 	bombs_num->pos = { 125,40 };
 
-	arrows_num = (GuiText*)App->gui->CreateElement(GuiType::text);
-	arrows_num->active = true;
-	arrows_num->movable = true;
-	arrows_num->str = std::to_string(App->player->arrows);
-	arrows_num->pos = { 200,40 };
 
 	inv = (Window*)App->gui->CreateElement(GuiType::window);
 	inv->active = false;
@@ -145,7 +135,6 @@ bool HUD::Update(float dt)
 {
 	rupees_num->str = std::to_string(App->player->rupees);
 	bombs_num->str = std::to_string(App->player->bombs);
-	arrows_num->str = std::to_string(App->player->arrows);
 	speed_num->str = std::to_string(App->player->pl_speed.x);
 	power_num->str = std::to_string(App->player->power);
 	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;

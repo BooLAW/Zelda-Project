@@ -940,7 +940,7 @@ void j1Player::DyingRestart()
 	power = 1;
 	rupees = floor(rupees / 2);
 	bombs = 0;
-	arrows = 0;
+//	arrows = 0;
 	curr_life_points = max_life_points;
 	//add more features to discuss by the designer
 	action = true;

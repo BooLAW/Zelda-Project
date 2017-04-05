@@ -22,11 +22,9 @@ public:
 	void AddItem(Item* obj);
 	SDL_Texture* items;
 	GuiImage* rupees;
-	GuiImage* arrows;
 	GuiImage* bombs;
 	GuiImage* life_icon;
 	GuiText* rupees_num;
-	GuiText* arrows_num;
 	GuiText* bombs_num;
 	std::list<GuiImage*>lifes;
 	Window* inv;

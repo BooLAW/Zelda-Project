@@ -128,8 +128,8 @@ public:
 	uint power = 1;
 	uint rupees = 50;
 	uint max_rupees = 99;
-	uint bombs = 50;
-	uint arrows = 100;
+	uint bombs = 0;
+	//uint arrows = 100;
 	std::list<Item*> inventory;
 	Point<float> pl_speed;
 	j1PerfTimer inmortal_timer;
