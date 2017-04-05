@@ -46,6 +46,7 @@ private:
 	Collider* to_dungeon_coll = nullptr;
 	Collider* to_shop_coll = nullptr;
 
+	bool round02 = false;
 
 
 

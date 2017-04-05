@@ -114,7 +114,7 @@ bool HouseScene::Update(float dt)
 		App->SaveGame("save_game.xml");
 
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
-		App->render->cam_travel = true;
+		//App->render->cam_travel = true;
 		App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 	}
 
