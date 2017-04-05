@@ -33,8 +33,6 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
-	// Called before quitting
-	bool CleanUp();
 private:
 	bool ESC = false;
 	SDL_Texture* debug_tex;

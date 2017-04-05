@@ -40,6 +40,8 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
+	bool CleanUp();
+
 private:
 
 	bool boss_music = false;

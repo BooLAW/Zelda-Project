@@ -177,6 +177,7 @@ bool j1Map::CleanUp()
 
 	while(item2 != data.layers.end())
 	{
+		LOG("LAYER");
 		RELEASE((*item2));
 		item2++;
 	}

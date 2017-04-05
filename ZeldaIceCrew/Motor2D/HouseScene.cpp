@@ -122,12 +122,3 @@ bool HouseScene::PostUpdate()
 
 	return ret;
 }
-
-// Called before quitting
-bool HouseScene::CleanUp()
-{
-	LOG("Freeing house scene");
-	
-	App->map->CleanUp();
-	return true;
-}
