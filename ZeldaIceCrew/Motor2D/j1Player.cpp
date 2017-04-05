@@ -528,7 +528,7 @@ bool j1Player::Start()
 	die_fx = App->audio->LoadFx("Audio/Fx/link_dies.wav");
 	open_inv_fx = App->audio->LoadFx("Audio/Fx/menu_open.wav");
 	close_inv_fx = App->audio->LoadFx("Audio/Fx/menu_close.wav");
-	hurt = App->audio->LoadFx("Audio/FX/link_hurt");
+	hurt = App->audio->LoadFx("Audio/Fx/link_hurt.wav");
 	// !_Animations
 
 

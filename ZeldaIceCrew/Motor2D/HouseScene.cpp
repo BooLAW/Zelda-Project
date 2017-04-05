@@ -63,7 +63,7 @@ bool HouseScene::Start()
 		App->render->camera.x = -App->render->camera.w / 2;
 		App->render->camera.y = -App->render->camera.h / 2;
 
-		App->audio->PlayMusic("Home.ogg");
+		App->audio->PlayMusic("Audio/music/Home.ogg");
 	return true;
 }
 
