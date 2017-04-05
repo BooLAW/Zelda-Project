@@ -114,7 +114,8 @@ bool VillageScene::Start()
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
-	App->render->SetCamPos(-(App->player->GetPos().x - App->render->camera.w / 2), -(App->player->GetPos().y - App->render->camera.h / 2));
+	App->render->cam_travel = false;
+	
 	
 	App->audio->PlayMusic("Audio/Music/Forest_Theme.ogg");
 	App->audio->SetVolumeMusic(60);

@@ -125,12 +125,12 @@ void SceneManager::ChangeScene(Scene * new_scene)
 {
 	LOG("Changing current scene");
 	App->render->cam_travel = false;
-	
 	Scene* prev_scene = current_scene;
 	current_scene = new_scene;
 	prev_scene->CleanUp();
 	LOG("CLEANUP PREV");
 	current_scene->Start();
+	current_scene->follow_cam = false;
 	LOG("START NEXT");
 }
 
