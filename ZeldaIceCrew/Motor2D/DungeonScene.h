@@ -44,6 +44,15 @@ public:
 
 private:
 
+	Collider* room1_up = nullptr;
+	Collider* room2_up = nullptr;
+	Collider* room2_down = nullptr;
+	Collider* room3_up = nullptr;
+	Collider* room3_down = nullptr;
+	Collider* room3_right = nullptr;
+	Collider* room4_left = nullptr;
+	Collider* room5_down = nullptr;
+
 	bool boss_music = false;
 
 	j1Timer boss_minions_spawn_time;

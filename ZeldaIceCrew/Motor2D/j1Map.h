@@ -56,7 +56,6 @@ struct MapLayer
 		return data[(y*width) + x];
 	}
 };
-
 // ----------------------------------------------------
 enum TileTypes
 {

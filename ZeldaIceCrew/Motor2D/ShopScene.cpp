@@ -51,6 +51,7 @@ bool ShopScene::Start()
 		//RELEASE_ARRAY(data);
 	}
 	//Scene::AddDoorway(dw_shop, Direction::Down, 14 * 16, 20 * 16);
+	to_overworld_coll = App->collisions->AddCollider({ 14 * 16,20 * 16,32,16 }, COLLIDER_TO_OVERWORLD_SHOP, App->player);
 
 	App->player->SetPosTile(10, 10);
 
@@ -139,4 +140,43 @@ bool ShopScene::PostUpdate()
 	}
 
 	return ret;
+}
+bool ShopScene::CleanUp()
+{
+	
+	App->collisions->EraseCollider(to_overworld_coll);
+	App->map->CleanUp();
+
+	if (items.empty() == false) {
+		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
+			if (it._Ptr->_Myval != nullptr)
+				App->entitymanager->DestroyEnity((*it));
+		}
+		items.clear();
+	}
+	if (enemies.empty() == false) {
+		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+			if (it._Ptr->_Myval != nullptr)
+				App->entitymanager->DestroyEnity((*it));
+		}
+		enemies.clear();
+	}
+
+	if (blocks.empty() == false) {
+		for (std::list<Block*>::iterator it = blocks.begin(); it != blocks.end(); it++) {
+			if (it._Ptr->_Myval != nullptr)
+				App->entitymanager->DestroyEnity((*it));
+		}
+		blocks.clear();
+	}
+
+	if (doorways.empty() == false) {
+		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
+		{
+			if (it._Ptr->_Myval != nullptr)
+				it._Ptr->_Myval->CleanUp();
+			//RELEASE(*it);
+		}
+		doorways.clear();
+	}
 }

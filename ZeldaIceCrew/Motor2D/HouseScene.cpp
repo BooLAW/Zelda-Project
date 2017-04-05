@@ -48,7 +48,8 @@ bool HouseScene::Start()
 		//
 		//RELEASE_ARRAY(data);
 	}
-	
+	to_overworld_coll = App->collisions->AddCollider({ 14*16,18*16,32,16 }, COLLIDER_TO_OVERWORLD_HOUSE, App->player);
+
 	App->player->SetPos(6.5 * 32, 8 * 32);
 	App->render->MoveCam(256, 128);
 	App->render->ScaleCamBoundaries(300);
@@ -106,7 +107,6 @@ bool HouseScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 	
-
 	App->map->Draw();
 
 	return true;
@@ -121,4 +121,44 @@ bool HouseScene::PostUpdate()
 		ret = false;
 
 	return ret;
+}
+
+bool HouseScene::CleanUp()
+{
+	App->collisions->EraseCollider(to_overworld_coll);
+
+	App->map->CleanUp();
+
+	if (items.empty() == false) {
+		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
+			if (it._Ptr->_Myval != nullptr)
+				App->entitymanager->DestroyEnity((*it));
+		}
+		items.clear();
+	}
+	if (enemies.empty() == false) {
+		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+			if (it._Ptr->_Myval != nullptr)
+				App->entitymanager->DestroyEnity((*it));
+		}
+		enemies.clear();
+	}
+
+	if (blocks.empty() == false) {
+		for (std::list<Block*>::iterator it = blocks.begin(); it != blocks.end(); it++) {
+			if (it._Ptr->_Myval != nullptr)
+				App->entitymanager->DestroyEnity((*it));
+		}
+		blocks.clear();
+	}
+
+	if (doorways.empty() == false) {
+		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
+		{
+			if (it._Ptr->_Myval != nullptr)
+				it._Ptr->_Myval->CleanUp();
+			//RELEASE(*it);
+		}
+		doorways.clear();
+	}
 }

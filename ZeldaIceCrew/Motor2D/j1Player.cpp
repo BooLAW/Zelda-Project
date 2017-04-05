@@ -378,10 +378,7 @@ bool j1Player::Start()
 			animations[Pickup][Right].speed = 0.2f;
 		}
 	}
-
-
 	// Push Objects
-
 	{
 
 		// Push UP 
@@ -642,15 +639,6 @@ bool j1Player::Update(float dt)
 
 		else
 			action_coll->SetPos(FARLANDS.x, FARLANDS.y);
-
-
-
-		//Idle
-		{
-			//if(App->input->GetKey(SDL_SCANCODE))action_blit = Idle;
-		}
-
-
 		// !_Logic
 
 		// Graphics
@@ -880,27 +868,50 @@ Point<float> j1Player::GetPos()
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (link_coll == c1  && (c2->type == COLLIDER_WALL || c2->type == COLLIDER_BLOCK) && link_coll != nullptr)
-	{	
-
-		//if (pos.y + PLAYER_COLL_Y_OFFSET >= c2->rect.y + c2->rect.h)
-		//{
-		//	pos.y = c2->rect.y + c2->rect.h;
-		//}
-		//
-		//else if (pos.y + c1->rect.h - PLAYER_COLL_Y_OFFSET <= c2->rect.y)
-		//{
-		//	pos.y = c2->rect.y - c1->rect.h;
-		//}
-		//else if (c1->rect.x + c1->rect.w >= c2->rect.x && c1->rect.x <= c2->rect.x)
-		//{
-		//	pos.x = c2->rect.x - c1->rect.w ;
-		//}
-		//else if (pos.x  <= c2->rect.x + c2->rect.w)
-		//{
-		//	//polish this one 
-		//	pos.x = c2->rect.x + c2->rect.w ;
-		//}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_HOUSE && alive == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
+		App->scene_manager->house_scene->to_overworld = true;
+	}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_SHOP && alive == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
+		App->scene_manager->shop_scene->to_overworld = true;
+	}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_DUNGEON && alive == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->dungeon_scene);
+		App->scene_manager->village_scene->to_dungeon = true;
+	}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_UP && alive == true)
+	{
+		App->player->pos.y -= ROOM_CHANGE_Y;
+		App->player->room.y--;
+	}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_DOWN && alive == true)
+	{
+		App->player->pos.y += ROOM_CHANGE_Y;
+		App->player->room.y++;
+	}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_LEFT && alive == true)
+	{
+		App->player->pos.x -= ROOM_CHANGE_X;
+		App->player->room.x++;
+	}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_RIGHT && alive == true)
+	{
+		App->player->pos.x += ROOM_CHANGE_X;
+		App->player->room.x--;
+	}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_SHOP && alive == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
+		App->scene_manager->village_scene->to_shop = true;
+	}
+	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_HOUSE && alive == true)
+	{
+		App->scene_manager->ChangeScene(App->scene_manager->house_scene);
+		App->scene_manager->village_scene->to_house = true;
 	}
 
 	// Hit collision

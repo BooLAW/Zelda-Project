@@ -38,7 +38,13 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
-private:	
+	bool CleanUp();
+
+
+public:
+	bool to_overworld = false;
+private:
+	Collider* to_overworld_coll = nullptr;
 	SDL_Texture* debug_tex;
 //	std::vector<Entity*> Bushes;
 //	SDL_Rect Bush_Rect;

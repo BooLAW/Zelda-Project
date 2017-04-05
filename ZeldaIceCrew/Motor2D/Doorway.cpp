@@ -8,7 +8,7 @@
 void Doorway::Start()
 {
 	open = true;
-	collider = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_DUNGEON_DOORWAY);
+	//collider = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_DUNGEON_DOORWAY);
 	this->tex = nullptr;
 	this->type = doorway;
 
