@@ -120,6 +120,7 @@ bool VillageScene::Start()
 	App->audio->PlayMusic("Audio/Music/Forest_Theme.ogg");
 	App->audio->SetVolumeMusic(60);
 
+
 	return true;
 }
 
@@ -156,7 +157,8 @@ bool VillageScene::PreUpdate()
 // Called each loop iteration
 bool VillageScene::Update(float dt)
 {
-	
+	App->render->cam_travel = false;
+
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
@@ -166,8 +168,10 @@ bool VillageScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->debug = !App->debug;
 
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		App->render->cam_travel = true;
 		App->scene_manager->ChangeScene(App->scene_manager->dungeon_scene);
+	}
 
 	App->map->Draw();
 

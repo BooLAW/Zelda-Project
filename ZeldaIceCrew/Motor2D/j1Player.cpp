@@ -580,6 +580,7 @@ bool j1Player::Update(float dt)
 	//		action_blit = PickUp;//change to wake Up animation when we have it
 	//	return ret;
 	//}
+	if(App->render->cam_travel != true){
 	if(App->debug_mode == true)
 		if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_DOWN) {
 			App->player->SetPos(-App->render->camera.x + App->render->camera.w / 2, -App->render->camera.y + App->render->camera.h / 2);
@@ -621,9 +622,9 @@ bool j1Player::Update(float dt)
 			switch (curr_dir) {
 			case Up:
 				App->player->action_coll->rect = { (int)App->player->GetPos().x, (int)App->player->link_coll->rect.y - WPN_COL_W / 4, WPN_COL_H / 4, WPN_COL_W / 4 };
-				break; 
+				break;
 			case Down:
-				App->player->action_coll->rect = { (int)App->player->GetPos().x, (int)App->player->link_coll->rect.y + App->player->link_coll->rect.h, WPN_COL_H / 4, WPN_COL_W / 4  };
+				App->player->action_coll->rect = { (int)App->player->GetPos().x, (int)App->player->link_coll->rect.y + App->player->link_coll->rect.h, WPN_COL_H / 4, WPN_COL_W / 4 };
 				break;
 			case Left:
 				App->player->action_coll->rect = { (int)App->player->GetPos().x - WPN_COL_W / 4, (int)App->player->GetPos().y + (App->player->link_coll->rect.w / 2) - (WPN_COL_H / 8), WPN_COL_W / 4, WPN_COL_H / 4 };
@@ -638,7 +639,7 @@ bool j1Player::Update(float dt)
 		else
 			action_coll->SetPos(FARLANDS.x, FARLANDS.y);
 		// !_Logic
-
+	}
 		// Graphics
 		if (action == false) {
 			//Movement or any action that does not stop movement

@@ -98,15 +98,19 @@ bool HouseScene::PreUpdate()
 // Called each loop iteration
 bool HouseScene::Update(float dt)
 {
+	App->render->cam_travel = false;
+
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		App->render->cam_travel = true;
 		App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
-	
+	}
+
 	App->map->Draw();
 
 	return true;
