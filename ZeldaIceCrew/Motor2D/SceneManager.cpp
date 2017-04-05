@@ -128,7 +128,9 @@ void SceneManager::ChangeScene(Scene * new_scene)
 	Scene* prev_scene = current_scene;
 	current_scene = new_scene;
 	prev_scene->CleanUp();
+	LOG("CLEANUP PREV");
 	current_scene->Start();
+	LOG("START NEXT");
 }
 
 Scene * SceneManager::GetCurrentScene()

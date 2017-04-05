@@ -90,7 +90,6 @@ bool DungeonScene::Start()
 		// t_boss_ballandchain,
 
 	// ROOM 0x2
-	AddEnemy(t_bluesoldier, 200, 124 + ROOM_H * 2);
 	AddEnemy(t_bluesoldier, 800, 124 + ROOM_H * 2);
 	AddEnemy(t_hinox, 500, 74 + ROOM_H * 2);
 	// ROOM 0x1
@@ -153,7 +152,6 @@ bool DungeonScene::Start()
 	App->player->SetPos(500, 400 + ROOM_H * 3);
 
 	App->player->room = { (int)trunc(App->player->pos.x / ROOM_W), (int)trunc(App->player->pos.y / ROOM_H) };
-	App->player->room = { 0, 3 };
 	App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
 	App->audio->SetVolumeMusic(60);
 
@@ -254,15 +252,19 @@ bool DungeonScene::PostUpdate()
 		ESC = true;
 	}
 
-	if (ESC == true)
+	if (ESC == true) {
 		this->CleanUp();
+		LOG("ESC CLEANUP");
+	}
 
 	return ret;
 }
 
 bool DungeonScene::CleanUp()
 {
+		LOG("DUNGEON CLEANUP");
 		App->map->CleanUp();
+
 
 		if (items.empty() == false) {
 			for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {

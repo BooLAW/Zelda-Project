@@ -47,10 +47,13 @@ void Enemy::SetRewards()
 
 void Enemy::Update(float dt)
 {
-
+	if (App->render->IsCameraCull(this->HitBox->rect) == 0)
+		active = false;
+	else
+		active = true;
+	LOG("ENEMY UPDATE");
 	if (HitBox != nullptr) {
-		if (App->render->IsCameraCull(this->HitBox->rect) == 0) {
-
+		if (active == true) {
 			if (App->player->weapon_coll != nullptr)
 				if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
 					Hit(App->player->curr_dir, App->player->power);
@@ -285,7 +288,7 @@ void Enemy::Hit(uint dir, uint dmg)
 void Enemy::Death()
 {
 	Reward();
-
+	LOG("ENEMY DEATH");
 	App->entitymanager->DestroyEnity(this);
 }
 
@@ -322,6 +325,7 @@ void Enemy::Reward()
 
 void Enemy::CleanUp()
 {
+	LOG("ENEMY CLEANUP");
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
 

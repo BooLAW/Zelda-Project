@@ -548,8 +548,6 @@ bool j1Player::Start()
 
 	curr_dir = Down;
 
-	room = { 0, 0 };
-
 	// !_Variables
 	
 	// Weapon SetUp
@@ -880,8 +878,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_DUNGEON && alive == true)
 	{
-		App->scene_manager->ChangeScene(App->scene_manager->dungeon_scene);
-		App->scene_manager->village_scene->to_dungeon = true;
+		App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+		App->scene_manager->village_scene->to_dungeon = false;
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_UP && alive == true)
 	{

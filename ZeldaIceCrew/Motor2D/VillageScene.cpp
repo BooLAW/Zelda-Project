@@ -61,8 +61,6 @@ bool VillageScene::Start()
 	to_dungeon_coll = App->collisions->AddCollider({ 40 * 16,6 * 16,32,16 }, COLLIDER_TO_DUNGEON, App->player);
 	to_shop_coll = App->collisions->AddCollider({ 55 * 16,50 * 16,32,16 }, COLLIDER_TO_SHOP, App->player);
 
-	App->player->SetPosTile(2, 2);
-
 	App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
@@ -116,7 +114,6 @@ bool VillageScene::Start()
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
-	App->player->SetPos(600, 500);
 	App->render->SetCamPos(-(App->player->GetPos().x - App->render->camera.w / 2), -(App->player->GetPos().y - App->render->camera.h / 2));
 	
 	App->audio->PlayMusic("Audio/Music/Forest_Theme.ogg");
@@ -169,7 +166,7 @@ bool VillageScene::Update(float dt)
 		App->debug = !App->debug;
 
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-		App->scene_manager->ChangeScene(App->scene_manager->house_scene);
+		App->scene_manager->ChangeScene(App->scene_manager->dungeon_scene);
 
 	App->map->Draw();
 

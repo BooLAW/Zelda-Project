@@ -60,7 +60,7 @@ public:
 	Enemy() {};
 	Enemy(uint subtype);
 	virtual ~Enemy() {
-		CleanUp();
+		//CleanUp();
 	};
 
 
@@ -117,6 +117,8 @@ public:
 	ENEMYTYPE subtype;
 	bool DmgType[__LAST_DMGTYPE];
 	AITYPE AIType;
+
+	bool active = false;
 
 	SDL_Rect sprites[EnDirection::LastDir][8];
 	Animation animations[EnDirection::LastDir];

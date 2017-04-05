@@ -76,6 +76,7 @@ Doorway * Scene::AddDoorway(uint subtype, uint dir, int x, int y)
 
 Enemy* Scene::AddEnemy(int subtype, float x, float y)
 {
+	LOG("ADD ENEMY");
 	Enemy* new_enemy = nullptr;
 	new_enemy = App->entitymanager->CreateEnemy(subtype);
 	new_enemy->pos = { x, y };

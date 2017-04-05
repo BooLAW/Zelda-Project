@@ -17,7 +17,8 @@ EntityManager::~EntityManager() {
 Enemy * EntityManager::CreateEnemy(uint subtype)
 {
 	Enemy* ret = nullptr;
-
+	LOG("CREATE ENEMY");
+	LOG("SUBT: %d", subtype);
 	switch (subtype) {
 	case t_bluesoldier:
 		ret = new BSoldier();
