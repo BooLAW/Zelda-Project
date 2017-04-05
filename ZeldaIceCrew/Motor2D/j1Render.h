@@ -79,7 +79,7 @@ public:
 	SDL_Rect		culling_cam;
 	SDL_Rect		viewport;
 	SDL_Color		background;
-
+	bool			cam_travel = false;
 private:
 	// camera
 	SDL_Rect cam_boundaries;

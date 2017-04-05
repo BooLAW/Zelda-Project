@@ -189,4 +189,5 @@ bool ShopScene::CleanUp()
 		}
 		doorways.clear();
 	}
+	return true;
 }
