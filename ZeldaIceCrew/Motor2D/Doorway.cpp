@@ -37,8 +37,6 @@ void Doorway::SetUp(uint dir)
 }
 void Doorway::Update(float dt)
 {
-	LOG("DOORWAY POS: %d %d", pos.x, pos.y);
-
 	collider->SetPos(pos.x, pos.y);
 
 	if(App->player->link_coll != nullptr)
@@ -50,22 +48,25 @@ bool DwDungeon::Cross()
 {
 	switch (direction) {
 	case Direction::Up:
-		App->render->camera.y -= -ROOM_H;
-		App->player->MovePos(0, -ROOM_CHANGE_Y);
+		App->player->room.y--;
+		App->player->pos = { (float)ROOM_W / 2 + App->player->room.x * ROOM_W,  (float)(ROOM_H - 125) + (App->player->room.y) * ROOM_H };
 		break;
 	case Direction::Down:
-		App->render->camera.y += -ROOM_H;
-		App->player->MovePos(0, ROOM_CHANGE_Y);
+		App->player->room.y++;
+		App->player->pos = { (float)ROOM_W / 2 + App->player->room.x * ROOM_W,  (float)(125) + (App->player->room.y) * ROOM_H };
 		break;
 	case Direction::Left:
-		App->render->camera.x += ROOM_W;
-		App->player->MovePos(-ROOM_CHANGE_X, 0);
+		App->player->room.x--;
+		App->player->pos = { (float)ROOM_W - 125 + App->player->room.x * ROOM_W,  (float)(ROOM_H / 2) + (App->player->room.y) * ROOM_H };
 		break;
 	case Direction::Right:
-		App->render->camera.x -= ROOM_W;
-		App->player->MovePos(ROOM_CHANGE_X, 0);
+		App->player->room.x++;
+		App->player->pos = { (float)100 + App->player->room.x * ROOM_W,  (float)(ROOM_H / 2) + (App->player->room.y) * ROOM_H };
 		break;
 	}
+
+	LOG("PLAYER ROOM: %d %d", App->player->room.x, App->player->room.y);
+
 	return true;
 }
 bool DwOverworld::Cross()

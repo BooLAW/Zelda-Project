@@ -551,6 +551,8 @@ bool j1Player::Start()
 
 	curr_dir = Down;
 
+	room = { 0, 0 };
+
 	// !_Variables
 	
 	// Weapon SetUp
@@ -727,6 +729,7 @@ bool j1Player::Update(float dt)
 					inmortal = false;
 		}
 	}
+
 	return ret;
 }
 

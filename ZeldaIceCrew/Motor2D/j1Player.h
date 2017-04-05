@@ -136,6 +136,8 @@ public:
 	float inmortal_time = 0;
 	bool inmortal = false;
 
+	iPoint room;
+
 	Collider* mov_coll = nullptr;
 
   // Weapon Related

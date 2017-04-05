@@ -139,12 +139,15 @@ bool DungeonScene::Start()
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
 
-	App->render->camera.x = 0;
-	App->render->camera.y = -ROOM_H * 3;
+	//App->render->camera.x = 0;
+	//App->render->camera.y = -ROOM_H * 3;
 
 	App->player->SetPos(500, 400 + ROOM_H * 3);
+
+	App->player->room = { (int)trunc(App->player->pos.x / ROOM_W), (int)trunc(App->player->pos.y / ROOM_H) };
+	App->player->room = { 0, 3 };
 	App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
-	App->audio->SetVolumeMusic(80);
+	App->audio->SetVolumeMusic(60);
 
 	follow_cam = false;
 

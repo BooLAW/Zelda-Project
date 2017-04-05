@@ -99,6 +99,9 @@ bool j1Render::Update(float dt) {
 		//	if (camera.y > App->scene_manager->GetCurrentScene()->camera_limit.y && camera.y < App->scene_manager->GetCurrentScene()->camera_limit.y + App->scene_manager->GetCurrentScene()->camera_limit.y)
 		if(App->scene_manager->GetCurrentScene()->follow_cam == true)
 			SetCamPos(-(App->player->GetPos().x - camera.w / 2), -(App->player->GetPos().y - camera.h / 2));
+		else {
+			SetCamPos(-(App->player->room.x * ROOM_W), -(App->player->room.y * ROOM_H));
+		}
 
 	}
 	return true;
