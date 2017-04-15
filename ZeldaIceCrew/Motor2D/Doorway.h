@@ -12,22 +12,24 @@
 
 class Entity;
 
+class Scene;
+
 enum DOORWAYTYPE {
-	dw_dungeon = 0,
-	dw_shop,
-	dw_overworld,
-	dw_house,
-	dw_free,
+	dw_cam = 0,
+	dw_dungeon,
+	dw_scene,
 	__LAST_DOORWAYTYPE
 };
 
-class Doorway : public Entity {
+class Doorway {
 public:
 	virtual void Start();
 	virtual void SetUp(uint dir);
 	virtual void Update(float dt);
 	virtual bool Cross() { return true;  };
 	virtual void CleanUp();
+
+	virtual void SetTarget(Scene*) {};
 
 	virtual void SetRoomPos(int x, int y) {
 		pos.x = x;
@@ -39,6 +41,10 @@ public:
 	uint direction;
 	Collider* collider;
 
+	fPoint pos;
+protected:
+	bool crossed = false;
+
 };
 
 class DwDungeon : public Doorway {
@@ -48,23 +54,15 @@ public:
 	void SetRoomPos(int x, int y);
 };
 
-class DwHouse : public Doorway {
-public:
+class DwScene : public Doorway {
+	public:
 	bool Cross();
 
-	void SetRoomPos(int x, int y);
+	void SetTarget(Scene* scene) { target = scene; };
+	Scene* GetTarget() { return target; };
 
+private:
+	Scene* target;
 };
-class DwShop : public Doorway {
-public:
-	bool Cross();
 
-	void SetRoomPos(int x, int y);
-};
-class DwOverworld : public Doorway {
-public:
-	bool Cross();
-
-	void SetRoomPos(int x, int y);
-};
 #endif // !_DOORWAY_H__

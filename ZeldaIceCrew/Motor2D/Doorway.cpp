@@ -7,12 +7,11 @@
 #include "ShopScene.h"
 void Doorway::Start()
 {
+	crossed = false;
 	open = true;
-	//collider = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_DUNGEON_DOORWAY);
-	this->tex = nullptr;
-	this->type = doorway;
-
+	collider = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_DUNGEON_DOORWAY);
 }
+
 void Doorway::SetUp(uint dir)
 {
 	direction = dir;
@@ -40,8 +39,10 @@ void Doorway::Update(float dt)
 	collider->SetPos(pos.x, pos.y);
 
 	if(App->player->link_coll != nullptr)
-	if (collider->CheckCollision(App->player->link_coll->rect) == true)
-		Cross();
+		if (collider->CheckCollision(App->player->link_coll->rect) == true) {
+			Cross();
+			crossed = true;
+		}
 };
 
 bool DwDungeon::Cross()
@@ -70,42 +71,7 @@ bool DwDungeon::Cross()
 
 	return true;
 }
-bool DwOverworld::Cross()
-{
-	switch (direction) {
-	case Direction::Up:
-		//go to dungeon
-		App->scene_manager->ChangeScene(App->scene_manager->dungeon_scene);
-		App->player->MovePos(80, 80);
-		break;
-	case Direction::Down:
-		//go to house
-		App->scene_manager->ChangeScene(App->scene_manager->house_scene);
-		App->player->MovePos(10, 10);
-		break;
-	case Direction::Left:
-		//nothing in  the demo
-		break;
-	case Direction::Right:
-		//go shop
-		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
-		App->player->MovePos(10, 10);
-		break;
-	}
-	return true;
-}
-bool DwHouse::Cross()
-{
-	App->scene_manager->ChangeScene(App->scene_manager->village_scene);
-	App->player->MovePos(-235, 1290);
-	return true;
-}
-bool DwShop::Cross()
-{
-	App->scene_manager->ChangeScene(App->scene_manager->village_scene);
-	App->player->MovePos(265, 350);
-	return true;
-}
+
 void DwDungeon::SetRoomPos(int x, int y)
 {
 	switch (direction) {
@@ -123,28 +89,20 @@ void DwDungeon::SetRoomPos(int x, int y)
 		break;
 	}
 };
-void DwHouse::SetRoomPos(int x, int y)
-{
-	pos = { (float) x, (float) y };
 
-};
-void DwShop::SetRoomPos(int x, int y)
-{
-	pos = { (float)x, (float)y };
-
-};
-void DwOverworld::SetRoomPos(int x, int y)
-{
-	pos = { (float)x, (float)y };
-
-};
 void Doorway::CleanUp()
 {
 	if (collider != nullptr) {
 		collider->to_delete = true;
-		LOG("DOORWAY TO DELETE");
 	}
-	tex = nullptr;
-	LOG("DOORWAY CLEANUP");
 
 };
+
+bool DwScene::Cross()
+{
+	if (crossed == false) {
+		App->scene_manager->ChangeScene(target);
+		crossed = true;
+	}
+	return true;
+}
