@@ -56,66 +56,19 @@ bool VillageScene::Start()
 	//Bush_Rect = { 8*32,2*32,32,32 };
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 	//Colliders
-	//Scene::AddDoorway(dw_overworld, Direction::Up, 40 * 16, 6 * 16);//dungeon doorway
-	//Scene::AddDoorway(dw_overworld, Direction::Right, 55 * 16, 50 * 16);//shop doorway
-	//Scene::AddDoorway(dw_overworld, Direction::Down, 23 * 16, 106 * 16);//house doorway
-	to_house_coll = App->collisions->AddCollider({ 23 * 16,106 * 16,32,16 }, COLLIDER_TO_HOUSE, App->player);
-	to_dungeon_coll = App->collisions->AddCollider({ 39 * 16,6 * 16,32 * 4,16 }, COLLIDER_TO_DUNGEON, App->player);
-	to_shop_coll = App->collisions->AddCollider({ 54 * 16,50 * 16,32,16 }, COLLIDER_TO_SHOP, App->player);
+	Doorway* dw = nullptr;
+	dw = AddDoorway(dw_scene, Down, 23 * 16, 106 * 16);
+	dw->SetTarget((Scene*)App->scene_manager->house_scene);
 
+	dw = AddDoorway(dw_scene, Down, 39 * 16, 6 * 16);
+	dw->SetTarget((Scene*)App->scene_manager->dungeon_scene);
 
-	App->render->CamBoundOrigin();
+	dw = AddDoorway(dw_scene, Down, 54 * 16, 50 * 16);
+	dw->SetTarget((Scene*)App->scene_manager->shop_scene);
+
+	///App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
-
-	// Enemy Start
-	//Enemy* new_enemy = nullptr;
-	//new_enemy = App->entitymanager->CreateEnemy(t_boss_ballandchain);
-	//new_enemy->pos = { 600, 300 };
-	
-	//enemies.push_back(new_enemy);
-	//
-	//new_enemy = App->entitymanager->CreateEnemy(RedSoldier);
-	//new_enemy->pos = { 250, 300 };
-	//
-	//enemies.push_back(new_enemy);
-	//
-	//new_enemy = App->entitymanager->CreateEnemy(GreenSoldier);
-	//new_enemy->pos = { 200, 300 };
-	//
-	//enemies.push_back(new_enemy);
-
-
-	// Items Start
-
-	//Item* new_item = nullptr;
-	//
-	//new_item = App->entitymanager->CreateItem(drop_tenrupee);
-	//new_item->SetPositions({ 300.0f, 300.0f });
-	//items.push_back(new_item);
-	//
-	//new_item = App->entitymanager->CreateItem(pegasus_boots);
-	//new_item->SetPositions({ 450.0f, 300.0f });
-	//new_item->SetPrice(20);
-	//items.push_back(new_item);
-	//
-	//new_item = App->entitymanager->CreateItem(heart_container);
-	//new_item->SetPositions({ 550.0f, 300.0f });
-	//items.push_back(new_item);
-	//
-	//new_item = App->entitymanager->CreateItem(drop_rupee);
-	//new_item->SetPositions({ 600.0f, 300.0f });
-	//items.push_back(new_item);
-	//
-	//new_item = App->entitymanager->CreateItem(drop_fiverupee);
-	//new_item->SetPositions({ 650.0f, 300.0f });
-	//items.push_back(new_item);
-	//
-	//new_item = App->entitymanager->CreateItem(weapon_sword);
-	//new_item->SetPositions({ 700.0f, 300.0f });
-	//items.push_back(new_item);
-
-	//we can do that with an iterator that recieves the positions readed from the xml file
 	
 	follow_cam = true;
 
@@ -162,6 +115,8 @@ bool VillageScene::PreUpdate()
 bool VillageScene::Update(float dt)
 {
 
+	DoorUpdate(dt);
+
 	//App->render->SetCamPos( 0, -(App->player->GetPos().y - App->render->camera.h / 2));
 
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
@@ -201,47 +156,5 @@ bool VillageScene::PostUpdate()
 	}
 
 	return ret;
-}
-bool VillageScene::CleanUp()
-{
-	App->collisions->EraseCollider(to_house_coll);
-	App->collisions->EraseCollider(to_dungeon_coll);
-	App->collisions->EraseCollider(to_shop_coll);
-
-	App->map->CleanUp();
-
-	if (items.empty() == false) {
-		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
-			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
-		}
-		items.clear();
-	}
-	if (this->enemies.empty() == false) {
-		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
-		}
-		enemies.clear();
-	}
-
-	if (blocks.empty() == false) {
-		for (std::list<Block*>::iterator it = blocks.begin(); it != blocks.end(); it++) {
-			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
-		}
-		blocks.clear();
-	}
-
-	/*if (doorways.empty() == false) {
-		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
-		{
-			if (it._Ptr->_Myval != nullptr)
-				it._Ptr->_Myval->CleanUp();
-			//RELEASE(*it);
-		}
-		doorways.clear();
-	}*/
-	return true;
 }
 

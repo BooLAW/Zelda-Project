@@ -48,23 +48,31 @@ bool HouseScene::Start()
 		//
 		//RELEASE_ARRAY(data);
 	}
-	to_overworld_coll = App->collisions->AddCollider({ 13 * 16,18 * 16,32,16 }, COLLIDER_TO_OVERWORLD_HOUSE, App->player);
+	//to_overworld_coll = App->collisions->AddCollider({ 13 * 16,18 * 16,32,16 }, COLLIDER_TO_OVERWORLD_HOUSE, App->player);
+	
+	DwScene* dw = nullptr;
+	dw = (DwScene*)AddDoorway(dw_scene, Down, 13 * 16, 18 * 16);
+	dw->SetTarget((Scene*)App->scene_manager->village_scene);
+
+	App->render->CamBoundOrigin();
 
 	App->player->SetPos(6.5 * 32, 8 * 32);
 	App->render->camera.x = 256;
 	App->render->camera.y = 128;
 	
+	follow_cam = false;
 	App->render->ScaleCamBoundaries(300);
 	
 	//we can do that with an iterator that recieves the positions readed from the xml file
 	//	Scene::AddDoorway(dw_house, Direction::Down, 13*16,20*16);
 
-	follow_cam = false;
 
-	App->render->camera.x = 0;
-	App->render->camera.y = 0;
+	//App->render->SetCamPos(-300, -300);
 
 		App->audio->PlayMusic("Audio/music/Home.ogg");
+
+		App->audio->SetVolumeMusic(40);
+
 	return true;
 }
 
@@ -106,6 +114,8 @@ bool HouseScene::PreUpdate()
 bool HouseScene::Update(float dt)
 {
 	App->render->cam_travel = false;
+
+	DoorUpdate(dt);
 
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");

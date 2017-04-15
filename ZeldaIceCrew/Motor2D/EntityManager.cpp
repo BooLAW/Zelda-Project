@@ -152,40 +152,6 @@ Block * EntityManager::CreateBlock(uint type)
 	return ret;
 }
 
-Doorway * EntityManager::CreateDoorway(uint subtype, uint dir)
-{
-	Doorway* ret = nullptr;
-
-	switch (subtype) {
-	case dw_dungeon:
-		ret = new DwDungeon();
-		break;
-	case dw_house:
-		ret = new DwHouse();
-		break;
-	case dw_shop:
-		ret = new DwShop();
-		break;
-	case dw_overworld:
-		ret = new DwOverworld();
-		break;
-	case dw_free:
-		break;
-	default:
-		LOG("Unknown DOORWAY type Id: %d", subtype);
-		break;
-	}
-	
-	ret->Start();
-	ret->SetUp(dir);
-
-	ret->type = doorway;
-
-	App->entitymanager->PushEntity(ret);
-
-	return ret;
-}
-
 bool EntityManager::Update(float dt) {
 
 	for (int i = 0; i < entities.size(); i++) {

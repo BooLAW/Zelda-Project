@@ -32,7 +32,6 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
-	bool CleanUp();
 public:
 	bool to_house = false;
 	bool to_dungeon = false;
@@ -40,12 +39,7 @@ public:
 private:
 	bool ESC = false;
 	SDL_Texture* debug_tex;
-	//std::vector<Entity*> Bushes;
-	//SDL_Rect Bush_Rect;
-	Collider* to_house_coll = nullptr;
-	Collider* to_dungeon_coll = nullptr;
-	Collider* to_shop_coll = nullptr;
-
+	
 	bool round02 = false;
 
 

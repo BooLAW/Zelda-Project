@@ -251,13 +251,7 @@ void j1Render::toDraw(SDL_Texture * texture, float priority, int x, int y, SDL_R
 	aux->pivot_x = pivot_x;
 	aux->pivot_y = pivot_y;
 
-	if (prior == true) {
-		App->render->max_prior_sprites.push_back(aux);
-	}
-	else {
-
-		App->render->sprites_toDraw.push_back(aux);
-	}
+	App->render->sprites_toDraw.push_back(aux);
 
 }
 

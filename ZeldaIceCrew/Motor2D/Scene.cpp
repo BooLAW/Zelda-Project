@@ -1,6 +1,17 @@
 #include "Scene.h"
 #include "j1Map.h"
 
+void Scene::DoorUpdate(float dt)
+{
+	if (doorways.empty() == false) {
+		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
+		{
+			if(it._Ptr->_Myval != nullptr)
+			it._Ptr->_Myval->Update(dt);
+		}
+	}
+}
+
 bool Scene::CleanUp()
 {
 
@@ -29,15 +40,15 @@ bool Scene::CleanUp()
 		blocks.clear();
 	}
 
-	/*if (doorways.empty() == false) {
+	if (doorways.empty() == false) {
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
 		{
 			if (it._Ptr->_Myval != nullptr)
 				it._Ptr->_Myval->CleanUp();
-			//RELEASE(*it);
+			RELEASE(*it);
 		}
 		doorways.clear();
-	}*/
+	}
 
 	return true;
 }
@@ -64,14 +75,25 @@ Block * Scene::AddBlock(uint subtype, float x, float y)
 
 Doorway * Scene::AddDoorway(uint subtype, uint dir, int x, int y)
 {
-	Doorway* dw = App->entitymanager->CreateDoorway(subtype, dir);
+	Doorway* ret = nullptr;
 
-	dw->SetRoomPos(x, y);
-	//dw->pos = { (float)x, (float)y };
+	switch (subtype) {
+	case dw_dungeon:
+		ret = new DwDungeon();
+		break;
+	case dw_scene:
+		ret = new DwScene();
+		break;
+	}
 
-	doorways.push_back(dw);
+	ret->Start();
+	ret->SetUp(dir);
 
-	return dw;
+	ret->SetRoomPos(x, y);
+
+	doorways.push_back(ret);
+
+	return ret;
 }
 
 Enemy* Scene::AddEnemy(int subtype, float x, float y)

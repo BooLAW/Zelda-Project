@@ -60,6 +60,7 @@ bool ShopScene::Start()
 	App->render->ScaleCamBoundaries(300);
 
 	App->audio->PlayMusic("Audio/Music/Shop.ogg");
+	App->audio->SetVolumeMusic(40);
 
 	Item* new_item = nullptr;
 	new_item = App->entitymanager->CreateItem(weapon_sword);
@@ -77,10 +78,9 @@ bool ShopScene::Start()
 
 	//we can do that with an iterator that recieves the positions readed from the xml file
 
-	follow_cam = true;
+	follow_cam = false;
 
-	App->render->camera.x = 0;
-	App->render->camera.y = 0;
+	App->render->SetCamPos(0, 0);
 
 
 
@@ -136,7 +136,7 @@ bool ShopScene::Update(float dt)
 		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
 	}
 
-	follow_cam = true;
+	//follow_cam = true;
 
 	App->map->Draw();
 	return true;

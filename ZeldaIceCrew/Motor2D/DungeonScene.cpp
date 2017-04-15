@@ -60,22 +60,22 @@ bool DungeonScene::Start()
 	//Door Colliders
 		//Boss room
 	
-	/*Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 3); 1
-	Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 2); 2
-	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 2); 2
-	Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 1); 3
-	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 1); 3
-	ChainBoss_dw = Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 0); b
-	Scene::AddDoorway(dw_dungeon, Direction::Right, 0, 1); 3
-	Scene::AddDoorway(dw_dungeon, Direction::Left, 1, 1);*/ //4
-	room1_up = App->collisions->AddCollider({ ROOM_W/2 + 0, 50 + 3 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
-	room2_down = App->collisions->AddCollider({ ROOM_W/2 +0, ROOM_H - 50 + 2 * ROOM_H,32,16 }, COLLIDER_DUNGEON_DOWN, App->player);
-	room2_up= App->collisions->AddCollider({ ROOM_W/2 + 0, 50 + 2 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
-	room3_down = App->collisions->AddCollider({ ROOM_W/2 + 0, ROOM_H - 50 + 1 * ROOM_H,32,16 }, COLLIDER_DUNGEON_DOWN, App->player);
-	room3_up = App->collisions->AddCollider({ ROOM_W / 2 + 0, 50 + 1 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
-	room5_down = App->collisions->AddCollider({ ROOM_W / 2 + 0, ROOM_H - 50 + 0 * ROOM_H,32,16 }, COLLIDER_DUNGEON_DOWN, App->player);
-	room3_right = App->collisions->AddCollider({ ROOM_W - 50 + 0, ROOM_H / 2 + 1 * ROOM_H,16,32 }, COLLIDER_DUNGEON_RIGHT, App->player);
-	room4_left = App->collisions->AddCollider({ 50 + 1 * ROOM_W , ROOM_H / 2 + 1 * ROOM_H,16,32 }, COLLIDER_DUNGEON_LEFT, App->player);
+	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 3); 
+	Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 2); 
+	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 2); 
+	Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 1); 
+	Scene::AddDoorway(dw_dungeon, Direction::Up, 0, 1); 
+	ChainBoss_dw = Scene::AddDoorway(dw_dungeon, Direction::Down, 0, 0); 
+	Scene::AddDoorway(dw_dungeon, Direction::Right, 0, 1); 
+	Scene::AddDoorway(dw_dungeon, Direction::Left, 1, 1);
+	//room1_up = App->collisions->AddCollider({ ROOM_W/2 + 0, 50 + 3 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
+	//room2_down = App->collisions->AddCollider({ ROOM_W/2 +0, ROOM_H - 50 + 2 * ROOM_H,32,16 }, COLLIDER_DUNGEON_DOWN, App->player);
+	//room2_up= App->collisions->AddCollider({ ROOM_W/2 + 0, 50 + 2 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
+	//room3_down = App->collisions->AddCollider({ ROOM_W/2 + 0, ROOM_H - 50 + 1 * ROOM_H,32,16 }, COLLIDER_DUNGEON_DOWN, App->player);
+	//room3_up = App->collisions->AddCollider({ ROOM_W / 2 + 0, 50 + 1 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
+	//room5_down = App->collisions->AddCollider({ ROOM_W / 2 + 0, ROOM_H - 50 + 0 * ROOM_H,32,16 }, COLLIDER_DUNGEON_DOWN, App->player);
+	//room3_right = App->collisions->AddCollider({ ROOM_W - 50 + 0, ROOM_H / 2 + 1 * ROOM_H,16,32 }, COLLIDER_DUNGEON_RIGHT, App->player);
+	//room4_left = App->collisions->AddCollider({ 50 + 1 * ROOM_W , ROOM_H / 2 + 1 * ROOM_H,16,32 }, COLLIDER_DUNGEON_LEFT, App->player);
 	
 
 
@@ -199,6 +199,8 @@ bool DungeonScene::PreUpdate()
 // Called each loop iteration
 bool DungeonScene::Update(float dt)
 {
+
+	DoorUpdate(dt);
 
 	if (App->render->cam_travel == true) {
 		if (-App->render->camera.y >= (App->player->room.y) * ROOM_H) {
@@ -330,15 +332,6 @@ bool DungeonScene::CleanUp()
 			ChainBoss->CleanUp();
 			RELEASE(ChainBoss)
 		}
-
-		App->collisions->EraseCollider(room1_up);
-		App->collisions->EraseCollider(room2_up);
-		App->collisions->EraseCollider(room2_down);
-		App->collisions->EraseCollider(room3_up);
-		App->collisions->EraseCollider(room3_down);
-		App->collisions->EraseCollider(room3_right);
-		App->collisions->EraseCollider(room4_left);
-		App->collisions->EraseCollider(room5_down);
 
 		return true;
 

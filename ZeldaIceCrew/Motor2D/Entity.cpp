@@ -6,7 +6,7 @@ bool Entity::CheckSpace(float new_x, float new_y)
 	bool ret = true;
 
 	// TileCheck
-	ret = !App->map->TileCheck(new_x, new_y, Up);
+	ret = !App->map->TileCheck(new_x, new_y);
 
 	if (ret != false) {
 		SDL_Rect r = HitBox->rect;

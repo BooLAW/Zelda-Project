@@ -86,7 +86,6 @@ private:
 
 	// Sprites Drawing
 	std::deque<Sprite*> sprites_toDraw;
-	std::deque<Sprite*> max_prior_sprites;
 };
 
 #endif // __j1RENDER_H__

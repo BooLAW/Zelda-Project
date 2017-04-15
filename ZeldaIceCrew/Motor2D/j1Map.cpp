@@ -189,7 +189,7 @@ bool j1Map::CleanUp()
 	return true;
 }
 
-int j1Map::TileCheck(int x, int y, Direction dir) const
+int j1Map::TileCheck(float x, float y) const
 {
 	int ret = 0;
 	//get the key navigation tiles(r)
@@ -200,8 +200,6 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 	if(data.tilesets.begin()._Ptr->_Next->_Myval != nullptr)
 		red_tile = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid;//walkability tile to don't walk
 																			 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
-	if (dir == Up)
-	{
 		iPoint ptemp = WorldToMap(x, y);
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
@@ -218,138 +216,6 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 		else
 			ret = 0;
 
-	}
-	if (dir == Left)
-	{
-		iPoint ptemp = WorldToMap(x, y);
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		else
-			ret = 0;
-	}
-	if (dir == Right)
-	{
-		iPoint ptemp = WorldToMap(x, y);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		else
-			ret = 0;
-	}
-	if (dir == Down)
-	{
-		iPoint ptemp = WorldToMap(x, y);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
-	if (dir == Down_L)
-	{
-		iPoint ptemp = WorldToMap(x, y);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
-	if (dir == Down_R)
-	{
-		iPoint ptemp = WorldToMap(x, y);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
-	if (dir == Up_R)
-	{
-		iPoint ptemp = WorldToMap(x, y);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
-	if (dir == Up_L)
-	{
-		iPoint ptemp = WorldToMap(x, y);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
 
 	//retornarem 0 si podem caminar o si es una blue tile
 	return ret;
