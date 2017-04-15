@@ -133,7 +133,7 @@ bool ShopScene::Update(float dt)
 		App->debug = !App->debug;
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		//App->render->cam_travel = true;
-		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
+		App->scene_manager->toChangeScene(App->scene_manager->village_scene);
 	}
 
 	//follow_cam = true;

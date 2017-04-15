@@ -257,7 +257,7 @@ bool DungeonScene::Update(float dt)
 	 
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		//App->render->cam_travel = true;
-		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
+		App->scene_manager->toChangeScene(App->scene_manager->shop_scene);
 	}
 
 	App->map->Draw();

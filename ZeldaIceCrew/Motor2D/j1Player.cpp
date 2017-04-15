@@ -869,19 +869,19 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_HOUSE && alive == true)
 	{
-		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
+		App->scene_manager->toChangeScene(App->scene_manager->village_scene);
 		App->scene_manager->house_scene->to_overworld_house = true;
 		App->player->SetPos(370, 1720);
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_SHOP && alive == true)
 	{
-		App->scene_manager->ChangeScene(App->scene_manager->village_scene);
+		App->scene_manager->toChangeScene(App->scene_manager->village_scene);
 		App->scene_manager->shop_scene->to_overworld_shop = true;
 		App->player->SetPos(850, 850);
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_DUNGEON && alive == true)
 	{
-		App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
 		App->scene_manager->village_scene->to_dungeon = false;
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_UP && alive == true)
@@ -906,12 +906,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_SHOP && alive == true)
 	{
-		App->scene_manager->ChangeScene(App->scene_manager->shop_scene);
+		App->scene_manager->toChangeScene(App->scene_manager->shop_scene);
 		App->scene_manager->village_scene->to_shop = true;
 	}
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_HOUSE && alive == true)
 	{
-		App->scene_manager->ChangeScene(App->scene_manager->house_scene);
+		App->scene_manager->toChangeScene(App->scene_manager->house_scene);
 		App->scene_manager->village_scene->to_house = true;
 	}
 
@@ -935,7 +935,7 @@ void j1Player::DyingRestart()
 {
 	alive = true;
 	pos = ORIGIN_RESTART;
-	App->scene_manager->ChangeScene((Scene*)App->scene_manager->house_scene);
+	App->scene_manager->toChangeScene((Scene*)App->scene_manager->house_scene);
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
 	App->player->inventory.clear();

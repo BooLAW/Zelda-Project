@@ -44,9 +44,16 @@ public:
 
 	// Change scene
 	void ChangeScene(Scene* new_scene);
+	void toChangeScene(Scene* new_scene) {
+		to_change_scene = true;
+		target = new_scene;
+	}
 	Scene* GetCurrentScene();
 
 public:
+	bool to_change_scene = false;
+	Scene* target = nullptr;
+
 	VillageScene*					village_scene = nullptr;//we need to change the name to villageScene
 	HouseScene*						house_scene = nullptr;
 	DungeonScene*					dungeon_scene = nullptr;

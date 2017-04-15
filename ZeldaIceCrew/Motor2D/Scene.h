@@ -82,6 +82,7 @@ protected:
 
 	bool change_scene = false;
 
+
 public:
 	SDL_Rect camera_limit = App->render->camera;
 

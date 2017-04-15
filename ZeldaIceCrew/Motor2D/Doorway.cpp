@@ -101,7 +101,7 @@ void Doorway::CleanUp()
 bool DwScene::Cross()
 {
 	if (crossed == false) {
-		App->scene_manager->ChangeScene(target);
+		App->scene_manager->toChangeScene(target);
 		crossed = true;
 	}
 	return true;

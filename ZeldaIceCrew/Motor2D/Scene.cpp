@@ -6,8 +6,9 @@ void Scene::DoorUpdate(float dt)
 	if (doorways.empty() == false) {
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
 		{
-			if(it._Ptr->_Myval != nullptr)
-			it._Ptr->_Myval->Update(dt);
+			if (it._Ptr->_Myval != nullptr) {
+				it._Ptr->_Myval->Update(dt);
+			}
 		}
 	}
 }

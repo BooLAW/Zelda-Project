@@ -69,6 +69,15 @@ bool SceneManager::PreUpdate()
 {
 	bool ret = false;
 
+	if (to_change_scene == true) {
+
+		if(target != nullptr)
+			ChangeScene(target);
+
+		target = nullptr;
+		to_change_scene = false;
+	}
+
 	if (current_scene != nullptr)
 		ret = current_scene->PreUpdate();
 
