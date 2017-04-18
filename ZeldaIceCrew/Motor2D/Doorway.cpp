@@ -5,6 +5,7 @@
 #include "DungeonScene.h"
 #include "HouseScene.h"
 #include "ShopScene.h"
+#include "j1Input.h"
 void Doorway::Start()
 {
 	crossed = false;
@@ -40,12 +41,33 @@ void Doorway::Update(float dt)
 
 	if (open == true) {
 
-	if (App->player->link_coll != nullptr)
-		if (collider->CheckCollision(App->player->link_coll->rect) == true) {
+		bool crossing = false;
+
+		if (App->player->link_coll != nullptr)
+			if (collider->CheckCollision(App->player->link_coll->rect) == true) {
+				switch (direction) {
+				case Up:
+					if (App->input->GetKey(SDL_SCANCODE_W))
+						crossing = true;
+					break;
+				case Down:
+					if (App->input->GetKey(SDL_SCANCODE_S))
+						crossing = true;
+					break;
+				case Left:
+					if (App->input->GetKey(SDL_SCANCODE_A))
+						crossing = true;
+					break;
+				case Right:
+					if (App->input->GetKey(SDL_SCANCODE_D))
+						crossing = true;
+					break;
+				}
+			}
+		if (crossing == true) {
 			Cross();
 			crossed = true;
 		}
-
 	}
 };
 
