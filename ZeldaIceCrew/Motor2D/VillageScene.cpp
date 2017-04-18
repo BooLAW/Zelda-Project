@@ -59,12 +59,15 @@ bool VillageScene::Start()
 	Doorway* dw = nullptr;
 	dw = AddDoorway(dw_scene, Down, 23 * 16, 106 * 16);
 	dw->SetTarget((Scene*)App->scene_manager->house_scene);
+	dw->target_pos = {6'5 * 32, 8 * 32 };
 
 	dw = AddDoorway(dw_scene, Down, 39 * 16, 6 * 16);
 	dw->SetTarget((Scene*)App->scene_manager->dungeon_scene);
+	dw->target_pos = { 500, 400 + ROOM_H * 3 };
 
 	dw = AddDoorway(dw_scene, Down, 54 * 16, 50 * 16);
 	dw->SetTarget((Scene*)App->scene_manager->shop_scene);
+	dw->target_pos = { 8 * 32, 8 * 32 };
 
 	///App->render->CamBoundOrigin();
 

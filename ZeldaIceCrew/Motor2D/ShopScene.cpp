@@ -50,10 +50,10 @@ bool ShopScene::Start()
 		//
 		//RELEASE_ARRAY(data);
 	}
-	//Scene::AddDoorway(dw_shop, Direction::Down, 14 * 16, 20 * 16);
-	to_overworld_coll = App->collisions->AddCollider({ 15 * 16,20 * 16 ,32,16 }, COLLIDER_TO_OVERWORLD_SHOP, App->player);
-
-	App->player->SetPosTile(10, 10);
+	Doorway* dw = nullptr;
+	dw = Scene::AddDoorway(dw_scene, Direction::Down, 14 * 16, 20 * 16);
+	dw->SetTarget((Scene*)App->scene_manager->village_scene);
+	dw->target_pos = { 54 * 16, 54 * 16 };
 
 	App->render->CamBoundOrigin();
 
@@ -90,30 +90,6 @@ bool ShopScene::Start()
 // Called each loop iteration
 bool ShopScene::PreUpdate()
 {
-	// debug pathfing ------------------
-	if (App->debug == true) {
-		static iPoint origin;
-		static bool origin_selected = false;
-
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-		{
-			if (origin_selected == true)
-			{
-				App->pathfinding->CreatePath(origin, p);
-				origin_selected = false;
-			}
-			else
-			{
-				origin = p;
-				origin_selected = true;
-			}
-		}
-	}
 	return true;
 }
 
@@ -139,6 +115,9 @@ bool ShopScene::Update(float dt)
 	//follow_cam = true;
 
 	App->map->Draw();
+
+	DoorUpdate(dt);
+
 	return true;
 
 }
