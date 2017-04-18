@@ -38,11 +38,15 @@ void Doorway::Update(float dt)
 {
 	collider->SetPos(pos.x, pos.y);
 
-	if(App->player->link_coll != nullptr)
+	if (open == true) {
+
+	if (App->player->link_coll != nullptr)
 		if (collider->CheckCollision(App->player->link_coll->rect) == true) {
 			Cross();
 			crossed = true;
 		}
+
+	}
 };
 
 bool DwDungeon::Cross()
@@ -50,21 +54,23 @@ bool DwDungeon::Cross()
 	switch (direction) {
 	case Direction::Up:
 		App->player->room.y--;
-		App->player->pos = { (float)ROOM_W / 2 + App->player->room.x * ROOM_W,  (float)(ROOM_H - 125) + (App->player->room.y) * ROOM_H };
+		target_pos = { (float)ROOM_W / 2 + App->player->room.x * ROOM_W,  (float)(ROOM_H - 125) + (App->player->room.y) * ROOM_H };
 		break;
 	case Direction::Down:
 		App->player->room.y++;
-		App->player->pos = { (float)ROOM_W / 2 + App->player->room.x * ROOM_W,  (float)(125) + (App->player->room.y) * ROOM_H };
+		target_pos = { (float)ROOM_W / 2 + App->player->room.x * ROOM_W,  (float)(125) + (App->player->room.y) * ROOM_H };
 		break;
 	case Direction::Left:
 		App->player->room.x--;
-		App->player->pos = { (float)ROOM_W - 125 + App->player->room.x * ROOM_W,  (float)(ROOM_H / 2) + (App->player->room.y) * ROOM_H };
+		target_pos = { (float)ROOM_W - 125 + App->player->room.x * ROOM_W,  (float)(ROOM_H / 2) + (App->player->room.y) * ROOM_H };
 		break;
 	case Direction::Right:
 		App->player->room.x++;
-		App->player->pos = { (float)100 + App->player->room.x * ROOM_W,  (float)(ROOM_H / 2) + (App->player->room.y) * ROOM_H };
+		target_pos = { (float)100 + App->player->room.x * ROOM_W,  (float)(ROOM_H / 2) + (App->player->room.y) * ROOM_H };
 		break;
 	}
+
+	App->player->pos = target_pos;
 
 	LOG("PLAYER CROSS");
 	LOG("PLAYER ROOM: %d %d", App->player->room.x, App->player->room.y);
@@ -104,5 +110,8 @@ bool DwScene::Cross()
 		App->scene_manager->toChangeScene(target);
 		crossed = true;
 	}
+
+	App->player->pos = target_pos;
+
 	return true;
 }

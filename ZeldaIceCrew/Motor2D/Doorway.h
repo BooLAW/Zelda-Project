@@ -41,7 +41,10 @@ public:
 	uint direction;
 	Collider* collider;
 
+	fPoint target_pos;
+
 	fPoint pos;
+
 protected:
 	bool crossed = false;
 

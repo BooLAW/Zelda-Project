@@ -37,8 +37,8 @@ public:
 	virtual bool CleanUp();
 
 	bool IsInside(SDL_Rect r1, SDL_Rect r2) {
-		if (r1.x + r1.w > r2.x && r1.x < r2.x + r2.w)
-			if (r1.y + r1.h > r2.y && r1.y < r2.y + r2.h)
+		if (r1.x > r2.x && r1.x < r2.x + r2.w)
+			if (r1.y > r2.y && r1.y < r2.y + r2.h)
 				return true;
 
 		return false;
@@ -92,6 +92,15 @@ public:
 	std::list<Item*> items;
 	std::list<Block*> blocks;
 	std::list<Doorway*> doorways;
+
+
+};
+
+class Room {
+public:
+	SDL_Rect rect;
+	iPoint xy_pos;
+
 
 
 };
