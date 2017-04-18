@@ -37,8 +37,8 @@ void Enemy::SetRewards()
 	// Standard Reward Pool
 	reward_pool[drop_heart] = 5;
 	reward_pool[drop_potion] = 0;
-	reward_pool[drop_rupee] = 50;
-	reward_pool[drop_fiverupee] = 10;
+	reward_pool[drop_rupee] = 10;
+	reward_pool[drop_fiverupee] = 0;
 	reward_pool[drop_tenrupee] = 0;
 
 	//SortRewardProbs();
@@ -47,7 +47,9 @@ void Enemy::SetRewards()
 
 void Enemy::Update(float dt)
 {
-	if (App->render->IsCameraCull(this->HitBox->rect) == 0 && active != false)
+	LOG("ENEMY POS: %f %f", pos.x, pos.y);
+
+	if (App->render->IsCameraCull(this->HitBox->rect) == 0 && active == false)
 		active = true;
 	else
 		active = false;
@@ -64,7 +66,7 @@ void Enemy::Update(float dt)
 				hit = false;
 
 			if(active == true)
-				if (App->debug_mode == false)
+				//if (App->debug_mode == false)
 					Move();
 
 			Attack();

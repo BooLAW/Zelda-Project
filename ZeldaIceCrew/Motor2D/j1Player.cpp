@@ -574,6 +574,17 @@ bool j1Player::Start()
 bool j1Player::Update(float dt)
 {
 	bool ret = true;
+	
+	if(App->debug_mode == true)
+		if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
+			if (App->scene_manager->GetCurrentScene()->enemies.empty() == false) {
+				for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) {
+					if (it._Ptr->_Myval != nullptr)
+						it._Ptr->_Myval->Hit(Down, 9999);
+				}
+			}
+		}
+
 	//if (alive == false)
 	//{
 	//	DyingRestart();

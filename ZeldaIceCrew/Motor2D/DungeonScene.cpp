@@ -105,7 +105,7 @@ bool DungeonScene::Start()
 	AddEnemy(t_redsoldier, 850 + ROOM_W, 425 + ROOM_H);
 
 	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-		it._Ptr->_Myval->active = false;
+		it._Ptr->_Myval->active = true;
 	}
 
 	// Block Start
@@ -155,14 +155,15 @@ bool DungeonScene::Start()
 	//App->render->camera.y = -ROOM_H * 3;
 
 	App->player->SetPos(500, 400 + ROOM_H * 3);
+	App->player->room = { 0 , 3 };
 
 	App->player->room = { (int)trunc(App->player->pos.x / ROOM_W), (int)trunc(App->player->pos.y / ROOM_H) };
 	App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
 	App->audio->SetVolumeMusic(60);
 
 	follow_cam = false;
-	App->render->cam_travel = true;
-	App->render->camera = { 0, 0 };
+	//App->render->cam_travel = true;
+	//App->render->camera = { 0, 0 };
 	return true;
 }
 
@@ -202,17 +203,17 @@ bool DungeonScene::Update(float dt)
 
 	DoorUpdate(dt);
 
-	if (App->render->cam_travel == true) {
-		if (-App->render->camera.y >= (App->player->room.y) * ROOM_H) {
-			App->render->cam_travel = false;
-		}
-		else
-			App->render->camera.y -= 5;
-	}
-	else
-		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-			it._Ptr->_Myval->active = true;
-		}
+	//if (App->render->cam_travel == true) {
+	//	if (-App->render->camera.y >= (App->player->room.y) * ROOM_H) {
+	//		App->render->cam_travel = false;
+	//	}
+	//	else
+	//		App->render->camera.y -= 5;
+	//}
+	//else
+	//	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+	//		it._Ptr->_Myval->active = true;
+	//	}
 
 	if (chain_boss_defeated == false && IsEnemy(ChainBoss) == false)
 		chain_boss_defeated = true;
@@ -221,14 +222,20 @@ bool DungeonScene::Update(float dt)
 		if (IsInside(App->player->link_coll->rect, { 0, 0, ROOM_W, ROOM_H }) == true) {
 			
 			if (chain_boss_defeated == false)
-				//ChainBoss_dw->open = false;
+				ChainBoss_dw->open = false;
+			else
+				ChainBoss_dw->open = true;
 
 			if (boss_music == false) {
 				App->audio->PlayMusic("Audio/Music/Hyrule_Castle.ogg");
 				boss_music = true;
 			}
 
-			if (App->render->cam_travel == false) {
+			if (chain_boss_defeated == true && boss_music == true) {
+				App->audio->PlayMusic("");
+				boss_music = false;
+			}
+
 				boss_minions_spawn_time.Start();
 				boss_minions_spawn_time.SetFlag(true);
 				if (boss_minions_spawn_time.ReadSec() >= 5) {
@@ -236,7 +243,6 @@ bool DungeonScene::Update(float dt)
 					AddEnemy(t_greensoldier, 850, 150);
 					boss_minions_spawn_time.SetFlag(false);
 				}
-			}
 		}
 		else {
 			if (boss_music == true) {
