@@ -90,6 +90,7 @@
     <ClCompile Include="ModuleParticles.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Room.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -191,6 +192,9 @@
     </ClInclude>
     <ClInclude Include="ModuleParticles.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

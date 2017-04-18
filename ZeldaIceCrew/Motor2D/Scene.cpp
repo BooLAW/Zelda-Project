@@ -1,112 +1,124 @@
 #include "Scene.h"
 #include "j1Map.h"
 
-void Scene::DoorUpdate(float dt)
-{
-	if (doorways.empty() == false) {
-		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
-		{
-			if (it._Ptr->_Myval != nullptr) {
-				it._Ptr->_Myval->Update(dt);
-			}
-		}
-	}
-}
-
 bool Scene::CleanUp()
 {
 
 	App->map->CleanUp();
 
-	if (items.empty() == false) {
-		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
-			if(it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
-		}
-		items.clear();
-	}
-	if (enemies.empty() == false) {
-		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
-		}
-		enemies.clear();
-	}
-
-	if (blocks.empty() == false) {
-		for (std::list<Block*>::iterator it = blocks.begin(); it != blocks.end(); it++) {
-			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
-		}
-		blocks.clear();
-	}
-
-	if (doorways.empty() == false) {
-		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
+	if (rooms.empty() == false) {
+		for (std::list<Room*>::iterator it = rooms.begin(); it != rooms.end(); it++)
 		{
 			if (it._Ptr->_Myval != nullptr)
 				it._Ptr->_Myval->CleanUp();
 			RELEASE(*it);
 		}
-		doorways.clear();
+		rooms.clear();
 	}
 
 	return true;
 }
 
-Item * Scene::AddItem(uint subtype, float x, float y)
+Room * Scene::GetRoom(int x, int y)
 {
-	Item* ret = App->entitymanager->CreateItem(subtype);
-	ret->pos = { x, y };
+	Room* ret = nullptr;
 
-	items.push_back(ret);
-
-	return ret;
-}
-
-Block * Scene::AddBlock(uint subtype, float x, float y)
-{
-	Block* nb = App->entitymanager->CreateBlock(subtype);
-	nb->pos = { x, y };
-
-	blocks.push_back(nb);
-
-	return nb;
-}
-
-Doorway * Scene::AddDoorway(uint subtype, uint dir, int x, int y)
-{
-	Doorway* ret = nullptr;
-
-	switch (subtype) {
-	case dw_dungeon:
-		ret = new DwDungeon();
-		break;
-	case dw_scene:
-		ret = new DwScene();
-		break;
+	for (std::list<Room*>::iterator it = rooms.begin(); it != rooms.end(); it++) {
+		if (it._Ptr->_Myval->coords.x == x && it._Ptr->_Myval->coords.y == y) {
+			ret = it._Ptr->_Myval;
+			break;
+		}
 	}
 
-	ret->Start();
-	ret->SetUp(dir);
+	return ret;
+}
 
-	ret->SetRoomPos(x, y);
+Item * Scene::AddItem(uint subtype, int coord_x, int coord_y, float x, float y)
+{
+	Room* r = GetRoom(coord_x, coord_y);
+	
+	Item* ret = nullptr;
 
-	doorways.push_back(ret);
+	if (r != nullptr) {
+
+		ret = App->entitymanager->CreateItem(subtype);
+		ret->pos = { x + r->coords.x * ROOM_W , y + r->coords.y * ROOM_H };
+
+		r->items.push_back(ret);
+	}
+	else
+		LOG("UNACCESIBLE ROOM: %d %d", coord_x, coord_y);
 
 	return ret;
 }
 
-Enemy* Scene::AddEnemy(int subtype, float x, float y)
+Block * Scene::AddBlock(uint subtype, int coord_x, int coord_y, float x, float y)
+{
+	Room* r = GetRoom(coord_x, coord_y);
+
+	Block* ret = nullptr;
+
+	if (r != nullptr) {
+
+		ret = App->entitymanager->CreateBlock(subtype);
+		ret->pos = { x + r->coords.x * ROOM_W , y + r->coords.y * ROOM_H };
+
+		r->blocks.push_back(ret);
+	}
+	else
+		LOG("UNACCESIBLE ROOM: %d %d", coord_x, coord_y);
+
+	return ret;
+}
+
+Doorway * Scene::AddDoorway(uint subtype, int coord_x, int coord_y, uint dir, int x, int y)
+{
+	Room* r = GetRoom(coord_x, coord_y);
+
+	Doorway* ret = nullptr;
+
+	if (r != nullptr) {
+
+		switch (subtype) {
+		case dw_dungeon:
+			ret = new DwDungeon();
+			break;
+		case dw_scene:
+			ret = new DwScene();
+			break;
+		}
+
+		ret->Start();
+		ret->SetUp(dir);
+
+		ret->SetRoomPos(x, y);
+
+		r->doorways.push_back(ret);
+	}
+	else
+		LOG("UNACCESIBLE ROOM: %d %d", coord_x, coord_y);
+
+	return ret;
+}
+
+Enemy* Scene::AddEnemy(int subtype, int coord_x, int coord_y, float x, float y)
 {
 	LOG("ADD ENEMY");
-	Enemy* new_enemy = nullptr;
-	new_enemy = App->entitymanager->CreateEnemy(subtype);
-	new_enemy->pos = { x, y };
+	Room* r = GetRoom(coord_x, coord_y);
 
-	this->enemies.push_back(new_enemy);
+	Enemy* ret = nullptr;
 
-	return new_enemy;
+	if (r != nullptr) {
+
+		ret = App->entitymanager->CreateEnemy(subtype);
+		ret->pos = { x + r->coords.x * ROOM_W , y + r->coords.y * ROOM_H };
+
+		r->enemies.push_back(ret);
+	}
+	else
+		LOG("UNACCESIBLE ROOM: %d %d", coord_x, coord_y);
+
+	return ret;
 }
 
 bool Scene::IsEnemy(Enemy * en)
@@ -114,10 +126,11 @@ bool Scene::IsEnemy(Enemy * en)
 	bool ret = false;
 
 	if (en != nullptr) {
-		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-			if ((*it) == en)
-				ret = true;
-		}
+		for(std::list<Room*>::iterator r_it = rooms.begin(); r_it != rooms.end(); r_it++)
+			for (std::list<Enemy*>::iterator it = r_it._Ptr->_Myval->enemies.begin(); it != r_it._Ptr->_Myval->enemies.end(); it++) {
+				if ((*it) == en)
+					ret = true;
+			}
 	}
 
 	return ret;

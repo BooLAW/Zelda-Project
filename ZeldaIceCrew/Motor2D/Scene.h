@@ -8,6 +8,8 @@
 #include "Doorway.h"
 #include "EntityManager.h"
 
+#include "Room.h"
+
 #include <string>
 #include <list>
 
@@ -32,9 +34,10 @@ public:
 	virtual bool Start() { return true; };
 	virtual bool PreUpdate() { return true; };
 	virtual bool Update(float dt) { return true; };
-	virtual void DoorUpdate(float dt);
 	virtual bool PostUpdate() { return true; };
 	virtual bool CleanUp();
+
+	Room* GetRoom(int x, int y);
 
 	bool IsInside(SDL_Rect r1, SDL_Rect r2) {
 		if (r1.x > r2.x && r1.x < r2.x + r2.w)
@@ -46,18 +49,20 @@ public:
 
 	virtual void DestroyItem(Item* ent) {
 		if (ent != nullptr) {
-			for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
-				if(it._Ptr->_Myval == ent)
-					items.erase(it);
-			}
+			for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
+				for (std::list<Item*>::iterator it = room_it._Ptr->_Myval->items.begin(); it != room_it._Ptr->_Myval->items.end(); it++) {
+					if(it._Ptr->_Myval == ent)
+						room_it._Ptr->_Myval->items.erase(it);
+				}
 		}
 	};
 	virtual void DestroyEnemy(Enemy* ent) {
 		if (ent != nullptr) {
-			for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-				if (it._Ptr->_Myval == ent)
-					enemies.erase(it);
-			}
+			for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
+				for (std::list<Enemy*>::iterator it = room_it._Ptr->_Myval->enemies.begin(); it != room_it._Ptr->_Myval->enemies.end(); it++) {
+					if (it._Ptr->_Myval == ent)
+						room_it._Ptr->_Myval->enemies.erase(it);
+				}
 		}
 	};
 
@@ -72,10 +77,10 @@ public:
 	}
 
 	
-	Item* AddItem(uint subtype, float x, float y);
-	Block* AddBlock(uint subtype, float x, float y);
-	Doorway* AddDoorway(uint subtype, uint dir, int x, int y);
-	Enemy* AddEnemy(int subtype, float x, float y);
+	Item* AddItem(uint subtype, int coord_x, int coord_y, float x, float y);
+	Block* AddBlock(uint subtype, int coord_x, int coord_y, float x, float y);
+	Doorway* AddDoorway(uint subtype, int coord_x, int coord_y, uint dir, int x, int y);
+	Enemy* AddEnemy(int subtype, int coord_x, int coord_y, float x, float y);
 	virtual bool IsEnemy(Enemy* en);
 
 protected:
@@ -88,20 +93,7 @@ public:
 
 	bool follow_cam = true;
 
-	std::list<Enemy*> enemies;
-	std::list<Item*> items;
-	std::list<Block*> blocks;
-	std::list<Doorway*> doorways;
-
-
-};
-
-class Room {
-public:
-	SDL_Rect rect;
-	iPoint xy_pos;
-
-
+	std::list<Room*> rooms;
 
 };
 
