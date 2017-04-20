@@ -1,7 +1,6 @@
 #ifndef __ROOM_H__
 #define __ROOM_H__
 
-#include "j1App.h"
 #include "j1Player.h"
 #include "Scene.h"
 
@@ -10,30 +9,21 @@ class Enemy;
 class Block;
 class Doorway;
 
+class Scene;
+
 #define ROOM_W 1024
 #define ROOM_H 576
 
 class Room {
 public:
-	virtual void Start() {
-		room_rect.w = ROOM_W;
-		room_rect.h = ROOM_H;
-	};
+	virtual void Start();
 
 	void Update(float dt);
 	void CleanUp();
 
-	bool isInside(SDL_Rect r) {
-		if (r.x > room_rect.x && r.x < room_rect.x + room_rect.w)
-			if (r.y > room_rect.y && r.y < room_rect.y + room_rect.h)
-				return true;
+	bool isInside(SDL_Rect r);
 
-		return false;
-	};
-
-	bool PlayerInside() {
-		return isInside(App->player->mov_coll->rect);
-	};
+	bool PlayerInside();
 
 	bool findEnemy(Enemy* en) {
 		bool ret = false;
@@ -53,10 +43,11 @@ public:
 	Block* AddBlock(uint subtype, float x, float y);
 	Doorway* AddDoorway(uint subtype, uint dir, float x, float y);
 
+	Scene* GetParentScene();
+	void SetParentScene(Scene* scene);
 
 public:
 	bool active = false;
-	bool enter = false;
 
 	iPoint coords;
 	SDL_Rect room_rect;
@@ -68,6 +59,9 @@ public:
 	std::list<Block*> blocks;
 	std::list<Doorway*> doorways;
 
-};
+protected:
+	Scene* parent;
+
+};;
 
 #endif //!__ROOM_H__

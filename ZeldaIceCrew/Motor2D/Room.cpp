@@ -7,15 +7,6 @@ void Room::Start()
 void Room::Update(float dt)
 {
 
-	if (enter == false) {
-		if (PlayerInside() == true) {
-			for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-				
-			}
-			enter = true;
-		}
-	}
-
 	active = PlayerInside();
 
 	if (active == true) {
@@ -94,6 +85,20 @@ void Room::CleanUp()
 	}
 }
 
+bool Room::isInside(SDL_Rect r)
+{
+	if (r.x > room_rect.x && r.x < room_rect.x + room_rect.w)
+		if (r.y > room_rect.y && r.y < room_rect.y + room_rect.h)
+			return true;
+
+	return false;
+}
+
+bool Room::PlayerInside()
+{
+	return isInside(App->player->mov_coll->rect);
+}
+
 Item * Room::AddItem(uint subtype, float x, float y)
 {
 	Item* ret = nullptr;
@@ -152,4 +157,14 @@ Doorway * Room::AddDoorway(uint subtype, uint dir, float x, float y)
 
 	return ret;
 
+}
+
+Scene * Room::GetParentScene()
+{
+	return parent;
+}
+
+void Room::SetParentScene(Scene * scene)
+{
+	parent = scene;
 }

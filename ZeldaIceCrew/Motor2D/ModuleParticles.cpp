@@ -185,9 +185,9 @@ bool Arrow::Update(float dt)
 
 	HitBox = { (int)position.x, (int)position.y, g_rect[curr_dir].w, g_rect[curr_dir].h };
 
-	std::list<Enemy*>*ents = &App->scene_manager->GetCurrentScene()->enemies;
+	std::list<Enemy*>*ents = &App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies;
 	
-	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) {
+	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++) {
 		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr) {
 			Collider* aux = collider;
 			aux->rect.x += 16;

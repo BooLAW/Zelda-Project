@@ -8,6 +8,8 @@
 #include "j1Collision.h"
 #include "j1Render.h"
 
+#include "j1Player.h"
+
 #include "Log.h"
 
 #include "Entity.h"

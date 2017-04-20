@@ -1,6 +1,12 @@
 #include "Entity.h"
 #include "j1Map.h"
 
+void Entity::CleanUp()
+{
+	if (tex != nullptr)
+		App->tex->UnLoad(tex);
+}
+
 bool Entity::CheckSpace(float new_x, float new_y)
 {
 	bool ret = true;
@@ -13,14 +19,14 @@ bool Entity::CheckSpace(float new_x, float new_y)
 		r.x = new_x;
 		r.y = new_y;
 
-		Scene* scene = App->scene_manager->GetCurrentScene();
+		Room* room = App->scene_manager->GetCurrentScene()->GetRoom(App->player->room.x, App->player->room.y);
 
 		// Enemy Check
-		for (std::list<Enemy*>::iterator it = scene->enemies.begin(); it != scene->enemies.end(); it++) {
+		for (std::list<Enemy*>::iterator it = room->enemies.begin(); it != room->enemies.end(); it++) {
 			if (it._Ptr->_Myval != nullptr) {
 				if (it._Ptr->_Myval == this)
 					continue;
-				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+				if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
 					ret = false;
 					break;
 				}
@@ -29,12 +35,12 @@ bool Entity::CheckSpace(float new_x, float new_y)
 
 		// Block Check
 		if (ret != false) {
-		
-			for (std::list<Block*>::iterator it = scene->blocks.begin(); it != scene->blocks.end(); it++) {
+
+			for (std::list<Block*>::iterator it = room->blocks.begin(); it != room->blocks.end(); it++) {
 				if (it._Ptr->_Myval != nullptr) {
 					if (it._Ptr->_Myval == this)
 						continue;
-					if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+					if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
 						ret = false;
 						break;
 					}
@@ -44,11 +50,11 @@ bool Entity::CheckSpace(float new_x, float new_y)
 
 		// Player Check
 		if (ret != false) {
-			if (scene->IsInside(r, App->player->mov_coll->rect))
+			if (CheckIntersec(r, App->player->mov_coll->rect))
 				ret = false;
 		}
 
 	}
 
 	return ret;
-}
+};

@@ -1,9 +1,10 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "j1App.h"
 #include "j1Textures.h"
+#include "MathHelpers.h"
 #include "j1Render.h"
+#include "Log.h"
 
 enum ENTITYTYPE
 {
@@ -22,10 +23,7 @@ public:
 	Entity() {};
 	virtual ~Entity() {};
 	virtual void Update(float dt) {};
-	virtual void CleanUp() {
-		if(tex != nullptr)
-			App->tex->UnLoad(tex);
-	}
+	virtual void CleanUp();
 	virtual void Draw(float dt) {};
 
 

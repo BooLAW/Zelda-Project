@@ -3,6 +3,8 @@
 
 #include "EntityManager.h"
 #include "j1Collision.h"
+#include "Entity.h"
+
 
 #define DOORWAY_UP		iPoint( { 32 * 16, 32 * 2  } )
 #define DOORWAY_DOWN	iPoint( { 32 * 16, 32 * 16 } )

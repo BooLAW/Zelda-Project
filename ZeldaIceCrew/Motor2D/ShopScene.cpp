@@ -50,8 +50,13 @@ bool ShopScene::Start()
 		//
 		//RELEASE_ARRAY(data);
 	}
+
+	AddRoom(0, 0);
+
+	GetRoom(0, 0)->room_rect.h = 768;
+
 	Doorway* dw = nullptr;
-	dw = Scene::AddDoorway(dw_scene, Direction::Down, 14 * 16, 20 * 16);
+	dw = Scene::AddDoorway(dw_scene, Direction::Down, 0, 0, 14 * 16, 20 * 16);
 	dw->SetTarget((Scene*)App->scene_manager->village_scene);
 	dw->target_pos = { 54 * 16, 54 * 16 };
 
@@ -62,16 +67,15 @@ bool ShopScene::Start()
 	App->audio->PlayMusic("Audio/Music/Shop.ogg");
 	App->audio->SetVolumeMusic(40);
 
-	Item* new_item = nullptr;
-	new_item = App->entitymanager->CreateItem(weapon_sword);
-	new_item->SetPositions({ 350.0f, 190.0f });
-	new_item->SetPrice(30);
-	items.push_back(new_item);
 
-	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	Item* new_item = nullptr;
+	new_item = AddItem(weapon_bow, 0, 0, 350, 190);
+	new_item->SetPrice(30);
+
+	new_item = AddItem(pegasus_boots, 0, 0, 150, 190);
 	new_item->SetPositions({ 150.0f, 190.0f });
 	new_item->SetPrice(30);
-	items.push_back(new_item);
+
 	// Enemy Start
 
 	// Items Start
@@ -91,87 +95,4 @@ bool ShopScene::Start()
 bool ShopScene::PreUpdate()
 {
 	return true;
-}
-
-// Called each loop iteration
-bool ShopScene::Update(float dt)
-{
-
-	App->render->cam_travel = false;
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame("save_game.xml");
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		App->SaveGame("save_game.xml");
-
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		App->debug = !App->debug;
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
-		//App->render->cam_travel = true;
-		App->scene_manager->toChangeScene(App->scene_manager->village_scene);
-	}
-
-	//follow_cam = true;
-
-	App->map->Draw();
-
-	DoorUpdate(dt);
-
-	return true;
-
-}
-
-// Called each loop iteration
-bool ShopScene::PostUpdate()
-{
-	bool ret = true;
-
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		ret = false;
-		ESC = true;
-	}
-
-	return ret;
-}
-bool ShopScene::CleanUp()
-{
-	
-	App->collisions->EraseCollider(to_overworld_coll);
-	App->map->CleanUp();
-
-	if (items.empty() == false) {
-		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
-			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
-		}
-		items.clear();
-	}
-	if (enemies.empty() == false) {
-		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
-		}
-		enemies.clear();
-	}
-
-	if (blocks.empty() == false) {
-		for (std::list<Block*>::iterator it = blocks.begin(); it != blocks.end(); it++) {
-			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
-		}
-		blocks.clear();
-	}
-
-	if (doorways.empty() == false) {
-		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
-		{
-			if (it._Ptr->_Myval != nullptr)
-				it._Ptr->_Myval->CleanUp();
-			//RELEASE(*it);
-		}
-		doorways.clear();
-	}
-	return true;
-}
+};

@@ -3,9 +3,9 @@
 
 #include "j1App.h"
 #include "EntityManager.h"
-#include "Entity.h"
 #include "j1Collision.h"
 #include "SceneManager.h"
+#include "Entity.h"
 
 #include "Item.h"
 

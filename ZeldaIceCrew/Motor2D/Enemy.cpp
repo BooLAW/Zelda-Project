@@ -317,7 +317,7 @@ void Enemy::Reward()
 
 	if (target != -1) {
 	
-		App->scene_manager->GetCurrentScene()->AddItem(target, pos.x + HitBox->rect.w / 2 - 16, pos.y + +HitBox->rect.h / 2 - 16);
+		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, pos.x + HitBox->rect.w / 2 - 16, pos.y + +HitBox->rect.h / 2 - 16);
 
 	}
 	else

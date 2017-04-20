@@ -1,9 +1,4 @@
 #include "Item.h"
-#include "j1App.h"
-#include "j1Map.h"
-#include "SceneManager.h"
-#include "HouseScene.h"
-#include "VillageScene.h"
 
 Item::Item(uint subtype)
 {
@@ -298,5 +293,5 @@ void BossKey::SetUp()
 void BossKey::Upgrade()
 {
 	App->player->curr_life_points = App->player->max_life_points;
-	App->scene_manager->toChangeScene(App->scene_manager->house_scene);
+	App->scene_manager->toChangeScene((Scene*)App->scene_manager->house_scene);
 }

@@ -9,6 +9,9 @@
 #include "VillageScene.h"
 #include "ShopScene.h"
 #include "HouseScene.h"
+
+#include "MathHelpers.h"
+
 j1Player::j1Player()
 {
 }
@@ -575,10 +578,12 @@ bool j1Player::Update(float dt)
 {
 	bool ret = true;
 	
+	Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
+
 	if(App->debug_mode == true)
 		if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
-			if (App->scene_manager->GetCurrentScene()->enemies.empty() == false) {
-				for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) {
+			if (c_r->enemies.empty() == false) {
+				for (std::list<Enemy*>::iterator it = c_r->enemies.begin(); it != c_r->enemies.end(); it++) {
 					if (it._Ptr->_Myval != nullptr)
 						it._Ptr->_Myval->Hit(Down, 9999);
 				}
@@ -979,12 +984,12 @@ bool j1Player::CheckSpace(float new_x, float new_y)
 		r.x = new_x;
 		r.y = new_y;
 
-		Scene* scene = App->scene_manager->GetCurrentScene();
+		Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
 
 		// Enemy Check
 		if (inmortal == false) {
-			for (std::list<Enemy*>::iterator it = scene->enemies.begin(); it != scene->enemies.end(); it++) {
-				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+			for (std::list<Enemy*>::iterator it = c_r->enemies.begin(); it != c_r->enemies.end(); it++) {
+				if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
 					ret = false;
 					break;
 				}
@@ -993,8 +998,8 @@ bool j1Player::CheckSpace(float new_x, float new_y)
 
 		// Block Check
 		if (ret != false) {
-			for (std::list<Block*>::iterator it = scene->blocks.begin(); it != scene->blocks.end(); it++) {
-				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+			for (std::list<Block*>::iterator it = c_r->blocks.begin(); it != c_r->blocks.end(); it++) {
+				if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
 					ret = false;
 					break;
 				}

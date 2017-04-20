@@ -196,6 +196,7 @@
     <ClInclude Include="Room.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="MathHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

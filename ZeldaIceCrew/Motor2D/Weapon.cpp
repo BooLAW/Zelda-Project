@@ -1,5 +1,4 @@
 #include "Weapon.h"
-#include "ModuleParticles.h"
 
 void Bow::Start()
 {
@@ -26,6 +25,8 @@ void Bow::Start()
 		anim[i].speed = 0.075;
 	}
 
+	subtype = weapon_bow;
+
 	curr_dir = App->player->curr_dir;
 	UI_rect = { 362, 326, 32, 32 };
 };
@@ -42,11 +43,6 @@ void Bow::Attack()
 	App->particle->CreateParticle(p_arrow, pos.x, pos.y, curr_dir);
 
 }
-ITEMTYPE Bow::Subtype()
-{
-	return ITEMTYPE::weapon_bow;
-}
-;
 
 void Sword::Start()
 {
@@ -103,6 +99,8 @@ void Sword::Start()
 
 	anim[Down].speed = anim[Down].speed * 6 / 9;
 
+	subtype = weapon_sword;
+
 	curr_dir = App->player->curr_dir;
 }
 
@@ -129,12 +127,7 @@ void Sword::Attack()
 
 }
 
-ITEMTYPE Sword::Subtype()
+uint Weapon::Subtype()
 {
-	return ITEMTYPE();
-}
-
-ITEMTYPE Weapon::Subtype()
-{
-	return ITEMTYPE::weapon_sword;
+	return subtype;
 }
