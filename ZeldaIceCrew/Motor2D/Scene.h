@@ -13,9 +13,6 @@
 #include <string>
 #include <list>
 
-#define ROOM_W 1024
-#define ROOM_H 576
-
 #define ROOM_CHANGE_X 175.0f
 #define ROOM_CHANGE_Y 175.0f
 

@@ -7,6 +7,15 @@ void Room::Start()
 void Room::Update(float dt)
 {
 
+	if (enter == false) {
+		if (PlayerInside() == true) {
+			for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+				
+			}
+			enter = true;
+		}
+	}
+
 	active = PlayerInside();
 
 	if (active == true) {

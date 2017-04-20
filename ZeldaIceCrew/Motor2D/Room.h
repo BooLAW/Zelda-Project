@@ -10,6 +10,9 @@ class Enemy;
 class Block;
 class Doorway;
 
+#define ROOM_W 1024
+#define ROOM_H 576
+
 class Room {
 public:
 	virtual void Start() {
@@ -53,6 +56,7 @@ public:
 
 public:
 	bool active = false;
+	bool enter = false;
 
 	iPoint coords;
 	SDL_Rect room_rect;
