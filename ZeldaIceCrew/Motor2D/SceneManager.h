@@ -5,6 +5,7 @@
 #include "j1Module.h"
 #include "j1Gui.h"
 #include "Scene.h"
+#include "j1FileSystem.h"
 
 struct SDL_Texture;
 class VillageScene;
@@ -42,6 +43,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool LoadRooms(const char* file_name);
+
 	// Change scene
 	void ChangeScene(Scene* new_scene);
 	void toChangeScene(Scene* new_scene) {
@@ -59,6 +62,8 @@ public:
 	DungeonScene*					dungeon_scene = nullptr;
 	ShopScene*						shop_scene = nullptr;
 private:
+	pugi::xml_document	scene_file;
+	std::string			folder;
 	std::list<Scene*>				 scenes;
 	Scene*							 current_scene = nullptr;
 

@@ -130,6 +130,19 @@ bool SceneManager::CleanUp()
 	return ret;
 }
 
+bool SceneManager::LoadRooms(const char * file_name)
+{
+	bool ret = true;
+	p2SString tmp("%s%s", folder.c_str(), file_name);
+
+	char* buf;
+	int size = App->fs->Load(tmp.GetString(), &buf);
+	pugi::xml_parse_result result = scene_file.load_buffer(buf, size);
+
+	RELEASE(buf);
+	return false;
+}
+
 void SceneManager::ChangeScene(Scene * new_scene)
 {
 	LOG("Changing current scene");

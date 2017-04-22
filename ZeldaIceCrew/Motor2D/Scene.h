@@ -17,6 +17,12 @@
 #define ROOM_CHANGE_X 175.0f
 #define ROOM_CHANGE_Y 175.0f
 
+enum scene_id {
+	null,
+	village,
+	dungeon,
+	intro
+};
 class Item;
 class Enemy;
 class Block;
@@ -70,8 +76,8 @@ public:
 	{
 		return true;
 	}
-
-	
+	bool Scene::Load_new_map(int id);
+	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 	Item* AddItem(uint subtype, float x, float y);
 	Block* AddBlock(uint subtype, float x, float y);
 	Doorway* AddDoorway(uint subtype, uint dir, int x, int y);
@@ -87,7 +93,7 @@ public:
 	SDL_Rect camera_limit = App->render->camera;
 
 	bool follow_cam = true;
-
+	scene_id curr_id;
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
 	std::list<Block*> blocks;

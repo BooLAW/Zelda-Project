@@ -135,7 +135,7 @@ public:
 	j1PerfTimer inmortal_timer;
 	float inmortal_time = 0;
 	bool inmortal = false;
-
+	bool camera_follow = false;
 	iPoint room;
 
 	Collider* mov_coll = nullptr;
