@@ -127,17 +127,52 @@ bool Scene::IsEnemy(Enemy * en)
 pugi::xml_node Scene::LoadConfig(pugi::xml_document& config_file) const
 {
 	pugi::xml_node ret;
-
+	int size = 0;
+	pugi::xml_parse_result result;
 	char* buf;
-	int size = App->fs->Load("Levels.xml", &buf);
-	pugi::xml_parse_result result = config_file.load_buffer(buf, size);
+	switch (curr_id)
+	{
+	case null:
+		break;
+	case village:
+		size = App->fs->Load("Village.xml", &buf);
+		break;
+	case dungeon:
+		size = App->fs->Load("Dungeon.xml", &buf);
+		break;
+	case intro:
+		//we have to stablish what do we need in the intro scene
+		size = App->fs->Load("Intro.xml", &buf);
+		break;
+	default:
+		break;
+	}
+	if(size != 0)
+		result = config_file.load_buffer(buf, size);
 	RELEASE(buf);
 
 	if (result == NULL)
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
 	else
-		ret = config_file.child("levels");
-
+	{
+		switch (curr_id)
+		{
+		case null:
+			break;
+		case village:
+			ret = config_file.child("village");
+			break;
+		case dungeon:
+			ret = config_file.child("dungeon");
+			break;
+		case intro:
+			//we have to stablish what do we need in the intro scene
+			ret = config_file.child("intro");
+			break;
+		default:
+			break;
+		}
+	}
 	return ret;
 }
 bool Scene::Load_new_map(int id)
@@ -166,6 +201,16 @@ bool Scene::Load_new_map(int id)
 				{
 					items.push_back(App->entitymanager->CreateItem(temp_item.attribute("id").as_int(0)));
 					temp_item = temp_item.next_sibling();
+				}
+			}
+			//Blocks
+			if (temp.child("blocks").attribute("num").as_int() != 0)
+			{
+				pugi::xml_node temp_block= temp.child("blocks").child("block");
+				for (int i = 0; i < temp.child("blocks").attribute("num").as_int(0); i++)
+				{
+					blocks.push_back(App->entitymanager->CreateBlock(temp_block.attribute("id").as_int(0)));
+					temp_block = temp_block.next_sibling();
 				}
 			}
 			//Doorways

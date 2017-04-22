@@ -93,7 +93,7 @@ public:
 	SDL_Rect camera_limit = App->render->camera;
 
 	bool follow_cam = true;
-	scene_id curr_id;
+	scene_id curr_id;// enum to use in the load_new_map scene function
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
 	std::list<Block*> blocks;
