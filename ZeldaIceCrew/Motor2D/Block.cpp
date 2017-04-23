@@ -412,3 +412,12 @@ App->player->action_blit = App->player->Light;
 App->player->action = true;
 
 }*/
+
+bool NPC::Start()
+{
+	this->dialogue = new Dialogue();
+	dialogue->Create("Hello fagots");
+	dialogue->displaying = false;
+
+	return false;
+}

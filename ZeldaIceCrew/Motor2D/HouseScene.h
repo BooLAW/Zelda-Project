@@ -5,6 +5,7 @@
 #include "EntityManager.h"
 #include <vector>
 #include "Scene.h"
+#include "Dialogues.h"
 struct SDL_Texture;
 //UI forward declarations
 class Image;
@@ -53,6 +54,9 @@ private:
 	
 	Window* window;
 	Label* win_title;
+
+	////////////////////////
+	Dialogue* welcome;
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "EntityManager.h"
 #include "Entity.h"
+#include "Dialogues.h"
 
 #define N_ITEMS 15
 
@@ -13,6 +14,7 @@ enum BLOCKTYPE {
 	torch_bowl,
 	torch_pillar,
 	slabs,
+	npc,
 	last_
 };
 
@@ -181,6 +183,13 @@ class Slab : public Block {
 
 	//void Move();
 
+};
+
+class NPC : public Block {
+public:
+	bool Start();
+	bool Update();
+	Dialogue* dialogue;
 };
 
 #endif // !__BLOCK_H__

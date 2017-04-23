@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "j1Fonts.h"
 #include "j1App.h"
+#include "SDL\include\SDL_rect.h"
 
 #define CREATEIMAGE(path) (GuiImage*)App->gui->CreateElement(GuiType::image, path);
 #define CREATETEXT (GuiText*)App->gui->CreateElement(GuiType::text);
