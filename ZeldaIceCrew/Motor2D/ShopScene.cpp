@@ -56,7 +56,7 @@ bool ShopScene::Start()
 	GetRoom(0, 0)->room_rect.h = 768;
 
 	Doorway* dw = nullptr;
-	dw = Scene::AddDoorway(dw_scene, Direction::Down, 0, 0, 14 * 16, 20 * 16);
+	dw = Scene::AddDoorway(dw_scene, 0, 0, Down, 14 * 16, 20 * 16);
 	dw->SetTarget((Scene*)App->scene_manager->village_scene);
 	dw->target_pos = { 54 * 16, 54 * 16 };
 

@@ -53,11 +53,10 @@ bool VillageScene::Start()
 		//
 		//RELEASE_ARRAY(data);
 	}
-	//Bush_Rect = { 8*32,2*32,32,32 };
-	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
+	//debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 	//Colliders
 	
-	AddRoom(0, 0);
+	AddRoom(0, 0, 1024, 5000);
 
 	Doorway* dw = nullptr;
 	dw = AddDoorway(dw_scene, 0, 0, Up, 23 * 16, 106 * 16);

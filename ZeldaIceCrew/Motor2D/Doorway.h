@@ -12,8 +12,6 @@
 #define DOORWAY_RIGHT	iPoint( { 32 * 30 + 8, 32 * 8 + 8  } )
 #define DOORWAY_SIZE	iPoint( { 32, 16 } )
 
-class Entity;
-
 class Scene;
 
 enum DOORWAYTYPE {

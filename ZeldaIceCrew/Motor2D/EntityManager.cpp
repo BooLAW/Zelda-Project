@@ -14,8 +14,8 @@ EntityManager::~EntityManager() {
 Enemy * EntityManager::CreateEnemy(uint subtype)
 {
 	Enemy* ret = nullptr;
-	LOG("CREATE ENEMY");
-	LOG("SUBT: %d", subtype);
+	//LOG("CREATE ENEMY");
+	//LOG("SUBT: %d", subtype);
 	switch (subtype) {
 	case t_bluesoldier:
 		ret = new BSoldier();
@@ -43,7 +43,7 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 
 	App->entitymanager->PushEntity(ret);
 
-	LOG("CREATE ENEMY");
+	//LOG("CREATE ENEMY");
 
 	return ret;
 }
@@ -151,10 +151,15 @@ Block * EntityManager::CreateBlock(uint type)
 
 bool EntityManager::Update(float dt) {
 
+	//LOG("ENTITY UPDT START");
+	if(entities.empty() == false)
 	for (int i = 0; i < entities.size(); i++) {
-		if(entities[i] != nullptr)
+		if (entities[i] != nullptr) {
+			//LOG("ENTITY UPDATE %d", i);
 			entities[i]->Update(dt);
+		}
 	}
+	//LOG("ENTITY UPDT END");
 
 
 	return true;
@@ -182,13 +187,17 @@ void EntityManager::DestroyEntities()
 void EntityManager::DestroyEnity(Entity * ent)
 {
 
-	if(ent != nullptr)
+	if (ent != nullptr) {
+		LOG("ENTITY TYPE %d", ent->type);
 		ent->CleanUp();
+		LOG("ENTITY CLEAR");
+		std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+			//RELEASE(ent);
+		if((*aux) != nullptr)
+		entities.erase(aux); 	
+	}
 
-	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
-	//RELEASE(ent);
-	if((*aux) != nullptr)
-		entities.erase(aux);
+	//LOG("ENTITY DESTROYED");
 }
 
 void EntityManager::OnCollision(Collider * c1, Collider * c2)

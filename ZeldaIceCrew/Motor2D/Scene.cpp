@@ -27,9 +27,9 @@ bool Scene::stdUpdate(float dt)
 
 	for (std::list<Room*>::iterator it = rooms.begin(); it != rooms.end(); it++) {
 		if (it._Ptr->_Myval != nullptr) {
-			i++;
-			LOG("ROOM_UPDATE Nº %d", i);
+			//LOG("ROOM_UPDATE Nº %d", i);
 			it._Ptr->_Myval->Update(dt);
+			i++;
 		}
 	}
 
@@ -48,8 +48,10 @@ bool Scene::stdCleanUp()
 	if (rooms.empty() == false) {
 		for (std::list<Room*>::iterator it = rooms.begin(); it != rooms.end(); it++)
 		{
-			if (it._Ptr->_Myval != nullptr)
+			if (it._Ptr->_Myval != nullptr) {
+				it._Ptr->_Myval->CleanUp();
 				DestroyRoom(it._Ptr->_Myval);
+			}
 			RELEASE(*it);
 		}
 		rooms.clear();
@@ -83,10 +85,14 @@ void Scene::DestroyItem(Item * ent)
 	if (ent != nullptr) {
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
 			for (std::list<Item*>::iterator it = room_it._Ptr->_Myval->items.begin(); it != room_it._Ptr->_Myval->items.end(); it++) {
-				if (it._Ptr->_Myval == ent)
+				if (it._Ptr->_Myval == ent) {
 					room_it._Ptr->_Myval->items.erase(it);
+					App->entitymanager->DestroyEnity(ent);
+				}
 			}
 	}
+
+
 }
 
 void Scene::DestroyEnemy(Enemy * ent)
@@ -94,8 +100,10 @@ void Scene::DestroyEnemy(Enemy * ent)
 	if (ent != nullptr) {
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
 			for (std::list<Enemy*>::iterator it = room_it._Ptr->_Myval->enemies.begin(); it != room_it._Ptr->_Myval->enemies.end(); it++) {
-				if (it._Ptr->_Myval == ent)
+				if (it._Ptr->_Myval == ent) {
 					room_it._Ptr->_Myval->enemies.erase(it);
+					App->entitymanager->DestroyEnity(ent);
+				}
 			}
 	}
 }
@@ -104,30 +112,34 @@ void Scene::DestroyBlock(Block * ent)
 	if (ent != nullptr) {
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
 			for (std::list<Block*>::iterator it = room_it._Ptr->_Myval->blocks.begin(); it != room_it._Ptr->_Myval->blocks.end(); it++) {
-				if (it._Ptr->_Myval == ent)
+				if (it._Ptr->_Myval == ent) {
 					room_it._Ptr->_Myval->blocks.erase(it);
+					App->entitymanager->DestroyEnity(ent);
+				}
 			}
 	}
 }
 void Scene::DestroyDoorway(Doorway * ent)
 {
-	//if (ent != nullptr) {
-	//	for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++) {
-	//		if (room_it._Ptr->_Myval != nullptr);
-	//		for (std::list<Doorway*>::iterator it = room_it._Ptr->_Myval->doorways.begin(); it != room_it._Ptr->_Myval->doorways.end(); it++) {
-	//			if (it._Ptr->_Myval == ent)
-	//				room_it._Ptr->_Myval->doorways.erase(it);
-	//		}
-	//	}
-	//}
+	if (ent != nullptr) {
+		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++) {
+			if (room_it._Ptr->_Myval != nullptr);
+			for (std::list<Doorway*>::iterator it = room_it._Ptr->_Myval->doorways.begin(); it != room_it._Ptr->_Myval->doorways.end(); it++) {
+				if (it._Ptr->_Myval == ent)
+					room_it._Ptr->_Myval->doorways.erase(it);
+			}
+		}
+	}
 }
 void Scene::DestroyRoom(Room * ent)
 {
 	if (ent != nullptr) {
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
-				if (room_it._Ptr->_Myval == ent)
-					rooms.erase(room_it);
+			if (room_it._Ptr->_Myval == ent) {
+				rooms.erase(room_it);
+			}
 	}
+
 }
 ;
 
@@ -224,7 +236,7 @@ Doorway * Scene::AddDungeonDoorway(uint dir, int coord_x, int coord_y)
 
 Enemy* Scene::AddEnemy(int subtype, int coord_x, int coord_y, float x, float y)
 {
-	LOG("ADD ENEMY");
+	//LOG("ADD ENEMY");
 	Room* r = GetRoom(coord_x, coord_y);
 
 	Enemy* ret = nullptr;

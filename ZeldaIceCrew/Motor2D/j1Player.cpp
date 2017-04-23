@@ -23,7 +23,7 @@ j1Player::~j1Player()
 bool j1Player::Awake()
 {
 	bool ret = true;
-	LOG("Player Awake Start");
+	//LOG("Player Awake Start");
 
 	return ret;
 }
@@ -580,7 +580,7 @@ bool j1Player::Update(float dt)
 	
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		if (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene) {
-			App->scene_manager->toChangeScene((Scene*)App->scene_manager->house_scene);
+			App->scene_manager->toChangeScene((Scene*)App->scene_manager->village_scene);
 		}else
 		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
 	}

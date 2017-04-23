@@ -47,13 +47,8 @@ void Enemy::SetRewards()
 
 void Enemy::Update(float dt)
 {
-	LOG("ENEMY POS: %f %f", pos.x, pos.y);
-
-	if (App->render->IsCameraCull(this->HitBox->rect) == 0 && active == false)
-		active = true;
-	else
-		active = false;
-	LOG("ENEMY UPDATE");
+	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
+	//LOG("ENEMY UPDATE");
 	if (HitBox != nullptr) {
 		if (App->render->IsCameraCull(this->HitBox->rect) == 0) {
 			if (App->player->weapon_coll != nullptr)
@@ -253,14 +248,14 @@ void Enemy::Hit(uint dir, uint dmg)
 		
 		hit = true;
 		
-		LOG("HP: %d DMG: %d", stats.Hp, dmg);
+		//LOG("HP: %d DMG: %d", stats.Hp, dmg);
 
 		stats.Hp -= dmg;
 
-		LOG("HP: %d", stats.Hp, dmg);
+		//LOG("HP: %d", stats.Hp, dmg);
 
 		if (stats.Hp <= 0) {
-			LOG("ENEMY DEATH");
+			//LOG("ENEMY DEATH");
 			Death();
 			return;
 		}
@@ -291,8 +286,8 @@ void Enemy::Hit(uint dir, uint dmg)
 void Enemy::Death()
 {
 	Reward();
-	LOG("ENEMY DEATH");
-	App->entitymanager->DestroyEnity(this);
+	//LOG("ENEMY DEATH");
+	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 
 void Enemy::Reward()
@@ -320,24 +315,29 @@ void Enemy::Reward()
 		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, pos.x + HitBox->rect.w / 2 - 16, pos.y + +HitBox->rect.h / 2 - 16);
 
 	}
-	else
-		LOG("NO REWARD FAGGOT");
+	else {}
+		//LOG("NO REWARD FAGGOT");
 
 }
 
 
 void Enemy::CleanUp()
 {
-	LOG("ENEMY CLEANUP");
+	LOG("ENEMY CLEANUP %d", EnemyType);
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
+
+	//LOG("TEX");
 
 	if (HitBox != nullptr)
 		HitBox->to_delete = true;
 
+	//LOG("HB");
+
 	path_to_follow.clear();
 
-	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
+	//LOG("END ENEMY CP");
+
 }
 
 bool BSoldier::Start()
@@ -743,8 +743,6 @@ void BossChainBall::CleanUp()
 
 	if (ball_collider != nullptr)
 		ball_collider->to_delete = true;
-
-	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 
 bool Hinox::Start()

@@ -3,22 +3,21 @@
 
 void Entity::CleanUp()
 {
-	LOG("CLEANUP");
-	LOG("ENT CLEANUP %d", type);
+	//LOG("ENT CLEANUP %d", type);
 
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
 
 	tex = nullptr;
 
-	LOG("ENT TEX");
+	//LOG("ENT TEX");
 
 	if (HitBox != nullptr)
 		HitBox->to_delete = true;
 
 	//HitBox = nullptr;
 
-	LOG("ENT HITBOX");
+	//LOG("ENT HITBOX");
 }
 
 bool Entity::CheckSpace(float new_x, float new_y)

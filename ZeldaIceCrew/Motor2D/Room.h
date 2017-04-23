@@ -43,6 +43,8 @@ public:
 	Block* AddBlock(uint subtype, float x, float y);
 	Doorway* AddDoorway(uint subtype, uint dir, float x, float y);
 
+	void EnemyActive(bool flag);
+
 	Scene* GetParentScene();
 	void SetParentScene(Scene* scene);
 
