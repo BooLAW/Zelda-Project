@@ -129,7 +129,7 @@ pugi::xml_node Scene::LoadConfig(pugi::xml_document& config_file) const
 	pugi::xml_node ret;
 	int size = 0;
 	pugi::xml_parse_result result;
-	char* buf;
+	char* buf = nullptr;
 	switch (curr_id)
 	{
 	case null:
@@ -147,7 +147,7 @@ pugi::xml_node Scene::LoadConfig(pugi::xml_document& config_file) const
 	default:
 		break;
 	}
-	if(size != 0)
+	if(size != 0 && buf!=nullptr)
 		result = config_file.load_buffer(buf, size);
 	RELEASE(buf);
 

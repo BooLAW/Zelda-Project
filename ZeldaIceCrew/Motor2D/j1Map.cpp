@@ -196,10 +196,11 @@ int j1Map::TileCheck(float x, float y) const
 	//Note: aqui el que fa es guardarse el numero del tileset en el que estan 2 
 	//tiles clau de la navigation
 	//el de no es pot passar i el detector de canvi d'escena
-	int red_tile;
+	int red_tile = 0;
+	int yellow_tile = 0;
 	if(data.tilesets.begin()._Ptr->_Next->_Myval != nullptr)
 		red_tile = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid;//walkability tile to don't walk
-																			 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
+	yellow_tile = red_tile + 1;																		 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
 		iPoint ptemp = WorldToMap(x, y);
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
@@ -208,6 +209,10 @@ int j1Map::TileCheck(float x, float y) const
 		if (id_1 == red_tile)
 		{
 			ret = 1;
+		}
+		else if (id_1 == yellow_tile)
+		{
+			ret = 2;
 		}
 		/*	else if (id_1 == blue_tile)
 		{
