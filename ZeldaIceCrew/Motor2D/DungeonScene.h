@@ -34,8 +34,6 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
-	bool CleanUp();
-
 private:
 
 	bool boss_music = false;

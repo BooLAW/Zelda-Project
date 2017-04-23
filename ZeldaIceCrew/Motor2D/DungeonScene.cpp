@@ -74,6 +74,12 @@ bool DungeonScene::Start()
 	ChainBoss_dw = Scene::AddDungeonDoorway(Direction::Down, 0, 0); 
 	Scene::AddDungeonDoorway(Direction::Right, 0, 1); 
 	Scene::AddDungeonDoorway(Direction::Left, 1, 1);
+
+	Doorway* dw = nullptr;
+	dw = AddDoorway(dw_scene, 0, 3, Up, 300, 300);
+	dw->SetTarget((Scene*)App->scene_manager->village_scene);
+
+
 	//room1_up = App->collisions->AddCollider({ ROOM_W/2 + 0, 50 + 3 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
 	//room2_down = App->collisions->AddCollider({ ROOM_W/2 +0, ROOM_H - 50 + 2 * ROOM_H,32,16 }, COLLIDER_DUNGEON_DOWN, App->player);
 	//room2_up= App->collisions->AddCollider({ ROOM_W/2 + 0, 50 + 2 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
@@ -211,24 +217,6 @@ bool DungeonScene::Update(float dt)
 				boss_music = false;
 			}
 		}
-	}
-
-	return true;
-
-}
-
-bool DungeonScene::CleanUp()
-{
-	stdCleanUp();
-
-	if (ChainBoss_dw != nullptr) {
-		ChainBoss_dw->CleanUp();
-		RELEASE(ChainBoss_dw);
-	}
-
-	if (ChainBoss != nullptr) {
-		ChainBoss->CleanUp();
-		RELEASE(ChainBoss)
 	}
 
 	return true;

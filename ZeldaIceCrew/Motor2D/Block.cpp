@@ -21,6 +21,17 @@ bool Block::Start()
 
 }
 
+void Block::CleanUp()
+{
+	if (tex != nullptr)
+		App->tex->UnLoad(tex);
+	if (HitBox != nullptr)
+		HitBox->to_delete = true;
+
+	App->scene_manager->GetCurrentScene()->DestroyBlock(this);
+
+}
+
 void Bush::SetRewards()
 {
 	memset(reward_pool, 0, N_ITEMS);

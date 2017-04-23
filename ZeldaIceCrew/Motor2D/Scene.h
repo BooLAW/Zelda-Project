@@ -33,9 +33,7 @@ public:
 
 	virtual bool Start() { return true; };
 	virtual bool PreUpdate() { return true; };
-	virtual bool Update(float dt) {
-		return stdUpdate(dt);
-	}
+	virtual bool Update(float dt);
 	virtual bool stdUpdate(float dt);
 	virtual bool PostUpdate() {
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -59,6 +57,10 @@ public:
 
 	virtual void DestroyItem(Item* ent);
 	virtual void DestroyEnemy(Enemy* ent);
+	virtual void DestroyBlock(Block* ent);
+	virtual void DestroyDoorway(Doorway* ent);
+
+	virtual void DestroyRoom(Room* ent);
 
 	virtual bool Load(pugi::xml_node&)
 	{

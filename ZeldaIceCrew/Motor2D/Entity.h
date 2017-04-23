@@ -47,7 +47,7 @@ public:
 	virtual bool CheckSpace(float new_x, float new_y);
 
 protected:
-	SDL_Texture* tex;
+	SDL_Texture* tex = nullptr;
 	SDL_Rect rect;
 	bool inverse_draw = false;
 

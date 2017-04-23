@@ -578,6 +578,13 @@ bool j1Player::Update(float dt)
 {
 	bool ret = true;
 	
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		if (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene) {
+			App->scene_manager->toChangeScene((Scene*)App->scene_manager->house_scene);
+		}else
+		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
+	}
+
 	Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
 
 	if(App->debug_mode == true)

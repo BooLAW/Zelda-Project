@@ -91,6 +91,7 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="MathHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />

@@ -4,6 +4,11 @@
 #include "j1Input.h"
 
 
+bool Scene::Update(float dt)
+{
+	return stdUpdate(dt);
+}
+
 bool Scene::stdUpdate(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
@@ -18,9 +23,14 @@ bool Scene::stdUpdate(float dt)
 	if (App->map->active)
 		App->map->Draw();
 
+	int i = 0;
+
 	for (std::list<Room*>::iterator it = rooms.begin(); it != rooms.end(); it++) {
-		if ((*it) != nullptr)
-			(*it)->Update(dt);
+		if (it._Ptr->_Myval != nullptr) {
+			i++;
+			LOG("ROOM_UPDATE Nº %d", i);
+			it._Ptr->_Myval->Update(dt);
+		}
 	}
 
 	return true;
@@ -39,7 +49,7 @@ bool Scene::stdCleanUp()
 		for (std::list<Room*>::iterator it = rooms.begin(); it != rooms.end(); it++)
 		{
 			if (it._Ptr->_Myval != nullptr)
-				it._Ptr->_Myval->CleanUp();
+				DestroyRoom(it._Ptr->_Myval);
 			RELEASE(*it);
 		}
 		rooms.clear();
@@ -88,7 +98,38 @@ void Scene::DestroyEnemy(Enemy * ent)
 					room_it._Ptr->_Myval->enemies.erase(it);
 			}
 	}
-};
+}
+void Scene::DestroyBlock(Block * ent)
+{
+	if (ent != nullptr) {
+		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
+			for (std::list<Block*>::iterator it = room_it._Ptr->_Myval->blocks.begin(); it != room_it._Ptr->_Myval->blocks.end(); it++) {
+				if (it._Ptr->_Myval == ent)
+					room_it._Ptr->_Myval->blocks.erase(it);
+			}
+	}
+}
+void Scene::DestroyDoorway(Doorway * ent)
+{
+	//if (ent != nullptr) {
+	//	for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++) {
+	//		if (room_it._Ptr->_Myval != nullptr);
+	//		for (std::list<Doorway*>::iterator it = room_it._Ptr->_Myval->doorways.begin(); it != room_it._Ptr->_Myval->doorways.end(); it++) {
+	//			if (it._Ptr->_Myval == ent)
+	//				room_it._Ptr->_Myval->doorways.erase(it);
+	//		}
+	//	}
+	//}
+}
+void Scene::DestroyRoom(Room * ent)
+{
+	if (ent != nullptr) {
+		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
+				if (room_it._Ptr->_Myval == ent)
+					rooms.erase(room_it);
+	}
+}
+;
 
 Item * Scene::AddItem(uint subtype, int coord_x, int coord_y, float x, float y)
 {
@@ -137,18 +178,17 @@ Doorway * Scene::AddDoorway(uint subtype, int coord_x, int coord_y, uint dir, in
 	if (r != nullptr) {
 
 		switch (subtype) {
-		case dw_dungeon:
-			ret = new DwDungeon();
-			break;
 		case dw_scene:
 			ret = new DwScene();
+			break;
+		case dw_cam:
 			break;
 		}
 
 		ret->Start();
 		ret->SetUp(dir);
 
-		ret->SetRoomPos(x, y);
+		ret->SetPos(x + ROOM_W * coord_x, y + ROOM_H * coord_y);
 
 		r->doorways.push_back(ret);
 	}
@@ -171,7 +211,7 @@ Doorway * Scene::AddDungeonDoorway(uint dir, int coord_x, int coord_y)
 		ret->Start();
 		ret->SetUp(dir);
 
-		ret->SetRoomPos(coord_x, coord_y);
+		ret->SetPos(coord_x, coord_y);
 
 		r->doorways.push_back(ret);
 

@@ -9,6 +9,10 @@ void Room::Update(float dt)
 
 	active = PlayerInside();
 
+	if (PlayerInside() == true) {
+		App->player->room = coords;
+	}
+
 	if (active == true) {
 
 		if (enemies.empty() == false) {
@@ -68,8 +72,10 @@ void Room::CleanUp()
 
 	if (blocks.empty() == false) {
 		for (std::list<Block*>::iterator it = blocks.begin(); it != blocks.end(); it++) {
-			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
+			if (it._Ptr->_Myval != nullptr) {
+				it._Ptr->_Myval->CleanUp();
+				RELEASE(it._Ptr->_Myval);
+			}
 		}
 		blocks.clear();
 	}
@@ -77,9 +83,10 @@ void Room::CleanUp()
 	if (doorways.empty() == false) {
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
 		{
-			if (it._Ptr->_Myval != nullptr)
+			if (it._Ptr->_Myval != nullptr) {
 				it._Ptr->_Myval->CleanUp();
-			RELEASE(*it);
+				RELEASE(it._Ptr->_Myval);
+			}
 		}
 		doorways.clear();
 	}
@@ -151,7 +158,7 @@ Doorway * Room::AddDoorway(uint subtype, uint dir, float x, float y)
 	ret->Start();
 	ret->SetUp(dir);
 
-	ret->SetRoomPos(x, y);
+	ret->SetPos(x + room_rect.w * coords.x, y + room_rect.h * coords.y);
 
 	doorways.push_back(ret);
 

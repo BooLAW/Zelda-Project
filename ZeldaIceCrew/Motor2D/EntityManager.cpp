@@ -187,7 +187,8 @@ void EntityManager::DestroyEnity(Entity * ent)
 
 	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
 	//RELEASE(ent);
-	entities.erase(aux);
+	if((*aux) != nullptr)
+		entities.erase(aux);
 }
 
 void EntityManager::OnCollision(Collider * c1, Collider * c2)

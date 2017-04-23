@@ -100,7 +100,7 @@ bool DwDungeon::Cross()
 	return true;
 }
 
-void DwDungeon::SetRoomPos(int x, int y)
+void DwDungeon::SetPos(int x, int y)
 {
 	switch (direction) {
 	case Direction::Up:
@@ -120,9 +120,12 @@ void DwDungeon::SetRoomPos(int x, int y)
 
 void Doorway::CleanUp()
 {
+	LOG("DOOR CLEANUP");
 	if (collider != nullptr) {
 		collider->to_delete = true;
 	}
+
+	App->scene_manager->GetCurrentScene()->DestroyDoorway(this);
 
 };
 

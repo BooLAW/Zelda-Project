@@ -55,7 +55,7 @@ bool HouseScene::Start()
 	GetRoom(0, 0)->room_rect.h = 768;
 
 	DwScene* dw = nullptr;
-	dw = (DwScene*)AddDoorway(dw_scene, Down, 0, 0, 13 * 16, 18 * 16);
+	dw = (DwScene*)AddDoorway(dw_scene, 0, 0, Down, 13 * 16, 18 * 16);
 	dw->SetTarget((Scene*)App->scene_manager->village_scene);
 	dw->target_pos = { 23 * 16, 108 * 16 };
 

@@ -47,6 +47,8 @@ public:
 
 	virtual bool Start();
 
+	virtual void CleanUp();
+
 	virtual void Spawn() {};
 
 	virtual void Update(float dt);
@@ -86,15 +88,6 @@ public:
 				reward_pool[i] = (reward_pool[i] * 100) / total;
 			}
 		}
-
-	}
-
-	virtual void CleanUp() {
-		if (tex != nullptr)
-			App->tex->UnLoad(tex);
-
-		if (HitBox != nullptr)
-			HitBox->to_delete = true;
 
 	}
 

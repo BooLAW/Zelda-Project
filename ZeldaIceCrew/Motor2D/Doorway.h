@@ -33,7 +33,7 @@ public:
 
 	virtual void SetTarget(Scene*) {};
 
-	virtual void SetRoomPos(int x, int y) {
+	virtual void SetPos(int x, int y) {
 		pos.x = x;
 		pos.y = y;
 	};
@@ -56,7 +56,7 @@ class DwDungeon : public Doorway {
 public:
 	bool Cross();
 
-	void SetRoomPos(int x, int y);
+	void SetPos(int x, int y);
 };
 
 class DwScene : public Doorway {
