@@ -6,51 +6,23 @@ void Room::Start()
 
 void Room::Update(float dt)
 {
-
 	active = PlayerInside();
 
-	if (PlayerInside() == true) {
+	if (PlayerInside() == true && App->player->room != coords) {
 		App->player->room = coords;
 	}
 
-	if (active == true) {
+	EnemyActive(active);
 
-		if (enemies.empty() == false) {
-			for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
-			{
-				if (it._Ptr->_Myval != nullptr) {
-					it._Ptr->_Myval->Update(dt);
-				}
-			}
-		}
-
-		if (items.empty() == false) {
-			for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++)
-			{
-				if (it._Ptr->_Myval != nullptr) {
-					it._Ptr->_Myval->Update(dt);
-				}
-			}
-		}
-
-		if (blocks.empty() == false) {
-			for (std::list<Block*>::iterator it = blocks.begin(); it != blocks.end(); it++)
-			{
-				if (it._Ptr->_Myval != nullptr) {
-					it._Ptr->_Myval->Update(dt);
-				}
-			}
-		}
-
-		if (doorways.empty() == false) {
-			for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
-			{
-				if (it._Ptr->_Myval != nullptr) {
-					it._Ptr->_Myval->Update(dt);
-				}
+	if (doorways.empty() == false) {
+		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
+		{
+			if (it._Ptr->_Myval != nullptr) {
+				it._Ptr->_Myval->Update(dt);
 			}
 		}
 	}
+
 }
 
 void Room::CleanUp()
@@ -58,14 +30,14 @@ void Room::CleanUp()
 	if (items.empty() == false) {
 		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
 			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
+				parent->DestroyItem((*it));
 		}
 		items.clear();
 	}
 	if (enemies.empty() == false) {
 		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
 			if (it._Ptr->_Myval != nullptr)
-				App->entitymanager->DestroyEnity((*it));
+				parent->DestroyEnemy((*it));
 		}
 		enemies.clear();
 	}
@@ -73,8 +45,7 @@ void Room::CleanUp()
 	if (blocks.empty() == false) {
 		for (std::list<Block*>::iterator it = blocks.begin(); it != blocks.end(); it++) {
 			if (it._Ptr->_Myval != nullptr) {
-				it._Ptr->_Myval->CleanUp();
-				RELEASE(it._Ptr->_Myval);
+				parent->DestroyBlock((*it));
 			}
 		}
 		blocks.clear();
@@ -123,7 +94,7 @@ Enemy * Room::AddEnemy(uint subtype, float x, float y)
 	Enemy* ret = nullptr;
 
 	ret = App->entitymanager->CreateEnemy(subtype);
-	ret->pos = { x, y };
+	ret->pos = { x + coords.x * ROOM_W, y + coords.y * ROOM_H };
 
 	enemies.push_back(ret);
 
@@ -164,6 +135,13 @@ Doorway * Room::AddDoorway(uint subtype, uint dir, float x, float y)
 
 	return ret;
 
+}
+
+void Room::EnemyActive(bool flag)
+{
+	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+		it._Ptr->_Myval->active = flag;
+	}
 }
 
 Scene * Room::GetParentScene()
