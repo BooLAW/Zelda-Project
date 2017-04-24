@@ -86,9 +86,9 @@ void Scene::DestroyItem(Item * ent)
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
 			for (std::list<Item*>::iterator it = room_it._Ptr->_Myval->items.begin(); it != room_it._Ptr->_Myval->items.end(); it++) {
 				if (it._Ptr->_Myval == ent) {
+					it._Ptr->_Myval->to_delete = true;
 					room_it._Ptr->_Myval->items.erase(it);
 					//App->entitymanager->DestroyEnity(ent);
-					it._Ptr->_Myval->to_delete = true;
 				}
 			}
 	}
@@ -103,8 +103,8 @@ void Scene::DestroyEnemy(Enemy * ent)
 			for (std::list<Enemy*>::iterator it = room_it._Ptr->_Myval->enemies.begin(); it != room_it._Ptr->_Myval->enemies.end(); it++) {
 				if (it._Ptr->_Myval == ent) {
 					//App->entitymanager->DestroyEnity(ent);
-					room_it._Ptr->_Myval->enemies.erase(it);
 					it._Ptr->_Myval->to_delete = true;
+					room_it._Ptr->_Myval->enemies.erase(it);
 				}
 			}
 	}
@@ -115,9 +115,9 @@ void Scene::DestroyBlock(Block * ent)
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
 			for (std::list<Block*>::iterator it = room_it._Ptr->_Myval->blocks.begin(); it != room_it._Ptr->_Myval->blocks.end(); it++) {
 				if (it._Ptr->_Myval == ent) {
+					it._Ptr->_Myval->to_delete = true;
 					room_it._Ptr->_Myval->blocks.erase(it);
 					//App->entitymanager->DestroyEnity(ent);
-					it._Ptr->_Myval->to_delete = true;
 				}
 			}
 	}
@@ -128,8 +128,10 @@ void Scene::DestroyDoorway(Doorway * ent)
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++) {
 			if (room_it._Ptr->_Myval != nullptr);
 			for (std::list<Doorway*>::iterator it = room_it._Ptr->_Myval->doorways.begin(); it != room_it._Ptr->_Myval->doorways.end(); it++) {
-				if (it._Ptr->_Myval == ent)
+				if (it._Ptr->_Myval == ent) {
+					//ent->CleanUp();
 					room_it._Ptr->_Myval->doorways.erase(it);
+				}
 			}
 		}
 	}

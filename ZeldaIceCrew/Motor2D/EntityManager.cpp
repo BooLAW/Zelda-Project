@@ -169,7 +169,8 @@ bool EntityManager::Update(float dt) {
 	for (int i = 0; i < entities.size(); i++) {
 		if (entities[i] != nullptr) {
 			//LOG("ENTITY UPDATE %d", i);
-			entities[i]->Update(dt);
+			if(entities[i]->active == true)
+				entities[i]->Update(dt);
 		}
 	}
 	//LOG("ENTITY UPDT END");

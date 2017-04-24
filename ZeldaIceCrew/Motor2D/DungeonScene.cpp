@@ -75,11 +75,6 @@ bool DungeonScene::Start()
 	Scene::AddDungeonDoorway(Direction::Right, 0, 1); 
 	Scene::AddDungeonDoorway(Direction::Left, 1, 1);
 
-	Doorway* dw = nullptr;
-	dw = AddDoorway(dw_scene, 0, 3, Up, 300, 300);
-	dw->SetTarget((Scene*)App->scene_manager->village_scene);
-
-
 	//room1_up = App->collisions->AddCollider({ ROOM_W/2 + 0, 50 + 3 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
 	//room2_down = App->collisions->AddCollider({ ROOM_W/2 +0, ROOM_H - 50 + 2 * ROOM_H,32,16 }, COLLIDER_DUNGEON_DOWN, App->player);
 	//room2_up= App->collisions->AddCollider({ ROOM_W/2 + 0, 50 + 2 * ROOM_H,32,16 }, COLLIDER_DUNGEON_UP, App->player);
@@ -102,38 +97,38 @@ bool DungeonScene::Start()
 		// t_boss_ballandchain,
 
 	// ROOM 0x2
-	AddEnemy(t_bluesoldier, 0, 2, 200, 124 + ROOM_H * 2);
-	AddEnemy(t_bluesoldier, 0, 2, 800, 124 + ROOM_H * 2);
-	AddEnemy(t_hinox,		0, 2, 500, 74 + ROOM_H * 2);
+	AddEnemy(t_bluesoldier, 0, 2, 200, 124);
+	AddEnemy(t_bluesoldier, 0, 2, 800, 124);
+	AddEnemy(t_hinox,		0, 2, 500, 74);
 	// ROOM 0x1
-	AddEnemy(t_greensoldier, 0, 1, 250, 74 + ROOM_H);
-	AddEnemy(t_greensoldier, 0, 1, ROOM_W - 150, 74 + ROOM_H);
+	AddEnemy(t_greensoldier, 0, 1, 250, 74);
+	AddEnemy(t_greensoldier, 0, 1, ROOM_W - 150, 74);
 	// ROOM 0x0
 	ChainBoss = AddEnemy(t_boss_ballandchain, 0, 0, 500, 120);
 	// ROOM 1x1
-	AddEnemy(t_greensoldier, 1, 1, 200 + ROOM_W, 75 + ROOM_H);
-	AddEnemy(t_greensoldier, 1, 1, 200 + ROOM_W, 425 + ROOM_H);
-	AddEnemy(t_redsoldier, 1, 1,   800 + ROOM_W, 75 + ROOM_H);
-	AddEnemy(t_redsoldier, 1, 1,   850 + ROOM_W, 425 + ROOM_H);
+	AddEnemy(t_greensoldier, 1, 1, 200, 75);
+	AddEnemy(t_greensoldier, 1, 1, 200, 425);
+	AddEnemy(t_redsoldier, 1, 1,   800, 75);
+	AddEnemy(t_redsoldier, 1, 1,   850, 425);
 
 	AllEnemyActive(false);
 
 	// Block Start
 	// ROOM 0x1
 	// PUZZLE 0x1 01
-	AddItem(heart_container, 0, 1,	75 + 32 * 2, 65 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 0,     65 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 1 + 1, 65 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 3 + 3, 65 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 4 + 4, 65 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 1 + 1, 65 + 32 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 2 + 2, 65 + 32 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 3 + 3, 65 + 32 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 0,     65 + 32 * 2 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 4 + 4, 65 + 32 * 2 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 1 + 1, 65 + 32 * 3 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 2 + 2, 65 + 32 * 3 + ROOM_H * 1);
-	AddBlock(slabs,	0, 1, 75 + 32 * 3 + 3, 65 + 32 * 3 + ROOM_H * 1);
+	AddItem(heart_container, 0, 1,	75 + 32 * 2, 65);
+	AddBlock(slabs,	0, 1, 75 + 32 * 0,     65);
+	AddBlock(slabs,	0, 1, 75 + 32 * 1 + 1, 65);
+	AddBlock(slabs,	0, 1, 75 + 32 * 3 + 3, 65);
+	AddBlock(slabs,	0, 1, 75 + 32 * 4 + 4, 65);
+	AddBlock(slabs,	0, 1, 75 + 32 * 1 + 1, 65 + 32);
+	AddBlock(slabs,	0, 1, 75 + 32 * 2 + 2, 65 + 32);
+	AddBlock(slabs,	0, 1, 75 + 32 * 3 + 3, 65 + 32);
+	AddBlock(slabs,	0, 1, 75 + 32 * 0,     65 + 32 * 2);
+	AddBlock(slabs,	0, 1, 75 + 32 * 4 + 4, 65 + 32 * 2);
+	AddBlock(slabs,	0, 1, 75 + 32 * 1 + 1, 65 + 32 * 3);
+	AddBlock(slabs,	0, 1, 75 + 32 * 2 + 2, 65 + 32 * 3);
+	AddBlock(slabs,	0, 1, 75 + 32 * 3 + 3, 65 + 32 * 3);
 
 	// Items Start
 

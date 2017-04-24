@@ -49,8 +49,6 @@ void Enemy::Update(float dt)
 {
 	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
 	//LOG("ENEMY UPDATE");
-	if (HitBox != nullptr) {
-		if (App->render->IsCameraCull(this->HitBox->rect) == 0) {
 			if (App->player->weapon_coll != nullptr)
 				if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
 					Hit(App->player->curr_dir, App->player->power);
@@ -60,17 +58,12 @@ void Enemy::Update(float dt)
 			if (App->player->action_blit != j1Player::Weapon_atk)
 				hit = false;
 
-			if(active == true)
 				//if (App->debug_mode == false)
-					Move();
+			Move();
 
 			Attack();
 
 			Draw();
-
-		}
-	}
-
 	
 }
 

@@ -54,7 +54,6 @@ bool HouseScene::Start()
 
 	GetRoom(0, 0)->room_rect.h = 768;
 
-	AddEnemy(t_bluesoldier, 0, 0, 5, 5);
 	//AddItem(drop_heart, 0, 0, 5, 5);
 
 	DwScene* dw = nullptr;
