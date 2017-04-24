@@ -214,10 +214,6 @@ int j1Map::TileCheck(float x, float y) const
 		{
 			ret = 2;
 		}
-		/*	else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 1;
-		}*/
 		else
 			ret = 0;
 

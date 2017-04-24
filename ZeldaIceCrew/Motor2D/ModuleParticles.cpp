@@ -1,6 +1,7 @@
 
 #include "ModuleParticles.h"
 #include "j1Collision.h"
+#include "j1Map.h"
 #include "SDL/include/SDL_timer.h"
 
 ModuleParticles::ModuleParticles()
@@ -179,20 +180,35 @@ void Arrow::Start()
 	App->particle->AddParticle(this, COLLIDER_ARROW, 1500, NULL);
 
 }
+int Arrow::CheckSpace(float new_x, float new_y)
+{
+	int ret = true;
 
+	// TileCheck
+	ret = App->map->TileCheck(new_x, new_y);
+	// 0 walkable
+	//1 wall
+	// 2 hole
+	
+	SDL_Rect r = collider->rect;
+	r.x = new_x;
+	r.y = new_y;
+
+	return ret;
+}
 bool Arrow::Update(float dt)
 {
 
 	HitBox = { (int)position.x, (int)position.y, g_rect[curr_dir].w, g_rect[curr_dir].h };
-
-	std::list<Enemy*>*ents = &App->scene_manager->GetCurrentScene()->enemies;
-	
-	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) {
-		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr) {
+	//ENEMY INTERACTION
+	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) 
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
 			Collider* aux = collider;
-			aux->rect.x += 16;
-			aux->rect.y += 16;
-			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false) {
+		
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false) 
+			{
 				hit = true;
 				LOG("ENEMY HIT");
 				App->particle->DestroyParticle(this);
@@ -200,7 +216,27 @@ bool Arrow::Update(float dt)
 			}
 		}
 	}
-
+	//BLOCK INTERACTION
+	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->blocks.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+			{
+				hit = true;
+				LOG("BLOCK HIT");
+				App->particle->DestroyParticle(this);
+			}
+		}
+	}
+	//TILED INTERACTION
+	if (this->CheckSpace(position.x, position.y)==1)
+	{
+		LOG("ARROW HIT");
+		App->particle->DestroyParticle(this);
+	}
+	
 
 	return stdUpdate(dt);
 }

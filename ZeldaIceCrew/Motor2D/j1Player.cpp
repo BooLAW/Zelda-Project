@@ -1037,7 +1037,7 @@ void j1Player::Movement()
 	//Movement
 	if(App->player->alive){
 		if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-			if (CheckSpace(pos.x - pl_speed.x, pos.y - pl_speed.y) != 1) //change dir
+			if (CheckSpace(pos.x - pl_speed.x, pos.y - pl_speed.y) == 0) //change dir
 			{
 				walk_dir = Up_L;
 				pos.y -= pl_speed.y * sqrt(2) / 2;
@@ -1047,7 +1047,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-			if (CheckSpace(pos.x - pl_speed.x, (pos.y + 34) + pl_speed.y) != 1) //change dir
+			if (CheckSpace(pos.x - pl_speed.x, (pos.y + 34) + pl_speed.y) == 0) //change dir
 			{
 				walk_dir = Down_L;
 				pos.y += pl_speed.y * sqrt(2) / 2;
@@ -1058,7 +1058,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
-			if (CheckSpace((pos.x + 32) + pl_speed.x, (pos.y + 32) + pl_speed.y) != 1)//change dir
+			if (CheckSpace((pos.x + 32) + pl_speed.x, (pos.y + 32) + pl_speed.y) == 0)//change dir
 			{
 				walk_dir = Down_R;
 				pos.y += pl_speed.y * sqrt(2) / 2;
@@ -1069,7 +1069,7 @@ void j1Player::Movement()
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
-			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y - pl_speed.y) != 1)//change dir
+			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y - pl_speed.y) == 0)//change dir
 			{
 				walk_dir = Up_R;
 				pos.y -= pl_speed.y * sqrt(2) / 2;
@@ -1079,7 +1079,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_W)) {
-			if (CheckSpace(pos.x, pos.y - pl_speed.y) != 1)
+			if (CheckSpace(pos.x, pos.y - pl_speed.y) == 0)
 			{
 				pos.y -= pl_speed.y;
 			}
@@ -1092,7 +1092,7 @@ void j1Player::Movement()
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A)) {
-			if (CheckSpace(pos.x - pl_speed.x, pos.y) != 1)
+			if (CheckSpace(pos.x - pl_speed.x, pos.y) == 0)
 			{
 				pos.x -= pl_speed.x;
 			}
@@ -1105,7 +1105,7 @@ void j1Player::Movement()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S))
 		{
-			if (CheckSpace(pos.x, (pos.y+32) + pl_speed.y) != 1)
+			if (CheckSpace(pos.x, (pos.y+32) + pl_speed.y) == 0)
 			{
 				pos.y += pl_speed.y;
 			}
@@ -1118,10 +1118,10 @@ void j1Player::Movement()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D))
 		{
-			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y) != 1)
+			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y) == 0)
 			{
 				pos.x += pl_speed.x;
-			}
+			}	
 			if (anim_override == false)
 				action_blit = Walk;
 			if (dir_override == false) {
