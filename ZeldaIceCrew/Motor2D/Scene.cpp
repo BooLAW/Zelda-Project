@@ -45,13 +45,11 @@ bool Scene::stdCleanUp()
 {
 	App->map->CleanUp();
 
-	App->entitymanager->DestroyEntities();
-
 	if (rooms.empty() == false) {
 		for (std::list<Room*>::iterator it = rooms.begin(); it != rooms.end(); it++)
 		{
 			if (it._Ptr->_Myval != nullptr) {
-				//it._Ptr->_Myval->CleanUp();
+				it._Ptr->_Myval->CleanUp();
 				DestroyRoom(it._Ptr->_Myval);
 			}
 			RELEASE(*it);
@@ -105,8 +103,8 @@ void Scene::DestroyEnemy(Enemy * ent)
 			for (std::list<Enemy*>::iterator it = room_it._Ptr->_Myval->enemies.begin(); it != room_it._Ptr->_Myval->enemies.end(); it++) {
 				if (it._Ptr->_Myval == ent) {
 					//App->entitymanager->DestroyEnity(ent);
-					it._Ptr->_Myval->to_delete = true;
 					room_it._Ptr->_Myval->enemies.erase(it);
+					it._Ptr->_Myval->to_delete = true;
 				}
 			}
 	}
