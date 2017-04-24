@@ -192,15 +192,16 @@ bool j1Map::CleanUp()
 int j1Map::TileCheck(float x, float y) const
 {
 	int ret = 0;
-	if (App->map->active) {
-		//get the key navigation tiles(r)
-		//Note: aqui el que fa es guardarse el numero del tileset en el que estan 2 
-		//tiles clau de la navigation
-		//el de no es pot passar i el detector de canvi d'escena
-		int red_tile;
-		if (data.tilesets.begin()._Ptr->_Next->_Myval != nullptr)
-			red_tile = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid;//walkability tile to don't walk
-																				 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
+  if(App->map->active == true) {
+	//get the key navigation tiles(r)
+	//Note: aqui el que fa es guardarse el numero del tileset en el que estan 2 
+	//tiles clau de la navigation
+	//el de no es pot passar i el detector de canvi d'escena
+	int red_tile = 0;
+	int yellow_tile = 0;
+	if(data.tilesets.begin()._Ptr->_Next->_Myval != nullptr)
+		red_tile = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid;//walkability tile to don't walk
+	  yellow_tile = red_tile + 1;																		 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
 		iPoint ptemp = WorldToMap(x, y);
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
@@ -210,14 +211,13 @@ int j1Map::TileCheck(float x, float y) const
 		{
 			ret = 1;
 		}
-		/*	else if (id_1 == blue_tile)
+		else if (id_1 == yellow_tile)
 		{
-		App->scene->switch_map = 1;
-		}*/
+			ret = 2;
+		}
 		else
 			ret = 0;
-	}
-
+  }
 	//retornarem 0 si podem caminar o si es una blue tile
 	return ret;
 }

@@ -44,7 +44,7 @@ public:
 		rect = rectangle;
 	}
 
-	virtual bool CheckSpace(float new_x, float new_y);
+	virtual int CheckSpace(float new_x, float new_y);
 
 protected:
 	SDL_Texture* tex = nullptr;

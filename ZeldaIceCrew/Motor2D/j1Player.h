@@ -110,7 +110,7 @@ public:
 	bool Find_weapon(Item* item);
 	void PlayerInmortal(float time);
 
-	bool CheckSpace(float new_x, float new_y);
+	int CheckSpace(float new_x, float new_y);
 
 	// base stats saving file
 	// --status flags 
@@ -135,7 +135,7 @@ public:
 	j1PerfTimer inmortal_timer;
 	float inmortal_time = 0;
 	bool inmortal = false;
-
+	bool camera_follow = false;
 	iPoint room;
 
 	Collider* mov_coll = nullptr;

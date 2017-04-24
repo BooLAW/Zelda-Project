@@ -74,6 +74,8 @@ struct Arrow : public Particle {
 
 	void Start();
 	bool Update(float dt);
+	int CheckSpace(float new_x, float new_y);
+
 };
 
 #endif // __MODULEPARTICLES_H__

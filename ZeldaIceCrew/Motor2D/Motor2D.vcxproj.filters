@@ -4,7 +4,6 @@
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
-    <ClCompile Include="j1Map.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="p2Log.cpp" />
@@ -92,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="MathHelpers.cpp" />
+    <ClCompile Include="j1Map.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />

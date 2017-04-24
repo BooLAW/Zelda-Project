@@ -17,6 +17,12 @@
 #define ROOM_CHANGE_X 175.0f
 #define ROOM_CHANGE_Y 175.0f
 
+enum scene_id {
+	null,
+	village,
+	dungeon,
+	intro
+};
 class Item;
 class Enemy;
 class Block;
@@ -72,13 +78,16 @@ public:
 		return true;
 	}
 
-	
 	Item* AddItem(uint subtype, int coord_x, int coord_y, float x, float y);
 	Block* AddBlock(uint subtype, int coord_x, int coord_y, float x, float y);
 	Doorway* AddDoorway(uint subtype, int coord_x, int coord_y, uint dir, int x, int y);
 	Doorway* AddDungeonDoorway(uint dir, int coord_x, int coord_y);
 	Enemy* AddEnemy(int subtype, int coord_x, int coord_y, float x, float y);
 	Room* AddRoom(int coord_x, int coord_y, int w = 1024, int h = 576);
+  
+	bool Scene::Load_new_map(int id);
+	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
+	
 	virtual bool IsEnemy(Enemy* en);
 
 	virtual void AllEnemyActive(bool flag);
@@ -90,9 +99,12 @@ protected:
 
 public:
 	bool follow_cam = true;
+  
 	std::list<Room*> rooms;
 
 	char* music_path;
+  
+	scene_id curr_id;// enum to use in the load_new_map scene function
 
 };
 
