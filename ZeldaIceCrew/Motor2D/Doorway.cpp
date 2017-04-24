@@ -31,12 +31,15 @@ void Doorway::SetUp(uint dir)
 		collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.y, DOORWAY_SIZE.x };
 		break;
 	default:
-		LOG("Unknown DOORWAY Direction Id: %d", direction);
+		//LOG("Unknown DOORWAY Direction Id: %d", direction);
 		break;
 	}
 }
 void Doorway::Update(float dt)
 {
+
+	//LOG("DOORWAY UPDATE");
+
 	collider->SetPos(pos.x, pos.y);
 
 	if (open == true) {
@@ -68,6 +71,7 @@ void Doorway::Update(float dt)
 			Cross();
 			crossed = true;
 		}
+		//LOG("END DOORWAY UPDT");
 	}
 };
 
@@ -94,13 +98,13 @@ bool DwDungeon::Cross()
 
 	App->player->pos = target_pos;
 
-	LOG("PLAYER CROSS");
-	LOG("PLAYER ROOM: %d %d", App->player->room.x, App->player->room.y);
+	//LOG("PLAYER CROSS");
+	//LOG("PLAYER ROOM: %d %d", App->player->room.x, App->player->room.y);
 
 	return true;
 }
 
-void DwDungeon::SetRoomPos(int x, int y)
+void DwDungeon::SetPos(int x, int y)
 {
 	switch (direction) {
 	case Direction::Up:
@@ -120,9 +124,12 @@ void DwDungeon::SetRoomPos(int x, int y)
 
 void Doorway::CleanUp()
 {
+	//LOG("DOOR CLEANUP");
 	if (collider != nullptr) {
 		collider->to_delete = true;
 	}
+
+	App->scene_manager->GetCurrentScene()->DestroyDoorway(this);
 
 };
 

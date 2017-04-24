@@ -1,9 +1,4 @@
 #include "Item.h"
-#include "j1App.h"
-#include "j1Map.h"
-#include "SceneManager.h"
-#include "HouseScene.h"
-#include "VillageScene.h"
 
 Item::Item(uint subtype)
 {
@@ -28,6 +23,8 @@ void Item::PassToInventory()
 
 void Item::Update(float dt)
 {
+	//LOG("ITEM UPDATE");
+
 	if (grabbed == false) {
 		if (HitBox != nullptr) {
 			if (HitBox->rect.x != pos.x || HitBox->rect.y != pos.y)
@@ -40,15 +37,15 @@ void Item::Update(float dt)
 					App->gui->DeleteElement(this->priceTag);
 					if (type == ENTITYTYPE::drop) {
 						Upgrade();
-						App->entitymanager->DestroyEnity(this);
+						App->scene_manager->GetCurrentScene()->DestroyItem(this);
 					}
 					else {
 						if (App->player->Find_inv(this)) {
 							Upgrade();
-							App->entitymanager->DestroyEnity(this);
+							App->scene_manager->GetCurrentScene()->DestroyItem(this);
 						}
 						else if (App->player->Find_weapon(this)) {
-							App->entitymanager->DestroyEnity(this);
+							App->scene_manager->GetCurrentScene()->DestroyItem(this);
 						}
 						else {
 							Upgrade();
@@ -91,6 +88,9 @@ void Item::Draw(float dt)
 
 void Item::CleanUp()
 {
+
+	LOG("CLEANING %d", subtype);
+
 	if (HitBox != nullptr)
 		HitBox->to_delete = true;
 	if (tex != nullptr)
@@ -99,7 +99,7 @@ void Item::CleanUp()
 	if (priceTag != nullptr)
 		priceTag->active = false;
 
-	App->scene_manager->GetCurrentScene()->DestroyItem(this);
+	//App->scene_manager->GetCurrentScene()->DestroyItem(this);
 }
 
 void Item::Start()
@@ -143,7 +143,7 @@ void PegasusBoots::SetUp()
 
 void PegasusBoots::Upgrade()
 {
-	App->player->UpgradeSPD(1);
+	App->player->UpgradeSPD(0.5);
 }
 
 void HeartContainer::SetUp()
@@ -170,6 +170,8 @@ void DropHeart::SetUp()
 	rect = { 180, 40, 32, 26 };
 	fx = App->audio->LoadFx("Audio/Fx/heart.wav");
 	
+	UI_tex = nullptr;
+
 }
 
 void DropHeart::Upgrade()
@@ -298,5 +300,5 @@ void BossKey::SetUp()
 void BossKey::Upgrade()
 {
 	App->player->curr_life_points = App->player->max_life_points;
-	App->scene_manager->toChangeScene(App->scene_manager->house_scene);
+	App->scene_manager->toChangeScene((Scene*)App->scene_manager->house_scene);
 }

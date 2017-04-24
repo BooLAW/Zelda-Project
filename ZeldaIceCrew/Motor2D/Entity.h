@@ -1,9 +1,10 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "j1App.h"
 #include "j1Textures.h"
+#include "MathHelpers.h"
 #include "j1Render.h"
+#include "Log.h"
 
 enum ENTITYTYPE
 {
@@ -22,10 +23,7 @@ public:
 	Entity() {};
 	virtual ~Entity() {};
 	virtual void Update(float dt) {};
-	virtual void CleanUp() {
-		if(tex != nullptr)
-			App->tex->UnLoad(tex);
-	}
+	virtual void CleanUp();
 	virtual void Draw(float dt) {};
 
 
@@ -49,12 +47,16 @@ public:
 	virtual int CheckSpace(float new_x, float new_y);
 
 protected:
-	SDL_Texture* tex;
+	SDL_Texture* tex = nullptr;
 	SDL_Rect rect;
 	bool inverse_draw = false;
 
 
 public:
+	bool to_delete = false;
+
+	bool active = true;
+
 	Collider* HitBox = nullptr;
 	fPoint pos;
 	uint type;

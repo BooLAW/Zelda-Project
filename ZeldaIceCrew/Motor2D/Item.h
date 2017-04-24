@@ -2,14 +2,13 @@
 #define __ITEM_H__
 
 #include "EntityManager.h"
-#include "Entity.h"
-#include "j1App.h"
 #include "j1Textures.h"
 #include "HUD.h"
 #include "j1Gui.h"
 #include "SceneManager.h"
-
+#include "j1Map.h"
 #include "j1Collision.h"
+#include "Entity.h"
 
 #define FLOATING_OFFSET 3.0f
 #define FLOATING_SPEED 20.0f

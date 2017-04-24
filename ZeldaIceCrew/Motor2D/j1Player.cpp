@@ -9,6 +9,9 @@
 #include "VillageScene.h"
 #include "ShopScene.h"
 #include "HouseScene.h"
+
+#include "MathHelpers.h"
+
 j1Player::j1Player()
 {
 }
@@ -20,7 +23,7 @@ j1Player::~j1Player()
 bool j1Player::Awake()
 {
 	bool ret = true;
-	LOG("Player Awake Start");
+	//LOG("Player Awake Start");
 
 	return ret;
 }
@@ -575,10 +578,19 @@ bool j1Player::Update(float dt)
 {
 	bool ret = true;
 	
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		if (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene) {
+			App->scene_manager->toChangeScene((Scene*)App->scene_manager->village_scene);
+		}else
+		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
+	}
+
+	Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
+
 	if(App->debug_mode == true)
 		if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
-			if (App->scene_manager->GetCurrentScene()->enemies.empty() == false) {
-				for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) {
+			if (c_r->enemies.empty() == false) {
+				for (std::list<Enemy*>::iterator it = c_r->enemies.begin(); it != c_r->enemies.end(); it++) {
 					if (it._Ptr->_Myval != nullptr)
 						it._Ptr->_Myval->Hit(Down, 9999);
 				}
@@ -972,16 +984,14 @@ int j1Player::CheckSpace(float new_x, float new_y)
 	int ret = true;
 
 	// TileCheck
-	ret = App->map->TileCheck(new_x, new_y);
-	// 0 walkable
-	//1 wall
-	// 2 hole
+	if(App->map->active)
+	 ret = App->map->TileCheck(new_x, new_y);
 	if (ret != 1) {
 		SDL_Rect r = mov_coll->rect;
 		r.x = new_x;
 		r.y = new_y;
 
-		Scene* scene = App->scene_manager->GetCurrentScene();
+		Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
 
 		// Enemy Check
 		if (inmortal == false) {

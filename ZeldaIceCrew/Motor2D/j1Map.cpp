@@ -192,6 +192,7 @@ bool j1Map::CleanUp()
 int j1Map::TileCheck(float x, float y) const
 {
 	int ret = 0;
+  if(App->map->active == true) {
 	//get the key navigation tiles(r)
 	//Note: aqui el que fa es guardarse el numero del tileset en el que estan 2 
 	//tiles clau de la navigation
@@ -200,7 +201,7 @@ int j1Map::TileCheck(float x, float y) const
 	int yellow_tile = 0;
 	if(data.tilesets.begin()._Ptr->_Next->_Myval != nullptr)
 		red_tile = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid;//walkability tile to don't walk
-	yellow_tile = red_tile + 1;																		 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
+	  yellow_tile = red_tile + 1;																		 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
 		iPoint ptemp = WorldToMap(x, y);
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
@@ -216,8 +217,7 @@ int j1Map::TileCheck(float x, float y) const
 		}
 		else
 			ret = 0;
-
-
+  }
 	//retornarem 0 si podem caminar o si es una blue tile
 	return ret;
 }
@@ -538,4 +538,4 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 		break;
 	}
 	return ret;
-}
+};

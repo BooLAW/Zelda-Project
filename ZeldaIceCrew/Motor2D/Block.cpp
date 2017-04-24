@@ -21,6 +21,17 @@ bool Block::Start()
 
 }
 
+void Block::CleanUp()
+{
+	if (tex != nullptr)
+		App->tex->UnLoad(tex);
+	if (HitBox != nullptr)
+		HitBox->to_delete = true;
+
+	App->scene_manager->GetCurrentScene()->DestroyBlock(this);
+
+}
+
 void Bush::SetRewards()
 {
 	memset(reward_pool, 0, N_ITEMS);
@@ -80,13 +91,16 @@ void Block::Reward()
 			newitem->pos = { pos.x, pos.y };
 
 	}
-	else
-		LOG("NO REWARD FAGGOT");
+	else {}
+		//LOG("NO REWARD FAGGOT");
 
 }
 
 void Block::Update(float dt)
 {
+
+	//LOG("BLOCK UPDATE");
+
 	if(HitBox != nullptr)
 	HitBox->SetPos(pos.x, pos.y + sprites[subtype][idle][0].h - 32);
 
