@@ -110,7 +110,7 @@ public:
 	bool Find_weapon(Item* item);
 	void PlayerInmortal(float time);
 
-	bool CheckSpace(float new_x, float new_y);
+	int CheckSpace(float new_x, float new_y);
 
 	// base stats saving file
 	// --status flags 
