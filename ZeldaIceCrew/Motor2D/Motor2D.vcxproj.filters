@@ -90,7 +90,9 @@
     <ClCompile Include="ModuleParticles.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Dialogues.cpp" />
+    <ClCompile Include="DialogueManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -193,7 +195,9 @@
     <ClInclude Include="ModuleParticles.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Dialogues.h" />
+    <ClInclude Include="DialogueManager.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

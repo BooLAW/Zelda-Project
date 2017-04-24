@@ -38,9 +38,7 @@ bool HouseScene::Awake()
 // Called before the first frame
 bool HouseScene::Start()
 {
-	////////////////////////////
-	welcome = new Dialogue();
-	welcome->Create("Aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaa tttttttttttttttt tttttttttttttttttttt tttttttttttttttttttt");
+	
 	//////////////////////////
 	App->render->cam_travel = false;
 	if (App->map->Load("House.tmx") == true)
@@ -122,9 +120,7 @@ bool HouseScene::Update(float dt)
 
 	DoorUpdate(dt);
 	///////////////////////////
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
-		welcome->Display();
-	}
+	
 	//////////////////////////////
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
@@ -192,8 +188,6 @@ bool HouseScene::CleanUp()
 		}
 		doorways.clear();
 	}
-
-	welcome->Clean();
 
 	return true;
 }

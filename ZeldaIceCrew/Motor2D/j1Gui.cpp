@@ -106,6 +106,18 @@ UIElement * j1Gui::CreateElement(GuiType type)
 		ret->type = window;
 		ret->texture = atlas;
 		break;
+
+	case GuiType::dialog_box:
+		ret = new UI_DialogBox();
+		ret->type = dialog_box;
+		ret->texture = atlas;
+		break;
+
+	case GuiType::UI_string:
+		ret = new UI_String();
+		ret->type = UI_string;
+		ret->texture = atlas;
+		break;
 	}
 	if (ret != nullptr) {
 		ret->pos.x = 0;
@@ -145,6 +157,7 @@ UIElement * j1Gui::CreateElement(GuiType type, const char* path)
 		ret = new Window();
 		ret->type = window;
 		break;
+
 	}
 
 	if (ret != nullptr) {
@@ -284,6 +297,14 @@ void GuiButton::Update()
 		this->text->Update();
 
 	}
+}
+void UIElement::Set_Interactive_Box(SDL_Rect new_rect)
+{
+	texture_rect = new_rect;
+}
+void UIElement::Set_Active_state(bool act)
+{
+	active = act;
 }
 void UIElement::Move(int x, int y) {
 
@@ -566,3 +587,115 @@ UIElement * Window::Selected()
 		return selected;
 	else return nullptr;
 }
+
+
+UI_DialogBox::~UI_DialogBox()
+{
+	RELEASE(Box);
+}
+
+bool UI_DialogBox::Update_Draw()
+{
+	//blit img
+	if (Box)
+	{
+		App->render->toDraw(texture, 10000, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+	}
+	//Child_Update_Draw();
+	return false;
+}
+
+void UI_DialogBox::SetImage(const GuiImage* new_img)
+{
+	Box = (GuiImage*)new_img;
+}
+
+void UI_DialogBox::SetText(const GuiText* new_txt)
+{
+	Dialog_Text = (GuiText*)new_txt;
+}
+
+void UI_DialogBox::SetViewport(SDL_Rect new_rect)
+{
+	Dialog_ViewPort = new_rect;
+}
+
+bool UI_String::Update_Draw()
+{
+	if (active)
+	{
+		SDL_Rect tmp = { 0, 0, 405,75 };
+		App->render->toDraw(texture, 10000, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &tmp);
+		App->render->toDraw(texture, 10000, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+
+	}
+
+	//Child_Update_Draw();
+
+	return true;
+}
+
+
+void UI_String::SetBlitTimeMS(int time)
+{
+	blit_time = time;
+}
+
+void UI_String::ForcedFinish()
+{
+	blit_text = text;
+	if (text_texture)
+		App->tex->UnLoad(text_texture);
+
+	text_texture = App->font->Print(blit_text.c_str());
+}
+
+void UI_String::Update()
+{
+
+	if (dialog_state == MID_TEXT && active)
+		BlitDialog();
+
+	//Return_state();
+}
+
+bool UI_String::Set_String(char* new_text)
+{
+	text = new_text;
+	blit_text.clear();
+
+	if (text_texture)
+		App->tex->UnLoad(text_texture);
+
+	char_blit_time.Start();
+	dialog_state = MID_TEXT;
+
+	return (text.c_str() != nullptr) ? true : false;
+}
+
+void UI_String::Load_text_texture()
+{
+	text_texture = App->font->Print(text.c_str());
+}
+
+
+void UI_String::BlitDialog()
+{
+	if (blit_text.size() < text.size())
+	{
+		if (char_blit_time.Read() >= (blit_time))
+		{
+			blit_text += text.at(blit_text.size());
+			//looks if the text is already loaded and unloads
+			if (text_texture)
+				App->tex->UnLoad(text_texture);
+
+			text_texture = App->font->Print(blit_text.c_str());
+			char_blit_time.Start();
+		}
+	}
+	else dialog_state = FINISHED_TEXT;
+
+
+}
+

@@ -77,7 +77,7 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Bomb.cpp" />
-    <ClCompile Include="Dialogues.cpp" />
+    <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="Doorway.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -116,7 +116,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Bomb.h" />
-    <ClInclude Include="Dialogues.h" />
+    <ClInclude Include="DialogueManager.h" />
     <ClInclude Include="Doorway.h" />
     <ClInclude Include="DungeonScene.h" />
     <ClInclude Include="Enemy.h" />

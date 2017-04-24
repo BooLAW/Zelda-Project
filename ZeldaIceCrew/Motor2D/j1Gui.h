@@ -18,8 +18,16 @@ enum GuiType
 	text,
 	button,
 	Input,
-	window
+	window,
+	dialog_box,
+	UI_string
 
+};
+enum TEXTSTATE
+{
+	FINISHED_TEXT,
+	MID_TEXT,
+	
 };
 
 // UI ELEMENT
@@ -37,6 +45,8 @@ public:
 	UIElement* parent;
 	bool max_prior = false;
 public:
+	void Set_Interactive_Box(SDL_Rect);
+	void Set_Active_state(bool);
 	virtual void Start() {};
 	virtual void Update() {};
 	virtual void PreUpdate() {}
@@ -59,6 +69,7 @@ public:
 	SDL_Color color;
 	std::string str;
 	void Start();
+
 public:
 
 	GuiText() {};
@@ -66,6 +77,46 @@ public:
 
 public:
 	void Update();
+};
+
+class UI_String : public UIElement
+{
+public:
+	std::string			text;
+	int				text_size;
+	_TTF_Font*		text_font = nullptr;
+	SDL_Texture*	text_texture = nullptr;
+
+	TEXTSTATE		dialog_state = FINISHED_TEXT;
+	int				blit_time = 0;
+
+public:
+
+	UI_String(const UI_String* other);
+	UI_String() {};
+
+
+	bool Set_String(char* new_text);				//Changes the string
+	void Load_text_texture();						//Loads the text texture
+
+	void Update();
+	bool Update_Draw();
+	bool Handle_input();
+
+	bool Draw_console(int height);					//Blits the string in the console [takes into account the height where it is the string]
+
+	void SetBlitTimeMS(int);
+	void ForcedFinish();
+
+private:
+
+	void LookEnter();
+
+	std::string	blit_text;
+	j1Timer	char_blit_time;
+	void	BlitDialog();
+
+
 };
 
 // BUTTON
@@ -144,6 +195,28 @@ private:
 	
 
 };
+
+class UI_DialogBox : public UIElement
+{
+public:
+
+//	UI_DialogBox(GuiType, j1Module*);
+	UI_DialogBox() {};
+	~UI_DialogBox();
+
+	bool Update_Draw();
+
+	void SetImage(const GuiImage*);
+	void SetText(const GuiText*);
+	void SetViewport(SDL_Rect);
+
+private:
+
+	GuiImage*	Box = nullptr;
+	GuiText*	Dialog_Text = nullptr;
+	SDL_Rect	Dialog_ViewPort;
+};
+
 
 // ---------------------------------------------------
 class j1Gui : public j1Module
