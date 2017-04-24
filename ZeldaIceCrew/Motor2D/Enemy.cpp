@@ -113,16 +113,16 @@ bool Enemy::Move()
 		if (path_to_follow.size() > 0) {
 
 			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
-				if(stats.Flying == true || CheckSpace(HitBox->rect.x + stats.Speed, HitBox->rect.y))
+				if(stats.Flying == true || CheckSpace(HitBox->rect.x + stats.Speed, HitBox->rect.y)==0)
 					pos.x += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x - stats.Speed, HitBox->rect.y))
+				if (stats.Flying == true || CheckSpace(HitBox->rect.x - stats.Speed, HitBox->rect.y) == 0)
 					pos.x -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y + stats.Speed))
+				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y + stats.Speed) == 0)
 					pos.y += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed))
+				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed) == 0)
 					pos.y -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
 				path_to_follow.pop_back();
@@ -172,19 +172,19 @@ void Enemy::HitPlayer()
 
 		switch (curr_dir) {
 		case Up:
-			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height))
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height) == 0)
 				App->player->MovePos(0, -App->map->data.tile_height);
 			break;
 		case Down:
-			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height))
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height) == 0)
 				App->player->MovePos(0, App->map->data.tile_height);
 			break;
 		case Left:
-			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y))
+			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y) == 0)
 				App->player->MovePos(-App->map->data.tile_width, 0);
 			break;
 		case Right:
-			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y))
+			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y) == 0)
 				App->player->MovePos(App->map->data.tile_width, 0);
 			break;
 		}
@@ -205,19 +205,19 @@ void Enemy::HitPlayer(uint dmg)
 
 		switch (curr_dir) {
 		case Up:
-			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height))
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height) == 0)
 				App->player->MovePos(0, -App->map->data.tile_height);
 			break;
 		case Down:
-			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height))
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height) == 0)
 				App->player->MovePos(0, App->map->data.tile_height);
 			break;
 		case Left:
-			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y))
+			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y) == 0)
 				App->player->MovePos(-App->map->data.tile_width, 0);
 			break;
 		case Right:
-			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y))
+			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y) == 0)
 				App->player->MovePos(App->map->data.tile_width, 0);
 			break;
 		}
@@ -267,19 +267,19 @@ void Enemy::Hit(uint dir, uint dmg)
 
 		switch (dir) {
 		case Direction::Up:
-			if (CheckSpace(pos.x, pos.y - jump_hit))
+			if (CheckSpace(pos.x, pos.y - jump_hit)==0)
 				pos.y -= jump_hit;
 			break;
 		case Direction::Down:
-			if (CheckSpace(pos.x, pos.y + jump_hit))
+			if (CheckSpace(pos.x, pos.y + jump_hit)==0)
 				pos.y += jump_hit;
 			break;
 		case Direction::Left:
-			if (CheckSpace(pos.x - jump_hit, pos.y))
+			if (CheckSpace(pos.x - jump_hit, pos.y)==0)
 				pos.x -= jump_hit;
 			break;
 		case Direction::Right:
-			if (CheckSpace(pos.x + jump_hit, pos.y))
+			if (CheckSpace(pos.x + jump_hit, pos.y)==0)
 				pos.x += jump_hit;
 			break;
 		}
