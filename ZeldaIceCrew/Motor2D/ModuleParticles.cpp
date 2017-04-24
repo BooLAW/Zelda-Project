@@ -201,7 +201,7 @@ bool Arrow::Update(float dt)
 
 	HitBox = { (int)position.x, (int)position.y, g_rect[curr_dir].w, g_rect[curr_dir].h };
 
-	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) 
+	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
 	{
 		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
 		{
@@ -217,7 +217,7 @@ bool Arrow::Update(float dt)
 		}
 	}
 	//BLOCK INTERACTION
-	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->blocks.end(); it++)
+	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
 	{
 		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
 		{

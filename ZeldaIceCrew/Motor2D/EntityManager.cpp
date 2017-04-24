@@ -210,12 +210,16 @@ void EntityManager::DestroyEnity(Entity * ent)
 				}
 			LOG("ENTITY TYPE %d", ent->type);
 			ent->CleanUp();
+			LOG("ENT CLEAR");
 			//std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
-			RELEASE(ent);
+			//if(ent != nullptr)
+			//	RELEASE(ent);
+			//
+			//ent = nullptr;
 
 	}
 
-	//LOG("ENTITY DESTROYED");
+	LOG("ENTITY DESTROYED");
 }
 
 void EntityManager::OnCollision(Collider * c1, Collider * c2)

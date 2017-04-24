@@ -49,6 +49,9 @@ bool SceneManager::Start()
 	dungeon_scene = new DungeonScene();
 	shop_scene = new ShopScene();
 
+	village_scene->curr_id = village;
+	dungeon_scene->curr_id = dungeon;
+
 	scenes.push_back(village_scene);
 	scenes.push_back(house_scene);
 	scenes.push_back(dungeon_scene);

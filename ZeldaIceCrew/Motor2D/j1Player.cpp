@@ -995,8 +995,8 @@ int j1Player::CheckSpace(float new_x, float new_y)
 
 		// Enemy Check
 		if (inmortal == false) {
-			for (std::list<Enemy*>::iterator it = scene->enemies.begin(); it != scene->enemies.end(); it++) {
-				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+			for (std::list<Enemy*>::iterator it = c_r->enemies.begin(); it != c_r->enemies.end(); it++) {
+				if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
 					ret = 1;
 					break;
 				}
@@ -1005,8 +1005,8 @@ int j1Player::CheckSpace(float new_x, float new_y)
 
 		// Block Check
 		if (ret != false) {
-			for (std::list<Block*>::iterator it = scene->blocks.begin(); it != scene->blocks.end(); it++) {
-				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
+			for (std::list<Block*>::iterator it = c_r->blocks.begin(); it != c_r->blocks.end(); it++) {
+				if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
 					ret = 1;
 					break;
 				}

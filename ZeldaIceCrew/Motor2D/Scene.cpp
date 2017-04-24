@@ -3,6 +3,16 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
+#include "j1Player.h"
+
+bool Scene::stdStart()
+{
+	Load_new_map(0);
+	App->player->pos = pl_start_pos;
+
+	return true;
+
+}
 
 bool Scene::Update(float dt)
 {
@@ -51,14 +61,20 @@ bool Scene::stdCleanUp()
 			if (it._Ptr->_Myval != nullptr) {
 				it._Ptr->_Myval->CleanUp();
 				DestroyRoom(it._Ptr->_Myval);
-			}
+			} 
 			RELEASE(*it);
 		}
 		rooms.clear();
 	}
 
+	//App->entitymanager->DestroyEntities();
+
 	return true;
 
+}
+
+void Scene::Clear()
+{
 }
 
 Room * Scene::GetRoom(int x, int y)
@@ -86,9 +102,9 @@ void Scene::DestroyItem(Item * ent)
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
 			for (std::list<Item*>::iterator it = room_it._Ptr->_Myval->items.begin(); it != room_it._Ptr->_Myval->items.end(); it++) {
 				if (it._Ptr->_Myval == ent) {
-					it._Ptr->_Myval->to_delete = true;
+					//it._Ptr->_Myval->to_delete = true;
+					App->entitymanager->DestroyEnity(ent);
 					room_it._Ptr->_Myval->items.erase(it);
-					//App->entitymanager->DestroyEnity(ent);
 				}
 			}
 	}
@@ -102,8 +118,8 @@ void Scene::DestroyEnemy(Enemy * ent)
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
 			for (std::list<Enemy*>::iterator it = room_it._Ptr->_Myval->enemies.begin(); it != room_it._Ptr->_Myval->enemies.end(); it++) {
 				if (it._Ptr->_Myval == ent) {
-					//App->entitymanager->DestroyEnity(ent);
-					it._Ptr->_Myval->to_delete = true;
+					App->entitymanager->DestroyEnity(ent);
+					//it._Ptr->_Myval->to_delete = true;
 					room_it._Ptr->_Myval->enemies.erase(it);
 				}
 			}
@@ -115,9 +131,9 @@ void Scene::DestroyBlock(Block * ent)
 		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
 			for (std::list<Block*>::iterator it = room_it._Ptr->_Myval->blocks.begin(); it != room_it._Ptr->_Myval->blocks.end(); it++) {
 				if (it._Ptr->_Myval == ent) {
-					it._Ptr->_Myval->to_delete = true;
+					//it._Ptr->_Myval->to_delete = true;
 					room_it._Ptr->_Myval->blocks.erase(it);
-					//App->entitymanager->DestroyEnity(ent);
+					App->entitymanager->DestroyEnity(ent);
 				}
 			}
 	}
@@ -315,6 +331,7 @@ pugi::xml_node Scene::LoadConfig(pugi::xml_document& config_file) const
 		break;
 	case dungeon:
 		size = App->fs->Load("Dungeon.xml", &buf);
+		LOG("SIZE %d", size);
 		break;
 	case intro:
 		//we have to stablish what do we need in the intro scene
@@ -328,7 +345,7 @@ pugi::xml_node Scene::LoadConfig(pugi::xml_document& config_file) const
 	RELEASE(buf);
 
 	if (result == NULL)
-		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+		LOG("Could not load map xml file config.xml. pugi error: %s \n ---Offset: %d", result.description(), result.offset);
 	else
 	{
 		switch (curr_id)
@@ -353,69 +370,167 @@ pugi::xml_node Scene::LoadConfig(pugi::xml_document& config_file) const
 }
 bool Scene::Load_new_map(int id)
 {
-	bool stop_rearch = false;
-
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
 
-	for (pugi::xml_node temp = config.child("maps").child("map"); stop_rearch == false; temp = temp.next_sibling())
-	{
+	for (pugi::xml_node temp = config.child("maps").child("map"); temp; temp = temp.next_sibling("map")) {
 		if (temp.attribute("id").as_int(0) == id)
-		{
-			if (id == 1)//add more conditions
 			{
+
+				//Music
+				App->audio->PlayMusic(temp.child_value("music"));
+				App->audio->SetVolumeMusic(temp.child("music").attribute("volume").as_uint(60));
+
 				//player position
-				App->player->pos.x = temp.child("Link").attribute("pos_x").as_int(0);
-				App->player->pos.y = temp.child("Link").attribute("pos_y").as_int(0);
-			}
-			//Items
-			if (temp.child("items").attribute("num").as_int() != 0)
-			{
-				pugi::xml_node temp_item = temp.child("items").child("item");
-				for (int i = 0; i < temp.child("items").attribute("num").as_int(0); i++)
-				{
-					items.push_back(App->entitymanager->CreateItem(temp_item.attribute("id").as_int(0)));
-					temp_item = temp_item.next_sibling();
+				pl_start_pos.x = temp.child("Link").child("pos").attribute("x").as_int(0) + ROOM_W * temp.child("Link").child("room").attribute("x").as_int(0);
+				pl_start_pos.y = temp.child("Link").child("pos").attribute("y").as_int(0) + ROOM_H * temp.child("Link").child("room").attribute("y").as_int(0);
+
+				//Rooms
+
+				for (pugi::xml_node node_rooms = temp.child("rooms"); node_rooms; node_rooms = node_rooms.next_sibling("rooms")) {
+					for (pugi::xml_node node_room = node_rooms.child("room"); node_room; node_room = node_room.next_sibling("room")) {
+						SDL_Rect room_coords;
+						room_coords = { node_room.attribute("x").as_int(-999), node_room.attribute("y").as_int(-999), node_room.attribute("w").as_int(1024), node_room.attribute("h").as_int(576) };
+
+						Room* r = AddRoom(room_coords.x, room_coords.y);
+
+						if (r != nullptr) {
+
+							//Items
+							for (pugi::xml_node node_items = node_room.child("items"); node_items; node_items = node_items.next_sibling("items")) {
+								for (pugi::xml_node node_item = node_items.child("item"); node_item; node_item = node_item.next_sibling("item")) {
+									LOG("XML ITEMS");
+									uint st = 0;
+
+									char* sub = (char*)node_item.attribute("subtype").as_string("");
+
+									LOG("SUB %s", sub);
+
+									if (sub == "power_gauntlet")
+										st = power_gauntlet;
+									if (sub == "pegasus_boots")
+										st = pegasus_boots;
+									if (sub == "heart_container")
+										st = heart_container;
+									if (sub == "boss_key")
+										st = boss_key;
+									if (sub == "drop_heart")
+										st = drop_heart;
+									if (sub == "drop_bomb")
+										st = drop_bomb;
+									if (sub == "drop_potion")
+										st = drop_potion;
+									if (sub == "drop_rupee")
+										st = drop_rupee;
+									if (sub == "drop_fiverupee")
+										st = drop_fiverupee;
+									if (sub == "drop_tenrupee")
+										st = drop_tenrupee;
+									if (sub == "weapon_sword")
+										st = weapon_sword;
+									if (sub == "weapon_bow")
+										st = weapon_bow;
+
+									r->AddItem(2, node_item.attribute("x").as_float(), node_item.attribute("y").as_float());
+
+								}
+							}
+
+							//Blocks
+							for (pugi::xml_node node_blocks = node_room.child("blocks"); node_blocks; node_blocks = node_blocks.next_sibling("blocks")) {
+								for (pugi::xml_node node_block = node_blocks.child("block"); node_block; node_block = node_block.next_sibling("block")) {
+									LOG("XML BLOCKS");
+
+									uint st = 0;
+
+									const pugi::char_t* sub = node_block.attribute("subtype").as_string("");
+
+									if (sub == "bush")
+										st = bush;
+									if (sub == "pot")
+										st = pot;
+									if (sub == "statue")
+										st = statue;
+									if (sub == "torch_bowl")
+										st = torch_bowl;
+									if (sub == "torch_pillar")
+										st = torch_pillar;
+									if (sub == "slabs")
+										st = slabs;
+
+									r->AddBlock(st, node_block.attribute("x").as_float(), node_block.attribute("y").as_float());
+								}
+							}
+
+							//Doorways
+							LOG("XML DW");
+							for (pugi::xml_node node_dws = node_room.child("doorways"); node_dws; node_dws = node_dws.next_sibling("doorways")) {
+								for (pugi::xml_node node_dw = node_dws.child("doorway"); node_dw; node_dw = node_dw.next_sibling("doorway")) {
+
+									uint st = 0;
+									uint dir = Down;
+
+									const pugi::char_t* sub = node_dw.attribute("subtype").as_string("");
+									const pugi::char_t* direction = node_dw.attribute("dir").as_string("");
+
+									if (sub == "dw_cam")
+										st = dw_cam;
+									if (sub == "dw_dungeon")
+										st = dw_dungeon;
+									if (sub == "dw_scene")
+										st = dw_scene;
+
+									if (direction == "Up")
+										dir = Up;
+									if (direction == "Down")
+										dir = Down;
+									if (direction == "Left")
+										dir = Left;
+									if (direction == "Right")
+										dir = Right;
+
+									//r->AddDoorway(st, dir, node_dw.attribute("x").as_float(), node_dw.attribute("y").as_float());
+
+								}
+							}
+
+							//Enemies
+							for (pugi::xml_node node_ens = node_room.child("enemies"); node_ens; node_ens = node_ens.next_sibling("enemies")) {
+								for (pugi::xml_node node_en = node_ens.child("enemy"); node_en; node_en = node_en.next_sibling("enemy")) {
+									LOG("XML ENEMIES");
+
+									uint st = 0;
+
+									const pugi::char_t* sub = node_en.attribute("subtype").as_string("");
+
+									if (sub == "t_bluesoldier")
+										st = t_bluesoldier;
+									if (sub == "t_redsoldier")
+										st = t_redsoldier;
+									if (sub == "t_greensoldier")
+										st = t_greensoldier;
+									if (sub == "t_hinox")
+										st = t_hinox;
+									if (sub == "t_boss_ballandchain")
+										st = t_boss_ballandchain;
+
+									r->AddEnemy(st, node_en.attribute("x").as_float(), node_en.attribute("y").as_float());
+
+								}
+							}
+						}
+					}
 				}
 			}
-			//Blocks
-			if (temp.child("blocks").attribute("num").as_int() != 0)
-			{
-				pugi::xml_node temp_block= temp.child("blocks").child("block");
-				for (int i = 0; i < temp.child("blocks").attribute("num").as_int(0); i++)
-				{
-					blocks.push_back(App->entitymanager->CreateBlock(temp_block.attribute("id").as_int(0)));
-					temp_block = temp_block.next_sibling();
-				}
-			}
-			//Doorways
-			if (temp.child("doorways").attribute("num").as_int() != 0)
-			{
-				pugi::xml_node temp_item = temp.child("doorways").child("doorway");
-				for (int i = 0; i < temp.child("doorways").attribute("num").as_int(0); i++)
-				{
-					items.push_back(App->entitymanager->CreateItem(temp_item.attribute("id").as_int(0)));
-					temp_item = temp_item.next_sibling();
-				}
-			}
-			//Enemies
-			if (temp.child("enemies").attribute("num").as_int(0) != 0)
-			{
-				pugi::xml_node temp_enemy = temp.child("enemies").child("enemy");
-				for (int i = 0; i < temp.child("enemies").attribute("num").as_int(0); i++)
-				{
-					enemies.push_back(App->entitymanager->CreateEnemy(temp_enemy.attribute("id").as_int(0)));
-					temp_enemy = temp_enemy.next_sibling();
-				}
-			}
+
 			//map
-			std::string name_map = temp.attribute("file").as_string("");
+			std::string name_map = temp.child_value("file");
 			App->map->Load(name_map.c_str());
 
 			//Camera position
 			int scale = App->win->GetScale();
-			App->player->camera_follow = temp.child("camera").attribute("follow").as_bool();
+			App->player->camera_follow = temp.child("camera").attribute("follow").as_bool(false);
 			// ------------NEEDED???
 			//if (App->player->camera_follow == true)
 			//{
@@ -444,12 +559,11 @@ bool Scene::Load_new_map(int id)
 			//}
 			//else
 			//{
-				iPoint size_pos = App->map->MapToWorld(App->map->data.width, App->map->data.height);
-				App->render->camera.x = (App->win->GetWidth() / scale - size_pos.x);
-				App->render->camera.y = (App->win->GetHeight() / scale - size_pos.y);
-		//	}
-			stop_rearch = true;
+			iPoint size_pos = App->map->MapToWorld(App->map->data.width, App->map->data.height);
+			App->render->camera.x = (App->win->GetWidth() / scale - size_pos.x);
+			App->render->camera.y = (App->win->GetHeight() / scale - size_pos.y);
+			//	}
 		}
-	}
+
 	return true;
 }

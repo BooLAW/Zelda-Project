@@ -41,7 +41,9 @@ public:
 	Item* AddItem(uint subtype, float x, float y);
 	Enemy* AddEnemy(uint subtype, float x, float y);
 	Block* AddBlock(uint subtype, float x, float y);
-	Doorway* AddDoorway(uint subtype, uint dir, float x, float y);
+	Doorway* AddDungeonDoorway(uint subtype, uint dir, float x, float y);
+	Doorway* AddSceneDoorway(uint subtype, uint dir, float x, float y);
+	Doorway* AddCamDoorway(uint subtype, uint dir, float x, float y);
 
 	void EnemyActive(bool flag);
 

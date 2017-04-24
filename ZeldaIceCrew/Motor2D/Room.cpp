@@ -82,7 +82,7 @@ Item * Room::AddItem(uint subtype, float x, float y)
 	Item* ret = nullptr;
 
 	ret = App->entitymanager->CreateItem(subtype);
-	ret->pos = { x, y };
+	ret->pos = { x + ROOM_W * coords.x, y + ROOM_H * coords.y};
 
 	items.push_back(ret);
 
@@ -106,35 +106,26 @@ Block * Room::AddBlock(uint subtype, float x, float y)
 	Block* ret = nullptr;
 
 	ret = App->entitymanager->CreateBlock(subtype);
-	ret->pos = { x, y };
+	ret->pos = { x + ROOM_W * coords.x, y + ROOM_H * coords.y };
 
 	blocks.push_back(ret);
 
 	return ret;
 }
 
-Doorway * Room::AddDoorway(uint subtype, uint dir, float x, float y)
+Doorway * Room::AddDungeonDoorway(uint subtype, uint dir, float x, float y)
 {
-	Doorway* ret = nullptr;
+	return nullptr;
+}
 
-	switch (subtype) {
-	case dw_dungeon:
-		ret = new DwDungeon();
-		break;
-	case dw_scene:
-		ret = new DwScene();
-		break;
-	}
+Doorway * Room::AddSceneDoorway(uint subtype, uint dir, float x, float y)
+{
+	return nullptr;
+}
 
-	ret->Start();
-	ret->SetUp(dir);
-
-	ret->SetPos(x + room_rect.w * coords.x, y + room_rect.h * coords.y);
-
-	doorways.push_back(ret);
-
-	return ret;
-
+Doorway * Room::AddCamDoorway(uint subtype, uint dir, float x, float y)
+{
+	return nullptr;
 }
 
 void Room::EnemyActive(bool flag)

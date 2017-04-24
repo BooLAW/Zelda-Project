@@ -37,7 +37,8 @@ public:
 
 	virtual ~Scene() {};
 
-	virtual bool Start() { return true; };
+	virtual bool Start() { return stdStart(); };
+	virtual bool stdStart();
 	virtual bool PreUpdate() { return true; };
 	virtual bool Update(float dt);
 	virtual bool stdUpdate(float dt);
@@ -48,6 +49,7 @@ public:
 	};
 	virtual bool CleanUp();
 	virtual bool stdCleanUp();
+	virtual void Clear();
 
 	Room* GetRoom(int x, int y);
 
@@ -96,6 +98,7 @@ protected:
 
 	bool change_scene = false;
 
+	fPoint pl_start_pos;
 
 public:
 	bool follow_cam = true;
