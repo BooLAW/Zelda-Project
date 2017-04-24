@@ -149,6 +149,19 @@ Block * EntityManager::CreateBlock(uint type)
 	return ret;
 }
 
+bool EntityManager::PreUpdate()
+{
+
+	for (uint i = 0; i < entities.size(); i++) {
+		if (entities[i] != nullptr && entities[i]->to_delete == true) {
+			entities[i]->to_delete = false;
+			DestroyEnity(entities[i]);
+		}
+	}
+
+	return true;
+}
+
 bool EntityManager::Update(float dt) {
 
 	//LOG("ENTITY UPDT START");
@@ -178,8 +191,8 @@ void EntityManager::DestroyEntities()
 {
 	for (uint i = 0; i < entities.size(); i++) {
 		if (entities[i] != nullptr) {
-			entities[i]->CleanUp();
-			delete entities[i];
+			DestroyEnity(entities[i]);
+			//RELEASE(entities[i]);
 		}
 	}
 }
@@ -188,13 +201,17 @@ void EntityManager::DestroyEnity(Entity * ent)
 {
 
 	if (ent != nullptr) {
-		LOG("ENTITY TYPE %d", ent->type);
-		ent->CleanUp();
-		LOG("ENTITY CLEAR");
-		std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
-			//RELEASE(ent);
-		if((*aux) != nullptr)
-		entities.erase(aux); 	
+
+			LOG("ENTITY CLEAR");
+			std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+				if (aux != entities.end()) {
+					entities.erase(aux);
+				}
+			LOG("ENTITY TYPE %d", ent->type);
+			ent->CleanUp();
+			//std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+			RELEASE(ent);
+
 	}
 
 	//LOG("ENTITY DESTROYED");

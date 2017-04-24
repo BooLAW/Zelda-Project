@@ -43,6 +43,7 @@ public:
 		return true;
 	}
 
+	bool PreUpdate();
 	bool Update(float dt);
 	void PushEntity(Entity* ent);
 	void DestroyEntities();

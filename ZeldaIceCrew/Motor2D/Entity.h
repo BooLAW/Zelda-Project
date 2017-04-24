@@ -53,6 +53,8 @@ protected:
 
 
 public:
+	bool to_delete = false;
+
 	Collider* HitBox = nullptr;
 	fPoint pos;
 	uint type;
