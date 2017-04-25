@@ -93,6 +93,9 @@
     <ClCompile Include="DialogueManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="DialogueManager.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
