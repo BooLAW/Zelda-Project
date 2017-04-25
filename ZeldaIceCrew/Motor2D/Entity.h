@@ -10,6 +10,7 @@ enum ENTITYTYPE
 {
 	drop = 0,
 	item,
+	weapon,
 	block,
 	enemy,
 	bomb,

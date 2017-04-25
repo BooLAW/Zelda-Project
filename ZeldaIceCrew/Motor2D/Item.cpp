@@ -14,7 +14,10 @@ void Item::PassToInventory()
 
 	if (priceTag != nullptr)
 		priceTag->active = false;
+	if (this->type == weapon) {
 
+		App->hud->AddWeapon(this);
+	}
 	App->player->inventory.push_back(this);
 	App->hud->AddItem(this);
 	grabbed = true;

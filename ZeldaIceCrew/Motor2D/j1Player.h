@@ -100,6 +100,7 @@ public:
 	void PickUp_();
 	void ChangeWeapon();
 	void AddWeapon(uint weapon_t);
+	
 
 	void SetPos(float x, float y);
 	void MovePos(float x, float y);

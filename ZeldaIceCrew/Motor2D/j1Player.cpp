@@ -554,6 +554,7 @@ bool j1Player::Start()
 
 	AddWeapon(t_sword);
 
+
 	curr_weapon = weapons.begin()._Ptr->_Myval;
 	for (int i = 0; i < LastDir; i++) {
 		animations[Weapon_atk][i] = curr_weapon->anim[i];
@@ -853,6 +854,7 @@ void j1Player::AddWeapon(uint weapon_t)
 		//if (std::find(weapons.begin(), weapons.end(), w) != weapons.end()) {
 			w->Start();
 			weapons.push_back(w);
+		
 		//}
 	}
 
