@@ -66,6 +66,10 @@
     
     <room x="0" y="3" w="1024" h="576">
 
+     <blocks>
+      <block subtype="pot" x="100" y="100"/>
+     </blocks>
+
      <doorways>
       <doorway subtype="dw_dungeon" dir="Up"/>
       <doorway subtype="dw_cam" target_x="20" target_y="20" dir="Left" x="60" y="60"/>

@@ -37,13 +37,13 @@ void Bush::SetRewards()
 	memset(reward_pool, 0, N_ITEMS);
 
 	// Standard Reward Pool
-	reward_pool[drop_heart] = 5;
+	reward_pool[drop_heart] = 0;
 	reward_pool[drop_potion] = 0;
 	reward_pool[drop_rupee] = 30;
-	reward_pool[drop_fiverupee] = 10;
-	reward_pool[drop_tenrupee] = 5;
+	reward_pool[drop_fiverupee] = 1;
+	reward_pool[drop_tenrupee] = 0;
 
-	SortRewardProbs();
+	//SortRewardProbs();
 
 }
 
@@ -52,20 +52,18 @@ void Pot::SetRewards()
 	memset(reward_pool, 0, N_ITEMS);
 
 	// Standard Reward Pool
-	reward_pool[drop_heart] = 40;
-	reward_pool[drop_potion] = 10;
-	reward_pool[drop_rupee] = 25;
-	reward_pool[drop_fiverupee] = 15;
-	reward_pool[drop_tenrupee] = 10;
+	reward_pool[drop_heart] = 10;
+	reward_pool[drop_potion] = 1;
+	reward_pool[drop_rupee] = 30;
+	reward_pool[drop_fiverupee] = 1;
+	reward_pool[drop_tenrupee] = 0;
 
-	SortRewardProbs();
+	//SortRewardProbs();
 
 }
 
 void Block::Reward()
 {
-
-	srand(time(NULL));
 
 	uint aux = 0;
 	uint prob = (rand() % 100) + 1;
@@ -84,11 +82,7 @@ void Block::Reward()
 
 	if (target != -1) {
 
-		Item* newitem;
-
-		newitem = App->entitymanager->CreateItem(target);
-		if (newitem != nullptr)
-			newitem->pos = { pos.x, pos.y };
+		App->scene_manager->GetCurrentScene()->AddItem(target, room.x, room.y, pos.x - room.x * ROOM_W, pos.y - room.y * ROOM_H);
 
 	}
 	else {}

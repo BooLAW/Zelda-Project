@@ -61,6 +61,7 @@ public:
 	fPoint pos;
 	uint type;
 
+	iPoint room;
 
 };
 

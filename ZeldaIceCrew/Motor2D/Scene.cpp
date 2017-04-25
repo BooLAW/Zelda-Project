@@ -179,6 +179,8 @@ Item * Scene::AddItem(uint subtype, int coord_x, int coord_y, float x, float y)
 		ret = App->entitymanager->CreateItem(subtype);
 		ret->pos = { x + r->coords.x * ROOM_W , y + r->coords.y * ROOM_H };
 
+		ret->room = { coord_x, coord_y };
+
 		r->items.push_back(ret);
 	}
 	else
@@ -197,6 +199,8 @@ Block * Scene::AddBlock(uint subtype, int coord_x, int coord_y, float x, float y
 
 		ret = App->entitymanager->CreateBlock(subtype);
 		ret->pos = { x + r->coords.x * ROOM_W , y + r->coords.y * ROOM_H };
+
+		ret->room = { coord_x, coord_y };
 
 		r->blocks.push_back(ret);
 	}
@@ -291,6 +295,8 @@ Enemy* Scene::AddEnemy(int subtype, int coord_x, int coord_y, float x, float y)
 
 		ret = App->entitymanager->CreateEnemy(subtype);
 		ret->pos = { x + r->coords.x * ROOM_W , y + r->coords.y * ROOM_H };
+
+		ret->room = { coord_x, coord_y };
 
 		r->enemies.push_back(ret);
 	}
