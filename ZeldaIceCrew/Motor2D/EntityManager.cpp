@@ -29,6 +29,9 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	case t_hinox:
 		ret = new Hinox();
 		break;
+	case t_rope:
+		ret = new Rope();
+		break;
 	case t_boss_ballandchain:
 		ret = new BossChainBall();
 		break;

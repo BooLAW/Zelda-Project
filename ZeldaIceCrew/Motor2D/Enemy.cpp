@@ -45,7 +45,7 @@ void Enemy::SetRewards()
 
 }
 
-void Enemy::Update(float dt)
+void Enemy::stdUpdate(float dt)
 {
 	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
 	//LOG("ENEMY UPDATE");
@@ -71,10 +71,8 @@ bool Enemy::Move()
 {
 	bool ret = true;
 
-	iPoint target;
-
 	switch (AIType) {
-	case AITYPE::path:	
+	case AITYPE::path:
 		break;
 	case AITYPE::chase:
 		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y - PL_OFFSET_Y / 2};
@@ -216,9 +214,17 @@ void Enemy::HitPlayer(uint dmg)
 
 }
 
+void Enemy::SetAnimation(SDL_Rect spr[LastDir][2])
+{
+	for (int i = 0; i < EnDirection::LastDir; i++) {
+		for (int k = 0; k < sizeof(spr) / sizeof(*spr); k++) {
+			animations[i].PushBack(spr[i][k]);
+		}
+	}
+}
+
 void Enemy::Draw()
 {
-
 	if (curr_dir == EnDirection::Left)
 		inverse_draw = true;
 	else
@@ -810,3 +816,160 @@ void Hinox::SetRewards()
 	reward_pool[drop_tenrupee] = 5;
 	reward_pool[drop_heart] = 23;
 };
+
+bool Rope::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+	
+		RopeSprites_m[Up][0] = { 2, 659, 100, 108 };
+		RopeSprites_m[Up][1] = { 2, 659, 100, 108 };
+		RopeSprites_m[Down][0] = { 2, 659, 100, 108 };
+		RopeSprites_m[Down][1] = { 2, 659, 100, 108 };
+		RopeSprites_m[Right][0] = { 206, 549, 100, 108};
+		RopeSprites_m[Right][1] = { 206, 549, 100, 108};
+		RopeSprites_m[Left][0] = { 104 , 549, 100, 108 };
+		RopeSprites_m[Left][1] = { 104 , 549, 100, 108 };
+
+		RopeSprites_nm[Up][0] =		{ 2, 549, 100, 108 };
+		RopeSprites_nm[Down][0] =	{ 2, 549, 100, 108 };
+		RopeSprites_nm[Right][0] =	{ 2, 549, 100, 108 };
+		RopeSprites_nm[Left][0] =	{ 2, 549, 100, 108 };
+		RopeSprites_nm[Up][1] =		{ 2, 659, 100, 108};
+		RopeSprites_nm[Down][1] =	{ 2, 659, 100, 108};
+		RopeSprites_nm[Right][1] =	{ 2, 659, 100, 108};
+		RopeSprites_nm[Left][1] =	{ 2, 659, 100, 108};
+
+		for (int i = 0; i < LastDir; i++) {
+			for (int k = 0; k < 2; k++) {
+				animations[i].PushBack(RopeSprites_m[i][k]);
+			}
+		}
+		nm_anim.PushBack(RopeSprites_nm[0][0]);
+		nm_anim.PushBack(RopeSprites_nm[0][1]);
+		nm_anim.speed = 0.05;
+	}
+
+	stats.Hp = 1;
+	stats.Speed = 5;
+	stats.Power = 1;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = 0.02; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 24, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	state = no_move;
+
+	DmgType[melee] = true;
+
+	AIType = path;
+
+	subtype = ENEMYTYPE::t_rope;
+
+	return ret;
+}
+
+void Rope::Update(float dt)
+{
+	aux_pos = pos;
+
+	stdUpdate(dt);
+
+	uint dir;
+
+	switch (state) {
+	case no_move:
+		walk_timer.Start();
+		walk_timer.SetFlag(true);
+		if (walk_timer.ReadSec() >= 2) {
+			target.x = (int)pos.x;
+			target.y = (int)pos.y;
+			dir = rand() % EnDirection::LastDir;
+			switch (dir) {
+			case EnDirection::Up:
+				target.y += 32 * ROPE_JMP;
+				break;
+			case EnDirection::Down:
+				target.y -= 32 * ROPE_JMP;
+				break;
+			case EnDirection::Left:
+				target.x -= 32 * ROPE_JMP;
+				break;
+			case EnDirection::Right:
+				target.x += 32 * ROPE_JMP;
+				break;
+			}
+			LOG("ROPE DIR %d", dir);
+			path_to_follow.push_back(target);
+			walk_timer.SetFlag(false);
+			state = moving;
+		}
+		break;
+	case moving:
+		walk_timer.Start();
+		walk_timer.SetFlag(true);
+		if (walk_timer.ReadSec() >= 2) {
+			walk_timer.SetFlag(false);
+			state = no_move;
+		}
+
+		break;
+	}
+
+	walk_timer.Start();
+	walk_timer.SetFlag(true);
+	if (walk_timer.ReadSec() >= 2) {
+		target.x = (int)pos.x;
+		target.y = (int)pos.y;
+		dir = rand() % EnDirection::LastDir;
+		switch (dir) {
+		case EnDirection::Up:
+			target.y += 32 * ROPE_JMP;
+			break;
+		case EnDirection::Down:
+			target.y -= 32 * ROPE_JMP;
+			break;
+		case EnDirection::Left:
+			target.x -= 32 * ROPE_JMP;
+			break;
+		case EnDirection::Right:
+			target.x += 32 * ROPE_JMP;
+			break;
+		}
+		LOG("ROPE DIR %d", dir);
+		path_to_follow.push_back(target);
+		walk_timer.SetFlag(false);
+	}
+
+}
+
+void Rope::Draw()
+{
+	SDL_Rect* draw_rect;
+
+	if (aux_pos == pos)
+		draw_rect = &nm_anim.GetCurrentFrame();
+	else
+	draw_rect = &animations[curr_dir].GetCurrentFrame();
+	
+	fPoint draw_pos = pos;
+
+	draw_pos.x -= 24;
+	draw_pos.y -= 16;
+
+	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, draw_pos.x, draw_pos.y, draw_rect);
+
+}

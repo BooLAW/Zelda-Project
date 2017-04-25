@@ -51,6 +51,10 @@ public:
 		loops = 0;
 	}
 
+	void Clear() {
+		last_frame = 0;
+	}
+
 	int GetLastFrame() {
 		return last_frame;
 	}

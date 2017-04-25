@@ -18,6 +18,8 @@
 
 #define ENEMY_STD_OFFSET_Y 24
 
+#define ROPE_JMP 5
+
 class Entity;
 
 enum ENEMYTYPE {
@@ -25,6 +27,7 @@ enum ENEMYTYPE {
 	t_redsoldier,
 	t_greensoldier,
 	t_hinox,
+	t_rope,
 	t_boss_ballandchain,
 	__LAST_ENEMYTYPE
 };
@@ -71,13 +74,16 @@ public:
 
 	virtual void Spawn() {}
 
-	virtual void Update(float dt);
+	virtual void stdUpdate(float dt);
+	virtual void Update(float dt) { stdUpdate(dt); };
 
 	virtual bool Move();
 
 	virtual bool Attack();
 	virtual void HitPlayer();
 	virtual void HitPlayer(uint dmg);
+
+	virtual void SetAnimation(SDL_Rect spr[LastDir][2]);
 
 	virtual void Draw();
 
@@ -113,6 +119,8 @@ public:
 		bool Flying = false;
 	
 	} stats;
+
+	iPoint target;
 
 	ENEMYTYPE subtype;
 	bool DmgType[__LAST_DMGTYPE];
@@ -193,6 +201,30 @@ class Hinox : public Enemy {
 public:
 	bool Start();
 	void SetRewards();
+};
+
+class Rope : public Enemy {
+	bool Start();
+
+	void Update(float dt);
+
+	void Draw();
+
+	enum ROPESTATE{
+		moving = 0,
+		no_move,
+		last_ropestate
+	}state = no_move;
+
+	fPoint aux_pos;
+
+	Animation nm_anim;
+
+	SDL_Rect RopeSprites_m[EnDirection::LastDir][2];
+	SDL_Rect RopeSprites_nm[EnDirection::LastDir][2];
+
+	j1Timer walk_timer;
+
 };
 
 #endif // !__ENEMY_H__

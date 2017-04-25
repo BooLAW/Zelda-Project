@@ -574,6 +574,8 @@ bool Scene::Load_new_map(int id)
 										st = t_greensoldier;
 									if (strcmp(sub, "t_hinox") == 0)
 										st = t_hinox;
+									if (strcmp(sub, "t_rope") == 0)
+										st = t_rope;
 									if (strcmp(sub, "t_boss_ballandchain") == 0)
 										st = t_boss_ballandchain;
 

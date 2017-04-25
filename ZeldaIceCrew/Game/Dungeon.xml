@@ -65,7 +65,9 @@
     </room>
     
     <room x="0" y="3" w="1024" h="576">
-
+     <enemies>
+	<enemy subtype="t_rope" x="500" y="120"/>
+     </enemies>
      <blocks>
       <block subtype="pot" x="100" y="100"/>
      </blocks>

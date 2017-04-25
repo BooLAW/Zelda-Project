@@ -6,6 +6,10 @@ void Room::Start()
 
 void Room::Update(float dt)
 {
+
+	if (App->debug)
+		App->render->DrawQuad(room_rect, 255, 0, 0, 10);
+
 	active = PlayerInside();
 
 	if (PlayerInside() == true && App->player->room != coords) {
