@@ -382,7 +382,7 @@ void Bush::Break() {
 	//triggers break animation (for whatever reason) and calls destructor
 	Reward();
 
-	App->entitymanager->DestroyEnity(this);
+	this->CleanUp();
 
 }
 
@@ -390,7 +390,7 @@ void Pot::Break() {
 	//triggers break animation (for whatever reason) and calls destructor
 	Reward();
 
-	App->entitymanager->DestroyEnity(this);
+	this->CleanUp();
 
 }
 
