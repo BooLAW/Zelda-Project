@@ -3,24 +3,32 @@
 
 #include "j1App.h"
 #include "j1Render.h"
+#include "j1Input.h"
 #include "PugiXml\src\pugixml.hpp"
 
 #include "Doorway.h"
 #include "EntityManager.h"
 
-#include <string>
-#include <list>
+#include "Room.h"
 
-#define ROOM_W 1024
-#define ROOM_H 576
+#include <string>
+//#include <list>
 
 #define ROOM_CHANGE_X 175.0f
 #define ROOM_CHANGE_Y 175.0f
 
+enum scene_id {
+	null,
+	village,
+	dungeon,
+	intro
+};
 class Item;
 class Enemy;
 class Block;
 class Doorway;
+
+class Room;
 
 class Scene
 {
@@ -29,12 +37,21 @@ public:
 
 	virtual ~Scene() {};
 
-	virtual bool Start() { return true; };
+	virtual bool Start() { return stdStart(); };
+	virtual bool stdStart();
 	virtual bool PreUpdate() { return true; };
-	virtual bool Update(float dt) { return true; };
-	virtual void DoorUpdate(float dt);
-	virtual bool PostUpdate() { return true; };
+	virtual bool Update(float dt);
+	virtual bool stdUpdate(float dt);
+	virtual bool PostUpdate() {
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+			return false;
+		return true;
+	};
 	virtual bool CleanUp();
+	virtual bool stdCleanUp();
+	virtual void Clear();
+
+	Room* GetRoom(int x, int y);
 
 	bool IsInside(SDL_Rect r1, SDL_Rect r2) {
 		if (r1.x > r2.x && r1.x < r2.x + r2.w)
@@ -44,22 +61,14 @@ public:
 		return false;
 	}
 
-	virtual void DestroyItem(Item* ent) {
-		if (ent != nullptr) {
-			for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++) {
-				if(it._Ptr->_Myval == ent)
-					items.erase(it);
-			}
-		}
-	};
-	virtual void DestroyEnemy(Enemy* ent) {
-		if (ent != nullptr) {
-			for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-				if (it._Ptr->_Myval == ent)
-					enemies.erase(it);
-			}
-		}
-	};
+	Room* GetCurrentRoom();
+
+	virtual void DestroyItem(Item* ent);
+	virtual void DestroyEnemy(Enemy* ent);
+	virtual void DestroyBlock(Block* ent);
+	virtual void DestroyDoorway(Doorway* ent);
+
+	virtual void DestroyRoom(Room* ent);
 
 	virtual bool Load(pugi::xml_node&)
 	{
@@ -71,37 +80,37 @@ public:
 		return true;
 	}
 
+	Item* AddItem(uint subtype, int coord_x, int coord_y, float x, float y);
+	Block* AddBlock(uint subtype, int coord_x, int coord_y, float x, float y);
+	Doorway* AddSceneDoorway(Scene* target, int coord_x, int coord_y, uint dir, float x, float y);
+	Doorway* AddDungeonDoorway(uint dir, int coord_x, int coord_y);
+	Doorway* AddCamDoorway(float target_x, float target_y, int coord_x, int coord_y, uint dir, float x, float y);
+	Enemy* AddEnemy(int subtype, int coord_x, int coord_y, float x, float y);
+	Room* AddRoom(int coord_x, int coord_y, int w = 1024, int h = 576);
+  
+	bool Scene::Load_new_map(int id);
+	pugi::xml_node LoadConfig(pugi::xml_document& config_file) const;
 	
-	Item* AddItem(uint subtype, float x, float y);
-	Block* AddBlock(uint subtype, float x, float y);
-	Doorway* AddDoorway(uint subtype, uint dir, int x, int y);
-	Enemy* AddEnemy(int subtype, float x, float y);
 	virtual bool IsEnemy(Enemy* en);
+
+	virtual void ShowCoords();
+
+	virtual void AllEnemyActive(bool flag);
 
 protected:
 
 	bool change_scene = false;
 
+	fPoint pl_start_pos;
 
 public:
-	SDL_Rect camera_limit = App->render->camera;
-
 	bool follow_cam = true;
+  
+	std::list<Room*> rooms;
 
-	std::list<Enemy*> enemies;
-	std::list<Item*> items;
-	std::list<Block*> blocks;
-	std::list<Doorway*> doorways;
-
-
-};
-
-class Room {
-public:
-	SDL_Rect rect;
-	iPoint xy_pos;
-
-
+	char* music_path;
+  
+	scene_id curr_id;// enum to use in the load_new_map scene function
 
 };
 

@@ -3,9 +3,9 @@
 
 #include "j1App.h"
 #include "EntityManager.h"
-#include "Entity.h"
 #include "j1Collision.h"
 #include "SceneManager.h"
+#include "Entity.h"
 
 #include "Item.h"
 
@@ -117,8 +117,6 @@ public:
 	ENEMYTYPE subtype;
 	bool DmgType[__LAST_DMGTYPE];
 	AITYPE AIType;
-
-	bool active = false;
 
 	SDL_Rect sprites[EnDirection::LastDir][8];
 	Animation animations[EnDirection::LastDir];

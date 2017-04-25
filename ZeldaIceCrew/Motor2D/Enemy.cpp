@@ -47,15 +47,8 @@ void Enemy::SetRewards()
 
 void Enemy::Update(float dt)
 {
-	LOG("ENEMY POS: %f %f", pos.x, pos.y);
-
-	if (App->render->IsCameraCull(this->HitBox->rect) == 0 && active == false)
-		active = true;
-	else
-		active = false;
-	LOG("ENEMY UPDATE");
-	if (HitBox != nullptr) {
-		if (App->render->IsCameraCull(this->HitBox->rect) == 0) {
+	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
+	//LOG("ENEMY UPDATE");
 			if (App->player->weapon_coll != nullptr)
 				if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
 					Hit(App->player->curr_dir, App->player->power);
@@ -65,17 +58,12 @@ void Enemy::Update(float dt)
 			if (App->player->action_blit != j1Player::Weapon_atk)
 				hit = false;
 
-			if(active == true)
 				//if (App->debug_mode == false)
-					Move();
+			Move();
 
 			Attack();
 
 			Draw();
-
-		}
-	}
-
 	
 }
 
@@ -113,16 +101,16 @@ bool Enemy::Move()
 		if (path_to_follow.size() > 0) {
 
 			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
-				if(stats.Flying == true || CheckSpace(HitBox->rect.x + stats.Speed, HitBox->rect.y))
+				if(stats.Flying == true || CheckSpace(HitBox->rect.x + stats.Speed, HitBox->rect.y)==0)
 					pos.x += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x - stats.Speed, HitBox->rect.y))
+				if (stats.Flying == true || CheckSpace(HitBox->rect.x - stats.Speed, HitBox->rect.y) == 0)
 					pos.x -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y + stats.Speed))
+				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y + stats.Speed) == 0)
 					pos.y += stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed))
+				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed) == 0)
 					pos.y -= stats.Speed;
 			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
 				path_to_follow.pop_back();
@@ -172,19 +160,19 @@ void Enemy::HitPlayer()
 
 		switch (curr_dir) {
 		case Up:
-			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height))
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height) == 0)
 				App->player->MovePos(0, -App->map->data.tile_height);
 			break;
 		case Down:
-			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height))
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height) == 0)
 				App->player->MovePos(0, App->map->data.tile_height);
 			break;
 		case Left:
-			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y))
+			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y) == 0)
 				App->player->MovePos(-App->map->data.tile_width, 0);
 			break;
 		case Right:
-			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y))
+			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y) == 0)
 				App->player->MovePos(App->map->data.tile_width, 0);
 			break;
 		}
@@ -205,19 +193,19 @@ void Enemy::HitPlayer(uint dmg)
 
 		switch (curr_dir) {
 		case Up:
-			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height))
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height) == 0)
 				App->player->MovePos(0, -App->map->data.tile_height);
 			break;
 		case Down:
-			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height))
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height) == 0)
 				App->player->MovePos(0, App->map->data.tile_height);
 			break;
 		case Left:
-			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y))
+			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y) == 0)
 				App->player->MovePos(-App->map->data.tile_width, 0);
 			break;
 		case Right:
-			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y))
+			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y) == 0)
 				App->player->MovePos(App->map->data.tile_width, 0);
 			break;
 		}
@@ -253,33 +241,33 @@ void Enemy::Hit(uint dir, uint dmg)
 		
 		hit = true;
 		
-		LOG("HP: %d DMG: %d", stats.Hp, dmg);
+		//LOG("HP: %d DMG: %d", stats.Hp, dmg);
 
 		stats.Hp -= dmg;
 
-		LOG("HP: %d", stats.Hp, dmg);
+		//LOG("HP: %d", stats.Hp, dmg);
 
 		if (stats.Hp <= 0) {
-			LOG("ENEMY DEATH");
+			//LOG("ENEMY DEATH");
 			Death();
 			return;
 		}
 
 		switch (dir) {
 		case Direction::Up:
-			if (CheckSpace(pos.x, pos.y - jump_hit))
+			if (CheckSpace(pos.x, pos.y - jump_hit)==0)
 				pos.y -= jump_hit;
 			break;
 		case Direction::Down:
-			if (CheckSpace(pos.x, pos.y + jump_hit))
+			if (CheckSpace(pos.x, pos.y + jump_hit)==0)
 				pos.y += jump_hit;
 			break;
 		case Direction::Left:
-			if (CheckSpace(pos.x - jump_hit, pos.y))
+			if (CheckSpace(pos.x - jump_hit, pos.y)==0)
 				pos.x -= jump_hit;
 			break;
 		case Direction::Right:
-			if (CheckSpace(pos.x + jump_hit, pos.y))
+			if (CheckSpace(pos.x + jump_hit, pos.y)==0)
 				pos.x += jump_hit;
 			break;
 		}
@@ -291,8 +279,8 @@ void Enemy::Hit(uint dir, uint dmg)
 void Enemy::Death()
 {
 	Reward();
-	LOG("ENEMY DEATH");
-	App->entitymanager->DestroyEnity(this);
+	//LOG("ENEMY DEATH");
+	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 
 void Enemy::Reward()
@@ -317,27 +305,32 @@ void Enemy::Reward()
 
 	if (target != -1) {
 	
-		App->scene_manager->GetCurrentScene()->AddItem(target, pos.x + HitBox->rect.w / 2 - 16, pos.y + +HitBox->rect.h / 2 - 16);
+		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, pos.x + HitBox->rect.w / 2 - 16, pos.y + +HitBox->rect.h / 2 - 16);
 
 	}
-	else
-		LOG("NO REWARD FAGGOT");
+	else {}
+		//LOG("NO REWARD FAGGOT");
 
 }
 
 
 void Enemy::CleanUp()
 {
-	LOG("ENEMY CLEANUP");
+	LOG("ENEMY CLEANUP %d", EnemyType);
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
+
+	//LOG("TEX");
 
 	if (HitBox != nullptr)
 		HitBox->to_delete = true;
 
+	//LOG("HB");
+
 	path_to_follow.clear();
 
-	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
+	//LOG("END ENEMY CP");
+
 }
 
 bool BSoldier::Start()
@@ -743,8 +736,6 @@ void BossChainBall::CleanUp()
 
 	if (ball_collider != nullptr)
 		ball_collider->to_delete = true;
-
-	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 
 bool Hinox::Start()

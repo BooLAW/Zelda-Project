@@ -51,6 +51,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ShowIncludes>false</ShowIncludes>
+      <AdditionalIncludeDirectories>C:\Users\guillemaj\Documents\GitHub\Zelda-Project\ZeldaIceCrew\Game\Brofiler-1.1.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -99,7 +100,12 @@
     <ClCompile Include="j1Pathfinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Player.cpp" />
+
     <ClCompile Include="NPC.cpp" />
+
+    <ClCompile Include="MathHelpers.cpp" />
+    <ClCompile Include="Room.cpp" />
+
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="VillageScene.cpp" />
@@ -135,7 +141,12 @@
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Player.h" />
+
     <ClInclude Include="NPC.h" />
+
+    <ClInclude Include="MathHelpers.h" />
+    <ClInclude Include="Room.h" />
+
     <ClInclude Include="ShopScene.h" />
     <ClInclude Include="VillageScene.h" />
     <ClInclude Include="j1Timer.h" />

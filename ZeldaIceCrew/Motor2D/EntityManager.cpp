@@ -1,7 +1,4 @@
 #include "EntityManager.h"
-#include "j1Player.h"
-#include "p2Log.h"
-#include "j1Render.h"
 
 //Constructor and destructor
 EntityManager::EntityManager() {
@@ -17,8 +14,8 @@ EntityManager::~EntityManager() {
 Enemy * EntityManager::CreateEnemy(uint subtype)
 {
 	Enemy* ret = nullptr;
-	LOG("CREATE ENEMY");
-	LOG("SUBT: %d", subtype);
+	//LOG("CREATE ENEMY");
+	//LOG("SUBT: %d", subtype);
 	switch (subtype) {
 	case t_bluesoldier:
 		ret = new BSoldier();
@@ -46,7 +43,7 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 
 	App->entitymanager->PushEntity(ret);
 
-	LOG("CREATE ENEMY");
+	//LOG("CREATE ENEMY");
 
 	return ret;
 }
@@ -137,6 +134,12 @@ Block * EntityManager::CreateBlock(uint type)
 		case slabs:
 			ret = new Slab();
 			break;
+		case slabs_no_move :
+			ret = new Slab_No_Move();
+			break;
+		case slabs_spikes:
+			ret = new Slab_No_Move();
+			break;
 		default:
 			LOG("Unknown Block Type: %d", type);
 			break;
@@ -152,12 +155,31 @@ Block * EntityManager::CreateBlock(uint type)
 	return ret;
 }
 
+bool EntityManager::PreUpdate()
+{
+
+	for (uint i = 0; i < entities.size(); i++) {
+		if (entities[i] != nullptr && entities[i]->to_delete == true) {
+			entities[i]->to_delete = false;
+			DestroyEnity(entities[i]);
+		}
+	}
+
+	return true;
+}
+
 bool EntityManager::Update(float dt) {
 
+	//LOG("ENTITY UPDT START");
+	if(entities.empty() == false)
 	for (int i = 0; i < entities.size(); i++) {
-		if(entities[i] != nullptr)
-			entities[i]->Update(dt);
+		if (entities[i] != nullptr) {
+			//LOG("ENTITY UPDATE %d", i);
+			if(entities[i]->active == true)
+				entities[i]->Update(dt);
+		}
 	}
+	//LOG("ENTITY UPDT END");
 
 
 	return true;
@@ -176,8 +198,8 @@ void EntityManager::DestroyEntities()
 {
 	for (uint i = 0; i < entities.size(); i++) {
 		if (entities[i] != nullptr) {
-			entities[i]->CleanUp();
-			delete entities[i];
+			DestroyEnity(entities[i]);
+			//RELEASE(entities[i]);
 		}
 	}
 }
@@ -185,12 +207,25 @@ void EntityManager::DestroyEntities()
 void EntityManager::DestroyEnity(Entity * ent)
 {
 
-	if(ent != nullptr)
-		ent->CleanUp();
+	if (ent != nullptr) {
 
-	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
-	//RELEASE(ent);
-	entities.erase(aux);
+			LOG("ENTITY CLEAR");
+			std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+				if (aux != entities.end()) {
+					entities.erase(aux);
+				}
+			LOG("ENTITY TYPE %d", ent->type);
+			ent->CleanUp();
+			LOG("ENT CLEAR");
+			//std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+			//if(ent != nullptr)
+			//	RELEASE(ent);
+			//
+			//ent = nullptr;
+
+	}
+
+	LOG("ENTITY DESTROYED");
 }
 
 void EntityManager::OnCollision(Collider * c1, Collider * c2)

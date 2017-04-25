@@ -52,9 +52,14 @@ bool HouseScene::Start()
 	}
 	//to_overworld_coll = App->collisions->AddCollider({ 13 * 16,18 * 16,32,16 }, COLLIDER_TO_OVERWORLD_HOUSE, App->player);
 	
+	AddRoom(0, 0);
+
+	GetRoom(0, 0)->room_rect.h = 768;
+
+	//AddItem(drop_heart, 0, 0, 5, 5);
+
 	DwScene* dw = nullptr;
-	dw = (DwScene*)AddDoorway(dw_scene, Down, 13 * 16, 18 * 16);
-	dw->SetTarget((Scene*)App->scene_manager->village_scene);
+	dw = (DwScene*)AddSceneDoorway((Scene*)App->scene_manager->village_scene, 0, 0, Down, 40, 40);
 	dw->target_pos = { 23 * 16, 108 * 16 };
 
 	App->render->CamBoundOrigin();
@@ -77,6 +82,7 @@ bool HouseScene::Start()
 		App->audio->SetVolumeMusic(40);
 
 	return true;
+
 }
 
 // Called each loop iteration
@@ -191,3 +197,6 @@ bool HouseScene::CleanUp()
 
 	return true;
 }
+
+};
+

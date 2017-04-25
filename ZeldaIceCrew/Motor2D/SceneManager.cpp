@@ -49,6 +49,9 @@ bool SceneManager::Start()
 	dungeon_scene = new DungeonScene();
 	shop_scene = new ShopScene();
 
+	village_scene->curr_id = village;
+	dungeon_scene->curr_id = dungeon;
+
 	scenes.push_back(village_scene);
 	scenes.push_back(house_scene);
 	scenes.push_back(dungeon_scene);
@@ -117,17 +120,32 @@ bool SceneManager::CleanUp()
 	bool ret = false;
 
 	for (std::list<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++) {
-		it._Ptr->_Myval->CleanUp();
+		if((*it) != nullptr) 
+			it._Ptr->_Myval->CleanUp();
 		RELEASE(it._Ptr->_Myval);
 	}
 
 	scenes.clear();
 
-	if (current_scene != nullptr)
-		ret = current_scene->CleanUp();
+	//if (current_scene != nullptr)
+	//	ret = current_scene->CleanUp();
 
+	current_scene = nullptr;
 
 	return ret;
+}
+
+bool SceneManager::LoadRooms(const char * file_name)
+{
+	bool ret = true;
+	p2SString tmp("%s%s", folder.c_str(), file_name);
+
+	char* buf;
+	int size = App->fs->Load(tmp.GetString(), &buf);
+	pugi::xml_parse_result result = scene_file.load_buffer(buf, size);
+
+	RELEASE(buf);
+	return false;
 }
 
 void SceneManager::ChangeScene(Scene * new_scene)
