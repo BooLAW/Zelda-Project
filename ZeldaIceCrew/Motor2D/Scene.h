@@ -93,6 +93,8 @@ public:
 	
 	virtual bool IsEnemy(Enemy* en);
 
+	virtual void ShowCoords();
+
 	virtual void AllEnemyActive(bool flag);
 
 protected:

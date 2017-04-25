@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Player.h"
+#include <string>
 
 bool Scene::stdStart()
 {
@@ -21,6 +22,9 @@ bool Scene::Update(float dt)
 
 bool Scene::stdUpdate(float dt)
 {
+	if(App->debug)
+		ShowCoords();
+
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
@@ -326,6 +330,20 @@ bool Scene::IsEnemy(Enemy * en)
 	}
 
 	return ret;
+}
+
+void Scene::ShowCoords()
+{
+	iPoint mouse_pos;
+	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
+
+	std::string title = "MOUSE x: ";
+	title.append(std::to_string(mouse_pos.x));
+	title.append(" y: ");
+	title.append(std::to_string(mouse_pos.y));
+
+	App->win->SetTitle(title.c_str());
+
 }
 
 void Scene::AllEnemyActive(bool flag)
