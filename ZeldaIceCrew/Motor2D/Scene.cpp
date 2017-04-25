@@ -281,7 +281,7 @@ Doorway * Scene::AddCamDoorway(float target_x, float target_y, int coord_x, int 
 	}
 	else
 		LOG("UNACCESIBLE ROOM: %d %d", coord_x, coord_y);
-
+	return ret;
 }
 
 Enemy* Scene::AddEnemy(int subtype, int coord_x, int coord_y, float x, float y)
