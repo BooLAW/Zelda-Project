@@ -89,11 +89,20 @@
     <ClCompile Include="ModuleParticles.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+
+    <ClCompile Include="DialogueManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="MathHelpers.cpp" />
     <ClCompile Include="j1Map.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -196,10 +205,19 @@
     <ClInclude Include="ModuleParticles.h">
       <Filter>Modules</Filter>
     </ClInclude>
+
+    <ClInclude Include="DialogueManager.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+
     <ClInclude Include="Room.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MathHelpers.h" />
+
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

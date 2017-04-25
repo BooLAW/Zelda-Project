@@ -14,6 +14,7 @@ enum ENTITYTYPE
 	enemy,
 	bomb,
 	doorway,
+	npc,
 	unknown
 };
 

@@ -178,6 +178,9 @@ class Slab : public Block {
 
 };
 
+
+
+
 class Slab_No_Move : public Block {
 	bool Start();
 
@@ -187,5 +190,6 @@ class Slab_Spikes : public Block {
 	bool Start();
 
 };
+
 
 #endif // !__BLOCK_H__
