@@ -7,13 +7,12 @@
       <music volume="60">Audio/Music/Forest_Theme.ogg</music>
 
       <Link>
-        <room x="0" y="3"/>
-        <pos x="500" y="400"/>
+        <room x="0" y="0"/>
+        <pos x="100" y="100"/>
       </Link>
 <!-- House -->
       <rooms>
         <room x="0" y="0" w="1024" h="576">
-
           <items>
           </items>
           <blocks>

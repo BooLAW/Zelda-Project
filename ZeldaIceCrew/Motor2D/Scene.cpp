@@ -375,7 +375,7 @@ pugi::xml_node Scene::LoadConfig(pugi::xml_document& config_file) const
 		size = App->fs->Load("Village.xml", &buf);
 		break;
 	case dungeon:
-		size = App->fs->Load("Dungeon.xml", &buf);
+		size = App->fs->Load("Dungeon.xml", &buf);  
 		LOG("SIZE %d", size);
 		break;
 	case intro:

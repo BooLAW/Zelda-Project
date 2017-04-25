@@ -14,9 +14,7 @@
 #include "j1Player.h"
 #include "Scene.h"
 #include "SceneManager.h"
-#include "HouseScene.h"
 #include "DungeonScene.h"
-#include "ShopScene.h"
 
 #define MAX_TABS 2
 
@@ -44,7 +42,7 @@ bool VillageScene::Start()
 
 	App->render->cam_travel = false;
 
-	if (App->map->Load("Overworld.tmx") == true)
+	if (App->map->Load("Village.tmx") == true)
 	{
 		// int w, h;
 		//uchar* data = NULL;
@@ -55,7 +53,7 @@ bool VillageScene::Start()
 	}
 	//debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
 	//Colliders
-	
+
 	AddRoom(0, 0, 1024, 5000);
 
 	//Doorway* dw = nullptr;

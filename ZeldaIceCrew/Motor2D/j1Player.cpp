@@ -7,9 +7,6 @@
 #include "Scene.h"
 #include "DungeonScene.h"
 #include "VillageScene.h"
-#include "ShopScene.h"
-#include "HouseScene.h"
-
 #include "MathHelpers.h"
 
 j1Player::j1Player()
@@ -890,18 +887,8 @@ Point<float> j1Player::GetPos()
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_HOUSE && alive == true)
-	{
-		App->scene_manager->toChangeScene(App->scene_manager->village_scene);
-		App->scene_manager->house_scene->to_overworld_house = true;
-		App->player->SetPos(370, 1720);
-	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_SHOP && alive == true)
-	{
-		App->scene_manager->toChangeScene(App->scene_manager->village_scene);
-		App->scene_manager->shop_scene->to_overworld_shop = true;
-		App->player->SetPos(850, 850);
-	}
+	
+
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_DUNGEON && alive == true)
 	{
 		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
@@ -927,17 +914,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		App->player->pos.x += ROOM_CHANGE_X;
 		App->player->room.x++;
 	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_SHOP && alive == true)
-	{
-		App->scene_manager->toChangeScene(App->scene_manager->shop_scene);
-		App->scene_manager->village_scene->to_shop = true;
-	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_HOUSE && alive == true)
-	{
-		App->scene_manager->toChangeScene(App->scene_manager->house_scene);
-		App->scene_manager->village_scene->to_house = true;
-	}
-
 	// Hit collision
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
 	{

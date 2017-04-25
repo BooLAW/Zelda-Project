@@ -3,8 +3,6 @@
 #include "Entity.h"
 #include "VillageScene.h"
 #include "DungeonScene.h"
-#include "HouseScene.h"
-#include "ShopScene.h"
 #include "j1Input.h"
 void Doorway::Start()
 {

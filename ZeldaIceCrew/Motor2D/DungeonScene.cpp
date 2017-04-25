@@ -14,9 +14,7 @@
 #include "j1Player.h"
 #include "Scene.h"
 #include "SceneManager.h"
-#include "HouseScene.h"
 #include "DungeonScene.h"
-#include "ShopScene.h"
 
 #define MAX_TABS 2
 
