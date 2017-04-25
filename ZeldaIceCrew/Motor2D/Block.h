@@ -13,6 +13,8 @@ enum BLOCKTYPE {
 	torch_bowl,
 	torch_pillar,
 	slabs,
+	slabs_no_move,
+	slabs_spikes,
 	last_
 };
 
@@ -173,6 +175,16 @@ class Slab : public Block {
 	}
 
 	//void Move();
+
+};
+
+class Slab_No_Move : public Block {
+	bool Start();
+
+};
+
+class Slab_Spikes : public Block {
+	bool Start();
 
 };
 

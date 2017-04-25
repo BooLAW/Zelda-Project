@@ -225,6 +225,25 @@ bool Slab::Start() {
 	return ret;
 }
 
+bool Slab_No_Move::Start()
+{
+	bool ret = true;
+	subtype = slabs_no_move;
+	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
+	anim = idle;
+	{
+		sprites[slabs_no_move][idle][0] = { 0,64,32,32 };
+
+		animations[slabs_no_move][idle].PushBack(sprites[slabs_no_move][idle][0]);
+	}
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
+
+	subtype = slabs_no_move;
+	return ret;
+}
+
+
 bool Statue::Start() {
 	bool ret = true;
 	front = true;
@@ -253,6 +272,24 @@ bool Torch_Bowl::Start() {
 	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
 
 	subtype = torch_bowl;
+	return ret;
+}
+
+bool Slab_Spikes::Start()
+{
+	bool ret = true;
+	subtype = slabs_spikes;
+	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
+	anim = idle;
+	{
+		sprites[slabs_spikes][idle][0] = { 64,50,32,32 };
+
+		animations[slabs_no_move][idle].PushBack(sprites[slabs_spikes][idle][0]);
+	}
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_ENEMY);
+
+	subtype = slabs_no_move;
 	return ret;
 }
 
@@ -333,20 +370,6 @@ void Block::Move() {
 	else
 		moving = false;
 }
-/*
-void Slab::Move() {
-//Changes position, does not require input but movement
-//position
-App->player->action_blit = App->player->Push;
-
-}
-
-void Statue::Move() {
-//Changes position, does not require input but movement
-//position
-App->player->action_blit = App->player->Push;
-
-}*/
 
 void Torch_Bowl::Light() {
 	//changes the spire blitted, from idle to lit
@@ -420,3 +443,5 @@ App->player->action_blit = App->player->Light;
 App->player->action = true;
 
 }*/
+
+
