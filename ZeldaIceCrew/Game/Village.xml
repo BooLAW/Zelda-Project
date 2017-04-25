@@ -1,95 +1,73 @@
 <?xml version="1.0"?>
 <village>
-  <!--doorways INFORMATION (not use, only information) file just if we want them to have a sprite-->
-  <doorways>
-    <doorway id="1" name="door_in_house"  rect_x="1" rect_y="131" rect_w="32" rect_h="44" file="textures/DynObjectsSpriteSheet.png"/>
-    <doorway id="2" name="door_out_house"  rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-    <doorway id="3" name="door_in_shop"  rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-    <doorway id="4" name="door_out_shop"  rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-    <doorway id="4" name="door_in_dungeon"  rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-  </doorways>
-  <!--doorways INFORMATION (not use, only information)-->
-  <enemies num="22">
-    <!-- Static Enemies -->
-    <enemy id="1" pos_x="169" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-    <enemy id="1" pos_x="193" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-    <enemy id="1" pos_x="217" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-    <!-- Interactive Enemies -->
-    <enemy id="1" pos_x="218" pos_y="414" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-    <enemy id="1" pos_x="330" pos_y="400" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
-  </enemies>
-  <blocks num="22">
-    <!-- Static Blocks -->
-    <block id="1" pos_x="169" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-    <block id="1" pos_x="193" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-    <block id="1" pos_x="217" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-    <!-- Interactive Blocks -->
-    <block id="1" pos_x="218" pos_y="414" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-    <block id="1" pos_x="330" pos_y="400" hp="3" attack="10" dir="down" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="0" />
-  </blocks>
-  <weapons>
-    <weapon id="1" name="hookshot" equiped="false" picked="false" file="textures/Items.png"/>
-    <weapon id="2" name="bomb" equiped="false" picked="false" file="textures/Items.png"/>
-  </weapons>
+  <maps>
+    <map id="0">
+      <file>Village.tmx</file>
 
-  <rooms>
-    <room n="1" file="House.tmx">
-      <camera follow="false"/> <!--We realy need that?-->
-      <Link pos_x="110" pos_y="100" /> <!--More info?-->
-      <blocks num="2">
-        <!-- Static Blocks -->
-        <block id="1" pos_x="169" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <!-- Interactive Blocks -->
-        <block id="1" pos_x="218" pos_y="414" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-      </blocks>
-      <items num = "0">
-      </items>
-      <enemies num="0">
-      </enemies>
-      <doorways num ="1">
-        <doorway id="2" name="door_out_house"  rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-      </doorways>
-      <enemies num="0" />
-    </room>
+      <music volume="60">Audio/Music/Forest_Theme.ogg</music>
 
-    <room n="2" file="Shop.tmx">
-      <camera follow="false"/>
-      <Link pos_x="184" pos_y="265" />
-      <blocks num="2">
-        <!-- Static Blocks -->
-        <block id="1" pos_x="169" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <!-- Interactive Blocks -->
-        <block id="1" pos_x="218" pos_y="414" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-      </blocks>
-      <enemies num="0">
-      </enemies>
-      <items num = "2">
-        <item id="1" name="bow"  attack="100" durability="1" file="gui/sf2.png" />
-        <item id="2" name="boots"  attack="100" durability="1" file="gui/sf2.png" />
-      </items>
-      <doorways num ="1">
-        <doorway id="4" name="door_out_shop"  rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-      </doorways>
-    </room>
-    
-    <room n="3" file="Overworld.tmx">
-      <camera follow="true"/>
-      <Link pos_x="184" pos_y="265" />
-      <blocks num="2">
-        <!-- Static Blocks -->
-        <block id="1" pos_x="169" pos_y="25" hp="10" attack="10" dir="down" canMove="false" destructible="false" file="textures/Soldiers.png" />
-        <!-- Interactive Blocks -->
-        <block id="1" pos_x="218" pos_y="414" hp="3" attack="10" dir="left" canMove="true" destructible="true" file="textures/Soldiers.png" item_id="1" />
-      </blocks>
-      <doorways num ="3">
-        <doorway id="1" name="door_in_house"  rect_x="1" rect_y="131" rect_w="32" rect_h="44" file="textures/DynObjectsSpriteSheet.png"/>
-        <doorway id="3" name="door_in_shop"  rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-        <doorway id="4" name="door_in_dungeon"  rect_x="37" rect_y="17" rect_w="16" rect_h="16" file="textures/DynObjectsSpriteSheet.png" />
-      </doorways>
-      <items num = "0">
-      </items>
-      <enemies num="0">
-      </enemies>
-    </room>
-  </rooms>
+      <Link>
+        <room x="0" y="3"/>
+        <pos x="500" y="400"/>
+      </Link>
+<!-- House -->
+      <rooms>
+        <room x="0" y="0" w="1024" h="576">
+
+          <items>
+          </items>
+          <blocks>
+            <block subtype="pot" x="100" y="100"/>
+          </blocks>
+          <doorways>
+            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+          </doorways>
+
+        </room>
+<!-- Shop -->
+        <room x="0" y="1" w="1024" h="576">
+          
+          <items>
+            <item subtype="pegasus_boots" x="20" y="20"/>
+            <item subtype="weapon_bow" x="40" y="20"/>
+          </items>
+
+          <blocks>
+          </blocks>
+
+          <doorways>
+            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+          </doorways>
+
+          <enemies>
+          </enemies>
+
+        </room>
+<!-- Overworld -->
+        <room x="0" y="2" w="1024" h="576">
+          
+          <items>
+            <item subtype="heart_container" x="50" y="50"/>
+          </items>
+
+          <blocks>
+            <block subtype="bush" x="100" y="100"/>
+          </blocks>
+
+          <doorways>
+            <!-- To House -->
+            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <!-- To Shop -->
+            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <!-- To Dungeon -->
+            <doorway subtype="dw_scene" scene="dungeon" dir="up" x="120" y ="400"/>
+          </doorways>
+
+          <enemies>
+          </enemies>
+
+        </room>
+      </rooms>
+    </map>
+  </maps>
 </village>
