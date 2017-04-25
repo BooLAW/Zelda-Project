@@ -9,25 +9,27 @@
 #include "j1Map.h"
 #include "j1PathFinding.h"
 #include "j1Gui.h"
-#include "HouseScene.h"
+#include "VillageScene.h"
 #include "j1Fonts.h"
 #include "j1Player.h"
-#include "VillageScene.h"
 #include "Scene.h"
 #include "SceneManager.h"
-#include "DungeonScene.h"
+#include "HouseScene.h"
+#include "ShopScene.h"
+
 #define MAX_TABS 2
 
-HouseScene::HouseScene() 
+ShopScene::ShopScene()
 {
+
 }
 
 // Destructor
-HouseScene::~HouseScene()
+ShopScene::~ShopScene()
 {}
 
 // Called before render is available
-bool HouseScene::Awake()
+bool ShopScene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -36,12 +38,10 @@ bool HouseScene::Awake()
 }
 
 // Called before the first frame
-bool HouseScene::Start()
+bool ShopScene::Start()
 {
-	
-	//////////////////////////
-	App->render->cam_travel = false;
-	if (App->map->Load("House.tmx") == true)
+
+	if (App->map->Load("Shop.tmx") == true)
 	{
 		//int w, h;
 		//uchar* data = NULL;
@@ -50,110 +50,95 @@ bool HouseScene::Start()
 		//
 		//RELEASE_ARRAY(data);
 	}
-	//to_overworld_coll = App->collisions->AddCollider({ 13 * 16,18 * 16,32,16 }, COLLIDER_TO_OVERWORLD_HOUSE, App->player);
-	
-	DwScene* dw = nullptr;
-	dw = (DwScene*)AddDoorway(dw_scene, Down, 13 * 16, 18 * 16);
+	Doorway* dw = nullptr;
+	dw = Scene::AddDoorway(dw_scene, Direction::Down, 14 * 16, 20 * 16);
 	dw->SetTarget((Scene*)App->scene_manager->village_scene);
-	dw->target_pos = { 23 * 16, 108 * 16 };
+	dw->target_pos = { 54 * 16, 54 * 16 };
 
 	App->render->CamBoundOrigin();
 
-	App->player->SetPos(6.5 * 32, 8 * 32);
-	App->render->camera.x = 256;
-	App->render->camera.y = 128;
-	
-	follow_cam = false;
 	App->render->ScaleCamBoundaries(300);
-	
+
+	App->audio->PlayMusic("Audio/Music/Shop.ogg");
+	App->audio->SetVolumeMusic(40);
+
+	Item* new_item = nullptr;
+	new_item = App->entitymanager->CreateItem(weapon_sword);
+	new_item->SetPositions({ 350.0f, 190.0f });
+	new_item->SetPrice(30);
+	items.push_back(new_item);
+
+	new_item = App->entitymanager->CreateItem(pegasus_boots);
+	new_item->SetPositions({ 150.0f, 190.0f });
+	new_item->SetPrice(30);
+	items.push_back(new_item);
+	// Enemy Start
+
+	// Items Start
+
 	//we can do that with an iterator that recieves the positions readed from the xml file
-	//	Scene::AddDoorway(dw_house, Direction::Down, 13*16,20*16);
+
+	follow_cam = false;
+
+	App->render->SetCamPos(0, 0);
 
 
-	//App->render->SetCamPos(-300, -300);
-
-		App->audio->PlayMusic("Audio/music/Home.ogg");
-
-		App->audio->SetVolumeMusic(40);
 
 	return true;
 }
 
 // Called each loop iteration
-bool HouseScene::PreUpdate()
+bool ShopScene::PreUpdate()
 {
-	// debug pathfing ------------------
-	
-	
-
-
-	if (App->debug == true) {
-		static iPoint origin;
-		static bool origin_selected = false;
-
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-		{
-			if (origin_selected == true)
-			{
-				App->pathfinding->CreatePath(origin, p);
-				origin_selected = false;
-			}
-			else
-			{
-				origin = p;
-				origin_selected = true;
-			}
-		}
-	}
 	return true;
 }
 
 // Called each loop iteration
-bool HouseScene::Update(float dt)
+bool ShopScene::Update(float dt)
 {
+
 	App->render->cam_travel = false;
 
-	DoorUpdate(dt);
-	///////////////////////////
-	
-	//////////////////////////////
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->debug = !App->debug;
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		//App->render->cam_travel = true;
-		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
+		App->scene_manager->toChangeScene(App->scene_manager->village_scene);
 	}
+
+	//follow_cam = true;
 
 	App->map->Draw();
 
+	DoorUpdate(dt);
+
 	return true;
+
 }
 
 // Called each loop iteration
-bool HouseScene::PostUpdate()
+bool ShopScene::PostUpdate()
 {
 	bool ret = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
 		ret = false;
-
+		ESC = true;
+	}
 
 	return ret;
 }
-
-bool HouseScene::CleanUp()
+bool ShopScene::CleanUp()
 {
+	
 	App->collisions->EraseCollider(to_overworld_coll);
-
 	App->map->CleanUp();
 
 	if (items.empty() == false) {
@@ -188,6 +173,5 @@ bool HouseScene::CleanUp()
 		}
 		doorways.clear();
 	}
-
 	return true;
 }

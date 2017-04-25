@@ -1,5 +1,6 @@
-#ifndef __HOUSE_SCENE_H__
-#define __HOUSE_SCENE_H__
+#pragma once
+#ifndef __DUNGEON_SCENE_H__
+#define __DUNGEON_SCENE_H__
 
 #include "j1Module.h"
 #include "EntityManager.h"
@@ -15,14 +16,14 @@ class Button;
 class Window;
 class Selector;
 class Windowed_Image;
-class HouseScene : public Scene
+class DungeonScene : public Scene
 {
 public:
 
-	HouseScene();
+	DungeonScene();
 
 	// Destructor
-	virtual ~HouseScene();
+	virtual ~DungeonScene();
 
 	// Called before render is available
 	bool Awake();
@@ -41,23 +42,21 @@ public:
 
 	bool CleanUp();
 
-
-public:
-	bool to_overworld_house = false;
 private:
-	Collider* to_overworld_coll = nullptr;
+
+	bool boss_music = false;
+
+	j1Timer boss_minions_spawn_time;
+	bool chain_boss_defeated = false;
+
+	Enemy* ChainBoss = nullptr;
+	Doorway* ChainBoss_dw = nullptr;
+
 	SDL_Texture* debug_tex;
-//	std::vector<Entity*> Bushes;
-//	SDL_Rect Bush_Rect;
-	Entity* House;
-	SDL_Rect House_Rect;
-	
+	bool ESC = false;
 	Window* window;
 	Label* win_title;
-
-	////////////////////////
-
 };
 
-#endif
+#endif //__DUNGEON_SCENE_H__
 

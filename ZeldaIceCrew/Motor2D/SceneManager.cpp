@@ -10,6 +10,8 @@
 #include "SceneManager.h"
 #include "VillageScene.h"
 #include "HouseScene.h"
+#include "DungeonScene.h"
+#include "ShopScene.h"
 
 #define NUMBER_OF_PLAYERS 4
 
@@ -44,9 +46,13 @@ bool SceneManager::Start()
 	// Create scenes
 	village_scene = new VillageScene();
 	house_scene = new HouseScene();
+	dungeon_scene = new DungeonScene();
+	shop_scene = new ShopScene();
 
 	scenes.push_back(village_scene);
 	scenes.push_back(house_scene);
+	scenes.push_back(dungeon_scene);
+	scenes.push_back(shop_scene);
 
 	// -------------
 
@@ -62,6 +68,15 @@ bool SceneManager::Start()
 bool SceneManager::PreUpdate()
 {
 	bool ret = false;
+
+	if (to_change_scene == true) {
+
+		if(target != nullptr)
+			ChangeScene(target);
+
+		target = nullptr;
+		to_change_scene = false;
+	}
 
 	if (current_scene != nullptr)
 		ret = current_scene->PreUpdate();
@@ -100,8 +115,17 @@ bool SceneManager::CleanUp()
 	LOG("Freeing scene");
 
 	bool ret = false;
+
+	for (std::list<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++) {
+		it._Ptr->_Myval->CleanUp();
+		RELEASE(it._Ptr->_Myval);
+	}
+
+	scenes.clear();
+
 	if (current_scene != nullptr)
 		ret = current_scene->CleanUp();
+
 
 	return ret;
 }
@@ -109,11 +133,13 @@ bool SceneManager::CleanUp()
 void SceneManager::ChangeScene(Scene * new_scene)
 {
 	LOG("Changing current scene");
-
+	App->render->cam_travel = false;
 	Scene* prev_scene = current_scene;
 	current_scene = new_scene;
 	prev_scene->CleanUp();
+	LOG("CLEANUP PREV");
 	current_scene->Start();
+	LOG("START NEXT");
 }
 
 Scene * SceneManager::GetCurrentScene()

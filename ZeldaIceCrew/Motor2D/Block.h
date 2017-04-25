@@ -4,6 +4,8 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
+#define N_ITEMS 15
+
 enum BLOCKTYPE {
 	bush = 0,
 	pot,
@@ -14,42 +16,94 @@ enum BLOCKTYPE {
 	last_
 };
 
+enum BLOCKANIM {
+	idle,
+	broke,
+	lit,
+
+	last__
+
+};
+
 class Block : public Entity {
 public:
-	iPoint position;
-
+	//fPoint position;
+	uint reward_pool[N_ITEMS];
+	BLOCKTYPE subtype;
+	BLOCKANIM anim;
+	SDL_Texture* temp;
+	SDL_Rect sprites[last_][last__][8];
+	Animation animations[last_][last__];
+	bool picked = false;
+	bool front = false;
+	bool back = false;
+	bool moving = false;
 
 public:
 	Block() {};
-	Block(uint subtype, iPoint pos);
+	Block(uint subtype);
 	virtual ~Block() {};
 
 
+	virtual bool Start();
+
+	virtual void Spawn() {};
+
+	virtual void Update(float dt);
+
+	virtual void Draw();
+
+	virtual void Reward();
 
 public:
-	Block* CreateBlock(uint type);
+	//Block* CreateBlock(uint type, fPoint ipos);
 
-	virtual bool isPushable() { return false; };
-	virtual bool isPullable() { return false; };
-	virtual bool isTalked() { return false; };
+	virtual bool isMovable() { return false; };
+	//virtual bool isTalked() { return false; };
 	virtual bool isLitable() { return false; };
 	virtual bool isBreakable() { return false; };
 	virtual bool isPickable() { return false; };
-	virtual bool isOpenable() { return false; };
+	//virtual bool isOpenable() { return false; };
 
-	virtual void Push() {};
-	virtual void Pull() {};
+	virtual void Move();
 	virtual void Light() {};
 	virtual void Break() {};
 	virtual void Pick() {};
 	virtual void Open() {};
 	virtual void Throw() {};
+
+	virtual void SetRewards() {};
+
+	void SortRewardProbs() {
+		uint total = 0;
+
+		for (int i = 0; i < N_ITEMS; i++) {
+			total += reward_pool[i];
+		}
+
+		if (total != 100) {
+			for (int i = 0; i < N_ITEMS; i++) {
+				reward_pool[i] = (reward_pool[i] * 100) / total;
+			}
+		}
+
+	}
+
+	virtual void CleanUp() {
+		if (tex != nullptr)
+			App->tex->UnLoad(tex);
+
+		if (HitBox != nullptr)
+			HitBox->to_delete = true;
+
+	}
+
 };
 
 class Bush : public Block {
-	SDL_Rect size = { 0,0,40,40 };
 	//Collision box is 3/4 down, why?
 	//Block moves down to Link position then the animation goes through
+	bool Start();
 
 	bool isBreakable() {
 		return true;
@@ -62,13 +116,14 @@ class Bush : public Block {
 	void Break();
 	void Throw();
 	void Pick();
+	void SetRewards();
 
 };
 
 class Pot : public Block {
-	SDL_Rect size = { 0,0,40,40 };
 	//Collision box is 3/4 down, why?
 	//Block moves down to Link position then the animation goes through
+	bool Start();
 
 	bool isPickable() {
 		return true;
@@ -77,26 +132,28 @@ class Pot : public Block {
 	bool isBreakable() {
 		return true;
 	}
-	
+
 	void Break();
 	void Throw();
 	void Pick();
+	void SetRewards();
+
 
 };
 
 class Statue : public Block {
-	SDL_Rect size = { 0,0,40,80 };
+	bool Start();
 
 	bool isPushable() {
 		return true;
 	}
 
-	void Push();
+	//void Move();
 
 };
 
 class Torch_Bowl : public Block {
-	SDL_Rect size = { 0,0,40,40 };
+	bool Start();
 
 	bool isLitable() {
 		return true;
@@ -105,30 +162,27 @@ class Torch_Bowl : public Block {
 	void Light();
 };
 
-class Torch_Pillar : public Block {
-	SDL_Rect size = { 0,0,40,80 };
+/*class Torch_Pillar : public Block {
+bool Start();
 
-	bool isLitable() {
-		return true;
-	}
+bool isLitable() {
+return true;
+}
 
-	void Light();
-};
+void Light();
+};*/
 
 class Slab : public Block {
-	SDL_Rect size = { 0,0,40,40 };
+	bool Start();
 
-	bool isPushable() {
+	bool isMovable() {
 		return true;
 	}
 
-	bool isPullable() {
-		return true;
-	}
-
-	void Push();
-	void Pull();
+	//void Move();
 
 };
+
+
 
 #endif // !__BLOCK_H__

@@ -1,5 +1,6 @@
-#ifndef __VILLAGESCENE_H__
-#define __VILLAGESCENE_H__
+#pragma once
+#ifndef __SHOPSCENE_H__
+#define __SHOPSCENE_H__
 
 #include "EntityManager.h"
 #include <vector>
@@ -8,14 +9,14 @@
 struct SDL_Texture;
 //UI forward declarations
 
-class VillageScene : public Scene
+class ShopScene : public Scene
 {
 public:
 
-	VillageScene();
+	ShopScene();
 
 	// Destructor
-	virtual ~VillageScene();
+	virtual ~ShopScene();
 
 	// Called before render is available
 	bool Awake();
@@ -32,20 +33,17 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
+	bool CleanUp();
+
 public:
-	bool to_house = false;
-	bool to_dungeon = false;
-	bool to_shop = false;
+	bool to_overworld_shop = false;
 private:
+	Collider* to_overworld_coll = nullptr;
+
 	bool ESC = false;
 	SDL_Texture* debug_tex;
-	
-	bool round02 = false;
-
-
-
-
-
+	//std::vector<Entity*> Bushes;
+	//SDL_Rect Bush_Rect
 };
 
 #endif // __j1SCENE_H__

@@ -73,7 +73,8 @@ public:
 	virtual ~p2SString()
 	{
 		if(str != NULL)
-			delete[] str;
+			if(str != nullptr)
+				delete[] str;
 	}
 
 	const p2SString& create(const char *format, ...)

@@ -2,7 +2,6 @@
 #define __BOMB_H__
 
 #include "EntityManager.h"
-#include "Entity.h"
 
 class Entity;
 

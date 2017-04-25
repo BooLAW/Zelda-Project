@@ -11,10 +11,15 @@ public:
 	j1Timer();
 
 	void Start();
+	void Stop();
 	uint32 Read() const;
 	float ReadSec() const;
+	void SetFlag(bool state) {
+		flag = state;
+	}
 
 private:
+	bool flag = false;
 	uint32	started_at;
 };
 

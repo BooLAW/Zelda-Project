@@ -17,16 +17,23 @@ EntityManager::~EntityManager() {
 Enemy * EntityManager::CreateEnemy(uint subtype)
 {
 	Enemy* ret = nullptr;
-
+	LOG("CREATE ENEMY");
+	LOG("SUBT: %d", subtype);
 	switch (subtype) {
-	case BlueSoldier:
+	case t_bluesoldier:
 		ret = new BSoldier();
 		break;
-	case RedSoldier:
+	case t_redsoldier:
 		ret = new RSoldier();
 		break;
-	case GreenSoldier:
+	case t_greensoldier:
 		ret = new GSoldier();
+		break;
+	case t_hinox:
+		ret = new Hinox();
+		break;
+	case t_boss_ballandchain:
+		ret = new BossChainBall();
 		break;
 	default:
 		LOG("Unknown Enemy Type: %d", subtype);
@@ -38,6 +45,8 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	ret->Start();
 
 	App->entitymanager->PushEntity(ret);
+
+	LOG("CREATE ENEMY");
 
 	return ret;
 }
@@ -57,6 +66,10 @@ Item * EntityManager::CreateItem(uint subtype)
 		break;
 	case heart_container:
 		ret = new HeartContainer();
+		ret->type = item;
+		break;
+	case boss_key:
+		ret = new BossKey();
 		ret->type = item;
 		break;
 	case drop_heart:
@@ -101,12 +114,52 @@ Item * EntityManager::CreateItem(uint subtype)
 	return ret;
 }
 
+Block * EntityManager::CreateBlock(uint type)
+{
+	Block* ret = nullptr;
+	
+		switch (type) {
+		case bush:
+			ret = new Bush();
+			break;
+		case pot:
+			ret = new Pot();
+			break;
+		case statue:
+			ret = new Statue();
+			break;
+		case torch_bowl:
+			ret = new Torch_Bowl();
+			break;
+		/*case torch_pillar:
+			ret = new Torch_Pillar();
+			break;*/
+		case slabs:
+			ret = new Slab();
+			break;
+		default:
+			LOG("Unknown Block Type: %d", type);
+			break;
+									
+	}
+	
+	ret->type = block;
+	
+	ret->Start();
+	
+	App->entitymanager->PushEntity(ret);
+	
+	return ret;
+}
 
 bool EntityManager::Update(float dt) {
 
 	for (int i = 0; i < entities.size(); i++) {
-		entities[i]->Update(dt);
+		if(entities[i] != nullptr)
+			entities[i]->Update(dt);
 	}
+
+
 	return true;
 }
 
@@ -136,7 +189,7 @@ void EntityManager::DestroyEnity(Entity * ent)
 		ent->CleanUp();
 
 	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
-
+	//RELEASE(ent);
 	entities.erase(aux);
 }
 

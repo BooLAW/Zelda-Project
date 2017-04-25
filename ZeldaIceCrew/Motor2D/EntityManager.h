@@ -16,11 +16,14 @@
 #include "Item.h"
 #include "Block.h"
 #include "Enemy.h"
+#include "Doorway.h"
 
 class Entity;
 class j1Player;
 struct SDL_Texture;
 struct SDL_Rect;
+
+class Doorway;
 
 class Bomb;
 class Item;
@@ -50,6 +53,8 @@ public:
 public:
 	Enemy* CreateEnemy(uint subtype);
 	Item* CreateItem(uint subtype);
+	Block* CreateBlock(uint subtype);
+	Doorway* CreateDoorway(uint subtype, uint dir);
 
 private:
 	std::deque<Entity*> entities;

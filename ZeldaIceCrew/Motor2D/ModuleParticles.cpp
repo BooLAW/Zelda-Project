@@ -27,8 +27,9 @@ bool ModuleParticles::CleanUp()
 bool ModuleParticles::Update(float dt)
 {
 	for (uint i = 0; i < particles.size(); i++) {
-		if (particles[i]->Update(dt) == false)
-			DestroyParticle(particles[i]);
+		if(particles[i] != nullptr)
+			if (particles[i]->Update(dt) == false)
+				DestroyParticle(particles[i]);
 	}
 	return true;
 }
@@ -123,9 +124,10 @@ bool Particle::stdUpdate(float dt)
 	position.x += speed.x;
 	position.y += speed.y;
 
+	if(collider != nullptr)
 	collider->SetPos(position.x, position.y);
 	
-	App->render->Blit(graphics, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
+	App->render->toDraw(graphics, position.y + anim[curr_dir].GetCurrentFrame().h, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
 
 	return ret;
 }
@@ -135,7 +137,8 @@ void Particle::CleanUp()
 	if (graphics != nullptr)
 		App->tex->UnLoad(graphics);
 
-	collider->to_delete = true;
+	if(collider != nullptr)
+		collider->to_delete = true;
 
 }
 
@@ -184,14 +187,19 @@ bool Arrow::Update(float dt)
 
 	std::list<Enemy*>*ents = &App->scene_manager->GetCurrentScene()->enemies;
 	
-	for (std::list<Enemy*>::iterator it = ents->begin(); it != ents->end(); it++) {
-		if (collider->CheckCollision(it._Ptr->_Myval->HitBox->rect)) {
+	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) {
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr) {
+			Collider* aux = collider;
+			aux->rect.x += 16;
+			aux->rect.y += 16;
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false) {
 				hit = true;
 				LOG("ENEMY HIT");
 				App->particle->DestroyParticle(this);
 				it._Ptr->_Myval->Hit(curr_dir, App->player->power);
 			}
 		}
+	}
 
 
 	return stdUpdate(dt);

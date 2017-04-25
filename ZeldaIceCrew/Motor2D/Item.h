@@ -21,6 +21,7 @@ enum ITEMTYPE {
 	power_gauntlet = 0,
 	pegasus_boots,
 	heart_container,
+	boss_key,
 	__FIRSTDROP,
 	drop_heart,
 	drop_bomb,
@@ -46,8 +47,8 @@ public:
 
 public:
 	virtual void Clear() {
-		if (collider != nullptr)
-			collider->to_delete = true;
+		if (HitBox != nullptr)
+			HitBox->to_delete = true;
 		if (UI_tex != nullptr)
 			App->tex->UnLoad(UI_tex);
 		if (tex != nullptr)
@@ -71,7 +72,9 @@ public:
 	}
 
 	virtual void Upgrade() {};
-
+	virtual ITEMTYPE Subtype() {
+		return subtype;
+	};
 	void SetPositions(fPoint point) {
 		pos = point;
 		draw_pos = point;
@@ -80,11 +83,12 @@ public:
 protected:
 	bool grabbed = false;
 
+	ITEMTYPE subtype;
+
 	uint price = NULL;
 	GuiText* priceTag;
 
 public:
-	Collider*		collider;
 	
 	SDL_Texture*	UI_tex = nullptr;
 	SDL_Rect		UI_rect;
@@ -92,6 +96,7 @@ public:
 	fPoint draw_pos = pos;
 	bool floating_up = false;
 	bool set = false;
+	std::string description;
 
 };
 
@@ -108,6 +113,12 @@ public:
 };
 
 struct HeartContainer : public Item {
+public:
+	void SetUp();
+	void Upgrade();
+};
+
+struct BossKey : public Item {
 public:
 	void SetUp();
 	void Upgrade();

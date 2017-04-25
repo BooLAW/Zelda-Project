@@ -48,6 +48,9 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera.h = App->win->screen_surface->h;
 		camera.x = 0;
 		camera.y = 0;
+
+		culling_cam = camera;
+
 	}
 
 	// Variables
@@ -80,26 +83,64 @@ bool j1Render::Update(float dt) {
 
 	if (App->debug == true) {
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-			App->render->camera.y += floor(200.0f * dt);
+			App->render->MoveCam(0, 200.0f * dt);
 
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-			App->render->camera.y -= floor(200.0f * dt);
+			App->render->MoveCam(0, -200.0f * dt);
 
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-			App->render->camera.x += floor(200.0f * dt);
+			App->render->MoveCam(-200.0f * dt, 0);
 
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-			App->render->camera.x -= floor(200.0f * dt);
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) 
+			App->render->MoveCam(200.0f * dt, 0);
 	}
+	else if(cam_travel == false) {
+		//if (camera.x > App->scene_manager->GetCurrentScene()->camera_limit.x && camera.x < App->scene_manager->GetCurrentScene()->camera_limit.x + App->scene_manager->GetCurrentScene()->camera_limit.w)
+		//	if (camera.y > App->scene_manager->GetCurrentScene()->camera_limit.y && camera.y < App->scene_manager->GetCurrentScene()->camera_limit.y + App->scene_manager->GetCurrentScene()->camera_limit.y)
+		if(App->scene_manager->GetCurrentScene()->follow_cam == true)
+			SetCamPos(-(App->player->GetPos().x - camera.w / 2), -(App->player->GetPos().y - camera.h / 2));
+		else {
+			SetCamPos(-(App->player->room.x * ROOM_W), -(App->player->room.y * ROOM_H));
+		}
 
-
-	SetCamPos(-(App->player->GetPos().x - camera.w / 2), - (App->player->GetPos().y - camera.h / 2));
-
+	}
 	return true;
 }
 
 bool j1Render::PostUpdate()
 {
+
+	culling_cam.x = -camera.x;
+	culling_cam.y = -camera.y;
+
+	SDL_Rect cam = App->render->culling_cam;
+
+	if (sprites_toDraw.size() > 1) {
+		for (int it = 0; it < sprites_toDraw.size() - 1; it++) {
+			if(sprites_toDraw[it] != nullptr)
+			if (sprites_toDraw[it]->priority > sprites_toDraw[it + 1]->priority) {
+				SWAP(sprites_toDraw[it], sprites_toDraw[it + 1]);
+			}
+		}
+	}
+
+	for (int it = 0; it < sprites_toDraw.size(); it++) {
+		if(sprites_toDraw[it]->pos.x + sprites_toDraw[it]->rect->w >= cam.x && sprites_toDraw[it]->pos.x <= cam.x + cam.w)
+			if(sprites_toDraw[it]->pos.y + sprites_toDraw[it]->rect->h > cam.y && sprites_toDraw[it]->pos.y < cam.y + cam.h)
+				App->render->Blit(sprites_toDraw[it]->texture, sprites_toDraw[it]->pos.x, sprites_toDraw[it]->pos.y, sprites_toDraw[it]->rect);
+		RELEASE(sprites_toDraw[it]);
+	}
+
+	//for (int it = 0; it < max_prior_sprites.size(); it++) {
+	//	if (max_prior_sprites[it]->pos.x + max_prior_sprites[it]->rect->w >= cam.x && max_prior_sprites[it]->pos.x <= cam.x + cam.w)
+	//		if (max_prior_sprites[it]->pos.y + max_prior_sprites[it]->rect->h > cam.y && max_prior_sprites[it]->pos.y < cam.y + cam.h)
+	//			App->render->Blit(max_prior_sprites[it]->texture, max_prior_sprites[it]->pos.x, max_prior_sprites[it]->pos.y, max_prior_sprites[it]->rect);
+	//	RELEASE(max_prior_sprites[it]);
+	//}
+
+	sprites_toDraw.clear();
+	//max_prior_sprites.clear();
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
@@ -140,14 +181,18 @@ void j1Render::SetBackgroundColor(SDL_Color color)
 
 void j1Render::MoveCam(float x, float y)
 {
-	camera.x += x;
+	camera.x -= x;
 	camera.y += y;
+	culling_cam.x += x;
+	culling_cam.y -= y;
 }
 
 void j1Render::SetCamPos(float x, float y)
 {
 	camera.x = floor(x);
 	camera.y = floor(y);
+	culling_cam.x = -floor(x);
+	culling_cam.y = -floor(y);
 }
 
 void j1Render::SetCamBoundaries(SDL_Rect rect)
@@ -177,6 +222,37 @@ void j1Render::ScaleCamBoundaries(int scale)
 	cam_boundaries.y -= scale;
 	cam_boundaries.w += 2 * scale;
 	cam_boundaries.h += 2 * scale;
+}
+
+bool j1Render::IsCameraCull(SDL_Rect rect)
+{
+	bool ret = true;
+
+	SDL_Rect cam = culling_cam;
+
+	if (rect.x + rect.w >= cam.x && rect.x <= cam.x + cam.w)
+		if (rect.y + rect.h > cam.y && rect.y < cam.y + cam.h)
+			ret = false;
+
+	return ret;
+}
+
+void j1Render::toDraw(SDL_Texture * texture, float priority, int x, int y, SDL_Rect* section, bool prior , float speed, double angle, int pivot_x, int pivot_y)
+{
+	Sprite* aux = new Sprite();
+	aux->pos.x = x;
+	aux->pos.y = y;
+	aux->texture = texture;
+	aux->rect = section;
+	aux->priority = priority;
+
+	aux->speed = speed;
+	aux->angle = angle;
+	aux->pivot_x = pivot_x;
+	aux->pivot_y = pivot_y;
+
+	App->render->sprites_toDraw.push_back(aux);
+
 }
 
 void j1Render::SetViewPort(const SDL_Rect& rect)

@@ -17,13 +17,13 @@
 
 #define PL_OFFSET 12
 #define PL_OFFSET_X 33
-#define PL_OFFSET_Y 35
+#define PL_OFFSET_Y 51
 
 #define MAX_SPD 5
 #define MAX_HP 24
 #define MAX_PWR 99
 
-#define PL_WALK_FPS 0.8f
+#define PL_WALK_FPS 0.2f
 
 #define link_width 99
 #define link_height 107
@@ -34,6 +34,8 @@
 #define WPN_COL_H 32
 #define WPN_COL_OFFSET_X 8
 #define WPN_COL_OFFSET_Y 8
+
+#define PL_FARLANDS iPoint({-5000, -5000});
 
 #define PL_SPD_ATK 6
 
@@ -52,20 +54,22 @@ public:
 		S_Charge_Idle,
 		S_Charge_Walk,
 		Pickup,
+		Hold_sth,
 		Pull,
 		Push,
 		Weapon_atk,
 		Slash,
+		Light,
 		Unknown,
 		__LAST
 	};
 	
 
-private:
+public:
 	Point<float> pos;
 	Point<float> last_pos;
-	Point<float> pl_speed;
 
+private:
 	SDL_Texture* Link_Movement = nullptr;
 
 	// All player sprites / animations
@@ -90,7 +94,11 @@ public:
 	void UpgradeSPD(float x);
 	void UpgradePWR(int x);
 	void UpgradeHP(int x);
-
+	//Update Functions
+	void Movement();
+	void Slash_();
+	void PickUp_();
+	void ChangeWeapon();
 	void AddWeapon(uint weapon_t);
 
 	void SetPos(float x, float y);
@@ -98,24 +106,39 @@ public:
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
 	void DyingRestart();
+	bool Find_inv(Item *item);
+	bool Find_weapon(Item* item);
+	void PlayerInmortal(float time);
+
+	bool CheckSpace(float new_x, float new_y);
+
 	// base stats saving file
 	// --status flags 
 	bool alive = true;
 	bool shield = true;
 	bool sword = false;  // as a flag to draw link with the sword sprite
-	bool action = false; // Actions: Throw, Pull, Slash,...
-	bool inmortal = false;					 // --status VARs
+	bool action = false; // Actions: Throw, Pull, Slash,...	
+						 // --status VARs
 	
 	unsigned int curr_dir;
+	uint		 walk_dir;
+
 	uint max_life_points = 6;
-	uint curr_life_points = 6;
+	int curr_life_points = 6;
 	uint power = 1;
 	uint rupees = 50;
 	uint max_rupees = 99;
-	uint bombs = 50;
-	uint arrows = 100;
-	j1PerfTimer inmortal_timer;
+	uint bombs = 0;
+	//uint arrows = 100;
 	std::list<Item*> inventory;
+	Point<float> pl_speed;
+	j1PerfTimer inmortal_timer;
+	float inmortal_time = 0;
+	bool inmortal = false;
+
+	iPoint room;
+
+	Collider* mov_coll = nullptr;
 
   // Weapon Related
 	bool Slashing = false;
@@ -140,10 +163,13 @@ public:
 	int action_blit;
 	bool dir_override = false; // Overrides directions expressed if there is an action that keeps movement but changes view direction being done at the time
 	bool anim_override = false;
+	bool push[5];
+	bool pull[5];
+	bool action_test = false;
 
 	Collider* link_coll;
 	Collider* weapon_coll;
-
+	Collider* action_coll;
 };
 
 #endif // !__PLAYER_H__

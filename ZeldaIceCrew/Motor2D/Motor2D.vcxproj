@@ -77,7 +77,11 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="DialogueManager.cpp" />
+    <ClCompile Include="Doorway.cpp" />
+    <ClCompile Include="DungeonScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="HouseScene.cpp" />
@@ -95,7 +99,9 @@
     <ClCompile Include="j1Pathfinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Player.cpp" />
+    <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="VillageScene.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
@@ -111,6 +117,9 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="DialogueManager.h" />
+    <ClInclude Include="Doorway.h" />
+    <ClInclude Include="DungeonScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
@@ -126,6 +135,8 @@
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Player.h" />
+    <ClInclude Include="NPC.h" />
+    <ClInclude Include="ShopScene.h" />
     <ClInclude Include="VillageScene.h" />
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1Audio.h" />

@@ -1,50 +1,114 @@
 #include "HUD.h"
 #include "Item.h"
 #include "j1Player.h"
-
 bool HUD::Start()
 {
+
+	items = App->tex->Load("Sprites/Items32x32.png");
 	bool ret = true;
 
 	rupees = (GuiImage*)App->gui->CreateElement(GuiType::image);
 	rupees->texture_rect = { 644,411,32,32 };
 	rupees->active = true;
 	rupees->pos = { 50,10 };
+	rupees->max_prior = true;
 
 	bombs = (GuiImage*)App->gui->CreateElement(GuiType::image);
 	bombs->texture_rect = { 702,411,32,32 };
 	bombs->active = true;
 	bombs->pos = { 125,10 };
+	bombs->max_prior = true;
 
-	arrows = (GuiImage*)App->gui->CreateElement(GuiType::image);
-	arrows->texture_rect = { 766,412,57,32 };
-	arrows->active = true;
-	arrows->pos = { 200,10 };
 
 	life_icon = (GuiImage*)App->gui->CreateElement(GuiType::image);
 	life_icon->texture_rect = { 735,462,176,28 };
 	life_icon->active = true;
 	life_icon->pos = { 750,10 };
+	life_icon->max_prior = true;
 
 	rupees_num = (GuiText*)App->gui->CreateElement(GuiType::text);
 	rupees_num->active = true;
+	rupees_num->movable = true;
 	rupees_num->str = std::to_string(App->player->rupees);
 	rupees_num->pos = { 50,40 };
 
 	bombs_num = (GuiText*)App->gui->CreateElement(GuiType::text);
 	bombs_num->active = true;
+	bombs_num->movable = true;
 	bombs_num->str = std::to_string(App->player->bombs);
 	bombs_num->pos = { 125,40 };
 
-	arrows_num = (GuiText*)App->gui->CreateElement(GuiType::text);
-	arrows_num->active = true;
-	arrows_num->str = std::to_string(App->player->arrows);
-	arrows_num->pos = { 200,40 };
 
 	inv = (Window*)App->gui->CreateElement(GuiType::window);
 	inv->active = false;
-	inv->pos = { 50,100 };
-	inv->texture_rect = {0,0,430,351};
+	inv->pos = {  50,100 };
+	inv->texture_rect = { 0,0,430,351 };
+	inv->max_prior = true;
+
+	descriptions_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	descriptions_rect->movable = true;
+	descriptions_rect->pos = { inv->pos.x, inv->pos.y + inv->texture_rect.h + 1 };
+	descriptions_rect->texture_rect = { 697,591,434,115 };
+	descriptions_rect->active = false;
+	descriptions_rect->max_prior = true;
+
+	item_description = (GuiText*)App->gui->CreateElement(GuiType::text);
+	item_description->active = false;
+	item_description->movable = true;
+	item_description->pos = { descriptions_rect->pos.x + 15, descriptions_rect->pos.y + 5 };
+	item_description->max_prior = true;
+
+	stats_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	stats_rect->movable = true;
+	stats_rect->active = false;
+	stats_rect->pos = { descriptions_rect->pos.x + descriptions_rect->texture_rect.w + 1,descriptions_rect->pos.y };
+	stats_rect->texture_rect = { 498,223,218,116 };
+	stats_rect->max_prior = true;
+
+	speed = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	speed->pos = { stats_rect->pos.x + 10, stats_rect->pos.y + 5 };
+	speed->active = false;
+	speed->movable = true;
+	speed->texture = App->hud->items;
+	speed->texture_rect = { 0, 326, 32, 32 };
+	speed->max_prior = true;
+
+	speed_num = (GuiText*)App->gui->CreateElement(GuiType::text);
+	speed_num->active = false;
+	speed_num->movable = true;
+	speed_num->pos = { speed->pos.x + 40,speed->pos.y };
+	speed_num->max_prior = true;
+
+	power = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	power->pos = { stats_rect->pos.x + 10, stats_rect->pos.y + speed->texture_rect.h + 20 };
+	power->active = false;
+	power->movable = true;
+	power->texture = App->hud->items;
+	power->texture_rect = { 40, 326, 32, 32 };
+	power->max_prior = true;
+
+	power_num = (GuiText*)App->gui->CreateElement(GuiType::text);
+	power_num->active = false;
+	power_num->movable = true;
+	power_num->pos = { power->pos.x + 40,power->pos.y };
+	power_num->max_prior = true;
+
+	weapon_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	weapon_rect->pos = { 900,500 };
+	weapon_rect->active = true;
+	weapon_rect->movable = true;
+	weapon_rect->texture_rect = { 539,402,46,48 };
+	weapon_rect->max_prior = true;
+
+	pl_weapon= (GuiImage*)App->gui->CreateElement(GuiType::image);
+	pl_weapon->pos.x = weapon_rect->pos.x + 10;
+	pl_weapon->pos.y = weapon_rect->pos.y + 10;
+	pl_weapon->active = true;
+	pl_weapon->movable = true;
+	pl_weapon->texture = App->hud->items;
+	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
+	pl_weapon->max_prior = true;
+
 
 
 	GenerateHP();
@@ -54,14 +118,15 @@ bool HUD::Start()
 			GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
 			img->texture = it._Ptr->_Myval->UI_tex;
 			img->texture_rect = it._Ptr->_Myval->UI_rect;
+			img->max_prior = true;
 
 			inv->AddElement(img);
 		}
 	}
 
-	inv->SetOffset(30,30);
 
 	
+	inv->SetOffset(30, 30);
 
 	return ret;
 }
@@ -70,15 +135,42 @@ bool HUD::Update(float dt)
 {
 	rupees_num->str = std::to_string(App->player->rupees);
 	bombs_num->str = std::to_string(App->player->bombs);
-	arrows_num->str = std::to_string(App->player->arrows);
+	speed_num->str = std::to_string(App->player->pl_speed.x);
+	power_num->str = std::to_string(App->player->power);
+	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
+	if (inv->active) {
+		descriptions_rect->active = true;
+		stats_rect->active = true;
+		speed->active = true;
+		speed_num->active = true;
+		power->active = true;
+		power_num->active = true;
+		if(!inv->Empty()){
+			if (inv->Selected() != nullptr) {
+				item_description->active = true;
+				item_description->str = inv->Selected()->obj->description;
+			}
 
+		}
+	}
+	else {
+		inv->Disable();
+		descriptions_rect->active = false;
+		item_description->active = false;
+		stats_rect->active = false;
+		speed->active = false;
+		speed_num->active = false;
+		power->active = false;
+		power_num->active = false;
+	}
 	UpdateHP();
-	
+
 	return true;
 }
 
 bool HUD::CleanUp()
 {
+	App->tex->UnLoad(items);
 	lifes.clear();
 	return true;
 }
@@ -112,7 +204,7 @@ void HUD::GenerateHP()
 			}
 		}
 
-		if ((i>=App->player->curr_life_points)&&(i<App->player->max_life_points)) {
+		if ((i >= App->player->curr_life_points) && (i<App->player->max_life_points)) {
 			if ((i % 2 == 0)) {
 				GuiImage* img;
 				img = (GuiImage*)App->gui->CreateElement(GuiType::image);
@@ -122,7 +214,7 @@ void HUD::GenerateHP()
 				heart_pos += {30, 0};
 				lifes.push_back(img);
 			}
-			
+
 		}
 
 	}
@@ -140,11 +232,20 @@ void HUD::UpdateHP()
 
 void HUD::AddItem(Item* obj)
 {
+
 	if (obj != nullptr) {
 		GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
 		img->texture_rect = obj->UI_rect;
-		img->texture = obj->UI_tex;
+		img->texture = items;
 		img->active = false;
-		App->hud->inv->AddElement(img);
+		img->obj = obj;
+
+		if (inv->Empty()) {
+			inv->Start_Sel({ 594,402,47,47 });
+			App->hud->inv->AddElement(img);
+		}
+		else {
+			App->hud->inv->AddElement(img);
+		}
 	}
 }

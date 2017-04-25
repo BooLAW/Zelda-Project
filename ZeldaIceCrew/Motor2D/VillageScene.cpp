@@ -15,6 +15,8 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "HouseScene.h"
+#include "DungeonScene.h"
+#include "ShopScene.h"
 
 #define MAX_TABS 2
 
@@ -39,78 +41,42 @@ bool VillageScene::Awake()
 // Called before the first frame
 bool VillageScene::Start()
 {
-	
-	if (App->map->Load("FirstMap.tmx") == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
 
-		RELEASE_ARRAY(data);
+	App->render->cam_travel = false;
+
+	if (App->map->Load("Overworld.tmx") == true)
+	{
+		// int w, h;
+		//uchar* data = NULL;
+		//if (App->map->CreateWalkabilityMap(w, h, &data))
+		//	App->pathfinding->SetMap(w, h, data);
+		//
+		//RELEASE_ARRAY(data);
 	}
 	//Bush_Rect = { 8*32,2*32,32,32 };
 	debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
+	//Colliders
+	Doorway* dw = nullptr;
+	dw = AddDoorway(dw_scene, Up, 23 * 16, 106 * 16);
+	dw->SetTarget((Scene*)App->scene_manager->house_scene);
+	dw->target_pos = {6'5 * 32, 8 * 32 };
 
-	App->player->SetPosTile(2, 2);
+	dw = AddDoorway(dw_scene, Up, 39 * 16, 6 * 16);
+	dw->SetTarget((Scene*)App->scene_manager->dungeon_scene);
+	dw->target_pos = { 500, 400 + ROOM_H * 3 };
 
-	App->render->CamBoundOrigin();
+	dw = AddDoorway(dw_scene, Up, 54 * 16, 50 * 16);
+	dw->SetTarget((Scene*)App->scene_manager->shop_scene);
+	dw->target_pos = { 8 * 32, 8 * 32 };
+
+	///App->render->CamBoundOrigin();
 
 	App->render->ScaleCamBoundaries(300);
-
-	// Enemy Start
-	Enemy* new_enemy;
-	new_enemy = App->entitymanager->CreateEnemy(BlueSoldier);
-	new_enemy->pos = { 20, 20 };
-
-	enemies.push_back(new_enemy);
-
-	new_enemy = App->entitymanager->CreateEnemy(RedSoldier);
-	new_enemy->pos = { 60, 30 };
-
-	enemies.push_back(new_enemy);
-
-	new_enemy = App->entitymanager->CreateEnemy(GreenSoldier);
-	new_enemy->pos = { 200, 10 };
-
-	enemies.push_back(new_enemy);
-
-
-	// Items Start
-
-	Item* new_item = nullptr;
-
-	new_item = App->entitymanager->CreateItem(drop_tenrupee);
-	new_item->SetPositions({ 300.0f, 50.0f });
-	items.push_back(new_item);
-
-	new_item = App->entitymanager->CreateItem(pegasus_boots);
-	new_item->SetPositions({ 450.0f, 50.0f });
-	new_item->SetPrice(20);
-	items.push_back(new_item);
-
-	new_item = App->entitymanager->CreateItem(heart_container);
-	new_item->SetPositions({ 550.0f, 50.0f });
-	items.push_back(new_item);
-
-	new_item = App->entitymanager->CreateItem(drop_rupee);
-	new_item->SetPositions({ 600.0f, 50.0f });
-	items.push_back(new_item);
-
-	new_item = App->entitymanager->CreateItem(drop_fiverupee);
-	new_item->SetPositions({ 650.0f, 50.0f });
-	items.push_back(new_item);
-
-	new_item = App->entitymanager->CreateItem(weapon_sword);
-	new_item->SetPositions({ 700.0f, 50.0f });
-	items.push_back(new_item);
-
-
-	//we can do that with an iterator that recieves the positions readed from the xml file
-
-
-	App->player->SetPos(500, 100);
 	
+	follow_cam = true;
+
+	App->audio->PlayMusic("Audio/Music/Forest_Theme.ogg");
+	App->audio->SetVolumeMusic(60);
 
 
 	return true;
@@ -119,6 +85,8 @@ bool VillageScene::Start()
 // Called each loop iteration
 bool VillageScene::PreUpdate()
 {
+
+	follow_cam = true;
 	// debug pathfing ------------------
 	if (App->debug == true) {
 		static iPoint origin;
@@ -149,7 +117,11 @@ bool VillageScene::PreUpdate()
 // Called each loop iteration
 bool VillageScene::Update(float dt)
 {
-	
+
+	DoorUpdate(dt);
+
+	//App->render->SetCamPos( 0, -(App->player->GetPos().y - App->render->camera.h / 2));
+
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
@@ -158,8 +130,11 @@ bool VillageScene::Update(float dt)
 	
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->debug = !App->debug;
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-		App->scene_manager->ChangeScene(App->scene_manager->house_scene);
+
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		//App->render->cam_travel = true;
+		App->scene_manager->toChangeScene(App->scene_manager->dungeon_scene);
+	}
 
 	App->map->Draw();
 
@@ -168,29 +143,6 @@ bool VillageScene::Update(float dt)
 	//
 	//}
 	
-	// Debug pathfinding ------------------------------
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.size(),
-		map_coordinates.x, map_coordinates.y);
-
-	//int x, y;
-	if (App->debug == true) {
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-		p = App->map->MapToWorld(p.x, p.y);
-		App->win->SetTitle(title.GetString());
-		//App->render->Blit(debug_tex, p.x, p.y);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
-		App->player->curr_life_points -= 1;
-	}
 		return true;
 	
 }
@@ -208,34 +160,4 @@ bool VillageScene::PostUpdate()
 
 	return ret;
 }
-
-// Called before quitting
-bool VillageScene::CleanUp()
-{
-	LOG("Freeing village scene");
-
-	if (ESC != true)
-	{
-		App->map->CleanUp();
-
-		for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++)
-		{
-			App->entitymanager->DestroyEnity(*it);
-		}
-		enemies.clear();
-		for (std::list<Item*>::iterator it = items.begin(); it != items.end(); it++)
-		{
-			App->entitymanager->DestroyEnity(*it);
-		}
-		items.clear();
-
-		if (debug_tex != NULL)
-			App->tex->UnLoad(debug_tex);
-	}
-	
-
-
-	return true;
-}
-
 

@@ -67,7 +67,7 @@ public:
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
-	p2SString GetString();
+	std::string GetString();
 
 private:
 
@@ -78,7 +78,7 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
-	p2SString   text;
+	std::string   text;
 };
 
 #endif // __j1INPUT_H__
