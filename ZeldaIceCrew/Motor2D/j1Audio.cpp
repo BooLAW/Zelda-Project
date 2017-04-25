@@ -182,3 +182,15 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+void j1Audio::SetVolumeMusic(uint32 vol)
+{
+	if (vol <= MIX_MAX_VOLUME && vol >= 0)
+		Mix_VolumeMusic(vol);
+}
+
+void j1Audio::SetVolume(uint32 vol, int channel)
+{
+	if (vol <= MIX_MAX_VOLUME && vol >= 0)
+		Mix_Volume(channel, vol);
+}

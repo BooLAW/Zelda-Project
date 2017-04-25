@@ -10,7 +10,7 @@
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
-	name.create("map");
+	name = "map";
 }
 
 // Destructor
@@ -23,7 +23,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	LOG("Loading Map Parser");
 	bool ret = true;
 
-	folder.create(config.child("folder").child_value());
+	folder = config.child("folder").child_value();
 
 	return ret;
 }
@@ -51,7 +51,11 @@ void j1Map::Draw()
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
 
-					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+					SDL_Rect cam = App->render->culling_cam;
+
+					if (pos.x + data.tile_width >= cam.x && pos.x <= cam.x + cam.w)
+						if (pos.y + data.tile_height * 2 > cam.y && pos.y < cam.y + cam.h)			// the "*2" is because of the ISOMETRIC view distorsion
+							App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
 			}
 		}
@@ -173,6 +177,7 @@ bool j1Map::CleanUp()
 
 	while(item2 != data.layers.end())
 	{
+		LOG("LAYER");
 		RELEASE((*item2));
 		item2++;
 	}
@@ -184,18 +189,19 @@ bool j1Map::CleanUp()
 	return true;
 }
 
-int j1Map::TileCheck(int x, int y, Direction dir) const
+int j1Map::TileCheck(float x, float y) const
 {
 	int ret = 0;
+  if(App->map->active == true) {
 	//get the key navigation tiles(r)
 	//Note: aqui el que fa es guardarse el numero del tileset en el que estan 2 
 	//tiles clau de la navigation
 	//el de no es pot passar i el detector de canvi d'escena
-	int red_tile = data.tilesets.begin()._Ptr->_Myval->firstgid + NO_WALK_ID;//walkability tile to don't walk
-																			 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
-
-	if (dir == Up)
-	{
+	int red_tile = 0;
+	int yellow_tile = 0;
+	if(data.tilesets.begin()._Ptr->_Next->_Myval != nullptr)
+		red_tile = data.tilesets.begin()._Ptr->_Next->_Myval->firstgid;//walkability tile to don't walk
+	  yellow_tile = red_tile + 1;																		 //int blue_tile = red_tile + 7;//walkability tile to get inside a building
 		iPoint ptemp = WorldToMap(x, y);
 		std::list<MapLayer*>::const_iterator item = data.layers.end();
 		item--;
@@ -205,146 +211,13 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 		{
 			ret = 1;
 		}
-		/*	else if (id_1 == blue_tile)
+		else if (id_1 == yellow_tile)
 		{
-		App->scene->switch_map = 1;
-		}*/
-		else
-			ret = 0;
-
-	}
-	if (dir == Left)
-	{
-		iPoint ptemp = WorldToMap(x, y);
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
+			ret = 2;
 		}
 		else
 			ret = 0;
-	}
-	if (dir == Right)
-	{
-		iPoint ptemp = WorldToMap(x + 20, y);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		else
-			ret = 0;
-	}
-	if (dir == Down)
-	{
-		iPoint ptemp = WorldToMap(x, y + 50);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
-	if (dir == Down_L)
-	{
-		iPoint ptemp = WorldToMap(x, y + 50);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
-	if (dir == Down_R)
-	{
-		iPoint ptemp = WorldToMap(x + 20, y + 50 );
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
-	if (dir == Up_R)
-	{
-		iPoint ptemp = WorldToMap(x + 20, y);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
-	if (dir == Up_L)
-	{
-		iPoint ptemp = WorldToMap(x, y);
-
-		std::list<MapLayer*>::const_iterator item = data.layers.end();
-		item--;
-		int id_1 = (*item)->Get(ptemp.x, ptemp.y);
-
-
-		if (id_1 == red_tile)
-		{
-			ret = 1;
-		}
-		/*else if (id_1 == blue_tile)
-		{
-		App->scene->switch_map = 2;
-		}*/
-		else
-			ret = 0;
-	}
-
+  }
 	//retornarem 0 si podem caminar o si es una blue tile
 	return ret;
 }
@@ -352,7 +225,7 @@ int j1Map::TileCheck(int x, int y, Direction dir) const
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
-	p2SString tmp("%s%s", folder.GetString(), file_name);
+	p2SString tmp("%s%s", folder.c_str(), file_name);
 
 	char* buf;
 	int size = App->fs->Load(tmp.GetString(), &buf);
@@ -414,7 +287,7 @@ bool j1Map::Load(const char* file_name)
 		{
 			TileSet* s = (*item);
 			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
+			LOG("name: %s firstgid: %d", s->name.c_str(), s->firstgid);
 			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item++;
@@ -425,7 +298,7 @@ bool j1Map::Load(const char* file_name)
 		{
 			MapLayer* l = (*item_layer);
 			LOG("Layer ----");
-			LOG("name: %s", l->name.GetString());
+			LOG("name: %s", l->name.c_str());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer++;
 		}
@@ -505,7 +378,7 @@ bool j1Map::LoadMap()
 bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
-	set->name.create(tileset_node.attribute("name").as_string());
+	set->name = (tileset_node.attribute("name").as_string());
 	set->firstgid = tileset_node.attribute("firstgid").as_int();
 	set->tile_width = tileset_node.attribute("tilewidth").as_int();
 	set->tile_height = tileset_node.attribute("tileheight").as_int();
@@ -539,7 +412,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	}
 	else
 	{
-		set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+		set->texture = App->tex->Load(PATH(folder.c_str(), image.attribute("source").as_string()));
 		int w, h;
 		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
 		set->tex_width = image.attribute("width").as_int();
@@ -664,6 +537,5 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 
 		break;
 	}
-
 	return ret;
-}
+};

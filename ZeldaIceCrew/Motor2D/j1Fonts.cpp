@@ -43,11 +43,10 @@ bool j1Fonts::Awake(pugi::xml_node& conf)
 bool j1Fonts::CleanUp()
 {
 	LOG("Freeing True Type fonts and library");
-	p2List_item<TTF_Font*>* item;
 
-	for (item = fonts.start; item != NULL; item = item->next)
+	for (std::list<_TTF_Font*>::const_iterator it = fonts.cbegin(); it != fonts.cend(); it++)
 	{
-		TTF_CloseFont(item->data);
+		TTF_CloseFont(it._Ptr->_Myval);
 	}
 
 	fonts.clear();
@@ -67,21 +66,22 @@ TTF_Font* const j1Fonts::Load(const char* path, int size)
 	else
 	{
 		LOG("Successfully loaded font %s size %d", path, size);
-		fonts.add(font);
+		fonts.push_back(font);
 	}
 
 	return font;
 }
 
 // Print text using font
-SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
+
+SDL_Texture * j1Fonts::Print(const char * text, SDL_Color color, _TTF_Font * font)
 {
 	SDL_Texture* ret = NULL;
 	SDL_Surface* surface = TTF_RenderText_Blended((font) ? font : default, text, color);
 
 	if (surface == NULL)
 	{
-		LOG("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		//LOG("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
 	}
 	else
 	{
@@ -90,6 +90,7 @@ SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 	}
 
 	return ret;
+
 }
 
 // calculate size of a text

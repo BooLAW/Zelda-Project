@@ -1,7 +1,10 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "EntityManager.h"
+#include "j1Textures.h"
+#include "MathHelpers.h"
+#include "j1Render.h"
+#include "Log.h"
 
 enum ENTITYTYPE
 {
@@ -10,6 +13,8 @@ enum ENTITYTYPE
 	block,
 	enemy,
 	bomb,
+	doorway,
+	npc,
 	unknown
 };
 
@@ -19,9 +24,12 @@ public:
 	Entity() {};
 	virtual ~Entity() {};
 	virtual void Update(float dt) {};
+	virtual void CleanUp();
 	virtual void Draw(float dt) {};
 
+
 public:
+
 	void SetTexture(SDL_Texture* texture) {
 		tex = texture;
 		if (tex == nullptr)
@@ -37,14 +45,24 @@ public:
 		rect = rectangle;
 	}
 
+	virtual int CheckSpace(float new_x, float new_y);
+
 protected:
-	SDL_Texture* tex;
+	SDL_Texture* tex = nullptr;
 	SDL_Rect rect;
+	bool inverse_draw = false;
+
 
 public:
+	bool to_delete = false;
+
+	bool active = true;
+
+	Collider* HitBox = nullptr;
 	fPoint pos;
 	uint type;
 
+	iPoint room;
 
 };
 

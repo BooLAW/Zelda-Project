@@ -11,21 +11,42 @@ j1Collision::j1Collision()
 
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_WALL][COLLIDER_BUSH] = true;
+	matrix[COLLIDER_WALL][COLLIDER_BLOCK] = true;
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_WALL][COLLIDER_PL_WEAPON] = false;
 	matrix[COLLIDER_WALL][COLLIDER_ITEM] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_BUSH] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_BLOCK] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PL_WEAPON] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_ITEM] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_DUNGEON] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_SHOP] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_HOUSE] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_OVERWORLD_SHOP] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_TO_OVERWORLD_HOUSE] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_DOORWAY] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_UP] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_DOWN] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_LEFT] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DUNGEON_RIGHT] = true;
 
-	matrix[COLLIDER_BUSH][COLLIDER_BUSH] = false;
-	matrix[COLLIDER_BUSH][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_BUSH][COLLIDER_PL_WEAPON] = true;
-	matrix[COLLIDER_BUSH][COLLIDER_ITEM] = false;
+
+
+
+
+	matrix[COLLIDER_ACTION][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_ACTION][COLLIDER_ACTION] = false;
+	matrix[COLLIDER_ACTION][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_ACTION][COLLIDER_WALL] = true;
+
+
+	matrix[COLLIDER_BLOCK][COLLIDER_BLOCK] = false;
+	matrix[COLLIDER_BLOCK][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_BLOCK][COLLIDER_PL_WEAPON] = true;
+	matrix[COLLIDER_BLOCK][COLLIDER_ITEM] = false;
+	matrix[COLLIDER_BLOCK][COLLIDER_ACTION] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_PL_WEAPON] = true;
@@ -115,11 +136,14 @@ void j1Collision::DebugDraw()
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
-		case COLLIDER_BUSH: // red
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
-			break;
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
+		case COLLIDER_BLOCK: // red
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case COLLIDER_ACTION:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
 		case COLLIDER_WALL: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
@@ -133,6 +157,43 @@ void j1Collision::DebugDraw()
 		case COLLIDER_ITEM:
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
+		case COLLIDER_ARROW:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case COLLIDER_ENEMY_PROJECTILE:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
+			break;
+		case COLLIDER_TO_DUNGEON:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_TO_OVERWORLD_HOUSE:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_TO_OVERWORLD_SHOP:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_DUNGEON_DOORWAY:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_TO_HOUSE:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_TO_SHOP:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_DUNGEON_UP:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_DUNGEON_DOWN:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_DUNGEON_LEFT:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+		case COLLIDER_DUNGEON_RIGHT:
+			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
+			break;
+
 		}
 	}
 }

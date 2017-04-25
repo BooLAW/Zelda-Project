@@ -8,6 +8,8 @@
 #include "j1Collision.h"
 #include "j1Render.h"
 
+#include "j1Player.h"
+
 #include "Log.h"
 
 #include "Entity.h"
@@ -15,13 +17,15 @@
 #include "Bomb.h"
 #include "Item.h"
 #include "Block.h"
-#include "Drop.h"
 #include "Enemy.h"
+#include "Doorway.h"
 
 class Entity;
 class j1Player;
 struct SDL_Texture;
 struct SDL_Rect;
+
+class Doorway;
 
 class Bomb;
 class Item;
@@ -34,17 +38,25 @@ public:
 	EntityManager();
 	~EntityManager();
 	
+	bool CleanUp() {
+		DestroyEntities();
+		return true;
+	}
+
+	bool PreUpdate();
 	bool Update(float dt);
 	void PushEntity(Entity* ent);
 	void DestroyEntities();
 	void DestroyEnity(Entity* ent);
 	
+	std::deque<Entity*>* GetEntities() { return &entities; };
+
 	void OnCollision(Collider* c1, Collider* c2);
 
 public:
 	Enemy* CreateEnemy(uint subtype);
 	Item* CreateItem(uint subtype);
-
+	Block* CreateBlock(uint subtype);
 private:
 	std::deque<Entity*> entities;
 	j1Timer time;

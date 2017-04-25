@@ -5,6 +5,21 @@
 #include "Point.h"
 #include "j1Module.h"
 
+#include <deque>
+
+struct Sprite {
+	SDL_Rect* rect;
+	SDL_Texture* texture;
+
+	fPoint pos;
+
+	float speed;
+	double angle;
+	int pivot_x, pivot_y;
+	bool max_priority = false;
+	float priority;
+};
+
 class j1Render : public j1Module
 {
 public:
@@ -53,16 +68,24 @@ public:
 	void ScaleCamBoundaries(int x, int y, int w, int h);
 	void ScaleCamBoundaries(int scale);
 
+	bool IsCameraCull(SDL_Rect rect);
+
+	void toDraw(SDL_Texture* texture, float priority, int x, int y, SDL_Rect* section = NULL, bool prior = false, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
+
 public:
 
 	SDL_Renderer*	renderer;
 	SDL_Rect		camera;
+	SDL_Rect		culling_cam;
 	SDL_Rect		viewport;
 	SDL_Color		background;
-
+	bool			cam_travel = false;
 private:
 	// camera
 	SDL_Rect cam_boundaries;
+
+	// Sprites Drawing
+	std::deque<Sprite*> sprites_toDraw;
 };
 
 #endif // __j1RENDER_H__

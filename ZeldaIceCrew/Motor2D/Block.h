@@ -4,82 +4,192 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
-class Entity;
-
-
+#define N_ITEMS 15
 
 enum BLOCKTYPE {
 	bush = 0,
 	pot,
 	statue,
 	torch_bowl,
-	torch_pilar,
+	torch_pillar,
 	slabs,
+	slabs_no_move,
+	slabs_spikes,
 	last_
 };
 
+enum BLOCKANIM {
+	idle,
+	broke,
+	lit,
+
+	last__
+
+};
+
 class Block : public Entity {
+public:
+	//fPoint position;
+	uint reward_pool[N_ITEMS];
+	BLOCKTYPE subtype;
+	BLOCKANIM anim;
+	SDL_Texture* temp;
+	SDL_Rect sprites[last_][last__][8];
+	Animation animations[last_][last__];
+	bool picked = false;
+	bool front = false;
+	bool back = false;
+	bool moving = false;
+
 public:
 	Block() {};
 	Block(uint subtype);
 	virtual ~Block() {};
 
 
+	virtual bool Start();
+
+	virtual void CleanUp();
+
+	virtual void Spawn() {};
+
+	virtual void Update(float dt);
+
+	virtual void Draw();
+
+	virtual void Reward();
 
 public:
-	Block* CreateBlock(uint type);
+	//Block* CreateBlock(uint type, fPoint ipos);
 
-	virtual bool isPushable() { return true; };
-	virtual bool isPullable() { return true; };
-	virtual bool isTalked() { return true; };
-	virtual bool isLit() { return true; };
-	virtual bool isBreakable() { return true; };
-	virtual bool isPickable() { return true; };
-	virtual bool isOpenable() { return true; };
+	virtual bool isMovable() { return false; };
+	//virtual bool isTalked() { return false; };
+	virtual bool isLitable() { return false; };
+	virtual bool isBreakable() { return false; };
+	virtual bool isPickable() { return false; };
+	//virtual bool isOpenable() { return false; };
+
+	virtual void Move();
+	virtual void Light() {};
+	virtual void Break() {};
+	virtual void Pick() {};
+	virtual void Open() {};
+	virtual void Throw() {};
+
+	virtual void SetRewards() {};
+
+	void SortRewardProbs() {
+		uint total = 0;
+
+		for (int i = 0; i < N_ITEMS; i++) {
+			total += reward_pool[i];
+		}
+
+		if (total != 100) {
+			for (int i = 0; i < N_ITEMS; i++) {
+				reward_pool[i] = (reward_pool[i] * 100) / total;
+			}
+		}
+
+	}
+
 };
 
 class Bush : public Block {
-	//Start que passi tota la info que toca, 
-	bool isBreakabled() {
-		return false;
+	//Collision box is 3/4 down, why?
+	//Block moves down to Link position then the animation goes through
+	bool Start();
+
+	bool isBreakable() {
+		return true;
 	}
 
 	bool isPickable() {
 		return true;
 	}
+
+	void Break();
+	void Throw();
+	void Pick();
+	void SetRewards();
+
 };
 
 class Pot : public Block {
+	//Collision box is 3/4 down, why?
+	//Block moves down to Link position then the animation goes through
+	bool Start();
+
 	bool isPickable() {
 		return true;
 	}
+
+	bool isBreakable() {
+		return true;
+	}
+
+	void Break();
+	void Throw();
+	void Pick();
+	void SetRewards();
+
+
 };
 
 class Statue : public Block {
+	bool Start();
+
 	bool isPushable() {
 		return true;
 	}
+
+	//void Move();
+
 };
 
 class Torch_Bowl : public Block {
-	bool isLit() {
+	bool Start();
+
+	bool isLitable() {
 		return true;
 	}
+
+	void Light();
 };
 
-class Torch_Pillar : public Block {
-	bool isLit() {
-		return true;
-	}
-};
+/*class Torch_Pillar : public Block {
+bool Start();
+
+bool isLitable() {
+return true;
+}
+
+void Light();
+};*/
 
 class Slab : public Block {
-	bool isPushable() {
+	bool Start();
+
+	bool isMovable() {
 		return true;
 	}
 
-	bool isPullable() {
-		return true;
-	}
+	//void Move();
+
 };
+
+
+
+
+class Slab_No_Move : public Block {
+	bool Start();
+
+};
+
+class Slab_Spikes : public Block {
+	bool Start();
+
+};
+
+
 #endif // !__BLOCK_H__
