@@ -113,19 +113,19 @@ Block * Room::AddBlock(uint subtype, float x, float y)
 	return ret;
 }
 
-Doorway * Room::AddDungeonDoorway(uint subtype, uint dir, float x, float y)
+Doorway * Room::AddDungeonDoorway(uint dir)
 {
-	return nullptr;
+	return parent->AddDungeonDoorway(dir, coords.x, coords.y);
 }
 
-Doorway * Room::AddSceneDoorway(uint subtype, uint dir, float x, float y)
+Doorway * Room::AddSceneDoorway(Scene* target, uint dir, float x, float y)
 {
-	return nullptr;
+	return parent->AddSceneDoorway(target, coords.x, coords.y, dir, x, y);
 }
 
-Doorway * Room::AddCamDoorway(uint subtype, uint dir, float x, float y)
+Doorway * Room::AddCamDoorway(float target_x, float target_y, uint dir, float x, float y)
 {
-	return nullptr;
+	return parent->AddCamDoorway(target_x, target_y, coords.x, coords.y, dir, x, y);
 }
 
 void Room::EnemyActive(bool flag)

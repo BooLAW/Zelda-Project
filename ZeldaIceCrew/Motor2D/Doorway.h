@@ -68,4 +68,16 @@ private:
 	Scene* target;
 };
 
+class DwCam : public Doorway {
+public:
+	bool Cross();
+
+	void SetTargetPos(float x, float y) { target = { x, y }; };
+	fPoint GetTargetPos() { return target; };
+
+private:
+	fPoint target;
+
+};
+
 #endif // !_DOORWAY_H__

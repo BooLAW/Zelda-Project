@@ -82,8 +82,9 @@ public:
 
 	Item* AddItem(uint subtype, int coord_x, int coord_y, float x, float y);
 	Block* AddBlock(uint subtype, int coord_x, int coord_y, float x, float y);
-	Doorway* AddDoorway(uint subtype, int coord_x, int coord_y, uint dir, int x, int y);
+	Doorway* AddSceneDoorway(Scene* target, int coord_x, int coord_y, uint dir, float x, float y);
 	Doorway* AddDungeonDoorway(uint dir, int coord_x, int coord_y);
+	Doorway* AddCamDoorway(float target_x, float target_y, int coord_x, int coord_y, uint dir, float x, float y);
 	Enemy* AddEnemy(int subtype, int coord_x, int coord_y, float x, float y);
 	Room* AddRoom(int coord_x, int coord_y, int w = 1024, int h = 576);
   

@@ -202,26 +202,22 @@ Block * Scene::AddBlock(uint subtype, int coord_x, int coord_y, float x, float y
 	return ret;
 }
 
-Doorway * Scene::AddDoorway(uint subtype, int coord_x, int coord_y, uint dir, int x, int y)
+Doorway * Scene::AddSceneDoorway(Scene* target, int coord_x, int coord_y, uint dir, float x, float y)
 {
 	Room* r = GetRoom(coord_x, coord_y);
 
-	Doorway* ret = nullptr;
+	DwScene* ret = nullptr;
 
 	if (r != nullptr) {
 
-		switch (subtype) {
-		case dw_scene:
-			ret = new DwScene();
-			break;
-		case dw_cam:
-			break;
-		}
+		ret = new DwScene();
 
 		ret->Start();
 		ret->SetUp(dir);
 
 		ret->SetPos(x + ROOM_W * coord_x, y + ROOM_H * coord_y);
+
+		ret->SetTarget(target);
 
 		r->doorways.push_back(ret);
 	}
@@ -253,6 +249,31 @@ Doorway * Scene::AddDungeonDoorway(uint dir, int coord_x, int coord_y)
 		LOG("UNACCESIBLE ROOM: %d %d", coord_x, coord_y);
 
 	return ret;
+}
+
+Doorway * Scene::AddCamDoorway(float target_x, float target_y, int coord_x, int coord_y, uint dir, float x, float y)
+{
+	Room* r = GetRoom(coord_x, coord_y);
+
+	DwCam* ret = nullptr;
+
+	if (r != nullptr) {
+
+		ret = new DwCam();
+
+		ret->Start();
+		ret->SetUp(dir);
+
+		ret->SetPos(x + ROOM_W * coord_x, y + ROOM_H * coord_y);
+
+		ret->SetTargetPos(target_x, target_y);
+
+		r->doorways.push_back(ret);
+
+	}
+	else
+		LOG("UNACCESIBLE ROOM: %d %d", coord_x, coord_y);
+
 }
 
 Enemy* Scene::AddEnemy(int subtype, int coord_x, int coord_y, float x, float y)
@@ -407,32 +428,32 @@ bool Scene::Load_new_map(int id)
 
 									LOG("SUB %s", sub);
 
-									if (sub == "power_gauntlet")
+									if (strcmp(sub, "power_gauntlet") == 0)
 										st = power_gauntlet;
-									if (sub == "pegasus_boots")
+									if (strcmp(sub, "pegasus_boots") == 0)
 										st = pegasus_boots;
-									if (sub == "heart_container")
+									if (strcmp(sub, "heart_container") == 0)
 										st = heart_container;
-									if (sub == "boss_key")
+									if (strcmp(sub, "boss_key") == 0)
 										st = boss_key;
-									if (sub == "drop_heart")
+									if (strcmp(sub, "drop_heart") == 0)
 										st = drop_heart;
-									if (sub == "drop_bomb")
+									if (strcmp(sub, "drop_bomb") == 0)
 										st = drop_bomb;
-									if (sub == "drop_potion")
+									if (strcmp(sub, "drop_potion") == 0)
 										st = drop_potion;
-									if (sub == "drop_rupee")
+									if (strcmp(sub, "drop_rupee") == 0)
 										st = drop_rupee;
-									if (sub == "drop_fiverupee")
+									if (strcmp(sub, "drop_fiverupee") == 0)
 										st = drop_fiverupee;
-									if (sub == "drop_tenrupee")
+									if (strcmp(sub, "drop_tenrupee") == 0)
 										st = drop_tenrupee;
-									if (sub == "weapon_sword")
+									if (strcmp(sub, "weapon_sword") == 0)
 										st = weapon_sword;
-									if (sub == "weapon_bow")
+									if (strcmp(sub, "weapon_bow") == 0)
 										st = weapon_bow;
 
-									r->AddItem(2, node_item.attribute("x").as_float(), node_item.attribute("y").as_float());
+									r->AddItem(st, node_item.attribute("x").as_float(), node_item.attribute("y").as_float());
 
 								}
 							}
@@ -446,17 +467,17 @@ bool Scene::Load_new_map(int id)
 
 									const pugi::char_t* sub = node_block.attribute("subtype").as_string("");
 
-									if (sub == "bush")
+									if (strcmp(sub, "bush") == 0)
 										st = bush;
-									if (sub == "pot")
+									if (strcmp(sub, "pot") == 0)
 										st = pot;
-									if (sub == "statue")
+									if (strcmp(sub, "statue") == 0)
 										st = statue;
-									if (sub == "torch_bowl")
+									if (strcmp(sub, "torch_bowl") == 0)
 										st = torch_bowl;
-									if (sub == "torch_pillar")
+									if (strcmp(sub, "torch_pillar") == 0)
 										st = torch_pillar;
-									if (sub == "slabs")
+									if (strcmp(sub, "slabs") == 0)
 										st = slabs;
 
 									r->AddBlock(st, node_block.attribute("x").as_float(), node_block.attribute("y").as_float());
@@ -474,24 +495,41 @@ bool Scene::Load_new_map(int id)
 									const pugi::char_t* sub = node_dw.attribute("subtype").as_string("");
 									const pugi::char_t* direction = node_dw.attribute("dir").as_string("");
 
-									if (sub == "dw_cam")
-										st = dw_cam;
-									if (sub == "dw_dungeon")
-										st = dw_dungeon;
-									if (sub == "dw_scene")
-										st = dw_scene;
-
-									if (direction == "Up")
+									if (strcmp(direction, "Up") == 0)
 										dir = Up;
-									if (direction == "Down")
+									if (strcmp(direction, "Down") == 0)
 										dir = Down;
-									if (direction == "Left")
+									if (strcmp(direction, "Left") == 0)
 										dir = Left;
-									if (direction == "Right")
+									if (strcmp(direction, "Right") == 0)
 										dir = Right;
 
-									//r->AddDoorway(st, dir, node_dw.attribute("x").as_float(), node_dw.attribute("y").as_float());
+									if (strcmp(sub, "dw_cam") == 0) {
+										st = dw_cam;
+										r->AddCamDoorway(node_dw.attribute("target_x").as_float(0), node_dw.attribute("target_y").as_float(0), dir, node_dw.attribute("x").as_float(), node_dw.attribute("y").as_float());
+									}
+									if (strcmp(sub, "dw_dungeon") == 0) {
+										st = dw_dungeon;
+										r->AddDungeonDoorway(dir);
+									}
+									if (strcmp(sub, "dw_scene") == 0) {
+										st = dw_scene;
 
+										Scene* target = nullptr;
+
+										const pugi::char_t* t = node_dw.attribute("scene").as_string("");
+										if (strcmp(t, "") != 0) {
+
+											if (strcmp(t, "village") == 0)
+												target = (Scene*)App->scene_manager->village_scene;
+											if (strcmp(t, "dungeon") == 0)
+												target = (Scene*)App->scene_manager->dungeon_scene;
+
+											if (target != nullptr) {
+												r->AddSceneDoorway(target, dir, node_dw.attribute("x").as_float(), node_dw.attribute("y").as_float());
+											}
+										}
+									}
 								}
 							}
 
@@ -504,15 +542,15 @@ bool Scene::Load_new_map(int id)
 
 									const pugi::char_t* sub = node_en.attribute("subtype").as_string("");
 
-									if (sub == "t_bluesoldier")
+									if (strcmp(sub, "t_bluesoldier") == 0)
 										st = t_bluesoldier;
-									if (sub == "t_redsoldier")
+									if (strcmp(sub, "t_redsoldier") == 0)
 										st = t_redsoldier;
-									if (sub == "t_greensoldier")
+									if (strcmp(sub, "t_greensoldier") == 0)
 										st = t_greensoldier;
-									if (sub == "t_hinox")
+									if (strcmp(sub, "t_hinox") == 0)
 										st = t_hinox;
-									if (sub == "t_boss_ballandchain")
+									if (strcmp(sub, "t_boss_ballandchain") == 0)
 										st = t_boss_ballandchain;
 
 									r->AddEnemy(st, node_en.attribute("x").as_float(), node_en.attribute("y").as_float());

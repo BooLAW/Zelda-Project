@@ -144,3 +144,11 @@ bool DwScene::Cross()
 
 	return true;
 }
+
+bool DwCam::Cross()
+{
+
+	App->player->pos = target;
+
+	return true;
+}
