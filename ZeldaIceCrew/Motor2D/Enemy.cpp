@@ -118,16 +118,17 @@ bool Enemy::Move()
 		if (AIType == chase)
 			path_to_follow.clear();
 	
-
-	if (target.y < pos.y && (target.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && target.x < pos.x + ENEMY_DIR_CHANGE_OFFSET) )
-		curr_dir = Enemy::EnDirection::Up;
-	else if (target.y > pos.y && (target.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && target.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
-		curr_dir = Enemy::EnDirection::Down;
-	else if (target.x < pos.x)
-		curr_dir = Enemy::EnDirection::Left;
-	else if (target.x > pos.x)
-		curr_dir = Enemy::EnDirection::Right;
-
+		if (path_to_follow.empty() == false) {
+			iPoint path_t = path_to_follow.begin()._Ptr->_Myval;
+			if (target.y < pos.y && (path_t.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+				curr_dir = Enemy::EnDirection::Up;
+			else if (path_t.y > pos.y && (path_t.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+				curr_dir = Enemy::EnDirection::Down;
+			else if (path_t.x < pos.x)
+				curr_dir = Enemy::EnDirection::Left;
+			else if (path_t.x > pos.x)
+				curr_dir = Enemy::EnDirection::Right;
+		}
 	return ret;
 }
 
@@ -1025,32 +1026,31 @@ void BlueArcher::Update(float dt)
 
 	switch (state) {
 	case moving:
-		if (pos.DistanceNoSqrt(pl_pos) < range) {
-			target.x = (int)pl_pos.x;
-			target.y = (int)pl_pos.y;
+		react_time.Start();
+		react_time.SetFlag(true);
+		target.x = pl_pos.x;
+		target.y = pl_pos.y;
+		if (std::abs(pos.x - pl_pos.x) >= std::abs(pos.y - pl_pos.y)) {
+			if (pos.x < pl_pos.x) {
+				target.x = pl_pos.x - range * TILE_S;
+			}
+			if (pos.x > pl_pos.x) {
+				target.x = pl_pos.x + range * TILE_S;
+			}
+		}
+		else {
+			if (pos.y < pl_pos.y) {
+				target.x = pl_pos.x - range * TILE_S;
+			}
+			if (pos.y > pl_pos.y) {
+				target.y = pl_pos.y + range * TILE_S;
+			}
+		}
+		if (react_time.Read() >= 1000) {
+			react_time.SetFlag(false);
+			path_to_follow.clear();
 			path_to_follow.push_back(target);
 		}
-		//if (pos.DistanceNoSqrt(pl_pos) > range * TILE_S && pos.DistanceNoSqrt(pl_pos) < range * TILE_S - range_limit * TILE_S) {
-		//	if (std::abs(pos.x - pl_pos.x) <= std::abs(pos.y - pl_pos.y)) {
-		//		if (pl_pos.x >= pos.x) {
-		//			target.x = pl_pos.x - TILE_S * range;
-		//		}
-		//		else
-		//			target.x = pl_pos.x + TILE_S * range;
-		//	}
-		//	else {
-		//		if (pl_pos.y >= pos.y) {
-		//			target.y = pl_pos.y - TILE_S * range;
-		//		}
-		//		else
-		//			target.y = pl_pos.y + TILE_S * range;
-		//	}
-		//}
-		//else {
-		//	state = shoot;
-		//}
-		path_to_follow.clear();
-		//path_to_follow.push_back(target);
 		break;
 	case shoot:
 		state = moving;
