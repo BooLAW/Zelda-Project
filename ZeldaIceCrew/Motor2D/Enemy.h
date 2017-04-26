@@ -29,6 +29,7 @@ enum ENEMYTYPE {
 	t_greensoldier,
 	t_hinox,
 	t_rope,
+	t_GBat,
 	t_boss_ballandchain,
 	__LAST_ENEMYTYPE
 };
@@ -252,6 +253,11 @@ class Rope : public Enemy {
 
 	j1Timer walk_timer;
 
+};
+
+class GreyBat : public Enemy {
+public:
+	bool Start();
 };
 
 #endif // !__ENEMY_H__

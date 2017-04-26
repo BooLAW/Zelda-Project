@@ -226,18 +226,10 @@ void Enemy::SetAnimation(SDL_Rect spr[LastDir][2])
 
 void Enemy::Draw()
 {
-	if (curr_dir == EnDirection::Left)
-		inverse_draw = true;
-	else
-		inverse_draw = false;
-
 	SDL_Rect* draw_rect = &animations[curr_dir].GetCurrentFrame();
-	fPoint aux_pos = pos;
-	if (inverse_draw == true)
-		aux_pos.x = pos.x - draw_rect->w + HitBox->rect.w;
+	fPoint aux_pos = { pos.x - 16, pos.y - 14 };
 
-	//App->render->Blit(GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
-	App->render->toDraw(GetTexture(), aux_pos.y + draw_rect->h, aux_pos.x, aux_pos.y, draw_rect);
+	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, draw_rect);
 }
 
 void Enemy::Hit(uint dir, uint dmg)
@@ -352,17 +344,17 @@ bool BSoldier::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 30, 251, 44, 68 };
-		sprites[Enemy::EnDirection::Down][1] = { 132, 249, 44, 70 };
+		sprites[Enemy::EnDirection::Down][0] = { 2, 219, 100, 108 };
+		sprites[Enemy::EnDirection::Down][1] = { 104, 219, 100, 108 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 30, 357, 44, 52 };
-		sprites[Enemy::EnDirection::Up][1] = { 132, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][0] = { 2, 329,  100, 108 };
+		sprites[Enemy::EnDirection::Up][1] = { 104, 329, 100, 108 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 214, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Left][1] = { 316, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Left][0] = { 206, 439, 100, 108 };
+		sprites[Enemy::EnDirection::Left][1] = { 308, 439, 100, 108 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 30, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Right][1] = { 132, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Right][0] = { 2, 439,  100, 108 };
+		sprites[Enemy::EnDirection::Right][1] = { 104, 439, 100, 108 };
 
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
@@ -413,17 +405,17 @@ bool RSoldier::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 438, 251, 44, 68 };
-		sprites[Enemy::EnDirection::Down][1] = { 540, 249, 44, 70 };
+		sprites[Enemy::EnDirection::Down][0] = { 410, 219, 100,108 };
+		sprites[Enemy::EnDirection::Down][1] = { 512, 219, 100,108 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 438, 357, 44, 52 };
-		sprites[Enemy::EnDirection::Up][1] = { 540, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][0] = { 410, 329, 100, 108 };
+		sprites[Enemy::EnDirection::Up][1] = { 512, 329, 100, 108 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 420, 575, 64, 54 };
-		sprites[Enemy::EnDirection::Left][1] = { 528, 577, 58, 52 };
+		sprites[Enemy::EnDirection::Left][0] = { 410, 439, 100, 108 };
+		sprites[Enemy::EnDirection::Left][1] = { 512, 439, 100, 108 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 438, 467, 58, 52 };
-		sprites[Enemy::EnDirection::Right][1] = { 540, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Right][0] = { 410, 549, 100, 108 };
+		sprites[Enemy::EnDirection::Right][1] = { 512, 549, 100, 108 };
 
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
@@ -474,17 +466,17 @@ bool GSoldier::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Down][0] = { 2, 0,  100, 108 };
+		sprites[Enemy::EnDirection::Down][1] = { 104, 0, 100, 108 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Up][0] = { 614, 0, 100, 108 };
+		sprites[Enemy::EnDirection::Up][1] = { 716, 0, 100, 108 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Left][0] = { 410, 0, 100, 108 };
+		sprites[Enemy::EnDirection::Left][1] = { 512, 0, 100, 108 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Right][0] = { 206, 0, 100, 108 };
+		sprites[Enemy::EnDirection::Right][1] = { 308, 0, 100, 108 };
 
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
@@ -757,17 +749,17 @@ bool Hinox::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 636, 239, 56, 60 };
-		sprites[Enemy::EnDirection::Down][1] = { 739, 239, 56, 60 };
+		sprites[Enemy::EnDirection::Down][0] = { 614, 219, 100, 108 };
+		sprites[Enemy::EnDirection::Down][1] = { 716, 219, 100, 108 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 635, 349, 56, 60 };
-		sprites[Enemy::EnDirection::Up][1] = { 738, 349, 56, 60 };
+		sprites[Enemy::EnDirection::Up][0] = { 614, 329, 100, 108 };
+		sprites[Enemy::EnDirection::Up][1] = { 716, 329, 100, 108 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 647, 463, 38, 56 };
-		sprites[Enemy::EnDirection::Left][1] = { 748, 461, 38, 58 };
+		sprites[Enemy::EnDirection::Left][0] = { 614, 439, 100, 108 };
+		sprites[Enemy::EnDirection::Left][1] = { 716, 439, 100, 108 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 648, 571, 38, 58 };
-		sprites[Enemy::EnDirection::Right][1] = { 749, 573, 38, 56 };
+		sprites[Enemy::EnDirection::Right][0] = { 614, 549, 100, 108 };
+		sprites[Enemy::EnDirection::Right][1] = { 716, 549, 100, 108 };
 
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
@@ -1092,4 +1084,50 @@ void BlueArcher::Draw()
 	
 	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, draw_rect);
 
+}
+
+bool GreyBat::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+		sprites[Enemy::EnDirection::Down][0] = { 104, 659, 100, 108 };
+		sprites[Enemy::EnDirection::Down][1] = { 206, 659, 100, 108 };
+		sprites[Enemy::EnDirection::Down][2] = { 308, 659, 100, 108 };
+		sprites[Enemy::EnDirection::Down][3] = { 410, 659, 100, 108 };
+		sprites[Enemy::EnDirection::Down][4] = { 512, 659, 100, 108 };
+
+		for (int i = 0; i < LastDir; i++) {
+			for (int k = 0; k < 4; k++)
+				animations[i].PushBack(sprites[Down][k]);
+		}
+	}
+
+	stats.Hp = 1;
+	stats.Speed = 2.5;
+	stats.Power = 1;
+
+	stats.Flying = true;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 36, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[melee] = true;
+
+	AIType = chase;
+
+	subtype = ENEMYTYPE::t_GBat;
+
+	return ret;
 }
