@@ -20,6 +20,16 @@ void Entity::CleanUp()
 	//LOG("ENT HITBOX");
 }
 
+bool Entity::LoadAttributes(pugi::xml_node attributes)
+{
+	return true;
+}
+
+bool Entity::LoadAnimations(std::string file)
+{
+	return true;
+}
+
 int Entity::CheckSpace(float new_x, float new_y)
 
 {

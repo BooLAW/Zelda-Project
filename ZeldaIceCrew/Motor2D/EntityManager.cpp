@@ -155,7 +155,81 @@ Block * EntityManager::CreateBlock(uint type)
 	return ret;
 }
 
+Npc * EntityManager::CreateNPC(int sector, NPC_TYPE type, float x, float y, int id)
+{
+	Npc* ret = NULL;
 
+	switch (type)
+	{
+	case NPC_ZELDA:
+		ret = new Npc_Zelda();
+		break;
+	case NPC_UNCLE:
+		ret = new Npc_Uncle();
+		break;
+	case NPC_HIPPIE:
+		ret = new Npc_Hippie();
+		break;
+	case NPC_FARM_KID:
+		ret = new Npc_Farm_Kid();
+		break;
+	case NPC_WOMAN:
+		ret = new Npc_Woman();
+		break;
+	case NPC_GRANDMA:
+		ret = new Npc_Grandma();
+		break;
+	case NPC_TAVERN_OLD_MAN:
+		ret = new Npc_Tavern_Old_Man();
+		break;
+	case NPC_LITTLE_KID:
+		ret = new Npc_Little_Kid();
+		break;
+
+	default:
+		return nullptr;
+	}
+
+	ret->pos = { x,y };
+
+	if (ret->Spawn(dir[npc], ret->pos, type))
+	{
+		ret->type = npc;
+		entities.push_back(ret);		
+		ret->id = entities.end();
+
+		//For dialog purposes
+		ret->npcId = id;
+	}
+	else
+	{
+		RELEASE(ret);
+		ret = NULL;
+	}
+
+	return ret;
+}
+
+
+
+
+bool EntityManager::Awake(pugi::xml_node & config)
+{
+	bool ret = true;
+
+
+	pugi::xml_node entityAttributes = config.child("entityAttributes");
+	std::string folder = entityAttributes.attribute("folder").as_string("/");
+	pugi::xml_node entity = entityAttributes.first_child();
+
+	for (int tmp = 0; !entity.empty(); tmp++)
+	{
+		dir.insert(std::pair<ENTITYTYPE, std::string >(ENTITYTYPE(tmp), (folder + entity.attribute("file").as_string(".xml"))));
+		entity = entity.next_sibling();
+	}
+
+	return ret;
+}
 
 bool EntityManager::PreUpdate()
 {

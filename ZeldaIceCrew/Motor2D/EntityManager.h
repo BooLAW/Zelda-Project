@@ -13,12 +13,17 @@
 #include "Log.h"
 
 #include "Entity.h"
+#include "NPC.h"
 
 #include "Bomb.h"
 #include "Item.h"
 #include "Block.h"
 #include "Enemy.h"
 #include "Doorway.h"
+#include <map>
+#include <deque>
+
+
 
 class Entity;
 class j1Player;
@@ -32,6 +37,7 @@ class Item;
 class Enemy;
 class Block;
 class Drop;
+class Npc;
 
 class EntityManager : public j1Module {
 public:
@@ -43,6 +49,7 @@ public:
 		return true;
 	}
 
+	bool Awake(pugi::xml_node & config);
 	bool PreUpdate();
 	bool Update(float dt);
 	void PushEntity(Entity* ent);
@@ -52,13 +59,16 @@ public:
 	std::deque<Entity*>* GetEntities() { return &entities; };
 
 	void OnCollision(Collider* c1, Collider* c2);
-
+	
 public:
 	Enemy* CreateEnemy(uint subtype);
 	Item* CreateItem(uint subtype);
 	Block* CreateBlock(uint subtype);
+	Npc * CreateNPC(int sector, NPC_TYPE type, float x, float y, int id);
 private:
+	
 	std::deque<Entity*> entities;
+	std::map<ENTITYTYPE, std::string> dir;
 	j1Timer time;
 	
 };

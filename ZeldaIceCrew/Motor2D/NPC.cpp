@@ -65,7 +65,7 @@ bool Npc::Spawn(std::string file, fPoint pos, NPC_TYPE type)
 		}
 
 		//actionState = IDLE;
-		//LoadAttributes(attributes);
+		LoadAttributes(attributes);
 	}
 
 	return ret;

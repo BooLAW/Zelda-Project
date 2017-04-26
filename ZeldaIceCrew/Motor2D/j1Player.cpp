@@ -957,6 +957,47 @@ void j1Player::PlayerInmortal(float time)
 	inmortal_timer.Start();
 }
 
+void j1Player::Talk()
+{
+	//actionState = IDLE;
+	App->dialog->text_on_screen->Set_Active_state(true);
+	
+	if (firstText == true)
+	{
+		App->dialog->BlitDialog(toTalk->npcId, toTalk->dialogState);
+		firstText = false;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN ||
+		App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN ||
+		App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN ||
+		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		if (toTalk != nullptr)
+		{
+			if (App->dialog->text_on_screen->dialog_state == MID_TEXT)
+				App->dialog->text_on_screen->ForcedFinish();
+
+			else
+			{
+				App->dialog->dialogueStep++;
+				if (App->dialog->BlitDialog(toTalk->npcId, toTalk->dialogState) == false)
+				{
+					//playerState = ACTIVE;
+					App->dialog->text_on_screen->Set_Active_state(false);
+					if (toTalk->dialogState == 0)
+					{
+						toTalk->dialogState++;
+					}
+					App->dialog->dialogueStep = 0;
+					int test = toTalk->dialogState;
+					firstText = true;
+					toTalk = nullptr;
+				}
+			}
+		}
+	}
+}
+
 int j1Player::CheckSpace(float new_x, float new_y)
 {
 	int ret = true;
