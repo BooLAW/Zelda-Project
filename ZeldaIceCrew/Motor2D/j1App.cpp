@@ -4,6 +4,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Functions.h"
+#include <time.h>
 
 #include "j1Window.h"
 #include "j1Input.h"
@@ -94,6 +95,8 @@ void j1App::AddModule(j1Module* module)
 bool j1App::Awake()
 {
 	PERF_START(ptimer);
+
+	srand(time(NULL));
 
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;

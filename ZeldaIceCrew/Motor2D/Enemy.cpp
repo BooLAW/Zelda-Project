@@ -45,7 +45,7 @@ void Enemy::SetRewards()
 
 }
 
-void Enemy::Update(float dt)
+void Enemy::stdUpdate(float dt)
 {
 	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
 	//LOG("ENEMY UPDATE");
@@ -71,10 +71,8 @@ bool Enemy::Move()
 {
 	bool ret = true;
 
-	iPoint target;
-
 	switch (AIType) {
-	case AITYPE::path:	
+	case AITYPE::path:
 		break;
 	case AITYPE::chase:
 		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y - PL_OFFSET_Y / 2};
@@ -120,16 +118,17 @@ bool Enemy::Move()
 		if (AIType == chase)
 			path_to_follow.clear();
 	
-
-	if (target.y < pos.y && (target.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && target.x < pos.x + ENEMY_DIR_CHANGE_OFFSET) )
-		curr_dir = Enemy::EnDirection::Up;
-	else if (target.y > pos.y && (target.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && target.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
-		curr_dir = Enemy::EnDirection::Down;
-	else if (target.x < pos.x)
-		curr_dir = Enemy::EnDirection::Left;
-	else if (target.x > pos.x)
-		curr_dir = Enemy::EnDirection::Right;
-
+		if (path_to_follow.empty() == false) {
+			iPoint path_t = path_to_follow.begin()._Ptr->_Myval;
+			if (path_t.y < pos.y && (path_t.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+				curr_dir = Enemy::EnDirection::Up;
+			else if (path_t.y > pos.y && (path_t.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+				curr_dir = Enemy::EnDirection::Down;
+			else if (path_t.x < pos.x)
+				curr_dir = Enemy::EnDirection::Left;
+			else if (path_t.x > pos.x)
+				curr_dir = Enemy::EnDirection::Right;
+		}
 	return ret;
 }
 
@@ -137,14 +136,14 @@ bool Enemy::Attack()
 {
 	bool ret = true;
 
-	if (DmgType[melee] == true) {
-		HitBox->SetPos(pos.x + animations[curr_dir].GetCurrentFrame().w / 6, pos.y + ENEMY_STD_OFFSET_Y);
-	}
+	HitBox->SetPos(pos.x + animations[curr_dir].GetCurrentFrame().w / 6, pos.y + ENEMY_STD_OFFSET_Y);
 
+	if (DmgType[melee] == true) {
 	if (App->player->link_coll != nullptr)
 		if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
 			HitPlayer();
 		}
+	}
 	
 
 	return ret;
@@ -216,9 +215,17 @@ void Enemy::HitPlayer(uint dmg)
 
 }
 
+void Enemy::SetAnimation(SDL_Rect spr[LastDir][2])
+{
+	for (int i = 0; i < EnDirection::LastDir; i++) {
+		for (int k = 0; k < sizeof(spr) / sizeof(*spr); k++) {
+			animations[i].PushBack(spr[i][k]);
+		}
+	}
+}
+
 void Enemy::Draw()
 {
-
 	if (curr_dir == EnDirection::Left)
 		inverse_draw = true;
 	else
@@ -810,3 +817,279 @@ void Hinox::SetRewards()
 	reward_pool[drop_tenrupee] = 5;
 	reward_pool[drop_heart] = 23;
 };
+
+bool Rope::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+	
+		RopeSprites_m[Up][0] = { 2, 659, 100, 108 };
+		RopeSprites_m[Up][1] = { 2, 659, 100, 108 };
+		RopeSprites_m[Down][0] = { 2, 659, 100, 108 };
+		RopeSprites_m[Down][1] = { 2, 659, 100, 108 };
+		RopeSprites_m[Right][0] = { 206, 549, 100, 108};
+		RopeSprites_m[Right][1] = { 206, 549, 100, 108};
+		RopeSprites_m[Left][0] = { 104 , 549, 100, 108 };
+		RopeSprites_m[Left][1] = { 104 , 549, 100, 108 };
+
+		RopeSprites_nm[Up][0] =		{ 2, 549, 100, 108 };
+		RopeSprites_nm[Down][0] =	{ 2, 549, 100, 108 };
+		RopeSprites_nm[Right][0] =	{ 2, 549, 100, 108 };
+		RopeSprites_nm[Left][0] =	{ 2, 549, 100, 108 };
+		RopeSprites_nm[Up][1] =		{ 2, 659, 100, 108};
+		RopeSprites_nm[Down][1] =	{ 2, 659, 100, 108};
+		RopeSprites_nm[Right][1] =	{ 2, 659, 100, 108};
+		RopeSprites_nm[Left][1] =	{ 2, 659, 100, 108};
+
+		for (int i = 0; i < LastDir; i++) {
+			for (int k = 0; k < 2; k++) {
+				animations[i].PushBack(RopeSprites_m[i][k]);
+			}
+		}
+		nm_anim.PushBack(RopeSprites_nm[0][0]);
+		nm_anim.PushBack(RopeSprites_nm[0][1]);
+		nm_anim.speed = 0.05;
+	}
+
+	stats.Hp = 1;
+	stats.Speed = 5;
+	stats.Power = 1;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = 0.02; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 24, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	state = no_move;
+
+	DmgType[melee] = true;
+
+	AIType = path;
+
+	subtype = ENEMYTYPE::t_rope;
+
+	return ret;
+}
+
+void Rope::Update(float dt)
+{
+	aux_pos = pos;
+
+	stdUpdate(dt);
+
+	uint dir;
+
+	switch (state) {
+	case no_move:
+		walk_timer.Start();
+		walk_timer.SetFlag(true);
+		if (walk_timer.ReadSec() >= 1) {
+			target.x = (int)pos.x;
+			target.y = (int)pos.y;
+			dir = rand() % EnDirection::LastDir;
+			switch (dir) {
+			case EnDirection::Up:
+				target.y += 32 * ROPE_JMP;
+				break;
+			case EnDirection::Down:
+				target.y -= 32 * ROPE_JMP;
+				break;
+			case EnDirection::Left:
+				target.x -= 32 * ROPE_JMP;
+				break;
+			case EnDirection::Right:
+				target.x += 32 * ROPE_JMP;
+				break;
+			}
+			LOG("ROPE DIR %d", dir);
+			path_to_follow.push_back(target);
+			walk_timer.SetFlag(false);
+			state = moving;
+		}
+		break;
+	case moving:
+		walk_timer.Start();
+		walk_timer.SetFlag(true);
+		if (walk_timer.ReadSec() >= 1) {
+			walk_timer.SetFlag(false);
+			path_to_follow.clear();
+			state = no_move;
+		}
+
+		break;
+	}
+
+}
+
+void Rope::Draw()
+{
+	SDL_Rect* draw_rect;
+
+	if (aux_pos == pos)
+		draw_rect = &nm_anim.GetCurrentFrame();
+	else
+	draw_rect = &animations[curr_dir].GetCurrentFrame();
+	
+	fPoint draw_pos = pos;
+
+	draw_pos.x -= 24;
+	draw_pos.y -= 16;
+
+	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, draw_pos.x, draw_pos.y, draw_rect);
+
+}
+
+bool BlueArcher::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
+
+		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
+
+		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 36, 56 };
+
+		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
+
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
+
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][0]);
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][1]);
+
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][0]);
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][1]);
+
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][0]);
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][1]);
+
+
+	}
+
+	stats.Hp = 1;
+	stats.Speed = 2;
+	stats.Power = 1;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 24, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[projectile] = true;
+
+	AIType = distance;
+
+	state = moving;
+
+	subtype = ENEMYTYPE::t_bluearcher;
+
+	return ret;
+}
+
+void BlueArcher::Update(float dt)
+{
+	stdUpdate(dt);
+
+	shoot_time.Start();
+	shoot_time.SetFlag(true);
+
+	fPoint pl_pos = App->player->GetPos();
+	pl_pos.y -= PL_OFFSET_Y / 2;
+
+	//target.x = (int)pl_pos.x;
+	//target.y = (int)pl_pos.y;
+
+	switch (state) {
+	case moving:
+		react_time.Start();
+		react_time.SetFlag(true);
+		target.x = pl_pos.x;
+		target.y = pl_pos.y;
+		if (std::abs(pos.x - pl_pos.x) >= std::abs(pos.y - pl_pos.y)) {
+			if (pos.x < pl_pos.x) {
+				target.x = pl_pos.x - range * TILE_S;
+			}
+			if (pos.x > pl_pos.x) {
+				target.x = pl_pos.x + range * TILE_S;
+			}
+		}
+		else {
+			if (pos.y < pl_pos.y) {
+				target.x = pl_pos.x - range * TILE_S;
+			}
+			if (pos.y > pl_pos.y) {
+				target.y = pl_pos.y + range * TILE_S;
+			}
+		}
+		if (react_time.Read() >= 1000) {
+			react_time.SetFlag(false);
+			path_to_follow.clear();
+			path_to_follow.push_back(target);
+		}
+
+		if ((pos.x > pl_pos.x - 8 && pos.x < pl_pos.x + 8) || (pos.y > pl_pos.y - 8 && pos.y < pl_pos.y + 8))
+			state = shoot;
+
+		break;
+		state = shoot;
+
+	case shoot:
+		path_to_follow.clear();
+		if (pl_pos.y < pos.y && (pl_pos.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && pl_pos.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+			curr_dir = Enemy::EnDirection::Up;
+		else if (pl_pos.y > pos.y && (pl_pos.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && pl_pos.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+			curr_dir = Enemy::EnDirection::Down;
+		else if (pl_pos.x < pos.x)
+			curr_dir = Enemy::EnDirection::Left;
+		else if (pl_pos.x > pos.x)
+			curr_dir = Enemy::EnDirection::Right;
+		
+		if (shoot_time.Read() >= 1000) {
+			App->particle->CreateParticle(p_enarrow, pos.x + 8, pos.y + 16, App->entitymanager->fromEntoPlDir(curr_dir));
+			shoot_time.SetFlag(false);
+		}
+
+		state = moving;
+		
+		break;
+	}
+
+}
+
+void BlueArcher::Draw()
+{
+
+	SDL_Rect* draw_rect = &animations[curr_dir].GetCurrentFrame();
+	fPoint aux_pos = pos;
+	
+	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, draw_rect);
+
+}

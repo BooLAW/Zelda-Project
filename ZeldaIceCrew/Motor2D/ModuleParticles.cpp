@@ -46,6 +46,9 @@ Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 		case p_arrow:
 			ret = new Arrow();
 			break;
+		case p_enarrow:
+			ret = new Enemy_Arrow();
+			break;
 		default:
 			LOG("Unknown Particle Type");
 			break;
@@ -66,7 +69,7 @@ Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 	return ret;
 }
 
-void ModuleParticles::AddParticle(Particle* particle, COLLIDER_TYPE collider_type, Uint32 life, Uint32 delay)
+void ModuleParticles::AddParticle(Particle* particle, COLLIDER_TYPE collider_type, Uint32 life, Uint32 dmg, Uint32 delay)
 {
 	particle->born = SDL_GetTicks() + delay;
 	particle->life = life;
@@ -143,6 +146,23 @@ void Particle::CleanUp()
 
 }
 
+int Particle::CheckSpace(float new_x, float new_y)
+{
+	int ret = true;
+
+	// TileCheck
+	ret = App->map->TileCheck(new_x, new_y);
+	// 0 walkable
+	//1 wall
+	// 2 hole
+
+	SDL_Rect r = collider->rect;
+	r.x = new_x;
+	r.y = new_y;
+
+	return ret;
+}
+
 
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
 	LOG("\nparticle col\n");
@@ -177,29 +197,16 @@ void Arrow::Start()
 	}
 
 	HitBox = { (int)position.x, (int)position.y, g_rect[0].w, g_rect[0].h };
-	App->particle->AddParticle(this, COLLIDER_ARROW, 1500, NULL);
+	App->particle->AddParticle(this, COLLIDER_ARROW, 1500, App->player->power, NULL);
 
-}
-int Arrow::CheckSpace(float new_x, float new_y)
-{
-	int ret = true;
+};
 
-	// TileCheck
-	ret = App->map->TileCheck(new_x, new_y);
-	// 0 walkable
-	//1 wall
-	// 2 hole
-	
-	SDL_Rect r = collider->rect;
-	r.x = new_x;
-	r.y = new_y;
-
-	return ret;
-}
 bool Arrow::Update(float dt)
 {
 
 	HitBox = { (int)position.x, (int)position.y, g_rect[curr_dir].w, g_rect[curr_dir].h };
+
+	collider->rect = HitBox;
 
 	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
 	{
@@ -212,7 +219,7 @@ bool Arrow::Update(float dt)
 				hit = true;
 				LOG("ENEMY HIT");
 				App->particle->DestroyParticle(this);
-				it._Ptr->_Myval->Hit(curr_dir, App->player->power);
+				it._Ptr->_Myval->Hit(curr_dir, damage);
 			}
 		}
 	}
@@ -239,4 +246,94 @@ bool Arrow::Update(float dt)
 	
 
 	return stdUpdate(dt);
+}
+
+void Enemy_Arrow::Start()
+{
+	graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	g_rect[Up] = { 2, 2, 34, 34 };
+	g_rect[Down] = { 38, 2, 34, 34 };
+	g_rect[Right] = { 74, 2, 34, 34 };
+	g_rect[Left] = { 110, 2, 34, 34 };
+
+	switch (curr_dir) {
+	case Up:
+		speed = { 0, -ARROW_SPEED };
+		break;
+	case Down:
+		speed = { 0, +ARROW_SPEED };
+		break;
+	case Left:
+		speed = { -ARROW_SPEED, 0 };
+		break;
+	case Right:
+		speed = { +ARROW_SPEED, 0 };
+		break;
+	}
+
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[k]);
+	}
+
+	HitBox = { (int)position.x, (int)position.y, g_rect[0].w, g_rect[0].h };
+	App->particle->AddParticle(this, COLLIDER_ARROW, 2000, 1, NULL);
+
+}
+
+bool Enemy_Arrow::Update(float dt)
+{
+	stdUpdate(dt);
+
+	switch (curr_dir) {
+	case Up:
+		HitBox = { (int)position.x + 8, (int)position.y, 8, 8 };
+		break;
+	case Down:
+		HitBox = { (int)position.x + 8, (int)position.y + 30, 8, 8 };
+		break;
+	case Left:
+		HitBox = { (int)position.x, (int)position.y + 16, 8, 8 };
+		break;
+	case Right:
+		HitBox = { (int)position.x + 30, (int)position.y + 16, 8, 8 };
+		break;
+	}
+
+	collider->rect = HitBox;
+
+	collider->SetPos(HitBox.x, HitBox.y);
+
+	Collider* aux = collider;
+
+	if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
+	{
+		hit = true;
+		LOG("Player HIT");
+		App->player->HitPlayer(damage);
+		App->particle->DestroyParticle(this);
+	}
+
+	//BLOCK INTERACTION
+	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+			{
+				hit = true;
+				LOG("BLOCK HIT");
+				App->particle->DestroyParticle(this);
+			}
+		}
+	}
+	//TILED INTERACTION
+	if (this->CheckSpace(position.x, position.y) == 1)
+	{
+		LOG("ARROW HIT");
+		App->particle->DestroyParticle(this);
+	}
+
+
+	return true;
 }

@@ -102,6 +102,8 @@ public:
 	void AddWeapon(uint weapon_t);
 	
 
+	void HitPlayer(int dmg);
+
 	void SetPos(float x, float y);
 	void MovePos(float x, float y);
 	bool SetPosTile(int x, int y);

@@ -20,6 +20,9 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	case t_bluesoldier:
 		ret = new BSoldier();
 		break;
+	case t_bluearcher:
+		ret = new BlueArcher();
+		break;
 	case t_redsoldier:
 		ret = new RSoldier();
 		break;
@@ -28,6 +31,9 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 		break;
 	case t_hinox:
 		ret = new Hinox();
+		break;
+	case t_rope:
+		ret = new Rope();
 		break;
 	case t_boss_ballandchain:
 		ret = new BossChainBall();
@@ -233,5 +239,27 @@ void EntityManager::DestroyEnity(Entity * ent)
 void EntityManager::OnCollision(Collider * c1, Collider * c2)
 {
 	
+}
+
+uint EntityManager::fromEntoPlDir(uint EnDir)
+{
+	uint ret = NULL;
+
+	switch (EnDir) {
+	case 0: // Up
+		ret = 1;
+		break;
+	case 1: // Down
+		ret = 4;
+		break;
+	case 2: // Right
+		ret = 3;
+		break;
+	case 3: // Left
+		ret = 2;
+		break;
+	}
+
+	return ret;
 }
 
