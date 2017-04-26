@@ -46,6 +46,9 @@ Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 		case p_arrow:
 			ret = new Arrow();
 			break;
+		case p_enarrow:
+			ret = new Enemy_Arrow();
+			break;
 		default:
 			LOG("Unknown Particle Type");
 			break;
@@ -203,6 +206,8 @@ bool Arrow::Update(float dt)
 
 	HitBox = { (int)position.x, (int)position.y, g_rect[curr_dir].w, g_rect[curr_dir].h };
 
+	collider->rect = HitBox;
+
 	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
 	{
 		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
@@ -256,13 +261,13 @@ void Enemy_Arrow::Start()
 		speed = { 0, -ARROW_SPEED };
 		break;
 	case Down:
-		speed = { 0, ARROW_SPEED };
+		speed = { 0, +ARROW_SPEED };
 		break;
 	case Left:
 		speed = { -ARROW_SPEED, 0 };
 		break;
 	case Right:
-		speed = { ARROW_SPEED, 0 };
+		speed = { +ARROW_SPEED, 0 };
 		break;
 	}
 
@@ -271,22 +276,40 @@ void Enemy_Arrow::Start()
 	}
 
 	HitBox = { (int)position.x, (int)position.y, g_rect[0].w, g_rect[0].h };
-	App->particle->AddParticle(this, COLLIDER_ARROW, 1500, 1, NULL);
+	App->particle->AddParticle(this, COLLIDER_ARROW, 2000, 1, NULL);
 
 }
 
 bool Enemy_Arrow::Update(float dt)
 {
-	HitBox = { (int)position.x, (int)position.y, g_rect[curr_dir].w, g_rect[curr_dir].h };
+	stdUpdate(dt);
 
-	
+	switch (curr_dir) {
+	case Up:
+		HitBox = { (int)position.x + 8, (int)position.y, 8, 8 };
+		break;
+	case Down:
+		HitBox = { (int)position.x + 8, (int)position.y + 30, 8, 8 };
+		break;
+	case Left:
+		HitBox = { (int)position.x, (int)position.y + 16, 8, 8 };
+		break;
+	case Right:
+		HitBox = { (int)position.x + 30, (int)position.y + 16, 8, 8 };
+		break;
+	}
+
+	collider->rect = HitBox;
+
+	collider->SetPos(HitBox.x, HitBox.y);
+
 	Collider* aux = collider;
 
 	if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
 	{
 		hit = true;
-		LOG("ENEMY HIT");
-		App->player->curr_life_points -= damage;
+		LOG("Player HIT");
+		App->player->HitPlayer(damage);
 		App->particle->DestroyParticle(this);
 	}
 
@@ -312,5 +335,5 @@ bool Enemy_Arrow::Update(float dt)
 	}
 
 
-	return stdUpdate(dt);
+	return true;
 }

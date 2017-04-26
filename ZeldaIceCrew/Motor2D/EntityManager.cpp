@@ -239,3 +239,25 @@ void EntityManager::OnCollision(Collider * c1, Collider * c2)
 	
 }
 
+uint EntityManager::fromEntoPlDir(uint EnDir)
+{
+	uint ret = NULL;
+
+	switch (EnDir) {
+	case 0: // Up
+		ret = 1;
+		break;
+	case 1: // Down
+		ret = 4;
+		break;
+	case 2: // Right
+		ret = 3;
+		break;
+	case 3: // Left
+		ret = 2;
+		break;
+	}
+
+	return ret;
+}
+

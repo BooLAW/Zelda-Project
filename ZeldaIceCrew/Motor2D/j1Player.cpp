@@ -858,6 +858,36 @@ void j1Player::AddWeapon(uint weapon_t)
 
 }
 
+void j1Player::HitPlayer(int dmg)
+{
+	if (App->player->inmortal == false) {
+
+		App->audio->PlayFx(App->player->hurt);
+		App->player->curr_life_points -= dmg;
+
+		switch (curr_dir) {
+		case Up:
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height) == 0)
+				App->player->MovePos(0, -App->map->data.tile_height);
+			break;
+		case Down:
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height) == 0)
+				App->player->MovePos(0, App->map->data.tile_height);
+			break;
+		case Left:
+			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y) == 0)
+				App->player->MovePos(-App->map->data.tile_width, 0);
+			break;
+		case Right:
+			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y) == 0)
+				App->player->MovePos(App->map->data.tile_width, 0);
+			break;
+		}
+
+		App->player->PlayerInmortal(HIT_INM_TIME);
+	}
+}
+
 void j1Player::SetPos(float x, float y)
 {
 	pos.x = x;

@@ -120,7 +120,7 @@ bool Enemy::Move()
 	
 		if (path_to_follow.empty() == false) {
 			iPoint path_t = path_to_follow.begin()._Ptr->_Myval;
-			if (target.y < pos.y && (path_t.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+			if (path_t.y < pos.y && (path_t.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
 				curr_dir = Enemy::EnDirection::Up;
 			else if (path_t.y > pos.y && (path_t.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
 				curr_dir = Enemy::EnDirection::Down;
@@ -1018,6 +1018,9 @@ void BlueArcher::Update(float dt)
 {
 	stdUpdate(dt);
 
+	shoot_time.Start();
+	shoot_time.SetFlag(true);
+
 	fPoint pl_pos = App->player->GetPos();
 	pl_pos.y -= PL_OFFSET_Y / 2;
 
@@ -1051,9 +1054,31 @@ void BlueArcher::Update(float dt)
 			path_to_follow.clear();
 			path_to_follow.push_back(target);
 		}
+
+		if ((pos.x > pl_pos.x - 8 && pos.x < pl_pos.x + 8) || (pos.y > pl_pos.y - 8 && pos.y < pl_pos.y + 8))
+			state = shoot;
+
 		break;
+		state = shoot;
+
 	case shoot:
+		path_to_follow.clear();
+		if (pl_pos.y < pos.y && (pl_pos.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && pl_pos.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+			curr_dir = Enemy::EnDirection::Up;
+		else if (pl_pos.y > pos.y && (pl_pos.x > pos.x - ENEMY_DIR_CHANGE_OFFSET && pl_pos.x < pos.x + ENEMY_DIR_CHANGE_OFFSET))
+			curr_dir = Enemy::EnDirection::Down;
+		else if (pl_pos.x < pos.x)
+			curr_dir = Enemy::EnDirection::Left;
+		else if (pl_pos.x > pos.x)
+			curr_dir = Enemy::EnDirection::Right;
+		
+		if (shoot_time.Read() >= 1000) {
+			App->particle->CreateParticle(p_enarrow, pos.x + 8, pos.y + 16, App->entitymanager->fromEntoPlDir(curr_dir));
+			shoot_time.SetFlag(false);
+		}
+
 		state = moving;
+		
 		break;
 	}
 

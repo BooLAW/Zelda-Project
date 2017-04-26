@@ -11,6 +11,7 @@
 
 enum PARTICLETYPE {
 	p_arrow = 0,
+	p_enarrow,
 	__LAST_PARTICLE
 };
 

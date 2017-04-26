@@ -221,9 +221,12 @@ class BlueArcher : public Enemy {
 	SDL_Rect BArcher_Shoot[EnDirection::LastDir][8];
 
 	j1Timer react_time;
+	j1Timer shoot_time;
 
 	uint range = 5;
 	uint range_limit = 2;
+
+	bool first_shot = true;
 
 };
 
