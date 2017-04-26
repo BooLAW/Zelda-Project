@@ -24,6 +24,7 @@ class Entity;
 
 enum ENEMYTYPE {
 	t_bluesoldier = 0,
+	t_bluearcher,
 	t_redsoldier,
 	t_greensoldier,
 	t_hinox,
@@ -201,6 +202,27 @@ class Hinox : public Enemy {
 public:
 	bool Start();
 	void SetRewards();
+};
+
+class BlueArcher : public Enemy {
+	bool Start();
+	void Update(float dt);
+
+	enum ARCHERSTATE {
+		moving = 0,
+		shoot,
+		last_archerstate
+	}state = moving;
+
+	void Draw();
+
+	Animation shoot_anim;
+
+	SDL_Rect BArcher_Shoot[EnDirection::LastDir][8];
+
+	uint range = 5;
+	uint range_limit = 2;
+
 };
 
 class Rope : public Enemy {

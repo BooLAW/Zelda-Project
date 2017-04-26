@@ -29,6 +29,8 @@ struct Particle
 	Uint32 life = 0;
 	bool fx_played = false;
 
+	uint damage = 0;
+
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect	 g_rect[MAX_FRAMES_PARTICLES];
 
@@ -38,7 +40,10 @@ struct Particle
 	virtual bool Update(float dt);
 	virtual bool stdUpdate(float dt);
 	virtual void CleanUp();
-	virtual void Draw(float dt) {}; 
+	virtual void Draw(float dt) {};
+
+	virtual int CheckSpace(float new_x, float new_y);
+
 };
 
 class ModuleParticles : public j1Module
@@ -52,7 +57,7 @@ public:
 	bool CleanUp();
 
 	Particle* CreateParticle(uint p_type, int x, int y, uint dir);
-	void AddParticle(Particle* particle, COLLIDER_TYPE collider_type, Uint32 life, Uint32 delay = 0);
+	void AddParticle(Particle* particle, COLLIDER_TYPE collider_type, Uint32 life, Uint32 dmg = 0, Uint32 delay = 0);
 	void DestroyParticles();
 	void DestroyParticle(Particle* particle);
 
@@ -74,8 +79,14 @@ struct Arrow : public Particle {
 
 	void Start();
 	bool Update(float dt);
-	int CheckSpace(float new_x, float new_y);
 
+};
+
+struct Enemy_Arrow : public Particle {
+	bool hit = false;
+
+	void Start();
+	bool Update(float dt);
 };
 
 #endif // __MODULEPARTICLES_H__

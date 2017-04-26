@@ -6,6 +6,8 @@
 #include "j1Render.h"
 #include "Log.h"
 
+#define TILE_S 32
+
 enum ENTITYTYPE
 {
 	drop = 0,

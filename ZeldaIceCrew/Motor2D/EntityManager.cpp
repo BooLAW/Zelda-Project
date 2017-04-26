@@ -20,6 +20,9 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	case t_bluesoldier:
 		ret = new BSoldier();
 		break;
+	case t_bluearcher:
+		ret = new BlueArcher();
+		break;
 	case t_redsoldier:
 		ret = new RSoldier();
 		break;

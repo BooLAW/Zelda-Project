@@ -568,6 +568,8 @@ bool Scene::Load_new_map(int id)
 
 									if (strcmp(sub, "t_bluesoldier") == 0)
 										st = t_bluesoldier;
+									if (strcmp(sub, "t_bluearcher") == 0)
+										st = t_bluearcher;
 									if (strcmp(sub, "t_redsoldier") == 0)
 										st = t_redsoldier;
 									if (strcmp(sub, "t_greensoldier") == 0)

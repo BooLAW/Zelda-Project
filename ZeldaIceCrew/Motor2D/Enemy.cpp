@@ -135,14 +135,14 @@ bool Enemy::Attack()
 {
 	bool ret = true;
 
-	if (DmgType[melee] == true) {
-		HitBox->SetPos(pos.x + animations[curr_dir].GetCurrentFrame().w / 6, pos.y + ENEMY_STD_OFFSET_Y);
-	}
+	HitBox->SetPos(pos.x + animations[curr_dir].GetCurrentFrame().w / 6, pos.y + ENEMY_STD_OFFSET_Y);
 
+	if (DmgType[melee] == true) {
 	if (App->player->link_coll != nullptr)
 		if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
 			HitPlayer();
 		}
+	}
 	
 
 	return ret;
@@ -894,7 +894,7 @@ void Rope::Update(float dt)
 	case no_move:
 		walk_timer.Start();
 		walk_timer.SetFlag(true);
-		if (walk_timer.ReadSec() >= 2) {
+		if (walk_timer.ReadSec() >= 1) {
 			target.x = (int)pos.x;
 			target.y = (int)pos.y;
 			dir = rand() % EnDirection::LastDir;
@@ -921,37 +921,13 @@ void Rope::Update(float dt)
 	case moving:
 		walk_timer.Start();
 		walk_timer.SetFlag(true);
-		if (walk_timer.ReadSec() >= 2) {
+		if (walk_timer.ReadSec() >= 1) {
 			walk_timer.SetFlag(false);
+			path_to_follow.clear();
 			state = no_move;
 		}
 
 		break;
-	}
-
-	walk_timer.Start();
-	walk_timer.SetFlag(true);
-	if (walk_timer.ReadSec() >= 2) {
-		target.x = (int)pos.x;
-		target.y = (int)pos.y;
-		dir = rand() % EnDirection::LastDir;
-		switch (dir) {
-		case EnDirection::Up:
-			target.y += 32 * ROPE_JMP;
-			break;
-		case EnDirection::Down:
-			target.y -= 32 * ROPE_JMP;
-			break;
-		case EnDirection::Left:
-			target.x -= 32 * ROPE_JMP;
-			break;
-		case EnDirection::Right:
-			target.x += 32 * ROPE_JMP;
-			break;
-		}
-		LOG("ROPE DIR %d", dir);
-		path_to_follow.push_back(target);
-		walk_timer.SetFlag(false);
 	}
 
 }
@@ -971,5 +947,124 @@ void Rope::Draw()
 	draw_pos.y -= 16;
 
 	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, draw_pos.x, draw_pos.y, draw_rect);
+
+}
+
+bool BlueArcher::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
+
+		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
+
+		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 36, 56 };
+
+		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
+
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
+
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][0]);
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][1]);
+
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][0]);
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][1]);
+
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][0]);
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][1]);
+
+
+	}
+
+	stats.Hp = 1;
+	stats.Speed = 2;
+	stats.Power = 1;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 24, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[projectile] = true;
+
+	AIType = distance;
+
+	state = moving;
+
+	subtype = ENEMYTYPE::t_bluearcher;
+
+	return ret;
+}
+
+void BlueArcher::Update(float dt)
+{
+	stdUpdate(dt);
+
+	fPoint pl_pos = App->player->GetPos();
+	pl_pos.y -= PL_OFFSET_Y / 2;
+
+	//target.x = (int)pl_pos.x;
+	//target.y = (int)pl_pos.y;
+
+	switch (state) {
+	case moving:
+		if (pos.DistanceNoSqrt(pl_pos) < range) {
+			target.x = (int)pl_pos.x;
+			target.y = (int)pl_pos.y;
+			path_to_follow.push_back(target);
+		}
+		//if (pos.DistanceNoSqrt(pl_pos) > range * TILE_S && pos.DistanceNoSqrt(pl_pos) < range * TILE_S - range_limit * TILE_S) {
+		//	if (std::abs(pos.x - pl_pos.x) <= std::abs(pos.y - pl_pos.y)) {
+		//		if (pl_pos.x >= pos.x) {
+		//			target.x = pl_pos.x - TILE_S * range;
+		//		}
+		//		else
+		//			target.x = pl_pos.x + TILE_S * range;
+		//	}
+		//	else {
+		//		if (pl_pos.y >= pos.y) {
+		//			target.y = pl_pos.y - TILE_S * range;
+		//		}
+		//		else
+		//			target.y = pl_pos.y + TILE_S * range;
+		//	}
+		//}
+		//else {
+		//	state = shoot;
+		//}
+		path_to_follow.clear();
+		//path_to_follow.push_back(target);
+		break;
+	case shoot:
+		state = moving;
+		break;
+	}
+
+}
+
+void BlueArcher::Draw()
+{
+
+	SDL_Rect* draw_rect = &animations[curr_dir].GetCurrentFrame();
+	fPoint aux_pos = pos;
+	
+	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, draw_rect);
 
 }
