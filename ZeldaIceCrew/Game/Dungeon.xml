@@ -130,7 +130,6 @@
       <doorways>
         <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
         <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-        <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
         <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
       </doorways>
      </room>
