@@ -9,6 +9,22 @@
 
 struct SDL_Rect;
 
+enum Controls {
+	UP = 0,
+	DOWN,
+	RIGHT,
+	LEFT,
+	MOVE_UP,
+	MOVE_DOWN,
+	MOVE_LEFT,
+	MOVE_RIGHT,
+	ACTION,
+	MENU,
+	WPN_NEXT,
+	WPN_PREV,
+	__LAST_CONTROLS
+};
+
 enum j1EventWindow
 {
 	WE_QUIT = 0,
@@ -68,7 +84,9 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 	std::string GetString();
-
+	void DefaultControls();
+	int controls [__LAST_CONTROLS];
+	
 private:
 
 	bool		windowEvents[WE_COUNT];

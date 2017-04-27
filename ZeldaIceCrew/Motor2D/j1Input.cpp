@@ -42,6 +42,7 @@ bool j1Input::Awake(pugi::xml_node& config)
 bool j1Input::Start()
 {
 	SDL_StopTextInput();
+	DefaultControls();
 	return true;
 }
 
@@ -166,4 +167,46 @@ std::string j1Input::GetString()
 	std::string ret = text;
 	text.shrink_to_fit();
 	return ret;
+}
+
+void j1Input::DefaultControls()
+{
+	for (int i = 0; i < __LAST_CONTROLS; i++) {
+		if (i == MOVE_UP) {
+			controls[i] = SDL_SCANCODE_W;
+		}
+		if (i == MOVE_DOWN) {
+			controls[i] = SDL_SCANCODE_S;
+		}
+		if (i == MOVE_RIGHT) {
+			controls[i] = SDL_SCANCODE_D;
+		}
+		if (i == MOVE_LEFT) {
+			controls[i] = SDL_SCANCODE_A;
+		}
+		if (i == UP) {
+			controls[i] = SDL_SCANCODE_UP;
+		}
+		if (i == DOWN) {
+			controls[i] = SDL_SCANCODE_DOWN;
+		}
+		if (i == RIGHT) {
+			controls[i] = SDL_SCANCODE_RIGHT;
+		}
+		if (i == LEFT) {
+			controls[i] = SDL_SCANCODE_LEFT;
+		}
+		if (i == ACTION) {
+			controls[i] = SDL_SCANCODE_SPACE;
+		}
+		if (i == MENU) {
+			controls[i] = SDL_SCANCODE_TAB;
+		}
+		if (i == WPN_NEXT) {
+			controls[i] = SDL_SCANCODE_E;
+		}
+		if (i == WPN_PREV) {
+			controls[i] = SDL_SCANCODE_Q;
+		}
+	}
 }
