@@ -8,6 +8,8 @@
 #include "j1Collision.h"
 #include "j1Render.h"
 
+#include "j1Player.h"
+
 #include "Log.h"
 
 #include "Entity.h"
@@ -41,6 +43,7 @@ public:
 		return true;
 	}
 
+	bool PreUpdate();
 	bool Update(float dt);
 	void PushEntity(Entity* ent);
 	void DestroyEntities();
@@ -50,12 +53,12 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
+	uint fromEntoPlDir(uint EnDir);
+
 public:
 	Enemy* CreateEnemy(uint subtype);
 	Item* CreateItem(uint subtype);
 	Block* CreateBlock(uint subtype);
-	Doorway* CreateDoorway(uint subtype, uint dir);
-
 private:
 	std::deque<Entity*> entities;
 	j1Timer time;

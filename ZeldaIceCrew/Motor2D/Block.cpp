@@ -21,18 +21,29 @@ bool Block::Start()
 
 }
 
+void Block::CleanUp()
+{
+	if (tex != nullptr)
+		App->tex->UnLoad(tex);
+	if (HitBox != nullptr)
+		HitBox->to_delete = true;
+
+	App->scene_manager->GetCurrentScene()->DestroyBlock(this);
+
+}
+
 void Bush::SetRewards()
 {
 	memset(reward_pool, 0, N_ITEMS);
 
 	// Standard Reward Pool
-	reward_pool[drop_heart] = 5;
+	reward_pool[drop_heart] = 0;
 	reward_pool[drop_potion] = 0;
 	reward_pool[drop_rupee] = 30;
-	reward_pool[drop_fiverupee] = 10;
-	reward_pool[drop_tenrupee] = 5;
+	reward_pool[drop_fiverupee] = 1;
+	reward_pool[drop_tenrupee] = 0;
 
-	SortRewardProbs();
+	//SortRewardProbs();
 
 }
 
@@ -41,20 +52,18 @@ void Pot::SetRewards()
 	memset(reward_pool, 0, N_ITEMS);
 
 	// Standard Reward Pool
-	reward_pool[drop_heart] = 40;
-	reward_pool[drop_potion] = 10;
-	reward_pool[drop_rupee] = 25;
-	reward_pool[drop_fiverupee] = 15;
-	reward_pool[drop_tenrupee] = 10;
+	reward_pool[drop_heart] = 10;
+	reward_pool[drop_potion] = 1;
+	reward_pool[drop_rupee] = 30;
+	reward_pool[drop_fiverupee] = 1;
+	reward_pool[drop_tenrupee] = 0;
 
-	SortRewardProbs();
+	//SortRewardProbs();
 
 }
 
 void Block::Reward()
 {
-
-	srand(time(NULL));
 
 	uint aux = 0;
 	uint prob = (rand() % 100) + 1;
@@ -73,20 +82,19 @@ void Block::Reward()
 
 	if (target != -1) {
 
-		Item* newitem;
-
-		newitem = App->entitymanager->CreateItem(target);
-		if (newitem != nullptr)
-			newitem->pos = { pos.x, pos.y };
+		App->scene_manager->GetCurrentScene()->AddItem(target, room.x, room.y, pos.x - room.x * ROOM_W, pos.y - room.y * ROOM_H);
 
 	}
-	else
-		LOG("NO REWARD FAGGOT");
+	else {}
+		//LOG("NO REWARD FAGGOT");
 
 }
 
 void Block::Update(float dt)
 {
+
+	//LOG("BLOCK UPDATE");
+
 	if(HitBox != nullptr)
 	HitBox->SetPos(pos.x, pos.y + sprites[subtype][idle][0].h - 32);
 
@@ -217,6 +225,25 @@ bool Slab::Start() {
 	return ret;
 }
 
+bool Slab_No_Move::Start()
+{
+	bool ret = true;
+	subtype = slabs_no_move;
+	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
+	anim = idle;
+	{
+		sprites[slabs_no_move][idle][0] = { 0,64,32,32 };
+
+		animations[slabs_no_move][idle].PushBack(sprites[slabs_no_move][idle][0]);
+	}
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
+
+	subtype = slabs_no_move;
+	return ret;
+}
+
+
 bool Statue::Start() {
 	bool ret = true;
 	front = true;
@@ -245,6 +272,24 @@ bool Torch_Bowl::Start() {
 	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
 
 	subtype = torch_bowl;
+	return ret;
+}
+
+bool Slab_Spikes::Start()
+{
+	bool ret = true;
+	subtype = slabs_spikes;
+	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
+	anim = idle;
+	{
+		sprites[slabs_spikes][idle][0] = { 64,50,32,32 };
+
+		animations[slabs_no_move][idle].PushBack(sprites[slabs_spikes][idle][0]);
+	}
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_ENEMY);
+
+	subtype = slabs_no_move;
 	return ret;
 }
 
@@ -325,20 +370,6 @@ void Block::Move() {
 	else
 		moving = false;
 }
-/*
-void Slab::Move() {
-//Changes position, does not require input but movement
-//position
-App->player->action_blit = App->player->Push;
-
-}
-
-void Statue::Move() {
-//Changes position, does not require input but movement
-//position
-App->player->action_blit = App->player->Push;
-
-}*/
 
 void Torch_Bowl::Light() {
 	//changes the spire blitted, from idle to lit
@@ -351,7 +382,7 @@ void Bush::Break() {
 	//triggers break animation (for whatever reason) and calls destructor
 	Reward();
 
-	App->entitymanager->DestroyEnity(this);
+	this->CleanUp();
 
 }
 
@@ -359,7 +390,7 @@ void Pot::Break() {
 	//triggers break animation (for whatever reason) and calls destructor
 	Reward();
 
-	App->entitymanager->DestroyEnity(this);
+	this->CleanUp();
 
 }
 

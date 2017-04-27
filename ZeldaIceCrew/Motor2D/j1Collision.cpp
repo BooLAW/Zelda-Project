@@ -158,7 +158,7 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 		case COLLIDER_ARROW:
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 		case COLLIDER_ENEMY_PROJECTILE:
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);

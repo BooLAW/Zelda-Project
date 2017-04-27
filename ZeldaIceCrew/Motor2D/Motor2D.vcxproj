@@ -51,6 +51,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ShowIncludes>false</ShowIncludes>
+      <AdditionalIncludeDirectories>C:\Users\guillemaj\Documents\GitHub\Zelda-Project\ZeldaIceCrew\Game\Brofiler-1.1.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -84,7 +85,6 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Functions.cpp" />
-    <ClCompile Include="HouseScene.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="j1Collision.cpp" />
@@ -100,8 +100,9 @@
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Player.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="MathHelpers.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="VillageScene.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
@@ -124,7 +125,6 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Functions.h" />
-    <ClInclude Include="HouseScene.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="j1Collision.h" />
@@ -136,7 +136,8 @@
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Player.h" />
     <ClInclude Include="NPC.h" />
-    <ClInclude Include="ShopScene.h" />
+    <ClInclude Include="MathHelpers.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="VillageScene.h" />
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1Audio.h" />

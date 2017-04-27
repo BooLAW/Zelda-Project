@@ -3,9 +3,9 @@
 
 #include "j1App.h"
 #include "EntityManager.h"
-#include "Entity.h"
 #include "j1Collision.h"
 #include "SceneManager.h"
+#include "Entity.h"
 
 #include "Item.h"
 
@@ -18,13 +18,18 @@
 
 #define ENEMY_STD_OFFSET_Y 24
 
+#define ROPE_JMP 5
+
 class Entity;
 
 enum ENEMYTYPE {
 	t_bluesoldier = 0,
+	t_bluearcher,
 	t_redsoldier,
 	t_greensoldier,
 	t_hinox,
+	t_rope,
+	t_GBat,
 	t_boss_ballandchain,
 	__LAST_ENEMYTYPE
 };
@@ -71,13 +76,16 @@ public:
 
 	virtual void Spawn() {}
 
-	virtual void Update(float dt);
+	virtual void stdUpdate(float dt);
+	virtual void Update(float dt) { stdUpdate(dt); };
 
 	virtual bool Move();
 
 	virtual bool Attack();
 	virtual void HitPlayer();
 	virtual void HitPlayer(uint dmg);
+
+	virtual void SetAnimation(SDL_Rect spr[LastDir][2]);
 
 	virtual void Draw();
 
@@ -114,11 +122,11 @@ public:
 	
 	} stats;
 
+	iPoint target;
+
 	ENEMYTYPE subtype;
 	bool DmgType[__LAST_DMGTYPE];
 	AITYPE AIType;
-
-	bool active = false;
 
 	SDL_Rect sprites[EnDirection::LastDir][8];
 	Animation animations[EnDirection::LastDir];
@@ -195,6 +203,61 @@ class Hinox : public Enemy {
 public:
 	bool Start();
 	void SetRewards();
+};
+
+class BlueArcher : public Enemy {
+	bool Start();
+	void Update(float dt);
+
+	enum ARCHERSTATE {
+		moving = 0,
+		shoot,
+		last_archerstate
+	}state = moving;
+
+	void Draw();
+
+	Animation shoot_anim;
+
+	SDL_Rect BArcher_Shoot[EnDirection::LastDir][8];
+
+	j1Timer react_time;
+	j1Timer shoot_time;
+
+	uint range = 5;
+	uint range_limit = 2;
+
+	bool first_shot = true;
+
+};
+
+class Rope : public Enemy {
+	bool Start();
+
+	void Update(float dt);
+
+	void Draw();
+
+	enum ROPESTATE{
+		moving = 0,
+		no_move,
+		last_ropestate
+	}state = no_move;
+
+	fPoint aux_pos;
+
+	Animation nm_anim;
+
+	SDL_Rect RopeSprites_m[EnDirection::LastDir][2];
+	SDL_Rect RopeSprites_nm[EnDirection::LastDir][2];
+
+	j1Timer walk_timer;
+
+};
+
+class GreyBat : public Enemy {
+public:
+	bool Start();
 };
 
 #endif // !__ENEMY_H__

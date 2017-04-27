@@ -109,6 +109,12 @@ bool HUD::Start()
 	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
 	pl_weapon->max_prior = true;
 
+	weapons = (Window*)App->gui->CreateElement(GuiType::window);
+	weapons->active = false;
+	weapons->pos = { inv->pos.x+10+inv->texture_rect.w,inv->pos.y*2 };
+	weapons->texture_rect = { 498,5,218,214};
+	weapons->max_prior = true;
+
 
 
 	GenerateHP();
@@ -138,6 +144,7 @@ bool HUD::Update(float dt)
 	speed_num->str = std::to_string(App->player->pl_speed.x);
 	power_num->str = std::to_string(App->player->power);
 	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
+
 	if (inv->active) {
 		descriptions_rect->active = true;
 		stats_rect->active = true;
@@ -145,6 +152,7 @@ bool HUD::Update(float dt)
 		speed_num->active = true;
 		power->active = true;
 		power_num->active = true;
+		weapons->active = true;
 		if(!inv->Empty()){
 			if (inv->Selected() != nullptr) {
 				item_description->active = true;
@@ -162,6 +170,7 @@ bool HUD::Update(float dt)
 		speed_num->active = false;
 		power->active = false;
 		power_num->active = false;
+		weapons->active = false;
 	}
 	UpdateHP();
 
@@ -247,5 +256,24 @@ void HUD::AddItem(Item* obj)
 		else {
 			App->hud->inv->AddElement(img);
 		}
+	}
+}
+
+void HUD::AddWeapon(Item* wep)
+{
+	if (wep != nullptr) {
+		GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
+		img->texture_rect = wep->UI_rect;
+		img->texture = items;
+		img->active = false;
+		//img->obj = wep;
+
+		/*if (inv->Empty()) {
+			inv->Start_Sel({ 594,402,47,47 });
+			App->hud->weapons->AddElement(img);
+		}*/
+		
+			App->hud->weapons->AddElement(img);
+		
 	}
 }

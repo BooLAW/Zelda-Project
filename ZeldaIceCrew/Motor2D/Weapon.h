@@ -4,6 +4,7 @@
 
 #include "p2Defs.h"
 #include "j1Player.h"
+#include "ModuleParticles.h"
 
 enum WEAPONTYPE {
 	t_noweapon = 0,
@@ -38,13 +39,16 @@ public:
 	virtual void SetDir(uint dir) {
 		curr_dir = dir;
 	}
-	virtual ITEMTYPE Subtype();
+	virtual uint Subtype();
+
 public:
 	SDL_Texture* graphics;
 	SDL_Rect sprites[Direction::LastDir][MAX_FRAMES];
 	Animation anim[Direction::LastDir];
 	SDL_Texture*	UI_tex = nullptr;
 	SDL_Rect		UI_rect;
+
+	uint subtype;
 
 
 protected:
@@ -61,14 +65,12 @@ struct Sword : public Weapon {
 public:
 	void Start();
 	void Attack();
-	ITEMTYPE Subtype();
 };
 
 struct Bow : public Weapon {
 public:
 	void Start();
 	void Attack();
-	ITEMTYPE Subtype();
 };
 
 #endif //!__WEAPON_H__

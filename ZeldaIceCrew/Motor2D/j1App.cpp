@@ -4,6 +4,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Functions.h"
+#include <time.h>
 
 #include "j1Window.h"
 #include "j1Input.h"
@@ -95,6 +96,8 @@ bool j1App::Awake()
 {
 	PERF_START(ptimer);
 
+	srand(time(NULL));
+
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
@@ -131,6 +134,8 @@ bool j1App::Awake()
 // Called before the first frame
 bool j1App::Start()
 {
+	BROFILER_CATEGORY("AddModule", Profiler::Color::Gray)
+
 	PERF_START(ptimer);
 	bool ret = true;
 	std::list<j1Module*>::iterator item;
@@ -153,6 +158,8 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
+	BROFILER_CATEGORY("Update", Profiler::Color::Orange)
+
 	bool ret = true;
 	PrepareUpdate();
 
@@ -195,6 +202,8 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+	BROFILER_CATEGORY("Preupdate", Profiler::Color::Brown)
+
 	frame_count++;
 	last_sec_frame_count++;
 
@@ -205,6 +214,8 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
+	BROFILER_CATEGORY("FinishUpdate", Profiler::Color::Magenta)
+
 	if(want_to_save == true)
 		SavegameNow();
 

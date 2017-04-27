@@ -1,14 +1,18 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "j1App.h"
 #include "j1Textures.h"
+#include "MathHelpers.h"
 #include "j1Render.h"
+#include "Log.h"
+
+#define TILE_S 32
 
 enum ENTITYTYPE
 {
 	drop = 0,
 	item,
+	weapon,
 	block,
 	enemy,
 	bomb,
@@ -23,10 +27,7 @@ public:
 	Entity() {};
 	virtual ~Entity() {};
 	virtual void Update(float dt) {};
-	virtual void CleanUp() {
-		if(tex != nullptr)
-			App->tex->UnLoad(tex);
-	}
+	virtual void CleanUp();
 	virtual void Draw(float dt) {};
 
 
@@ -47,19 +48,24 @@ public:
 		rect = rectangle;
 	}
 
-	virtual bool CheckSpace(float new_x, float new_y);
+	virtual int CheckSpace(float new_x, float new_y);
 
 protected:
-	SDL_Texture* tex;
+	SDL_Texture* tex = nullptr;
 	SDL_Rect rect;
 	bool inverse_draw = false;
 
 
 public:
+	bool to_delete = false;
+
+	bool active = true;
+
 	Collider* HitBox = nullptr;
 	fPoint pos;
 	uint type;
 
+	iPoint room;
 
 };
 

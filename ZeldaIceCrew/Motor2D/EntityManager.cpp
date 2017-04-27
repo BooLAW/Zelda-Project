@@ -1,7 +1,4 @@
 #include "EntityManager.h"
-#include "j1Player.h"
-#include "p2Log.h"
-#include "j1Render.h"
 
 //Constructor and destructor
 EntityManager::EntityManager() {
@@ -17,11 +14,14 @@ EntityManager::~EntityManager() {
 Enemy * EntityManager::CreateEnemy(uint subtype)
 {
 	Enemy* ret = nullptr;
-	LOG("CREATE ENEMY");
-	LOG("SUBT: %d", subtype);
+	//LOG("CREATE ENEMY");
+	//LOG("SUBT: %d", subtype);
 	switch (subtype) {
 	case t_bluesoldier:
 		ret = new BSoldier();
+		break;
+	case t_bluearcher:
+		ret = new BlueArcher();
 		break;
 	case t_redsoldier:
 		ret = new RSoldier();
@@ -31,6 +31,12 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 		break;
 	case t_hinox:
 		ret = new Hinox();
+		break;
+	case t_rope:
+		ret = new Rope();
+		break;
+	case t_GBat:
+		ret = new GreyBat();
 		break;
 	case t_boss_ballandchain:
 		ret = new BossChainBall();
@@ -46,7 +52,7 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 
 	App->entitymanager->PushEntity(ret);
 
-	LOG("CREATE ENEMY");
+	//LOG("CREATE ENEMY");
 
 	return ret;
 }
@@ -94,10 +100,10 @@ Item * EntityManager::CreateItem(uint subtype)
 		break;
 	case weapon_sword:
 		ret = new ItemSword();
-		ret->type = item;
+		ret->type = weapon;
 	case weapon_bow:
 		ret = new ItemBow();
-		ret->type = item;
+		ret->type = weapon;
 	default:
 		LOG("Unknown Item Type: %d", subtype);
 		break;
@@ -137,6 +143,12 @@ Block * EntityManager::CreateBlock(uint type)
 		case slabs:
 			ret = new Slab();
 			break;
+		case slabs_no_move :
+			ret = new Slab_No_Move();
+			break;
+		case slabs_spikes:
+			ret = new Slab_No_Move();
+			break;
 		default:
 			LOG("Unknown Block Type: %d", type);
 			break;
@@ -152,12 +164,33 @@ Block * EntityManager::CreateBlock(uint type)
 	return ret;
 }
 
+
+
+bool EntityManager::PreUpdate()
+{
+
+	for (uint i = 0; i < entities.size(); i++) {
+		if (entities[i] != nullptr && entities[i]->to_delete == true) {
+			entities[i]->to_delete = false;
+			DestroyEnity(entities[i]);
+		}
+	}
+
+	return true;
+}
+
 bool EntityManager::Update(float dt) {
 
+	//LOG("ENTITY UPDT START");
+	if(entities.empty() == false)
 	for (int i = 0; i < entities.size(); i++) {
-		if(entities[i] != nullptr)
-			entities[i]->Update(dt);
+		if (entities[i] != nullptr) {
+			//LOG("ENTITY UPDATE %d", i);
+			if(entities[i]->active == true)
+				entities[i]->Update(dt);
+		}
 	}
+	//LOG("ENTITY UPDT END");
 
 
 	return true;
@@ -176,8 +209,8 @@ void EntityManager::DestroyEntities()
 {
 	for (uint i = 0; i < entities.size(); i++) {
 		if (entities[i] != nullptr) {
-			entities[i]->CleanUp();
-			delete entities[i];
+			DestroyEnity(entities[i]);
+			//RELEASE(entities[i]);
 		}
 	}
 }
@@ -185,16 +218,51 @@ void EntityManager::DestroyEntities()
 void EntityManager::DestroyEnity(Entity * ent)
 {
 
-	if(ent != nullptr)
-		ent->CleanUp();
+	if (ent != nullptr) {
 
-	std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
-	//RELEASE(ent);
-	entities.erase(aux);
+			LOG("ENTITY CLEAR");
+			std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+				if (aux != entities.end()) {
+					entities.erase(aux);
+				}
+			LOG("ENTITY TYPE %d", ent->type);
+			ent->CleanUp();
+			LOG("ENT CLEAR");
+			//std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
+			//if(ent != nullptr)
+			//	RELEASE(ent);
+			//
+			//ent = nullptr;
+
+	}
+
+	LOG("ENTITY DESTROYED");
 }
 
 void EntityManager::OnCollision(Collider * c1, Collider * c2)
 {
 	
+}
+
+uint EntityManager::fromEntoPlDir(uint EnDir)
+{
+	uint ret = NULL;
+
+	switch (EnDir) {
+	case 0: // Up
+		ret = 1;
+		break;
+	case 1: // Down
+		ret = 4;
+		break;
+	case 2: // Right
+		ret = 3;
+		break;
+	case 3: // Left
+		ret = 2;
+		break;
+	}
+
+	return ret;
 }
 

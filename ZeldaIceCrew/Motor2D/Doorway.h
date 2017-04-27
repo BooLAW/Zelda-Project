@@ -3,14 +3,14 @@
 
 #include "EntityManager.h"
 #include "j1Collision.h"
+#include "Entity.h"
 
-#define DOORWAY_UP		iPoint( { 32 * 16, 32 * 2  } )
-#define DOORWAY_DOWN	iPoint( { 32 * 16, 32 * 16 } )
-#define DOORWAY_LEFT	iPoint( { 32 * 2 - 8 , 32 * 8 + 8  } )
-#define DOORWAY_RIGHT	iPoint( { 32 * 30 + 8, 32 * 8 + 8  } )
+
+#define DOORWAY_UP		iPoint( { 32 * 15, 32 * 2  } )
+#define DOORWAY_DOWN	iPoint( { 32 * 15, 32 * 16 } )
+#define DOORWAY_LEFT	iPoint( { 32 * 2 - 16 , 32 * 8 + 16  } )
+#define DOORWAY_RIGHT	iPoint( { 32 * 30 + 16, 32 * 8 + 16  } )
 #define DOORWAY_SIZE	iPoint( { 32, 16 } )
-
-class Entity;
 
 class Scene;
 
@@ -31,7 +31,7 @@ public:
 
 	virtual void SetTarget(Scene*) {};
 
-	virtual void SetRoomPos(int x, int y) {
+	virtual void SetPos(int x, int y) {
 		pos.x = x;
 		pos.y = y;
 	};
@@ -54,7 +54,7 @@ class DwDungeon : public Doorway {
 public:
 	bool Cross();
 
-	void SetRoomPos(int x, int y);
+	void SetPos(int x, int y);
 };
 
 class DwScene : public Doorway {
@@ -66,6 +66,18 @@ class DwScene : public Doorway {
 
 private:
 	Scene* target;
+};
+
+class DwCam : public Doorway {
+public:
+	bool Cross();
+
+	void SetTargetPos(float x, float y) { target = { x, y }; };
+	fPoint GetTargetPos() { return target; };
+
+private:
+	fPoint target;
+
 };
 
 #endif // !_DOORWAY_H__

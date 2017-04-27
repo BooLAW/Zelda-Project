@@ -71,13 +71,12 @@ bool Npc::Spawn(std::string file, fPoint pos, NPC_TYPE type)
 	return ret;
 }
 
-/*bool Npc::Update(float dt)
+void Npc::Update(float dt)
 {
-	switch (actionState)
+	/*switch (actionState)
 	{
 	case IDLE:
 		break;
-	}
-	return false;
-}*/
+	}*/
+}
 

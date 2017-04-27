@@ -13,6 +13,8 @@ enum BLOCKTYPE {
 	torch_bowl,
 	torch_pillar,
 	slabs,
+	slabs_no_move,
+	slabs_spikes,
 	last_
 };
 
@@ -46,6 +48,8 @@ public:
 
 
 	virtual bool Start();
+
+	virtual void CleanUp();
 
 	virtual void Spawn() {};
 
@@ -86,15 +90,6 @@ public:
 				reward_pool[i] = (reward_pool[i] * 100) / total;
 			}
 		}
-
-	}
-
-	virtual void CleanUp() {
-		if (tex != nullptr)
-			App->tex->UnLoad(tex);
-
-		if (HitBox != nullptr)
-			HitBox->to_delete = true;
 
 	}
 
@@ -183,6 +178,18 @@ class Slab : public Block {
 
 };
 
+
+
+
+class Slab_No_Move : public Block {
+	bool Start();
+
+};
+
+class Slab_Spikes : public Block {
+	bool Start();
+
+};
 
 
 #endif // !__BLOCK_H__

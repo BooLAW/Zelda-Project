@@ -4,14 +4,10 @@
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
-    <ClCompile Include="j1Map.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
-    <ClCompile Include="HouseScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -22,9 +18,6 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="DungeonScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="ShopScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Block.cpp">
@@ -96,6 +89,11 @@
     <ClCompile Include="NPC.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="MathHelpers.cpp" />
+    <ClCompile Include="j1Map.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -111,9 +109,6 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="HouseScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -124,9 +119,6 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="DungeonScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="ShopScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Block.h">
@@ -204,6 +196,10 @@
     <ClInclude Include="NPC.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MathHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

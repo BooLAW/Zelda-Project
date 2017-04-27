@@ -23,15 +23,6 @@ public:
 	// Called before the first frame
 	bool Start();
 
-	// Called before all Updates
-	bool PreUpdate();
-
-	// Called each loop iteration
-	bool Update(float dt);
-
-	// Called before all Updates
-	bool PostUpdate();
-
 public:
 	bool to_house = false;
 	bool to_dungeon = false;
@@ -41,10 +32,6 @@ private:
 	SDL_Texture* debug_tex;
 	
 	bool round02 = false;
-
-
-
-
 
 };
 

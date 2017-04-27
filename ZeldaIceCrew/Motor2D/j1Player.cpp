@@ -7,8 +7,8 @@
 #include "Scene.h"
 #include "DungeonScene.h"
 #include "VillageScene.h"
-#include "ShopScene.h"
-#include "HouseScene.h"
+#include "MathHelpers.h"
+
 j1Player::j1Player()
 {
 }
@@ -20,7 +20,7 @@ j1Player::~j1Player()
 bool j1Player::Awake()
 {
 	bool ret = true;
-	LOG("Player Awake Start");
+	//LOG("Player Awake Start");
 
 	return ret;
 }
@@ -554,6 +554,7 @@ bool j1Player::Start()
 
 	AddWeapon(t_sword);
 
+
 	curr_weapon = weapons.begin()._Ptr->_Myval;
 	for (int i = 0; i < LastDir; i++) {
 		animations[Weapon_atk][i] = curr_weapon->anim[i];
@@ -575,10 +576,19 @@ bool j1Player::Update(float dt)
 {
 	bool ret = true;
 	
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		if (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene) {
+			App->scene_manager->toChangeScene((Scene*)App->scene_manager->village_scene);
+		}else
+		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
+	}
+
+	Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
+
 	if(App->debug_mode == true)
 		if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
-			if (App->scene_manager->GetCurrentScene()->enemies.empty() == false) {
-				for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->enemies.end(); it++) {
+			if (c_r->enemies.empty() == false) {
+				for (std::list<Enemy*>::iterator it = c_r->enemies.begin(); it != c_r->enemies.end(); it++) {
 					if (it._Ptr->_Myval != nullptr)
 						it._Ptr->_Myval->Hit(Down, 9999);
 				}
@@ -844,9 +854,40 @@ void j1Player::AddWeapon(uint weapon_t)
 		//if (std::find(weapons.begin(), weapons.end(), w) != weapons.end()) {
 			w->Start();
 			weapons.push_back(w);
+		
 		//}
 	}
 
+}
+
+void j1Player::HitPlayer(int dmg)
+{
+	if (App->player->inmortal == false) {
+
+		App->audio->PlayFx(App->player->hurt);
+		App->player->curr_life_points -= dmg;
+
+		switch (curr_dir) {
+		case Up:
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height) == 0)
+				App->player->MovePos(0, -App->map->data.tile_height);
+			break;
+		case Down:
+			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height) == 0)
+				App->player->MovePos(0, App->map->data.tile_height);
+			break;
+		case Left:
+			if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y) == 0)
+				App->player->MovePos(-App->map->data.tile_width, 0);
+			break;
+		case Right:
+			if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y) == 0)
+				App->player->MovePos(App->map->data.tile_width, 0);
+			break;
+		}
+
+		App->player->PlayerInmortal(HIT_INM_TIME);
+	}
 }
 
 void j1Player::SetPos(float x, float y)
@@ -878,18 +919,8 @@ Point<float> j1Player::GetPos()
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_HOUSE && alive == true)
-	{
-		App->scene_manager->toChangeScene(App->scene_manager->village_scene);
-		App->scene_manager->house_scene->to_overworld_house = true;
-		App->player->SetPos(370, 1720);
-	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_OVERWORLD_SHOP && alive == true)
-	{
-		App->scene_manager->toChangeScene(App->scene_manager->village_scene);
-		App->scene_manager->shop_scene->to_overworld_shop = true;
-		App->player->SetPos(850, 850);
-	}
+	
+
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_DUNGEON && alive == true)
 	{
 		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
@@ -915,17 +946,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		App->player->pos.x += ROOM_CHANGE_X;
 		App->player->room.x++;
 	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_SHOP && alive == true)
-	{
-		App->scene_manager->toChangeScene(App->scene_manager->shop_scene);
-		App->scene_manager->village_scene->to_shop = true;
-	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_HOUSE && alive == true)
-	{
-		App->scene_manager->toChangeScene(App->scene_manager->house_scene);
-		App->scene_manager->village_scene->to_house = true;
-	}
-
 	// Hit collision
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
 	{
@@ -967,25 +987,25 @@ void j1Player::PlayerInmortal(float time)
 	inmortal_timer.Start();
 }
 
-bool j1Player::CheckSpace(float new_x, float new_y)
+int j1Player::CheckSpace(float new_x, float new_y)
 {
-	bool ret = true;
+	int ret = true;
 
 	// TileCheck
-	ret = !App->map->TileCheck(new_x, new_y);
-
-	if (ret != false) {
+	if(App->map->active)
+	 ret = App->map->TileCheck(new_x, new_y);
+	if (ret != 1) {
 		SDL_Rect r = mov_coll->rect;
 		r.x = new_x;
 		r.y = new_y;
 
-		Scene* scene = App->scene_manager->GetCurrentScene();
+		Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
 
 		// Enemy Check
 		if (inmortal == false) {
-			for (std::list<Enemy*>::iterator it = scene->enemies.begin(); it != scene->enemies.end(); it++) {
-				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
-					ret = false;
+			for (std::list<Enemy*>::iterator it = c_r->enemies.begin(); it != c_r->enemies.end(); it++) {
+				if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
+					ret = 1;
 					break;
 				}
 			}
@@ -993,9 +1013,9 @@ bool j1Player::CheckSpace(float new_x, float new_y)
 
 		// Block Check
 		if (ret != false) {
-			for (std::list<Block*>::iterator it = scene->blocks.begin(); it != scene->blocks.end(); it++) {
-				if (scene->IsInside(r, it._Ptr->_Myval->HitBox->rect) == true) {
-					ret = false;
+			for (std::list<Block*>::iterator it = c_r->blocks.begin(); it != c_r->blocks.end(); it++) {
+				if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
+					ret = 1;
 					break;
 				}
 			}
@@ -1035,7 +1055,7 @@ void j1Player::Movement()
 	//Movement
 	if(App->player->alive){
 		if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
-			if (CheckSpace(pos.x - pl_speed.x, pos.y - pl_speed.y)) //change dir
+			if (CheckSpace(pos.x - pl_speed.x, pos.y - pl_speed.y) == 0) //change dir
 			{
 				walk_dir = Up_L;
 				pos.y -= pl_speed.y * sqrt(2) / 2;
@@ -1045,7 +1065,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
-			if (CheckSpace(pos.x - pl_speed.x, (pos.y + 34) + pl_speed.y)) //change dir
+			if (CheckSpace(pos.x - pl_speed.x, (pos.y + 34) + pl_speed.y) == 0) //change dir
 			{
 				walk_dir = Down_L;
 				pos.y += pl_speed.y * sqrt(2) / 2;
@@ -1056,7 +1076,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
-			if (CheckSpace((pos.x + 32) + pl_speed.x, (pos.y + 32) + pl_speed.y))//change dir
+			if (CheckSpace((pos.x + 32) + pl_speed.x, (pos.y + 32) + pl_speed.y) == 0)//change dir
 			{
 				walk_dir = Down_R;
 				pos.y += pl_speed.y * sqrt(2) / 2;
@@ -1067,7 +1087,7 @@ void j1Player::Movement()
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
-			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y - pl_speed.y))//change dir
+			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y - pl_speed.y) == 0)//change dir
 			{
 				walk_dir = Up_R;
 				pos.y -= pl_speed.y * sqrt(2) / 2;
@@ -1077,7 +1097,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_W)) {
-			if (CheckSpace(pos.x, pos.y - pl_speed.y))
+			if (CheckSpace(pos.x, pos.y - pl_speed.y) == 0)
 			{
 				pos.y -= pl_speed.y;
 			}
@@ -1090,7 +1110,7 @@ void j1Player::Movement()
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A)) {
-			if (CheckSpace(pos.x - pl_speed.x, pos.y))
+			if (CheckSpace(pos.x - pl_speed.x, pos.y) == 0)
 			{
 				pos.x -= pl_speed.x;
 			}
@@ -1103,7 +1123,7 @@ void j1Player::Movement()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S))
 		{
-			if (CheckSpace(pos.x, (pos.y+32) + pl_speed.y))
+			if (CheckSpace(pos.x, (pos.y+32) + pl_speed.y) == 0)
 			{
 				pos.y += pl_speed.y;
 			}
@@ -1116,10 +1136,10 @@ void j1Player::Movement()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D))
 		{
-			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y))
+			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y) == 0)
 			{
 				pos.x += pl_speed.x;
-			}
+			}	
 			if (anim_override == false)
 				action_blit = Walk;
 			if (dir_override == false) {
