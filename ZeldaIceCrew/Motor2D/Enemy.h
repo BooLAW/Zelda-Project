@@ -76,6 +76,8 @@ public:
 
 	virtual void Spawn() {}
 
+	virtual uint GetPlayerDirection();
+
 	virtual void stdUpdate(float dt);
 	virtual void Update(float dt) { stdUpdate(dt); };
 
@@ -260,7 +262,7 @@ class Geldman : public Enemy {
 	void Draw();
 	void Update(float dt);
 
-	const int time_moving = 500;
+	const int time_moving = 3500;
 
 	enum GELDMANSTATE {
 		appear = 0,

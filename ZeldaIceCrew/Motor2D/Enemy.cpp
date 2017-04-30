@@ -45,6 +45,32 @@ void Enemy::SetRewards()
 
 }
 
+uint Enemy::GetPlayerDirection()
+{
+	uint dir = NULL;
+
+	fPoint p = App->player->pos;
+
+	if (p.x < pos.x && p.y > pos.y)
+		dir = Direction::Down_L;
+	if (p.x < pos.x && p.y == pos.y)
+		dir = Direction::Left;
+	if (p.x < pos.x && p.y < pos.y)
+		dir = Direction::Up_L;
+	if (p.x == pos.x && p.y > pos.y)
+		dir = Direction::Down;
+	if (p.x == pos.x && p.y < pos.y)
+		dir = Direction::Up;
+	if (p.x > pos.x && p.y > pos.y)
+		dir = Direction::Down_R;
+	if (p.x > pos.x && p.y == pos.y)
+		dir = Direction::Right;
+	if (p.x > pos.x && p.y < pos.y)
+		dir = Direction::Up_R;
+
+	return dir;
+}
+
 void Enemy::stdUpdate(float dt)
 {
 	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
@@ -1134,7 +1160,7 @@ bool Geldman::Start()
 	}
 
 	stats.Hp = 3;
-	stats.Speed = 5;
+	stats.Speed = 4;
 	stats.Power = 1;
 
 	stats.Flying = false;
@@ -1169,7 +1195,7 @@ void Geldman::Update(float dt)
 	fPoint p_pos = App->player->pos;
 
 	SDL_Rect p_rect;
-	SDL_Rect en_rect = { 0, 0, 1000, 1000 };
+	SDL_Rect en_rect = { 0, 0, 500, 500 };
 
 	switch (state) {
 	case appear_start:
@@ -1186,8 +1212,44 @@ void Geldman::Update(float dt)
 		}
 		break;
 	case appear:
-		target.x = (int)App->player->pos.x;
-		target.y = (int)App->player->pos.y;
+		switch (GetPlayerDirection()) {
+		case Direction::Up:
+			target.x = (int)pos.x;
+			target.y = (int)pos.y - 9999;
+			break;
+		case Direction::Down:
+			target.x = (int)pos.x;
+			target.y = (int)pos.y + 9999;
+			break;
+		case Direction::Left:
+			target.x = (int)pos.x - 9999;
+			target.y = (int)pos.y;
+			break;
+		case Direction::Right:
+			target.x = (int)pos.x + 9999;
+			target.y = (int)pos.y;
+			break;
+		case Direction::Down_L:
+			target.x = (int)pos.x - 9999;
+			target.y = (int)pos.y + 9999;
+			break;
+		case Direction::Down_R:
+			target.x = (int)pos.x + 9999;
+			target.y = (int)pos.y + 9999;
+			break;
+		case Direction::Up_R:
+			target.x = (int)pos.x + 9999;
+			target.y = (int)pos.y - 9999;
+			break;
+		case Direction::Up_L:
+			target.x = (int)pos.x - 9999;
+			target.y = (int)pos.y - 9999;
+			break;
+		default:
+			target.x = (int)pos.x;
+			target.y = (int)pos.y;
+			break;
+		}
 		path_to_follow.push_back(target);
 		state = move;
 		break;
