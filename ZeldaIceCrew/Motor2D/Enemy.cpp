@@ -1093,3 +1093,117 @@ void BlueArcher::Draw()
 	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, draw_rect);
 
 }
+
+bool Geldman::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+		sprites[Enemy::EnDirection::Down][0] = { 30, 251, 44, 68 };
+		sprites[Enemy::EnDirection::Down][1] = { 132, 249, 44, 70 };
+
+		sprites[Enemy::EnDirection::Up][0] = { 30, 357, 44, 52 };
+		sprites[Enemy::EnDirection::Up][1] = { 132, 357, 44, 52 };
+
+		sprites[Enemy::EnDirection::Left][0] = { 214, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Left][1] = { 316, 465, 64, 54 };
+
+		sprites[Enemy::EnDirection::Right][0] = { 30, 465, 64, 54 };
+		sprites[Enemy::EnDirection::Right][1] = { 132, 465, 64, 54 };
+
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
+
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][0]);
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][1]);
+
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][0]);
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][1]);
+
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][0]);
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][1]);
+
+
+	}
+
+	stats.Hp = 3;
+	stats.Speed = 5;
+	stats.Power = 1;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 36, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[melee] = true;
+
+	AIType = path;
+
+	subtype = ENEMYTYPE::t_geldman;
+
+	return ret;
+}
+
+void Geldman::Draw()
+{
+}
+
+void Geldman::Update(float dt)
+{
+
+	SDL_Rect c_r = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->room_rect;
+
+	fPoint app_pos;
+
+	fPoint p_pos = App->player->pos;
+
+	SDL_Rect p_rect;
+	SDL_Rect en_rect = { 0, 0, 1000, 1000 };
+
+	switch (state) {
+	case appear_start:
+		app_pos.x = rand() % en_rect.w + (int)(p_pos.x - en_rect.w /2);
+		app_pos.y = rand() % en_rect.h + (int)(p_pos.y - en_rect.h /2);
+		LOG("APPEAR POS: %f %f", app_pos.x, app_pos.y);
+		if (!(CheckSpace(app_pos.x, app_pos.y) != 0 || App->scene_manager->GetCurrentScene()->GetCurrentRoom()->isInside({ (int)app_pos.x, (int)app_pos.y, 0, 0 }) == false)) {
+			SDL_Rect en_aux = { app_pos.x, app_pos.y, 1, 1 };
+			p_rect = {(int)p_pos.x - 100, (int)p_pos.y - 100, 132, 148 };
+			if (CheckIntersec(en_aux, p_rect) == false) {
+				pos = app_pos;
+				state = appear;
+			}
+		}
+		break;
+	case appear:
+		target.x = (int)App->player->pos.x;
+		target.y = (int)App->player->pos.y;
+		path_to_follow.push_back(target);
+		state = move;
+		break;
+	case move:
+		move_time.Start();
+		move_time.SetFlag(true);
+		if (move_time.Read() >= time_moving) {
+			state = disappear;
+			move_time.SetFlag(false);
+		}
+		break;
+	case disappear:
+		path_to_follow.clear();
+		state = appear_start;
+		break;
+	}
+
+	stdUpdate(dt);
+}

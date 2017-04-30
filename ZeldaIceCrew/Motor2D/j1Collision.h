@@ -41,6 +41,8 @@ struct Collider
 	COLLIDER_TYPE type;
 	j1Module* callback = nullptr;
 
+	bool active = true;
+
 	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, j1Module* callback = nullptr) :
 		rect(rectangle),
 		type(type),

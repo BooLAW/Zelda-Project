@@ -29,6 +29,7 @@ enum ENEMYTYPE {
 	t_greensoldier,
 	t_hinox,
 	t_rope,
+	t_geldman,
 	t_boss_ballandchain,
 	__LAST_ENEMYTYPE
 };
@@ -251,6 +252,24 @@ class Rope : public Enemy {
 	SDL_Rect RopeSprites_nm[EnDirection::LastDir][2];
 
 	j1Timer walk_timer;
+
+};
+
+class Geldman : public Enemy {
+	bool Start();
+	void Draw();
+	void Update(float dt);
+
+	const int time_moving = 500;
+
+	enum GELDMANSTATE {
+		appear = 0,
+		appear_start,
+		disappear,
+		move
+	}state = appear_start;
+
+	j1Timer move_time;
 
 };
 
