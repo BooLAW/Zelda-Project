@@ -135,19 +135,19 @@ bool Enemy::Move()
 				diff_y = -diff_y;
 			}
 
-			LOG("DIFF %f %f", diff_x, diff_y);
+			LOG("DIFF %f %f", diff_y, diff_x);
 
-			angle = RadtoDeg(atan(diff_y/diff_x));
+			angle = (atan2(diff_y, diff_x));
 
 			LOG("ANGLE %d", angle);
 			
 			fPoint aux_s;
 
 			if (path_to_follow.begin()._Ptr->_Myval.x >= pos.x) {
-				aux_s = { stats.Speed * (float)cos((double)angle), -stats.Speed * (float)sin((double)angle) };
+				aux_s = { -stats.Speed * (float)cos((double)angle), stats.Speed * (float)sin((double)angle) };
 			}
 			else
-				aux_s = { -stats.Speed * (float)cos((double)angle), stats.Speed * (float)sin((double)angle) };
+				aux_s = { stats.Speed * (float)cos((double)angle), -stats.Speed * (float)sin((double)angle) };
 
 			LOG("SPEEDS %f %f",aux_s.x, aux_s.y);
 			LOG("TARGET %d %d", path_to_follow.begin()._Ptr->_Myval.x, path_to_follow.begin()._Ptr->_Myval.y);
@@ -1240,7 +1240,7 @@ void Geldman::Update(float dt)
 	fPoint p_pos = App->player->pos;
 
 	SDL_Rect p_rect;
-	SDL_Rect en_rect = { 0, 0, 500, 500 };
+	SDL_Rect en_rect = { 0, 0, 250, 250 };
 
 	switch (state) {
 	case appear_start:
@@ -1262,16 +1262,14 @@ void Geldman::Update(float dt)
 	case move:
 		move_time.Start();
 		move_time.SetFlag(true);
-		target.x = (int)App->player->pos.x;
-		target.y = (int)App->player->pos.y;
-		path_to_follow.clear();
-		path_to_follow.push_back(target);
+		AIType = chase;
 		if (move_time.Read() >= time_moving) {
 			state = disappear;
 			move_time.SetFlag(false);
 		}
 		break;
 	case disappear:
+		AIType = no_move;
 		path_to_follow.clear();
 		state = appear_start;
 		break;
