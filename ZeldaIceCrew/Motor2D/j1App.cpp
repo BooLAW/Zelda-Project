@@ -159,7 +159,7 @@ bool j1App::Start()
 bool j1App::Update()
 {
 	BROFILER_CATEGORY("Update", Profiler::Color::Orange)
-
+	
 	bool ret = true;
 	PrepareUpdate();
 
@@ -258,13 +258,15 @@ bool j1App::PreUpdate()
 
 	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = (*item);
+		if ((*item)->pause == false) {
+			pModule = (*item);
 
-		if(pModule->active == false) {
-			continue;
+			if (pModule->active == false) {
+				continue;
+			}
+
+			ret = (*item)->PreUpdate();
 		}
-
-		ret = (*item)->PreUpdate();
 	}
 
 	return ret;
@@ -278,13 +280,15 @@ bool j1App::DoUpdate()
 
 	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = (*item);
+		if ((*item)->pause == false) {
+			pModule = (*item);
 
-		if(pModule->active == false) {
-			continue;
+			if (pModule->active == false) {
+				continue;
+			}
+
+			ret = (*item)->Update(dt);
 		}
-
-		ret = (*item)->Update(dt);
 	}
 
 	return ret;
@@ -298,13 +302,15 @@ bool j1App::PostUpdate()
 
 	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = (*item);
+		if ((*item)->pause == false) {
+			pModule = (*item);
 
-		if(pModule->active == false) {
-			continue;
+			if (pModule->active == false) {
+				continue;
+			}
+
+			ret = (*item)->PostUpdate();
 		}
-
-		ret = (*item)->PostUpdate();
 	}
 
 	return ret;

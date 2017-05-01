@@ -118,6 +118,9 @@
         <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
         <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
       </doorways>
+	<enemies>
+
+     </enemies>
 
      </room>
 

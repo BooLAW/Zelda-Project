@@ -43,6 +43,7 @@ bool j1Input::Start()
 {
 	SDL_StopTextInput();
 	DefaultControls();
+	Init_Pause_Matrix();
 	return true;
 }
 
@@ -208,5 +209,68 @@ void j1Input::DefaultControls()
 		if (i == WPN_PREV) {
 			controls[i] = SDL_SCANCODE_Q;
 		}
+	}
+}
+
+bool j1Input::Start_Pause(Pause_Type type)
+{
+	bool ret = true;
+	j1Module* pModule = NULL;
+	int i = 0;
+
+	for (std::list<j1Module*>::iterator item = App->modules.begin(); item != App->modules.end() && ret == true; item++)
+	{
+		if(pause_matrix[i][type] == true)
+			(*item)->pause = true;
+
+		i++;
+	}
+
+	pause2[type] = true;
+	
+	return ret;
+}
+
+bool j1Input::Stop_Pause(Pause_Type type)
+{
+
+	bool ret = true;
+	j1Module* pModule = NULL;
+
+	for (std::list<j1Module*>::iterator item = App->modules.begin(); item != App->modules.end() && ret == true; item++)
+	{
+		(*item)->pause = false;
+
+	}
+
+	pause2[type] = false;
+
+	return ret;
+
+}
+
+void j1Input::Init_Pause_Matrix()
+{
+	for (int i = 0; i < last_module_; i++)
+		for (int j = 0; j < last_pause__; j++)
+			pause_matrix[i][j] = false;
+
+	for (int j = 0; j < last_pause__; j++)
+		pause2[j] = false;
+
+	// General Pause
+	{
+		pause_matrix[j1Player_][General_] = true;
+		pause_matrix[j1PathFinding_][General_] = true;
+		pause_matrix[j1Collision_][General_] = true;
+		pause_matrix[j1Player_][General_] = true;
+		pause_matrix[EntityManager_][General_] = true;
+		pause_matrix[ModuleParticles_][General_] = true;
+		pause_matrix[j1Audio_][General_] = true;
+	}
+
+	// Inventory Pause
+	{
+
 	}
 }

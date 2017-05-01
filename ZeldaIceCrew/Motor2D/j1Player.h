@@ -83,7 +83,7 @@ public:
 public:
 	Point<float> pos;
 	Point<float> last_pos;
-	int [__LAST_CONTROLS] controls;
+	int controls[__LAST_CONTROLS];
 
 private:
 	SDL_Texture* Link_Movement = nullptr;
