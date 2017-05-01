@@ -101,7 +101,7 @@ bool Enemy::Move()
 	case AITYPE::path:
 		break;
 	case AITYPE::chase:
-		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y - PL_OFFSET_Y / 2};
+		target = { (int)App->player->link_coll->rect.x, (int)App->player->link_coll->rect.y - PL_OFFSET_Y / 2};
 		path_to_follow.push_back(target);
 		break;
 	case AITYPE::distance:
@@ -121,22 +121,67 @@ bool Enemy::Move()
 		}
 	}
 
-
 		if (path_to_follow.size() > 0) {
 
-			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
-				if(stats.Flying == true || CheckSpace(HitBox->rect.x + stats.Speed, HitBox->rect.y)==0)
-					pos.x += stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x - stats.Speed, HitBox->rect.y) == 0)
-					pos.x -= stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y + stats.Speed) == 0)
-					pos.y += stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed) == 0)
-					pos.y -= stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
+			float diff_x, diff_y;
+			float hip;
+			float angle;
+
+			diff_x =( path_to_follow.begin()._Ptr->_Myval.x - pos.x);
+			diff_y = path_to_follow.begin()._Ptr->_Myval.y - pos.y;
+
+			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x) {
+				diff_x = -diff_x;
+				diff_y = -diff_y;
+			}
+
+			LOG("DIFF %f %f", diff_x, diff_y);
+
+			angle = RadtoDeg(atan(diff_y/diff_x));
+
+			LOG("ANGLE %d", angle);
+			
+			fPoint aux_s;
+
+			if (path_to_follow.begin()._Ptr->_Myval.x >= pos.x) {
+				aux_s = { stats.Speed * (float)cos((double)angle), -stats.Speed * (float)sin((double)angle) };
+			}
+			else
+				aux_s = { -stats.Speed * (float)cos((double)angle), stats.Speed * (float)sin((double)angle) };
+
+			LOG("SPEEDS %f %f",aux_s.x, aux_s.y);
+			LOG("TARGET %d %d", path_to_follow.begin()._Ptr->_Myval.x, path_to_follow.begin()._Ptr->_Myval.y);
+			LOG("POS %f %f", pos.x, pos.y);
+			if (stats.Flying == true || CheckSpace(HitBox->rect.x + aux_s.x, HitBox->rect.y + aux_s.y) == 0) {
+				pos.x += aux_s.x;
+				pos.y -= aux_s.y;
+			}
+
+			//if (path_to_follow.begin()._Ptr->_Myval.x > pos.x && path_to_follow.begin()._Ptr->_Myval.y == pos.y)
+			//	if(stats.Flying == true || CheckSpace(HitBox->rect.x + stats.Speed, HitBox->rect.y)==0)
+			//		pos.x += stats.Speed;
+			//if (path_to_follow.begin()._Ptr->_Myval.x < pos.x && path_to_follow.begin()._Ptr->_Myval.y == pos.y)
+			//	if (stats.Flying == true || CheckSpace(HitBox->rect.x - stats.Speed, HitBox->rect.y) == 0)
+			//		pos.x -= stats.Speed;
+			//if (path_to_follow.begin()._Ptr->_Myval.x == pos.x && path_to_follow.begin()._Ptr->_Myval.y > pos.y)
+			//	if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y + stats.Speed) == 0)
+			//		pos.y += stats.Speed;
+			//if (path_to_follow.begin()._Ptr->_Myval.x == pos.x && path_to_follow.begin()._Ptr->_Myval.y < pos.y)
+			//	if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed) == 0)
+			//		pos.y -= stats.Speed;
+			//if (path_to_follow.begin()._Ptr->_Myval.x < pos.x && path_to_follow.begin()._Ptr->_Myval.y < pos.y)
+			//	if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed) == 0)
+			//		pos.y -= stats.Speed;
+			//if (path_to_follow.begin()._Ptr->_Myval.x < pos.x && path_to_follow.begin()._Ptr->_Myval.y > pos.y)
+			//	if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed) == 0)
+			//		pos.y -= stats.Speed;
+			//if (path_to_follow.begin()._Ptr->_Myval.x > pos.x && path_to_follow.begin()._Ptr->_Myval.y < pos.y)
+			//	if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed) == 0)
+			//		pos.y -= stats.Speed;
+			//if (path_to_follow.begin()._Ptr->_Myval.x > pos.x && path_to_follow.begin()._Ptr->_Myval.y > pos.y)
+			//	if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed) == 0)
+			//		pos.y -= stats.Speed;
+			if (path_to_follow.begin()._Ptr->_Myval.x > (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
 				path_to_follow.pop_back();
 		
 		}
@@ -1160,7 +1205,7 @@ bool Geldman::Start()
 	}
 
 	stats.Hp = 3;
-	stats.Speed = 4;
+	stats.Speed = 2;
 	stats.Power = 1;
 
 	stats.Flying = false;
@@ -1212,50 +1257,15 @@ void Geldman::Update(float dt)
 		}
 		break;
 	case appear:
-		switch (GetPlayerDirection()) {
-		case Direction::Up:
-			target.x = (int)pos.x;
-			target.y = (int)pos.y - 9999;
-			break;
-		case Direction::Down:
-			target.x = (int)pos.x;
-			target.y = (int)pos.y + 9999;
-			break;
-		case Direction::Left:
-			target.x = (int)pos.x - 9999;
-			target.y = (int)pos.y;
-			break;
-		case Direction::Right:
-			target.x = (int)pos.x + 9999;
-			target.y = (int)pos.y;
-			break;
-		case Direction::Down_L:
-			target.x = (int)pos.x - 9999;
-			target.y = (int)pos.y + 9999;
-			break;
-		case Direction::Down_R:
-			target.x = (int)pos.x + 9999;
-			target.y = (int)pos.y + 9999;
-			break;
-		case Direction::Up_R:
-			target.x = (int)pos.x + 9999;
-			target.y = (int)pos.y - 9999;
-			break;
-		case Direction::Up_L:
-			target.x = (int)pos.x - 9999;
-			target.y = (int)pos.y - 9999;
-			break;
-		default:
-			target.x = (int)pos.x;
-			target.y = (int)pos.y;
-			break;
-		}
-		path_to_follow.push_back(target);
 		state = move;
 		break;
 	case move:
 		move_time.Start();
 		move_time.SetFlag(true);
+		target.x = (int)App->player->pos.x;
+		target.y = (int)App->player->pos.y;
+		path_to_follow.clear();
+		path_to_follow.push_back(target);
 		if (move_time.Read() >= time_moving) {
 			state = disappear;
 			move_time.SetFlag(false);
