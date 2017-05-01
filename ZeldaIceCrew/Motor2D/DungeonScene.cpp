@@ -39,7 +39,8 @@ bool DungeonScene::Awake()
 // Called before the first frame
 bool DungeonScene::Start()
 {
-	
+	BROFILER_CATEGORY("StartDungeon", Profiler::Color::DarkBlue)
+
 	curr_id = dungeon;
 
 	stdStart();
@@ -53,6 +54,8 @@ bool DungeonScene::Start()
 // Called each loop iteration
 bool DungeonScene::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateDungeon", Profiler::Color::Red)
+
 	stdUpdate(dt);
 
 	if (chain_boss_defeated == false && IsEnemy(ChainBoss) == false)

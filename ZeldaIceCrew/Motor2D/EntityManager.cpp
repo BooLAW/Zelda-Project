@@ -40,6 +40,9 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 		break;
 	case t_freezor:
 		ret = new Freezor();
+    break;
+	case t_GBat:
+		ret = new GreyBat();
 		break;
 	case t_boss_ballandchain:
 		ret = new BossChainBall();
@@ -103,10 +106,10 @@ Item * EntityManager::CreateItem(uint subtype)
 		break;
 	case weapon_sword:
 		ret = new ItemSword();
-		ret->type = item;
+		ret->type = weapon;
 	case weapon_bow:
 		ret = new ItemBow();
-		ret->type = item;
+		ret->type = weapon;
 	default:
 		LOG("Unknown Item Type: %d", subtype);
 		break;
@@ -166,6 +169,8 @@ Block * EntityManager::CreateBlock(uint type)
 	
 	return ret;
 }
+
+
 
 bool EntityManager::PreUpdate()
 {

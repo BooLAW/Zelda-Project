@@ -31,6 +31,7 @@ enum ENEMYTYPE {
 	t_rope,
 	t_geldman,
 	t_freezor,
+	t_GBat,
 	t_boss_ballandchain,
 	__LAST_ENEMYTYPE
 };
@@ -300,6 +301,11 @@ class Freezor : public Enemy {
 	Animation appear_anim, disappear_anim, attack_anim;
 	SDL_Rect appear_sprites[8], attack_sprites[2];
 	j1Timer timer;
+};
+
+class GreyBat : public Enemy {
+public:
+	bool Start();
 };
 
 #endif // !__ENEMY_H__

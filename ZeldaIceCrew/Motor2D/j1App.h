@@ -120,9 +120,11 @@ public:
 	ModuleParticles*	particle = NULL;
 
 	bool			    debug_mode = false;
-private:
 
 	std::list<j1Module*>	modules;
+private:
+
+	
 	int					argc;
 	char**				args;
 

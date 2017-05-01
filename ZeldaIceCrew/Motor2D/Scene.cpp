@@ -314,7 +314,7 @@ Room * Scene::AddRoom(int coord_x, int coord_y, int w, int h)
 
 	ret->coords.x = coord_x;
 	ret->coords.y = coord_y;
-	ret->room_rect = { coord_x * w, coord_y * h , w, h };
+	ret->room_rect = { coord_x * ROOM_W, coord_y * ROOM_H , w, h };
 
 	ret->SetParentScene(this);
 
@@ -582,6 +582,8 @@ bool Scene::Load_new_map(int id)
 										st = t_geldman;
 									if (strcmp(sub, "t_freezor") == 0)
 										st = t_freezor;
+									if (strcmp(sub, "t_GBat") == 0)
+										st = t_GBat;
 									if (strcmp(sub, "t_boss_ballandchain") == 0)
 										st = t_boss_ballandchain;
 

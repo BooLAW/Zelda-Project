@@ -52,7 +52,7 @@ bool SceneManager::Start()
 	scenes.push_back(dungeon_scene);
 	// -------------
 
-	current_scene = village_scene;
+	current_scene = dungeon_scene;
 
 	if (current_scene != nullptr)
 		ret = current_scene->Start();
@@ -101,6 +101,13 @@ bool SceneManager::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		if (App->input->pause2[General_] == false)
+			App->input->Start_Pause(General_);
+		else
+			App->input->Stop_Pause(General_);
+	}
 
 	return ret;
 }

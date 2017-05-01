@@ -64,10 +64,26 @@ public:
 		__LAST
 	};
 	
+	enum Controls {
+		UP = 0,
+		DOWN,
+		RIGHT,
+		LEFT,
+		MOVE_UP,
+		MOVE_DOWN,
+		MOVE_LEFT,
+		MOVE_RIGHT,
+		ACTION,
+		MENU,
+		WPN_NEXT,
+		WPN_PREV,
+		__LAST_CONTROLS
+	};
 
 public:
 	Point<float> pos;
 	Point<float> last_pos;
+	int controls[__LAST_CONTROLS];
 
 private:
 	SDL_Texture* Link_Movement = nullptr;
@@ -100,6 +116,7 @@ public:
 	void PickUp_();
 	void ChangeWeapon();
 	void AddWeapon(uint weapon_t);
+	
 
 	void HitPlayer(int dmg);
 
