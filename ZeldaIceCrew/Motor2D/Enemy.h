@@ -50,6 +50,7 @@ protected:
 	enum DAMAGETYPE {
 		melee = 0,
 		projectile,
+		none,
 		__LAST_DMGTYPE
 	};
 
@@ -264,9 +265,13 @@ class Geldman : public Enemy {
 
 	const int time_moving = 3500;
 
+	SDL_Rect appear_sprites[8], move_sprites[8];
+	Animation appear_anim, disappear_anim, move_anim;
+
 	enum GELDMANSTATE {
 		appear = 0,
 		appear_start,
+		disappear_start,
 		disappear,
 		move
 	}state = appear_start;

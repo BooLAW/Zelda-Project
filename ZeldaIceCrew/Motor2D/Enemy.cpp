@@ -135,11 +135,7 @@ bool Enemy::Move()
 				diff_y = -diff_y;
 			}
 
-			LOG("DIFF %f %f", diff_y, diff_x);
-
 			angle = (atan2(diff_y, diff_x));
-
-			LOG("ANGLE %d", angle);
 			
 			fPoint aux_s;
 
@@ -149,9 +145,6 @@ bool Enemy::Move()
 			else
 				aux_s = { stats.Speed * (float)cos((double)angle), -stats.Speed * (float)sin((double)angle) };
 
-			LOG("SPEEDS %f %f",aux_s.x, aux_s.y);
-			LOG("TARGET %d %d", path_to_follow.begin()._Ptr->_Myval.x, path_to_follow.begin()._Ptr->_Myval.y);
-			LOG("POS %f %f", pos.x, pos.y);
 			if (stats.Flying == true || CheckSpace(HitBox->rect.x + aux_s.x, HitBox->rect.y + aux_s.y) == 0) {
 				pos.x += aux_s.x;
 				pos.y -= aux_s.y;
@@ -1177,31 +1170,25 @@ bool Geldman::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 30, 251, 44, 68 };
-		sprites[Enemy::EnDirection::Down][1] = { 132, 249, 44, 70 };
+		appear_sprites[0] = { 104, 659, 100, 108 };
+		appear_sprites[1] = { 410, 659, 100, 108 };
+		appear_sprites[2] = { 410, 659, 1, 1 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 30, 357, 44, 52 };
-		sprites[Enemy::EnDirection::Up][1] = { 132, 357, 44, 52 };
+		move_sprites[0] = { 206, 659, 100, 108 };
+		move_sprites[1] = { 308, 659, 100, 108 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 214, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Left][1] = { 316, 465, 64, 54 };
-
-		sprites[Enemy::EnDirection::Right][0] = { 30, 465, 64, 54 };
-		sprites[Enemy::EnDirection::Right][1] = { 132, 465, 64, 54 };
-
-		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
-		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
-
-		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][0]);
-		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][1]);
-
-		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][0]);
-		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][1]);
-
-		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][0]);
-		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][1]);
-
-
+		for (int i = 0; i < 3; i++) {
+			disappear_anim.PushBack(appear_sprites[1 - i]);
+			if (i < 2) {
+				appear_anim.PushBack(appear_sprites[i]);
+				move_anim.PushBack(move_sprites[i]);
+			}
+		}
+		appear_anim.speed = 0.07;
+		appear_anim.loop = false;
+		disappear_anim.speed = 0.1;
+		disappear_anim.loop = false;
+		move_anim.speed = 0.05;
 	}
 
 	stats.Hp = 3;
@@ -1213,7 +1200,7 @@ bool Geldman::Start()
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 36, 32 }, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ 0, 0, 48, 32 }, COLLIDER_ENEMY);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 
@@ -1228,10 +1215,34 @@ bool Geldman::Start()
 
 void Geldman::Draw()
 {
+
+	fPoint aux_pos = pos;
+
+	aux_pos.y = pos.y - 20;
+	aux_pos.x = pos.x - 26;
+
+	Animation* animation_aux = &move_anim;
+
+	switch (state) {
+	case move:
+		animation_aux = &move_anim;
+		break;
+	case appear:
+		animation_aux = &appear_anim;
+		break;
+	case disappear:
+		animation_aux = &disappear_anim;
+		break;
+	}
+	
+	if(state == move || state == appear || state == disappear)
+	App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.y, aux_pos.x, aux_pos.y, &animation_aux->GetCurrentFrame());
 }
 
 void Geldman::Update(float dt)
 {
+
+	int aux_hp = stats.Hp;
 
 	SDL_Rect c_r = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->room_rect;
 
@@ -1244,6 +1255,7 @@ void Geldman::Update(float dt)
 
 	switch (state) {
 	case appear_start:
+		appear_anim.Reset();
 		app_pos.x = rand() % en_rect.w + (int)(p_pos.x - en_rect.w /2);
 		app_pos.y = rand() % en_rect.h + (int)(p_pos.y - en_rect.h /2);
 		LOG("APPEAR POS: %f %f", app_pos.x, app_pos.y);
@@ -1257,23 +1269,51 @@ void Geldman::Update(float dt)
 		}
 		break;
 	case appear:
-		state = move;
+		move_time.Start();
+		move_time.SetFlag(true);
+		if (move_time.Read() >= 700) {
+			state = move;
+			move_time.SetFlag(false);
+		}
 		break;
 	case move:
 		move_time.Start();
 		move_time.SetFlag(true);
 		AIType = chase;
 		if (move_time.Read() >= time_moving) {
-			state = disappear;
+			state = disappear_start;
 			move_time.SetFlag(false);
 		}
 		break;
+	case disappear_start:
+		disappear_anim.Reset();
+		state = disappear;
+		break;
 	case disappear:
+		move_time.Start();
+		move_time.SetFlag(true);
 		AIType = no_move;
 		path_to_follow.clear();
-		state = appear_start;
+		if (move_time.Read() >= 3000) {
+			state = appear_start;
+			move_time.SetFlag(false);
+		}
 		break;
 	}
 
 	stdUpdate(dt);
+
+	if (state != move) {
+		HitBox->SetPos(-9999, -9999);
+		DmgType[melee] = 0;
+		DmgType[none] = 1;
+	}
+	else {
+		DmgType[melee] = 1;
+		DmgType[none] = 0;
+	}
+
+	if (aux_hp > stats.Hp)
+		state = disappear_start;
+
 }
