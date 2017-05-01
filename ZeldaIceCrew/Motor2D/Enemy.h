@@ -30,6 +30,7 @@ enum ENEMYTYPE {
 	t_hinox,
 	t_rope,
 	t_geldman,
+	t_freezor,
 	t_boss_ballandchain,
 	__LAST_ENEMYTYPE
 };
@@ -278,6 +279,27 @@ class Geldman : public Enemy {
 
 	j1Timer move_time;
 
+};
+
+class Freezor : public Enemy {
+	bool Start();
+	void Draw();
+	void Update(float dt);
+	const int time_attack = 3500;
+
+	j1Timer attack_timer;
+
+	enum FREEZORSTATE {
+		appear = 0,
+		appear_start,
+		attack,
+		disappear,
+		disappear_start
+	}state = appear_start;
+
+	Animation appear_anim, disappear_anim, attack_anim;
+	SDL_Rect appear_sprites[8], attack_sprites[2];
+	j1Timer timer;
 };
 
 #endif // !__ENEMY_H__

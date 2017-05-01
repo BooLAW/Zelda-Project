@@ -580,6 +580,8 @@ bool Scene::Load_new_map(int id)
 										st = t_rope;
 									if (strcmp(sub, "t_geldman") == 0)
 										st = t_geldman;
+									if (strcmp(sub, "t_freezor") == 0)
+										st = t_freezor;
 									if (strcmp(sub, "t_boss_ballandchain") == 0)
 										st = t_boss_ballandchain;
 

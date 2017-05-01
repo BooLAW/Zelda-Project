@@ -38,6 +38,9 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	case t_geldman:
 		ret = new Geldman();
 		break;
+	case t_freezor:
+		ret = new Freezor();
+		break;
 	case t_boss_ballandchain:
 		ret = new BossChainBall();
 		break;
