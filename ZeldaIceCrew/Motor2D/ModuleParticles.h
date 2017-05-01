@@ -4,14 +4,17 @@
 #include "j1Module.h"
 #include "j1Player.h"
 
-#define MAX_FRAMES_PARTICLES 8
+#define MAX_FRAMES_PARTICLES 16
 #define ARROW_SPEED 6.0f
 
 #define MAX_PARTICLES 100
 
+#define SHADOW_SPD 3
+
 enum PARTICLETYPE {
 	p_arrow = 0,
 	p_enarrow,
+	p_shadow,
 	__LAST_PARTICLE
 };
 
@@ -33,7 +36,7 @@ struct Particle
 	uint damage = 0;
 
 	SDL_Texture* graphics = nullptr;
-	SDL_Rect	 g_rect[MAX_FRAMES_PARTICLES];
+	SDL_Rect	 g_rect[Direction::LastDir][MAX_FRAMES_PARTICLES];
 
 	Particle();
 
@@ -84,6 +87,13 @@ struct Arrow : public Particle {
 };
 
 struct Enemy_Arrow : public Particle {
+	bool hit = false;
+
+	void Start();
+	bool Update(float dt);
+};
+
+struct Shadow_Projectile : public Particle {
 	bool hit = false;
 
 	void Start();

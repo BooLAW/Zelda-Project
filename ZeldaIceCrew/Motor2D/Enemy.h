@@ -29,6 +29,8 @@ enum ENEMYTYPE {
 	t_greensoldier,
 	t_hinox,
 	t_rope,
+	t_geldman,
+	t_freezor,
 	t_GBat,
 	t_boss_ballandchain,
 	__LAST_ENEMYTYPE
@@ -50,6 +52,7 @@ protected:
 	enum DAMAGETYPE {
 		melee = 0,
 		projectile,
+		none,
 		__LAST_DMGTYPE
 	};
 
@@ -75,6 +78,8 @@ public:
 	virtual void SetRewards();
 
 	virtual void Spawn() {}
+
+	virtual uint GetPlayerDirection();
 
 	virtual void stdUpdate(float dt);
 	virtual void Update(float dt) { stdUpdate(dt); };
@@ -253,6 +258,49 @@ class Rope : public Enemy {
 
 	j1Timer walk_timer;
 
+};
+
+class Geldman : public Enemy {
+	bool Start();
+	void Draw();
+	void Update(float dt);
+
+	const int time_moving = 3500;
+
+	SDL_Rect appear_sprites[8], move_sprites[8];
+	Animation appear_anim, disappear_anim, move_anim;
+
+	enum GELDMANSTATE {
+		appear = 0,
+		appear_start,
+		disappear_start,
+		disappear,
+		move
+	}state = appear_start;
+
+	j1Timer move_time;
+
+};
+
+class Freezor : public Enemy {
+	bool Start();
+	void Draw();
+	void Update(float dt);
+	const int time_attack = 3500;
+
+	j1Timer attack_timer;
+
+	enum FREEZORSTATE {
+		appear = 0,
+		appear_start,
+		attack,
+		disappear,
+		disappear_start
+	}state = appear_start;
+
+	Animation appear_anim, disappear_anim, attack_anim;
+	SDL_Rect appear_sprites[8], attack_sprites[2];
+	j1Timer timer;
 };
 
 class GreyBat : public Enemy {

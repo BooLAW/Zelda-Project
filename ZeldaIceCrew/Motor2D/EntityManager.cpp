@@ -35,6 +35,12 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	case t_rope:
 		ret = new Rope();
 		break;
+	case t_geldman:
+		ret = new Geldman();
+		break;
+	case t_freezor:
+		ret = new Freezor();
+    break;
 	case t_GBat:
 		ret = new GreyBat();
 		break;

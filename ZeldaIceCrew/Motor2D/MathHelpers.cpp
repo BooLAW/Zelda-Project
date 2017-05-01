@@ -8,3 +8,13 @@ bool CheckIntersec(SDL_Rect r1, SDL_Rect r2)
 
 	return false;
 }
+
+int RadtoDeg(int rad)
+{
+	return rad * (180 / M_PI);
+}
+
+int DegtoRad(int deg)
+{
+	return deg * (M_PI / 180);
+}

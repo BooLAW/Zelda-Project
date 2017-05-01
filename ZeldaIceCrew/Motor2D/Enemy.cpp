@@ -45,6 +45,32 @@ void Enemy::SetRewards()
 
 }
 
+uint Enemy::GetPlayerDirection()
+{
+	uint dir = NULL;
+
+	fPoint p = App->player->pos;
+
+	if (p.x < pos.x && p.y > pos.y)
+		dir = Direction::Down_L;
+	if (p.x < pos.x && p.y == pos.y)
+		dir = Direction::Left;
+	if (p.x < pos.x && p.y < pos.y)
+		dir = Direction::Up_L;
+	if (p.x == pos.x && p.y > pos.y)
+		dir = Direction::Down;
+	if (p.x == pos.x && p.y < pos.y)
+		dir = Direction::Up;
+	if (p.x > pos.x && p.y > pos.y)
+		dir = Direction::Down_R;
+	if (p.x > pos.x && p.y == pos.y)
+		dir = Direction::Right;
+	if (p.x > pos.x && p.y < pos.y)
+		dir = Direction::Up_R;
+
+	return dir;
+}
+
 void Enemy::stdUpdate(float dt)
 {
 	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
@@ -75,7 +101,7 @@ bool Enemy::Move()
 	case AITYPE::path:
 		break;
 	case AITYPE::chase:
-		target = { (int)App->player->GetPos().x, (int)App->player->GetPos().y - PL_OFFSET_Y / 2};
+		target = { (int)App->player->link_coll->rect.x, (int)App->player->link_coll->rect.y - PL_OFFSET_Y / 2};
 		path_to_follow.push_back(target);
 		break;
 	case AITYPE::distance:
@@ -95,22 +121,36 @@ bool Enemy::Move()
 		}
 	}
 
+		if (path_to_follow.size() > 0 && AIType != no_move) {
 
-		if (path_to_follow.size() > 0) {
+			float diff_x, diff_y;
+			float hip;
+			float angle;
 
-			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x)
-				if(stats.Flying == true || CheckSpace(HitBox->rect.x + stats.Speed, HitBox->rect.y)==0)
-					pos.x += stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.x < pos.x)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x - stats.Speed, HitBox->rect.y) == 0)
-					pos.x -= stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.y > pos.y)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y + stats.Speed) == 0)
-					pos.y += stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.y < pos.y)
-				if (stats.Flying == true || CheckSpace(HitBox->rect.x, HitBox->rect.y - stats.Speed) == 0)
-					pos.y -= stats.Speed;
-			if (path_to_follow.begin()._Ptr->_Myval.x == (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
+			diff_x =( path_to_follow.begin()._Ptr->_Myval.x - pos.x);
+			diff_y = path_to_follow.begin()._Ptr->_Myval.y - pos.y;
+
+			if (path_to_follow.begin()._Ptr->_Myval.x > pos.x) {
+				diff_x = -diff_x;
+				diff_y = -diff_y;
+			}
+
+			angle = (atan2(diff_y, diff_x));
+			
+			fPoint aux_s;
+
+			if (path_to_follow.begin()._Ptr->_Myval.x >= pos.x) {
+				aux_s = { -stats.Speed * (float)cos((double)angle), stats.Speed * (float)sin((double)angle) };
+			}
+			else
+				aux_s = { stats.Speed * (float)cos((double)angle), -stats.Speed * (float)sin((double)angle) };
+
+			if (stats.Flying == true || CheckSpace(HitBox->rect.x + aux_s.x, HitBox->rect.y + aux_s.y) == 0) {
+				pos.x += aux_s.x;
+				pos.y -= aux_s.y;
+			}
+
+			if (path_to_follow.begin()._Ptr->_Myval.x > (int)pos.x && path_to_follow.begin()._Ptr->_Myval.y == (int)pos.y)
 				path_to_follow.pop_back();
 		
 		}
@@ -1124,10 +1164,338 @@ bool GreyBat::Start()
 	memset(DmgType, false, __LAST_DMGTYPE);
 
 	DmgType[melee] = true;
-
 	AIType = chase;
 
 	subtype = ENEMYTYPE::t_GBat;
 
 	return ret;
 }
+
+bool Geldman::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+		appear_sprites[0] = { 104, 659, 100, 108 };
+		appear_sprites[1] = { 410, 659, 100, 108 };
+		appear_sprites[2] = { 410, 659, 1, 1 };
+
+		move_sprites[0] = { 206, 659, 100, 108 };
+		move_sprites[1] = { 308, 659, 100, 108 };
+
+		for (int i = 0; i < 3; i++) {
+			disappear_anim.PushBack(appear_sprites[1 - i]);
+			if (i < 2) {
+				appear_anim.PushBack(appear_sprites[i]);
+				move_anim.PushBack(move_sprites[i]);
+			}
+		}
+		appear_anim.speed = 0.07;
+		appear_anim.loop = false;
+		disappear_anim.speed = 0.1;
+		disappear_anim.loop = false;
+		move_anim.speed = 0.05;
+	}
+
+	stats.Hp = 3;
+	stats.Speed = 2;
+	stats.Power = 1;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 48, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[melee] = true;
+
+	AIType = path;
+
+	subtype = ENEMYTYPE::t_geldman;
+
+	return ret;
+}
+
+void Geldman::Draw()
+{
+
+	fPoint aux_pos = pos;
+
+	aux_pos.y = pos.y - 20;
+	aux_pos.x = pos.x - 26;
+
+	Animation* animation_aux = &move_anim;
+
+	switch (state) {
+	case move:
+		animation_aux = &move_anim;
+		break;
+	case appear:
+		animation_aux = &appear_anim;
+		break;
+	case disappear:
+		animation_aux = &disappear_anim;
+		break;
+	}
+	
+	if(state == move || state == appear || state == disappear)
+	App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.y, aux_pos.x, aux_pos.y, &animation_aux->GetCurrentFrame());
+}
+
+void Geldman::Update(float dt)
+{
+
+	int aux_hp = stats.Hp;
+
+	SDL_Rect c_r = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->room_rect;
+
+	fPoint app_pos;
+
+	fPoint p_pos = App->player->pos;
+
+	SDL_Rect p_rect;
+	SDL_Rect en_rect = { 0, 0, 250, 250 };
+
+	switch (state) {
+	case appear_start:
+		appear_anim.Reset();
+		app_pos.x = rand() % en_rect.w + (int)(p_pos.x - en_rect.w /2);
+		app_pos.y = rand() % en_rect.h + (int)(p_pos.y - en_rect.h /2);
+		LOG("APPEAR POS: %f %f", app_pos.x, app_pos.y);
+		if (!(CheckSpace(app_pos.x, app_pos.y) != 0 || App->scene_manager->GetCurrentScene()->GetCurrentRoom()->isInside({ (int)app_pos.x, (int)app_pos.y, 0, 0 }) == false)) {
+			SDL_Rect en_aux = { app_pos.x, app_pos.y, 1, 1 };
+			p_rect = {(int)p_pos.x - 100, (int)p_pos.y - 100, 132, 148 };
+			if (CheckIntersec(en_aux, p_rect) == false) {
+				pos = app_pos;
+				state = appear;
+			}
+		}
+		break;
+	case appear:
+		move_time.Start();
+		move_time.SetFlag(true);
+		if (move_time.Read() >= 700) {
+			state = move;
+			move_time.SetFlag(false);
+		}
+		break;
+	case move:
+		move_time.Start();
+		move_time.SetFlag(true);
+		AIType = chase;
+		if (move_time.Read() >= time_moving) {
+			state = disappear_start;
+			move_time.SetFlag(false);
+		}
+		break;
+	case disappear_start:
+		disappear_anim.Reset();
+		state = disappear;
+		break;
+	case disappear:
+		move_time.Start();
+		move_time.SetFlag(true);
+		AIType = no_move;
+		path_to_follow.clear();
+		if (move_time.Read() >= 3000) {
+			state = appear_start;
+			move_time.SetFlag(false);
+		}
+		break;
+	}
+
+	stdUpdate(dt);
+
+	if (state != move) {
+		HitBox->SetPos(-9999, -9999);
+		DmgType[melee] = 0;
+		DmgType[none] = 1;
+	}
+	else {
+		DmgType[melee] = 1;
+		DmgType[none] = 0;
+	}
+
+	if (aux_hp > stats.Hp)
+		state = disappear_start;
+
+}
+
+bool Freezor::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+		appear_sprites[0] = { 104, 659, 100, 108 };
+		appear_sprites[1] = { 410, 659, 100, 108 };
+		appear_sprites[2] = { 410, 659, 1, 1 };
+
+		attack_sprites[0] = { 206, 659, 100, 108 };
+		attack_sprites[1] = { 308, 659, 100, 108 };
+
+		for (int i = 0; i < 3; i++) {
+			disappear_anim.PushBack(appear_sprites[1 - i]);
+			if (i < 2) {
+				appear_anim.PushBack(appear_sprites[i]);
+				attack_anim.PushBack(attack_sprites[i]);
+			}
+		}
+		appear_anim.speed = 0.07;
+		appear_anim.loop = false;
+		disappear_anim.speed = 0.1;
+		disappear_anim.loop = false;
+		attack_anim.speed = 0.05;
+	}
+
+	stats.Hp = 3;
+	stats.Speed = 2;
+	stats.Power = 1;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 48, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[projectile] = true;
+
+	AIType = no_move;
+
+	subtype = ENEMYTYPE::t_freezor;
+
+	return ret;
+
+}
+
+void Freezor::Draw()
+{
+	fPoint aux_pos = pos;
+
+	aux_pos.y = pos.y - 20;
+	aux_pos.x = pos.x - 26;
+
+	Animation* animation_aux = &attack_anim;
+
+	switch (state) {
+	case attack:
+		animation_aux = &attack_anim;
+		break;
+	case appear:
+		animation_aux = &appear_anim;
+		break;
+	case disappear:
+		animation_aux = &disappear_anim;
+		break;
+	}
+
+	if (state == attack || state == appear || state == disappear)
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.y, aux_pos.x, aux_pos.y, &animation_aux->GetCurrentFrame());
+
+}
+
+void Freezor::Update(float dt)
+{
+	int aux_hp = stats.Hp;
+
+	SDL_Rect c_r = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->room_rect;
+
+	fPoint app_pos;
+
+	fPoint p_pos = App->player->pos;
+
+	SDL_Rect p_rect;
+	SDL_Rect en_rect = { 0, 0, 500, 500 };
+
+	switch (state) {
+	case appear_start:
+		appear_anim.Reset();
+		app_pos.x = rand() % en_rect.w + (int)(p_pos.x - en_rect.w / 2);
+		app_pos.y = rand() % en_rect.h + (int)(p_pos.y - en_rect.h / 2);
+		LOG("APPEAR POS: %f %f", app_pos.x, app_pos.y);
+		if (!(CheckSpace(app_pos.x, app_pos.y) != 0 || App->scene_manager->GetCurrentScene()->GetCurrentRoom()->isInside({ (int)app_pos.x, (int)app_pos.y, 0, 0 }) == false)) {
+			SDL_Rect en_aux = { app_pos.x, app_pos.y, 1, 1 };
+			p_rect = { (int)p_pos.x - 100, (int)p_pos.y - 100, 132, 148 };
+			if (CheckIntersec(en_aux, p_rect) == false) {
+				pos = app_pos;
+				state = appear;
+			}
+		}
+		break;
+	case appear:
+		timer.Start();
+		timer.SetFlag(true);
+		if (timer.Read() >= 700) {
+			state = attack;
+			timer.SetFlag(false);
+		}
+		break;
+	case attack:
+		timer.Start();
+		timer.SetFlag(true);
+		attack_timer.Start();
+		attack_timer.SetFlag(true);
+		if (attack_timer.Read() >= 1000) {
+			App->particle->CreateParticle(p_shadow, HitBox->rect.x, HitBox->rect.y, curr_dir);
+			attack_timer.SetFlag(false);
+		}
+		if (timer.Read() >= time_attack) {
+			state = disappear_start;
+			timer.SetFlag(false);
+		}
+		break;
+	case disappear_start:
+		disappear_anim.Reset();
+		state = disappear;
+		break;
+	case disappear:
+		timer.Start();
+		timer.SetFlag(true);
+		path_to_follow.clear();
+		if (timer.Read() >= 3000) {
+			state = appear_start;
+			timer.SetFlag(false);
+		}
+		break;
+	}
+
+
+	target.x = App->player->link_coll->rect.x;
+	target.y = App->player->link_coll->rect.y;
+	path_to_follow.clear();
+	path_to_follow.push_back(target);
+	stdUpdate(dt);
+
+	if (state != attack) {
+		HitBox->SetPos(-9999, -9999);
+		DmgType[projectile] = 0;
+		DmgType[none] = 1;
+	}
+	else {
+		DmgType[projectile] = 1;
+		DmgType[none] = 0;
+	}
+
+	if (aux_hp > stats.Hp)
+		state = disappear_start;
+}
+
