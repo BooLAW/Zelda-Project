@@ -193,6 +193,9 @@ void j1Collision::DebugDraw()
 		case COLLIDER_DUNGEON_RIGHT:
 			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
 			break;
+		case COLLIDER_DMG_BY_BB:
+			App->render->DrawQuad(colliders[i]->rect, 204, 0, 204, alpha);
+			break;
 
 		}
 	}

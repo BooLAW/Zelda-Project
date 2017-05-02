@@ -10,6 +10,7 @@
 #define MAX_PARTICLES 100
 
 #define SHADOW_SPD 3
+#define BOUNCEB_SPD 3
 
 enum PARTICLETYPE {
 	p_arrow = 0,
@@ -106,11 +107,13 @@ struct BounceBack : public Particle {
 	void Start();
 	bool Update(float dt);
 
+	fPoint target;
+
 	enum BOUNCESTATE {
 		go = 0,
 		back
 	}state = go;
 
 }
-
+;
 #endif // __MODULEPARTICLES_H__

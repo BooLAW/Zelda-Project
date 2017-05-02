@@ -81,7 +81,7 @@ void ModuleParticles::AddParticle(Particle* particle, COLLIDER_TYPE collider_typ
 	particle->damage = dmg;
 	particle->life = life;
 	if (collider_type != COLLIDER_NONE)
-		particle->collider = App->collisions->AddCollider({ (int)particle->position.x, (int)particle->position.y, particle->HitBox.w, particle->HitBox.h }, collider_type, this);
+		particle->collider = App->collisions->AddCollider({ 0, 0, particle->HitBox.w, particle->HitBox.h }, collider_type, this);
 
 }
 
@@ -492,6 +492,9 @@ void BounceBack::Start()
 
 	damage = 1;
 
+	target.x = App->player->link_coll->rect.x;
+	target.y = App->player->link_coll->rect.y;
+
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
 	life = -1;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
@@ -505,8 +508,8 @@ bool BounceBack::Update(float dt)
 	float angle;
 
 	fPoint p_pos;
-	p_pos.x = App->player->link_coll->rect.x;
-	p_pos.y = App->player->link_coll->rect.y;
+	p_pos.x = target.x;
+	p_pos.y = target.y;
 
 	diff_x = (p_pos.x - position.x);
 	diff_y = p_pos.y - position.y;
@@ -519,38 +522,20 @@ bool BounceBack::Update(float dt)
 	angle = (atan2(diff_y, diff_x));
 
 	if (p_pos.x >= position.x) {
-		speed.x = SHADOW_SPD * -(float)cos((double)angle);
-		speed.y = SHADOW_SPD * -(float)sin((double)angle);
+		speed.x = BOUNCEB_SPD * -(float)cos((double)angle);
+		speed.y = BOUNCEB_SPD * -(float)sin((double)angle);
 	}
 	else {
-		speed.x = SHADOW_SPD * (float)cos((double)angle);
-		speed.y = SHADOW_SPD * (float)sin((double)angle);
+		speed.x = BOUNCEB_SPD * (float)cos((double)angle);
+		speed.y = BOUNCEB_SPD * (float)sin((double)angle);
 	}
 
-	iPoint path_t = { App->player->link_coll->rect.x, App->player->link_coll->rect.y };
-	if (path_t.y < position.y && (path_t.x > position.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
-		curr_dir = Up;
-	else if (path_t.y > position.y && (path_t.x > position.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
-		curr_dir = Down;
-	else if (path_t.x < position.x)
-		curr_dir = Left;
-	else if (path_t.x > position.x)
-		curr_dir = Right;
-
-	switch (curr_dir) {
-	case Up:
-		HitBox = { (int)position.x + 8, (int)position.y, 32, 32 };
-		break;
-	case Down:
-		HitBox = { (int)position.x + 8, (int)position.y + 30, 32, 32 };
-		break;
-	case Left:
-		HitBox = { (int)position.x, (int)position.y + 16, 32, 32 };
-		break;
-	case Right:
-		HitBox = { (int)position.x + 30, (int)position.y + 16, 32, 32 };
-		break;
+	if (state = back) {
+		speed.x = -speed.x;
+		speed.y = -speed.y;
 	}
+
+	HitBox = { (int)position.x, (int)position.y, 32, 32 };
 
 	collider->rect = HitBox;
 
@@ -585,7 +570,6 @@ bool BounceBack::Update(float dt)
 			App->particle->DestroyParticle(this);
 		}
 		if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
-			speed = speed.Negate();
 			state = back;
 		}
 	}

@@ -1499,6 +1499,73 @@ void Freezor::Update(float dt)
 		state = disappear_start;
 }
 
+bool Beamos::Start()
+{
+	bool ret = true;
+
+	SetRewards();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
+
+		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
+
+		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 36, 56 };
+
+		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
+
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
+		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
+
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][0]);
+		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][1]);
+
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][0]);
+		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][1]);
+
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][0]);
+		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][1]);
+
+
+	}
+
+	stats.Hp = 1;
+	stats.Speed = 2;
+	stats.Power = 1;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[projectile] = true;
+
+	AIType = no_move;
+
+	state = search;
+
+	subtype = ENEMYTYPE::t_beamos;
+
+	return ret;
+}
+
+void Beamos::Draw()
+{
+}
+
 void Beamos::Update(float dt)
 {
 	stdUpdate(dt);
@@ -1509,11 +1576,17 @@ void Beamos::Update(float dt)
 		timer.SetFlag(true);
 		if (timer.Read() >= 1500) {
 			state = shooting;
+			//App->particle->CreateParticle(p_bounceback, pos.x, pos.y, curr_dir);
 			timer.SetFlag(false);
 		}
 		break;
 	case shooting:
-
+		timer.Start();
+		timer.SetFlag(true);
+		if (timer.Read() >= 500) {
+			state = search;
+			timer.SetFlag(true);
+		}
 		break;
 	}
 

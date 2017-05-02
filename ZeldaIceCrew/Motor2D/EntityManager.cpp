@@ -44,6 +44,9 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	case t_GBat:
 		ret = new GreyBat();
 		break;
+	case t_beamos:
+		ret = new Beamos();
+		break;
 	case t_boss_ballandchain:
 		ret = new BossChainBall();
 		break;
