@@ -15,6 +15,7 @@ enum PARTICLETYPE {
 	p_arrow = 0,
 	p_enarrow,
 	p_shadow,
+	p_bounceback,
 	__LAST_PARTICLE
 };
 
@@ -99,5 +100,17 @@ struct Shadow_Projectile : public Particle {
 	void Start();
 	bool Update(float dt);
 };
+
+struct BounceBack : public Particle {
+	bool hit = false;
+	void Start();
+	bool Update(float dt);
+
+	enum BOUNCESTATE {
+		go = 0,
+		back
+	}state = go;
+
+}
 
 #endif // __MODULEPARTICLES_H__

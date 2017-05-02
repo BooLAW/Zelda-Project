@@ -1499,3 +1499,22 @@ void Freezor::Update(float dt)
 		state = disappear_start;
 }
 
+void Beamos::Update(float dt)
+{
+	stdUpdate(dt);
+
+	switch (state) {
+	case search:
+		timer.Start();
+		timer.SetFlag(true);
+		if (timer.Read() >= 1500) {
+			state = shooting;
+			timer.SetFlag(false);
+		}
+		break;
+	case shooting:
+
+		break;
+	}
+
+}

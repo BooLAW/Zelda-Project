@@ -32,6 +32,7 @@ enum ENEMYTYPE {
 	t_geldman,
 	t_freezor,
 	t_GBat,
+	t_beamos,
 	t_boss_ballandchain,
 	__LAST_ENEMYTYPE
 };
@@ -306,6 +307,22 @@ class Freezor : public Enemy {
 class GreyBat : public Enemy {
 public:
 	bool Start();
+};
+
+
+class Beamos : public Enemy {
+public:
+	bool Start();
+	void Draw();
+	void Update(float dt);
+
+	enum BEAMOSSTATE {
+		search = 0,
+		shooting
+	}state = search;
+
+	j1Timer timer;
+
 };
 
 #endif // !__ENEMY_H__
