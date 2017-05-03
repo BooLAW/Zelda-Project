@@ -75,11 +75,13 @@ void Enemy::stdUpdate(float dt)
 {
 	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
 	//LOG("ENEMY UPDATE");
+		if(HitBox->type == COLLIDER_ENEMY) {
 			if (App->player->weapon_coll != nullptr)
 				if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
 					Hit(App->player->curr_dir, App->player->power);
 					App->audio->PlayFx(hit_fx);
 				}
+		}
 
 			if (App->player->action_blit != j1Player::Weapon_atk)
 				hit = false;
@@ -1547,7 +1549,7 @@ bool Beamos::Start()
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_DMG_BY_BB);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 

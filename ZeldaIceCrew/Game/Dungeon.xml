@@ -60,7 +60,7 @@
      
     <room x="2" y="3" w="1024" h="576">
 <enemies>
-	<enemy subtype="t_beamos" x="100" y="100"/>
+	<enemy subtype="t_beamos" x="500" y="200"/>
 </enemies>       
 <doorways>
          <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>

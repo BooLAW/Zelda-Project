@@ -239,7 +239,7 @@ bool Arrow::Update(float dt)
 		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
 		{
 			Collider* aux = collider;
-		
+			if(it._Ptr->_Myval->HitBox->type != COLLIDER_DMG_BY_BB)
 			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false) 
 			{
 				hit = true;
@@ -461,9 +461,9 @@ bool Shadow_Projectile::Update(float dt)
 		App->particle->DestroyParticle(this);
 	}
 
-	if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
-		App->particle->DestroyParticle(this);
-	}
+	//if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
+	//	App->particle->DestroyParticle(this);
+	//}
 
 	LOG("LIFE %d", SDL_GetTicks() - born);
 
@@ -530,12 +530,6 @@ void BounceBack::Start()
 
 bool BounceBack::Update(float dt)
 {
-	
-	if (state == back && bounce == false) {
-		speed.x = -speed.x;
-		speed.y = -speed.y;
-		bounce = true;
-	}
 
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
 
@@ -573,6 +567,20 @@ bool BounceBack::Update(float dt)
 		}
 		if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
 			state = back;
+			switch (App->player->curr_dir) {
+			case Up:
+				speed.y = -std::abs(speed.y);
+				break;
+			case Down:
+				speed.y = std::abs(speed.y);
+				break;
+			case Left:
+				speed.x = -std::abs(speed.x);
+				break;
+			case Right:
+				speed.x = std::abs(speed.x);
+				break;
+			}
 		}
 	}
 
