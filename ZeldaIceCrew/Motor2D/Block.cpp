@@ -13,7 +13,7 @@ bool Block::Start()
 	bool ret = true;
 	anim = idle;
 
-	HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_BLOCK);
+	HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_BLOCK_A);
 
 	type = BLOCKTYPE::last_;
 
@@ -179,7 +179,7 @@ bool Bush::Start() {
 
 		animations[bush][idle].PushBack(sprites[bush][idle][0]);
 	}
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = bush;
 
@@ -198,7 +198,7 @@ bool Pot::Start() {
 		animations[pot][idle].PushBack(sprites[pot][idle][0]);
 	}
 
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = pot;
 	return ret;
@@ -217,7 +217,7 @@ bool Slab::Start() {
 		animations[slabs][idle].PushBack(sprites[slabs][idle][0]);
 	}
 
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = slabs;
 	return ret;
@@ -235,7 +235,7 @@ bool Slab_No_Move::Start()
 		animations[slabs_no_move][idle].PushBack(sprites[slabs_no_move][idle][0]);
 	}
 
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = slabs_no_move;
 	return ret;
@@ -253,7 +253,7 @@ bool Statue::Start() {
 
 		animations[statue][idle].PushBack(sprites[statue][idle][0]);
 	}
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = statue;
 	return ret;
@@ -265,7 +265,7 @@ bool Torch_Bowl::Start() {
 	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
 	anim = idle;
 
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = torch_bowl;
 	return ret;
@@ -283,7 +283,7 @@ bool Slab_Spikes::Start()
 		animations[slabs_no_move][idle].PushBack(sprites[slabs_spikes][idle][0]);
 	}
 
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_B);
 
 	subtype = slabs_no_move;
 	return ret;
@@ -302,7 +302,7 @@ bool Button_Wall::Start() {
 		animations[button_wall][idle].PushBack(sprites[button_wall][idle][0]);
 		animations[button_wall][on].PushBack(sprites[button_wall][on][0]);
 	}
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_B);
 
 
 	return ret;
@@ -321,7 +321,7 @@ bool Pressure_Plate::Start() {
 		animations[pressure_plate][idle].PushBack(sprites[pressure_plate][idle][0]);
 		animations[pressure_plate][on].PushBack(sprites[pressure_plate][on][0]);
 	}
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_B);
 
 
 	return ret;
