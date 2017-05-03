@@ -1533,7 +1533,7 @@ bool Beamos::Start()
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_DMG_BY_BB);
+	HitBox = App->collisions->AddCollider({ 0, 0, 24, 24 }, COLLIDER_DMG_BY_BB);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 
@@ -1553,8 +1553,8 @@ void Beamos::Draw()
 	fPoint aux_pos = pos;
 	SDL_Rect* r_aux = nullptr;
 
-	aux_pos.y = pos.y - 20;
-	aux_pos.x = pos.x - 26;
+	aux_pos.y = pos.y;
+	aux_pos.x = pos.x - 40;
 
 	r_aux = &beamos_sprites[GetPlayerDirection()];
 
