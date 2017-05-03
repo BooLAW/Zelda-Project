@@ -11,6 +11,7 @@
 
 #define SHADOW_SPD 3
 #define BOUNCEB_SPD 3
+#define STD_PROJ_SPD 3
 
 enum PARTICLETYPE {
 	p_arrow = 0,
@@ -117,6 +118,16 @@ struct BounceBack : public Particle {
 		back
 	}state = go;
 };
+
+struct StdEnemyProjectile : public Particle {
+	bool hit = false;
+	void Start();
+	bool Update(float dt);
+
+	fPoint target;
+
+};
+
 struct AgahnimBasic : public Particle {
 	bool hit = false;
 	void Start();

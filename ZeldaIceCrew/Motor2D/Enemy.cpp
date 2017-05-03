@@ -1513,29 +1513,31 @@ bool Beamos::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
+		beamos_sprites[5] =		{ 614, 879, 100, 108 };
+		beamos_sprites[6] =		{ 512, 879, 100, 108 };
+		beamos_sprites[7] =		{ 410, 879, 100, 108 };
+		beamos_sprites[8] =		{ 308, 879, 100, 108 };
+		beamos_sprites[9] =		{ 206, 879, 100, 108 };
+		beamos_sprites[10] =	{ 104, 879, 100, 108 };
+		beamos_sprites[11] =	{ 2	 , 879, 100, 108 };
+		beamos_sprites[12] =	{ 614, 985, 100, 108 };
+		beamos_sprites[13] =	{ 512, 985, 100, 108 };
+		beamos_sprites[0] =		{ 410, 985, 100, 108 };
+		beamos_sprites[1] =		{ 308, 985, 100, 108 };
+		beamos_sprites[2] =		{ 206, 985, 100, 108 };
+		beamos_sprites[3] =		{ 104, 985, 100, 108 };
+		beamos_sprites[4] =		{ 2  , 985, 100, 108 };
+		beamos_sprites[14] =	{ 614, 985, 100, 108 };
+		beamos_sprites[15] =	{ 512, 985, 100, 108 }; 
+		beamos_sprites[16] =	{ 410, 985, 100, 108 };
+		beamos_sprites[17] =	{ 308, 985, 100, 108 };
+		beamos_sprites[18] =	{ 206, 985, 100, 108 };
+		beamos_sprites[19] =	{ 104, 985, 100, 108 };
+		beamos_sprites[20] =	{ 2  , 985, 100, 108 };
+		beamos_sprites[21] =	{ 206, 985, 100, 108 };
+		beamos_sprites[22] =	{ 104, 985, 100, 108 };
+		beamos_sprites[23] =	{ 2, 985, 100, 108 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
-
-		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 36, 56 };
-
-		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
-
-		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
-		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
-
-		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][0]);
-		animations[Enemy::EnDirection::Up].PushBack(sprites[Up][1]);
-
-		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][0]);
-		animations[Enemy::EnDirection::Left].PushBack(sprites[Left][1]);
-
-		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][0]);
-		animations[Enemy::EnDirection::Right].PushBack(sprites[Right][1]);
 
 
 	}

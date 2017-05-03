@@ -340,6 +340,8 @@ public:
 	void Draw();
 	void Update(float dt);
 
+	SDL_Rect beamos_sprites[24];
+
 	enum BEAMOSSTATE {
 		search = 0,
 		shooting

@@ -203,8 +203,10 @@ void Arrow::Start()
 		anim[k].PushBack(g_rect[k][0]);
 	}
 
+	life = 10000;
+
 	HitBox = { (int)position.x, (int)position.y, g_rect[0][0].w, g_rect[0][0].h };
-	App->particle->AddParticle(this, COLLIDER_ARROW, 1500, App->player->power, NULL);
+	App->particle->AddParticle(this, COLLIDER_ARROW, life, App->player->power, NULL);
 
 };
 
@@ -301,8 +303,10 @@ void Enemy_Arrow::Start()
 		anim[k].PushBack(g_rect[k][0]);
 	}
 
+	life = 10000;
+
 	HitBox = { (int)position.x, (int)position.y, g_rect[0][0].w, g_rect[0][0].h };
-	App->particle->AddParticle(this, COLLIDER_ARROW, 2000, 1, NULL);
+	App->particle->AddParticle(this, COLLIDER_ARROW, life, 1, NULL);
 
 }
 
@@ -614,9 +618,108 @@ void AgahnimBasic::Start()
 
 	damage = 4;
 
-	HitBox = { (int)position.x, (int)position.y, 32, 32 };
+	HitBox = { (int)position.x, (int)position.y, 16, 16 };
 	life = -1;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
 
+
+}
+
+void StdEnemyProjectile::Start()
+{
+	graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	g_rect[Up][0] = { 2, 2, 34, 34 };
+	g_rect[Up][1] = { 2, 2, 34, 34 };
+	g_rect[Down][0] = { 38, 2, 34, 34 };
+	g_rect[Down][1] = { 38, 2, 34, 34 };
+	g_rect[Right][0] = { 74, 2, 34, 34 };
+	g_rect[Right][1] = { 74, 2, 34, 34 };
+	g_rect[Left][0] = { 110, 2, 34, 34 };
+	g_rect[Left][1] = { 110, 2, 34, 34 };
+
+
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[k][0]);
+		anim[k].PushBack(g_rect[k][1]);
+	}
+
+	speed = { STD_PROJ_SPD, STD_PROJ_SPD };
+
+	damage = 1;
+
+	target.x = App->player->link_coll->rect.x;
+	target.y = App->player->link_coll->rect.y;
+
+	float diff_x, diff_y;
+	float hip;
+	float angle;
+
+	fPoint p_pos;
+	p_pos.x = target.x;
+	p_pos.y = target.y;
+
+	diff_x = (p_pos.x - position.x);
+	diff_y = p_pos.y - position.y;
+
+	if (p_pos.x > position.x) {
+		diff_x = -diff_x;
+		diff_y = -diff_y;
+	}
+
+	angle = (atan2(diff_y, diff_x));
+
+	if (p_pos.x >= position.x) {
+		speed.x = STD_PROJ_SPD * -(float)cos((double)angle);
+		speed.y = STD_PROJ_SPD * -(float)sin((double)angle);
+	}
+	else {
+		speed.x = STD_PROJ_SPD * (float)cos((double)angle);
+		speed.y = STD_PROJ_SPD * (float)sin((double)angle);
+	}
+
+	HitBox = { (int)position.x, (int)position.y, 32, 32 };
+	life = 10000;
+	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
+
+}
+
+bool StdEnemyProjectile::Update(float dt)
+{
+	collider->rect = HitBox;
+
+	collider->SetPos(HitBox.x, HitBox.y);
+
+	Collider* aux = collider;
+
+	if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
+	{
+		hit = true;
+		LOG("Player HIT");
+		App->player->HitPlayer(damage);
+		App->particle->DestroyParticle(this);
+	}
+
+	//BLOCK INTERACTION
+	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+			{
+				hit = true;
+				LOG("BLOCK HIT");
+				App->particle->DestroyParticle(this);
+			}
+		}
+	}
+	//TILED INTERACTION
+	if (this->CheckSpace(position.x, position.y) == 1)
+	{
+		LOG("ARROW HIT");
+		App->particle->DestroyParticle(this);
+	}
+
+	return stdUpdate(dt);
 
 }
