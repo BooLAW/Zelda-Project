@@ -6,10 +6,10 @@
 #include "Entity.h"
 
 
-#define DOORWAY_UP		iPoint( { 32 * 16, 32 * 2  } )
-#define DOORWAY_DOWN	iPoint( { 32 * 16, 32 * 16 } )
-#define DOORWAY_LEFT	iPoint( { 32 * 2 - 8 , 32 * 8 + 8  } )
-#define DOORWAY_RIGHT	iPoint( { 32 * 30 + 8, 32 * 8 + 8  } )
+#define DOORWAY_UP		iPoint( { 32 * 15, 32 * 2  } )
+#define DOORWAY_DOWN	iPoint( { 32 * 15, 32 * 16 } )
+#define DOORWAY_LEFT	iPoint( { 32 * 2 - 16 , 32 * 8 + 16  } )
+#define DOORWAY_RIGHT	iPoint( { 32 * 30 + 16, 32 * 8 + 16  } )
 #define DOORWAY_SIZE	iPoint( { 32, 16 } )
 
 class Scene;

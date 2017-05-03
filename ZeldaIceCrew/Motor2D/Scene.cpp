@@ -314,7 +314,7 @@ Room * Scene::AddRoom(int coord_x, int coord_y, int w, int h)
 
 	ret->coords.x = coord_x;
 	ret->coords.y = coord_y;
-	ret->room_rect = { coord_x * w, coord_y * h , w, h };
+	ret->room_rect = { coord_x * ROOM_W, coord_y * ROOM_H , w, h };
 
 	ret->SetParentScene(this);
 
@@ -499,10 +499,18 @@ bool Scene::Load_new_map(int id)
 										st = statue;
 									if (strcmp(sub, "torch_bowl") == 0)
 										st = torch_bowl;
-									if (strcmp(sub, "torch_pillar") == 0)
-										st = torch_pillar;
+									//if (strcmp(sub, "torch_pillar") == 0)
+										//st = torch_pillar;
 									if (strcmp(sub, "slabs") == 0)
 										st = slabs;
+									if (strcmp(sub, "slabs_no_move") == 0)
+										st = slabs_no_move;
+									if (strcmp(sub, "slabs_spikes") == 0)
+										st = slabs_spikes;
+									if (strcmp(sub, "button_wall") == 0)
+										st = button_wall;
+									if (strcmp(sub, "pressure_plate") == 0)
+										st = pressure_plate;
 
 									r->AddBlock(st, node_block.attribute("x").as_float(), node_block.attribute("y").as_float());
 								}
@@ -568,12 +576,24 @@ bool Scene::Load_new_map(int id)
 
 									if (strcmp(sub, "t_bluesoldier") == 0)
 										st = t_bluesoldier;
+									if (strcmp(sub, "t_bluearcher") == 0)
+										st = t_bluearcher;
 									if (strcmp(sub, "t_redsoldier") == 0)
 										st = t_redsoldier;
 									if (strcmp(sub, "t_greensoldier") == 0)
 										st = t_greensoldier;
 									if (strcmp(sub, "t_hinox") == 0)
 										st = t_hinox;
+									if (strcmp(sub, "t_rope") == 0)
+										st = t_rope;
+									if (strcmp(sub, "t_geldman") == 0)
+										st = t_geldman;
+									if (strcmp(sub, "t_freezor") == 0)
+										st = t_freezor;
+									if (strcmp(sub, "t_GBat") == 0)
+										st = t_GBat;
+									if (strcmp(sub, "t_beamos") == 0)
+										st = t_beamos;
 									if (strcmp(sub, "t_boss_ballandchain") == 0)
 										st = t_boss_ballandchain;
 

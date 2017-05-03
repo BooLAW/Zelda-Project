@@ -13,7 +13,7 @@ bool Block::Start()
 	bool ret = true;
 	anim = idle;
 
-	HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_BLOCK);
+	HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_BLOCK_A);
 
 	type = BLOCKTYPE::last_;
 
@@ -96,7 +96,7 @@ void Block::Update(float dt)
 	//LOG("BLOCK UPDATE");
 
 	if(HitBox != nullptr)
-	HitBox->SetPos(pos.x, pos.y + sprites[subtype][idle][0].h - 32);
+	HitBox->SetPos(pos.x, pos.y);
 
 	/*if (App->player->link_coll != nullptr) {
 
@@ -179,7 +179,7 @@ bool Bush::Start() {
 
 		animations[bush][idle].PushBack(sprites[bush][idle][0]);
 	}
-	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = bush;
 
@@ -195,12 +195,10 @@ bool Pot::Start() {
 	{
 		sprites[pot][idle][0] = { 32,32,32,32 };
 
-		//sprites[pot][broke][] = ;
-
-		animations[pot][idle].PushBack(sprites[bush][idle][0]);
+		animations[pot][idle].PushBack(sprites[pot][idle][0]);
 	}
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = pot;
 	return ret;
@@ -219,7 +217,7 @@ bool Slab::Start() {
 		animations[slabs][idle].PushBack(sprites[slabs][idle][0]);
 	}
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = slabs;
 	return ret;
@@ -237,7 +235,7 @@ bool Slab_No_Move::Start()
 		animations[slabs_no_move][idle].PushBack(sprites[slabs_no_move][idle][0]);
 	}
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = slabs_no_move;
 	return ret;
@@ -253,11 +251,9 @@ bool Statue::Start() {
 	{
 		sprites[statue][idle][0] = { 64,0,32,49 };
 
-		//sprites[bush][broke][] = ;
-
 		animations[statue][idle].PushBack(sprites[statue][idle][0]);
 	}
-	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = statue;
 	return ret;
@@ -269,7 +265,7 @@ bool Torch_Bowl::Start() {
 	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
 	anim = idle;
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_BLOCK);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = torch_bowl;
 	return ret;
@@ -287,88 +283,128 @@ bool Slab_Spikes::Start()
 		animations[slabs_no_move][idle].PushBack(sprites[slabs_spikes][idle][0]);
 	}
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_B);
 
 	subtype = slabs_no_move;
 	return ret;
 }
 
+bool Button_Wall::Start() {
+	bool ret = true;
+	
+	anim = idle;
+	subtype = button_wall;
+	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
+	{
+		sprites[button_wall][idle][0] = { 96,64,32,20 };
+		sprites[button_wall][on][0] = {96,94,32, 14};
+
+		animations[button_wall][idle].PushBack(sprites[button_wall][idle][0]);
+		animations[button_wall][on].PushBack(sprites[button_wall][on][0]);
+	}
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_B);
+
+
+	return ret;
+}
+
+bool Pressure_Plate::Start() {
+	bool ret = true;
+	SetRewards();
+	anim = idle;
+	subtype = pressure_plate;
+	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
+	{
+		sprites[pressure_plate][idle][0] = { 96,0,32,32 };
+		sprites[pressure_plate][on][0] = { 96,32,32,32 };
+
+		animations[pressure_plate][idle].PushBack(sprites[pressure_plate][idle][0]);
+		animations[pressure_plate][on].PushBack(sprites[pressure_plate][on][0]);
+	}
+	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_B);
+
+
+	return ret;
+}
+
 void Block::Move() {
-	App->player->action_blit = App->player->Pull;
-	App->player->action = true;
-	HitBox->SetPos(pos.x, pos.y + sprites[subtype][idle][0].h - 32);
-	if (App->player->curr_dir == Up) {
-		if (front == true && App->input->GetKey(SDL_SCANCODE_W)) {
-			App->player->action_blit = App->player->Push;
-			if (CheckSpace(HitBox->rect.x, HitBox->rect.y - App->player->pl_speed.y / 4)) {
-				App->player->pos.y -= App->player->pl_speed.y / 4;
-				pos.y -= App->player->pl_speed.y / 4;
+	if (isMovable() == true) {
+		App->player->action_blit = App->player->Pull;
+		App->player->action = true;
+		HitBox->SetPos(pos.x, pos.y + sprites[subtype][idle][0].h - 32);
+		if (App->player->curr_dir == Up) {
+			if (front == true && App->input->GetKey(SDL_SCANCODE_W)) {
+				App->player->action_blit = App->player->Push;
+				if (CheckSpace(HitBox->rect.x, HitBox->rect.y - App->player->pl_speed.y / 4)) {
+					App->player->pos.y -= App->player->pl_speed.y / 4;
+					pos.y -= App->player->pl_speed.y / 4;
+				}
+			}
+			else if (back == true && App->input->GetKey(SDL_SCANCODE_S)) {
+				App->player->action_blit = App->player->Pull;
+				if (CheckSpace(HitBox->rect.x, HitBox->rect.y + App->player->pl_speed.y / 4)) {
+					App->player->pos.y += App->player->pl_speed.y / 4;
+					pos.y += App->player->pl_speed.y / 4;
+				}
 			}
 		}
-		else if (back == true && App->input->GetKey(SDL_SCANCODE_S)) {
-			App->player->action_blit = App->player->Pull;
-			if (CheckSpace(HitBox->rect.x, HitBox->rect.y + App->player->pl_speed.y / 4)) {
-				App->player->pos.y += App->player->pl_speed.y / 4;
-				pos.y += App->player->pl_speed.y / 4;
+		else if (App->player->curr_dir == Left) {
+			if (front == true && App->input->GetKey(SDL_SCANCODE_A)) {
+				App->player->action_blit = App->player->Push;
+				if (CheckSpace(HitBox->rect.x - App->player->pl_speed.x / 4, HitBox->rect.y)) {
+					App->player->pos.x -= App->player->pl_speed.x / 4;
+					pos.x -= App->player->pl_speed.x / 4;
+				}
+			}
+			else if (back == true && App->input->GetKey(SDL_SCANCODE_D)) {
+				App->player->action_blit = App->player->Pull;
+				if (CheckSpace(HitBox->rect.x + App->player->pl_speed.x / 4, HitBox->rect.y)) {
+					App->player->pos.x += App->player->pl_speed.x / 4;
+					pos.x += App->player->pl_speed.x / 4;
+				}
 			}
 		}
-	}
-	else if (App->player->curr_dir == Left) {
-		if (front == true && App->input->GetKey(SDL_SCANCODE_A)) {
-			App->player->action_blit = App->player->Push;
-			if (CheckSpace(HitBox->rect.x - App->player->pl_speed.x / 4, HitBox->rect.y)) {
-				App->player->pos.x -= App->player->pl_speed.x / 4;
-				pos.x -= App->player->pl_speed.x / 4;
-			}
-		}
-		else if (back == true && App->input->GetKey(SDL_SCANCODE_D)) {
-			App->player->action_blit = App->player->Pull;
-			if (CheckSpace(HitBox->rect.x + App->player->pl_speed.x / 4, HitBox->rect.y)) {
-				App->player->pos.x += App->player->pl_speed.x / 4;
-				pos.x += App->player->pl_speed.x / 4;
-			}
-		}
-	}
 
-	else if (App->player->curr_dir == Right) {
-		if (front == true && App->input->GetKey(SDL_SCANCODE_D)) {
-			App->player->action_blit = App->player->Push;
-			bool test = CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y);
-			if (CheckSpace(HitBox->rect.x  + App->player->pl_speed.x / 4, HitBox->rect.y)) {
-				App->player->pos.x += App->player->pl_speed.x / 4;
-				pos.x += App->player->pl_speed.x / 4;
+		else if (App->player->curr_dir == Right) {
+			if (front == true && App->input->GetKey(SDL_SCANCODE_D)) {
+				App->player->action_blit = App->player->Push;
+				bool test = CheckSpace(pos.x + App->player->pl_speed.x / 4, pos.y);
+				if (CheckSpace(HitBox->rect.x + App->player->pl_speed.x / 4, HitBox->rect.y)) {
+					App->player->pos.x += App->player->pl_speed.x / 4;
+					pos.x += App->player->pl_speed.x / 4;
+				}
+			}
+			else if (back == true && App->input->GetKey(SDL_SCANCODE_A)) {
+				App->player->action_blit = App->player->Pull;
+				if (CheckSpace(HitBox->rect.x - App->player->pl_speed.x / 4, HitBox->rect.y)) {
+					App->player->pos.x -= App->player->pl_speed.x / 4;
+					pos.x -= App->player->pl_speed.x / 4;
+				}
 			}
 		}
-		else if (back == true && App->input->GetKey(SDL_SCANCODE_A)) {
-			App->player->action_blit = App->player->Pull;
-			if (CheckSpace(HitBox->rect.x - App->player->pl_speed.x / 4, HitBox->rect.y)) {
-				App->player->pos.x -= App->player->pl_speed.x / 4;
-				pos.x -= App->player->pl_speed.x / 4;
-			}
-		}
-	}
 
-	else if (App->player->curr_dir == Down) {
-		if (front == true && App->input->GetKey(SDL_SCANCODE_S)) {
-			App->player->action_blit = App->player->Push;
- 		if (CheckSpace(HitBox->rect.x, HitBox->rect.y + App->player->pl_speed.y / 4)) {
-				App->player->pos.y += App->player->pl_speed.y / 4;
-				pos.y += App->player->pl_speed.y / 4;
+		else if (App->player->curr_dir == Down) {
+			if (front == true && App->input->GetKey(SDL_SCANCODE_S)) {
+				App->player->action_blit = App->player->Push;
+				if (CheckSpace(HitBox->rect.x, HitBox->rect.y + App->player->pl_speed.y / 4)) {
+					App->player->pos.y += App->player->pl_speed.y / 4;
+					pos.y += App->player->pl_speed.y / 4;
+				}
+			}
+			else if (back == true && App->input->GetKey(SDL_SCANCODE_W)) {
+				App->player->action_blit = App->player->Pull;
+				if (CheckSpace(HitBox->rect.x, HitBox->rect.y - App->player->pl_speed.y / 4)) {
+					App->player->pos.y -= App->player->pl_speed.y / 4;
+					pos.y -= App->player->pl_speed.y / 4;
+				}
 			}
 		}
-		else if (back == true && App->input->GetKey(SDL_SCANCODE_W)) {
-			App->player->action_blit = App->player->Pull;
-			if (CheckSpace(HitBox->rect.x, HitBox->rect.y - App->player->pl_speed.y / 4)) {
-				App->player->pos.y -= App->player->pl_speed.y / 4;
-				pos.y -= App->player->pl_speed.y / 4;
-			}
-		}
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE))
-		moving = true;
-	else
-		moving = false;
+		if (App->input->GetKey(SDL_SCANCODE_SPACE))
+			moving = true;
+		else
+			moving = false;
+	}
 }
 
 void Torch_Bowl::Light() {

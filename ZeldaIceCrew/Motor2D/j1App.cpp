@@ -4,6 +4,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Functions.h"
+#include <time.h>
 
 #include "j1Window.h"
 #include "j1Input.h"
@@ -98,6 +99,8 @@ bool j1App::Awake()
 {
 	PERF_START(ptimer);
 
+	srand(time(NULL));
+
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
@@ -134,6 +137,8 @@ bool j1App::Awake()
 // Called before the first frame
 bool j1App::Start()
 {
+	BROFILER_CATEGORY("AddModule", Profiler::Color::Gray)
+
 	PERF_START(ptimer);
 	bool ret = true;
 	std::list<j1Module*>::iterator item;
@@ -156,6 +161,8 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
+	BROFILER_CATEGORY("Update", Profiler::Color::Orange)
+	
 	bool ret = true;
 	PrepareUpdate();
 
@@ -198,6 +205,8 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+	BROFILER_CATEGORY("Preupdate", Profiler::Color::Brown)
+
 	frame_count++;
 	last_sec_frame_count++;
 
@@ -208,6 +217,8 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
+	BROFILER_CATEGORY("FinishUpdate", Profiler::Color::Magenta)
+
 	if(want_to_save == true)
 		SavegameNow();
 
@@ -250,13 +261,15 @@ bool j1App::PreUpdate()
 
 	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = (*item);
+		if ((*item)->pause == false) {
+			pModule = (*item);
 
-		if(pModule->active == false) {
-			continue;
+			if (pModule->active == false) {
+				continue;
+			}
+
+			ret = (*item)->PreUpdate();
 		}
-
-		ret = (*item)->PreUpdate();
 	}
 
 	return ret;
@@ -270,13 +283,15 @@ bool j1App::DoUpdate()
 
 	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = (*item);
+		if ((*item)->pause == false) {
+			pModule = (*item);
 
-		if(pModule->active == false) {
-			continue;
+			if (pModule->active == false) {
+				continue;
+			}
+
+			ret = (*item)->Update(dt);
 		}
-
-		ret = (*item)->Update(dt);
 	}
 
 	return ret;
@@ -290,13 +305,15 @@ bool j1App::PostUpdate()
 
 	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = (*item);
+		if ((*item)->pause == false) {
+			pModule = (*item);
 
-		if(pModule->active == false) {
-			continue;
+			if (pModule->active == false) {
+				continue;
+			}
+
+			ret = (*item)->PostUpdate();
 		}
-
-		ret = (*item)->PostUpdate();
 	}
 
 	return ret;

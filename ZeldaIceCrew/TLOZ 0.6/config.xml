@@ -1,0 +1,37 @@
+<!-- Config file for the game -->
+
+<config>
+  <app framerate_cap="">
+    <title>Pathfinding Test</title>
+    <organization>UPC</organization>
+  </app>
+  <atlas file =""/>
+  <renderer>
+    <vsync value="true"/>
+  </renderer>
+
+  <fonts>
+    <default_font file="fonts/ReturnofGanon.ttf" size="24"/>
+  </fonts>
+
+  <gui>
+    <atlas file="gui/sf2.png"/>
+  </gui>
+    
+  <window>
+    <resolution width="1024" height="768" scale="1"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="true"/>
+    <fullscreen_window value="false"/>
+  </window>
+
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+
+  <map>
+    <folder>maps/</folder>
+  </map>
+
+</config>

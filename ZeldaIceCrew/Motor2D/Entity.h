@@ -5,7 +5,13 @@
 #include "MathHelpers.h"
 #include "j1Render.h"
 #include "Log.h"
+
 #include <deque>
+
+
+#define TILE_S 32
+
+
 enum ENTITYTYPE
 {
 	drop = 0,

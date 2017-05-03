@@ -4,13 +4,22 @@
 #include "j1Module.h"
 #include "j1Player.h"
 
-#define MAX_FRAMES_PARTICLES 8
+#define MAX_FRAMES_PARTICLES 16
 #define ARROW_SPEED 6.0f
 
 #define MAX_PARTICLES 100
 
+#define SHADOW_SPD 3
+#define BOUNCEB_SPD 3
+
 enum PARTICLETYPE {
 	p_arrow = 0,
+	p_enarrow,
+	p_shadow,
+	p_bounceback,
+	p_agahnim_ball,
+	p_agahnim_lightning,
+	p_agahnim_4balls,
 	__LAST_PARTICLE
 };
 
@@ -29,8 +38,10 @@ struct Particle
 	Uint32 life = 0;
 	bool fx_played = false;
 
+	uint damage = 0;
+
 	SDL_Texture* graphics = nullptr;
-	SDL_Rect	 g_rect[MAX_FRAMES_PARTICLES];
+	SDL_Rect	 g_rect[Direction::LastDir][MAX_FRAMES_PARTICLES];
 
 	Particle();
 
@@ -38,7 +49,10 @@ struct Particle
 	virtual bool Update(float dt);
 	virtual bool stdUpdate(float dt);
 	virtual void CleanUp();
-	virtual void Draw(float dt) {}; 
+	virtual void Draw(float dt) {};
+
+	virtual int CheckSpace(float new_x, float new_y);
+
 };
 
 class ModuleParticles : public j1Module
@@ -52,7 +66,7 @@ public:
 	bool CleanUp();
 
 	Particle* CreateParticle(uint p_type, int x, int y, uint dir);
-	void AddParticle(Particle* particle, COLLIDER_TYPE collider_type, Uint32 life, Uint32 delay = 0);
+	void AddParticle(Particle* particle, COLLIDER_TYPE collider_type, Uint32 life, Uint32 dmg = 0, Uint32 delay = 0);
 	void DestroyParticles();
 	void DestroyParticle(Particle* particle);
 
@@ -74,8 +88,40 @@ struct Arrow : public Particle {
 
 	void Start();
 	bool Update(float dt);
-	int CheckSpace(float new_x, float new_y);
 
+};
+
+struct Enemy_Arrow : public Particle {
+	bool hit = false;
+
+	void Start();
+	bool Update(float dt);
+};
+
+struct Shadow_Projectile : public Particle {
+	bool hit = false;
+
+	void Start();
+	bool Update(float dt);
+};
+
+struct BounceBack : public Particle {
+	bool hit = false;
+	void Start();
+	bool Update(float dt);
+
+	fPoint target;
+
+	enum BOUNCESTATE {
+		go = 0,
+		back
+	}state = go;
+};
+struct AgahnimBasic : public Particle {
+	bool hit = false;
+	void Start();
+	bool Update(float dt);
+	Direction directions;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 };
 
 #endif // __MODULEPARTICLES_H__

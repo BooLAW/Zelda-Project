@@ -29,7 +29,12 @@ bool j1Player::Start()
 {
 	bool ret = true;
 	LOG("Player Start");
-
+	//CONTROLS
+	for (int i = 0; i < __LAST_CONTROLS; i++) {
+		if (i == MOVE_DOWN) {
+			
+		}
+	}
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
 	//Idle
 	{
@@ -118,6 +123,31 @@ bool j1Player::Start()
 		sprites[Walk_Shield][Left][5] = { link_x * 5,link_y * 8,link_width,link_height };
 		sprites[Walk_Shield][Left][6] = { link_x * 6,link_y * 8,link_width,link_height };
 	
+	}
+
+	//Link Wake up
+	{
+		sprites[Wake_up][Down][0] = { 0  ,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][1] = { link_x,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][2] = { link_x * 2,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][3] = { link_x * 3,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][4] = { link_x * 4,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][5] = { link_x * 5,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][6] = { link_x * 6,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][7] = { link_x * 7,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][8] = { link_x * 8,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][9] = { link_x * 9,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][10] = { link_x * 10,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][11] = { link_x * 11,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][12] = { link_x * 12,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][13] = { link_x * 13,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][14] = { link_x * 14,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][15] = { link_x * 15,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][16] = { link_x * 16,link_y * 8,link_width,link_height };
+		
+
+
+
 	}
 	//Pick-up Object
 	//y coordinate for object depends on animation
@@ -209,6 +239,7 @@ bool j1Player::Start()
 	// Load Textures
 
 	Link_Movement = App->tex->Load("Sprites/Link_Movement.png");
+	Link_Wakeup = App->tex->Load("Sprites/Link.png");
 
 	// !_Textures
 
@@ -233,16 +264,16 @@ bool j1Player::Start()
 	// Walking
 	{
 
-		// Walking UP 
+// Walking UP 
 		{
-			animations[Walk][Up].PushBack(sprites[Walk][Up][0]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][1]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][2]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][3]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][4]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][5]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][6]);
-			animations[Walk][Up].speed = PL_WALK_FPS;
+		animations[Walk][Up].PushBack(sprites[Walk][Up][0]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][1]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][2]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][3]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][4]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][5]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][6]);
+		animations[Walk][Up].speed = PL_WALK_FPS;
 		}
 
 		// Walking DOWN
@@ -331,6 +362,28 @@ bool j1Player::Start()
 
 	}
 
+	// Waking up
+	{
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][0]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][1]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][2]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][3]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][4]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][5]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][6]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][7]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][8]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][9]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][10]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][11]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][12]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][13]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][14]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][15]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][16]);
+
+
+}
 	// Pick up Objects
 	{
 
@@ -575,168 +628,170 @@ bool j1Player::Start()
 bool j1Player::Update(float dt)
 {
 	bool ret = true;
-	
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
-		if (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene) {
-			App->scene_manager->toChangeScene((Scene*)App->scene_manager->village_scene);
-		}else
-		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
-	}
 
-	Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
+		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+			if (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene) {
+				App->scene_manager->toChangeScene((Scene*)App->scene_manager->village_scene);
+			}
+			else
+				App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
+		}
 
-	if(App->debug_mode == true)
-		if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
-			if (c_r->enemies.empty() == false) {
-				for (std::list<Enemy*>::iterator it = c_r->enemies.begin(); it != c_r->enemies.end(); it++) {
-					if (it._Ptr->_Myval != nullptr)
-						it._Ptr->_Myval->Hit(Down, 9999);
+		Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
+
+		if (App->debug_mode == true)
+			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
+				if (c_r->enemies.empty() == false) {
+					for (std::list<Enemy*>::iterator it = c_r->enemies.begin(); it != c_r->enemies.end(); it++) {
+						if (it._Ptr->_Myval != nullptr)
+							it._Ptr->_Myval->Hit(Down, 9999);
+					}
 				}
 			}
-		}
 
-	//if (alive == false)
-	//{
-	//	DyingRestart();
-	//		action_blit = PickUp;//change to wake Up animation when we have it
-	//	return ret;
-	//}
-	if(App->render->cam_travel != true){
-	if(App->debug_mode == true)
-		if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_DOWN) {
-			App->player->SetPos(-App->render->camera.x + App->render->camera.w / 2, -App->render->camera.y + App->render->camera.h / 2);
-		}
+		//if (alive == false)
+		//{
+		//	DyingRestart();
+		//		action_blit = PickUp;//change to wake Up animation when we have it
+		//	return ret;
+		//}
+		if (App->render->cam_travel != true) {
+			if (App->debug_mode == true)
+				if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_DOWN) {
+					App->player->SetPos(-App->render->camera.x + App->render->camera.w / 2, -App->render->camera.y + App->render->camera.h / 2);
+				}
 
-	// Logic
-	if (App->debug_mode == false) 
-	{
-		if (action == false) 
-		{
-			Movement();
-			Slash_();			
-		}
-	}
-	if (Slashing == true) 
-	{
-		curr_weapon->Attack();
-		if (action_blit != Weapon_atk)
-		{
-			Slashing = false;
-			weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
-		}
-	}
-
-	// Actions
-	{
-		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
-			change_weapon = Q_Change;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
-			change_weapon = E_Change;
-		}
-		ChangeWeapon();
-
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
-			//for now perform an action to see animation
-			//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
-			action_test = true;
-			switch (curr_dir) {
-			case Up:
-				App->player->action_coll->rect = { (int)App->player->GetPos().x, (int)App->player->link_coll->rect.y - WPN_COL_W / 4, WPN_COL_H / 4, WPN_COL_W / 4 };
-				break;
-			case Down:
-				App->player->action_coll->rect = { (int)App->player->GetPos().x, (int)App->player->link_coll->rect.y + App->player->link_coll->rect.h, WPN_COL_H / 4, WPN_COL_W / 4 };
-				break;
-			case Left:
-				App->player->action_coll->rect = { (int)App->player->GetPos().x - WPN_COL_W / 4, (int)App->player->GetPos().y + (App->player->link_coll->rect.w / 2) - (WPN_COL_H / 8), WPN_COL_W / 4, WPN_COL_H / 4 };
-				break;
-			case Right:
-				App->player->action_coll->rect = { (int)App->player->GetPos().x + App->player->link_coll->rect.w, (int)App->player->GetPos().y + (App->player->link_coll->rect.w / 2) - (WPN_COL_H / 8), WPN_COL_W / 4, WPN_COL_H / 4 };
-				break;
-
-			}
-		}
-
-		else
-			action_coll->SetPos(FARLANDS.x, FARLANDS.y);
-		// !_Logic
-	}
-		// Graphics
-		if (action == false) {
-			//Movement or any action that does not stop movement
-
-			if (shield == true && (action_blit == Idle || action_blit == Walk)) //add cases for actions that can be done with or without shield
-				action_blit++;
-
-			App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
-			//!_Movement ""
-
-			if (anim_override == true && animations[action_blit][curr_dir].Finished()) {
-				anim_override = false;
-				dir_override = false;
-				animations[action_blit][curr_dir].Reset();
-				action_blit = Idle;
-				pl_speed.x = pl_speed.x * PL_SPD_ATK;
-				pl_speed.y = pl_speed.y * PL_SPD_ATK;
-			}
-		}
-
-
-		//Actions
-		else if (action == true) {
-
-			if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
-				action = false;
-				LOG("ACTION = FALSE");
-				action_test = false;
-				animations[action_blit][curr_dir].Reset();
-				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[Idle][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
-			}
-			else {
-				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
-
-				if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-					animations[action_blit][curr_dir].Reset();
-			}
-
-		}
-		//!_Actions	
-
-		if (App->input->GetKey(SDL_SCANCODE_TAB)== KEY_DOWN) {
-			if (!App->hud->inv->active) {
-				App->hud->inv->active = true;
-				App->audio->PlayFx(open_inv_fx);
-			}
-			else {
-				App->hud->inv->active = false;
-				App->audio->PlayFx(close_inv_fx);
-			}
-		}
-		//!_Graphics
-
-		// MODIFY COLLISION -------------------------------------------------
-		link_coll->SetPos(pos.x, pos.y);
-		mov_coll->SetPos(pos.x + (link_coll->rect.w / 2 - mov_coll->rect.w / 2), pos.y + (link_coll->rect.h / 2 - mov_coll->rect.h / 2));
-		/*if ((App->player->curr_life_points <= 2)&&(App->player->curr_life_points!=0)) {
-			App->audio->PlayFx(low_hp);
-		}*/
-		if (App->player->curr_life_points <= 0) {
-			//Here he should change the scene to the room scene
-			DyingRestart();
-			App->audio->PlayFx(die_fx);
-		}
-
-		if (App->debug_mode == true) {
-			inmortal = true;
-		}
-
-		if (inmortal == true) {
-			App->render->DrawQuad({ (int)pos.x - 2, (int)pos.y - 8, 36, 56 }, 255, 255, 255, 80);
+			// Logic
 			if (App->debug_mode == false)
-				if (inmortal_timer.ReadMs() >= inmortal_time)
-					inmortal = false;
+			{
+				if (action == false)
+				{
+					Movement();
+					Slash_();
+				}
+			}
+			if (Slashing == true)
+			{
+				curr_weapon->Attack();
+				if (action_blit != Weapon_atk)
+				{
+					Slashing = false;
+					weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
+				}
+				
+			}
+
+			// Actions
+			{
+				if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+					change_weapon = Q_Change;
+				}
+				if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+					change_weapon = E_Change;
+				}
+				ChangeWeapon();
+
+				if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
+					//for now perform an action to see animation
+					//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
+					action_test = true;
+					switch (curr_dir) {
+					case Up:
+						App->player->action_coll->rect = { (int)App->player->GetPos().x, (int)App->player->link_coll->rect.y - WPN_COL_W / 4, WPN_COL_H / 4, WPN_COL_W / 4 };
+						break;
+					case Down:
+						App->player->action_coll->rect = { (int)App->player->GetPos().x, (int)App->player->link_coll->rect.y + App->player->link_coll->rect.h, WPN_COL_H / 4, WPN_COL_W / 4 };
+						break;
+					case Left:
+						App->player->action_coll->rect = { (int)App->player->GetPos().x - WPN_COL_W / 4, (int)App->player->GetPos().y + (App->player->link_coll->rect.w / 2) - (WPN_COL_H / 8), WPN_COL_W / 4, WPN_COL_H / 4 };
+						break;
+					case Right:
+						App->player->action_coll->rect = { (int)App->player->GetPos().x + App->player->link_coll->rect.w, (int)App->player->GetPos().y + (App->player->link_coll->rect.w / 2) - (WPN_COL_H / 8), WPN_COL_W / 4, WPN_COL_H / 4 };
+						break;
+
+					}
+				}
+
+				else
+					action_coll->SetPos(FARLANDS.x, FARLANDS.y);
+				// !_Logic
+			}
+			// Graphics
+			if (action == false) {
+				//Movement or any action that does not stop movement
+
+				if (shield == true && (action_blit == Idle || action_blit == Walk)) //add cases for actions that can be done with or without shield
+					action_blit++;
+
+				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+				//!_Movement ""
+
+				if (anim_override == true && animations[action_blit][curr_dir].Finished()) {
+					anim_override = false;
+					dir_override = false;
+					animations[action_blit][curr_dir].Reset();
+					action_blit = Idle;
+					pl_speed.x = pl_speed.x * PL_SPD_ATK;
+					pl_speed.y = pl_speed.y * PL_SPD_ATK;
+				}
+			}
+
+
+			//Actions
+			else if (action == true) {
+
+				if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
+					action = false;
+					LOG("ACTION = FALSE");
+					action_test = false;
+					animations[action_blit][curr_dir].Reset();
+					App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[Idle][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
+				}
+				else {
+					App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+
+					if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+						animations[action_blit][curr_dir].Reset();
+				}
+
+			}
+			//!_Actions	
+
+			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+				if (!App->hud->inv->active) {
+					App->hud->inv->active = true;
+					App->audio->PlayFx(open_inv_fx);
+				}
+				else {
+					App->hud->inv->active = false;
+					App->audio->PlayFx(close_inv_fx);
+				}
+			}
+			//!_Graphics
+
+			// MODIFY COLLISION -------------------------------------------------
+			link_coll->SetPos(pos.x, pos.y);
+			mov_coll->SetPos(pos.x + (link_coll->rect.w / 2 - mov_coll->rect.w / 2), pos.y + (link_coll->rect.h / 2 - mov_coll->rect.h / 2));
+			/*if ((App->player->curr_life_points <= 2)&&(App->player->curr_life_points!=0)) {
+				App->audio->PlayFx(low_hp);
+			}*/
+			if (App->player->curr_life_points <= 0) {
+				//Here he should change the scene to the room scene
+				DyingRestart();
+				App->audio->PlayFx(die_fx);
+			}
+
+			if (App->debug_mode == true) {
+				inmortal = true;
+			}
+
+			if (inmortal == true) {
+				App->render->DrawQuad({ (int)pos.x - 2, (int)pos.y - 8, 36, 56 }, 255, 255, 255, 80);
+				if (App->debug_mode == false)
+					if (inmortal_timer.ReadMs() >= inmortal_time)
+						inmortal = false;
+			}
 		}
-	}
 
 	return ret;
 }
@@ -860,6 +915,40 @@ void j1Player::AddWeapon(uint weapon_t)
 
 }
 
+void j1Player::HitPlayer(int dmg)
+{
+	if (App->player->curr_life_points > 0) {
+		if (App->player->inmortal == false) {
+
+			App->audio->PlayFx(App->player->hurt);
+			App->player->curr_life_points -= dmg;
+
+			switch (curr_dir) {
+			case Up:
+				if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height) == 0)
+					App->player->MovePos(0, -App->map->data.tile_height);
+				break;
+			case Down:
+				if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y + App->player->link_coll->rect.h + App->map->data.tile_height) == 0)
+					App->player->MovePos(0, App->map->data.tile_height);
+				break;
+			case Left:
+				if (App->player->CheckSpace(App->player->GetPos().x - App->map->data.tile_height, App->player->GetPos().y) == 0)
+					App->player->MovePos(-App->map->data.tile_width, 0);
+				break;
+			case Right:
+				if (App->player->CheckSpace(App->player->GetPos().x + App->player->link_coll->rect.w + App->map->data.tile_height, App->player->GetPos().y) == 0)
+					App->player->MovePos(App->map->data.tile_width, 0);
+				break;
+			}
+
+			App->player->PlayerInmortal(HIT_INM_TIME);
+
+			
+		}
+	}
+}
+
 void j1Player::SetPos(float x, float y)
 {
 	pos.x = x;
@@ -922,6 +1011,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		if (curr_life_points <= 0)
 			alive = false;
 
+		//Activate screen shake
+		App->render->Activate_Shake(2, 1);
 		//Add extra particles?
 		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
 		//function to restart in the house()

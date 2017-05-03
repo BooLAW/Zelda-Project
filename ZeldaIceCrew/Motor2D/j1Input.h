@@ -9,6 +9,22 @@
 
 struct SDL_Rect;
 
+enum Controls {
+	UP = 0,
+	DOWN,
+	RIGHT,
+	LEFT,
+	MOVE_UP,
+	MOVE_DOWN,
+	MOVE_LEFT,
+	MOVE_RIGHT,
+	ACTION,
+	MENU,
+	WPN_NEXT,
+	WPN_PREV,
+	__LAST_CONTROLS
+};
+
 enum j1EventWindow
 {
 	WE_QUIT = 0,
@@ -25,6 +41,35 @@ enum j1KeyState
 	KEY_UP
 };
 
+enum Modules {
+	j1Window_ = 0,
+	j1Input_,
+	j1Render_,
+	j1Textures_,
+	j1Audio_,
+	j1FileSystem_,
+	SceneManager_,
+	j1Map_,
+	j1PathFinding_,
+	j1Fonts_,
+	j1Gui_,
+	j1Collision_,
+	HUD_,
+	j1Player_,
+	EntityManager_,
+	ModuleParticles_,
+
+	last_module_
+};
+
+enum Pause_Type {
+
+	General_ = 0,
+	Inventory_,
+
+	last_pause__
+
+};
 class j1Input : public j1Module
 {
 
@@ -68,6 +113,16 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 	std::string GetString();
+	void DefaultControls();
+	int controls [__LAST_CONTROLS];
+	
+	//Pause things
+	bool Start_Pause(Pause_Type type);
+	bool Stop_Pause(Pause_Type type);
+	void Init_Pause_Matrix();
+
+	bool pause_matrix[last_module_][last_pause__];
+	bool pause2[last_pause__];
 
 private:
 

@@ -56,7 +56,11 @@ public:
 	std::deque<Entity*>* GetEntities() { return &entities; };
 
 	void OnCollision(Collider* c1, Collider* c2);
-	
+
+
+	uint fromEntoPlDir(uint EnDir);
+
+
 public:
 	Enemy* CreateEnemy(uint subtype);
 	Item* CreateItem(uint subtype);

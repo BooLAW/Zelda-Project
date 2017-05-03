@@ -18,14 +18,23 @@
 
 #define ENEMY_STD_OFFSET_Y 24
 
+#define ROPE_JMP 5
+
 class Entity;
 
 enum ENEMYTYPE {
 	t_bluesoldier = 0,
+	t_bluearcher,
 	t_redsoldier,
 	t_greensoldier,
 	t_hinox,
+	t_rope,
+	t_geldman,
+	t_freezor,
+	t_GBat,
+	t_beamos,
 	t_boss_ballandchain,
+	t_boss_agahnim,
 	__LAST_ENEMYTYPE
 };
 
@@ -45,6 +54,7 @@ protected:
 	enum DAMAGETYPE {
 		melee = 0,
 		projectile,
+		none,
 		__LAST_DMGTYPE
 	};
 
@@ -52,6 +62,7 @@ protected:
 		path = 0,
 		chase,
 		distance,
+		special,
 		no_move,
 		__LAST_AITYPE
 	};
@@ -71,13 +82,18 @@ public:
 
 	virtual void Spawn() {}
 
-	virtual void Update(float dt);
+	virtual uint GetPlayerDirection();
+
+	virtual void stdUpdate(float dt);
+	virtual void Update(float dt) { stdUpdate(dt); };
 
 	virtual bool Move();
 
 	virtual bool Attack();
 	virtual void HitPlayer();
 	virtual void HitPlayer(uint dmg);
+
+	virtual void SetAnimation(SDL_Rect spr[LastDir][2]);
 
 	virtual void Draw();
 
@@ -113,6 +129,8 @@ public:
 		bool Flying = false;
 	
 	} stats;
+
+	iPoint target;
 
 	ENEMYTYPE subtype;
 	bool DmgType[__LAST_DMGTYPE];
@@ -193,6 +211,142 @@ class Hinox : public Enemy {
 public:
 	bool Start();
 	void SetRewards();
+};
+
+class BlueArcher : public Enemy {
+	bool Start();
+	void Update(float dt);
+
+	enum ARCHERSTATE {
+		moving = 0,
+		shoot,
+		last_archerstate
+	}state = moving;
+
+	void Draw();
+
+	Animation shoot_anim;
+
+	SDL_Rect BArcher_Shoot[EnDirection::LastDir][8];
+
+	j1Timer react_time;
+	j1Timer shoot_time;
+
+	uint range = 5;
+	uint range_limit = 2;
+
+	bool first_shot = true;
+
+};
+
+class Rope : public Enemy {
+	bool Start();
+
+	void Update(float dt);
+
+	void Draw();
+
+	enum ROPESTATE{
+		moving = 0,
+		no_move,
+		last_ropestate
+	}state = no_move;
+
+	fPoint aux_pos;
+
+	Animation nm_anim;
+
+	SDL_Rect RopeSprites_m[EnDirection::LastDir][2];
+	SDL_Rect RopeSprites_nm[EnDirection::LastDir][2];
+
+	j1Timer walk_timer;
+
+};
+
+class Geldman : public Enemy {
+	bool Start();
+	void Draw();
+	void Update(float dt);
+
+	const int time_moving = 3500;
+
+	SDL_Rect appear_sprites[8], move_sprites[8];
+	Animation appear_anim, disappear_anim, move_anim;
+
+	enum GELDMANSTATE {
+		appear = 0,
+		appear_start,
+		disappear_start,
+		disappear,
+		move
+	}state = appear_start;
+
+	j1Timer move_time;
+
+};
+
+class Freezor : public Enemy {
+	bool Start();
+	void Draw();
+	void Update(float dt);
+	const int time_attack = 3500;
+
+	j1Timer attack_timer;
+
+	enum FREEZORSTATE {
+		appear = 0,
+		appear_start,
+		attack,
+		disappear,
+		disappear_start
+	}state = appear_start;
+
+	Animation appear_anim, disappear_anim, attack_anim;
+	SDL_Rect appear_sprites[8], attack_sprites[2];
+	j1Timer timer;
+};
+
+class GreyBat : public Enemy {
+public:
+	bool Start();
+};
+
+class BossAgahnim : public Enemy {
+public:
+	bool Start();
+	void SetReward();
+	void Draw();
+	void Update(float dt);
+	const int time_attack = 3500;//CHANGE
+
+	j1Timer attack_timer;
+	enum AGAHNIMSTATE {
+		appear = 0,
+		appear_start,
+		attack,
+		hit,
+		disappear,
+		disappear_start
+	}state = appear_start;
+
+	Animation appear_anim, disappear_anim, attack_anim, hit_anim;
+	SDL_Rect appear_sprites[8], attack_sprites[2], disappear_sprites[6];
+	j1Timer timer;
+};
+
+class Beamos : public Enemy {
+public:
+	bool Start();
+	void Draw();
+	void Update(float dt);
+
+	enum BEAMOSSTATE {
+		search = 0,
+		shooting
+	}state = search;
+
+	j1Timer timer;
+
 };
 
 #endif // !__ENEMY_H__

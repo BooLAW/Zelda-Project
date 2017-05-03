@@ -4,7 +4,7 @@
 #include "SDL/include/SDL.h"
 #include "Point.h"
 #include "j1Module.h"
-
+#include "j1PerfTimer.h"
 #include <deque>
 
 struct Sprite {
@@ -86,6 +86,21 @@ private:
 
 	// Sprites Drawing
 	std::deque<Sprite*> sprites_toDraw;
+
+public:
+	//Camera Shake
+	void Coord_Shake();
+	void Activate_Shake(int quantity_, float duration_);
+	float quantity;
+	float duration;
+	float start_ms;
+	float end_ms;
+	int counter;
+	int shake_interval;
+	int shake_ret;
+	int get_ms;
+	bool trigger_shake;
+	j1PerfTimer Shake_Timer;
 };
 
 #endif // __j1RENDER_H__
