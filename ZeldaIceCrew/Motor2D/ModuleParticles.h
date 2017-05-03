@@ -9,7 +9,7 @@
 
 #define MAX_PARTICLES 100
 
-#define SHADOW_SPD 3
+#define SHADOW_SPD 2
 #define BOUNCEB_SPD 3
 #define STD_PROJ_SPD 3
 
@@ -101,6 +101,8 @@ struct Enemy_Arrow : public Particle {
 
 struct Shadow_Projectile : public Particle {
 	bool hit = false;
+
+	uint shot_dir;
 
 	void Start();
 	bool Update(float dt);

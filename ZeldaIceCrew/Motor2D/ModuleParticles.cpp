@@ -386,12 +386,14 @@ void Shadow_Projectile::Start()
 		anim[k].PushBack(g_rect[k][1]);
 	}
 
+	shot_dir = curr_dir;
+
 	speed = { 1, 1 };
 
 	damage = 1;
 
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
-	life = 6000;
+	life = 3000;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
 
 }
@@ -426,30 +428,23 @@ bool Shadow_Projectile::Update(float dt)
 		speed.y = SHADOW_SPD * (float)sin((double)angle);
 	}
 
-	iPoint path_t = { App->player->link_coll->rect.x, App->player->link_coll->rect.y };
-	if (path_t.y < position.y && (path_t.x > position.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
+	if (p_pos.y < position.y && (p_pos.x > position.x - ENEMY_DIR_CHANGE_OFFSET && p_pos.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
 		curr_dir = Up;
-	else if (path_t.y > position.y && (path_t.x > position.x - ENEMY_DIR_CHANGE_OFFSET && path_t.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
+	else if (p_pos.y > position.y && (p_pos.x > position.x - ENEMY_DIR_CHANGE_OFFSET && p_pos.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
 		curr_dir = Down;
-	else if (path_t.x < position.x)
+	else if (p_pos.x < position.x)
 		curr_dir = Left;
-	else if (path_t.x > position.x)
+	else if (p_pos.x > position.x)
 		curr_dir = Right;
 
-	switch (curr_dir) {
-	case Up:
-		HitBox = { (int)position.x + 8, (int)position.y, 32, 32 };
-		break;
-	case Down:
-		HitBox = { (int)position.x + 8, (int)position.y + 30, 32, 32 };
-		break;
-	case Left:
-		HitBox = { (int)position.x, (int)position.y + 16, 32, 32 };
-		break;
-	case Right:
-		HitBox = { (int)position.x + 30, (int)position.y + 16, 32, 32 };
-		break;
+	if (shot_dir == Left || curr_dir == Right) {
+		speed.y *= 0.33;
 	}
+	if (shot_dir == Up || curr_dir == Down) {
+		speed.x *= 0.33;
+	}
+
+	HitBox = { (int)position.x , (int)position.y, 24, 24 };
 
 	collider->rect = HitBox;
 
