@@ -499,10 +499,18 @@ bool Scene::Load_new_map(int id)
 										st = statue;
 									if (strcmp(sub, "torch_bowl") == 0)
 										st = torch_bowl;
-									if (strcmp(sub, "torch_pillar") == 0)
-										st = torch_pillar;
+									//if (strcmp(sub, "torch_pillar") == 0)
+										//st = torch_pillar;
 									if (strcmp(sub, "slabs") == 0)
 										st = slabs;
+									if (strcmp(sub, "slabs_no_move") == 0)
+										st = slabs_no_move;
+									if (strcmp(sub, "slabs_spikes") == 0)
+										st = slabs_spikes;
+									if (strcmp(sub, "button_wall") == 0)
+										st = button_wall;
+									if (strcmp(sub, "pressure_plate") == 0)
+										st = pressure_plate;
 
 									r->AddBlock(st, node_block.attribute("x").as_float(), node_block.attribute("y").as_float());
 								}

@@ -156,7 +156,13 @@ Block * EntityManager::CreateBlock(uint type)
 			ret = new Slab_No_Move();
 			break;
 		case slabs_spikes:
-			ret = new Slab_No_Move();
+			ret = new Slab_Spikes();
+			break;
+		case button_wall:
+			ret = new Button_Wall();
+			break;
+		case pressure_plate:
+			ret = new Pressure_Plate();
 			break;
 		default:
 			LOG("Unknown Block Type: %d", type);
