@@ -12,6 +12,8 @@
 #include "Item.h"
 #include "Weapon.h"
 #include "j1Audio.h"
+#include "DialogueManager.h"
+#include"NPC.h"
 
 #define MAX_SPRITE_FRAMES 30
 
@@ -130,6 +132,7 @@ public:
 	bool Find_inv(Item *item);
 	bool Find_weapon(Item* item);
 	void PlayerInmortal(float time);
+	void Talk();
 
 	int CheckSpace(float new_x, float new_y);
 
@@ -140,7 +143,8 @@ public:
 	bool sword = false;  // as a flag to draw link with the sword sprite
 	bool action = false; // Actions: Throw, Pull, Slash,...	
 						 // --status VARs
-	
+	bool firstText = true;
+	Npc* toTalk = nullptr;
 	unsigned int curr_dir;
 	uint		 walk_dir;
 
@@ -156,7 +160,8 @@ public:
 	j1PerfTimer inmortal_timer;
 	float inmortal_time = 0;
 	bool inmortal = false;
-	bool camera_follow = false;
+	bool camera_follow = false; 
+	bool talking = false;
 	iPoint room;
 
 	Collider* mov_coll = nullptr;

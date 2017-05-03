@@ -24,6 +24,7 @@ bool DialogManager::Awake(pugi::xml_node & config)
 	int size = App->fs->Load(tmp.c_str(), &buf);
 	pugi::xml_parse_result result = dialogueDataFile.load_buffer(buf, size);
 
+	if(buf!=nullptr)
 	RELEASE_ARRAY(buf);
 
 	if (result == NULL)

@@ -34,4 +34,14 @@
     <folder>maps/</folder>
   </map>
 
+<dialogue>
+
+<dialogues folder="dialogue/">
+
+	<npc file="dialogs.xml"/>
+
+	</dialogues>
+
+</dialogue>
+
 </config>

@@ -6,7 +6,11 @@
 #include "j1Render.h"
 #include "Log.h"
 
+#include <deque>
+
+
 #define TILE_S 32
+
 
 enum ENTITYTYPE
 {
@@ -29,6 +33,8 @@ public:
 	virtual void Update(float dt) {};
 	virtual void CleanUp();
 	virtual void Draw(float dt) {};
+	virtual bool LoadAttributes(pugi::xml_node attributes);
+	virtual bool LoadAnimations(std::string file);
 
 
 public:
@@ -64,7 +70,7 @@ public:
 	Collider* HitBox = nullptr;
 	fPoint pos;
 	uint type;
-
+	std::deque<Entity*>::iterator id;
 	iPoint room;
 
 };
