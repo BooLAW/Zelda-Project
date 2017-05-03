@@ -124,6 +124,31 @@ bool j1Player::Start()
 		sprites[Walk_Shield][Left][6] = { link_x * 6,link_y * 8,link_width,link_height };
 	
 	}
+
+	//Link Wake up
+	{
+		sprites[Wake_up][Down][0] = { 0  ,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][1] = { link_x,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][2] = { link_x * 2,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][3] = { link_x * 3,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][4] = { link_x * 4,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][5] = { link_x * 5,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][6] = { link_x * 6,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][7] = { link_x * 7,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][8] = { link_x * 8,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][9] = { link_x * 9,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][10] = { link_x * 10,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][11] = { link_x * 11,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][12] = { link_x * 12,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][13] = { link_x * 13,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][14] = { link_x * 14,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][15] = { link_x * 15,link_y * 8,link_width,link_height };
+		sprites[Wake_up][Down][16] = { link_x * 16,link_y * 8,link_width,link_height };
+		
+
+
+
+	}
 	//Pick-up Object
 	//y coordinate for object depends on animation
 
@@ -214,6 +239,7 @@ bool j1Player::Start()
 	// Load Textures
 
 	Link_Movement = App->tex->Load("Sprites/Link_Movement.png");
+	Link_Wakeup = App->tex->Load("Sprites/Link.png");
 
 	// !_Textures
 
@@ -238,16 +264,16 @@ bool j1Player::Start()
 	// Walking
 	{
 
-		// Walking UP 
+// Walking UP 
 		{
-			animations[Walk][Up].PushBack(sprites[Walk][Up][0]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][1]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][2]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][3]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][4]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][5]);
-			animations[Walk][Up].PushBack(sprites[Walk][Up][6]);
-			animations[Walk][Up].speed = PL_WALK_FPS;
+		animations[Walk][Up].PushBack(sprites[Walk][Up][0]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][1]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][2]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][3]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][4]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][5]);
+		animations[Walk][Up].PushBack(sprites[Walk][Up][6]);
+		animations[Walk][Up].speed = PL_WALK_FPS;
 		}
 
 		// Walking DOWN
@@ -336,6 +362,28 @@ bool j1Player::Start()
 
 	}
 
+	// Waking up
+	{
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][0]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][1]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][2]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][3]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][4]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][5]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][6]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][7]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][8]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][9]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][10]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][11]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][12]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][13]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][14]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][15]);
+	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][16]);
+
+
+}
 	// Pick up Objects
 	{
 
