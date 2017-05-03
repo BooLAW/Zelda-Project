@@ -630,6 +630,7 @@ bool j1Player::Update(float dt)
 					Slashing = false;
 					weapon_coll->SetPos(FARLANDS.x, FARLANDS.y);
 				}
+				
 			}
 
 			// Actions
@@ -894,6 +895,8 @@ void j1Player::HitPlayer(int dmg)
 			}
 
 			App->player->PlayerInmortal(HIT_INM_TIME);
+
+			
 		}
 	}
 }
@@ -960,6 +963,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		if (curr_life_points <= 0)
 			alive = false;
 
+		//Activate screen shake
+		App->render->Activate_Shake(2, 1);
 		//Add extra particles?
 		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
 		//function to restart in the house()

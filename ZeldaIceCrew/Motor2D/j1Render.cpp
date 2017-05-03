@@ -59,6 +59,17 @@ bool j1Render::Awake(pugi::xml_node& config)
 	cam_boundaries.w = App->win->screen_surface->w;
 	cam_boundaries.h = App->win->screen_surface->h;
 
+	//Camera Shake
+
+	quantity = 0;
+	duration = 0;
+	start_ms = 0;
+	end_ms = 0;
+	counter = 1;
+	shake_interval = 5;
+	shake_ret = 0;
+	trigger_shake = false;
+
 	return ret;
 }
 
@@ -104,6 +115,9 @@ bool j1Render::Update(float dt) {
 		}
 
 	}
+
+	App->render->Coord_Shake();
+
 	return true;
 }
 
@@ -255,6 +269,56 @@ void j1Render::toDraw(SDL_Texture * texture, float priority, int x, int y, SDL_R
 
 }
 
+void j1Render::Coord_Shake()
+{
+	if (trigger_shake == true) {
+
+		get_ms = (int)Shake_Timer.ReadMs();
+
+		if (counter >= duration * 60) {
+			start_ms = 0;
+			end_ms = 0;
+			trigger_shake = false;
+			shake_ret = 0;
+			counter = 1;
+			duration = 0;
+		}
+
+		if (trigger_shake == true) {
+			if(counter % shake_interval == 0){
+			if ((counter % 2) == 0)
+				shake_ret = (camera.w / 10) * ( quantity / 15 );
+			else
+				shake_ret = -((camera.w / 10) * ( quantity / 15 ) );
+			}
+			quantity -= quantity / (duration * 60);
+			counter++;
+
+		}
+
+	}
+}
+
+void j1Render::Activate_Shake(int quantity_, float duration_) {
+	if (trigger_shake != true) {
+		trigger_shake = true;
+		quantity = quantity_;
+		duration = duration_;
+		start_ms = Shake_Timer.ReadMs();
+
+		//repair numbers
+
+		if (quantity > 15) quantity = 15;
+		if (quantity < 0) quantity = 0;
+
+		if (duration < 0) duration *= -1;
+		if (duration > 10) duration = 10;
+
+
+		end_ms = start_ms + duration_ * 100;
+	}
+}
+
 void j1Render::SetViewPort(const SDL_Rect& rect)
 {
 	SDL_RenderSetViewport(renderer, &rect);
@@ -285,6 +349,8 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * scale;
 	rect.y = (int)(camera.y * speed) + y * scale;
+
+	rect.x += shake_ret;
 
 	if(section != NULL)
 	{
