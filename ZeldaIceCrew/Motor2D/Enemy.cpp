@@ -1591,3 +1591,142 @@ void Beamos::Update(float dt)
 	}
 
 }
+
+bool BossAgahnim::Start()
+{
+	bool ret = true;
+
+	SetReward();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Bosses.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+		appear_sprites[0] = { 104, 659, 100, 108 };
+		appear_sprites[1] = { 410, 659, 100, 108 };
+		appear_sprites[2] = { 410, 659, 1, 1 };
+
+		attack_sprites[0] = { 206, 659, 100, 108 };
+		attack_sprites[1] = { 308, 659, 100, 108 };
+
+		for (int i = 0; i < 3; i++) {
+			disappear_anim.PushBack(appear_sprites[1 - i]);
+			if (i < 2) {
+				appear_anim.PushBack(appear_sprites[i]);
+				attack_anim.PushBack(attack_sprites[i]);
+			}
+		}
+		appear_anim.speed = 0.07;
+		appear_anim.loop = false;
+		disappear_anim.speed = 0.1;
+		disappear_anim.loop = false;
+		attack_anim.speed = 0.05;
+	}
+
+	stats.Hp = 12;
+	stats.Speed = 1;
+	stats.Power = 2;
+
+	stats.Flying = false;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 48, 32 }, COLLIDER_ENEMY);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[projectile] = true;
+
+	AIType = special;
+
+	subtype = ENEMYTYPE::t_boss_agahnim;
+
+	return ret;
+}
+
+void BossAgahnim::SetReward()
+{
+	reward_pool[heart_container] = 100;
+}
+
+void BossAgahnim::Draw()
+{
+	int aux_hp = stats.Hp;
+	SDL_Rect c_r = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->room_rect;
+	fPoint app_pos;
+	fPoint p_pos = App->player->pos;
+
+	SDL_Rect p_rect;
+	SDL_Rect en_rect = { 0,0,500,500 };
+
+	switch(state)
+	{
+	case appear_start:
+		appear_anim.Reset();
+		app_pos.x = rand() % en_rect.w + (int)(p_pos.x - en_rect.w / 2);
+		app_pos.x = rand() % en_rect.h + (int)(p_pos.y - en_rect.h / 2);
+		
+		if (!(CheckSpace(app_pos.x, app_pos.y) != 0 || App->scene_manager->GetCurrentScene()->GetCurrentRoom()->isInside({ (int)app_pos.x, (int)app_pos.y, 0, 0 }) == false))
+		{
+			SDL_Rect en_aux = { app_pos.x,app_pos.y,1,1 };
+			p_rect = { (int)p_pos.x - 100, (int)p_pos.y - 100, 132, 148 };
+			if (CheckIntersec(en_aux, p_rect) == false) {
+				pos = app_pos;
+				state = appear;
+			}
+		}
+		break;
+	case appear:
+		timer.Start();
+		timer.SetFlag(true);
+		if (timer.Read() >= 700) {
+			state = attack;
+			timer.SetFlag(false);
+		}
+		break;
+	case attack:
+		timer.Start();
+		timer.SetFlag(true);
+		attack_timer.Start();
+		attack_timer.SetFlag(true);
+		if (attack_timer.Read() >= 1000) {
+			App->particle->CreateParticle(p_shadow, HitBox->rect.x, HitBox->rect.y, curr_dir);
+			attack_timer.SetFlag(false);
+		}
+		if (timer.Read() >= time_attack) {
+			state = disappear_start;
+			timer.SetFlag(false);
+		}
+		break;
+	case hit:
+		timer.Start();
+		timer.SetFlag(true);
+		attack_timer.Start();
+		attack_timer.SetFlag(true);
+		if (attack_timer.Read() >= 1000) {
+			App->particle->CreateParticle(p_shadow, HitBox->rect.x, HitBox->rect.y, curr_dir);
+			attack_timer.SetFlag(false);
+		}
+		if (timer.Read() >= time_attack) {
+			state = disappear_start;
+			timer.SetFlag(false);
+		}
+		break;
+	case disappear:
+		timer.Start();
+		timer.SetFlag(true);
+		path_to_follow.clear();
+		if (timer.Read() >= 3000) {
+			state = appear_start;
+			timer.SetFlag(false);
+		}
+		break;
+	case disappear_start:
+		disappear_anim.Reset();
+		state = disappear;
+		break;
+	}
+}

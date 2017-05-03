@@ -34,6 +34,7 @@ enum ENEMYTYPE {
 	t_GBat,
 	t_beamos,
 	t_boss_ballandchain,
+	t_boss_agahnim,
 	__LAST_ENEMYTYPE
 };
 
@@ -61,6 +62,7 @@ protected:
 		path = 0,
 		chase,
 		distance,
+		special,
 		no_move,
 		__LAST_AITYPE
 	};
@@ -309,6 +311,28 @@ public:
 	bool Start();
 };
 
+class BossAgahnim : public Enemy {
+public:
+	bool Start();
+	void SetReward();
+	void Draw();
+	void Update(float dt);
+	const int time_attack = 3500;//CHANGE
+
+	j1Timer attack_timer;
+	enum AGAHNIMSTATE {
+		appear = 0,
+		appear_start,
+		attack,
+		hit,
+		disappear,
+		disappear_start
+	}state = appear_start;
+
+	Animation appear_anim, disappear_anim, attack_anim, hit_anim;
+	SDL_Rect appear_sprites[8], attack_sprites[2], disappear_sprites[6];
+	j1Timer timer;
+};
 
 class Beamos : public Enemy {
 public:

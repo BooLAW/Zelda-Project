@@ -17,6 +17,9 @@ enum PARTICLETYPE {
 	p_enarrow,
 	p_shadow,
 	p_bounceback,
+	p_agahnim_ball,
+	p_agahnim_lightning,
+	p_agahnim_4balls,
 	__LAST_PARTICLE
 };
 
@@ -113,7 +116,12 @@ struct BounceBack : public Particle {
 		go = 0,
 		back
 	}state = go;
+};
+struct AgahnimBasic : public Particle {
+	bool hit = false;
+	void Start();
+	bool Update(float dt);
+	Direction directions;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+};
 
-}
-;
 #endif // __MODULEPARTICLES_H__

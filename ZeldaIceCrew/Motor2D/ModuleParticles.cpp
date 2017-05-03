@@ -583,3 +583,30 @@ bool BounceBack::Update(float dt)
 
 	return stdUpdate(dt);
 }
+
+void AgahnimBasic::Start()
+{
+	graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	//to change
+	g_rect[Up][0] = { 2,2,34,34 };
+	g_rect[Down][0] = { 2,2,34,34 };
+	g_rect[Right][0] = { 2,2,34,34 };
+	g_rect[Left][0] = { 2,2,34,34 };
+	g_rect[Down_R][0] = { 2,2,34,34 };
+	g_rect[Down_L][0] = { 2,2,34,34 };
+
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[k][0]);
+		anim[k].PushBack(g_rect[k][1]);
+	}
+
+	speed = { 1, 1 };
+
+	damage = 4;
+
+	HitBox = { (int)position.x, (int)position.y, 32, 32 };
+	life = -1;
+	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
+
+
+}
