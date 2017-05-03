@@ -110,6 +110,8 @@ struct BounceBack : public Particle {
 	void Start();
 	bool Update(float dt);
 
+	bool bounce = false;
+
 	fPoint target;
 
 	enum BOUNCESTATE {

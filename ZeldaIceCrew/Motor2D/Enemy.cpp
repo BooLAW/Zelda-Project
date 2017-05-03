@@ -1576,7 +1576,7 @@ void Beamos::Update(float dt)
 		timer.SetFlag(true);
 		if (timer.Read() >= 1500) {
 			state = shooting;
-			//App->particle->CreateParticle(p_bounceback, pos.x, pos.y, curr_dir);
+			App->particle->CreateParticle(p_bounceback, pos.x, pos.y, curr_dir);
 			timer.SetFlag(false);
 		}
 		break;

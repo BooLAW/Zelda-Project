@@ -495,14 +495,6 @@ void BounceBack::Start()
 	target.x = App->player->link_coll->rect.x;
 	target.y = App->player->link_coll->rect.y;
 
-	HitBox = { (int)position.x, (int)position.y, 32, 32 };
-	life = -1;
-	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
-
-}
-
-bool BounceBack::Update(float dt)
-{
 	float diff_x, diff_y;
 	float hip;
 	float angle;
@@ -530,9 +522,19 @@ bool BounceBack::Update(float dt)
 		speed.y = BOUNCEB_SPD * (float)sin((double)angle);
 	}
 
-	if (state = back) {
+	HitBox = { (int)position.x, (int)position.y, 32, 32 };
+	life = -1;
+	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
+
+}
+
+bool BounceBack::Update(float dt)
+{
+	
+	if (state == back && bounce == false) {
 		speed.x = -speed.x;
 		speed.y = -speed.y;
+		bounce = true;
 	}
 
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
