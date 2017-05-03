@@ -77,7 +77,7 @@ bool VillageScene::Start()
 
 	App->audio->PlayMusic("Audio/Music/Forest_Theme.ogg");
 	App->audio->SetVolumeMusic(60);
-
+	App->entitymanager->CreateNPC(NPC_ZELDA, App->player->pos.x + 10, App->player->pos.y + 10, 1);
 
 	return true;
 };

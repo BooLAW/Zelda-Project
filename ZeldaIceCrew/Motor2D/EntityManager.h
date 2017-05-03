@@ -44,11 +44,8 @@ public:
 	EntityManager();
 	~EntityManager();
 	
-	bool CleanUp() {
-		DestroyEntities();
-		return true;
-	}
-
+	bool CleanUp();
+	bool Start();
 	bool Awake(pugi::xml_node & config);
 	bool PreUpdate();
 	bool Update(float dt);
@@ -64,12 +61,13 @@ public:
 	Enemy* CreateEnemy(uint subtype);
 	Item* CreateItem(uint subtype);
 	Block* CreateBlock(uint subtype);
-	Npc * CreateNPC(int sector, NPC_TYPE type, float x, float y, int id);
+	Npc * CreateNPC(NPC_TYPE type, float x, float y, int id);
 private:
 	
 	std::deque<Entity*> entities;
 	std::map<ENTITYTYPE, std::string> dir;
 	j1Timer time;
+	SDL_Texture* npc_tex;
 	
 };
 

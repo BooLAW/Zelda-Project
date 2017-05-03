@@ -155,7 +155,7 @@ Block * EntityManager::CreateBlock(uint type)
 	return ret;
 }
 
-Npc * EntityManager::CreateNPC(int sector, NPC_TYPE type, float x, float y, int id)
+Npc * EntityManager::CreateNPC(NPC_TYPE type, float x, float y, int id)
 {
 	Npc* ret = NULL;
 
@@ -163,6 +163,11 @@ Npc * EntityManager::CreateNPC(int sector, NPC_TYPE type, float x, float y, int 
 	{
 	case NPC_ZELDA:
 		ret = new Npc_Zelda();
+		ret->pos = { x,y };
+		ret->type = type;
+		ret->npcId = id;
+		ret->SetTexture(npc_tex);
+		ret->SetRect({ 0,0,21,26 });
 		break;
 	case NPC_UNCLE:
 		ret = new Npc_Uncle();
@@ -189,8 +194,12 @@ Npc * EntityManager::CreateNPC(int sector, NPC_TYPE type, float x, float y, int 
 	default:
 		return nullptr;
 	}
+	if (ret != nullptr) {
 
-	ret->pos = { x,y };
+		App->entitymanager->PushEntity(ret);
+
+	}
+	/*ret->pos = { x,y };
 
 	if (ret->Spawn(dir[npc], ret->pos, type))
 	{
@@ -206,12 +215,28 @@ Npc * EntityManager::CreateNPC(int sector, NPC_TYPE type, float x, float y, int 
 		RELEASE(ret);
 		ret = NULL;
 	}
-
+	*/
 	return ret;
 }
 
 
 
+
+bool EntityManager::CleanUp()
+{
+	App->tex->UnLoad(npc_tex);
+	DestroyEntities();
+	return true;
+	
+}
+
+bool EntityManager::Start(){
+	
+	
+	npc_tex = App->tex->Load("Sprites/Npc.png");
+	
+	return true;
+}
 
 bool EntityManager::Awake(pugi::xml_node & config)
 {

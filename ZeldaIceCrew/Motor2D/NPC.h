@@ -30,6 +30,7 @@ public:
 	bool Spawn(std::string file, fPoint pos, NPC_TYPE);
 	virtual void Update(float dt);
 
+
 public:
 
 	int npcId;

@@ -73,6 +73,7 @@ bool Npc::Spawn(std::string file, fPoint pos, NPC_TYPE type)
 
 void Npc::Update(float dt)
 {
+	App->render->toDraw(GetTexture(),10, this->pos.x, this->pos.y, &this->GetRect());
 	/*switch (actionState)
 	{
 	case IDLE:
