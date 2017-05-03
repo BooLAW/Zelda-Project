@@ -51,21 +51,21 @@ uint Enemy::GetPlayerDirection()
 
 	fPoint p = App->player->pos;
 
-	if (p.x < pos.x && p.y > pos.y)
-		dir = Direction::Down_L;
-	if (p.x < pos.x && p.y == pos.y)
+	if (p.x < pos.x && (p.y > pos.y - 32 && p.y < pos.y + 64))
 		dir = Direction::Left;
-	if (p.x < pos.x && p.y < pos.y)
-		dir = Direction::Up_L;
-	if (p.x == pos.x && p.y > pos.y)
+	else if ((p.x > pos.x - 32 && p.x < pos.x + 64) && p.y > pos.y)
 		dir = Direction::Down;
-	if (p.x == pos.x && p.y < pos.y)
+	else if ((p.x > pos.x - 32 && p.x < pos.x + 64) && p.y < pos.y)
 		dir = Direction::Up;
-	if (p.x > pos.x && p.y > pos.y)
-		dir = Direction::Down_R;
-	if (p.x > pos.x && p.y == pos.y)
+	else if (p.x > pos.x && (p.y > pos.y - 32 && p.y < pos.y + 64))		
 		dir = Direction::Right;
-	if (p.x > pos.x && p.y < pos.y)
+	else if (p.x < pos.x && p.y < pos.y)
+		dir = Direction::Up_L;
+	else if (p.x > pos.x && p.y > pos.y)
+		dir = Direction::Down_R;
+	else if (p.x < pos.x && p.y > pos.y)
+		dir = Direction::Down_L;
+	else if (p.x > pos.x && p.y < pos.y)
 		dir = Direction::Up_R;
 
 	return dir;
@@ -1251,7 +1251,7 @@ void Geldman::Draw()
 	}
 	
 	if(state == move || state == appear || state == disappear)
-	App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.y, aux_pos.x, aux_pos.y, &animation_aux->GetCurrentFrame());
+	App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &animation_aux->GetCurrentFrame());
 }
 
 void Geldman::Update(float dt)
@@ -1411,7 +1411,7 @@ void Freezor::Draw()
 	}
 
 	if (state == attack || state == appear || state == disappear)
-		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.y, aux_pos.x, aux_pos.y, &animation_aux->GetCurrentFrame());
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &animation_aux->GetCurrentFrame());
 
 }
 
@@ -1513,32 +1513,14 @@ bool Beamos::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		beamos_sprites[5] =		{ 614, 879, 100, 108 };
-		beamos_sprites[6] =		{ 512, 879, 100, 108 };
-		beamos_sprites[7] =		{ 410, 879, 100, 108 };
-		beamos_sprites[8] =		{ 308, 879, 100, 108 };
-		beamos_sprites[9] =		{ 206, 879, 100, 108 };
-		beamos_sprites[10] =	{ 104, 879, 100, 108 };
-		beamos_sprites[11] =	{ 2	 , 879, 100, 108 };
-		beamos_sprites[12] =	{ 614, 985, 100, 108 };
-		beamos_sprites[13] =	{ 512, 985, 100, 108 };
-		beamos_sprites[0] =		{ 410, 985, 100, 108 };
-		beamos_sprites[1] =		{ 308, 985, 100, 108 };
-		beamos_sprites[2] =		{ 206, 985, 100, 108 };
-		beamos_sprites[3] =		{ 104, 985, 100, 108 };
-		beamos_sprites[4] =		{ 2  , 985, 100, 108 };
-		beamos_sprites[14] =	{ 614, 985, 100, 108 };
-		beamos_sprites[15] =	{ 512, 985, 100, 108 }; 
-		beamos_sprites[16] =	{ 410, 985, 100, 108 };
-		beamos_sprites[17] =	{ 308, 985, 100, 108 };
-		beamos_sprites[18] =	{ 206, 985, 100, 108 };
-		beamos_sprites[19] =	{ 104, 985, 100, 108 };
-		beamos_sprites[20] =	{ 2  , 985, 100, 108 };
-		beamos_sprites[21] =	{ 206, 985, 100, 108 };
-		beamos_sprites[22] =	{ 104, 985, 100, 108 };
-		beamos_sprites[23] =	{ 2, 985, 100, 108 };
-
-
+		beamos_sprites[Direction::Right] =	{ 410, 985, 100, 108 };
+		beamos_sprites[Direction::Up_R] =	{ 104, 985, 100, 108 };
+		beamos_sprites[Direction::Up] =		{ 2  , 985, 100, 108 };
+		beamos_sprites[Direction::Up_L] =	{ 410, 879, 100, 104 };
+		beamos_sprites[Direction::Left] =	{ 104, 879, 100, 104 };
+		beamos_sprites[Direction::Down_L] =	{ 614, 1095, 100, 108 };
+		beamos_sprites[Direction::Down] =	{ 410, 1095, 100, 108 };
+		beamos_sprites[Direction::Down_R] =	{ 206, 1095, 100, 108 };
 
 	}
 
@@ -1568,6 +1550,44 @@ bool Beamos::Start()
 
 void Beamos::Draw()
 {
+	fPoint aux_pos = pos;
+	SDL_Rect* r_aux = nullptr;
+
+	aux_pos.y = pos.y - 20;
+	aux_pos.x = pos.x - 26;
+
+	r_aux = &beamos_sprites[GetPlayerDirection()];
+
+	//fPoint p_pos = App->player->pos;
+	//float angle = 0;
+	//fPoint diff = { p_pos.x + 16 - (pos.x),  (p_pos.y + 16 - (pos.y)) };
+	//fPoint origin = { 2, 0.5 };
+	////if (p_pos.x > pos.x) {
+	////	diff_x = -diff_x;
+	////	diff_y = -diff_y;
+	////}
+	//
+	//float dotp = diff.x*origin.x + diff.y*origin.y;
+	//float det = diff.x*origin.y - diff.y*origin.x;
+	//
+	//angle = std::abs(atan2(det, dotp));
+	//
+	//if (p_pos.y > pos.y + 16)
+	//	angle = DegtoRad(180) + (DegtoRad(180) - angle);
+	//
+	//float num = RadtoDeg(angle);
+	//
+	//if (num < 0) {
+	//	//num = std::abs(num);
+	//}
+	//
+	//LOG("ANGLE %f", num);
+	//
+	//r_aux = &beamos_sprites[(int)floor(num/15)];
+	//
+	//if(r_aux != nullptr)
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, r_aux);
+
 }
 
 void Beamos::Update(float dt)
