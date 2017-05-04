@@ -258,7 +258,81 @@ bool j1Player::Start()
 		sprites[Pull][Right][0] = { link_x * 10, link_y * 3, link_width, link_height };
 	
 	}
+	{
+		// All animation since sleeping until Link wakes up
+		sprites[Sleep_Wake_up][Down][0] = { link_x * 2, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][1] = { link_x * 3, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][2] = { link_x * 4, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][3] = { link_x * 5, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][4] = { link_x * 6, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][5] = { link_x * 7, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][6] = { link_x * 8, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][7] = { link_x * 9, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][8] = { link_x * 10, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][9] = { link_x * 11, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][10] = { link_x * 12, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][11] = { link_x * 13, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][12] = { link_x * 14, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][13] = { link_x * 15, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][14] = { link_x * 16, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][15] = { link_x * 17, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][16] = { link_x * 18, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][17] = { link_x * 19, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][18] = { link_x * 20, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][19] = { link_x * 21, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][20] = { link_x * 22, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][21] = { link_x * 23, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][22] = { link_x * 24, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][23] = { link_x * 25, link_y * 14, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][24] = { link_x * 26, link_y * 14, link_width, link_height };
 
+		// here is waking up from the bed
+		sprites[Sleep_Wake_up][Down][25] = { link_x * 2, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][26] = { link_x * 3, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][27] = { link_x * 4, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][28] = { link_x * 5, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][29] = { link_x * 6, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][30] = { link_x * 7, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][31] = { link_x * 8, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][32] = { link_x * 9, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][33] = { link_x * 10, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][34] = { link_x * 11, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][35] = { link_x * 12, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][36] = { link_x * 13, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][37] = { link_x * 14, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][38] = { link_x * 15, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][39] = { link_x * 16, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][40] = { link_x * 17, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][41] = { link_x * 18, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][42] = { link_x * 19, link_y * 15, link_width, link_height };
+		sprites[Sleep_Wake_up][Down][43] = { link_x * 20, link_y * 15, link_width, link_height };
+
+
+	}
+
+	{
+		// Only waking up
+
+		sprites[Wake_up][Down][0] = { link_x * 2, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][1] = { link_x * 3, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][2] = { link_x * 4, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][3] = { link_x * 5, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][4] = { link_x * 6, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][5] = { link_x * 7, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][6] = { link_x * 8, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][7] = { link_x * 9, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][8] = { link_x * 10, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][9] = { link_x * 11, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][10] = { link_x * 12, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][11] = { link_x * 13, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][12] = { link_x * 14, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][13] = { link_x * 15, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][14] = { link_x * 16, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][15] = { link_x * 17, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][16] = { link_x * 18, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][17] = { link_x * 19, link_y * 15, link_width, link_height };
+		sprites[Wake_up][Down][18] = { link_x * 20, link_y * 15, link_width, link_height };
+	}
 	//Sword Charge Idle
 
 	//Sword Charge Walk
@@ -268,7 +342,7 @@ bool j1Player::Start()
 	// Load Textures
 
 	Link_Movement = App->tex->Load("Sprites/Link_Movement.png");
-	Link_Wakeup = App->tex->Load("Sprites/Link.png");
+	
 
 	// !_Textures
 
@@ -419,25 +493,53 @@ bool j1Player::Start()
 
 	}
 
-	// Waking up
+	// Sleep & Waking up
 	{
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][0]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][1]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][2]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][3]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][4]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][5]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][6]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][7]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][8]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][9]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][10]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][11]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][12]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][13]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][14]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][15]);
-	animations[Wake_up][DOWN].PushBack(sprites[Wake_up][DOWN][16]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][0]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][1]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][2]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][3]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][4]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][5]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][6]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][7]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][8]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][9]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][10]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][11]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][12]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][13]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][14]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][15]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][16]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][17]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][18]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][19]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][20]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][21]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][22]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][23]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][24]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][25]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][26]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][27]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][28]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][29]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][30]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][31]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][32]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][33]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][34]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][35]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][36]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][37]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][38]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][39]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][40]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][41]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][42]);
+	animations[Sleep_Wake_up][Down].PushBack(sprites[Sleep_Wake_up][Down][43]);
+	animations[Sleep_Wake_up][Down].speed = 0.2f;
 
 
 }
@@ -740,6 +842,15 @@ bool j1Player::Update(float dt)
 	
 			// Actions
 			{
+
+				if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
+					dir_override = true;
+					anim_override = true;
+					action = true;
+					action_blit = Sleep_Wake_up;
+					curr_dir = Down;
+				}
+
 				if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
 					change_weapon = Q_Change;
 				}

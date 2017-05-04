@@ -61,6 +61,7 @@ public:
 		Push,
 		Weapon_atk,
 		Slash,
+		Sleep_Wake_up,
 		Wake_up,
 		Light,
 		Dash,
@@ -91,7 +92,7 @@ public:
 
 private:
 	SDL_Texture* Link_Movement = nullptr;
-	SDL_Texture* Link_Wakeup = nullptr;
+	
 
 	// All player sprites / animations
 	Animation animations[Sprites::__LAST][Direction::LastDir];
