@@ -149,6 +149,35 @@ bool j1Player::Start()
 
 
 	}
+
+	// Dash
+	{
+
+		sprites[Dash][Up][0] =		{ link_x * 11, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][1] =		{ link_x * 12, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][2] =		{ link_x * 13, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][3] =		{ link_x * 14, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][4] =		{ link_x * 15, link_y * 6, link_width, link_height };
+
+		sprites[Dash][Down][0] =	{ link_x * 11, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][1] =	{ link_x * 12, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][2] =	{ link_x * 13, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][3] =	{ link_x * 14, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][4] =	{ link_x * 15, link_y * 5, link_width, link_height };
+
+		sprites[Dash][Left][0] =	{ link_x * 11, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][1] =	{ link_x * 12, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][2] =	{ link_x * 13, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][3] =	{ link_x * 14, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][4] =	{ link_x * 15, link_y * 8, link_width, link_height };
+
+		sprites[Dash][Right][0] =	{ link_x * 11, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][1] =	{ link_x * 12, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][2] =	{ link_x * 13, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][3] =	{ link_x * 14, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][4] =	{ link_x * 15, link_y * 7, link_width, link_height };
+
+	}
 	//Pick-up Object
 	//y coordinate for object depends on animation
 
@@ -244,6 +273,34 @@ bool j1Player::Start()
 	// !_Textures
 
 	// Animations Settup
+
+	{
+
+		animations[Dash][Up].PushBack(sprites[Dash][Up][0]);
+		animations[Dash][Up].PushBack(sprites[Dash][Up][1]);
+		animations[Dash][Up].PushBack(sprites[Dash][Up][2]);
+		animations[Dash][Up].PushBack(sprites[Dash][Up][3]);
+
+		animations[Dash][Down].PushBack(sprites[Dash][Down][0]);
+		animations[Dash][Down].PushBack(sprites[Dash][Down][1]);
+		animations[Dash][Down].PushBack(sprites[Dash][Down][2]);
+		animations[Dash][Down].PushBack(sprites[Dash][Down][3]);
+
+		animations[Dash][Left].PushBack(sprites[Dash][Left][0]);
+		animations[Dash][Left].PushBack(sprites[Dash][Left][1]);
+		animations[Dash][Left].PushBack(sprites[Dash][Left][2]);
+		animations[Dash][Left].PushBack(sprites[Dash][Left][3]);
+
+		animations[Dash][Right].PushBack(sprites[Dash][Right][0]);
+		animations[Dash][Right].PushBack(sprites[Dash][Right][1]);
+		animations[Dash][Right].PushBack(sprites[Dash][Right][2]);
+		animations[Dash][Right].PushBack(sprites[Dash][Right][3]);
+
+		for (int i = 0; i < LastDir; i++) {
+			animations[Dash][i].speed = 0.05;
+		}
+
+	}
 
 	// Idle
 	{
@@ -691,6 +748,15 @@ bool j1Player::Update(float dt)
 				}
 				ChangeWeapon();
 	
+				if (anim_override == false) {
+					if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+						if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_DOWN) {
+							action_blit = Dash;
+							dir_override = true;
+							anim_override = true;
+						}
+					}
+				}
 				if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
 					//for now perform an action to see animation
 					//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
@@ -983,32 +1049,6 @@ Point<float> j1Player::GetPos()
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	
-
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_TO_DUNGEON && alive == true)
-	{
-		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
-		App->scene_manager->village_scene->to_dungeon = false;
-	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_UP && alive == true)
-	{
-		App->player->pos.y -= ROOM_CHANGE_Y;
-		App->player->room.y--;
-	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_DOWN && alive == true)
-	{
-		App->player->pos.y += ROOM_CHANGE_Y;
-		App->player->room.y++;
-	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_LEFT && alive == true)
-	{
-		App->player->pos.x -= ROOM_CHANGE_X;
-		App->player->room.x--;
-	}
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_DUNGEON_RIGHT && alive == true)
-	{
-		App->player->pos.x += ROOM_CHANGE_X;
-		App->player->room.x++;
-	}
 	// Hit collision
 	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
 	{
@@ -1156,6 +1196,7 @@ bool j1Player::Find_weapon(Item* item)
 
 }
 
+		
 void j1Player::Movement()
 {
 	//Movement
@@ -1257,6 +1298,7 @@ void j1Player::Movement()
 			if (anim_override == false)
 				action_blit = Idle;
 		}
+
 	}
 		last_pos = pos;
 }

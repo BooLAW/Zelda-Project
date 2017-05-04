@@ -63,6 +63,7 @@ public:
 		Slash,
 		Wake_up,
 		Light,
+		Dash,
 		Unknown,
 		__LAST
 	};
