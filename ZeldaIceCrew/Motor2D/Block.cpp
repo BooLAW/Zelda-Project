@@ -92,64 +92,65 @@ void Block::Reward()
 
 void Block::Update(float dt)
 {
+	if (App->input->pause2[General_] == false) {
+		//LOG("BLOCK UPDATE");
 
-	//LOG("BLOCK UPDATE");
+		if (HitBox != nullptr)
+			HitBox->SetPos(pos.x, pos.y);
 
-	if(HitBox != nullptr)
-	HitBox->SetPos(pos.x, pos.y);
+		/*if (App->player->link_coll != nullptr) {
 
-	/*if (App->player->link_coll != nullptr) {
+		if (HitBox->CheckCollision(App->player->link_coll->rect) == true) {
+		if (this->isPushable()) {
+		this->Push();
+		}
+		}
+		}*/
 
-	if (HitBox->CheckCollision(App->player->link_coll->rect) == true) {
-	if (this->isPushable()) {
-	this->Push();
-	}
-	}
-	}*/
+		//Check that you don't have an item picked
+		if (moving == false) {
+			if (picked == false && App->player->action_blit != App->player->Hold_sth && App->player->action == false)
+			{
+				if (App->player->weapon_coll != nullptr && App->player->weapon_coll->rect.x != FARLANDS.x) {
 
-	//Check that you don't have an item picked
-	if (moving == false) {
-		if (picked == false && App->player->action_blit != App->player->Hold_sth && App->player->action == false)
-		{
-			if (App->player->weapon_coll != nullptr && App->player->weapon_coll->rect.x != FARLANDS.x) {
+					if (HitBox != nullptr)
+						if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
+							if (this->isBreakable()) {
+								this->Break();
+							}
+						}
+				}
 
-				if(HitBox != nullptr)
-				if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
-					if (this->isBreakable()) {
-						this->Break();
-					}
+				if (App->player->action_coll != nullptr && App->player->action_coll->rect.x != FARLANDS.x) {
+					if (HitBox != nullptr)
+						if (HitBox->CheckCollision(App->player->action_coll->rect) == true) {
+							if (this->isPickable()) {
+								this->Pick();
+							}
+							else if (this->isLitable()) {
+								this->Light();
+							}
+							else
+								this->Move();
+						}
 				}
 			}
 
-			if (App->player->action_coll != nullptr && App->player->action_coll->rect.x != FARLANDS.x) {
-				if(HitBox != nullptr)
-				if (HitBox->CheckCollision(App->player->action_coll->rect) == true) {
-					if (this->isPickable()) {
-						this->Pick();
-					}
-					else if (this->isLitable()) {
-						this->Light();
-					}
-					else
-						this->Move();
+			else if (picked == true /*App->player->action_blit == App->player->Hold_sth*/) {
+
+				if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+					this->Throw();
+				}
+
+				else {
+					this->pos = App->player->GetPos();
 				}
 			}
 		}
+		else
+			Move();
 
-		else if (picked == true /*App->player->action_blit == App->player->Hold_sth*/) {
-
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-				this->Throw();
-			}
-
-			else {
-				this->pos = App->player->GetPos();
-			}
-		}
 	}
-	else
-		Move();
-
 
 	Draw();
 

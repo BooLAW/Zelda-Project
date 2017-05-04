@@ -90,17 +90,15 @@ private:
 public:
 	//Camera Shake
 	void Coord_Shake();
-	void Activate_Shake(int quantity_, float duration_);
+	void Activate_Shake(float quantity_, float duration_);
+
+protected:
 	float quantity;
 	float duration;
-	float start_ms;
-	float end_ms;
 	int counter;
 	int shake_interval;
 	int shake_ret;
-	int get_ms;
 	bool trigger_shake;
-	j1PerfTimer Shake_Timer;
 };
 
 #endif // __j1RENDER_H__

@@ -58,6 +58,7 @@ enum Modules {
 	j1Player_,
 	EntityManager_,
 	ModuleParticles_,
+	DialogManager_,
 
 	last_module_
 };
@@ -67,9 +68,11 @@ enum Pause_Type {
 	General_ = 0,
 	Inventory_,
 
-	last_pause__
+	last_pause_type_
 
 };
+
+
 class j1Input : public j1Module
 {
 
@@ -117,13 +120,12 @@ public:
 	int controls [__LAST_CONTROLS];
 	
 	//Pause things
-	bool Start_Pause(Pause_Type type);
-	bool Stop_Pause(Pause_Type type);
+	void Start_Pause(Pause_Type type);
+	void Stop_Pause(Pause_Type type);
 	void Init_Pause_Matrix();
 
-	bool pause_matrix[last_module_][last_pause__];
-	bool pause2[last_pause__];
-
+	bool pause_matrix[last_module_][last_pause_type_];
+	bool pause2[last_pause_type_];
 private:
 
 	bool		windowEvents[WE_COUNT];

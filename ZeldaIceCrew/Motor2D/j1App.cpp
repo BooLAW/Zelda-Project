@@ -270,6 +270,8 @@ bool j1App::PreUpdate()
 
 			ret = (*item)->PreUpdate();
 		}
+		else
+			ret = true;
 	}
 
 	return ret;
@@ -292,6 +294,8 @@ bool j1App::DoUpdate()
 
 			ret = (*item)->Update(dt);
 		}
+		else
+			ret = true;
 	}
 
 	return ret;
@@ -305,15 +309,15 @@ bool j1App::PostUpdate()
 
 	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		if ((*item)->pause == false) {
-			pModule = (*item);
+		
+		pModule = (*item);
 
-			if (pModule->active == false) {
-				continue;
-			}
-
-			ret = (*item)->PostUpdate();
+		if (pModule->active == false) {
+			continue;
 		}
+
+		ret = (*item)->PostUpdate();
+		
 	}
 
 	return ret;
