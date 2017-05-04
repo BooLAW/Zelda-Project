@@ -28,6 +28,14 @@
 #define MAX_HP 24
 #define MAX_PWR 99
 
+#define ORIGIN_SPD 2.5
+#define ORIGIN_HP 6
+#define ORIGIN_PWR 30
+
+#define MIN_SPD 1
+#define MIN_HP 2
+#define MIN_PWR 1
+
 #define PL_WALK_FPS 0.2f
 
 #define link_width 99

@@ -770,7 +770,7 @@ animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
 	pl_speed.x = 2.5;
 	pl_speed.y = 2.5;
 
-	power = 1;
+	power = 30;
 
 	curr_dir = Down;
 
@@ -1127,6 +1127,9 @@ void j1Player::UpgradeSPD(float x)
 		pl_speed.x = MAX_SPD;
 		pl_speed.y = MAX_SPD;
 	}
+	if (pl_speed.x < MIN_SPD) {
+		pl_speed = { MIN_SPD, MIN_SPD };
+	}
 
 }
 
@@ -1136,7 +1139,8 @@ void j1Player::UpgradePWR(int x)
 
 	if (power > MAX_PWR)
 		power = MAX_PWR;
-
+	if (power < MIN_PWR)
+		power = MIN_PWR;
 }
 
 void j1Player::UpgradeHP(int x)
@@ -1145,6 +1149,8 @@ void j1Player::UpgradeHP(int x)
 	
 	if (max_life_points > MAX_HP)
 		max_life_points = MAX_HP;
+	if (max_life_points < MIN_HP)
+		max_life_points = MIN_HP;
 }
 
 void j1Player::ChangeWeapon()

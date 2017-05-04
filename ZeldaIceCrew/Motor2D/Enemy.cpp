@@ -415,7 +415,7 @@ bool BSoldier::Start()
 
 	}
 
-	stats.Hp = 3;
+	stats.Hp = 3 * ORIGIN_PWR;
 	stats.Speed = 1.5;
 	stats.Power = 1;
 
@@ -476,7 +476,7 @@ bool RSoldier::Start()
 
 	}
 
-	stats.Hp = 5;
+	stats.Hp = 5 * ORIGIN_PWR;
 	stats.Speed = 0.75;
 	stats.Power = 2;
 
@@ -537,7 +537,7 @@ bool GSoldier::Start()
 
 	}
 
-	stats.Hp = 1;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 2.5;
 	stats.Power = 1;
 
@@ -636,7 +636,7 @@ bool BossChainBall::Start()
 
 	}
 
-	stats.Hp = 60;
+	stats.Hp = 30 * ORIGIN_PWR;
 	stats.Speed = 1;
 	stats.Power = 2;
 
@@ -820,7 +820,7 @@ bool Hinox::Start()
 
 	}
 
-	stats.Hp = 15;
+	stats.Hp = 7 * ORIGIN_PWR;
 	stats.Speed = 0.75;
 	stats.Power = 1;
 
@@ -895,7 +895,7 @@ bool Rope::Start()
 		nm_anim.speed = 0.05;
 	}
 
-	stats.Hp = 1;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 5;
 	stats.Power = 1;
 
@@ -1026,7 +1026,7 @@ bool BlueArcher::Start()
 
 	}
 
-	stats.Hp = 1;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 2;
 	stats.Power = 1;
 
@@ -1154,7 +1154,7 @@ bool GreyBat::Start()
 		}
 	}
 
-	stats.Hp = 1;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 2.5;
 	stats.Power = 1;
 
@@ -1208,7 +1208,7 @@ bool Geldman::Start()
 		move_anim.speed = 0.05;
 	}
 
-	stats.Hp = 3;
+	stats.Hp = 3 * ORIGIN_PWR;
 	stats.Speed = 2;
 	stats.Power = 1;
 
@@ -1368,7 +1368,7 @@ bool Freezor::Start()
 		attack_anim.speed = 0.05;
 	}
 
-	stats.Hp = 3;
+	stats.Hp = 3 * ORIGIN_PWR;
 	stats.Speed = 2;
 	stats.Power = 1;
 
@@ -1526,7 +1526,7 @@ bool Beamos::Start()
 
 	}
 
-	stats.Hp = 1;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 2;
 	stats.Power = 1;
 
@@ -1602,16 +1602,23 @@ void Beamos::Update(float dt)
 		timer.SetFlag(true);
 		if (timer.Read() >= 1500) {
 			state = shooting;
-			App->particle->CreateParticle(p_bounceback, pos.x, pos.y, curr_dir);
+			n_proj = 0;
 			timer.SetFlag(false);
 		}
 		break;
 	case shooting:
 		timer.Start();
 		timer.SetFlag(true);
-		if (timer.Read() >= 500) {
-			state = search;
-			timer.SetFlag(true);
+		if (timer.Read() >= 1000) {
+			timer.SetFlag(false);
+			if (n_proj < 2) {
+				App->particle->CreateParticle(p_std, pos.x, pos.y, curr_dir);
+			}
+			else {
+				App->particle->CreateParticle(p_bounceback, pos.x, pos.y, curr_dir);
+				state = search;
+			}
+			n_proj++;
 		}
 		break;
 	}
@@ -1651,7 +1658,7 @@ bool BossAgahnim::Start()
 		attack_anim.speed = 0.05;
 	}
 
-	stats.Hp = 12;
+	stats.Hp = 12 * ORIGIN_PWR;
 	stats.Speed = 1;
 	stats.Power = 2;
 

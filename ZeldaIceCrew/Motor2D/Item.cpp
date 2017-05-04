@@ -307,3 +307,20 @@ void BossKey::Upgrade()
 	App->player->curr_life_points = App->player->max_life_points;
 	App->scene_manager->toChangeScene((Scene*)App->scene_manager->house_scene);
 }
+
+void GoldenGauntlet::SetUp()
+{
+	subtype = gold_gauntlet;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void GoldenGauntlet::Upgrade()
+{
+	App->player->UpgradePWR(2);
+	App->player->UpgradeSPD(-0.5);
+}

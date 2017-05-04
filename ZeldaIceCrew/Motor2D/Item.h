@@ -20,6 +20,11 @@ enum ITEMTYPE {
 	power_gauntlet = 0,
 	pegasus_boots,
 	heart_container,
+	gold_gauntlet,
+	magic_mirror,
+	mysterious_dust,
+	odd_mushroom,
+	bag_of_rupees,
 	boss_key,
 	__FIRSTDROP,
 	drop_heart,
@@ -112,6 +117,12 @@ public:
 };
 
 struct HeartContainer : public Item {
+public:
+	void SetUp();
+	void Upgrade();
+};
+
+struct GoldenGauntlet : public Item {
 public:
 	void SetUp();
 	void Upgrade();

@@ -342,6 +342,8 @@ public:
 
 	SDL_Rect beamos_sprites[24];
 
+	uint n_proj = 0;
+
 	enum BEAMOSSTATE {
 		search = 0,
 		shooting

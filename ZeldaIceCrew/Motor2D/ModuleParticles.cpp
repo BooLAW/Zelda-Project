@@ -55,6 +55,9 @@ Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 		case p_bounceback:
 			ret = new BounceBack();
 			break;
+		case p_std:
+			ret = new StdEnemyProjectile();
+			break;
 		default:
 			LOG("Unknown Particle Type");
 			break;
@@ -550,7 +553,7 @@ bool BounceBack::Update(float dt)
 					hit = true;
 					LOG("ENEMY HIT");
 					App->particle->DestroyParticle(this);
-					it._Ptr->_Myval->Hit(curr_dir, damage);
+					it._Ptr->_Myval->Hit(curr_dir, damage * ORIGIN_PWR);
 				}
 			}
 		}

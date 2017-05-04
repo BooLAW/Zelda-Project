@@ -18,6 +18,7 @@ enum PARTICLETYPE {
 	p_enarrow,
 	p_shadow,
 	p_bounceback,
+	p_std,
 	p_agahnim_ball,
 	p_agahnim_lightning,
 	p_agahnim_4balls,
