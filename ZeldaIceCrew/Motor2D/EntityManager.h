@@ -65,7 +65,7 @@ public:
 	Enemy* CreateEnemy(uint subtype);
 	Item* CreateItem(uint subtype);
 	Block* CreateBlock(uint subtype);
-	Npc * CreateNPC(NPC_TYPE type, float x, float y, int id);
+	Npc * CreateNPC(NPC_TYPE type, int id);
 private:
 	
 	std::deque<Entity*> entities;

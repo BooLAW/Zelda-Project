@@ -37,6 +37,7 @@ public:
 	~Dialog();
 
 	uint id;
+	
 	std::vector<TextLine*> texts;
 };
 
@@ -49,7 +50,7 @@ public:
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool BlitDialog(int id, int state);
-
+	Dialog* DialogtoPrint(int id);
 	int dialogueStep = 0; //Allows to order the conversarion correctly
 
 						  /*--- UI elements to print dialogues on screen ---*/

@@ -39,6 +39,8 @@ public:
 	GuiText* power_num;
 	GuiImage* weapon_rect;
 	GuiImage* pl_weapon;
+
+	GuiText* dialog;
 };
 
 

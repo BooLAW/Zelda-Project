@@ -179,7 +179,7 @@ Block * EntityManager::CreateBlock(uint type)
 	return ret;
 }
 
-Npc * EntityManager::CreateNPC(NPC_TYPE type, float x, float y, int id)
+Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 {
 	Npc* ret = NULL;
 
@@ -187,32 +187,68 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, float x, float y, int id)
 	{
 	case NPC_ZELDA:
 		ret = new Npc_Zelda();
-		ret->pos = { x,y };
 		ret->type = type;
 		ret->npcId = id;
-		ret->SetTexture(npc_tex);
-		ret->SetRect({ 0,0,21,26 });
+		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
+		ret->SetRect({ 0,0,42,52 });
+		ret->HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_WALL);
+		App->player->toTalk = ret;
 		break;
 	case NPC_UNCLE:
 		ret = new Npc_Uncle();
+		ret->type = type;
+		ret->npcId = id;
+		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
+		ret->SetRect({ 0,0,42,52 });
+		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
 		break;
 	case NPC_HIPPIE:
 		ret = new Npc_Hippie();
+		ret->type = type;
+		ret->npcId = id;
+		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
+		ret->SetRect({ 0,0,42,52 });
+		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
 		break;
 	case NPC_FARM_KID:
 		ret = new Npc_Farm_Kid();
+		ret->type = type;
+		ret->npcId = id;
+		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
+		ret->SetRect({ 0,0,42,52 });
+		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
 		break;
 	case NPC_WOMAN:
 		ret = new Npc_Woman();
+		ret->type = type;
+		ret->npcId = id;
+		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
+		ret->SetRect({ 0,0,42,52 });
+		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
 		break;
 	case NPC_GRANDMA:
 		ret = new Npc_Grandma();
+		ret->type = type;
+		ret->npcId = id;
+		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
+		ret->SetRect({ 0,0,42,52 });
+		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
 		break;
 	case NPC_TAVERN_OLD_MAN:
 		ret = new Npc_Tavern_Old_Man();
+		ret->type = type;
+		ret->npcId = id;
+		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
+		ret->SetRect({ 0,0,42,52 });
+		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
 		break;
 	case NPC_LITTLE_KID:
 		ret = new Npc_Little_Kid();
+		ret->type = type;
+		ret->npcId = id;
+		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
+		ret->SetRect({ 0,0,42,52 });
+		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
 		break;
 
 	default:

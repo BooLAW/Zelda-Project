@@ -48,6 +48,8 @@ private:
 	bool ESC = false;
 	Window* window;
 	Label* win_title;
+	Npc* test;
+	Enemy* en;
 };
 
 #endif //__DUNGEON_SCENE_H__

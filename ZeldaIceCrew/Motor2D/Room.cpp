@@ -132,6 +132,20 @@ Doorway * Room::AddCamDoorway(float target_x, float target_y, uint dir, float x,
 	return parent->AddCamDoorway(target_x, target_y, coords.x, coords.y, dir, x, y);
 }
 
+Npc * Room::AddNpc(NPC_TYPE type, float x, float y, int id)
+{
+	Npc* ret = nullptr;
+
+	ret = App->entitymanager->CreateNPC(type,id);
+	ret->pos = { x + coords.x * ROOM_W, y + coords.y * ROOM_H };
+
+	ret->HitBox->SetPos((int)ret->pos.x, (int)ret->pos.y);
+
+	npcs.push_back(ret);
+
+	return ret;
+}
+
 void Room::EnemyActive(bool flag)
 {
 	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {

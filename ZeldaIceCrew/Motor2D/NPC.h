@@ -27,9 +27,11 @@ public:
 	~Npc() {};
 
 	NPC_TYPE npcType;
+	
 	bool Spawn(std::string file, fPoint pos, NPC_TYPE);
-	virtual void Update(float dt);
-
+	void Update(float dt);
+	void Draw();
+	
 
 public:
 

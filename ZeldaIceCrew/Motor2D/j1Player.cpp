@@ -833,6 +833,8 @@ bool j1Player::Update(float dt)
 					App->audio->PlayFx(close_inv_fx);
 				}
 			}
+
+			
 			//!_Graphics
 	
 			// MODIFY COLLISION -------------------------------------------------

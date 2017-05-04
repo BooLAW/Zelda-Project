@@ -73,11 +73,20 @@ bool Npc::Spawn(std::string file, fPoint pos, NPC_TYPE type)
 
 void Npc::Update(float dt)
 {
-	App->render->toDraw(GetTexture(),10, this->pos.x, this->pos.y, &this->GetRect());
-	/*switch (actionState)
-	{
-	case IDLE:
-		break;
-	}*/
+	Draw();
+	
+	if (this->HitBox->type == COLLIDER_NPC) {
+		if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
+			App->player->toTalk = this;
+			App->player->Talk();
+		}
+	}
+}
+
+void Npc::Draw()
+{
+	fPoint aux_pos = { pos.x - 16, pos.y - 14 };
+
+	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &this->rect);
 }
 

@@ -39,12 +39,13 @@ bool DungeonScene::Awake()
 // Called before the first frame
 bool DungeonScene::Start()
 {
-	BROFILER_CATEGORY("StartDungeon", Profiler::Color::DarkBlue)
+	BROFILER_CATEGORY("StartDungeon", Profiler::Color::DarkBlue);
+
+	
 
 	curr_id = dungeon;
-
 	stdStart();
-
+	GetRoom(2, 3)->AddNpc(NPC_ZELDA,500, 400, 1);
 	boss_music = false;
 	chain_boss_defeated = false;
 

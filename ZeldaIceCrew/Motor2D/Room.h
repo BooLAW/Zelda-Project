@@ -3,11 +3,13 @@
 
 #include "j1Player.h"
 #include "Scene.h"
+#include "NPC.h"
 
 class Item;
 class Enemy;
 class Block;
 class Doorway;
+class Npc;
 
 class Scene;
 
@@ -44,6 +46,7 @@ public:
 	Doorway* AddDungeonDoorway(uint dir);
 	Doorway* AddSceneDoorway(Scene* target, uint dir, float x, float y);
 	Doorway* AddCamDoorway(float target_x, float target_y, uint dir, float x, float y);
+	Npc* AddNpc(NPC_TYPE type, float x, float y,int id);
 
 	void EnemyActive(bool flag);
 
@@ -62,6 +65,7 @@ public:
 	std::list<Item*> items;
 	std::list<Block*> blocks;
 	std::list<Doorway*> doorways;
+	std::list<Npc*> npcs;
 
 protected:
 	Scene* parent;
