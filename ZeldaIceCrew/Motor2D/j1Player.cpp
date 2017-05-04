@@ -802,7 +802,6 @@ bool j1Player::Update(float dt)
 {
 
 	bool ret = true;
-
 	if (talking) {
 		App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 		App->hud->dialog->active = true;
@@ -857,7 +856,6 @@ bool j1Player::Update(float dt)
 				if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_DOWN) {
 					App->player->SetPos(-App->render->camera.x + App->render->camera.w / 2, -App->render->camera.y + App->render->camera.h / 2);
 				}
-
 			// Logic
 			if (App->debug_mode == false)
 			{
@@ -1305,6 +1303,7 @@ void j1Player::DyingRestart()
 	action = true;
 }
 
+
 void j1Player::PlayerInmortal(float time)
 {
 	inmortal = true;
@@ -1605,4 +1604,40 @@ void j1Player::Slash_()
 			}
 		}
 	}
+}
+bool j1Player::Load(pugi::xml_node& data)
+{
+	//weapons info
+	std::string curr_weapon = data.child("weapons").attribute("curr_weapon").as_string();
+		if (curr_weapon.c_str() == "t_sword")
+	if(data.child("weapons").attribute("sword").as_bool())
+			AddWeapon(t_sword);
+	if (data.child("weapons").attribute("bow").as_bool())
+			AddWeapon(t_bow);
+		
+	//items info
+	if (data.child("items").attribute("pegasus_boots").as_bool())
+		inventory.push_back(App->entitymanager->CreateItem(pegasus_boots));
+	//dungeon situation info
+
+
+	return true;
+}
+
+// Save Game State
+bool j1Player::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node weap = data.append_child("weapons");
+
+	weap.append_attribute("curr_weapon") = pos.x;
+	weap.append_attribute("sword") = pos.y;
+	weap.append_attribute("bow") = pos.y;
+
+	pugi::xml_node items = data.append_child("items");
+		//items.append_attribute("pegasus_boots") = inventory.find();
+	pugi::xml_node dun = data.append_child("dungeon");
+		dun.append_attribute("in") = (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene);
+
+
+	return true;
 }

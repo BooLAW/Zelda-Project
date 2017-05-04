@@ -1,0 +1,17 @@
+<!-- Save game for the game -->
+
+<game_state>
+
+  <renderer>
+    <camera x="100" y="0"/>
+  </renderer>
+
+  <player>
+    <rupees n="0"/>
+    <weapons curr_weapon ="t_sword" sword="true" bow ="true" />
+    <items pegasus_boots = "true" />
+    <!-- checkpoints are used to know in which room is link in the saving moment-->
+    <dungeon in="true" map = "1" room_x ="0" room_y="2" />
+  </player>
+
+</game_state>

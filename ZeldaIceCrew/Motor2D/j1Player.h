@@ -13,6 +13,7 @@
 #include "Weapon.h"
 #include "j1Audio.h"
 #include "DialogueManager.h"
+#include "j1FileSystem.h"
 #include"NPC.h"
 
 #define MAX_SPRITE_FRAMES 30
@@ -125,6 +126,8 @@ public:
 	void ChangeWeapon();
 	void AddWeapon(uint weapon_t);
 	
+	bool Save(pugi::xml_node& data) const;
+	bool Load(pugi::xml_node& data);
 
 	void HitPlayer(int dmg);
 
@@ -133,6 +136,7 @@ public:
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
 	void DyingRestart();
+	void AutoSave();
 	bool Find_inv(Item *item);
 	bool Find_weapon(Item* item);
 	void PlayerInmortal(float time);
