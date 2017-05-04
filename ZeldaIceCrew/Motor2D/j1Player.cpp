@@ -543,6 +543,32 @@ bool j1Player::Start()
 
 
 }
+
+	{
+		// Only waking up
+
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][0]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][1]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][2]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][3]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][4]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][5]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][6]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][7]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][8]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][9]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][10]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][11]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][12]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][13]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][14]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][15]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][16]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][17]);
+		animations[Wake_up][Down].PushBack(sprites[Wake_up][Down][18]);
+		animations[Wake_up][Down].speed = 0.2f;
+		
+	}
 	// Pick up Objects
 	{
 
@@ -873,7 +899,16 @@ bool j1Player::Update(float dt)
 					action = true;
 					action_blit = Sleep_Wake_up;
 					curr_dir = Down;
+				
 				}
+
+				/*if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
+					dir_override = true;
+					anim_override = true;
+					action = true;
+					action_blit = Wake_up;
+					curr_dir = Down;
+				}*/
 
 				if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
 					change_weapon = Q_Change;
