@@ -18,6 +18,7 @@ private:
 	bool CleanUp();
 	void GenerateHP();
 	void UpdateHP();
+	
 public:
 	void AddItem(Item* obj);
 	void AddWeapon(Item* wep);
@@ -39,8 +40,9 @@ public:
 	GuiText* power_num;
 	GuiImage* weapon_rect;
 	GuiImage* pl_weapon;
-
+	GuiImage* dialog_rect;
 	GuiText* dialog;
+	int dialog_num = 0;
 };
 
 

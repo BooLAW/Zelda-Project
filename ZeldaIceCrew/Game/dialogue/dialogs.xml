@@ -3,12 +3,9 @@
   
    <npc id="1">
      <dialogue state="0">
-       <text value=" Hi Link! We had problems with Ganon's soldiers. They came out of nowhere with pretending to kidnap Zelda,but she managed to escape into the forest."/>
-	<text value=" The forest is at the south-west, passing the village. We need your help. Bring Zelda back, please."/>
-	<text value=" I forgot! You can attack in four directions using ABXY, and dodge with RB. "/>
-     </dialogue>
-     <dialogue state="1">
-   	<text value=" Go to the forest, at south-west, and find Zelda.You are our last hope, good luck Link."/>
+       <text value=" Hi Link! I'm an NPC, you can do whatever you want with me. ;)"/>
+	<text value=" You look so good right now, it's hot in here, isn't it?"/>
+	<text value=" If you want me to do something you know where to find me. "/>
      </dialogue>
    </npc>
   

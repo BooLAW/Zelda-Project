@@ -115,11 +115,15 @@ bool HUD::Start()
 	weapons->texture_rect = { 498,5,218,214};
 	weapons->max_prior = true;
 
+	dialog_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	dialog_rect->texture_rect = { 625,733,613,77 };
+	dialog_rect->active = false;
+	dialog_rect->pos = { power->pos.x - 450,power->pos.y };
+
 	dialog = (GuiText*)App->gui->CreateElement(GuiType::text);
 	dialog->active = false;
 	dialog->movable = true;
-	dialog->pos = { App->render->camera.x+App->render->camera.w/2, App->render->camera.y+App->render->camera.h/2 };
-
+	dialog->pos = { dialog_rect->pos.x + 10, dialog_rect->pos.y + 10 };
 
 	GenerateHP();
 
@@ -148,7 +152,13 @@ bool HUD::Update(float dt)
 	speed_num->str = std::to_string(App->player->pl_speed.x);
 	power_num->str = std::to_string(App->player->power);
 	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
-	//dialog->str = &App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts[0]->line;
+
+	if (App->player->talking) {
+		dialog_rect->active = true;
+	}
+	else {
+		dialog_rect->active = false;
+	}
 	if (inv->active) {
 		descriptions_rect->active = true;
 		stats_rect->active = true;

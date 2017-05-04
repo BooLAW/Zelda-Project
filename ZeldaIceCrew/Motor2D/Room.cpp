@@ -27,6 +27,18 @@ void Room::Update(float dt)
 		}
 	}
 
+	if (npcs.empty() == false) {
+		for (std::list<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
+		{
+			if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect) == 0) {
+				App->player->toTalk = it._Ptr->_Myval;
+			}
+			else {
+				App->player->toTalk = nullptr;
+			}
+		}
+	}
+
 }
 
 void Room::CleanUp()

@@ -191,8 +191,8 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 		ret->npcId = id;
 		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
 		ret->SetRect({ 0,0,42,52 });
-		ret->HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_WALL);
-		App->player->toTalk = ret;
+		ret->HitBox = App->collisions->AddCollider({ 0, 0, 40, 25 }, COLLIDER_NPC);
+
 		break;
 	case NPC_UNCLE:
 		ret = new Npc_Uncle();
@@ -200,7 +200,8 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 		ret->npcId = id;
 		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
 		ret->SetRect({ 0,0,42,52 });
-		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
+		ret->HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_NPC);
+
 		break;
 	case NPC_HIPPIE:
 		ret = new Npc_Hippie();
@@ -208,7 +209,8 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 		ret->npcId = id;
 		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
 		ret->SetRect({ 0,0,42,52 });
-		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
+		ret->HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_NPC);
+
 		break;
 	case NPC_FARM_KID:
 		ret = new Npc_Farm_Kid();
@@ -216,7 +218,8 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 		ret->npcId = id;
 		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
 		ret->SetRect({ 0,0,42,52 });
-		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
+		ret->HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_NPC);
+
 		break;
 	case NPC_WOMAN:
 		ret = new Npc_Woman();
@@ -224,7 +227,8 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 		ret->npcId = id;
 		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
 		ret->SetRect({ 0,0,42,52 });
-		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
+		ret->HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_NPC);
+
 		break;
 	case NPC_GRANDMA:
 		ret = new Npc_Grandma();
@@ -232,7 +236,8 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 		ret->npcId = id;
 		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
 		ret->SetRect({ 0,0,42,52 });
-		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
+		ret->HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_NPC);
+
 		break;
 	case NPC_TAVERN_OLD_MAN:
 		ret = new Npc_Tavern_Old_Man();
@@ -240,7 +245,8 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 		ret->npcId = id;
 		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
 		ret->SetRect({ 0,0,42,52 });
-		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
+		ret->HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_NPC);
+
 		break;
 	case NPC_LITTLE_KID:
 		ret = new Npc_Little_Kid();
@@ -248,7 +254,8 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 		ret->npcId = id;
 		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
 		ret->SetRect({ 0,0,42,52 });
-		ret->HitBox = new Collider({ 0, 0, 0, 0 }, COLLIDER_ENEMY);
+		ret->HitBox = App->collisions->AddCollider({ 0, 0, 32, 32 }, COLLIDER_NPC);
+
 		break;
 
 	default:
@@ -340,6 +347,8 @@ bool EntityManager::Update(float dt) {
 				entities[i]->Update(dt);
 		}
 	}
+
+
 	//LOG("ENTITY UPDT END");
 
 

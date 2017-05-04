@@ -75,13 +75,9 @@ void Npc::Update(float dt)
 {
 	Draw();
 	
-	if (this->HitBox->type == COLLIDER_NPC) {
-		if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
-			App->player->toTalk = this;
-			App->player->Talk();
-		}
+	
 	}
-}
+
 
 void Npc::Draw()
 {

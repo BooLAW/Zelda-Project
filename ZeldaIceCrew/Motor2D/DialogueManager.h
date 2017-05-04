@@ -57,9 +57,9 @@ public:
 	GuiImage* screen = nullptr;
 	UI_String* text_on_screen = nullptr;
 	/*-- END --*/
-
-private:
 	std::vector<Dialog*> dialog;
+private:
+
 
 	/*-- Data to load XML --*/
 	std::string folder;
