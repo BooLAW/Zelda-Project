@@ -153,29 +153,35 @@ bool j1Player::Start()
 	// Dash
 	{
 
-		sprites[Dash][Up][0] =		{ link_x * 11, link_y * 6, link_width, link_height };
-		sprites[Dash][Up][1] =		{ link_x * 12, link_y * 6, link_width, link_height };
-		sprites[Dash][Up][2] =		{ link_x * 13, link_y * 6, link_width, link_height };
-		sprites[Dash][Up][3] =		{ link_x * 14, link_y * 6, link_width, link_height };
-		sprites[Dash][Up][4] =		{ link_x * 15, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][0] =		{ link_x * 12, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][1] =		{ link_x * 13, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][2] =		{ link_x * 14, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][3] =		{ link_x * 15, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][4] =		{ link_x * 16, link_y * 6, link_width, link_height };
+		sprites[Dash][Up][5] = { link_x * 16, link_y * 6, link_width, link_height };
 
-		sprites[Dash][Down][0] =	{ link_x * 11, link_y * 5, link_width, link_height };
-		sprites[Dash][Down][1] =	{ link_x * 12, link_y * 5, link_width, link_height };
-		sprites[Dash][Down][2] =	{ link_x * 13, link_y * 5, link_width, link_height };
-		sprites[Dash][Down][3] =	{ link_x * 14, link_y * 5, link_width, link_height };
-		sprites[Dash][Down][4] =	{ link_x * 15, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][0] =	{ link_x * 12, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][1] =	{ link_x * 13, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][2] =	{ link_x * 14, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][3] =	{ link_x * 15, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][4] =	{ link_x * 16, link_y * 5, link_width, link_height };
+		sprites[Dash][Down][5] = { link_x * 16, link_y * 5, link_width, link_height };
 
-		sprites[Dash][Left][0] =	{ link_x * 11, link_y * 8, link_width, link_height };
-		sprites[Dash][Left][1] =	{ link_x * 12, link_y * 8, link_width, link_height };
-		sprites[Dash][Left][2] =	{ link_x * 13, link_y * 8, link_width, link_height };
-		sprites[Dash][Left][3] =	{ link_x * 14, link_y * 8, link_width, link_height };
-		sprites[Dash][Left][4] =	{ link_x * 15, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][5] = { link_x * 12, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][4] =	{ link_x * 12, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][3] = { link_x * 13, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][2] = { link_x * 14, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][1] = { link_x * 15, link_y * 8, link_width, link_height };
+		sprites[Dash][Left][0] = { link_x * 16, link_y * 8, link_width, link_height };
 
-		sprites[Dash][Right][0] =	{ link_x * 11, link_y * 7, link_width, link_height };
-		sprites[Dash][Right][1] =	{ link_x * 12, link_y * 7, link_width, link_height };
-		sprites[Dash][Right][2] =	{ link_x * 13, link_y * 7, link_width, link_height };
-		sprites[Dash][Right][3] =	{ link_x * 14, link_y * 7, link_width, link_height };
-		sprites[Dash][Right][4] =	{ link_x * 15, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][0] =	{ link_x * 12, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][1] = { link_x * 13, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][2] = { link_x * 14, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][3] = { link_x * 15, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][4] = { link_x * 16, link_y * 7, link_width, link_height };
+		sprites[Dash][Right][5] = { link_x * 16, link_y * 7, link_width, link_height };
+
+
 
 	}
 	//Pick-up Object
@@ -350,30 +356,12 @@ bool j1Player::Start()
 
 	{
 
-		animations[Dash][Up].PushBack(sprites[Dash][Up][0]);
-		animations[Dash][Up].PushBack(sprites[Dash][Up][1]);
-		animations[Dash][Up].PushBack(sprites[Dash][Up][2]);
-		animations[Dash][Up].PushBack(sprites[Dash][Up][3]);
-
-		animations[Dash][Down].PushBack(sprites[Dash][Down][0]);
-		animations[Dash][Down].PushBack(sprites[Dash][Down][1]);
-		animations[Dash][Down].PushBack(sprites[Dash][Down][2]);
-		animations[Dash][Down].PushBack(sprites[Dash][Down][3]);
-
-		animations[Dash][Left].PushBack(sprites[Dash][Left][0]);
-		animations[Dash][Left].PushBack(sprites[Dash][Left][1]);
-		animations[Dash][Left].PushBack(sprites[Dash][Left][2]);
-		animations[Dash][Left].PushBack(sprites[Dash][Left][3]);
-
-		animations[Dash][Right].PushBack(sprites[Dash][Right][0]);
-		animations[Dash][Right].PushBack(sprites[Dash][Right][1]);
-		animations[Dash][Right].PushBack(sprites[Dash][Right][2]);
-		animations[Dash][Right].PushBack(sprites[Dash][Right][3]);
-
 		for (int i = 0; i < LastDir; i++) {
-			animations[Dash][i].speed = 0.05;
+			for (int k = 0; k < 6; k++) {
+				animations[Dash][i].PushBack(sprites[Dash][i][k]);
+			}
+			animations[Dash][i].speed = 0.1;
 		}
-
 	}
 
 	// Idle
@@ -922,11 +910,65 @@ bool j1Player::Update(float dt)
 					if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 						if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_DOWN) {
 							action_blit = Dash;
-							dir_override = true;
-							anim_override = true;
+							action = true;
+							//dir_override = true;
+							//anim_override = true;
 						}
 					}
 				}
+
+				if (action_blit != Dash) {
+					link_coll->active = true;
+				}
+
+				if (action == true && action_blit == Dash) {
+					link_coll->active = false;
+					if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
+						if (CheckSpace(pos.x - pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y - pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
+							pos.x -= pl_speed.x * DASH_SPD * (sqrt(2) / 2);
+							pos.y -= pl_speed.y * DASH_SPD * (sqrt(2) / 2);
+						}
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_D)) {
+						if (CheckSpace(pos.x + pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y - pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
+							pos.x += pl_speed.x * DASH_SPD * (sqrt(2) / 2);
+							pos.y -= pl_speed.y * DASH_SPD * (sqrt(2) / 2);
+						}
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_A)) {
+						if (CheckSpace(pos.x - pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y + pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
+							pos.x -= pl_speed.x * DASH_SPD * (sqrt(2) / 2);
+							pos.y += pl_speed.y * DASH_SPD * (sqrt(2) / 2);
+						}
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
+						if (CheckSpace(pos.x + pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y + pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
+							pos.x += pl_speed.x * DASH_SPD * (sqrt(2) / 2);
+							pos.y += pl_speed.y * DASH_SPD * (sqrt(2) / 2);
+						}
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_W)) {
+						if (CheckSpace(pos.x, pos.y - pl_speed.y * DASH_SPD) == 0) {
+							pos.y -= pl_speed.y * DASH_SPD;
+						}
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_A)) {
+						if (CheckSpace(pos.x - pl_speed.x * DASH_SPD, pos.y) == 0) {
+							pos.x -= pl_speed.x * DASH_SPD;
+						}
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_S)) {
+						if (CheckSpace(pos.x, pos.y + pl_speed.y * DASH_SPD) == 0) {
+							pos.y += pl_speed.y * DASH_SPD;
+						}
+					}
+					else if (App->input->GetKey(SDL_SCANCODE_D)) {
+						if (CheckSpace(pos.x + pl_speed.x * DASH_SPD, pos.y) == 0) {
+							pos.x += pl_speed.x * DASH_SPD;
+						}
+					}
+				}
+
 				if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && anim_override == false) {
 					//for now perform an action to see animation
 					//requires a detector for usage: villager = talk, bush or bomb or pot... = pickup and then throw, lever or rock = pull or push...
@@ -1166,7 +1208,7 @@ void j1Player::AddWeapon(uint weapon_t)
 void j1Player::HitPlayer(int dmg)
 {
 	if (App->player->curr_life_points > 0) {
-		if (App->player->inmortal == false) {
+		if (App->player->inmortal == false && link_coll->active == true) {
 
 			App->audio->PlayFx(App->player->hurt);
 			App->player->curr_life_points -= dmg;

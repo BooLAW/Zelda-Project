@@ -17,6 +17,8 @@
 
 #define MAX_SPRITE_FRAMES 30
 
+#define DASH_SPD 1.77
+
 #define PL_OFFSET 12
 #define PL_OFFSET_X 33
 #define PL_OFFSET_Y 51

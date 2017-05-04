@@ -196,7 +196,7 @@ bool Enemy::Attack()
 void Enemy::HitPlayer()
 {
 
-	if (App->player->inmortal == false) {
+	if (App->player->inmortal == false && App->player->link_coll->active == true) {
 
 		App->audio->PlayFx(App->player->hurt);
 		App->player->curr_life_points -= stats.Power;
