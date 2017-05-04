@@ -83,6 +83,63 @@ Item * EntityManager::CreateItem(uint subtype)
 		ret = new HeartContainer();
 		ret->type = item;
 		break;
+	case gold_gauntlet:
+		ret = new GoldenGauntlet();
+		ret->type = item;
+		break;
+	case wind_cape:
+		ret = new WindCape();
+		ret->type = item;
+		break;
+	case magic_hammer:
+		ret = new MagicHammer();
+		ret->type = item;
+		break;
+	case small_shield:
+		ret = new SmallShield();
+		ret->type = item;
+		break;
+	case vanguard_emblem:
+		ret = new VanguardEmblem();
+		ret->type = item;
+		break;
+	case magic_sphere:
+		ret = new MagicSphere();
+		ret->type = item;
+		break;
+	case magic_mirror:
+		ret = new MagicMirror();
+		ret->type = item;
+		break;
+	case golden_shield:
+		ret = new GoldenShield();
+		ret->type = item;
+		break;
+	case mysterious_dust:
+		ret = new MysteriousDust();
+		ret->type = item;
+		break;
+	case odd_mushroom:
+		ret = new OddMushroom();
+		ret->type = item;
+		break;
+	case bag_of_rupees:
+		ret = new BagOfRupees();
+		ret->type = item;
+		break;
+	case icon_of_power:
+		ret = new IconOfPower();
+		ret->type = item;
+		break;
+	case icon_of_valor:
+		ret = new IconOfValor();
+		ret->type = item;
+		break;
+	case icon_of_wisdom:
+		ret = new IconOfWisdom();
+		ret->type = item;
+		break;
+
 	case boss_key:
 		ret = new BossKey();
 		ret->type = item;

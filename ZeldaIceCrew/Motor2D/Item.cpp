@@ -121,7 +121,7 @@ void Item::Start()
 
 void PowerGauntlet::Upgrade()
 {
-	App->player->UpgradePWR(1);
+	App->player->UpgradePWR(5);
 }
 
 void PowerGauntlet::SetUp()
@@ -148,7 +148,7 @@ void PegasusBoots::SetUp()
 
 void PegasusBoots::Upgrade()
 {
-	App->player->UpgradeSPD(0.5);
+	App->player->UpgradeSPD(0.25);
 }
 
 void HeartContainer::SetUp()
@@ -321,6 +321,361 @@ void GoldenGauntlet::SetUp()
 
 void GoldenGauntlet::Upgrade()
 {
-	App->player->UpgradePWR(2);
-	App->player->UpgradeSPD(-0.5);
+	App->player->UpgradePWR(15);
+	App->player->UpgradeSPD(-0.25);
+}
+
+void WindCape::SetUp()
+{
+	subtype = wind_cape;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void WindCape::Upgrade()
+{
+	App->player->UpgradePWR(-5);
+	App->player->UpgradeSPD(0.5);
+}
+
+void MagicHammer::SetUp()
+{
+	subtype = magic_hammer;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void MagicHammer::Upgrade()
+{
+	App->player->UpgradePWR(15);
+	App->player->UpgradeHP(-2);
+}
+
+void MagicSphere::SetUp()
+{
+	subtype = magic_sphere;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void MagicSphere::Upgrade()
+{
+	App->player->UpgradeHP(4);
+	App->player->UpgradeSPD(-0.25);
+}
+
+void VanguardEmblem::SetUp()
+{
+	subtype = vanguard_emblem;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void VanguardEmblem::Upgrade()
+{
+	App->player->UpgradeHP(4);
+	App->player->UpgradePWR(-5);
+}
+
+void SmallShield::SetUp()
+{
+	subtype = small_shield;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void SmallShield::Upgrade()
+{
+	App->player->UpgradePWR(-5);
+	App->player->UpgradeSPD(0.5);
+}
+
+void GoldenShield::SetUp()
+{
+	subtype = small_shield;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void GoldenShield::Upgrade()
+{
+	float aux = App->player->pl_speed.x;
+
+	App->player->pl_speed.x = App->player->pl_speed.y = ((float)App->player->power * 0.083);
+
+	if (App->player->pl_speed.x > MAX_SPD) {
+		App->player->pl_speed.x = MAX_SPD;
+		App->player->pl_speed.y = MAX_SPD;
+	}
+	if (App->player->pl_speed.x < MIN_SPD) {
+		App->player->pl_speed = { MIN_SPD, MIN_SPD };
+	}
+
+	App->player->power = (int)(round(aux / 0.083));
+
+	if (App->player->power > MAX_PWR)
+		App->player->power = MAX_PWR;
+	if (App->player->power < MIN_PWR)
+		App->player->power = MIN_PWR;
+
+}
+
+void MagicMirror::SetUp()
+{
+	subtype = small_shield;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void MagicMirror::Upgrade()
+{
+
+	float aux = App->player->max_life_points;
+
+	App->player->max_life_points = App->player->power / 5;
+
+	App->player->power = (int)aux * 5;
+
+	if (App->player->power > MAX_PWR)
+		App->player->power = MAX_PWR;
+	if (App->player->power < MIN_PWR)
+		App->player->power = MIN_PWR;
+
+
+	if (App->player->max_life_points > MAX_HP)
+		App->player->max_life_points = MAX_HP;
+	if (App->player->max_life_points < MIN_HP)
+		App->player->max_life_points = MIN_HP;
+}
+
+void BagOfRupees::SetUp()
+{
+	subtype = bag_of_rupees;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void BagOfRupees::Upgrade()
+{
+	App->player->max_rupees = 300;
+}
+
+void OddMushroom::SetUp()
+{
+	subtype = odd_mushroom;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void OddMushroom::Upgrade()
+{
+	float a_s = App->player->pl_speed.x;
+	float a_p = App->player->power;
+	float a_h = App->player->max_life_points;
+
+	float a_temp;
+
+	uint rnd = rand() % 2;
+	
+	switch (rnd) {
+	case 0:
+		std::swap(a_s, a_p);
+		std::swap(a_p, a_h);
+		break;
+	case 1:
+		std::swap(a_h, a_p);
+		std::swap(a_p, a_s);
+		break;
+	}
+
+
+	App->player->pl_speed.x = a_s;
+	App->player->pl_speed.y = a_s;
+	App->player->power = a_p;
+	App->player->max_life_points = a_h;
+
+	if (App->player->power > MAX_PWR)
+		App->player->power = MAX_PWR;
+	if (App->player->power < MIN_PWR)
+		App->player->power = MIN_PWR;
+
+	if (App->player->pl_speed.x > MAX_SPD) {
+		App->player->pl_speed.x = MAX_SPD;
+		App->player->pl_speed.y = MAX_SPD;
+	}
+	if (App->player->pl_speed.x < MIN_SPD) {
+		App->player->pl_speed = { MIN_SPD, MIN_SPD };
+	}
+
+	if (App->player->max_life_points > MAX_HP)
+		App->player->max_life_points = MAX_HP;
+	if (App->player->max_life_points < MIN_HP)
+		App->player->max_life_points = MIN_HP;
+
+}
+
+void MysteriousDust::SetUp()
+{
+	subtype = mysterious_dust;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void MysteriousDust::Upgrade()
+{
+	uint rnd_s = rand() % 3;
+	int rnd_up = rand() % 2;
+
+	rnd_up == 0 ? rnd_up = -1 : rnd_up = 1;
+
+	switch (rnd_s) {
+	case 0:
+		App->player->UpgradeHP(rnd_up * 2);
+		break;
+	case 1:
+		App->player->UpgradePWR(rnd_up * 5);
+		break;
+	case 2:
+		App->player->UpgradeSPD(rnd_up * 0.25);
+		break;
+	}
+
+}
+
+void IconOfValor::SetUp()
+{
+	subtype = icon_of_valor;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void IconOfValor::Upgrade()
+{
+	App->player->UpgradeHP(2);
+	App->player->UpgradePWR(5);
+	App->player->UpgradeSPD(0.25);
+
+}
+
+void IconOfWisdom::SetUp()
+{
+	subtype = icon_of_wisdom;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void IconOfWisdom::Upgrade()
+{
+	float aux = App->player->power + App->player->max_life_points * 5 + ceil(App->player->pl_speed.x / 0.083);
+
+	aux = ceil(aux / 3);
+
+	App->player->power = aux;
+	App->player->max_life_points = round(aux / 5);
+	App->player->pl_speed.x = aux * 0.083;
+	App->player->pl_speed.y = aux * 0.083;
+
+	if (App->player->power > MAX_PWR)
+		App->player->power = MAX_PWR;
+	if (App->player->power < MIN_PWR)
+		App->player->power = MIN_PWR;
+
+	if (App->player->pl_speed.x > MAX_SPD) {
+		App->player->pl_speed.x = MAX_SPD;
+		App->player->pl_speed.y = MAX_SPD;
+	}
+	if (App->player->pl_speed.x < MIN_SPD) {
+		App->player->pl_speed = { MIN_SPD, MIN_SPD };
+	}
+
+	if (App->player->max_life_points > MAX_HP)
+		App->player->max_life_points = MAX_HP;
+	if (App->player->max_life_points < MIN_HP)
+		App->player->max_life_points = MIN_HP;
+
+}
+
+void IconOfPower::SetUp()
+{
+	subtype = icon_of_power;
+	type = ENTITYTYPE::item;
+	tex = App->tex->Load("Sprites/Items32x32.png");
+	rect = { 362, 144, 32, 34 };
+	UI_tex = tex;
+	UI_rect = { 360, 470, 32, 32 };
+	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+}
+
+void IconOfPower::Upgrade()
+{
+	float aux = App->player->power;
+
+	if (App->player->power < App->player->pl_speed.x / 0.083) {
+		aux = App->player->pl_speed.x;
+		if (aux / 0.083 < App->player->max_life_points * 5) {
+			aux = App->player->max_life_points;
+			App->player->UpgradeHP(4);
+		}
+		else {
+			App->player->UpgradeSPD(0.5);
+		}
+	}
+	else {
+		if (aux < App->player->max_life_points * 5) {
+			aux = App->player->max_life_points;
+			App->player->UpgradeHP(4);
+		}
+		else {
+			App->player->UpgradePWR(15);
+		}
+	}
+
 }

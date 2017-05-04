@@ -21,10 +21,19 @@ enum ITEMTYPE {
 	pegasus_boots,
 	heart_container,
 	gold_gauntlet,
+	wind_cape,
+	magic_hammer,
+	small_shield,
+	vanguard_emblem,
+	magic_sphere,
 	magic_mirror,
+	golden_shield,
 	mysterious_dust,
 	odd_mushroom,
 	bag_of_rupees,
+	icon_of_power,
+	icon_of_wisdom,
+	icon_of_valor,
 	boss_key,
 	__FIRSTDROP,
 	drop_heart,
@@ -124,6 +133,71 @@ public:
 
 struct GoldenGauntlet : public Item {
 public:
+	void SetUp();
+	void Upgrade();
+};
+
+struct WindCape : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct MagicHammer : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct SmallShield : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct VanguardEmblem : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct MagicSphere : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct MagicMirror : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct GoldenShield : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct MysteriousDust : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct OddMushroom : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct BagOfRupees : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct IconOfPower : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct IconOfWisdom : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct IconOfValor : public Item {
 	void SetUp();
 	void Upgrade();
 };
