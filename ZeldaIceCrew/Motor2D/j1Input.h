@@ -120,12 +120,9 @@ public:
 	int controls [__LAST_CONTROLS];
 	
 	//Pause things
-	void Start_Pause(Pause_Type type);
-	void Stop_Pause(Pause_Type type);
-	void Init_Pause_Matrix();
 
-	bool pause_matrix[last_module_][last_pause_type_];
-	bool pause2[last_pause_type_];
+
+	
 private:
 
 	bool		windowEvents[WE_COUNT];

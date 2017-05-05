@@ -259,19 +259,15 @@ bool j1App::PreUpdate()
 	bool ret = true;
 	j1Module* pModule = NULL;
 
-	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		if ((*item)->pause == false) {
-			pModule = (*item);
+		pModule = (*item);
 
-			if (pModule->active == false) {
-				continue;
-			}
-
-			ret = (*item)->PreUpdate();
+		if (pModule->active == false) {
+			continue;
 		}
-		else
-			ret = true;
+
+		ret = (*item)->PreUpdate();
 	}
 
 	return ret;
@@ -283,19 +279,15 @@ bool j1App::DoUpdate()
 	bool ret = true;
 	j1Module* pModule = NULL;
 
-	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		if ((*item)->pause == false) {
-			pModule = (*item);
+		pModule = (*item);
 
-			if (pModule->active == false) {
-				continue;
-			}
-
-			ret = (*item)->Update(dt);
+		if (pModule->active == false) {
+			continue;
 		}
-		else
-			ret = true;
+
+		ret = (*item)->Update(dt);
 	}
 
 	return ret;
@@ -307,9 +299,8 @@ bool j1App::PostUpdate()
 	bool ret = true;
 	j1Module* pModule = NULL;
 
-	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		
 		pModule = (*item);
 
 		if (pModule->active == false) {
@@ -317,7 +308,6 @@ bool j1App::PostUpdate()
 		}
 
 		ret = (*item)->PostUpdate();
-		
 	}
 
 	return ret;

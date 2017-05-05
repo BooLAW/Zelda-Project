@@ -822,16 +822,6 @@ bool j1Player::Update(float dt)
 
 	}
 	else {
-		
-		if (App->input->pause2[General_] == false) {
-			if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
-				if (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene) {
-					App->scene_manager->toChangeScene((Scene*)App->scene_manager->village_scene);
-				}
-				else
-					App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
-			}
-		}
 
 		Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
 
@@ -1078,8 +1068,7 @@ bool j1Player::Update(float dt)
 		}
 	}
 
-	if (App->input->pause2[General_] == true)
-		App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+
 
 
 	return ret;

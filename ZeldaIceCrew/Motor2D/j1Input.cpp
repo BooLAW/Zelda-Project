@@ -43,7 +43,7 @@ bool j1Input::Start()
 {
 	SDL_StopTextInput();
 	DefaultControls();
-	Init_Pause_Matrix();
+
 	return true;
 }
 
@@ -212,50 +212,3 @@ void j1Input::DefaultControls()
 	}
 }
 
-void j1Input::Start_Pause(Pause_Type type)
-{
-	int i = 0;
-
-	for (std::list<j1Module*>::iterator item = App->modules.begin(); item != App->modules.end(); item++)
-	{
-		if (pause_matrix[i][type] == true)
-			(*item)->pause = true;
-		else
-			(*item)->pause = false;
-		i++;
-	}
-
-	pause2[type] = true;
-}
-
-void j1Input::Stop_Pause(Pause_Type type)
-{
-	for (std::list<j1Module*>::iterator item = App->modules.begin(); item != App->modules.end(); item++)
-	{
-		(*item)->pause = false;
-
-	}
-
-	pause2[type] = false;
-}
-
-void j1Input::Init_Pause_Matrix()
-{
-	for (int i = 0; i < last_module_; i++)
-		for (int j = 0; j < last_pause_type_; j++)
-			pause_matrix[i][j] = false;
-
-	for (int j = 0; j < last_pause_type_; j++)
-		pause2[j] = false;
-
-	// General Pause
-	{
-		pause_matrix[j1Collision_][General_] = true;
-		pause_matrix[ModuleParticles_][General_] = true;
-	}
-
-	// Inventory Pause
-	{
-
-	}
-}

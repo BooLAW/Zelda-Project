@@ -75,7 +75,7 @@ void Enemy::stdUpdate(float dt)
 {
 	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
 	//LOG("ENEMY UPDATE");
-	if (App->input->pause2[General_] == false) {
+	
 
 		if (HitBox->type == COLLIDER_ENEMY) {
 			if (App->player->weapon_coll != nullptr)
@@ -92,7 +92,7 @@ void Enemy::stdUpdate(float dt)
 		Move();
 
 		Attack();
-	}
+	
 			Draw();
 	
 }

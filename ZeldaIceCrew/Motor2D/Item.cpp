@@ -27,7 +27,7 @@ void Item::PassToInventory()
 void Item::Update(float dt)
 {
 	//LOG("ITEM UPDATE");
-	if (App->input->pause2[General_] == false) {
+	
 		if (grabbed == false) {
 			if (HitBox != nullptr) {
 				if (HitBox->rect.x != pos.x || HitBox->rect.y != pos.y)
@@ -64,7 +64,7 @@ void Item::Update(float dt)
 			}
 
 		}
-	}
+	
 
 	if (priceTag != nullptr)
 		priceTag->pos = { (int)this->pos.x, (int)this->pos.y};

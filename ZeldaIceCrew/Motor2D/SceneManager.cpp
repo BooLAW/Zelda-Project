@@ -102,12 +102,6 @@ bool SceneManager::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
-		if (App->input->pause2[General_] == false)
-			App->input->Start_Pause(General_);
-		else
-			App->input->Stop_Pause(General_);
-	}
 
 	return ret;
 }

@@ -92,7 +92,7 @@ void Block::Reward()
 
 void Block::Update(float dt)
 {
-	if (App->input->pause2[General_] == false) {
+	
 		//LOG("BLOCK UPDATE");
 
 		if (HitBox != nullptr)
@@ -150,7 +150,7 @@ void Block::Update(float dt)
 		else
 			Move();
 
-	}
+	
 
 	Draw();
 
