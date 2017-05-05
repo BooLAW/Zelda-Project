@@ -395,15 +395,25 @@ bool EntityManager::PreUpdate()
 
 bool EntityManager::Update(float dt) {
 
-	//LOG("ENTITY UPDT START");
-	if(entities.empty() == false)
-	for (int i = 0; i < entities.size(); i++) {
-		if (entities[i] != nullptr) {
-			//LOG("ENTITY UPDATE %d", i);
-			if(entities[i]->active == true)
-				entities[i]->Update(dt);
-		}
-	}
+	
+
+		//LOG("ENTITY UPDT START");
+		if (entities.empty() == false)
+			for (int i = 0; i < entities.size(); i++) {
+				if (entities[i] != nullptr) {
+					if (!App->IsPaused()) {
+						//LOG("ENTITY UPDATE %d", i);
+						if (entities[i]->active == true)
+							entities[i]->Update(dt);
+					}
+					else {
+						if (entities[i]->active == true)
+							entities[i]->Draw(dt);
+					}
+				}
+			}
+	
+	
 
 
 	//LOG("ENTITY UPDT END");

@@ -21,8 +21,10 @@ void Room::Update(float dt)
 	if (doorways.empty() == false) {
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
 		{
-			if (it._Ptr->_Myval != nullptr) {
-				it._Ptr->_Myval->Update(dt);
+			if(!App->IsPaused()){
+				if (it._Ptr->_Myval != nullptr) {
+					it._Ptr->_Myval->Update(dt);
+				}
 			}
 		}
 	}
@@ -30,11 +32,17 @@ void Room::Update(float dt)
 	if (npcs.empty() == false) {
 		for (std::list<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
 		{
-			if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect) == 0) {
-				App->player->toTalk = it._Ptr->_Myval;
+			if (!App->IsPaused()) {
+				if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect) == 0) {
+					App->player->toTalk = it._Ptr->_Myval;
+				}
+			
+				else {
+					App->player->toTalk = nullptr;
+				}
 			}
 			else {
-				App->player->toTalk = nullptr;
+				it._Ptr->_Myval->Draw();
 			}
 		}
 	}

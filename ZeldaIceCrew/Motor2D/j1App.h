@@ -73,6 +73,9 @@ public:
 	void EndSDL();
 
 	void OpenWebPage(char* url);
+	bool IsPaused()const;
+	void Pause();
+	void UnPause();
 private:
 
 	// Load config file
@@ -126,7 +129,7 @@ public:
 	std::list<j1Module*>	modules;
 private:
 
-	
+	bool				paused=false;
 	int					argc;
 	char**				args;
 

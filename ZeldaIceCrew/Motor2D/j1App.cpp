@@ -493,3 +493,19 @@ void j1App::OpenWebPage(char * url)
 {
 	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWMAXIMIZED);
 }
+
+bool j1App::IsPaused() const
+{
+	return paused;
+}
+
+void j1App::Pause()
+{
+	paused = true;
+}
+
+void j1App::UnPause()
+{
+	paused = false;
+}
+
