@@ -144,7 +144,6 @@ public:
 	bool SetPosTile(int x, int y);
 	Point<float> GetPos();
 	void DyingRestart();
-	void AutoSave();
 	bool Find_inv(Item *item);
 	bool Find_weapon(Item* item);
 	void PlayerInmortal(float time);

@@ -48,8 +48,7 @@
     <room x="2" y="2" w="1024" h="576">
 	<enemies>
 		<enemy subtype="t_beamos" x="500" y="200"/>
-		<enemy subtype="t_GBat" x="100" y="100"/>
-		<enemy subtype="t_GBat" x="900" y="100"/>
+		<!--<enemy subtype="t_GBat" x="100" y="100"/> crashes-->
 	</enemies>
        <doorways>
          <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
