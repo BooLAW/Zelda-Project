@@ -162,7 +162,7 @@ public:
 	Npc* toTalk = nullptr;
 	unsigned int curr_dir;
 	uint		 walk_dir;
-
+	bool		 inMainScreen;
 	uint max_life_points = 6;
 	int curr_life_points = 6;
 	uint power = 1;

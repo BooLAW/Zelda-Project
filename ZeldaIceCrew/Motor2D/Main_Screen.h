@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __DUNGEON_SCENE_H__
 #define __DUNGEON_SCENE_H__
 
@@ -6,6 +5,7 @@
 #include "EntityManager.h"
 #include <vector>
 #include "Scene.h"
+#include "j1Gui.h"
 
 struct SDL_Texture;
 //UI forward declarations
@@ -16,14 +16,14 @@ class Button;
 class Window;
 class Selector;
 class Windowed_Image;
-class DungeonScene : public Scene
+class Main_Screen : public Scene
 {
 public:
 
-	DungeonScene();
+	Main_Screen();
 
 	// Destructor
-	virtual ~DungeonScene();
+	virtual ~Main_Screen();
 
 	// Called before render is available
 	bool Awake();
@@ -34,23 +34,15 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	UIElement* Next();
+	UIElement* Prev();
+
 private:
 
-	bool boss_music = false;
+	std::list<UIElement*> ui_elements;
+	UIElement* selected;
 
-	j1Timer boss_minions_spawn_time;
-	bool chain_boss_defeated = false;
-
-	Enemy* ChainBoss = nullptr;
-	Doorway* ChainBoss_dw = nullptr;
-
-	SDL_Texture* debug_tex;
-	bool ESC = false;
-	Window* window;
-	Label* win_title;
-	Npc* test;
-	
 };
 
-#endif //__DUNGEON_SCENE_H__
+#endif //__Main_Screen_H__
 
