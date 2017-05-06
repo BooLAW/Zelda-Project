@@ -351,7 +351,8 @@ bool Enemy_Arrow::Update(float dt)
 		hit = true;
 		LOG("Player HIT");
 		App->player->HitPlayer(damage);
-		App->particle->DestroyParticle(this);
+		if (App->player->link_coll->active == true) 
+			App->particle->DestroyParticle(this);
 	}
 
 	//BLOCK INTERACTION
@@ -468,7 +469,8 @@ bool Shadow_Projectile::Update(float dt)
 		hit = true;
 		LOG("Player HIT");
 		App->player->HitPlayer(damage);
-		App->particle->DestroyParticle(this);
+		if (App->player->link_coll->active == true)
+			App->particle->DestroyParticle(this);
 	}
 
 	//if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
@@ -571,7 +573,8 @@ bool BounceBack::Update(float dt)
 			hit = true;
 			LOG("Player HIT");
 			App->player->HitPlayer(damage);
-			App->particle->DestroyParticle(this);
+			if (App->player->link_coll->active == true)
+				App->particle->DestroyParticle(this);
 		}
 		if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
 			state = back;
@@ -689,6 +692,8 @@ void StdEnemyProjectile::Start()
 
 bool StdEnemyProjectile::Update(float dt)
 {
+	HitBox = { (int)position.x, (int)position.y, 32, 32 };
+
 	collider->rect = HitBox;
 
 	collider->SetPos(HitBox.x, HitBox.y);
@@ -699,8 +704,10 @@ bool StdEnemyProjectile::Update(float dt)
 	{
 		hit = true;
 		LOG("Player HIT");
-		App->player->HitPlayer(damage);
-		App->particle->DestroyParticle(this);
+		if (App->player->link_coll->active == true) {
+			App->player->HitPlayer(damage);
+			App->particle->DestroyParticle(this);
+		}
 	}
 
 	//BLOCK INTERACTION

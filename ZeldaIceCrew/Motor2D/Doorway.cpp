@@ -140,7 +140,6 @@ void Doorway::CleanUp()
 }
 void Doorway::Draw()
 {
-	LOG("DW DRAW");
 	iPoint aux_pos = { collider->rect.x, collider->rect.y };
 	App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[state]);
 }
