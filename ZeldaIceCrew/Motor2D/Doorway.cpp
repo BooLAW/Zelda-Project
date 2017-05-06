@@ -7,10 +7,10 @@
 void Doorway::Start()
 {
 	tex = App->tex->Load("Sprites/Npc.png");
-	SetUp();
 	crossed = false;
 	state = open;
 	collider = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_DUNGEON_DOORWAY);
+	SetUp();
 }
 
 void Doorway::SetUp(uint dir)
@@ -42,8 +42,6 @@ void Doorway::Update(float dt)
 
 	collider->SetPos(pos.x, pos.y);
 
-	if (state == open) {
-
 		bool crossing = false;
 
 		if (App->player->link_coll != nullptr)
@@ -67,12 +65,14 @@ void Doorway::Update(float dt)
 					break;
 				}
 			}
-		if (crossing == true) {
+		if (crossing == true && state == open) {
 			Cross();
 			crossed = true;
 		}
+
+		Draw();
+
 		//LOG("END DOORWAY UPDT");
-	}
 };
 
 bool DwDungeon::Cross()
@@ -140,9 +140,9 @@ void Doorway::CleanUp()
 }
 void Doorway::Draw()
 {
-	fPoint aux_pos = pos;
-	SDL_Rect draw_r = sprite[state];
-	App->render->toDraw(tex, 99999, aux_pos.x, aux_pos.y, &draw_r);
+	LOG("DW DRAW");
+	iPoint aux_pos = { collider->rect.x, collider->rect.y };
+	App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[state]);
 }
 ;
 

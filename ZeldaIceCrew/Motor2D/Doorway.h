@@ -51,7 +51,6 @@ public:
 	uint state;
 	uint direction;
 	Collider* collider;
-
 	fPoint target_pos;
 
 	fPoint pos;

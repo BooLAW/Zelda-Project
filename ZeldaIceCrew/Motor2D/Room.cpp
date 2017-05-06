@@ -32,6 +32,9 @@ void Room::Update(float dt)
 					it._Ptr->_Myval->Update(dt);
 				}
 			}
+			else {
+				(*it)->Draw();
+			}
 		}
 	}
 
