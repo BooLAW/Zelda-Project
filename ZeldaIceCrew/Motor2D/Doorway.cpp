@@ -140,8 +140,10 @@ void Doorway::CleanUp()
 }
 void Doorway::Draw()
 {
-	iPoint aux_pos = { collider->rect.x, collider->rect.y };
-	App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[state]);
+	if (App->render->IsCameraCull(collider->rect)== false) {
+		iPoint aux_pos = { collider->rect.x, collider->rect.y };
+		App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[state]);
+	}
 }
 ;
 

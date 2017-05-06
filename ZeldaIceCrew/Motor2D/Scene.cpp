@@ -390,7 +390,7 @@ pugi::xml_node Scene::LoadConfig(pugi::xml_document& config_file) const
 	RELEASE(buf);
 
 	if (result == NULL)
-		LOG("Could not load map xml file config.xml. pugi error: %s \n ---Offset: %d", result.description(), result.offset);
+		LOG("Could not load map XML. pugi error: %s \n ---Offset: %d", result.description(), result.offset);
 	else
 	{
 		switch (curr_id)
@@ -422,6 +422,9 @@ bool Scene::Load_new_map(int id)
 	for (pugi::xml_node temp = config.child("maps").child("map"); temp; temp = temp.next_sibling("map")) {
 		if (temp.attribute("id").as_int(0) == id)
 			{
+
+			// Camera 
+			follow_cam = temp.child("camera").attribute("follow").as_bool(false);
 
 				//Music
 				App->audio->PlayMusic(temp.child_value("music"));

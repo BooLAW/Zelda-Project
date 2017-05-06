@@ -109,7 +109,7 @@ bool j1Render::Update(float dt) {
 		if(App->scene_manager->GetCurrentScene()->follow_cam == true)
 			SetCamPos(-(App->player->GetPos().x - camera.w / 2), -(App->player->GetPos().y - camera.h / 2));
 		else {
-			SetCamPos(-(App->player->room.x * ROOM_W), -(App->player->room.y * ROOM_H));
+			SetCamPos(-(App->player->room.x * ROOM_W), -(App->player->room.y * ROOM_H - (camera.h/2 - ROOM_H/2)));
 		}
 
 	}
@@ -242,6 +242,12 @@ bool j1Render::IsCameraCull(SDL_Rect rect)
 	bool ret = true;
 
 	SDL_Rect cam = culling_cam;
+
+	if (App->scene_manager->GetCurrentScene()->curr_id == dungeon) {
+		cam.h -= (culling_cam.h / 2 - ROOM_H / 2) * 2;
+		cam.y += (culling_cam.h / 2 - ROOM_H / 2);
+	}
+
 
 	if (rect.x + rect.w >= cam.x && rect.x <= cam.x + cam.w)
 		if (rect.y + rect.h > cam.y && rect.y < cam.y + cam.h)

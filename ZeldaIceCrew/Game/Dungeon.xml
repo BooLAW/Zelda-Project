@@ -6,6 +6,8 @@
 
    <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
 
+	<camera follow="0"/>
+
    <Link>
     <room x="2" y="3"/>
     <pos x="512" y="238"/>	

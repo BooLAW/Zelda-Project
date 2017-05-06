@@ -1614,10 +1614,10 @@ void Beamos::Update(float dt)
 		if (timer.Read() >= 1000) {
 			timer.SetFlag(false);
 			if (n_proj < 2) {
-				App->particle->CreateParticle(p_std, pos.x, pos.y, curr_dir);
+				App->particle->CreateParticle(p_std, pos.x, pos.y + 16, curr_dir);
 			}
 			else {
-				App->particle->CreateParticle(p_bounceback, pos.x, pos.y, curr_dir);
+				App->particle->CreateParticle(p_bounceback, pos.x, pos.y + 16, curr_dir);
 				state = search;
 			}
 			n_proj++;
