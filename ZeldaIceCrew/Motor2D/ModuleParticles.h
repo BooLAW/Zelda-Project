@@ -51,7 +51,7 @@ struct Particle
 	virtual bool Update(float dt);
 	virtual bool stdUpdate(float dt);
 	virtual void CleanUp();
-	virtual void Draw(float dt) {};
+	virtual void Draw(float dt);
 
 	virtual int CheckSpace(float new_x, float new_y);
 

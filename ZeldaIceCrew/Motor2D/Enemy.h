@@ -95,7 +95,7 @@ public:
 
 	virtual void SetAnimation(SDL_Rect spr[LastDir][2]);
 
-	virtual void Draw();
+	virtual void Draw(float dt);
 
 	virtual void Hit(uint dir, uint dmg);
 	virtual void Death();
@@ -177,7 +177,7 @@ public:
 	bool Attack();
 	void SetRewards();
 
-	void Draw();
+	void Draw(float dt);
 
 	void CleanUp();
 
@@ -223,7 +223,7 @@ class BlueArcher : public Enemy {
 		last_archerstate
 	}state = moving;
 
-	void Draw();
+	void Draw(float dt);
 
 	Animation shoot_anim;
 
@@ -244,7 +244,7 @@ class Rope : public Enemy {
 
 	void Update(float dt);
 
-	void Draw();
+	void Draw(float dt);
 
 	enum ROPESTATE{
 		moving = 0,
@@ -265,7 +265,7 @@ class Rope : public Enemy {
 
 class Geldman : public Enemy {
 	bool Start();
-	void Draw();
+	void Draw(float dt);
 	void Update(float dt);
 
 	const int time_moving = 3500;
@@ -287,7 +287,7 @@ class Geldman : public Enemy {
 
 class Freezor : public Enemy {
 	bool Start();
-	void Draw();
+	void Draw(float dt);
 	void Update(float dt);
 	const int time_attack = 3500;
 
@@ -315,7 +315,7 @@ class BossAgahnim : public Enemy {
 public:
 	bool Start();
 	void SetReward();
-	void Draw();
+	void Draw(float dt);
 	void Update(float dt);
 	const int time_attack = 3500;//CHANGE
 
@@ -337,7 +337,7 @@ public:
 class Beamos : public Enemy {
 public:
 	bool Start();
-	void Draw();
+	void Draw(float dt);
 	void Update(float dt);
 
 	SDL_Rect beamos_sprites[24];

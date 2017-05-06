@@ -29,8 +29,11 @@ bool ModuleParticles::Update(float dt)
 {
 	for (uint i = 0; i < particles.size(); i++) {
 		if(particles[i] != nullptr)
-			if (particles[i]->Update(dt) == false)
-				DestroyParticle(particles[i]);
+			if (App->IsPaused() == false) {
+				if (particles[i]->Update(dt) == false)
+					DestroyParticle(particles[i]);
+			}
+			else particles[i]->Draw(dt);
 	}
 	return true;
 }
@@ -141,7 +144,7 @@ bool Particle::stdUpdate(float dt)
 	if(collider != nullptr)
 	collider->SetPos(position.x, position.y);
 	
-	App->render->toDraw(graphics, position.y + anim[curr_dir].GetCurrentFrame().h, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
+	Draw(dt);
 
 	return ret;
 }
@@ -154,6 +157,11 @@ void Particle::CleanUp()
 	if(collider != nullptr)
 		collider->to_delete = true;
 
+}
+
+void Particle::Draw(float dt)
+{
+	App->render->toDraw(graphics, position.y + anim[curr_dir].GetCurrentFrame().h, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
 }
 
 int Particle::CheckSpace(float new_x, float new_y)
@@ -466,8 +474,6 @@ bool Shadow_Projectile::Update(float dt)
 	//if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
 	//	App->particle->DestroyParticle(this);
 	//}
-
-	LOG("LIFE %d", SDL_GetTicks() - born);
 
 	return stdUpdate(dt);
 }

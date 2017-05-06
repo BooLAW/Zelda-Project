@@ -7,6 +7,12 @@ void Room::Start()
 void Room::Update(float dt)
 {
 
+	for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++) {
+		if ((*it) != nullptr) {
+			enemies.empty() ? (*it)->state = DWSTATE::open : (*it)->state = DWSTATE::close;
+		}
+	}
+
 	if (App->debug)
 		App->render->DrawQuad(room_rect, 255, 0, 0, 10);
 

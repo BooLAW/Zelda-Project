@@ -40,9 +40,6 @@ bool DungeonScene::Awake()
 bool DungeonScene::Start()
 {
 	BROFILER_CATEGORY("StartDungeon", Profiler::Color::DarkBlue);
-
-	
-
 	curr_id = dungeon;
 	stdStart();
 	GetRoom(2, 3)->AddNpc(NPC_ZELDA,500, 400, 1);
@@ -59,42 +56,42 @@ bool DungeonScene::Update(float dt)
 
 	stdUpdate(dt);
 
-	if (chain_boss_defeated == false && IsEnemy(ChainBoss) == false)
-		chain_boss_defeated = true;
-
-	if (chain_boss_defeated == false) {
-		if (GetRoom(0, 0)->PlayerInside() == true) {
-			
-			if (chain_boss_defeated == false)
-				ChainBoss_dw->open = false;
-			else
-				ChainBoss_dw->open = true;
-
-			if (boss_music == false) {
-				App->audio->PlayMusic("Audio/Music/Hyrule_Castle.ogg");
-				boss_music = true;
-			}
-
-			if (chain_boss_defeated == true && boss_music == true) {
-				App->audio->PlayMusic("");
-				boss_music = false;
-			}
-
-				boss_minions_spawn_time.Start();
-				boss_minions_spawn_time.SetFlag(true);
-				if (boss_minions_spawn_time.ReadSec() >= 5) {
-					GetRoom(0, 0)->AddEnemy(t_greensoldier, 150, 150);
-					GetRoom(0, 0)->AddEnemy(t_greensoldier, 850, 150);
-					boss_minions_spawn_time.SetFlag(false);
-				}
-		}
-		else {
-			if (boss_music == true) {
-				App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
-				boss_music = false;
-			}
-		}
-	}
+	//if (chain_boss_defeated == false && IsEnemy(ChainBoss) == false)
+	//	chain_boss_defeated = true;
+	//
+	//if (chain_boss_defeated == false) {
+	//	if (GetRoom(0, 0)->PlayerInside() == true) {
+	//		
+	//		if (chain_boss_defeated == false)
+	//			ChainBoss_dw->open = false;
+	//		else
+	//			ChainBoss_dw->open = true;
+	//
+	//		if (boss_music == false) {
+	//			App->audio->PlayMusic("Audio/Music/Hyrule_Castle.ogg");
+	//			boss_music = true;
+	//		}
+	//
+	//		if (chain_boss_defeated == true && boss_music == true) {
+	//			App->audio->PlayMusic("");
+	//			boss_music = false;
+	//		}
+	//
+	//			boss_minions_spawn_time.Start();
+	//			boss_minions_spawn_time.SetFlag(true);
+	//			if (boss_minions_spawn_time.ReadSec() >= 5) {
+	//				GetRoom(0, 0)->AddEnemy(t_greensoldier, 150, 150);
+	//				GetRoom(0, 0)->AddEnemy(t_greensoldier, 850, 150);
+	//				boss_minions_spawn_time.SetFlag(false);
+	//			}
+	//	}
+	//	else {
+	//		if (boss_music == true) {
+	//			App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
+	//			boss_music = false;
+	//		}
+	//	}
+	//}
 
 	return true;
 

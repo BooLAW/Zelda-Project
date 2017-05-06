@@ -4,6 +4,7 @@
 #include "EntityManager.h"
 #include "j1Collision.h"
 #include "Entity.h"
+#include "j1Textures.h"
 
 
 #define DOORWAY_UP		iPoint( { 32 * 15, 32 * 2  } )
@@ -13,6 +14,12 @@
 #define DOORWAY_SIZE	iPoint( { 32, 16 } )
 
 class Scene;
+
+enum DWSTATE {
+	open = 0,
+	close,
+	LASTDWSTATE
+};
 
 enum DOORWAYTYPE {
 	dw_cam = 0,
@@ -29,6 +36,10 @@ public:
 	virtual bool Cross() { return true;  };
 	virtual void CleanUp();
 
+	virtual void SetUp() {};
+
+	virtual void Draw();
+
 	virtual void SetTarget(Scene*) {};
 
 	virtual void SetPos(int x, int y) {
@@ -37,13 +48,16 @@ public:
 	};
 
 public:
-	bool open = true;
+	uint state;
 	uint direction;
 	Collider* collider;
 
 	fPoint target_pos;
 
 	fPoint pos;
+
+	SDL_Texture* tex;
+	SDL_Rect sprite[LASTDWSTATE];
 
 protected:
 	bool crossed = false;
@@ -53,6 +67,8 @@ protected:
 class DwDungeon : public Doorway {
 public:
 	bool Cross();
+
+	void SetUp();
 
 	void SetPos(int x, int y);
 };

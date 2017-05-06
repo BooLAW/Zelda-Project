@@ -76,6 +76,7 @@ void Enemy::stdUpdate(float dt)
 	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
 	//LOG("ENEMY UPDATE");
 	
+	if (App->IsPaused() == false) {
 
 		if (HitBox->type == COLLIDER_ENEMY) {
 			if (App->player->weapon_coll != nullptr)
@@ -92,8 +93,9 @@ void Enemy::stdUpdate(float dt)
 		Move();
 
 		Attack();
-	
-			Draw();
+	}
+
+		Draw(dt);
 	
 }
 
@@ -268,7 +270,7 @@ void Enemy::SetAnimation(SDL_Rect spr[LastDir][2])
 	}
 }
 
-void Enemy::Draw()
+void Enemy::Draw(float dt)
 {
 	SDL_Rect* draw_rect = &animations[curr_dir].GetCurrentFrame();
 	fPoint aux_pos = { pos.x - 16, pos.y - 14 };
@@ -744,7 +746,7 @@ void BossChainBall::SetRewards()
 	reward_pool[boss_key] = 100;
 }
 
-void BossChainBall::Draw()
+void BossChainBall::Draw(float dt)
 {
 	SDL_Rect* draw_rect;
 	
@@ -969,7 +971,7 @@ void Rope::Update(float dt)
 
 }
 
-void Rope::Draw()
+void Rope::Draw(float dt)
 {
 	SDL_Rect* draw_rect;
 
@@ -1120,7 +1122,7 @@ void BlueArcher::Update(float dt)
 
 }
 
-void BlueArcher::Draw()
+void BlueArcher::Draw(float dt)
 {
 
 	SDL_Rect* draw_rect = &animations[curr_dir].GetCurrentFrame();
@@ -1230,7 +1232,7 @@ bool Geldman::Start()
 	return ret;
 }
 
-void Geldman::Draw()
+void Geldman::Draw(float dt)
 {
 
 	fPoint aux_pos = pos;
@@ -1391,7 +1393,7 @@ bool Freezor::Start()
 
 }
 
-void Freezor::Draw()
+void Freezor::Draw(float dt)
 {
 	fPoint aux_pos = pos;
 
@@ -1550,7 +1552,7 @@ bool Beamos::Start()
 	return ret;
 }
 
-void Beamos::Draw()
+void Beamos::Draw(float dt)
 {
 	fPoint aux_pos = pos;
 	SDL_Rect* r_aux = nullptr;
@@ -1685,7 +1687,7 @@ void BossAgahnim::SetReward()
 	reward_pool[heart_container] = 100;
 }
 
-void BossAgahnim::Draw()
+void BossAgahnim::Draw(float dt)
 {
 	int aux_hp = stats.Hp;
 	SDL_Rect c_r = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->room_rect;

@@ -6,8 +6,10 @@
 #include "j1Input.h"
 void Doorway::Start()
 {
+	tex = App->tex->Load("Sprites/Npc.png");
+	SetUp();
 	crossed = false;
-	open = true;
+	state = open;
 	collider = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_DUNGEON_DOORWAY);
 }
 
@@ -40,7 +42,7 @@ void Doorway::Update(float dt)
 
 	collider->SetPos(pos.x, pos.y);
 
-	if (open == true) {
+	if (state == open) {
 
 		bool crossing = false;
 
@@ -102,6 +104,12 @@ bool DwDungeon::Cross()
 	return true;
 }
 
+void DwDungeon::SetUp()
+{
+	sprite[open] = { 0, 0, 32, 32 };
+	sprite[close] = { 32, 32, 32, 32 };
+}
+
 void DwDungeon::SetPos(int x, int y)
 {
 	switch (direction) {
@@ -129,7 +137,14 @@ void Doorway::CleanUp()
 
 	App->scene_manager->GetCurrentScene()->DestroyDoorway(this);
 
-};
+}
+void Doorway::Draw()
+{
+	fPoint aux_pos = pos;
+	SDL_Rect draw_r = sprite[state];
+	App->render->toDraw(tex, 99999, aux_pos.x, aux_pos.y, &draw_r);
+}
+;
 
 bool DwScene::Cross()
 {
