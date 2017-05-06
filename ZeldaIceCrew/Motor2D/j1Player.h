@@ -208,6 +208,8 @@ public:
 	bool pull[5];
 	bool action_test = false;
 
+	uint ticking_effect = 0;
+
 	Collider* link_coll;
 	Collider* weapon_coll;
 	Collider* action_coll;

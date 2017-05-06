@@ -992,10 +992,20 @@ bool j1Player::Update(float dt)
 
 					if (shield == true && (action_blit == Idle || action_blit == Walk)) //add cases for actions that can be done with or without shield
 						action_blit++;
-
-					App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
-					//!_Movement ""
-
+					if (inmortal == true) {
+						animations[action_blit][curr_dir].GetCurrentFrame();
+						if (ticking_effect > 0) {
+							App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+							//!_Movement ""
+							ticking_effect = 0;
+						}
+						else {
+							ticking_effect++;
+						}
+					}
+					else {
+						App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+					}
 					if (anim_override == true && animations[action_blit][curr_dir].Finished()) {
 						anim_override = false;
 						dir_override = false;
@@ -1018,8 +1028,19 @@ bool j1Player::Update(float dt)
 						App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[Idle][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
 					}
 					else {
-						App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
-
+						if (inmortal == true) {
+							animations[action_blit][curr_dir].GetCurrentFrame();
+							if (ticking_effect > 0) {
+								App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+								ticking_effect = 0;
+							}
+							else {
+								ticking_effect++;
+							}
+						}
+						else {
+							App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+						}
 						if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 							animations[action_blit][curr_dir].Reset();
 					}
@@ -1064,7 +1085,7 @@ bool j1Player::Update(float dt)
 				}
 
 				if (inmortal == true) {
-					App->render->DrawQuad({ (int)pos.x - 2, (int)pos.y - 8, 36, 56 }, 255, 255, 255, 80);
+					//App->render->DrawQuad({ (int)pos.x - 2, (int)pos.y - 8, 36, 56 }, 255, 255, 255, 80);
 					if (App->debug_mode == false)
 						if (inmortal_timer.ReadMs() >= inmortal_time)
 							inmortal = false;
