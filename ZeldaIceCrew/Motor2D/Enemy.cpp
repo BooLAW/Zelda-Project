@@ -203,6 +203,8 @@ void Enemy::HitPlayer()
 		App->audio->PlayFx(App->player->hurt);
 		App->player->curr_life_points -= stats.Power;
 
+		App->render->Activate_Shake(2, 1);
+
 		switch (curr_dir) {
 		case Up:
 			if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height) == 0)
@@ -324,6 +326,7 @@ void Enemy::Hit(uint dir, uint dmg)
 void Enemy::Death()
 {
 	Reward();
+	SDL_Delay(150);
 	//LOG("ENEMY DEATH");
 	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }

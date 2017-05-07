@@ -1238,6 +1238,9 @@ void j1Player::HitPlayer(int dmg)
 			App->audio->PlayFx(App->player->hurt);
 			App->player->curr_life_points -= dmg;
 
+			if(dmg > 0)
+			App->render->Activate_Shake(2, 1);
+
 			switch (curr_dir) {
 			case Up:
 				if (App->player->CheckSpace(App->player->GetPos().x, App->player->GetPos().y - App->map->data.tile_height) == 0)
@@ -1295,17 +1298,17 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	
 	// Hit collision
-	if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
-	{
-		if (curr_life_points <= 0)
-			alive = false;
-
-		//Activate screen shake
-		App->render->Activate_Shake(2, 1);
-		//Add extra particles?
-		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
-		//function to restart in the house()
-	}
+	//if (link_coll == c1 && link_coll != nullptr && c2->type == COLLIDER_ENEMY && alive == true)
+	//{
+	//	if (curr_life_points <= 0)
+	//		alive = false;
+	//
+	//	//Activate screen shake
+	//	App->render->Activate_Shake(2, 1);
+	//	//Add extra particles?
+	//	//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
+	//	//function to restart in the house()
+	//}
 		//Add extra particles?
 		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
 		//function to restart in the house()

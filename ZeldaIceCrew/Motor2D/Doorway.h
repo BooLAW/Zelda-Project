@@ -7,10 +7,10 @@
 #include "j1Textures.h"
 
 
-#define DOORWAY_UP		iPoint( { 32 * 15, 32 * 2  } )
-#define DOORWAY_DOWN	iPoint( { 32 * 15, 32 * 16 } )
-#define DOORWAY_LEFT	iPoint( { 32 * 2 - 16 , 32 * 8 + 16  } )
-#define DOORWAY_RIGHT	iPoint( { 32 * 30 + 16, 32 * 8 + 16  } )
+#define DOORWAY_UP		iPoint( { 16 * 31, 16 * 3  } )
+#define DOORWAY_DOWN	iPoint( { 16 * 31, 16 * 32 } )
+#define DOORWAY_LEFT	iPoint( { 16*3 , 16*17  } )
+#define DOORWAY_RIGHT	iPoint( { 16 * 60, 16 * 17  } )
 #define DOORWAY_SIZE	iPoint( { 32, 16 } )
 
 class Scene;
@@ -56,7 +56,7 @@ public:
 	fPoint pos;
 
 	SDL_Texture* tex;
-	SDL_Rect sprite[LASTDWSTATE];
+	SDL_Rect sprite[Direction::LastDir][LASTDWSTATE];
 
 protected:
 	bool crossed = false;

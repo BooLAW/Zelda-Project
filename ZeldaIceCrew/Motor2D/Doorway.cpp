@@ -6,7 +6,7 @@
 #include "j1Input.h"
 void Doorway::Start()
 {
-	tex = App->tex->Load("Sprites/Npc.png");
+	tex = App->tex->Load("Sprites/Door.png");
 	crossed = false;
 	state = open;
 	collider = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_DUNGEON_DOORWAY);
@@ -106,8 +106,14 @@ bool DwDungeon::Cross()
 
 void DwDungeon::SetUp()
 {
-	sprite[open] = { 0, 0, 32, 32 };
-	sprite[close] = { 32, 32, 32, 32 };
+	sprite[Up][open] = { 0, 0, 0, 0 };
+	sprite[Down][open] = { 0, 0, 0, 0 };
+	sprite[Left][open] = { 0, 0, 0, 0 };
+	sprite[Right][open] = { 0, 0, 0, 0 };
+	sprite[Up][close] = { 0, 0, 64, 48 };
+	sprite[Down][close] = { 72, 0, 64, 48 };
+	sprite[Right][close] = { 72, 56, 48, 64 };
+	sprite[Left][close] = { 16, 56, 48, 64 };
 }
 
 void DwDungeon::SetPos(int x, int y)
@@ -142,7 +148,25 @@ void Doorway::Draw()
 {
 	if (App->render->IsCameraCull(collider->rect)== false) {
 		iPoint aux_pos = { collider->rect.x, collider->rect.y };
-		App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[state]);
+		switch (direction) {
+		case Up:
+			aux_pos.y -= 48;
+			aux_pos.x -= 16;
+			break;
+		case Down:
+			aux_pos.x -= 16;
+			aux_pos.y += 16;
+			break;
+		case Left:
+			aux_pos.x -= 48;
+			aux_pos.y -= 16;
+			break;
+		case Right:
+			aux_pos.x += 16;
+			aux_pos.y -= 16;
+			break;
+		}
+		App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[direction][state]);
 	}
 }
 ;
