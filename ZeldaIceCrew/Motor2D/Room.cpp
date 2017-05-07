@@ -9,7 +9,12 @@ void Room::Update(float dt)
 
 	for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++) {
 		if ((*it) != nullptr) {
-			enemies.empty() ? (*it)->state = DWSTATE::open : (*it)->state = DWSTATE::close;
+			if (PlayerInside() == true) {
+				enemies.empty() ? (*it)->state = DWSTATE::open : (*it)->state = DWSTATE::close;
+			}
+			else {
+				(*it)->state = DWSTATE::open;
+			}
 		}
 	}
 
@@ -27,10 +32,8 @@ void Room::Update(float dt)
 	if (doorways.empty() == false) {
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
 		{
-			if(!App->IsPaused()){
-				if (it._Ptr->_Myval != nullptr) {
-					it._Ptr->_Myval->Update(dt);
-				}
+			if (it._Ptr->_Myval != nullptr) {
+				it._Ptr->_Myval->Update(dt);
 			}
 			else {
 				(*it)->Draw();

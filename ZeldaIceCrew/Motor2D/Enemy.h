@@ -317,21 +317,29 @@ public:
 	void SetReward();
 	void Draw(float dt);
 	void Update(float dt);
-	const int time_attack = 3500;//CHANGE
-
 	j1Timer attack_timer;
+
+	enum AGAHNIMPHASE {
+		phase_1,
+		phase_2,
+		phase_3
+	}phase = phase_1;
 	enum AGAHNIMSTATE {
-		appear = 0,
-		appear_start,
+		idle = 0,
+		attack_charge,
 		attack,
-		hit,
 		disappear,
-		disappear_start
-	}state = appear_start;
+		move_start,
+		move,
+		appear
+	}state = idle;
 
 	Animation appear_anim, disappear_anim, attack_anim, hit_anim;
 	SDL_Rect appear_sprites[8], attack_sprites[2], disappear_sprites[6];
 	j1Timer timer;
+
+	const float org_spd = 2.5;
+
 };
 
 class Beamos : public Enemy {

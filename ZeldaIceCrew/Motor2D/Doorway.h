@@ -6,6 +6,7 @@
 #include "Entity.h"
 #include "j1Textures.h"
 
+#define CHANGE_SPEED 10
 
 #define DOORWAY_UP		iPoint( { 16 * 31, 16 * 3  } )
 #define DOORWAY_DOWN	iPoint( { 16 * 31, 16 * 32 } )
@@ -55,6 +56,8 @@ public:
 
 	fPoint pos;
 
+	bool animating = false;
+
 	SDL_Texture* tex;
 	SDL_Rect sprite[Direction::LastDir][LASTDWSTATE];
 
@@ -68,7 +71,7 @@ public:
 	bool Cross();
 
 	void SetUp();
-
+	void Draw();
 	void SetPos(int x, int y);
 };
 

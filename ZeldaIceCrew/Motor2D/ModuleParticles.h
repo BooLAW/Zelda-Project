@@ -134,6 +134,25 @@ struct StdEnemyProjectile : public Particle {
 
 };
 
+struct AgahnimBall : public Particle {
+	bool hit = false;
+	void Start();
+	bool Update(float dt);
+
+	fPoint target;
+
+	struct MiniAgBalls {
+		SDL_Texture* tex = nullptr;
+		SDL_Rect rect;
+		fPoint pos;
+	}miniagballs[2];
+
+	enum BOUNCESTATE {
+		go = 0,
+		back
+	}state = go;
+};
+
 struct AgahnimBasic : public Particle {
 	bool hit = false;
 	void Start();
