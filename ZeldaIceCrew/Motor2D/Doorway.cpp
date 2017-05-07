@@ -125,8 +125,6 @@ bool DwDungeon::Cross()
 
 	App->render->cam_travel = true;
 
-	LOG("PLAYER ROOM 01 %d %d", App->player->room.x, App->player->room.y);
-
 	switch (direction) {
 	case Direction::Up:
 		App->player->room.y--;
@@ -147,8 +145,6 @@ bool DwDungeon::Cross()
 	}
 
 	App->player->pos = target_pos;
-
-	LOG("PLAYER ROOM 02 %d %d", App->player->room.x, App->player->room.y);
 
 	animating = true;
 

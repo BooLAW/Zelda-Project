@@ -61,6 +61,9 @@ Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 		case p_std:
 			ret = new StdEnemyProjectile();
 			break;
+		case p_agahnim_ball:
+			ret = new AgahnimBall();
+			break;
 		default:
 			LOG("Unknown Particle Type");
 			break;
@@ -733,4 +736,128 @@ bool StdEnemyProjectile::Update(float dt)
 
 	return stdUpdate(dt);
 
+}
+
+void AgahnimBall::Start()
+{
+	graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	g_rect[Up][0] = { 2, 2, 34, 34 };
+	g_rect[Up][1] = { 2, 2, 34, 34 };
+	g_rect[Down][0] = { 38, 2, 34, 34 };
+	g_rect[Down][1] = { 38, 2, 34, 34 };
+	g_rect[Right][0] = { 74, 2, 34, 34 };
+	g_rect[Right][1] = { 74, 2, 34, 34 };
+	g_rect[Left][0] = { 110, 2, 34, 34 };
+	g_rect[Left][1] = { 110, 2, 34, 34 };
+
+
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[k][0]);
+		anim[k].PushBack(g_rect[k][1]);
+	}
+
+	speed = { 1, 1 };
+
+	damage = 1;
+
+	target.x = App->player->link_coll->rect.x;
+	target.y = App->player->link_coll->rect.y;
+
+	float diff_x, diff_y;
+	float hip;
+	float angle;
+
+	fPoint p_pos;
+	p_pos.x = target.x;
+	p_pos.y = target.y;
+
+	diff_x = (p_pos.x - position.x);
+	diff_y = p_pos.y - position.y;
+
+	if (p_pos.x > position.x) {
+		diff_x = -diff_x;
+		diff_y = -diff_y;
+	}
+
+	angle = (atan2(diff_y, diff_x));
+
+	if (p_pos.x >= position.x) {
+		speed.x = BOUNCEB_SPD * -(float)cos((double)angle);
+		speed.y = BOUNCEB_SPD * -(float)sin((double)angle);
+	}
+	else {
+		speed.x = BOUNCEB_SPD * (float)cos((double)angle);
+		speed.y = BOUNCEB_SPD * (float)sin((double)angle);
+	}
+
+	HitBox = { (int)position.x, (int)position.y, 32, 32 };
+	life = -1;
+	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
+
+}
+
+bool AgahnimBall::Update(float dt)
+{
+	HitBox = { (int)position.x, (int)position.y, 32, 32 };
+
+	collider->rect = HitBox;
+
+	collider->SetPos(HitBox.x, HitBox.y);
+
+	Collider* aux = collider;
+
+	if (state == back) {
+		for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
+		{
+			if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+			{
+				Collider* aux = collider;
+
+				if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+				{
+					hit = true;
+					LOG("ENEMY HIT");
+					App->particle->DestroyParticle(this);
+					it._Ptr->_Myval->Hit(curr_dir, damage * ORIGIN_PWR);
+				}
+			}
+		}
+	}
+
+	if (state == go) {
+		if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
+		{
+			hit = true;
+			LOG("Player HIT");
+			App->player->HitPlayer(damage);
+			if (App->player->link_coll->active == true)
+				App->particle->DestroyParticle(this);
+		}
+		if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
+			state = back;
+			switch (App->player->curr_dir) {
+			case Up:
+				speed.y = -std::abs(speed.y);
+				break;
+			case Down:
+				speed.y = std::abs(speed.y);
+				break;
+			case Left:
+				speed.x = -std::abs(speed.x);
+				break;
+			case Right:
+				speed.x = std::abs(speed.x);
+				break;
+			}
+		}
+	}
+
+	//TILED INTERACTION
+	if (this->CheckSpace(position.x, position.y) == 1)
+	{
+		App->particle->DestroyParticle(this);
+	}
+
+
+	return stdUpdate(dt);
 }

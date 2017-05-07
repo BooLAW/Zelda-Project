@@ -599,6 +599,8 @@ bool Scene::Load_new_map(int id)
 										st = t_beamos;
 									if (strcmp(sub, "t_boss_ballandchain") == 0)
 										st = t_boss_ballandchain;
+									if (strcmp(sub, "t_boss_agahnim") == 0)
+										st = t_boss_agahnim;
 
 									r->AddEnemy(st, node_en.attribute("x").as_float(), node_en.attribute("y").as_float());
 

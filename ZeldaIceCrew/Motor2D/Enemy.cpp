@@ -1664,10 +1664,10 @@ bool BossAgahnim::Start()
 	}
 
 	stats.Hp = 12 * ORIGIN_PWR;
-	stats.Speed = 1;
+	stats.Speed = 3;
 	stats.Power = 2;
 
-	stats.Flying = false;
+	stats.Flying = true;
 
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
@@ -1700,71 +1700,68 @@ void BossAgahnim::Draw(float dt)
 	SDL_Rect p_rect;
 	SDL_Rect en_rect = { 0,0,500,500 };
 
-	switch(state)
-	{
-	case appear_start:
-		appear_anim.Reset();
-		app_pos.x = rand() % en_rect.w + (int)(p_pos.x - en_rect.w / 2);
-		app_pos.x = rand() % en_rect.h + (int)(p_pos.y - en_rect.h / 2);
-		
-		if (!(CheckSpace(app_pos.x, app_pos.y) != 0 || App->scene_manager->GetCurrentScene()->GetCurrentRoom()->isInside({ (int)app_pos.x, (int)app_pos.y, 0, 0 }) == false))
-		{
-			SDL_Rect en_aux = { app_pos.x,app_pos.y,1,1 };
-			p_rect = { (int)p_pos.x - 100, (int)p_pos.y - 100, 132, 148 };
-			if (CheckIntersec(en_aux, p_rect) == false) {
-				pos = app_pos;
-				state = appear;
-			}
-		}
-		break;
-	case appear:
-		timer.Start();
-		timer.SetFlag(true);
-		if (timer.Read() >= 700) {
+	
+}
+
+void BossAgahnim::Update(float dt)
+{
+	iPoint new_p;
+	Room* r_a = App->scene_manager->GetCurrentScene()->GetCurrentRoom();
+	
+	stdUpdate(dt);
+
+	LOG("PHASE %d", phase);
+	LOG("STATE %d", state);
+	LOG("TIMER %d", timer.Read());
+
+	switch (phase) {
+	case phase_1:
+		switch (state) {
+		case attack_charge:
 			state = attack;
-			timer.SetFlag(false);
+			break;
+		case attack:
+			App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
+			state = idle;
+			break;
+		case idle:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() >= 2000) {
+				timer.SetFlag(false);
+				state = disappear;
+			}
+			break;
+		case disappear:
+			state = move_start;
+			break;
+		case move_start:
+			path_to_follow.clear();
+			new_p.x = rand() % (r_a->room_rect.w - 200) + (r_a->room_rect.x + 200);
+			new_p.y = rand() % (r_a->room_rect.h - 200) + (r_a->room_rect.y + 200);
+			if (CheckSpace((float)new_p.x, (float)new_p.y) == 0) {
+				target = new_p;
+				path_to_follow.push_back(target);
+				state = move;
+			}
+			break;
+		case move:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() >= 2000) {
+				timer.SetFlag(false);
+				state = appear;
+				path_to_follow.clear();
+			}
+			break;
+		case appear:
+			state = attack_charge;
+			break;
 		}
 		break;
-	case attack:
-		timer.Start();
-		timer.SetFlag(true);
-		attack_timer.Start();
-		attack_timer.SetFlag(true);
-		if (attack_timer.Read() >= 1000) {
-			App->particle->CreateParticle(p_shadow, HitBox->rect.x, HitBox->rect.y, curr_dir);
-			attack_timer.SetFlag(false);
-		}
-		if (timer.Read() >= time_attack) {
-			state = disappear_start;
-			timer.SetFlag(false);
-		}
+	case phase_2:
 		break;
-	case hit:
-		timer.Start();
-		timer.SetFlag(true);
-		attack_timer.Start();
-		attack_timer.SetFlag(true);
-		if (attack_timer.Read() >= 1000) {
-			App->particle->CreateParticle(p_shadow, HitBox->rect.x, HitBox->rect.y, curr_dir);
-			attack_timer.SetFlag(false);
-		}
-		if (timer.Read() >= time_attack) {
-			state = disappear_start;
-			timer.SetFlag(false);
-		}
-		break;
-	case disappear:
-		timer.Start();
-		timer.SetFlag(true);
-		path_to_follow.clear();
-		if (timer.Read() >= 3000) {
-			state = appear_start;
-			timer.SetFlag(false);
-		}
-		break;
-	case disappear_start:
-		disappear_anim.Reset();
-		state = disappear;
+	case phase_3:
 		break;
 	}
 }
