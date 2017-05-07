@@ -40,7 +40,51 @@ void Doorway::Update(float dt)
 
 	//LOG("DOORWAY UPDATE");
 
-	collider->SetPos(pos.x, pos.y);
+	bool end_animating = false;
+
+	if (animating == true) {
+
+		App->scene_manager->GetCurrentScene()->AllEnemyActive(false);
+		App->render->cam_travel = true;
+	
+		iPoint go_to = { -((App->player->room.x - 1) * ROOM_W), -((App->player->room.y - 1) * ROOM_H - (App->render->camera.h / 2 - ROOM_H / 2)) };
+	
+	//	if (App->render->camera.x != go_to.x && App->render->camera.y != go_to.y) {
+	//
+			switch (direction) {
+			case Up:
+				if (App->render->camera.y >= go_to.y)
+					end_animating = true;
+				App->render->camera.y += CHANGE_SPEED;
+				break;
+			case Down:
+				if (App->render->camera.y <= go_to.y - 2 * ROOM_H)
+			 		end_animating = true;
+				App->render->camera.y -= CHANGE_SPEED;
+				break;
+			case Left:
+				LOG("%d %d", App->render->camera.x, go_to.x);
+				if (App->render->camera.x >= go_to.x)
+					end_animating = true;
+				App->render->camera.x += CHANGE_SPEED;
+				break;
+			case Right:
+				LOG("%d %d", App->render->camera.x, go_to.x - 2*ROOM_W);
+				if (App->render->camera.x <= go_to.x - 2*ROOM_W)
+					end_animating = true;
+				App->render->camera.x -= CHANGE_SPEED;
+				break;
+			}
+			if (end_animating == true) {
+				App->render->cam_travel = false;
+				App->scene_manager->GetCurrentScene()->AllEnemyActive(true);
+				animating = false;
+			}
+
+	}
+	else {
+
+		collider->SetPos(pos.x, pos.y);
 
 		bool crossing = false;
 
@@ -71,12 +115,18 @@ void Doorway::Update(float dt)
 		}
 
 		Draw();
+	}
 
 		//LOG("END DOORWAY UPDT");
 };
 
 bool DwDungeon::Cross()
 {
+
+	App->render->cam_travel = true;
+
+	LOG("PLAYER ROOM 01 %d %d", App->player->room.x, App->player->room.y);
+
 	switch (direction) {
 	case Direction::Up:
 		App->player->room.y--;
@@ -98,6 +148,12 @@ bool DwDungeon::Cross()
 
 	App->player->pos = target_pos;
 
+	LOG("PLAYER ROOM 02 %d %d", App->player->room.x, App->player->room.y);
+
+	animating = true;
+
+	//App->Pause();
+
 	//LOG("PLAYER CROSS");
 	//LOG("PLAYER ROOM: %d %d", App->player->room.x, App->player->room.y);
 
@@ -114,6 +170,32 @@ void DwDungeon::SetUp()
 	sprite[Down][close] = { 72, 0, 64, 48 };
 	sprite[Right][close] = { 72, 56, 48, 64 };
 	sprite[Left][close] = { 16, 56, 48, 64 };
+}
+
+void DwDungeon::Draw()
+{
+	if (App->render->IsCameraCull(collider->rect) == false) {
+		iPoint aux_pos = { collider->rect.x, collider->rect.y };
+		switch (direction) {
+		case Up:
+			aux_pos.y -= 48;
+			aux_pos.x -= 16;
+			break;
+		case Down:
+			aux_pos.x -= 16;
+			aux_pos.y += 16;
+			break;
+		case Left:
+			aux_pos.x -= 48;
+			aux_pos.y -= 16;
+			break;
+		case Right:
+			aux_pos.x += 16;
+			aux_pos.y -= 16;
+			break;
+		}
+		App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[direction][state]);
+	}
 }
 
 void DwDungeon::SetPos(int x, int y)
@@ -146,28 +228,7 @@ void Doorway::CleanUp()
 }
 void Doorway::Draw()
 {
-	if (App->render->IsCameraCull(collider->rect)== false) {
-		iPoint aux_pos = { collider->rect.x, collider->rect.y };
-		switch (direction) {
-		case Up:
-			aux_pos.y -= 48;
-			aux_pos.x -= 16;
-			break;
-		case Down:
-			aux_pos.x -= 16;
-			aux_pos.y += 16;
-			break;
-		case Left:
-			aux_pos.x -= 48;
-			aux_pos.y -= 16;
-			break;
-		case Right:
-			aux_pos.x += 16;
-			aux_pos.y -= 16;
-			break;
-		}
-		App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[direction][state]);
-	}
+	
 }
 ;
 

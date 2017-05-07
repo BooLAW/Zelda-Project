@@ -109,7 +109,7 @@ bool j1Render::Update(float dt) {
 		if(App->scene_manager->GetCurrentScene()->follow_cam == true)
 			SetCamPos(-(App->player->GetPos().x - camera.w / 2), -(App->player->GetPos().y - camera.h / 2));
 		else {
-			SetCamPos(-(App->player->room.x * ROOM_W), -(App->player->room.y * ROOM_H - (camera.h/2 - ROOM_H/2)));
+			SetCamPos(-(App->scene_manager->GetCurrentScene()->GetCurrentRoom()->coords.x * ROOM_W), -(App->scene_manager->GetCurrentScene()->GetCurrentRoom()->coords.y * ROOM_H - (camera.h/2 - ROOM_H/2)));
 		}
 
 	}
