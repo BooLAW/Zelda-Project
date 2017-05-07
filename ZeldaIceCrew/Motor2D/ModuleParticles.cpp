@@ -652,6 +652,8 @@ void StdEnemyProjectile::Start()
 	g_rect[Left][0] = { 110, 2, 34, 34 };
 	g_rect[Left][1] = { 110, 2, 34, 34 };
 
+	miniagballs[0].rect = { 0, 0, 16, 16 };
+	miniagballs[1].rect = { 0, 0, 8, 8, };
 
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);

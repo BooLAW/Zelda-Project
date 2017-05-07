@@ -142,7 +142,6 @@ struct AgahnimBall : public Particle {
 	fPoint target;
 
 	struct MiniAgBalls {
-		SDL_Texture* tex = nullptr;
 		SDL_Rect rect;
 		fPoint pos;
 	}miniagballs[2];
