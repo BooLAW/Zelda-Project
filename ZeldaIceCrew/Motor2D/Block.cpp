@@ -108,7 +108,7 @@ void Block::Update(float dt)
 		}*/
 
 		//Check that you don't have an item picked
-		if (moving == false) {
+		if (moving == false && recent == false) {
 			if (picked == false && App->player->action_blit != App->player->Hold_sth && App->player->action == false)
 			{
 				if (App->player->weapon_coll != nullptr && App->player->weapon_coll->rect.x != FARLANDS.x) {
@@ -118,10 +118,14 @@ void Block::Update(float dt)
 							if (this->isBreakable()) {
 								this->Break();
 							}
+							if (this->isActivatable() && recent == false) {
+								this->Activate();
+							}
 						}
+
 				}
 
-				if (App->player->action_coll != nullptr && App->player->action_coll->rect.x != FARLANDS.x) {
+				else if (App->player->action_coll != nullptr && App->player->action_coll->rect.x != FARLANDS.x) {
 					if (HitBox != nullptr)
 						if (HitBox->CheckCollision(App->player->action_coll->rect) == true) {
 							if (this->isPickable()) {
@@ -133,6 +137,17 @@ void Block::Update(float dt)
 							else
 								this->Move();
 						}
+				}
+
+				else if (App->player->link_coll != nullptr && App->player->link_coll->active == true) {
+
+					if (HitBox != nullptr)
+						if (this->HitBox->CheckCollision(App->player->link_coll->rect) == true) {
+							if (this->isActivatable() && this->subtype != button_wall) {
+								this->Activate();
+							}
+						}
+					
 				}
 			}
 
@@ -150,6 +165,8 @@ void Block::Update(float dt)
 		else
 			Move();
 
+		if (App->frame_count >= timer + 120)
+			recent = false;
 	
 
 	Draw();
@@ -408,6 +425,21 @@ void Block::Move() {
 	}
 }
 
+void Block::Activate() {
+	
+	if (anim != on) {
+		anim = on;
+		recent = true;
+		timer = App->frame_count;
+	}
+	else if (recent == false && anim == on)
+	{
+		anim = idle;
+		timer = App->frame_count;
+		recent = true;
+	}
+}
+
 void Torch_Bowl::Light() {
 	//changes the spire blitted, from idle to lit
 	App->player->action_blit = App->player->Light;
@@ -436,9 +468,10 @@ void Bush::Pick() {
 	App->player->action_blit = App->player->Pickup;
 	App->player->action = true;
 	picked = true;
-	Reward();
-	App->collisions->EraseCollider(this->HitBox);
+	//Reward();
+	this->HitBox = nullptr;
 	this->pos = App->player->GetPos();
+	recent = true;
 
 }
 
@@ -447,19 +480,22 @@ void Pot::Pick() {
 	App->player->action_blit = App->player->Pickup;
 	App->player->action = true;
 	picked = true;
-	App->collisions->EraseCollider(this->HitBox);
+	this->HitBox = nullptr;
 	this->pos = App->player->GetPos();
+	recent = true;
 
 }
 
 void Bush::Throw() {
 	//throws if something is held
-	Break();
+	this->CleanUp(); 
+	App->particle->CreateParticle(p_block_bush, pos.x, pos.y, App->player->curr_dir);
 }
 
 void Pot::Throw() {
 	//throws if something is held
-	Break();
+	this->CleanUp();
+	App->particle->CreateParticle(p_block_pot, pos.x, pos.y, App->player->curr_dir);
 }
 
 

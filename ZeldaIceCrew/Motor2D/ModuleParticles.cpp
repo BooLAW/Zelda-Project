@@ -61,6 +61,12 @@ Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 		case p_std:
 			ret = new StdEnemyProjectile();
 			break;
+		case p_block_bush:
+			ret = new Block_Bush();
+			break;
+		case p_block_pot:
+			ret = new Block_Pot();
+			break;
 		default:
 			LOG("Unknown Particle Type");
 			break;
@@ -733,4 +739,304 @@ bool StdEnemyProjectile::Update(float dt)
 
 	return stdUpdate(dt);
 
+}
+
+void Block_Bush::Start()
+{
+	graphics = App->tex->Load("Sprites/Blocks_Temp.png");
+	g_rect[Up][0] = { 0, 0, 32, 32 };
+	g_rect[Down][0] = g_rect[Up][0];
+	g_rect[Right][0] = g_rect[Up][0];
+	g_rect[Left][0] = g_rect[Up][0];
+
+	switch (curr_dir) {
+	case Up:
+		speed = { 0, -ARROW_SPEED * 2 };
+		break;
+	case Down:
+		speed = { 0, ARROW_SPEED * 2 };
+		break;
+	case Left:
+		speed = { -ARROW_SPEED * 2, 0 };
+		break;
+	case Right:
+		speed = { ARROW_SPEED * 2, 0 };
+		break;
+	}
+
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[k][0]);
+	}
+
+	life = 5000;
+
+	HitBox = { (int)position.x, (int)position.y, g_rect[0][0].w, g_rect[0][0].h };
+	App->particle->AddParticle(this, COLLIDER_ARROW, life, App->player->power*2, NULL);
+}
+
+void Block_Pot::Start()
+{
+	graphics = App->tex->Load("Sprites/Blocks_Temp.png");
+	g_rect[Up][0] = { 32, 32, 32, 32 };
+	g_rect[Down][0] = g_rect[Up][0];
+	g_rect[Right][0] = g_rect[Up][0];
+	g_rect[Left][0] = g_rect[Up][0];
+
+	switch (curr_dir) {
+	case Up:
+		speed = { 0, -ARROW_SPEED * 2 };
+		break;
+	case Down:
+		speed = { 0, ARROW_SPEED * 2 };
+		break;
+	case Left:
+		speed = { -ARROW_SPEED * 2, 0 };
+		break;
+	case Right:
+		speed = { ARROW_SPEED * 2, 0 };
+		break;
+	}
+
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[k][0]);
+	}
+
+	life = 5000;
+
+	HitBox = { (int)position.x, (int)position.y, g_rect[0][0].w, g_rect[0][0].h };
+	App->particle->AddParticle(this, COLLIDER_ARROW, life, App->player->power * 2, NULL);
+}
+
+void Block_Skull::Start()
+{
+	graphics = App->tex->Load("Sprites/Blocks_Temp.png");
+	g_rect[Up][0] = { 0, 32, 32, 32 };
+	g_rect[Down][0] = g_rect[Up][0];
+	g_rect[Right][0] = g_rect[Up][0];
+	g_rect[Left][0] = g_rect[Up][0];
+
+	switch (curr_dir) {
+	case Up:
+		speed = { 0, -ARROW_SPEED * 2 };
+		break;
+	case Down:
+		speed = { 0, ARROW_SPEED * 2 };
+		break;
+	case Left:
+		speed = { -ARROW_SPEED * 2, 0 };
+		break;
+	case Right:
+		speed = { ARROW_SPEED * 2, 0 };
+		break;
+	}
+
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[k][0]);
+	}
+
+	life = 5000;
+
+	HitBox = { (int)position.x, (int)position.y, g_rect[0][0].w, g_rect[0][0].h };
+	App->particle->AddParticle(this, COLLIDER_ARROW, life, App->player->power * 2, NULL);
+}
+
+bool Block_Bush::Update(float dt)
+{
+
+	stdUpdate(dt);
+
+	switch (curr_dir) {
+	case Up:
+		HitBox = { (int)position.x + 8, (int)position.y, 8, 8 };
+		break;
+	case Down:
+		HitBox = { (int)position.x + 8, (int)position.y + 30, 8, 8 };
+		break;
+	case Left:
+		HitBox = { (int)position.x, (int)position.y + 16, 8, 8 };
+		break;
+	case Right:
+		HitBox = { (int)position.x + 30, (int)position.y + 16, 8, 8 };
+		break;
+	}
+
+	collider->rect = HitBox;
+
+	collider->SetPos(HitBox.x, HitBox.y);
+
+	Collider* aux = collider;
+
+	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (it._Ptr->_Myval->HitBox->type != COLLIDER_DMG_BY_BB)
+				if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+				{
+					hit = true;
+					LOG("ENEMY HIT");
+					App->particle->DestroyParticle(this);
+					it._Ptr->_Myval->Hit(curr_dir, damage);
+				}
+		}
+	}
+
+	//BLOCK INTERACTION
+	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+			{
+				hit = true;
+				LOG("BLOCK HIT");
+				App->particle->DestroyParticle(this);
+			}
+		}
+	}
+	//TILED INTERACTION
+	if (this->CheckSpace(position.x, position.y) == 1)
+	{
+		LOG("ARROW HIT");
+		App->particle->DestroyParticle(this);
+	}
+
+
+	return stdUpdate(dt);
+}
+
+bool Block_Pot::Update(float dt)
+{
+
+	stdUpdate(dt);
+
+	switch (curr_dir) {
+	case Up:
+		HitBox = { (int)position.x + 8, (int)position.y, 8, 8 };
+		break;
+	case Down:
+		HitBox = { (int)position.x + 8, (int)position.y + 30, 8, 8 };
+		break;
+	case Left:
+		HitBox = { (int)position.x, (int)position.y + 16, 8, 8 };
+		break;
+	case Right:
+		HitBox = { (int)position.x + 30, (int)position.y + 16, 8, 8 };
+		break;
+	}
+
+	collider->rect = HitBox;
+
+	collider->SetPos(HitBox.x, HitBox.y);
+
+	Collider* aux = collider;
+
+	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (it._Ptr->_Myval->HitBox->type != COLLIDER_DMG_BY_BB)
+				if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+				{
+					hit = true;
+					LOG("ENEMY HIT");
+					App->particle->DestroyParticle(this);
+					it._Ptr->_Myval->Hit(curr_dir, damage);
+				}
+		}
+	}
+	//BLOCK INTERACTION
+	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+			{
+				hit = true;
+				LOG("BLOCK HIT");
+				App->particle->DestroyParticle(this);
+			}
+		}
+	}
+	//TILED INTERACTION
+	if (this->CheckSpace(position.x, position.y) == 1)
+	{
+		LOG("ARROW HIT");
+		App->particle->DestroyParticle(this);
+	}
+
+
+	return stdUpdate(dt);
+}
+
+bool Block_Skull::Update(float dt)
+{
+
+	stdUpdate(dt);
+
+	switch (curr_dir) {
+	case Up:
+		HitBox = { (int)position.x + 8, (int)position.y, 8, 8 };
+		break;
+	case Down:
+		HitBox = { (int)position.x + 8, (int)position.y + 30, 8, 8 };
+		break;
+	case Left:
+		HitBox = { (int)position.x, (int)position.y + 16, 8, 8 };
+		break;
+	case Right:
+		HitBox = { (int)position.x + 30, (int)position.y + 16, 8, 8 };
+		break;
+	}
+
+	collider->rect = HitBox;
+
+	collider->SetPos(HitBox.x, HitBox.y);
+
+	Collider* aux = collider;
+
+	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (it._Ptr->_Myval->HitBox->type != COLLIDER_DMG_BY_BB)
+				if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+				{
+					hit = true;
+					LOG("ENEMY HIT");
+					App->particle->DestroyParticle(this);
+					it._Ptr->_Myval->Hit(curr_dir, damage);
+				}
+		}
+	}
+	//BLOCK INTERACTION
+	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+			{
+				hit = true;
+				LOG("BLOCK HIT");
+				App->particle->DestroyParticle(this);
+				if (it._Ptr->_Myval->HitBox->type == COLLIDER_BLOCK_B)
+					it._Ptr->_Myval->Activate();
+			}
+		}
+	}
+	//TILED INTERACTION
+	if (this->CheckSpace(position.x, position.y) == 1)
+	{
+		LOG("ARROW HIT");
+		App->particle->DestroyParticle(this);
+	}
+
+
+	return stdUpdate(dt);
 }

@@ -42,6 +42,8 @@ public:
 	bool front = false;
 	bool back = false;
 	bool moving = false;
+	bool recent = false;
+	uint64 timer;
 
 public:
 	Block() {};
@@ -78,7 +80,7 @@ public:
 	virtual void Pick() {};
 	virtual void Open() {};
 	virtual void Throw() {};
-	virtual void Activate() {};
+	virtual void Activate();
 	virtual void SetRewards() {};
 
 	void SortRewardProbs() {

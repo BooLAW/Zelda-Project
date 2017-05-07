@@ -22,6 +22,9 @@ enum PARTICLETYPE {
 	p_agahnim_ball,
 	p_agahnim_lightning,
 	p_agahnim_4balls,
+	p_block_bush,
+	p_block_pot,
+	p_block_skull,
 	__LAST_PARTICLE
 };
 
@@ -136,6 +139,27 @@ struct AgahnimBasic : public Particle {
 	void Start();
 	bool Update(float dt);
 	Direction directions;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+};
+
+struct Block_Bush : public Particle {
+	bool hit = false;
+
+	void Start();
+	bool Update(float dt);
+};
+
+struct Block_Pot : public Particle {
+	bool hit = false;
+
+	void Start();
+	bool Update(float dt);
+};
+
+struct Block_Skull : public Particle {
+	bool hit = false;
+
+	void Start();
+	bool Update(float dt);
 };
 
 #endif // __MODULEPARTICLES_H__
