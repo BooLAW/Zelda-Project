@@ -1320,7 +1320,7 @@ void j1Player::DyingRestart()
 	alive = true;
 	pos = ORIGIN_RESTART;
 	App->scene_manager->toChangeScene((Scene*)App->scene_manager->village_scene);
-	App->player->pos = App->scene_manager->village_scene->pl_start_pos;
+	//App->player->pos = App->scene_manager->village_scene->pl_start_pos;
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
 	App->player->inventory.clear();

@@ -302,6 +302,8 @@ class Freezor : public Enemy {
 		disappear_start
 	}state = appear_start;
 
+	uint shadow_count = 0;
+
 	Animation appear_anim, disappear_anim, attack_anim;
 	SDL_Rect appear_sprites[8], attack_sprites[2];
 	j1Timer timer;
@@ -336,7 +338,7 @@ public:
 		phase_2,
 		goto_phase_3,
 		phase_3
-	}phase = goto_phase_3;
+	}phase = phase_1;
 	enum AGAHNIMSTATE {
 		idle = 0,
 		attack_charge,
@@ -346,7 +348,7 @@ public:
 		move_start,
 		move,
 		appear,
-	}state = disappear;
+	}state = idle;
 
 	Animation appear_a, disappear_a, ticking_a, move_a, idle_a, attack_c_a, light_a_c;
 	SDL_Rect attack_sprites[3], light_a_sprites[2], ticking_sprites[2], disappear_sprites[6], idle_sprites[3];

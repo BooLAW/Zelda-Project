@@ -304,10 +304,14 @@ bool Arrow::Update(float dt)
 void Enemy_Arrow::Start()
 {
 	graphics = App->tex->Load("Sprites/Particles/Particles.png");
-	g_rect[Up][0] = { 2, 2, 34, 34 };
-	g_rect[Down][0] = { 38, 2, 34, 34 };
-	g_rect[Right][0] = { 74, 2, 34, 34 };
-	g_rect[Left][0] = { 110, 2, 34, 34 };
+	g_rect[Up][0] = { 110, 38, 34, 34 };
+	g_rect[Up][1] = { 74, 38, 34, 34 };
+	g_rect[Down][0] = { 74, 74, 34, 34 };
+	g_rect[Down][1] = { 110, 74, 34, 34 };
+	g_rect[Right][0] = { 38, 74, 34, 34 };
+	g_rect[Right][1] = { 2, 74, 34, 34 };
+	g_rect[Left][0] = { 2, 38, 34, 34 };
+	g_rect[Left][1] = { 38, 38, 34, 34 };
 
 	switch (curr_dir) {
 	case Up:
@@ -326,6 +330,8 @@ void Enemy_Arrow::Start()
 
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);
+		anim[k].PushBack(g_rect[k][1]);
+		anim[k].speed = 0.1;
 	}
 
 	life = 10000;
@@ -397,19 +403,20 @@ bool Enemy_Arrow::Update(float dt)
 void Shadow_Projectile::Start()
 {
 	graphics = App->tex->Load("Sprites/Particles/Particles.png");
-	g_rect[Up][0] = { 2, 2, 34, 34 };
-	g_rect[Up][1] = { 2, 2, 34, 34 };
-	g_rect[Down][0] = { 38, 2, 34, 34 };
-	g_rect[Down][1] = { 38, 2, 34, 34 };
-	g_rect[Right][0] = { 74, 2, 34, 34 };
-	g_rect[Right][1] = { 74, 2, 34, 34 };
-	g_rect[Left][0] = { 110, 2, 34, 34 };
-	g_rect[Left][1] = { 110, 2, 34, 34 };
+	g_rect[Up][0] = { 2, 146, 34, 34 };
+	g_rect[Up][1] = { 38, 146, 34, 34 };
+	g_rect[Down][0] = { 2, 110, 34, 34 };
+	g_rect[Down][1] = { 38, 110, 34, 34 };
+	g_rect[Right][0] = { 110, 110, 34, 34 };
+	g_rect[Right][1] = { 110, 146, 34, 34 };
+	g_rect[Left][0] = { 74, 110, 34, 34 };
+	g_rect[Left][1] = { 74, 146, 34, 34 };
 
 
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);
 		anim[k].PushBack(g_rect[k][1]);
+		anim[k].speed = 0.1;
 	}
 
 	shot_dir = curr_dir;
@@ -496,15 +503,15 @@ bool Shadow_Projectile::Update(float dt)
 
 void BounceBack::Start()
 {
-	graphics = App->tex->Load("Sprites/Particles/Particles.png");
-	g_rect[Up][0] = { 2, 2, 34, 34 };
-	g_rect[Up][1] = { 2, 2, 34, 34 };
-	g_rect[Down][0] = { 38, 2, 34, 34 };
-	g_rect[Down][1] = { 38, 2, 34, 34 };
-	g_rect[Right][0] = { 74, 2, 34, 34 };
-	g_rect[Right][1] = { 74, 2, 34, 34 };
-	g_rect[Left][0] = { 110, 2, 34, 34 };
-	g_rect[Left][1] = { 110, 2, 34, 34 };
+	graphics = App->tex->Load("Sprites/BossProjectile.png");
+	g_rect[Up][0] =		{ 2, 80, 37, 37 };
+	g_rect[Up][1] =		{ 41, 80, 37, 37 };
+	g_rect[Down][0] =	{ 2, 80, 37, 37 };
+	g_rect[Down][1] =	{ 41, 80, 37, 37 };
+	g_rect[Right][0] =	{ 2, 80, 37, 37 };
+	g_rect[Right][1] =	{ 41, 80, 37, 37 };
+	g_rect[Left][0] =	{ 2, 80, 37, 37 };
+	g_rect[Left][1] =	{ 41, 80, 37, 37 };
 
 
 	for (int k = 0; k < LastDir; k++) {
@@ -621,15 +628,15 @@ bool BounceBack::Update(float dt)
 
 void AgahnimBasic::Start()
 {
-	graphics = App->tex->Load("Sprites/Particles/Particles.png");
-	g_rect[Up][0] = { 2, 2, 34, 34 };
-	g_rect[Up][1] = { 2, 2, 34, 34 };
-	g_rect[Down][0] = { 38, 2, 34, 34 };
-	g_rect[Down][1] = { 38, 2, 34, 34 };
-	g_rect[Right][0] = { 74, 2, 34, 34 };
-	g_rect[Right][1] = { 74, 2, 34, 34 };
-	g_rect[Left][0] = { 110, 2, 34, 34 };
-	g_rect[Left][1] = { 110, 2, 34, 34 };
+	graphics = App->tex->Load("Sprites/BossProjectile.png");
+	g_rect[Up][0] =		{ 41, 80, 37, 37 };
+	g_rect[Up][1] =		{ 41, 80, 37, 37 };
+	g_rect[Down][0] =	{ 41, 80, 37, 37 };
+	g_rect[Down][1] =	{ 41, 80, 37, 37 };
+	g_rect[Right][0] =	{ 41, 80, 37, 37 };
+	g_rect[Right][1] =	{ 41, 80, 37, 37 };
+	g_rect[Left][0] =	{ 41, 80, 37, 37 };
+	g_rect[Left][1] =	{ 41, 80, 37, 37 };
 
 
 
@@ -726,15 +733,15 @@ bool AgahnimBasic::Update(float dt)
 
 void StdEnemyProjectile::Start()
 {
-	graphics = App->tex->Load("Sprites/Particles/Particles.png");
-	g_rect[Up][0] = { 2, 2, 34, 34 };
-	g_rect[Up][1] = { 2, 2, 34, 34 };
-	g_rect[Down][0] = { 38, 2, 34, 34 };
-	g_rect[Down][1] = { 38, 2, 34, 34 };
-	g_rect[Right][0] = { 74, 2, 34, 34 };
-	g_rect[Right][1] = { 74, 2, 34, 34 };
-	g_rect[Left][0] = { 110, 2, 34, 34 };
-	g_rect[Left][1] = { 110, 2, 34, 34 };
+	graphics = App->tex->Load("Sprites/BossProjectile.png");
+	g_rect[Up][0] = { 41, 119, 37, 37 };
+	g_rect[Up][1] = { 41, 119, 37, 37 };
+	g_rect[Down][0] = { 41, 119, 37, 37 };
+	g_rect[Down][1] = { 41, 119, 37, 37 };
+	g_rect[Right][0] = { 41, 119, 37, 37 };
+	g_rect[Right][1] = { 41, 119, 37, 37 };
+	g_rect[Left][0] = { 41, 119, 37, 37 };
+	g_rect[Left][1] = { 41, 119, 37, 37 };
 
 	
 	
@@ -943,7 +950,6 @@ bool AgahnimBall::Update(float dt)
 		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
 		{
 			Collider* aux = collider;
-			if (it._Ptr->_Myval->HitBox->type != COLLIDER_DMG_BY_BB)
 				
 				if (state == back) {
 					for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
@@ -957,7 +963,7 @@ bool AgahnimBall::Update(float dt)
 								hit = true;
 								LOG("ENEMY HIT");
 								App->particle->DestroyParticle(this);
-								it._Ptr->_Myval->Hit(curr_dir, damage);
+								it._Ptr->_Myval->Hit(curr_dir, ORIGIN_PWR);
 							}
 						}
 					}
@@ -1220,7 +1226,6 @@ bool Block_Skull::Update(float dt)
 	//TILED INTERACTION
 	if (this->CheckSpace(position.x, position.y) == 1)
 	{
-		LOG("ARROW HIT");
 		App->particle->DestroyParticle(this);
 	}
 
@@ -1232,15 +1237,15 @@ bool Block_Skull::Update(float dt)
 //Solved
 void AgahnimBall::Start()
 {
-	graphics = App->tex->Load("Sprites/Particles/Particles.png");
-	g_rect[Up][0] = { 2, 2, 34, 34 };
-	g_rect[Up][1] = { 2, 2, 34, 34 };
-	g_rect[Down][0] = { 38, 2, 34, 34 };
-	g_rect[Down][1] = { 38, 2, 34, 34 };
-	g_rect[Right][0] = { 74, 2, 34, 34 };
-	g_rect[Right][1] = { 74, 2, 34, 34 };
-	g_rect[Left][0] = { 110, 2, 34, 34 };
-	g_rect[Left][1] = { 110, 2, 34, 34 };
+	graphics = App->tex->Load("Sprites/BossProjectile.png");
+	g_rect[Up][0] =		{ 2, 41, 37, 37 };
+	g_rect[Up][1] =		{ 41, 41, 37, 37 };
+	g_rect[Down][0] =	{ 2, 41, 37, 37 };
+	g_rect[Down][1] =	{ 41, 41, 37, 37 };
+	g_rect[Right][0] =	{ 2, 41, 37, 37 };
+	g_rect[Right][1] =	{ 41, 41, 37, 37 };
+	g_rect[Left][0] =	{ 2, 41, 37, 37 };
+	g_rect[Left][1] =	{ 41, 41, 37, 37 };
 
 	miniagballs[0].rect = { 0, 0, 16, 16 };
 	miniagballs[1].rect = { 0, 0, 8, 8, };
@@ -1248,6 +1253,7 @@ void AgahnimBall::Start()
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);
 		anim[k].PushBack(g_rect[k][1]);
+		anim[k].speed = 0.1;
 	}
 
 	speed = { 1, 1 };
@@ -1286,6 +1292,7 @@ void AgahnimBall::Start()
 
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
 	life = -1;
+	damage = 4;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
 
 }
@@ -1313,7 +1320,7 @@ void AgahnimLightning::Start()
 	damage = 4;
 
 	HitBox = { (int)position.x, (int)position.y, 173, 302 };
-	life = 2000;
+	life = 2900;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
 
 }

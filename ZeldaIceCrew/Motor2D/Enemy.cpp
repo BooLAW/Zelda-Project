@@ -1004,17 +1004,17 @@ bool BlueArcher::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		sprites[Enemy::EnDirection::Down][0] = { 36, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Down][1] = { 138, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Down][0] = { 952, 27, 32, 48 };
+		sprites[Enemy::EnDirection::Down][1] = { 952, 27, 32, 48 };
 
-		sprites[Enemy::EnDirection::Up][0] = { 648, 25, 32, 56 };
-		sprites[Enemy::EnDirection::Up][1] = { 750, 25, 32, 56 };
+		sprites[Enemy::EnDirection::Up][0] = { 952, 247, 32, 48 };
+		sprites[Enemy::EnDirection::Up][1] = { 952, 247, 32, 48 };
 
-		sprites[Enemy::EnDirection::Left][0] = { 440, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Left][1] = { 542, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Left][0] = { 952, 137, 32, 48 };
+		sprites[Enemy::EnDirection::Left][1] = { 952, 137, 32, 48 };
 
-		sprites[Enemy::EnDirection::Right][0] = { 240, 25, 36, 56 };
-		sprites[Enemy::EnDirection::Right][1] = { 342, 25, 36, 56 };
+		sprites[Enemy::EnDirection::Right][0] = { 848, 357, 32, 48 };
+		sprites[Enemy::EnDirection::Right][1] = { 848, 357, 32, 48 };
 
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][0]);
 		animations[Enemy::EnDirection::Down].PushBack(sprites[Down][1]);
@@ -1192,12 +1192,12 @@ bool Geldman::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		appear_sprites[0] = { 104, 659, 100, 108 };
-		appear_sprites[1] = { 410, 659, 100, 108 };
-		appear_sprites[2] = { 410, 659, 1, 1 };
+		appear_sprites[0] = { 2, 769, 100, 108 };
+		appear_sprites[1] = { 308, 769, 100, 108 };
+		appear_sprites[2] = { 410, 769, 1, 1 };
 
-		move_sprites[0] = { 206, 659, 100, 108 };
-		move_sprites[1] = { 308, 659, 100, 108 };
+		move_sprites[0] = { 104, 769, 100, 108 };
+		move_sprites[1] = { 206, 769, 100, 108 };
 
 		for (int i = 0; i < 3; i++) {
 			disappear_anim.PushBack(appear_sprites[1 - i]);
@@ -1352,12 +1352,12 @@ bool Freezor::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		appear_sprites[0] = { 104, 659, 100, 108 };
-		appear_sprites[1] = { 410, 659, 100, 108 };
-		appear_sprites[2] = { 410, 659, 1, 1 };
+		appear_sprites[0] = { 818, 769, 100, 108 };
+		appear_sprites[1] = { 716, 769, 100, 108 };
+		appear_sprites[2] = { 716, 769, 1, 1 };
 
-		attack_sprites[0] = { 206, 659, 100, 108 };
-		attack_sprites[1] = { 308, 659, 100, 108 };
+		attack_sprites[0] = { 410, 769, 100, 108 };
+		attack_sprites[1] = { 512, 769, 100, 108 };
 
 		for (int i = 0; i < 3; i++) {
 			disappear_anim.PushBack(appear_sprites[1 - i]);
@@ -1463,12 +1463,15 @@ void Freezor::Update(float dt)
 		timer.SetFlag(true);
 		attack_timer.Start();
 		attack_timer.SetFlag(true);
+		if(shadow_count < 3)
 		if (attack_timer.Read() >= 1000) {
 			App->particle->CreateParticle(p_shadow, HitBox->rect.x, HitBox->rect.y, curr_dir);
 			attack_timer.SetFlag(false);
+			shadow_count++;
 		}
 		if (timer.Read() >= time_attack) {
 			state = disappear_start;
+			shadow_count = 0;
 			timer.SetFlag(false);
 		}
 		break;
@@ -1798,7 +1801,7 @@ void BossAgahnim::Update(float dt)
 			timer.Start();
 			timer.SetFlag(true);
 			if (ball_counter < 2) {
-				if (timer.Read() > 1000) {
+				if (timer.Read() > 200) {
 					timer.SetFlag(false);
 					ball_counter++;
 					state = attack_charge;
@@ -1823,7 +1826,7 @@ void BossAgahnim::Update(float dt)
 		case idle:
 			timer.Start();
 			timer.SetFlag(true);
-			if (timer.Read() >= 2000) {
+			if (timer.Read() >= 1000) {
 				timer.SetFlag(false);
 				state = disappear;
 			}
@@ -1845,7 +1848,7 @@ void BossAgahnim::Update(float dt)
 		case move:
 			timer.Start();
 			timer.SetFlag(true);
-			if (timer.Read() >= 2000) {
+			if (timer.Read() >= 1500) {
 				timer.SetFlag(false);
 				state = appear;
 				path_to_follow.clear();
@@ -2014,17 +2017,17 @@ void BossAgahnim::Update(float dt)
 			
 			updowntime.Start();
 			updowntime.SetFlag(true);
-			if (updowntime.Read() > 500) {
+			if (updowntime.Read() > 100) {
 				updowntime.SetFlag(false);
 				updown = !updown;
 			}
 
-			updown ? target.y = r_a->coords.y * ROOM_H + 30 : target.y = r_a->coords.y * ROOM_H + 200;
+			updown ? target.y = r_a->coords.y * ROOM_H + 30 : target.y = r_a->coords.y * ROOM_H + 60;
 
 			path_to_follow.clear();
 			path_to_follow.push_back(target);
 
-			if (timer.Read() > 3000) {
+			if (timer.Read() > rand() % 1500 + 1500) {
 				timer.SetFlag(false);
 				path_to_follow.clear();
 				state = light_attack_charge;
@@ -2046,9 +2049,9 @@ void BossAgahnim::Update(float dt)
 			timer.Start();
 			timer.SetFlag(true);
 			App->render->Activate_Shake(2, 1);
-			if (timer.Read() > 2000) {
+			if (timer.Read() > 2900) {
 				timer.SetFlag(false);
-				state = light_attack_charge;
+				state = idle;
 				ball_counter = 0;
 			}
 
@@ -2127,7 +2130,7 @@ bool AgahnimClones::Start()
 
 	}
 
-	stats.Hp = 99999;
+	stats.Hp = 99 * ORIGIN_PWR;
 	stats.Speed = 3;
 	stats.Power = 2;
 

@@ -52,7 +52,7 @@ bool SceneManager::Start()
 	scenes.push_back(dungeon_scene);
 	// -------------
 
-	current_scene = village_scene;
+	current_scene = dungeon_scene;
 
 	if (current_scene != nullptr)
 		ret = current_scene->Start();

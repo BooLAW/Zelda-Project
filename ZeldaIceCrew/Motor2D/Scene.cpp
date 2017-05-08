@@ -8,9 +8,8 @@
 
 bool Scene::stdStart()
 {
-	Load_new_map(1);
+	Load_new_map(0);
 	App->player->pos = pl_start_pos;
-
 
 	return true;
 
@@ -434,6 +433,9 @@ bool Scene::Load_new_map(int id)
 				//player position
 				pl_start_pos.x = temp.child("Link").child("pos").attribute("x").as_int(0) + ROOM_W * temp.child("Link").child("room").attribute("x").as_int(0);
 				pl_start_pos.y = temp.child("Link").child("pos").attribute("y").as_int(0) + ROOM_H * temp.child("Link").child("room").attribute("y").as_int(0);
+
+				App->player->room.x = temp.child("Link").child("room").attribute("x").as_int(0);
+				App->player->room.y = temp.child("Link").child("room").attribute("y").as_int(0);
 
 				//Rooms
 
