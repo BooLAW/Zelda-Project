@@ -1721,8 +1721,19 @@ void BossAgahnim::Update(float dt)
 			state = attack;
 			break;
 		case attack:
-			App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
-			state = idle;
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() >= 1000) {
+				if (ball_counter < 2) {
+					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, curr_dir);
+					ball_counter++;
+				}
+				else if(ball_counter == 2) {
+					App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
+					state = idle;
+				}
+				timer.SetFlag(false);
+			}
 			break;
 		case idle:
 			timer.Start();

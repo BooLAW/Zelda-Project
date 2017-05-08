@@ -319,6 +319,8 @@ public:
 	void Update(float dt);
 	j1Timer attack_timer;
 
+	uint ball_counter = 0;
+
 	enum AGAHNIMPHASE {
 		phase_1,
 		phase_2,

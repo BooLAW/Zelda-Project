@@ -155,8 +155,8 @@ struct AgahnimBall : public Particle {
 struct AgahnimBasic : public Particle {
 	bool hit = false;
 	void Start();
-	bool Update(float dt);
-	Direction directions;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+	bool Update(float dt);   
+	fPoint target;
 };
 
 struct Block_Bush : public Particle {

@@ -69,6 +69,9 @@ Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 		case p_agahnim_ball:
 			ret = new AgahnimBall();
 			break;
+		case p_agahnim_4balls:
+			ret = new AgahnimBasic();
+			break;
 		default:
 			LOG("Unknown Particle Type");
 			break;
@@ -616,28 +619,106 @@ bool BounceBack::Update(float dt)
 void AgahnimBasic::Start()
 {
 	graphics = App->tex->Load("Sprites/Particles/Particles.png");
-	//to change
-	g_rect[Up][0] = { 2,2,34,34 };
-	g_rect[Down][0] = { 2,2,34,34 };
-	g_rect[Right][0] = { 2,2,34,34 };
-	g_rect[Left][0] = { 2,2,34,34 };
-	g_rect[Down_R][0] = { 2,2,34,34 };
-	g_rect[Down_L][0] = { 2,2,34,34 };
+	g_rect[Up][0] = { 2, 2, 34, 34 };
+	g_rect[Up][1] = { 2, 2, 34, 34 };
+	g_rect[Down][0] = { 38, 2, 34, 34 };
+	g_rect[Down][1] = { 38, 2, 34, 34 };
+	g_rect[Right][0] = { 74, 2, 34, 34 };
+	g_rect[Right][1] = { 74, 2, 34, 34 };
+	g_rect[Left][0] = { 110, 2, 34, 34 };
+	g_rect[Left][1] = { 110, 2, 34, 34 };
+
+
+
 
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);
 		anim[k].PushBack(g_rect[k][1]);
 	}
 
-	speed = { 1, 1 };
+	speed = { STD_PROJ_SPD, STD_PROJ_SPD };
 
+	target.x = App->player->link_coll->rect.x;
+	target.y = App->player->link_coll->rect.y;
+
+	float diff_x, diff_y;
+	float hip;
+	float angle;
+
+	fPoint p_pos;
+	p_pos.x = target.x;
+	p_pos.y = target.y;
+
+	diff_x = (p_pos.x - position.x);
+	diff_y = p_pos.y - position.y;
+
+	if (p_pos.x > position.x) {
+		diff_x = -diff_x;
+		diff_y = -diff_y;
+	}
+
+	angle = (atan2(diff_y, diff_x));
+
+	if (p_pos.x >= position.x) {
+		speed.x = STD_PROJ_SPD * -(float)cos((double)angle);
+		speed.y = STD_PROJ_SPD * -(float)sin((double)angle);
+	}
+	else {
+		speed.x = STD_PROJ_SPD * (float)cos((double)angle);
+		speed.y = STD_PROJ_SPD * (float)sin((double)angle);
+	}
+
+	HitBox = { (int)position.x, (int)position.y, 32, 32 };
+	life = 10000;
 	damage = 4;
-
-	HitBox = { (int)position.x, (int)position.y, 16, 16 };
-	life = -1;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
 
 
+}
+
+bool AgahnimBasic::Update(float dt)
+{
+
+	HitBox = { (int)position.x, (int)position.y, 32, 32 };
+
+	collider->rect = HitBox;
+
+	collider->SetPos(HitBox.x, HitBox.y);
+
+	Collider* aux = collider;
+
+	if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
+	{
+		hit = true;
+		LOG("Player HIT");
+		if (App->player->link_coll->active == true) {
+			App->player->HitPlayer(damage);
+			App->particle->DestroyParticle(this);
+		}
+	}
+
+	//BLOCK INTERACTION
+	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
+	{
+		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		{
+			Collider* aux = collider;
+			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+			{
+				hit = true;
+				LOG("BLOCK HIT");
+				App->particle->DestroyParticle(this);
+			}
+		}
+	}
+	//TILED INTERACTION
+	if (this->CheckSpace(position.x, position.y) == 1)
+	{
+		LOG("ARROW HIT");
+		App->particle->DestroyParticle(this);
+	}
+
+	return stdUpdate(dt);
 }
 
 void StdEnemyProjectile::Start()
@@ -652,8 +733,8 @@ void StdEnemyProjectile::Start()
 	g_rect[Left][0] = { 110, 2, 34, 34 };
 	g_rect[Left][1] = { 110, 2, 34, 34 };
 
-	miniagballs[0].rect = { 0, 0, 16, 16 };
-	miniagballs[1].rect = { 0, 0, 8, 8, };
+	
+	
 
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);
@@ -1158,6 +1239,8 @@ void AgahnimBall::Start()
 	g_rect[Left][0] = { 110, 2, 34, 34 };
 	g_rect[Left][1] = { 110, 2, 34, 34 };
 
+	miniagballs[0].rect = { 0, 0, 16, 16 };
+	miniagballs[1].rect = { 0, 0, 8, 8, };
 
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);
