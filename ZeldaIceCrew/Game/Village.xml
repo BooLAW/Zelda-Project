@@ -26,15 +26,15 @@
 <!-- Shop -->
         <room x="0" y="1" w="200" h="200">
           <items>
-            <item subtype="pegasus_boots" x="1000" y="-320"/>
-            <item subtype="weapon_bow" x="900" y="-320"/>
+            <item subtype="pegasus_boots" x="3175" y="200"/>
+            <item subtype="weapon_bow" x="2975" y="200"/>
           </items>
 
           <blocks>
           </blocks>
 
           <doorways>
-            <doorway subtype="dw_cam" target_x="1000" target_y="1500" dir="Down" x="960" y="-260"/>
+            <doorway subtype="dw_cam" target_x="2200" target_y="900" dir="Down" x="3090" y="350"/>
           </doorways>
 
           <enemies>
@@ -54,11 +54,11 @@
 
           <doorways>
             <!-- To House -->
-            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <doorway subtype="dw_cam" target_x="390" target_y="1600" dir="Up" x="1710" y="610"/>
             <!-- To Shop -->
-            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <doorway subtype="dw_cam" target_x="3090" target_y="850" dir="Up" x="2207" y="-305"/>
             <!-- To Dungeon -->
-            <doorway subtype="dw_scene" scene="dungeon" dir="up" x="120" y ="400"/>
+            <doorway subtype="dw_scene" scene="dungeon" dir="Up" x="2000" y ="-800"/>
           </doorways>
 
           <enemies>
