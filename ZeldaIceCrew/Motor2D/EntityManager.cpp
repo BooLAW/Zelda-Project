@@ -53,6 +53,9 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 	case t_boss_agahnim:
 		ret = new BossAgahnim();
 		break;
+	case t_boss_agahnimclone:
+		ret = new AgahnimClones();
+		break;
 	default:
 		LOG("Unknown Enemy Type: %d", subtype);
 		break;

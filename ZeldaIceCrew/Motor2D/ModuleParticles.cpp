@@ -72,6 +72,9 @@ Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 		case p_agahnim_4balls:
 			ret = new AgahnimBasic();
 			break;
+		case p_agahnim_lightning:
+			ret = new AgahnimLightning();
+			break;
 		default:
 			LOG("Unknown Particle Type");
 			break;
@@ -1285,4 +1288,54 @@ void AgahnimBall::Start()
 	life = -1;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
 
+}
+
+void AgahnimLightning::Start()
+{
+	graphics = App->tex->Load("Sprites/BossProjectile.png");
+	g_rect[Up][0] =		{ 274, 2,  173, 302 };
+	g_rect[Up][1] =		{ 449, 2,  173, 302 };
+	g_rect[Down][0] =	{ 274, 2,  173, 302 };
+	g_rect[Down][1] =	{ 449, 2,  173, 302 };
+	g_rect[Right][0] =	{ 274, 2,  173, 302 };
+	g_rect[Right][1] =	{ 449, 2,  173, 302 };
+	g_rect[Left][0] =	{ 274, 2,  173, 302 };
+	g_rect[Left][1] =	{ 449, 2,  173, 302 };
+
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[k][0]);
+		anim[k].PushBack(g_rect[k][1]);
+		anim[k].speed = 0.05;
+	}
+
+	speed = { 0, 0 };
+
+	damage = 4;
+
+	HitBox = { (int)position.x, (int)position.y, 173, 302 };
+	life = 2000;
+	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
+
+}
+
+bool AgahnimLightning::Update(float dt)
+{
+	HitBox = { (int)position.x, (int)position.y, 173, 302 };
+
+	collider->rect = HitBox;
+
+	collider->SetPos(HitBox.x, HitBox.y);
+
+	Collider* aux = collider;
+
+	if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
+	{
+		//hit = true;
+		LOG("Player HIT");
+		if (App->player->link_coll->active == true) {
+			App->player->HitPlayer(damage);
+			//App->particle->DestroyParticle(this);
+		}
+	}
+	return stdUpdate(dt);
 }

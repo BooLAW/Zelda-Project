@@ -159,6 +159,12 @@ struct AgahnimBasic : public Particle {
 	fPoint target;
 };
 
+struct AgahnimLightning : public Particle {
+	bool hit = false;
+	void Start();
+	bool Update(float dt);
+};
+
 struct Block_Bush : public Particle {
 	bool hit = false;
 

@@ -35,6 +35,7 @@ enum ENEMYTYPE {
 	t_beamos,
 	t_boss_ballandchain,
 	t_boss_agahnim,
+	t_boss_agahnimclone,
 	__LAST_ENEMYTYPE
 };
 
@@ -311,33 +312,75 @@ public:
 	bool Start();
 };
 
+class AgahnimClones;
+
 class BossAgahnim : public Enemy {
 public:
 	bool Start();
 	void SetReward();
 	void Draw(float dt);
 	void Update(float dt);
-	j1Timer attack_timer;
 
 	uint ball_counter = 0;
 
+	bool goandback = true;
+	bool updown = true;
+	j1Timer updowntime;
+	AgahnimClones* clones[2];
+
+	uint n_deaths;
+
 	enum AGAHNIMPHASE {
 		phase_1,
+		goto_phase_2,
 		phase_2,
+		goto_phase_3,
 		phase_3
-	}phase = phase_1;
+	}phase = goto_phase_3;
 	enum AGAHNIMSTATE {
+		idle = 0,
+		attack_charge,
+		light_attack_charge,
+		attack,
+		disappear,
+		move_start,
+		move,
+		appear,
+	}state = disappear;
+
+	Animation appear_a, disappear_a, ticking_a, move_a, idle_a, attack_c_a;
+	SDL_Rect attack_sprites[3], ticking_sprites[2], disappear_sprites[6], idle_sprites[3];
+	j1Timer timer;
+
+	const float org_spd = 2.5;
+
+};
+
+class AgahnimClones : public Enemy {
+	bool Start();
+	void SetReward();
+	void Draw(float dt);
+	void Update(float dt);
+
+	uint ball_counter = 0;
+
+	enum AGAHNIMCLONESTATE {
 		idle = 0,
 		attack_charge,
 		attack,
 		disappear,
 		move_start,
 		move,
-		appear
+		appear,
 	}state = idle;
 
-	Animation appear_anim, disappear_anim, attack_anim, hit_anim;
-	SDL_Rect appear_sprites[8], attack_sprites[2], disappear_sprites[6];
+	enum AGAHNIMCLONEPHASE {
+		phase_2 = 0,
+		phase_3
+	}phase = phase_2;
+
+	Animation appear_a, disappear_a, ticking_a, move_a, idle_a, attack_c_a;
+	SDL_Rect attack_sprites[3], ticking_sprites[2], disappear_sprites[6], idle_sprites[3];
 	j1Timer timer;
 
 	const float org_spd = 2.5;

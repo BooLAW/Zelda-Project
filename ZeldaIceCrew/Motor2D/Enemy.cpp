@@ -1642,25 +1642,61 @@ bool BossAgahnim::Start()
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
-		appear_sprites[0] = { 104, 659, 100, 108 };
-		appear_sprites[1] = { 410, 659, 100, 108 };
-		appear_sprites[2] = { 410, 659, 1, 1 };
 
-		attack_sprites[0] = { 206, 659, 100, 108 };
-		attack_sprites[1] = { 308, 659, 100, 108 };
+		disappear_sprites[0] = { 491,  491,	161, 161 };
+		disappear_sprites[1] = { 654,  491,	161, 161 };
+		disappear_sprites[2] = { 817,  491,	161, 161 };
+		disappear_sprites[3] = { 980,  491,	161, 161 };
+		disappear_sprites[4] = { 1143, 491,	161, 161 };
+		disappear_sprites[5] = { 1306, 491,	161, 161 };
+		
+		ticking_sprites[0] = { 1632, 328, 161, 161 };
+		ticking_sprites[1] = { 491, 2, 161, 161 };
 
-		for (int i = 0; i < 3; i++) {
-			disappear_anim.PushBack(appear_sprites[1 - i]);
-			if (i < 2) {
-				appear_anim.PushBack(appear_sprites[i]);
-				attack_anim.PushBack(attack_sprites[i]);
-			}
-		}
-		appear_anim.speed = 0.07;
-		appear_anim.loop = false;
-		disappear_anim.speed = 0.1;
-		disappear_anim.loop = false;
-		attack_anim.speed = 0.05;
+		attack_sprites[0] = { 1143, 2, 161, 161 };
+		attack_sprites[1] = { 1306, 2, 161, 161 };
+		attack_sprites[2] = { 980, 328, 161, 161 };
+
+		idle_sprites[0] = { 817, 2, 161, 161 };
+		idle_sprites[1] = { 654, 2, 161, 161 };
+		idle_sprites[2] = { 491, 2, 161, 161 };
+
+		idle_a.PushBack(idle_sprites[0]);
+		idle_a.PushBack(idle_sprites[2]);
+		idle_a.PushBack(idle_sprites[1]);
+		idle_a.speed = 0.1;
+
+		appear_a.PushBack(disappear_sprites[5]);
+		appear_a.PushBack(disappear_sprites[4]);
+		appear_a.PushBack(disappear_sprites[3]);
+		appear_a.PushBack(disappear_sprites[2]);
+		appear_a.PushBack(disappear_sprites[1]);
+		appear_a.PushBack(disappear_sprites[0]);
+		appear_a.speed = 0.1;
+		appear_a.loop = false;
+
+		disappear_a.PushBack(disappear_sprites[0]);
+		disappear_a.PushBack(disappear_sprites[1]);
+		disappear_a.PushBack(disappear_sprites[2]);
+		disappear_a.PushBack(disappear_sprites[3]);
+		disappear_a.PushBack(disappear_sprites[4]);
+		disappear_a.PushBack(disappear_sprites[5]);
+		disappear_a.speed = 0.1;
+		disappear_a.loop = false;
+
+		ticking_a.PushBack(ticking_sprites[0]);
+		ticking_a.PushBack(ticking_sprites[1]);
+		ticking_a.speed = 0.05;
+
+		attack_c_a.PushBack(attack_sprites[0]);
+		attack_c_a.PushBack(attack_sprites[1]);
+		attack_c_a.speed = 0.1;
+
+		move_a.PushBack(disappear_sprites[4]);
+		move_a.PushBack(disappear_sprites[5]);
+		move_a.speed = 0.1;
+
+
 	}
 
 	stats.Hp = 12 * ORIGIN_PWR;
@@ -1672,7 +1708,7 @@ bool BossAgahnim::Start()
 	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
 		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
 
-	HitBox = App->collisions->AddCollider({ 0, 0, 48, 32 }, COLLIDER_ENEMY);
+	HitBox = App->collisions->AddCollider({ 0, 0, 48, 32 }, COLLIDER_DMG_BY_BB);
 
 	memset(DmgType, false, __LAST_DMGTYPE);
 
@@ -1692,13 +1728,32 @@ void BossAgahnim::SetReward()
 
 void BossAgahnim::Draw(float dt)
 {
-	int aux_hp = stats.Hp;
-	SDL_Rect c_r = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->room_rect;
-	fPoint app_pos;
-	fPoint p_pos = App->player->pos;
+	
+	fPoint aux_pos = pos;
 
-	SDL_Rect p_rect;
-	SDL_Rect en_rect = { 0,0,500,500 };
+	aux_pos.x -= 58;
+	aux_pos.y -= 40;
+
+	switch (state) {
+	case idle:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &idle_a.GetCurrentFrame());
+		break;
+	case attack_charge:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &attack_c_a.GetCurrentFrame());
+		break;
+	case attack:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &attack_sprites[2]);
+		break;
+	case disappear:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &disappear_a.GetCurrentFrame());
+		break;
+	case move:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &move_a.GetCurrentFrame());
+		break;
+	case appear:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &appear_a.GetCurrentFrame());
+		break;
+	}
 
 	
 }
@@ -1710,30 +1765,50 @@ void BossAgahnim::Update(float dt)
 	
 	stdUpdate(dt);
 
-	LOG("PHASE %d", phase);
-	LOG("STATE %d", state);
-	LOG("TIMER %d", timer.Read());
-
 	switch (phase) {
 	case phase_1:
+		if (stats.Hp <= 9 * ORIGIN_PWR) {
+			phase = goto_phase_2;
+			state = move_start;
+		}
 		switch (state) {
 		case attack_charge:
-			state = attack;
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() > 1000) {
+				appear_a.Reset();
+				disappear_a.Reset();
+				timer.SetFlag(false);
+				if (ball_counter < 2)
+					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, curr_dir);
+				state = attack;
+			}
 			break;
 		case attack:
 			timer.Start();
 			timer.SetFlag(true);
-			if (timer.Read() >= 1000) {
-				if (ball_counter < 2) {
-					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, curr_dir);
+			if (ball_counter < 2) {
+				if (timer.Read() > 1000) {
+					timer.SetFlag(false);
 					ball_counter++;
+					state = attack_charge;
 				}
-				else if(ball_counter == 2) {
-					App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
+			}
+			else if (ball_counter == 2) {
+				timer.Start();
+				timer.SetFlag(true);
+
+				App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
+
+				ball_counter++;
+			}
+			else if (ball_counter > 2)
+				if (timer.Read() > 1000) {
+					timer.SetFlag(false);
+					ball_counter = 0;
 					state = idle;
 				}
-				timer.SetFlag(false);
-			}
+
 			break;
 		case idle:
 			timer.Start();
@@ -1744,7 +1819,8 @@ void BossAgahnim::Update(float dt)
 			}
 			break;
 		case disappear:
-			state = move_start;
+			if (disappear_a.Finished() == true)
+				state = move_start;
 			break;
 		case move_start:
 			path_to_follow.clear();
@@ -1766,13 +1842,405 @@ void BossAgahnim::Update(float dt)
 			}
 			break;
 		case appear:
-			state = attack_charge;
+			if (appear_a.Finished() == true)
+				state = attack_charge;
+			break;
+		}
+		break;
+	case goto_phase_2:
+		switch (state) {
+		case disappear:
+			if (disappear_a.Finished() == true)
+				state = move_start;
+			break;
+		case move_start:
+			path_to_follow.clear();
+			new_p.x = 600 + r_a->coords.x * ROOM_W;
+			new_p.y = 100 + r_a->coords.y * ROOM_H;
+			target = new_p;
+			path_to_follow.push_back(target);
+			state = move;
+			break;
+		case move:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() >= 2000) {
+				timer.SetFlag(false);
+				state = appear;
+				path_to_follow.clear();
+			}
+			break;
+		case appear:
+			if (appear_a.Finished() == true) {
+				phase = phase_2;
+				state = idle;
+				clones[0] = (AgahnimClones*)App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddEnemy(t_boss_agahnimclone, 200, 420);
+				clones[1] = (AgahnimClones*)App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddEnemy(t_boss_agahnimclone, 824, 420);
+				appear_a.Reset();
+				disappear_a.Reset();
+			}
 			break;
 		}
 		break;
 	case phase_2:
+		if (stats.Hp <= 6 * ORIGIN_PWR) {
+			phase = goto_phase_3;
+			state = disappear;
+		}
+		switch (state) {
+		case attack_charge:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() > 1000) {
+				appear_a.Reset();
+				disappear_a.Reset();
+				timer.SetFlag(false);
+				App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
+				state = attack;
+			}
+			break;
+		case attack:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() > 1000) {
+				timer.SetFlag(false);
+				state = idle;
+				ball_counter = 0;
+			}
+
+			break;
+		case idle:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() >= 2000) {
+				timer.SetFlag(false);
+				state = disappear;
+			}
+			break;
+		case disappear:
+			if (disappear_a.Finished() == true)
+				state = move_start;
+			break;
+		case move_start:
+			path_to_follow.clear();
+			new_p.x = rand() % (r_a->room_rect.w - 200) + (r_a->room_rect.x + 200);
+			new_p.y = rand() % (r_a->room_rect.h - 200) + (r_a->room_rect.y + 200);
+			if (CheckSpace((float)new_p.x, (float)new_p.y) == 0) {
+				target = new_p;
+				path_to_follow.push_back(target);
+				state = move;
+			}
+			break;
+		case move:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() >= 2000) {
+				timer.SetFlag(false);
+				state = appear;
+				path_to_follow.clear();
+			}
+			break;
+		case appear:
+			if (appear_a.Finished() == true)
+				state = attack_charge;
+			break;
+		}
+		
+		break;
+	case goto_phase_3:
+		switch (state) {
+		case disappear:
+			for (int i = 0; i < 2; i++) {
+				if(clones[i] != nullptr)
+				clones[i]->Death();
+			}
+
+			if (disappear_a.Finished() == true)
+				state = move_start;
+			break;
+		case move_start:
+			path_to_follow.clear();
+			new_p.x = 600 + r_a->coords.x * ROOM_W;
+			new_p.y = 100 + r_a->coords.y * ROOM_H;
+			target = new_p;
+			path_to_follow.push_back(target);
+			state = move;
+			break;
+		case move:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() >= 2000) {
+				timer.SetFlag(false);
+				state = appear;
+				path_to_follow.clear();
+			}
+			break;
+		case appear:
+			if (appear_a.Finished() == true) {
+				clones[0] = (AgahnimClones*)App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddEnemy(t_boss_agahnimclone, 200, 420);
+				clones[1] = (AgahnimClones*)App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddEnemy(t_boss_agahnimclone, 824, 420);
+				clones[0]->stats.Hp = 1;
+				clones[1]->stats.Hp = 1;
+				phase = phase_3;
+				state = idle;
+				stats.Speed = 4;
+				appear_a.Reset();
+				disappear_a.Reset();
+			}
+			break;
+		}
 		break;
 	case phase_3:
+		switch (state) {
+		case idle:
+			timer.Start();
+			timer.SetFlag(true);
+			if (pos.x <= r_a->coords.x * ROOM_W + 210 || pos.x >= r_a->coords.x * ROOM_W + ROOM_W - 210)
+				goandback = !goandback;
+			if(goandback)
+				target = { r_a->coords.x*ROOM_W + 200, r_a->coords.y * ROOM_H + 50 };
+			else
+				target = { r_a->coords.x*ROOM_W + ROOM_W - 200, r_a->coords.y * ROOM_H + 50 };
+			
+			updowntime.Start();
+			updowntime.SetFlag(true);
+			if (updowntime.Read() > 500) {
+				updowntime.SetFlag(false);
+				updown = !updown;
+			}
+
+			updown ? target.y = r_a->coords.y * ROOM_H + 30 : target.y = r_a->coords.y * ROOM_H + 200;
+
+			path_to_follow.clear();
+			path_to_follow.push_back(target);
+
+			if (timer.Read() > 3000) {
+				timer.SetFlag(false);
+				path_to_follow.clear();
+				state = light_attack_charge;
+			}
+
+			break;
+		case light_attack_charge:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() > 2000) {
+				appear_a.Reset();
+				disappear_a.Reset();
+				timer.SetFlag(false);
+				App->particle->CreateParticle(p_agahnim_lightning, pos.x - 60, pos.y + 48, Down);
+				state = attack;
+			}
+			break;
+		case attack:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() > 2000) {
+				timer.SetFlag(false);
+				state = light_attack_charge;
+				ball_counter = 0;
+			}
+
+			break;
+		}
 		break;
 	}
+}
+
+bool AgahnimClones::Start()
+{
+	bool ret = true;
+
+	SetReward();
+
+	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Bosses.png"));
+
+	// All Animation Settup (you don't want to look into that, trust me :s)
+	{
+
+		disappear_sprites[0] = { 491,  491,	161, 161 };
+		disappear_sprites[1] = { 654,  491,	161, 161 };
+		disappear_sprites[2] = { 817,  491,	161, 161 };
+		disappear_sprites[3] = { 980,  491,	161, 161 };
+		disappear_sprites[4] = { 1143, 491,	161, 161 };
+		disappear_sprites[5] = { 1306, 491,	161, 161 };
+
+		ticking_sprites[0] = { 1632, 328, 161, 161 };
+		ticking_sprites[1] = { 491, 2, 161, 161 };
+
+		attack_sprites[0] = { 1143, 2, 161, 161 };
+		attack_sprites[1] = { 1306, 2, 161, 161 };
+		attack_sprites[2] = { 980, 328, 161, 161 };
+
+		idle_sprites[0] = { 817, 2, 161, 161 };
+		idle_sprites[1] = { 654, 2, 161, 161 };
+		idle_sprites[2] = { 491, 2, 161, 161 };
+
+		idle_a.PushBack(idle_sprites[0]);
+		idle_a.PushBack(idle_sprites[2]);
+		idle_a.PushBack(idle_sprites[1]);
+		idle_a.speed = 0.1;
+
+		appear_a.PushBack(disappear_sprites[5]);
+		appear_a.PushBack(disappear_sprites[4]);
+		appear_a.PushBack(disappear_sprites[3]);
+		appear_a.PushBack(disappear_sprites[2]);
+		appear_a.PushBack(disappear_sprites[1]);
+		appear_a.PushBack(disappear_sprites[0]);
+		appear_a.speed = 0.1;
+		appear_a.loop = false;
+
+		disappear_a.PushBack(disappear_sprites[0]);
+		disappear_a.PushBack(disappear_sprites[1]);
+		disappear_a.PushBack(disappear_sprites[2]);
+		disappear_a.PushBack(disappear_sprites[3]);
+		disappear_a.PushBack(disappear_sprites[4]);
+		disappear_a.PushBack(disappear_sprites[5]);
+		disappear_a.speed = 0.1;
+		disappear_a.loop = false;
+
+		ticking_a.PushBack(ticking_sprites[0]);
+		ticking_a.PushBack(ticking_sprites[1]);
+		ticking_a.speed = 0.05;
+
+		attack_c_a.PushBack(attack_sprites[0]);
+		attack_c_a.PushBack(attack_sprites[1]);
+		attack_c_a.speed = 0.1;
+
+		move_a.PushBack(disappear_sprites[4]);
+		move_a.PushBack(disappear_sprites[5]);
+		move_a.speed = 0.2;
+
+
+	}
+
+	stats.Hp = 99999;
+	stats.Speed = 3;
+	stats.Power = 2;
+
+	stats.Flying = true;
+
+	for (int i = 0; i < Enemy::EnDirection::LastDir; i++)
+		animations[i].speed = stats.Speed * ENEMY_SPRITES_PER_SPD; // All Enemy Animation.Speed's must be Subtype::stats.speed * 0.5
+
+	HitBox = App->collisions->AddCollider({ 0, 0, 48, 32 }, COLLIDER_DMG_BY_BB);
+
+	memset(DmgType, false, __LAST_DMGTYPE);
+
+	DmgType[projectile] = true;
+
+	AIType = special;
+
+	subtype = ENEMYTYPE::t_boss_agahnimclone;
+
+	return ret;
+}
+
+void AgahnimClones::SetReward()
+{
+
+}
+
+void AgahnimClones::Draw(float dt)
+{
+	fPoint aux_pos = pos;
+
+	aux_pos.x -= 58;
+	aux_pos.y -= 40;
+
+	switch (state) {
+	case idle:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &idle_a.GetCurrentFrame());
+		break;
+	case attack_charge:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &attack_c_a.GetCurrentFrame());
+		break;
+	case attack:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &attack_sprites[2]);
+		break;
+	case disappear:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &disappear_a.GetCurrentFrame());
+		break;
+	case move:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &move_a.GetCurrentFrame());
+		break;
+	case appear:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &appear_a.GetCurrentFrame());
+		break;
+	}
+
+}
+
+void AgahnimClones::Update(float dt)
+{
+	iPoint new_p;
+	Room* r_a = App->scene_manager->GetCurrentScene()->GetCurrentRoom();
+
+	LOG("%f %f", pos.x, pos.y);
+
+	stdUpdate(dt);
+
+		switch (state) {
+		case attack_charge:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() > 1000) {
+				appear_a.Reset();
+				disappear_a.Reset();
+				timer.SetFlag(false);
+				if(state == phase_3)
+					App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
+				else
+				App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, curr_dir);
+				state = attack;
+			}
+			break;
+		case attack:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() > 1000) {
+				timer.SetFlag(false);
+				state = idle;
+				ball_counter = 0;
+			}
+
+			break;
+		case idle:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() >= 2000) {
+				timer.SetFlag(false);
+				state = disappear;
+			}
+			break;
+		case disappear:
+			if (disappear_a.Finished() == true)
+				state = move_start;
+			break;
+		case move_start:
+			path_to_follow.clear();
+			new_p.x = rand() % (r_a->room_rect.w - 200) + (r_a->room_rect.x + 200);
+			new_p.y = rand() % (r_a->room_rect.h - 200) + (r_a->room_rect.y + 200);
+			if (CheckSpace((float)new_p.x, (float)new_p.y) == 0) {
+				target = new_p;
+				path_to_follow.push_back(target);
+				state = move;
+			}
+			break;
+		case move:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() >= 2000) {
+				timer.SetFlag(false);
+				state = appear;
+				path_to_follow.clear();
+			}
+			break;
+		case appear:
+			if (appear_a.Finished() == true)
+				state = attack_charge;
+			break;
+		}
 }
