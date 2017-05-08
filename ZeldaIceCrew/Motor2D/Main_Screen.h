@@ -35,16 +35,38 @@ public:
 
 	UIElement* Next();
 	UIElement* Prev();
+	UIElement* Settings_Next();
+	UIElement* Settings_Prev();
+
+	bool CleanUp();
 
 private:
 
 	std::list<UIElement*> ui_elements;
+	std::list<UIElement*> settings_elements;
 	UIElement* selected;
 	GuiImage* New_game;
 	GuiImage* Continue;
 	GuiImage* Settings;
 	GuiImage* Exit;
+	GuiImage* background;
+	GuiText* new_game;
+	GuiText* cont;
+	GuiText* settings;
+	GuiText* exit;
+	uint fx;
+	uint press_fx;
 
+	///////
+
+	bool in_settings;
+
+	GuiImage* Controls;
+	GuiImage* Mute;
+	GuiImage* Back;
+	GuiText* controls;
+	GuiText* mute;
+	GuiText* back;
 };
 
 #endif //__Main_Screen_H__

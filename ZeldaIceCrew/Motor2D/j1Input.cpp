@@ -3,7 +3,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
-#include "SDL/include/SDL.h"
+
 
 #define MAX_KEYS 300
 

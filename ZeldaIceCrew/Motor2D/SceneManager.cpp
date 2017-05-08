@@ -153,9 +153,9 @@ void SceneManager::ChangeScene(Scene * new_scene)
 	App->render->cam_travel = false;
 	Scene* prev_scene = current_scene;
 	current_scene = new_scene;
+	current_scene->Start();
 	prev_scene->CleanUp();
 	LOG("CLEANUP PREV");
-	current_scene->Start();
 	LOG("START NEXT");
 }
 
