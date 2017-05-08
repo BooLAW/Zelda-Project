@@ -111,7 +111,7 @@ public:
 
 	// Check if a certain window event happened
 	bool GetWindowEvent(int code);
-
+	SDL_Scancode returnkey();
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);

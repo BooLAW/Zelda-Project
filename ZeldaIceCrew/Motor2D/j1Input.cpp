@@ -151,6 +151,134 @@ bool j1Input::GetWindowEvent(j1EventWindow ev)
 	return windowEvents[ev];
 }
 
+SDL_Scancode j1Input::returnkey()
+{
+
+	if (GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+		return SDL_SCANCODE_Q;
+	}
+	else if (GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		return SDL_SCANCODE_W;
+	}
+	else if (GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		return SDL_SCANCODE_E;
+	}
+	else if (GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		return SDL_SCANCODE_R;
+	}
+	else if (GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
+		return SDL_SCANCODE_T;
+	}
+	else if (GetKey(SDL_SCANCODE_Y) == KEY_DOWN) {
+		return SDL_SCANCODE_Y;
+	}
+	else if (GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
+		return SDL_SCANCODE_U;
+	}
+	else if (GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+		return SDL_SCANCODE_I;
+	}
+	else if (GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+		return SDL_SCANCODE_O;
+	}
+	else if (GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		return SDL_SCANCODE_P;
+	}
+	else if (GetKey(SDL_SCANCODE_A) == KEY_DOWN) {
+		return SDL_SCANCODE_A;
+	}
+	else if (GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+		return SDL_SCANCODE_S;
+	}
+	else if (GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
+		return SDL_SCANCODE_D;
+	}
+	else if (GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+		return SDL_SCANCODE_F;
+	}
+	else if (GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
+		return SDL_SCANCODE_G;
+	}
+	else if (GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
+		return SDL_SCANCODE_H;
+	}
+	else if (GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
+		return SDL_SCANCODE_J;
+	}
+	else if (GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+		return SDL_SCANCODE_K;
+	}
+	else if (GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+		return SDL_SCANCODE_L;
+	}
+	else if (GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
+		return SDL_SCANCODE_Z;
+	}
+	else if (GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
+		return SDL_SCANCODE_X;
+	}
+	else if (GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
+		return SDL_SCANCODE_C;
+	}
+	else if (GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
+		return SDL_SCANCODE_V;
+	}
+	else if (GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
+		return SDL_SCANCODE_B;
+	}
+	else if (GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+		return SDL_SCANCODE_N;
+	}
+	else if (GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		return SDL_SCANCODE_M;
+	}
+	else if (GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+		return SDL_SCANCODE_TAB;
+	}
+	else if (GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+		return SDL_SCANCODE_UP;
+	}
+	else if (GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+		return SDL_SCANCODE_DOWN;
+	}
+	else if (GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+		return SDL_SCANCODE_RIGHT;
+	}
+	else if (GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+		return SDL_SCANCODE_LEFT;
+	}
+	else if (GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+		return SDL_SCANCODE_1;
+	}
+	else if (GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+		return SDL_SCANCODE_2;
+	}
+	else if (GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+		return SDL_SCANCODE_3;
+	}
+	else if (GetKey(SDL_SCANCODE_4) == KEY_DOWN) {
+		return SDL_SCANCODE_4;
+	}
+	else if (GetKey(SDL_SCANCODE_5) == KEY_DOWN) {
+		return SDL_SCANCODE_5;
+	}
+	else if (GetKey(SDL_SCANCODE_6) == KEY_DOWN) {
+		return SDL_SCANCODE_6;
+	}
+	else if (GetKey(SDL_SCANCODE_7) == KEY_DOWN) {
+		return SDL_SCANCODE_7;
+	}
+	else if (GetKey(SDL_SCANCODE_8) == KEY_DOWN) {
+		return SDL_SCANCODE_8;
+	}
+	else if (GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
+		return SDL_SCANCODE_9;
+	}
+	else {
+		return SDL_SCANCODE_0;
+	}
+}
+
 void j1Input::GetMousePosition(int& x, int& y)
 {
 	x = mouse_x;
