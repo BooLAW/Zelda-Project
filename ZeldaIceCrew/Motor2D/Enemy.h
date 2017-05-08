@@ -348,8 +348,8 @@ public:
 		appear,
 	}state = disappear;
 
-	Animation appear_a, disappear_a, ticking_a, move_a, idle_a, attack_c_a;
-	SDL_Rect attack_sprites[3], ticking_sprites[2], disappear_sprites[6], idle_sprites[3];
+	Animation appear_a, disappear_a, ticking_a, move_a, idle_a, attack_c_a, light_a_c;
+	SDL_Rect attack_sprites[3], light_a_sprites[2], ticking_sprites[2], disappear_sprites[6], idle_sprites[3];
 	j1Timer timer;
 
 	const float org_spd = 2.5;

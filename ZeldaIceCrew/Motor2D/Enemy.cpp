@@ -1657,6 +1657,9 @@ bool BossAgahnim::Start()
 		attack_sprites[1] = { 1306, 2, 161, 161 };
 		attack_sprites[2] = { 980, 328, 161, 161 };
 
+		light_a_sprites[0] = { 1469, 2, 161, 161 };
+		light_a_sprites[1] = { 1632, 2, 161, 161 };
+
 		idle_sprites[0] = { 817, 2, 161, 161 };
 		idle_sprites[1] = { 654, 2, 161, 161 };
 		idle_sprites[2] = { 491, 2, 161, 161 };
@@ -1683,6 +1686,10 @@ bool BossAgahnim::Start()
 		disappear_a.PushBack(disappear_sprites[5]);
 		disappear_a.speed = 0.1;
 		disappear_a.loop = false;
+
+		light_a_c.PushBack(light_a_sprites[0]);
+		light_a_c.PushBack(light_a_sprites[1]);
+		light_a_c.speed = 0.1;
 
 		ticking_a.PushBack(ticking_sprites[0]);
 		ticking_a.PushBack(ticking_sprites[1]);
@@ -1752,6 +1759,9 @@ void BossAgahnim::Draw(float dt)
 		break;
 	case appear:
 		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &appear_a.GetCurrentFrame());
+		break;
+	case light_attack_charge:
+		App->render->toDraw(tex, HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &light_a_c.GetCurrentFrame());
 		break;
 	}
 
@@ -2035,6 +2045,7 @@ void BossAgahnim::Update(float dt)
 		case attack:
 			timer.Start();
 			timer.SetFlag(true);
+			App->render->Activate_Shake(2, 1);
 			if (timer.Read() > 2000) {
 				timer.SetFlag(false);
 				state = light_attack_charge;
