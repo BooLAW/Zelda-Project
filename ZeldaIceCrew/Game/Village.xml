@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <village>
   <maps>
-    <map id="1">
+    <map id="0">
       <file>Village.tmx</file>
       <camera follow ="true"/>
       <music volume="60">Audio/Music/Forest_Theme.ogg</music>

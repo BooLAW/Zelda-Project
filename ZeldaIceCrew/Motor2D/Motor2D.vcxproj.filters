@@ -94,6 +94,9 @@
     <ClCompile Include="j1Map.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Main_Screen.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -200,6 +203,9 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MathHelpers.h" />
+    <ClInclude Include="Main_Screen.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

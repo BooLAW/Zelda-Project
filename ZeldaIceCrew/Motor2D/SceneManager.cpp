@@ -10,7 +10,7 @@
 #include "SceneManager.h"
 #include "VillageScene.h"
 #include "DungeonScene.h"
-
+#include "Main_Screen.h"
 #define NUMBER_OF_PLAYERS 4
 
 SceneManager::SceneManager() : j1Module()
@@ -44,15 +44,17 @@ bool SceneManager::Start()
 	// Create scenes
 	village_scene = new VillageScene();
 	dungeon_scene = new DungeonScene();
+	main_screen = new Main_Screen();
 
 	village_scene->curr_id = village;
 	dungeon_scene->curr_id = dungeon;
-
+	main_screen->curr_id = mainscreen;
 	scenes.push_back(village_scene);
 	scenes.push_back(dungeon_scene);
+	scenes.push_back(main_screen);
 	// -------------
 
-	current_scene = dungeon_scene;
+	current_scene = main_screen;
 
 	if (current_scene != nullptr)
 		ret = current_scene->Start();

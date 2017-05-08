@@ -147,47 +147,75 @@ bool HUD::Start()
 
 bool HUD::Update(float dt)
 {
+
+
 	rupees_num->str = std::to_string(App->player->rupees);
 	bombs_num->str = std::to_string(App->player->bombs);
 	speed_num->str = std::to_string(App->player->pl_speed.x);
 	power_num->str = std::to_string(App->player->power);
 	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
 
-	if (App->player->talking) {
-		dialog_rect->active = true;
-	}
-	else {
-		dialog_rect->active = false;
-	}
-	if (inv->active) {
-		descriptions_rect->active = true;
-		stats_rect->active = true;
-		speed->active = true;
-		speed_num->active = true;
-		power->active = true;
-		power_num->active = true;
-		weapons->active = true;
-		if(!inv->Empty()){
-			if (inv->Selected() != nullptr) {
-				item_description->active = true;
-				item_description->str = inv->Selected()->obj->description;
-			}
-
+	if (App->player->inMainScreen) {
+		rupees->active = false;
+		bombs->active = false;
+		life_icon->active = false;
+		rupees_num->active = false;
+		bombs_num->active = false;
+		for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
+			it._Ptr->_Myval->active = false;
 		}
-	}
-	else {
-		inv->Disable();
-		descriptions_rect->active = false;
-		item_description->active = false;
-		stats_rect->active = false;
-		speed->active = false;
-		speed_num->active = false;
-		power->active = false;
-		power_num->active = false;
-		weapons->active = false;
-	}
-	UpdateHP();
+		pl_weapon->active = false;
+		weapon_rect->active = false;
 
+	}
+
+	else {
+		rupees->active = true;
+		bombs->active = true;
+		life_icon->active = true;
+		rupees_num->active = true;
+		bombs_num->active = true;
+		for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
+			it._Ptr->_Myval->active = true;
+		}
+		pl_weapon->active = true;
+		weapon_rect->active = true;
+
+		if (App->player->talking) {
+			dialog_rect->active = true;
+		}
+		else {
+			dialog_rect->active = false;
+		}
+		if (inv->active) {
+			descriptions_rect->active = true;
+			stats_rect->active = true;
+			speed->active = true;
+			speed_num->active = true;
+			power->active = true;
+			power_num->active = true;
+			weapons->active = true;
+			if (!inv->Empty()) {
+				if (inv->Selected() != nullptr) {
+					item_description->active = true;
+					item_description->str = inv->Selected()->obj->description;
+				}
+
+			}
+		}
+		else {
+			inv->Disable();
+			descriptions_rect->active = false;
+			item_description->active = false;
+			stats_rect->active = false;
+			speed->active = false;
+			speed_num->active = false;
+			power->active = false;
+			power_num->active = false;
+			weapons->active = false;
+		}
+		UpdateHP();
+	}
 	return true;
 }
 
