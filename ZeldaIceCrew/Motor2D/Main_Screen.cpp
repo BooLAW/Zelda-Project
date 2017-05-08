@@ -766,6 +766,95 @@ bool Main_Screen::CleanUp()
 	ui_elements.clear();
 	settings_elements.clear();
 	controls_elements.clear();
+
+	up->active=false;
+	down->active=false;
+	right->active=false;
+	left->active=false;
+	move_up->active=false;
+	move_down->active = false;
+	move_right->active = false;
+	move_left->active = false;
+	menu->active = false;
+	action->active = false;
+	dash->active = false;
+	back_controls->active= false;
+
+	Up->active= false;
+	Down->active= false;
+	Right->active=false;
+	Left->active = false;
+	Move_up->active= false;
+	Move_down->active= false;
+	Move_left->active = false;
+	Move_right->active = false;
+	Menu->active = false;
+	Action->active = false;
+	Dash->active = false;
+	Back_controls->active = false;
+
+	New_game->active = false;
+	new_game->active = false;
+	Continue->active = false;
+	cont->active = false;
+	Settings->active = false;
+	settings->active = false;
+	Exit->active= false;
+	exit->active = false;
+	Controls->active= false;
+	controls->active=false;
+	Mute->active=false;
+	mute->active=false;
+	Back->active=false;
+	back->active=false;
+
+
+
+
+
+
+
+
+	/*App->gui->DeleteElement(up);
+	App->gui->DeleteElement(down);
+	App->gui->DeleteElement(right);
+	App->gui->DeleteElement(left);
+	App->gui->DeleteElement(move_up);
+	App->gui->DeleteElement(move_down);
+	App->gui->DeleteElement(move_right);
+	App->gui->DeleteElement(move_left);
+	App->gui->DeleteElement(menu);
+	App->gui->DeleteElement(action);
+	App->gui->DeleteElement(dash);
+	App->gui->DeleteElement(back_controls);
+
+	App->gui->DeleteElement(Up);
+	App->gui->DeleteElement(Down);
+	App->gui->DeleteElement(Right);
+	App->gui->DeleteElement(Left);
+	App->gui->DeleteElement(Move_up);
+	App->gui->DeleteElement(Move_down);
+	App->gui->DeleteElement(Move_left);
+	App->gui->DeleteElement(Move_right);
+	App->gui->DeleteElement(Menu);
+	App->gui->DeleteElement(Action);
+	App->gui->DeleteElement(Dash);
+	App->gui->DeleteElement(Back_controls);
+
+	App->gui->DeleteElement(New_game);
+	App->gui->DeleteElement(new_game);
+	App->gui->DeleteElement(Continue);
+	App->gui->DeleteElement(cont);
+	App->gui->DeleteElement(Settings);
+	App->gui->DeleteElement(settings);
+	App->gui->DeleteElement(Exit);
+	App->gui->DeleteElement(exit);
+	App->gui->DeleteElement(Controls);
+	App->gui->DeleteElement(controls);
+	App->gui->DeleteElement(Mute);
+	App->gui->DeleteElement(mute);
+	App->gui->DeleteElement(Back);
+	App->gui->DeleteElement(back);*/
 	
 	return ret;
 }

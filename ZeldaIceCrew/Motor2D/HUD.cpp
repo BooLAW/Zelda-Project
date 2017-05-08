@@ -170,6 +170,16 @@ bool HUD::Update(float dt)
 	}
 
 	else {
+		rupees->active = true;
+		bombs->active = true;
+		life_icon->active = true;
+		rupees_num->active = true;
+		bombs_num->active = true;
+		for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
+			it._Ptr->_Myval->active = true;
+		}
+		pl_weapon->active = true;
+		weapon_rect->active = true;
 
 		if (App->player->talking) {
 			dialog_rect->active = true;

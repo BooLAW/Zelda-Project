@@ -30,11 +30,7 @@ bool j1Player::Start()
 	bool ret = true;
 	LOG("Player Start");
 	//CONTROLS
-	for (int i = 0; i < __LAST_CONTROLS; i++) {
-		if (i == MOVE_DOWN) {
-			
-		}
-	}
+	
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
 	//Idle
 	{
@@ -794,7 +790,7 @@ animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
 	}
 
 	// !_Weapon SetUp
-
+	room = { 2,3 };
 	return ret;
 }
 
