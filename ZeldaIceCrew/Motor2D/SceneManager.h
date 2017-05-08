@@ -7,14 +7,19 @@
 #include "Scene.h"
 #include "j1FileSystem.h"
 
+
+
 struct SDL_Texture;
 class VillageScene;
 class HouseScene;
 class DungeonScene;
 class ShopScene;
+
+
 //add the forward declaration for each new scene
 
 class Scene;
+class Main_Screen;
 
 class SceneManager : public j1Module
 {
@@ -61,6 +66,8 @@ public:
 	HouseScene*						house_scene = nullptr;
 	DungeonScene*					dungeon_scene = nullptr;
 	ShopScene*						shop_scene = nullptr;
+	Main_Screen*					main_screen = nullptr;
+
 private:
 	pugi::xml_document	scene_file;
 	std::string			folder;

@@ -21,7 +21,8 @@ enum scene_id {
 	null,
 	village,
 	dungeon,
-	intro
+	intro,
+	mainscreen
 };
 class Item;
 class Enemy;

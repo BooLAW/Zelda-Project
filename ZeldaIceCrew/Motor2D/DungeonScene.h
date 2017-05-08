@@ -16,6 +16,7 @@ class Button;
 class Window;
 class Selector;
 class Windowed_Image;
+
 class DungeonScene : public Scene
 {
 public:

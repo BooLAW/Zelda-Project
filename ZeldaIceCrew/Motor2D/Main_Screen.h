@@ -1,8 +1,7 @@
-#ifndef __DUNGEON_SCENE_H__
-#define __DUNGEON_SCENE_H__
+#ifndef __MAIN_SCREEN_H__
+#define __MAIN_SCREEN_H__
 
 #include "j1Module.h"
-#include "EntityManager.h"
 #include <vector>
 #include "Scene.h"
 #include "j1Gui.h"
@@ -41,6 +40,10 @@ private:
 
 	std::list<UIElement*> ui_elements;
 	UIElement* selected;
+	GuiImage* New_game;
+	GuiImage* Continue;
+	GuiImage* Settings;
+	GuiImage* Exit;
 
 };
 
