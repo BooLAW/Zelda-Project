@@ -16,6 +16,7 @@ class Button;
 class Window;
 class Selector;
 class Windowed_Image;
+
 class DungeonScene : public Scene
 {
 public:
@@ -50,6 +51,7 @@ private:
 	Label* win_title;
 	Npc* test;
 	Enemy* en;
+	
 };
 
 #endif //__DUNGEON_SCENE_H__
