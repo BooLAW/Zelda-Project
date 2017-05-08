@@ -101,11 +101,11 @@ protected:
 
 	bool change_scene = false;
 
-	fPoint pl_start_pos;
+	
 
 public:
 	bool follow_cam = true;
-  
+	fPoint pl_start_pos;
 	std::list<Room*> rooms;
 
 	char* music_path;
