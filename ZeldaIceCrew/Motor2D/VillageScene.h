@@ -22,7 +22,8 @@ public:
 
 	// Called before the first frame
 	bool Start();
-
+	// Called each loop iteration
+	bool Update(float dt);
 public:
 	bool to_house = false;
 	bool to_dungeon = false;

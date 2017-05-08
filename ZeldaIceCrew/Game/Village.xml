@@ -1,41 +1,40 @@
 <?xml version="1.0"?>
 <village>
   <maps>
-    <map id="0">
+    <map id="1">
       <file>Village.tmx</file>
-
+      <camera follow ="true"/>
       <music volume="60">Audio/Music/Forest_Theme.ogg</music>
 
       <Link>
         <room x="0" y="0"/>
-        <pos x="100" y="100"/>
+        <pos x="335" y="1600"/>
       </Link>
 <!-- House -->
       <rooms>
-        <room x="0" y="0" w="1024" h="576">
+        <room x="0" y="0" w="200" h="200">
           <items>
           </items>
           <blocks>
-            <block subtype="pot" x="100" y="100"/>
+            <block subtype="pot" x="340" y="150"/>
           </blocks>
           <doorways>
-            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <doorway subtype="dw_cam" target_x="1700" target_y="1780" dir="Down" x="370" y="1820"/>
           </doorways>
 
         </room>
 <!-- Shop -->
-        <room x="0" y="1" w="1024" h="576">
-          
+        <room x="0" y="1" w="200" h="200">
           <items>
-            <item subtype="pegasus_boots" x="20" y="20"/>
-            <item subtype="weapon_bow" x="40" y="20"/>
+            <item subtype="pegasus_boots" x="1000" y="-320"/>
+            <item subtype="weapon_bow" x="900" y="-320"/>
           </items>
 
           <blocks>
           </blocks>
 
           <doorways>
-            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <doorway subtype="dw_cam" target_x="1000" target_y="1500" dir="Down" x="960" y="-260"/>
           </doorways>
 
           <enemies>
@@ -43,7 +42,7 @@
 
         </room>
 <!-- Overworld -->
-        <room x="0" y="2" w="1024" h="576">
+        <room x="0" y="2" w="200" h="200">
           
           <items>
             <item subtype="heart_container" x="50" y="50"/>

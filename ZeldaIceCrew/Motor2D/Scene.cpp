@@ -8,8 +8,9 @@
 
 bool Scene::stdStart()
 {
-	Load_new_map(0);
+	Load_new_map(1);
 	App->player->pos = pl_start_pos;
+
 
 	return true;
 
@@ -618,34 +619,8 @@ bool Scene::Load_new_map(int id)
 			//Camera position
 			int scale = App->win->GetScale();
 			App->player->camera_follow = temp.child("camera").attribute("follow").as_bool(false);
-			// ------------NEEDED???
-			//if (App->player->camera_follow == true)
-			//{
-			//	int h = App->win->GetHeight() / scale;
-			//	int w = App->win->GetWidth() / scale;
-			//	App->render->camera.x = -((player->position.x - (w / scale)) * scale);
-			//	App->render->camera.y = -((player->position.y - (h / scale)) * scale);
-
-			//	iPoint size_map = App->map->MapToWorld(App->map->data.width, App->map->data.height);
-			//	if (-App->render->camera.x < 0)
-			//	{
-			//		App->render->camera.x = 0;
-			//	}
-			//	if (-App->render->camera.y < 0)
-			//	{
-			//		App->render->camera.y = 0;
-			//	}
-			//	if (((-App->render->camera.x / scale) + App->win->GetWidth() / scale) > size_map.x)
-			//	{
-			//		App->render->camera.x = (-size_map.x + App->win->GetWidth() / scale) * scale;
-			//	}
-			//	if (((-App->render->camera.y / scale) + App->win->GetHeight() / scale) > size_map.y)
-			//	{
-			//		App->render->camera.y = (-size_map.y + App->win->GetHeight() / scale) * scale;
-			//	}
-			//}
-			//else
-			//{
+		
+	
 			iPoint size_pos = App->map->MapToWorld(App->map->data.width, App->map->data.height);
 			App->render->camera.x = (App->win->GetWidth() / scale - size_pos.x);
 			App->render->camera.y = (App->win->GetHeight() / scale - size_pos.y);
