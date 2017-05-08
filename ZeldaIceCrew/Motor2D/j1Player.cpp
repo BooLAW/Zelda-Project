@@ -842,7 +842,7 @@ bool j1Player::Update(float dt)
 			//if (alive == false)
 			//{
 			//	DyingRestart();
-			//		action_blit = PickUp;//change to wake Up animation when we have it
+			//	action_blit = Sleep_Wake_up;//change to wake Up animation when we have it
 			//	return ret;
 			//}
 			if (App->render->cam_travel != true) {
@@ -873,7 +873,7 @@ bool j1Player::Update(float dt)
 				// Actions
 				{
 
-					if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
+					/*if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
 						dir_override = true;
 						anim_override = true;
 						action = true;
@@ -882,7 +882,7 @@ bool j1Player::Update(float dt)
 
 					}
 
-					/*if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
+					if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
 						dir_override = true;
 						anim_override = true;
 						action = true;
@@ -1319,7 +1319,7 @@ void j1Player::DyingRestart()
 {
 	alive = true;
 	pos = ORIGIN_RESTART;
-	App->scene_manager->toChangeScene((Scene*)App->scene_manager->house_scene);
+	App->scene_manager->toChangeScene((Scene*)App->scene_manager->village_scene);
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
 	App->player->inventory.clear();
@@ -1329,6 +1329,12 @@ void j1Player::DyingRestart()
 	bombs = 0;
 //	arrows = 0;
 	curr_life_points = max_life_points;
+	/*dir_override = true;
+	anim_override = true;
+	action = true;
+	action_blit = Sleep_Wake_up;
+	curr_dir = Down;*/
+
 	//add more features to discuss by the designer
 	action = true;
 }
