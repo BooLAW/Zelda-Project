@@ -54,7 +54,7 @@ bool SceneManager::Start()
 	scenes.push_back(main_screen);
 	// -------------
 
-	current_scene = dungeon_scene;
+	current_scene = main_screen;
 
 	if (current_scene != nullptr)
 		ret = current_scene->Start();

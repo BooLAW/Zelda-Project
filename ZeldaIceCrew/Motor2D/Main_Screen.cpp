@@ -24,12 +24,13 @@ bool Main_Screen::Start()
 	App->player->inMainScreen = true;
 	fx = App->audio->LoadFx("Audio/Fx/cursor.wav");
 	press_fx = App->audio->LoadFx("Audio/Fx/button.wav");
+	tex = App->tex->Load("Sprites/TitleScreen.png");
 	//App->render->camera.w = 1920;
 	//App->render->camera.h = 1200;
 
 	background = (GuiImage*)App->gui->CreateElement(image);
 	background->pos = { 0,0 };
-	background->texture = App->tex->Load("Sprites/TitleScreen.png");
+	background->texture = tex;
 	background->texture_rect = { 0,0,1024,768 };
 	background->active = true;
 	background->movable = true;
@@ -758,24 +759,13 @@ bool Main_Screen::IsInsideCam(UIElement * element)
 
 bool Main_Screen::CleanUp()
 {
-	App->player->inMainScreen = false;
 	bool ret = true;
+	App->player->inMainScreen = false;
+	App->tex->UnLoad(tex);
 
-	for (std::list<UIElement*>::const_iterator it = ui_elements.cbegin(); it != ui_elements.cend(); it++) {
-		App->gui->DeleteElement(it._Ptr->_Myval);
-	}
 	ui_elements.clear();
-	App->gui->DeleteElement(background);
-	App->gui->DeleteElement(new_game);
-	App->gui->DeleteElement(cont);
-	App->gui->DeleteElement(settings);
-	App->gui->DeleteElement(exit);
-
-	for (std::list<UIElement*>::const_iterator it = settings_elements.cbegin(); it != settings_elements.cend(); it++) {
-		App->gui->DeleteElement(it._Ptr->_Myval);
-	}
-	App->gui->DeleteElement(controls);
-	App->gui->DeleteElement(mute);
-	App->gui->DeleteElement(back);
+	settings_elements.clear();
+	controls_elements.clear();
+	
 	return ret;
 }

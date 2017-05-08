@@ -102,6 +102,9 @@ private:
 	GuiText* action;
 	GuiText* dash;
 	GuiText* back_controls;
+
+
+	SDL_Texture* tex;
 };
 
 #endif //__Main_Screen_H__
