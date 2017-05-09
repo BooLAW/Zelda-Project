@@ -146,7 +146,7 @@ bool Main_Screen::Start()
 	up->str = "Up";
 	up->active = false;
 	up->movable = true;
-	up->pos = { Up->pos.x + 550, Up->pos.y + 2 };
+	up->pos = { Up->pos.x + 350, Up->pos.y + 2 };
 
 	Down = (GuiImage*)App->gui->CreateElement(image);
 	Down->pos = { Up->pos.x,Up->pos.y + 50 };
@@ -159,7 +159,7 @@ bool Main_Screen::Start()
 	down->str = "Down";
 	down->active = false;
 	down->movable = true;
-	down->pos = { Down->pos.x + 550, Down->pos.y + 2 };
+	down->pos = { Down->pos.x + 350, Down->pos.y + 2 };
 
 	Right = (GuiImage*)App->gui->CreateElement(image);
 	Right->pos = { Down->pos.x,Down->pos.y + 50 };
@@ -172,7 +172,7 @@ bool Main_Screen::Start()
 	right->str = "Right";
 	right->active = false;
 	right->movable = true;
-	right->pos = { Right->pos.x + 550, Right->pos.y + 2 };
+	right->pos = { Right->pos.x + 350, Right->pos.y + 2 };
 
 	Left = (GuiImage*)App->gui->CreateElement(image);
 	Left->pos = { Right->pos.x,Right->pos.y + 50 };
@@ -185,7 +185,7 @@ bool Main_Screen::Start()
 	left->str = "Left";
 	left->active = false;
 	left->movable = true;
-	left->pos = { Left->pos.x + 550, Left->pos.y + 2 };
+	left->pos = { Left->pos.x + 350, Left->pos.y + 2 };
 
 	Move_up = (GuiImage*)App->gui->CreateElement(image);
 	Move_up->pos = { Left->pos.x,Left->pos.y + 50 };
@@ -198,7 +198,7 @@ bool Main_Screen::Start()
 	move_up->str = "Move Up";
 	move_up->active = false;
 	move_up->movable = true;
-	move_up->pos = { Move_up->pos.x + 550, Move_up->pos.y + 2 };
+	move_up->pos = { Move_up->pos.x + 350, Move_up->pos.y + 2 };
 
 	Move_down = (GuiImage*)App->gui->CreateElement(image);
 	Move_down->pos = { Move_up->pos.x,Move_up->pos.y + 50 };
@@ -211,7 +211,7 @@ bool Main_Screen::Start()
 	move_down->str = "Move Down";
 	move_down->active = false;
 	move_down->movable = true;
-	move_down->pos = { Move_down->pos.x + 550, Move_down->pos.y + 2 };
+	move_down->pos = { Move_down->pos.x + 350, Move_down->pos.y + 2 };
 
 	Move_right = (GuiImage*)App->gui->CreateElement(image);
 	Move_right->pos = { Move_down->pos.x,Move_down->pos.y + 50 };
@@ -224,7 +224,7 @@ bool Main_Screen::Start()
 	move_right->str = "Move Right";
 	move_right->active = false;
 	move_right->movable = true;
-	move_right->pos = { Move_right->pos.x + 550, Move_right->pos.y + 2 };
+	move_right->pos = { Move_right->pos.x + 350, Move_right->pos.y + 2 };
 
 	Move_left = (GuiImage*)App->gui->CreateElement(image);
 	Move_left->pos = { Move_right->pos.x,Move_right->pos.y + 50 };
@@ -237,7 +237,7 @@ bool Main_Screen::Start()
 	move_left->str = "Move_left";
 	move_left->active = false;
 	move_left->movable = true;
-	move_left->pos = { Move_left->pos.x + 550, Move_left->pos.y + 2 };
+	move_left->pos = { Move_left->pos.x + 350, Move_left->pos.y + 2 };
 
 	Menu = (GuiImage*)App->gui->CreateElement(image);
 	Menu->pos = { Move_left->pos.x,Move_left->pos.y + 50 };
@@ -250,7 +250,7 @@ bool Main_Screen::Start()
 	menu->str = "Menu";
 	menu->active = false;
 	menu->movable = true;
-	menu->pos = { Menu->pos.x + 550, Menu->pos.y + 2 };
+	menu->pos = { Menu->pos.x + 350, Menu->pos.y + 2 };
 
 	Action = (GuiImage*)App->gui->CreateElement(image);
 	Action->pos = { Menu->pos.x,Menu->pos.y + 50 };
@@ -263,7 +263,7 @@ bool Main_Screen::Start()
 	action->str = "Action";
 	action->active = false;
 	action->movable = true;
-	action->pos = { Action->pos.x + 550, Action->pos.y + 2 };
+	action->pos = { Action->pos.x + 350, Action->pos.y + 2 };
 
 	Dash = (GuiImage*)App->gui->CreateElement(image);
 	Dash->pos = { Action->pos.x,Action->pos.y + 50 };
@@ -276,7 +276,7 @@ bool Main_Screen::Start()
 	dash->str = "Dash";
 	dash->active = false;
 	dash->movable = true;
-	dash->pos = { Dash->pos.x + 550, Dash->pos.y + 2 };
+	dash->pos = { Dash->pos.x + 350, Dash->pos.y + 2 };
 
 	Back_controls = (GuiImage*)App->gui->CreateElement(image);
 	Back_controls->pos = { Dash->pos.x, Dash->pos.y + 50 };
@@ -290,6 +290,75 @@ bool Main_Screen::Start()
 	back_controls->active = false;
 	back_controls->movable = true;
 	back_controls->pos = { Back_controls->pos.x + 550, Back_controls->pos.y + 2 };
+
+
+
+	up_key= (GuiText*)App->gui->CreateElement(text);
+	up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[UP]);
+	up_key->active = false;
+	up_key->movable = true;
+	up_key->pos = { up->pos.x + 200, up->pos.y };
+
+	down_key = (GuiText*)App->gui->CreateElement(text);
+	down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DOWN]);
+	down_key->active = false;
+	down_key->movable = true;
+	down_key->pos = { down->pos.x + 200, down->pos.y };
+
+	left_key = (GuiText*)App->gui->CreateElement(text);
+	left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[LEFT]);
+	left_key->active = false;
+	left_key->movable = true;
+	left_key->pos = { left->pos.x + 200, left->pos.y };
+
+	right_key = (GuiText*)App->gui->CreateElement(text);
+	right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[RIGHT]);
+	right_key->active = false;
+	right_key->movable = true;
+	right_key->pos = { right->pos.x + 200, right->pos.y };
+
+	move_up_key = (GuiText*)App->gui->CreateElement(text);
+	move_up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_UP]);
+	move_up_key->active = false;
+	move_up_key->movable = true;
+	move_up_key->pos = { move_up->pos.x + 200, move_up->pos.y };
+
+	move_down_key = (GuiText*)App->gui->CreateElement(text);
+	move_down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_DOWN]);
+	move_down_key->active = false;
+	move_down_key->movable = true;
+	move_down_key->pos = { move_down->pos.x + 200, move_down->pos.y };
+
+	move_left_key = (GuiText*)App->gui->CreateElement(text);
+	move_left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_LEFT]);
+	move_left_key->active = false;
+	move_left_key->movable = true;
+	move_left_key->pos = { move_left->pos.x + 200, move_left->pos.y };
+
+	move_right_key = (GuiText*)App->gui->CreateElement(text);
+	move_right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_RIGHT]);
+	move_right_key->active = false;
+	move_right_key->movable = true;
+	move_right_key->pos = { move_right->pos.x + 200, move_right->pos.y };
+
+
+	menu_key = (GuiText*)App->gui->CreateElement(text);
+	menu_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MENU]);
+	menu_key->active = false;
+	menu_key->movable = true;
+	menu_key->pos = { menu->pos.x + 200, menu->pos.y };
+
+	action_key = (GuiText*)App->gui->CreateElement(text);
+	action_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[ACTION]);
+	action_key->active = false;
+	action_key->movable = true;
+	action_key->pos = { action->pos.x + 200, action->pos.y };
+
+	dash_key = (GuiText*)App->gui->CreateElement(text);
+	dash_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DASH]);
+	dash_key->active = false;
+	dash_key->movable = true;
+	dash_key->pos = { dash->pos.x + 200, dash->pos.y };
 
 	App->audio->PlayMusic("Audio/Music/Opening.ogg");
 
@@ -306,6 +375,18 @@ bool Main_Screen::Start()
 
 bool Main_Screen::Update(float dt)
 {
+	up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[UP]);
+	down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DOWN]);
+	left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[LEFT]);
+	right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[RIGHT]);
+	move_up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_UP]);
+	move_down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_DOWN]);
+	move_left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_LEFT]);
+	move_right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_RIGHT]);
+	menu_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MENU]);
+	action_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[ACTION]);
+	dash_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DASH]);
+
 	bool ret = true;
 	if (in_settings) {
 
@@ -341,6 +422,18 @@ bool Main_Screen::Update(float dt)
 		mute->active = true;
 		Back->active = true;
 		back->active = true;
+
+		up_key->active = false;
+		down_key->active = false;
+		left_key->active = false;
+		right_key->active = false;
+		move_up_key->active = false;
+		move_down_key->active = false;
+		move_left_key->active = false;
+		move_right_key->active = false;
+		menu_key->active = false;
+		action_key->active = false;
+		dash_key->active = false;
 
 
 		for (std::list<UIElement*>::const_iterator it = settings_elements.cbegin(); it != settings_elements.cend(); it++) {
@@ -417,6 +510,18 @@ bool Main_Screen::Update(float dt)
 		dash->active = true;
 		back_controls->active = true;
 
+		up_key->active = true;
+		down_key->active = true;
+		left_key->active = true;
+		right_key->active = true;
+		move_up_key->active = true;
+		move_down_key->active = true;
+		move_left_key->active = true;
+		move_right_key->active = true;
+		menu_key->active = true;
+		action_key->active = true;
+		dash_key->active = true;
+
 		if (changing_controls) {
 			if (selected == Up) {
 
@@ -492,74 +597,75 @@ bool Main_Screen::Update(float dt)
 				}
 			}
 		}
+		else {
+			for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
+				if (selected == it._Ptr->_Myval) {
+					it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
+				}
+				else {
+					it._Ptr->_Myval->texture_rect = { 0, 514, 683, 36 };
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+				App->audio->PlayFx(fx);
+				selected = Controls_Prev();
+				/*if (!IsInsideCam(selected)) {
+				Scroll_Down();
+				}*/
+			}
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+				App->audio->PlayFx(fx);
+				selected = Controls_Next();
+				/*if (!IsInsideCam(selected)) {
+				Scroll_Up();
+				}*/
 
-		for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
-			if (selected == it._Ptr->_Myval) {
-				it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
 			}
-			else {
-				it._Ptr->_Myval->texture_rect = { 0, 514, 683, 36 };
-			}
-		}
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
-			App->audio->PlayFx(fx);
-			selected = Controls_Prev();
-			/*if (!IsInsideCam(selected)) {
-			Scroll_Down();
-			}*/
-		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
-			App->audio->PlayFx(fx);
-			selected = Controls_Next();
-			/*if (!IsInsideCam(selected)) {
-			Scroll_Up();
-			}*/
-
-		}
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-			App->audio->PlayFx(press_fx);
-			if (selected == Up) {
-				// go to change controls scene
-				changing_controls = true;
-			}
-			if (selected == Down) {
-				changing_controls = true;
-			}
-			if (selected == Right) {
-				changing_controls = true;
-			}
-			if (selected == Left) {
-				changing_controls = true;
-			}
-			if (selected == Move_left) {
-				changing_controls = true;
-			}
-			if (selected == Move_up) {
-				changing_controls = true;
-			}
-			if (selected == Move_down) {
-				changing_controls = true;
-			}
-			if (selected == Move_right) {
-				changing_controls = true;
-			}
-			if (selected == Menu) {
-				changing_controls = true;
-			}
-			if (selected == Action) {
-				changing_controls = true;
-			}
-			if (selected == Dash) {
-				changing_controls = true;
-			}
-			if (selected == Back_controls) {
-				in_settings = true;
-				in_controls = false;
-				selected = settings_elements.front();
-				changing_controls = false;
-			}
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+				App->audio->PlayFx(press_fx);
+				if (selected == Up) {
+					// go to change controls scene
+					changing_controls = true;
+				}
+				if (selected == Down) {
+					changing_controls = true;
+				}
+				if (selected == Right) {
+					changing_controls = true;
+				}
+				if (selected == Left) {
+					changing_controls = true;
+				}
+				if (selected == Move_left) {
+					changing_controls = true;
+				}
+				if (selected == Move_up) {
+					changing_controls = true;
+				}
+				if (selected == Move_down) {
+					changing_controls = true;
+				}
+				if (selected == Move_right) {
+					changing_controls = true;
+				}
+				if (selected == Menu) {
+					changing_controls = true;
+				}
+				if (selected == Action) {
+					changing_controls = true;
+				}
+				if (selected == Dash) {
+					changing_controls = true;
+				}
+				if (selected == Back_controls) {
+					in_settings = true;
+					in_controls = false;
+					selected = settings_elements.front();
+					changing_controls = false;
+				}
 
 
+			}
 		}
 
 
@@ -582,6 +688,18 @@ bool Main_Screen::Update(float dt)
 		action->active = false;
 		dash->active = false;
 		back_controls->active = false;
+
+		up_key->active = false;
+		down_key->active = false;
+		left_key->active = false;
+		right_key->active = false;
+		move_up_key->active = false;
+		move_down_key->active = false;
+		move_left_key->active = false;
+		move_right_key->active = false;
+		menu_key->active = false;
+		action_key->active = false;
+		dash_key->active = false;
 
 		New_game->active = true;
 		new_game->active = true;
@@ -889,6 +1007,17 @@ bool Main_Screen::CleanUp()
 	Back->active=false;
 	back->active=false;
 
+	up_key->active = false;
+		down_key->active = false;
+		left_key->active = false;
+		right_key->active = false;
+		move_up_key->active = false;
+		move_down_key->active = false;
+		move_left_key->active = false;
+		move_right_key->active = false;
+		menu_key->active = false;
+		action_key->active = false;
+		dash_key->active = false;
 
 
 

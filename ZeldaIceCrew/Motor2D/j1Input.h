@@ -98,7 +98,7 @@ public:
 
 	// Gather relevant win events
 	bool GetWindowEvent(j1EventWindow ev);
-
+	const char* GetKeyString(SDL_Scancode scan)const ;
 	// Check key states (includes mouse and joy buttons)
 	j1KeyState GetKey(int id) const
 	{

@@ -105,6 +105,18 @@ private:
 	GuiText* back_controls;
 
 
+	GuiText* up_key;
+	GuiText* down_key;
+	GuiText* left_key;
+	GuiText* right_key;
+	GuiText* move_up_key;
+	GuiText* move_down_key;
+	GuiText* move_left_key;
+	GuiText* move_right_key;
+	GuiText* menu_key;
+	GuiText* action_key;
+	GuiText* dash_key;
+
 	SDL_Texture* tex;
 };
 
