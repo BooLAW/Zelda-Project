@@ -914,6 +914,7 @@ bool j1Player::Update(float dt)
 						}
 
 						if (action == true && action_blit == Dash) {
+							PlayerInmortal(1);
 							link_coll->active = false;
 							if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
 								if (CheckSpace(pos.x - pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y - pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {

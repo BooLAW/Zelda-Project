@@ -15,7 +15,6 @@
 #include "Entity.h"
 #include "NPC.h"
 
-#include "Bomb.h"
 #include "Item.h"
 #include "Block.h"
 #include "Enemy.h"
@@ -32,7 +31,6 @@ struct SDL_Rect;
 
 class Doorway;
 
-class Bomb;
 class Item;
 class Enemy;
 class Block;

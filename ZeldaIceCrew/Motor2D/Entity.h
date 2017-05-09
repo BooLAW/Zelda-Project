@@ -19,7 +19,6 @@ enum ENTITYTYPE
 	weapon,
 	block,
 	enemy,
-	bomb,
 	doorway,
 	npc,
 	unknown
