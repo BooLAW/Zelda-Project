@@ -191,7 +191,7 @@ bool j1Map::CleanUp()
 
 int j1Map::TileCheck(float x, float y) const
 {
-	int ret = 0;
+  int ret = 0;
   if(App->map->active == true) {
 	//get the key navigation tiles(r)
 	//Note: aqui el que fa es guardarse el numero del tileset en el que estan 2 
