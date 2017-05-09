@@ -64,6 +64,9 @@ public:
 	Item* CreateItem(uint subtype);
 	Block* CreateBlock(uint subtype);
 	Npc * CreateNPC(NPC_TYPE type, int id);
+
+	SDL_Texture* std_enemy_tex = nullptr;
+
 private:
 	
 	std::deque<Entity*> entities;

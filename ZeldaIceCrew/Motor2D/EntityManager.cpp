@@ -63,6 +63,8 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 
 	ret->type = enemy;
 
+	ret->SetTexture(std_enemy_tex);
+
 	ret->Start();
 
 	App->entitymanager->PushEntity(ret);
@@ -355,6 +357,7 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 bool EntityManager::CleanUp()
 {
 	App->tex->UnLoad(npc_tex);
+	App->tex->UnLoad(std_enemy_tex);
 	DestroyEntities();
 	return true;
 	
@@ -362,7 +365,7 @@ bool EntityManager::CleanUp()
 
 bool EntityManager::Start(){
 	
-	
+	std_enemy_tex = App->tex->Load("Sprites/Enemies/Enemies.png");
 	npc_tex = App->tex->Load("Sprites/Npc.png");
 	
 	return true;
@@ -371,7 +374,6 @@ bool EntityManager::Start(){
 bool EntityManager::Awake(pugi::xml_node & config)
 {
 	bool ret = true;
-
 
 	pugi::xml_node entityAttributes = config.child("entityAttributes");
 	std::string folder = entityAttributes.attribute("folder").as_string("/");
