@@ -86,12 +86,14 @@
     <ClCompile Include="NPC.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Room.cpp" />
     <ClCompile Include="MathHelpers.cpp" />
     <ClCompile Include="j1Map.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Main_Screen.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>

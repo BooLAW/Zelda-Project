@@ -8,6 +8,7 @@
 
   <player>
     <rupees n="0"/>
+    <hp curr="6" max="6"/>
     <weapons curr_weapon ="t_sword" sword="true" bow ="true" />
     <items power_gauntlet = "false"
         pegasus_boots="false"

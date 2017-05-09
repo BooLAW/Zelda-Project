@@ -1414,7 +1414,6 @@ int j1Player::CheckSpace(float new_x, float new_y)
 					}
 				}
 			}
-
 			// Block Check
 			if (ret != false) {
 				for (std::list<Block*>::iterator it = c_r->blocks.begin(); it != c_r->blocks.end(); it++) {
@@ -1646,6 +1645,8 @@ void j1Player::Slash_()
 bool j1Player::Load(pugi::xml_node& data)
 {
 	//weapons info
+	curr_life_points = data.child("hp").attribute("curr").as_int();
+	max_life_points = data.child("hp").attribute("max").as_int();
 	std::string curr_weapon = data.child("weapons").attribute("curr_weapon").as_string();
 		if (curr_weapon.c_str() == "t_sword")
 	if(data.child("weapons").attribute("sword").as_bool())
@@ -1674,6 +1675,9 @@ bool j1Player::Load(pugi::xml_node& data)
 // Save Game State
 bool j1Player::Save(pugi::xml_node& data) const
 {
+	pugi::xml_node hp = data.append_child("hp");
+		hp.append_attribute("curr") = curr_life_points;
+		hp.append_attribute("max") = max_life_points;
 	pugi::xml_node weap = data.append_child("weapons");
 
 	weap.append_attribute("curr_weapon") = pos.x;

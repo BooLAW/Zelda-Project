@@ -60,7 +60,7 @@ public:
 	SDL_Rect room_rect;
 
 	SDL_Rect cam_boundaries;
-
+	bool boss_room = false;
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
 	std::list<Block*> blocks;
