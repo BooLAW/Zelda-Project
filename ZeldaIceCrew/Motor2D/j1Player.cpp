@@ -1658,7 +1658,7 @@ bool j1Player::Load(pugi::xml_node& data)
 		inventory.push_back(App->entitymanager->CreateItem(pegasus_boots));
 	//dungeon situation info
 	if (data.child("dungeon").attribute("in").as_bool(false) == true)
-		App->scene_manager->SetCurrentScene(App->scene_manager->dungeon_scene);
+		App->scene_manager->SetCurrentScene((Scene*)App->scene_manager->dungeon_scene);
 
 	//maps completed in dungeon
 
@@ -1688,9 +1688,6 @@ bool j1Player::Save(pugi::xml_node& data) const
 		dun.append_attribute("map2_comp") = map2_comp;
 		dun.append_attribute("map3_comp") = map3_comp;
 		dun.append_attribute("map4_comp") = map4_comp;
-		dun.append_attribute("map5_comp") = map5_comp;
-
-
-		4                                                                                              
+		dun.append_attribute("map5_comp") = map5_comp;                                                                                         
 	return true;
 }

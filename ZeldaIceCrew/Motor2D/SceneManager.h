@@ -52,7 +52,7 @@ public:
 		target = new_scene;
 	}
 	Scene* GetCurrentScene();
-	Scene* SetCurrentScene();
+	Scene* SetCurrentScene(Scene* new_scene);
 
 
 public:
