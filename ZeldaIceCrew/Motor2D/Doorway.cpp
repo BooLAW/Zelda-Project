@@ -31,14 +31,14 @@ void Doorway::SetUp(uint dir)
 		collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.y, DOORWAY_SIZE.x };
 		break;
 	default:
-		//LOG("Unknown DOORWAY Direction Id: %d", direction);
+		
 		break;
 	}
 }
 void Doorway::Update(float dt)
 {
 
-	//LOG("DOORWAY UPDATE");
+	
 
 	bool end_animating = false;
 
@@ -63,13 +63,13 @@ void Doorway::Update(float dt)
 				App->render->camera.y -= CHANGE_SPEED;
 				break;
 			case Left:
-				LOG("%d %d", App->render->camera.x, go_to.x);
+			
 				if (App->render->camera.x >= go_to.x)
 					end_animating = true;
 				App->render->camera.x += CHANGE_SPEED;
 				break;
 			case Right:
-				LOG("%d %d", App->render->camera.x, go_to.x - 2*ROOM_W);
+			
 				if (App->render->camera.x <= go_to.x - 2*ROOM_W)
 					end_animating = true;
 				App->render->camera.x -= CHANGE_SPEED;
@@ -110,14 +110,16 @@ void Doorway::Update(float dt)
 				}
 			}
 		if (crossing == true && state == open) {
-			Cross();
-			crossed = true;
+			if (crossed == false) {
+				Cross();
+				crossed = true;
+			}
 		}
 
 		Draw();
 	}
 
-		//LOG("END DOORWAY UPDT");
+		
 };
 
 bool DwDungeon::Cross()
@@ -150,8 +152,6 @@ bool DwDungeon::Cross()
 
 	//App->Pause();
 
-	//LOG("PLAYER CROSS");
-	//LOG("PLAYER ROOM: %d %d", App->player->room.x, App->player->room.y);
 
 	return true;
 }
@@ -214,7 +214,7 @@ void DwDungeon::SetPos(int x, int y)
 
 void Doorway::CleanUp()
 {
-	//LOG("DOOR CLEANUP");
+	
 	if (collider != nullptr) {
 		collider->to_delete = true;
 	}

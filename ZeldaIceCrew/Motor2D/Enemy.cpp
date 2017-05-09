@@ -73,8 +73,6 @@ uint Enemy::GetPlayerDirection()
 
 void Enemy::stdUpdate(float dt)
 {
-	//LOG("ENEMY POS: %f %f", pos.x, pos.y);
-	//LOG("ENEMY UPDATE");
 	
 	if (App->IsPaused() == false) {
 
@@ -287,15 +285,11 @@ void Enemy::Hit(uint dir, uint dmg)
 	if (hit == false) {
 		
 		hit = true;
-		
-		//LOG("HP: %d DMG: %d", stats.Hp, dmg);
 
 		stats.Hp -= dmg;
 
-		//LOG("HP: %d", stats.Hp, dmg);
-
 		if (stats.Hp <= 0) {
-			//LOG("ENEMY DEATH");
+			
 			Death();
 			return;
 		}
@@ -325,10 +319,15 @@ void Enemy::Hit(uint dir, uint dmg)
 
 void Enemy::Death()
 {
-	Reward();
-	SDL_Delay(150);
-	//LOG("ENEMY DEATH");
-	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
+	hit_pause_counter++;
+	if (hit_pause_counter < 200) {
+		if (hit_pause_counter % 2)
+			SDL_Delay(1);
+	}
+	else {
+		Reward();
+		App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
+	}
 }
 
 void Enemy::Reward()
