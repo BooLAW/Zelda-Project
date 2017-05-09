@@ -452,7 +452,16 @@ bool Main_Screen::Update(float dt)
 
 			}
 			if (selected == Mute) {
-				//mute the app
+				if (App->audio->volume_percentatge != 0) {
+					App->audio->volume_percentatge = 0;
+					App->audio->SetVolumeMusic(0);
+					App->audio->SetVolume(0, -1);
+				}
+				else {
+					App->audio->volume_percentatge = 1;
+					App->audio->SetVolumeMusic(1);
+					App->audio->SetVolume(1, -1);
+				}
 			}
 			if (selected == Back) {
 
@@ -462,6 +471,12 @@ bool Main_Screen::Update(float dt)
 			}
 
 		}
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+			selected = ui_elements.front();
+			in_settings = false;
+			in_controls = false;
+		}
+
 
 
 	}
@@ -630,6 +645,14 @@ bool Main_Screen::Update(float dt)
 					App->audio->PlayFx(press_fx);
 				}
 			}
+			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+				App->audio->PlayFx(press_fx);
+				in_settings = true;
+				in_controls = false;
+				selected = settings_elements.front();
+				changing_controls = false;
+			
+			}
 
 
 			}
@@ -706,10 +729,12 @@ bool Main_Screen::Update(float dt)
 			App->audio->PlayFx(press_fx);
 			if (selected == New_game) {
 				// start a new game, for now:
+				App->player->inMainScreen = false;
 				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 			}
 			if (selected == Continue) {
 				//continue with the current game, for now:
+				App->player->inMainScreen = false;
 				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 			}
 			if (selected == Settings) {
@@ -717,7 +742,7 @@ bool Main_Screen::Update(float dt)
 				selected = settings_elements.front();
 			}
 			if (selected == Exit) {
-				//close the app
+				ret = false;
 
 			}
 		}

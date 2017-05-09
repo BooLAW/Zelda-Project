@@ -44,8 +44,8 @@ public:
 	virtual bool Update(float dt);
 	virtual bool stdUpdate(float dt);
 	virtual bool PostUpdate() {
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-			return false;
+		/*if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+			return false;*/
 		return true;
 	};
 	virtual bool CleanUp();

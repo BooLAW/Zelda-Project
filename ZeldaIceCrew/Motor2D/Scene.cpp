@@ -428,7 +428,7 @@ bool Scene::Load_new_map(int id)
 
 				//Music
 				App->audio->PlayMusic(temp.child_value("music"));
-				App->audio->SetVolumeMusic(temp.child("music").attribute("volume").as_uint(60));
+				App->audio->SetVolumeMusic(temp.child("music").attribute("volume").as_uint(60)*App->audio->volume_percentatge);
 
 				//player position
 				pl_start_pos.x = temp.child("Link").child("pos").attribute("x").as_int(0) + ROOM_W * temp.child("Link").child("room").attribute("x").as_int(0);

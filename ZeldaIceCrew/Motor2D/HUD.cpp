@@ -94,7 +94,7 @@ bool HUD::Start()
 	power_num->max_prior = true;
 
 	weapon_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
-	weapon_rect->pos = { 900,500 };
+	weapon_rect->pos = { 900,700 };
 	weapon_rect->active = true;
 	weapon_rect->movable = true;
 	weapon_rect->texture_rect = { 539,402,46,48 };
@@ -138,6 +138,54 @@ bool HUD::Start()
 		}
 	}
 
+	Menu = (GuiImage*)App->gui->CreateElement(image);
+	Menu->texture = App->tex->Load("Sprites/Options_Menu.png");
+	Menu->pos = { 250,100 };
+	Menu->texture_rect = {0,0,484,560};
+	Menu->active = false;
+	Menu->movable = true;
+
+	Continue = (GuiImage*)App->gui->CreateElement(image);
+	Continue->pos = { Menu->pos.x+80,Menu->pos.y+100 };
+	Continue->texture_rect = { 108,680,336,36 };
+	Continue->active = false;
+	Continue->movable = true;
+	menu.push_back(Continue);
+
+	titlescreen = (GuiImage*)App->gui->CreateElement(image);
+	titlescreen->pos = { Continue->pos.x,Continue->pos.y + 100 };
+	titlescreen->texture_rect = { 108,680,336,36 };
+	titlescreen->active = false;
+	titlescreen->movable = true;
+	menu.push_back(titlescreen);
+
+	Exit = (GuiImage*)App->gui->CreateElement(image);
+	Exit->pos = { titlescreen->pos.x,titlescreen->pos.y + 100 };
+	Exit->texture_rect = { 108,680,336,36 };
+	Exit->active = false;
+	Exit->movable = true;
+	menu.push_back(Exit);
+
+	cont = (GuiText*)App->gui->CreateElement(text);
+	cont->pos = { Continue->pos.x + 50, Continue->pos.y + 2 };
+	cont->str = "Continue";
+	cont->active = false;
+	cont->movable = true;
+
+	title = (GuiText*)App->gui->CreateElement(text);
+	title->pos = { titlescreen->pos.x + 50, titlescreen->pos.y + 2 };
+	title->str = "Main Menu";
+	title->active = false;
+	title->movable = true;
+
+	exit = (GuiText*)App->gui->CreateElement(text);
+	exit->pos = { Exit->pos.x + 50, Exit->pos.y + 2 };
+	exit->str = "Exit";
+	exit->active = false;
+	exit->movable = true;
+
+	menu_selected = Continue;
+
 
 	
 	inv->SetOffset(30, 30);
@@ -147,6 +195,7 @@ bool HUD::Start()
 
 bool HUD::Update(float dt)
 {
+	bool ret = true;
 
 
 	rupees_num->str = std::to_string(App->player->rupees);
@@ -166,6 +215,14 @@ bool HUD::Update(float dt)
 		}
 		pl_weapon->active = false;
 		weapon_rect->active = false;
+		Menu->active = false;
+		Continue->active = false;
+		titlescreen->active = false;
+		Exit->active = false;
+		cont->active = false;
+		title->active = false;
+		exit->active = false;
+		menu_selected = nullptr;
 
 	}
 
@@ -214,14 +271,82 @@ bool HUD::Update(float dt)
 			power_num->active = false;
 			weapons->active = false;
 		}
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+			if (!Menu->active) {
+				menu_selected = Continue;
+				App->Pause();
+				Menu->active = true;
+				Continue->active = true;
+				titlescreen->active = true;
+				Exit->active = true;
+				cont->active = true;
+				title->active = true;
+				exit->active = true;
+
+			}
+			else {
+				App->UnPause();
+				menu_selected = Continue;
+				Menu->active = false;
+				Continue->active = false;
+				titlescreen->active = false;
+				Exit->active = false;
+				cont->active = false;
+				title->active = false;
+				exit->active = false;
+			}
+		}
+				if (Menu->active) {
+					for (std::list<UIElement*>::const_iterator it = menu.cbegin(); it != menu.cend(); it++) {
+						if (menu_selected == it._Ptr->_Myval) {
+							it._Ptr->_Myval->texture_rect = { 109,601,336,36 };
+						}
+						else {
+							it._Ptr->_Myval->texture_rect = { 108,680,336,36 };
+						}
+					}
+					
+						if (App->input->GetKey(SDL_SCANCODE_UP)==KEY_DOWN) {
+							menu_selected = menu_prev();
+						}
+						if (App->input->GetKey(SDL_SCANCODE_DOWN)==KEY_DOWN) {
+							menu_selected = menu_next();
+				}
+						if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+							if (menu_selected == Continue) {
+								App->UnPause();
+								Menu->active = false;
+								Continue->active = false;
+								titlescreen->active = false;
+								Exit->active = false;
+								cont->active = false;
+								title->active = false;
+								exit->active = false;
+							}
+							if (menu_selected == titlescreen) {
+								App->player->inMainScreen = true;
+								if (App->IsPaused()) {
+									App->UnPause();
+								}
+								App->scene_manager->ChangeScene((Scene*)App->scene_manager->main_screen);
+							}
+							if (menu_selected == Exit) {
+								ret = false;
+							}
+
+						}
+			}
 		UpdateHP();
 	}
-	return true;
+	return ret;
 }
 
 bool HUD::CleanUp()
 {
+	menu_selected = nullptr;
 	App->tex->UnLoad(items);
+	App->tex->UnLoad(Menu->texture);
+	menu.clear();
 	lifes.clear();
 	return true;
 }
@@ -279,6 +404,60 @@ void HUD::UpdateHP()
 	lifes.clear();
 
 	GenerateHP();
+}
+
+UIElement * HUD::menu_next()
+{
+	if (menu_selected != nullptr) {
+		if (!menu.empty()) {
+			if (menu_selected == menu.back()) {
+				return menu.back();
+			}
+			else {
+				for (std::list<UIElement*>::const_iterator it = menu.cbegin(); it != menu.cend(); it++) {
+					if (menu_selected == it._Ptr->_Myval) {
+						if (menu_selected == menu.back()) {
+							return menu.back();
+						}
+						else {
+							it++;
+							if (it._Ptr != nullptr)
+								return it._Ptr->_Myval;
+							else
+								return menu.back();
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+UIElement * HUD::menu_prev()
+{
+	if (menu_selected != nullptr) {
+		if (!menu.empty()) {
+			if (menu_selected == menu.front()) {
+				return menu.front();
+			}
+			for (std::list<UIElement*>::const_iterator it = menu.cend(); it != menu.cbegin(); it--) {
+				if (menu_selected == it._Ptr->_Myval) {
+					if (menu_selected == menu.front()) {
+						return menu.front();
+					}
+					else {
+						it--;
+						if (it._Ptr != nullptr)
+							return it._Ptr->_Myval;
+						else
+							return menu.back();
+					}
+				}
+
+
+			}
+		}
+	}
 }
 
 void HUD::AddItem(Item* obj)

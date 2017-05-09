@@ -18,8 +18,11 @@ private:
 	bool CleanUp();
 	void GenerateHP();
 	void UpdateHP();
+	UIElement* menu_next();
+	UIElement* menu_prev();
 	
 public:
+
 	void AddItem(Item* obj);
 	void AddWeapon(Item* wep);
 	SDL_Texture* items;
@@ -42,6 +45,21 @@ public:
 	GuiImage* pl_weapon;
 	GuiImage* dialog_rect;
 	GuiText* dialog;
+
+	GuiImage* Menu;
+	GuiImage* Continue;
+	GuiImage* titlescreen;
+	GuiImage* Exit;
+
+	GuiText* cont;
+	GuiText* title;
+	GuiText* exit;
+
+	UIElement* menu_selected;
+
+	std::list <UIElement*> menu;
+
+
 	int dialog_num = 0;
 };
 

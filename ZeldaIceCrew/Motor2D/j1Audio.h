@@ -35,6 +35,8 @@ public:
 	void SetVolumeMusic(uint32 vol);
 	void SetVolume(uint32 vol, int channel);
 
+	float volume_percentatge = 1.0;
+
 private:
 
 	_Mix_Music*			music = NULL;
