@@ -10,17 +10,21 @@ bool Puzzle_Manager::Start() {
 	return ret;
 }
 
-bool Puzzle_Manager::PreUpdate() {
-	bool ret = true;
-
-	return ret;
-}
-
 bool Puzzle_Manager::Update(float dt) {
 	bool ret = true;
 
 	if (blocks_used.empty() == false)
-		
+		//LOG("PUZZLES UPDT START");
+		if (puzzles.empty() == false)
+			for (int i = 0; i < puzzles.size(); i++) {
+				if (puzzles[i] != nullptr) {
+					if (!App->IsPaused()) {
+						//LOG("PUZZLES UPDATE %d", i);
+						if (puzzles[i]->active == true)
+							puzzles[i]->Update(dt);
+					}
+				}
+			}
 
 	return ret;
 }

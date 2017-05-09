@@ -106,6 +106,7 @@
     <ClCompile Include="Puzzle_Manager.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Simon_Says_Puzzle.cpp" />
     <ClCompile Include="VillageScene.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Puzzle.h" />
     <ClInclude Include="Puzzle_Manager.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Simon_Says_Puzzle.h" />
     <ClInclude Include="VillageScene.h" />
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1Audio.h" />

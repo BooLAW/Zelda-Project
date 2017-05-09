@@ -3,13 +3,14 @@
 
 #include "EntityManager.h"
 #include "Entity.h"
-#include "Block.h"
-#include "SceneManager.h"
-#include "Scene.h"
-#include "j1App.h"
+
+
+#include "Puzzle.h"
+#include "Simon_Says_Puzzle.h"
 
 enum Puzzle_List {
 	no_puzzles = 0,
+	SimonSays_Dungeon_,
 
 	_last_
 };
@@ -32,6 +33,7 @@ public:
 	std::deque<Block*> blocks_used;
 	std::deque<Puzzle*> puzzles;
 
+	SimonSays_Dungeon SimonSays_Dungeon;
 private:
 	j1Timer time;
 	
