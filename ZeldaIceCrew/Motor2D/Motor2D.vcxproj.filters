@@ -217,13 +217,5 @@
     <Filter Include="Modules">
       <UniqueIdentifier>{3fec696e-4c9f-403d-ad04-1a77f94213a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Dungeons">
-      <UniqueIdentifier>{f355923a-a9a2-4c56-aeeb-0f6cfea95d90}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="MaceKnightLevel.xml">
-      <Filter>Dungeons</Filter>
-    </Xml>
   </ItemGroup>
 </Project>

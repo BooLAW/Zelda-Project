@@ -101,14 +101,14 @@ public:
 protected:
 
 	bool change_scene = false;
-	fPoint pl_start_pos;
+	
 
 	
 
 public:
 	bool follow_cam = true;
 	std::list<Room*> rooms;
-
+	fPoint pl_start_pos;
 	char* music_path;
   
 	scene_id curr_id;// enum to use in the load_new_map scene function

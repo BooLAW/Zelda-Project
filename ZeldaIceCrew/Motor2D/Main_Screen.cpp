@@ -297,6 +297,8 @@ bool Main_Screen::Start()
 
 	selected = New_game;
 
+	in_settings = false;
+	in_controls = false;
 
 	return ret;
 }

@@ -43,6 +43,8 @@ bool VillageScene::Start()
 	BROFILER_CATEGORY("StartVillage", Profiler::Color::DarkBlue);
 	curr_id = village;
 	stdStart();
+	App->player->room = { 0,0 };
+
 	//GetRoom(2, 3)->AddNpc(NPC_ZELDA, 500, 400, 1);
 	
 	return true;

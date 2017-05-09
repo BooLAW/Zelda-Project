@@ -842,7 +842,7 @@ bool j1Player::Update(float dt)
 				//if (alive == false)
 				//{
 				//	DyingRestart();
-				//	action_blit = Sleep_Wake_up;//change to wake Up animation when we have it
+				//	//action_blit = Sleep_Wake_up;//change to wake Up animation when we have it
 				//	return ret;
 				//}
 				if (App->render->cam_travel != true) {
@@ -1320,7 +1320,7 @@ void j1Player::DyingRestart()
 {
 	alive = true;
 	pos = ORIGIN_RESTART;
-	App->scene_manager->toChangeScene((Scene*)App->scene_manager->village_scene);
+	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
 	//App->player->pos = App->scene_manager->village_scene->pl_start_pos;
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;

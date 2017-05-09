@@ -10,7 +10,7 @@ bool Scene::stdStart()
 {
 	Load_new_map(0);
 	App->player->pos = pl_start_pos;
-
+	
 	return true;
 
 }
