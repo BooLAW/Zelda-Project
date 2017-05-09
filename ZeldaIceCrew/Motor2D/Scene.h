@@ -82,7 +82,7 @@ public:
 	}
 
 	Item* AddItem(uint subtype, int coord_x, int coord_y, float x, float y);
-	Block* AddBlock(uint subtype, int coord_x, int coord_y, float x, float y);
+	Block* AddBlock(uint subtype, uint linked_obj, uint puzzle, int coord_x, int coord_y, float x, float y);
 	Doorway* AddSceneDoorway(Scene* target, int coord_x, int coord_y, uint dir, float x, float y);
 	Doorway* AddDungeonDoorway(uint dir, int coord_x, int coord_y);
 	Doorway* AddCamDoorway(float target_x, float target_y, int coord_x, int coord_y, uint dir, float x, float y);

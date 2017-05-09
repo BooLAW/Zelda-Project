@@ -22,9 +22,9 @@
 #include "Doorway.h"
 #include <map>
 #include <deque>
+#include "Puzzle_Manager.h"
 
-
-
+class Puzzle;
 class Entity;
 class j1Player;
 struct SDL_Texture;
@@ -64,7 +64,7 @@ public:
 public:
 	Enemy* CreateEnemy(uint subtype);
 	Item* CreateItem(uint subtype);
-	Block* CreateBlock(uint subtype);
+	Block* CreateBlock(uint subtype, uint linked_obj, uint puzzle);
 	Npc * CreateNPC(NPC_TYPE type, int id);
 private:
 	

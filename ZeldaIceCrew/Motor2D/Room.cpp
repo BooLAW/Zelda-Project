@@ -137,11 +137,11 @@ Enemy * Room::AddEnemy(uint subtype, float x, float y)
 	return ret;
 }
 
-Block * Room::AddBlock(uint subtype, float x, float y)
+Block * Room::AddBlock(uint subtype, uint linked_obj, uint puzzle, float x, float y)
 {
 	Block* ret = nullptr;
 
-	ret = App->entitymanager->CreateBlock(subtype);
+	ret = App->entitymanager->CreateBlock(subtype, linked_obj, puzzle);
 	ret->pos = { x + ROOM_W * coords.x, y + ROOM_H * coords.y };
 
 	blocks.push_back(ret);

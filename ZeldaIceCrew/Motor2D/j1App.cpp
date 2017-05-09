@@ -25,6 +25,7 @@
 #include "DialogueManager.h"
 //#include "j1Console"
 #include "EntityManager.h"
+#include "Puzzle_Manager.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -49,7 +50,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	hud = new HUD();
 	particle = new ModuleParticles();
 	dialog = new DialogManager();
-
+	puzzle_manager = new Puzzle_Manager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp

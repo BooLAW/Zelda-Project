@@ -102,6 +102,8 @@
     <ClCompile Include="Main_Screen.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="MathHelpers.cpp" />
+    <ClCompile Include="Puzzle.cpp" />
+    <ClCompile Include="Puzzle_Manager.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="VillageScene.cpp" />
@@ -139,6 +141,8 @@
     <ClInclude Include="Main_Screen.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="MathHelpers.h" />
+    <ClInclude Include="Puzzle.h" />
+    <ClInclude Include="Puzzle_Manager.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="VillageScene.h" />
     <ClInclude Include="j1Timer.h" />

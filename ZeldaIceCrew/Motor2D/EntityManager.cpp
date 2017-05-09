@@ -192,53 +192,77 @@ Item * EntityManager::CreateItem(uint subtype)
 	return ret;
 }
 
-Block * EntityManager::CreateBlock(uint type)
+Block * EntityManager::CreateBlock(uint type, uint linked_obj, uint puzzle)
 {
 	Block* ret = nullptr;
 	
-		switch (type) {
+	switch (type) {
 		case bush:
 			ret = new Bush();
+			if (linked_obj > 0)
+				CreateBlock(linked_obj, 0, puzzle);
 			break;
 		case pot:
 			ret = new Pot();
+			if (linked_obj > 0)
+				CreateBlock(linked_obj, 0, puzzle);
 			break;
 		case statue:
 			ret = new Statue();
+			if (linked_obj > 0)
+				CreateBlock(linked_obj, 0, puzzle);
 			break;
 		case torch_bowl:
 			ret = new Torch_Bowl();
+			if (linked_obj > 0)
+				CreateBlock(linked_obj, 0, puzzle);
 			break;
 		/*case torch_pillar:
 			ret = new Torch_Pillar();
 			break;*/
 		case slabs:
 			ret = new Slab();
+			if (linked_obj > 0)
+				CreateBlock(linked_obj, 0, puzzle);
 			break;
 		case slabs_no_move :
 			ret = new Slab_No_Move();
+			if (linked_obj > 0)
+				CreateBlock(linked_obj, 0, puzzle);
 			break;
 		case slabs_spikes:
 			ret = new Slab_Spikes();
+			if (linked_obj > 0)
+				CreateBlock(linked_obj, 0, puzzle);
 			break;
 		case button_wall:
 			ret = new Button_Wall();
+			if (linked_obj > 0)
+				CreateBlock(linked_obj, 0, puzzle);
 			break;
 		case pressure_plate:
 			ret = new Pressure_Plate();
+			if (linked_obj > 0)
+				CreateBlock(linked_obj, 0, puzzle);
 			break;
 		default:
-			LOG("Unknown Block Type: %d", type);
+			LOG("Unknown Block Type: %d", puzzle);
 			break;
 									
 	}
 	
+	Entity* aux = entities.back();
+	if (linked_obj > 0)
+		ret->Linked_Object = aux;
+
 	ret->type = block;
 	
 	ret->Start();
 	
 	App->entitymanager->PushEntity(ret);
 	
+	App->puzzle_manager->PushBlock(ret);
+
 	return ret;
 }
 

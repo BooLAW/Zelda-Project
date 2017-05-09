@@ -7,7 +7,8 @@
 #define N_ITEMS 15
 
 enum BLOCKTYPE {
-	bush = 0,
+	none = 0,
+	bush,
 	pot,
 	statue,
 	torch_bowl,
@@ -34,6 +35,7 @@ public:
 	//fPoint position;
 	uint reward_pool[N_ITEMS];
 	BLOCKTYPE subtype;
+	BLOCKTYPE linked_obj;
 	BLOCKANIM anim;
 	SDL_Texture* temp;
 	SDL_Rect sprites[last_][last__][8];
@@ -44,6 +46,8 @@ public:
 	bool moving = false;
 	bool recent = false;
 	uint64 timer;
+
+	Entity* Linked_Object;
 
 public:
 	Block() {};
@@ -64,7 +68,12 @@ public:
 	virtual void Reward();
 
 public:
-	//Block* CreateBlock(uint type, fPoint ipos);
+	//Block Linkers
+	virtual void Link_Torch() {};
+	virtual void Link_Statue() {};
+	virtual void Link_Button() {};
+	virtual void Link_Pressure_Plate() {};
+	//Block Action
 
 	virtual bool isMovable() { return false; };
 	//virtual bool isTalked() { return false; };

@@ -20,9 +20,6 @@
     <ClCompile Include="DungeonScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Bomb.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
@@ -97,6 +94,15 @@
     <ClCompile Include="Main_Screen.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Puzzle_Manager.cpp">
+      <Filter>Puzzles</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Puzzle.cpp">
+      <Filter>Puzzles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -123,9 +129,6 @@
     </ClInclude>
     <ClInclude Include="DungeonScene.h">
       <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Bomb.h">
       <Filter>Entities</Filter>
@@ -206,6 +209,15 @@
     <ClInclude Include="Main_Screen.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Puzzle_Manager.h">
+      <Filter>Puzzles</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Puzzle.h">
+      <Filter>Puzzles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
@@ -216,6 +228,9 @@
     </Filter>
     <Filter Include="Modules">
       <UniqueIdentifier>{3fec696e-4c9f-403d-ad04-1a77f94213a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Puzzles">
+      <UniqueIdentifier>{e8913635-342b-4ce4-9cd8-c63913a32e75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

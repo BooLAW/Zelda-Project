@@ -5,6 +5,7 @@
 #include "j1Window.h"
 #include "j1Player.h"
 #include <string>
+#include "Puzzle_Manager.h"
 
 bool Scene::stdStart()
 {
@@ -189,7 +190,7 @@ Item * Scene::AddItem(uint subtype, int coord_x, int coord_y, float x, float y)
 	return ret;
 }
 
-Block * Scene::AddBlock(uint subtype, int coord_x, int coord_y, float x, float y)
+Block * Scene::AddBlock(uint subtype, uint linked_obj, uint puzzle, int coord_x, int coord_y, float x, float y)
 {
 	Room* r = GetRoom(coord_x, coord_y);
 
@@ -197,7 +198,7 @@ Block * Scene::AddBlock(uint subtype, int coord_x, int coord_y, float x, float y
 
 	if (r != nullptr) {
 
-		ret = App->entitymanager->CreateBlock(subtype);
+		ret = App->entitymanager->CreateBlock(subtype, linked_obj, puzzle);
 		ret->pos = { x + r->coords.x * ROOM_W , y + r->coords.y * ROOM_H };
 
 		ret->room = { coord_x, coord_y };
@@ -494,6 +495,8 @@ bool Scene::Load_new_map(int id)
 									LOG("XML BLOCKS");
 
 									uint st = 0;
+									uint lo = 0;
+									uint pz = 0;
 
 									const pugi::char_t* sub = node_block.attribute("subtype").as_string("");
 
@@ -518,7 +521,34 @@ bool Scene::Load_new_map(int id)
 									if (strcmp(sub, "pressure_plate") == 0)
 										st = pressure_plate;
 
-									r->AddBlock(st, node_block.attribute("x").as_float(), node_block.attribute("y").as_float());
+									sub = node_block.attribute("linked_obj").as_string("");
+
+									if (strcmp(sub, "bush") == 0)
+										lo = bush;
+									if (strcmp(sub, "pot") == 0)
+										lo = pot;
+									if (strcmp(sub, "statue") == 0)
+										lo = statue;
+									if (strcmp(sub, "torch_bowl") == 0)
+										lo = torch_bowl;
+									//if (strcmp(sub, "torch_pillar") == 0)
+									//st = torch_pillar;
+									if (strcmp(sub, "slabs") == 0)
+										lo = slabs;
+									if (strcmp(sub, "slabs_no_move") == 0)
+										lo = slabs_no_move;
+									if (strcmp(sub, "slabs_spikes") == 0)
+										lo = slabs_spikes;
+									if (strcmp(sub, "button_wall") == 0)
+										lo = button_wall;
+									if (strcmp(sub, "pressure_plate") == 0)
+										lo = pressure_plate;
+
+									if (strcmp(sub, "0") == 0)
+										lo = no_puzzles;
+									//posar altres puzzles...
+
+									r->AddBlock(st, lo, pz, node_block.attribute("x").as_float(), node_block.attribute("y").as_float());
 								}
 							}
 
