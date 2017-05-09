@@ -420,7 +420,7 @@ bool Main_Screen::Update(float dt)
 		if (changing_controls) {
 			if (selected == Up) {
 
-				if(App->input-)
+				
 				
 			}
 			if (selected == Down) {

@@ -104,6 +104,8 @@ public:
 		return keyboard[id];
 	}
 
+	SDL_Scancode returnkey();
+
 	j1KeyState GetMouseButtonDown(int id) const
 	{
 		return mouse_buttons[id - 1];
