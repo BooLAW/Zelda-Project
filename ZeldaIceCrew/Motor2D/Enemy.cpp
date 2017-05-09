@@ -2258,3 +2258,8 @@ void AgahnimClones::Update(float dt)
 			break;
 		}
 }
+
+bool TrueBlueSoldier::Start()
+{
+	return false;
+}

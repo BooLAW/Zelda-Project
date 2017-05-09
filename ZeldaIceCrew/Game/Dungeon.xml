@@ -40,21 +40,17 @@
 
         <room x="1" y="1" w="1024" h="576">
           <enemies>
-            <!--enemy subtype="t_GBat" x="256" y="128"/>
+            
             <enemy subtype="t_GBat" x="768" y="128"/>
             <enemy subtype="t_GBat" x="256" y="208"/>
-            <enemy subtype="t_GBat" x="768" y="208"/-->
+            <enemy subtype="t_GBat" x="768" y="208"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
           </doorways>
         </room>
-        <room x="1" y="2" w="1024" h="576">
-          <enemies>
-            <enemy subtype="t_geldman" x="192" y="192"/>
-            <enemy subtype="t_geldman" x="768" y="192"/>
-
-          </enemies>
+        <room x="2" y="4" w="1024" h="576">
+          
           <items>
 
           </items>

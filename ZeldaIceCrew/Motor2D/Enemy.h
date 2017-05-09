@@ -157,19 +157,25 @@ public:
 class BSoldier : public Enemy {
 public:
 	bool Start();
+	//void Draw(float dt);
+
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
 
 };
 
 class RSoldier : public Enemy {
 public:
 	bool Start();
-
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
 };
 
 class GSoldier : public Enemy {
 public:
 	bool Start();
-
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
 };
 
 class BossChainBall : public Enemy {
@@ -212,6 +218,8 @@ class Hinox : public Enemy {
 public:
 	bool Start();
 	void SetRewards();
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
 };
 
 class BlueArcher : public Enemy {
@@ -312,6 +320,8 @@ class Freezor : public Enemy {
 class GreyBat : public Enemy {
 public:
 	bool Start();
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
 };
 
 class AgahnimClones;
@@ -406,6 +416,11 @@ public:
 
 	j1Timer timer;
 
+};
+
+class TrueBlueSoldier : public Enemy {
+	bool Start();
+	
 };
 
 #endif // !__ENEMY_H__
