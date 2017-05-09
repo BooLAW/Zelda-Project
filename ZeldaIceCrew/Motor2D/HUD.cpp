@@ -273,6 +273,16 @@ bool HUD::Update(float dt)
 		}
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 			if (!Menu->active) {
+				inv->Disable();
+				descriptions_rect->active = false;
+				item_description->active = false;
+				stats_rect->active = false;
+				speed->active = false;
+				speed_num->active = false;
+				power->active = false;
+				power_num->active = false;
+				weapons->active = false;
+
 				menu_selected = Continue;
 				App->Pause();
 				Menu->active = true;
