@@ -44,7 +44,6 @@
             <enemy subtype="t_GBat" x="768" y="128"/>
             <enemy subtype="t_GBat" x="256" y="208"/>
             <enemy subtype="t_GBat" x="768" y="208"/-->
-		<enemy subtype="t_GBat" x="256" y="208"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>

@@ -365,7 +365,7 @@ void Enemy::Reward()
 void Enemy::CleanUp()
 {
 	LOG("ENEMY CLEANUP %d", EnemyType);
-	if (tex != App->entitymanager->std_enemy_tex && tex != nullptr)
+	if (tex != nullptr)
 		App->tex->UnLoad(tex);
 
 	//LOG("TEX");
@@ -388,6 +388,8 @@ bool BSoldier::Start()
 	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -448,6 +450,8 @@ bool RSoldier::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
 		sprites[Enemy::EnDirection::Down][0] = { 410, 219, 100,108 };
@@ -506,6 +510,8 @@ bool GSoldier::Start()
 	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -788,6 +794,8 @@ bool Hinox::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
 		sprites[Enemy::EnDirection::Down][0] = { 614, 219, 100, 108 };
@@ -858,6 +866,8 @@ bool Rope::Start()
 	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -989,6 +999,8 @@ bool BlueArcher::Start()
 	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -1130,8 +1142,8 @@ bool GreyBat::Start()
 	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
-	
-	LOG("WTF");
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -1175,6 +1187,8 @@ bool Geldman::Start()
 	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -1333,6 +1347,8 @@ bool Freezor::Start()
 	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -1502,6 +1518,8 @@ bool Beamos::Start()
 	SetRewards();
 
 	curr_dir = Enemy::EnDirection::Down;
+
+	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
