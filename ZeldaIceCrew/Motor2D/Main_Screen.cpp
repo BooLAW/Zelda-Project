@@ -359,7 +359,7 @@ bool Main_Screen::Update(float dt)
 			selected = Settings_Next();
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			App->audio->PlayFx(press_fx);
 			if (selected == Controls) {
 				in_settings = false;
@@ -439,7 +439,7 @@ bool Main_Screen::Update(float dt)
 			}*/
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			App->audio->PlayFx(press_fx);
 			if (selected == Up) {
 				// go to change controls scene
@@ -539,7 +539,7 @@ bool Main_Screen::Update(float dt)
 			selected = Next();
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			App->audio->PlayFx(press_fx);
 			if (selected == New_game) {
 				// start a new game, for now:
