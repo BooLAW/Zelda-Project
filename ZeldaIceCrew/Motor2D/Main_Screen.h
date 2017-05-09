@@ -68,6 +68,7 @@ private:
 
 	bool in_settings;
 	bool in_controls;
+	bool changing_controls = false;
 
 	GuiImage* Controls;
 	GuiImage* Mute;

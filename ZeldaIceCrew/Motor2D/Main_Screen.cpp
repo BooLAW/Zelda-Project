@@ -299,6 +299,7 @@ bool Main_Screen::Start()
 
 	in_settings = false;
 	in_controls = false;
+	changing_controls = false;
 
 	return ret;
 }
@@ -416,6 +417,44 @@ bool Main_Screen::Update(float dt)
 		dash->active = true;
 		back_controls->active = true;
 
+		if (changing_controls) {
+			if (selected == Up) {
+
+				if(App->input-)
+				
+			}
+			if (selected == Down) {
+				
+			}
+			if (selected == Right) {
+				
+			}
+			if (selected == Left) {
+				
+			}
+			if (selected == Move_left) {
+				
+			}
+			if (selected == Move_up) {
+				
+			}
+			if (selected == Move_down) {
+				
+			}
+			if (selected == Move_right) {
+				
+			}
+			if (selected == Menu) {
+				
+			}
+			if (selected == Action) {
+				
+			}
+			if (selected == Dash) {
+				
+			}
+		}
+
 		for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
 			if (selected == it._Ptr->_Myval) {
 				it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
@@ -443,42 +482,43 @@ bool Main_Screen::Update(float dt)
 			App->audio->PlayFx(press_fx);
 			if (selected == Up) {
 				// go to change controls scene
-
+				changing_controls = true;
 			}
 			if (selected == Down) {
-				//mute the app
+				changing_controls = true;
 			}
 			if (selected == Right) {
-
+				changing_controls = true;
 			}
 			if (selected == Left) {
-				//mute the app
+				changing_controls = true;
 			}
 			if (selected == Move_left) {
-				//mute the app
+				changing_controls = true;
 			}
 			if (selected == Move_up) {
-				//mute the app
+				changing_controls = true;
 			}
 			if (selected == Move_down) {
-				//mute the app
+				changing_controls = true;
 			}
 			if (selected == Move_right) {
-				//mute the app
+				changing_controls = true;
 			}
 			if (selected == Menu) {
-				//mute the app
+				changing_controls = true;
 			}
 			if (selected == Action) {
-				//mute the app
+				changing_controls = true;
 			}
 			if (selected == Dash) {
-				//mute the app
+				changing_controls = true;
 			}
 			if (selected == Back_controls) {
 				in_settings = true;
 				in_controls = false;
 				selected = settings_elements.front();
+				changing_controls = false;
 			}
 
 
