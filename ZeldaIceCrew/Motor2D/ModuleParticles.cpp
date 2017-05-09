@@ -185,7 +185,7 @@ int Particle::CheckSpace(float new_x, float new_y)
 	// TileCheck
 	ret = App->map->TileCheck(new_x, new_y);
 	// 0 walkable
-	//1 wall
+	// 1 wall
 	// 2 hole
 
 	SDL_Rect r = collider->rect;
@@ -433,71 +433,72 @@ void Shadow_Projectile::Start()
 
 bool Shadow_Projectile::Update(float dt)
 {
+	if (collider != nullptr) {
+		float diff_x, diff_y;
+		float hip;
+		float angle;
 
-	float diff_x, diff_y;
-	float hip;
-	float angle;
+		fPoint p_pos;
+		p_pos.x = App->player->link_coll->rect.x;
+		p_pos.y = App->player->link_coll->rect.y;
 
-	fPoint p_pos;
-	p_pos.x = App->player->link_coll->rect.x;
-	p_pos.y = App->player->link_coll->rect.y;
+		diff_x = (p_pos.x - position.x);
+		diff_y = p_pos.y - position.y;
 
-	diff_x = (p_pos.x - position.x);
-	diff_y = p_pos.y - position.y;
+		if (p_pos.x > position.x) {
+			diff_x = -diff_x;
+			diff_y = -diff_y;
+		}
 
-	if (p_pos.x > position.x) {
-		diff_x = -diff_x;
-		diff_y = -diff_y;
+		angle = (atan2(diff_y, diff_x));
+
+		if (p_pos.x >= position.x) {
+			speed.x = SHADOW_SPD * -(float)cos((double)angle);
+			speed.y = SHADOW_SPD * -(float)sin((double)angle);
+		}
+		else {
+			speed.x = SHADOW_SPD * (float)cos((double)angle);
+			speed.y = SHADOW_SPD * (float)sin((double)angle);
+		}
+
+		if (p_pos.y < position.y && (p_pos.x > position.x - ENEMY_DIR_CHANGE_OFFSET && p_pos.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
+			curr_dir = Up;
+		else if (p_pos.y > position.y && (p_pos.x > position.x - ENEMY_DIR_CHANGE_OFFSET && p_pos.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
+			curr_dir = Down;
+		else if (p_pos.x < position.x)
+			curr_dir = Left;
+		else if (p_pos.x > position.x)
+			curr_dir = Right;
+
+		if (shot_dir == Left || curr_dir == Right) {
+			speed.y *= 0.33;
+		}
+		if (shot_dir == Up || curr_dir == Down) {
+			speed.x *= 0.33;
+		}
+
+		HitBox = { (int)position.x , (int)position.y, 24, 24 };
+
+		collider->rect = HitBox;
+
+		collider->SetPos(HitBox.x, HitBox.y);
+
+		Collider* aux = collider;
+
+		if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
+		{
+			hit = true;
+			LOG("Player HIT");
+			App->player->HitPlayer(damage);
+			if (App->player->link_coll->active == true)
+				App->particle->DestroyParticle(this);
+		}
+
+		//if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
+		//	App->particle->DestroyParticle(this);
+		//}
+
 	}
-
-	angle = (atan2(diff_y, diff_x));
-
-	if (p_pos.x >= position.x) {
-		speed.x = SHADOW_SPD * -(float)cos((double)angle);
-		speed.y = SHADOW_SPD * -(float)sin((double)angle);
-	}
-	else {
-		speed.x = SHADOW_SPD * (float)cos((double)angle);
-		speed.y = SHADOW_SPD * (float)sin((double)angle);
-	}
-
-	if (p_pos.y < position.y && (p_pos.x > position.x - ENEMY_DIR_CHANGE_OFFSET && p_pos.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
-		curr_dir = Up;
-	else if (p_pos.y > position.y && (p_pos.x > position.x - ENEMY_DIR_CHANGE_OFFSET && p_pos.x < position.x + ENEMY_DIR_CHANGE_OFFSET))
-		curr_dir = Down;
-	else if (p_pos.x < position.x)
-		curr_dir = Left;
-	else if (p_pos.x > position.x)
-		curr_dir = Right;
-
-	if (shot_dir == Left || curr_dir == Right) {
-		speed.y *= 0.33;
-	}
-	if (shot_dir == Up || curr_dir == Down) {
-		speed.x *= 0.33;
-	}
-
-	HitBox = { (int)position.x , (int)position.y, 24, 24 };
-
-	collider->rect = HitBox;
-
-	collider->SetPos(HitBox.x, HitBox.y);
-
-	Collider* aux = collider;
-
-	if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
-	{
-		hit = true;
-		LOG("Player HIT");
-		App->player->HitPlayer(damage);
-		if (App->player->link_coll->active == true)
-			App->particle->DestroyParticle(this);
-	}
-
-	//if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
-	//	App->particle->DestroyParticle(this);
-	//}
-
 	return stdUpdate(dt);
 }
 

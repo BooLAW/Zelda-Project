@@ -1438,13 +1438,13 @@ void Freezor::Update(float dt)
 	switch (state) {
 	case appear_start:
 		appear_anim.Reset();
-		app_pos.x = rand() % en_rect.w + (int)(p_pos.x - en_rect.w / 2);
-		app_pos.y = rand() % en_rect.h + (int)(p_pos.y - en_rect.h / 2);
+		app_pos.x = rand() % (c_r.w - 250) + (c_r.x + 100);
+		app_pos.y = rand() % (c_r.h - 150) + (c_r.y + 50);
 		LOG("APPEAR POS: %f %f", app_pos.x, app_pos.y);
 		if (!(CheckSpace(app_pos.x, app_pos.y) != 0 || App->scene_manager->GetCurrentScene()->GetCurrentRoom()->isInside({ (int)app_pos.x, (int)app_pos.y, 0, 0 }) == false)) {
 			SDL_Rect en_aux = { app_pos.x, app_pos.y, 1, 1 };
 			p_rect = { (int)p_pos.x - 100, (int)p_pos.y - 100, 132, 148 };
-			if (CheckIntersec(en_aux, p_rect) == false) {
+			if (App->scene_manager->GetCurrentScene()->GetCurrentRoom()->isInside(en_aux) == true) {
 				pos = app_pos;
 				state = appear;
 			}
