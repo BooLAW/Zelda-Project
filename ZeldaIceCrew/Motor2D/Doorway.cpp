@@ -92,19 +92,19 @@ void Doorway::Update(float dt)
 			if (collider->CheckCollision(App->player->link_coll->rect) == true) {
 				switch (direction) {
 				case Up:
-					if (App->input->GetKey(SDL_SCANCODE_W))
+					if (App->input->GetKey(App->input->controls[MOVE_UP]))
 						crossing = true;
 					break;
 				case Down:
-					if (App->input->GetKey(SDL_SCANCODE_S))
+					if (App->input->GetKey(App->input->controls[MOVE_DOWN]))
 						crossing = true;
 					break;
 				case Left:
-					if (App->input->GetKey(SDL_SCANCODE_A))
+					if (App->input->GetKey(App->input->controls[MOVE_LEFT]))
 						crossing = true;
 					break;
 				case Right:
-					if (App->input->GetKey(SDL_SCANCODE_D))
+					if (App->input->GetKey(App->input->controls[MOVE_RIGHT]))
 						crossing = true;
 					break;
 				}

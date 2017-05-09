@@ -345,5 +345,6 @@ SDL_Scancode j1Input::returnkey()
 	else {
 		return SDL_SCANCODE_0;
 	}
+	return SDL_SCANCODE_0;
 }
 

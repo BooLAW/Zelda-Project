@@ -1467,7 +1467,7 @@ void j1Player::Movement()
 {
 	//Movement
 	if(App->player->alive){
-		if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
+		if (App->input->GetKey(App->input->controls[MOVE_UP]) && App->input->GetKey(App->input->controls[MOVE_LEFT])) {
 			if (CheckSpace(pos.x - pl_speed.x, pos.y - pl_speed.y) == 0) //change dir
 			{
 				walk_dir = Up_L;
@@ -1477,7 +1477,7 @@ void j1Player::Movement()
 			if (anim_override == false)
 				action_blit = Walk;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) && App->input->GetKey(SDL_SCANCODE_S)) {
+		else if (App->input->GetKey(App->input->controls[MOVE_LEFT]) && App->input->GetKey(App->input->controls[MOVE_DOWN])) {
 			if (CheckSpace(pos.x - pl_speed.x, (pos.y + 34) + pl_speed.y) == 0) //change dir
 			{
 				walk_dir = Down_L;
@@ -1488,7 +1488,7 @@ void j1Player::Movement()
 			if (anim_override == false)
 				action_blit = Walk;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
+		else if (App->input->GetKey(App->input->controls[MOVE_DOWN]) && App->input->GetKey(App->input->controls[MOVE_RIGHT])) {
 			if (CheckSpace((pos.x + 32) + pl_speed.x, (pos.y + 32) + pl_speed.y) == 0)//change dir
 			{
 				walk_dir = Down_R;
@@ -1499,7 +1499,7 @@ void j1Player::Movement()
 				action_blit = Walk;
 
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_D) && App->input->GetKey(SDL_SCANCODE_W)) {
+		else if (App->input->GetKey(App->input->controls[MOVE_RIGHT]) && App->input->GetKey(App->input->controls[MOVE_UP])) {
 			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y - pl_speed.y) == 0)//change dir
 			{
 				walk_dir = Up_R;
@@ -1509,7 +1509,7 @@ void j1Player::Movement()
 			if (anim_override == false)
 				action_blit = Walk;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_W)) {
+		else if (App->input->GetKey(App->input->controls[MOVE_UP])) {
 			if (CheckSpace(pos.x, pos.y - pl_speed.y) == 0)
 			{
 				pos.y -= pl_speed.y;
@@ -1522,7 +1522,7 @@ void j1Player::Movement()
 			}
 
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_A)) {
+		else if (App->input->GetKey(App->input->controls[MOVE_LEFT])) {
 			if (CheckSpace(pos.x - pl_speed.x, pos.y) == 0)
 			{
 				pos.x -= pl_speed.x;
@@ -1534,7 +1534,7 @@ void j1Player::Movement()
 				walk_dir = Left;
 			}
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_S))
+		else if (App->input->GetKey(App->input->controls[MOVE_DOWN]))
 		{
 			if (CheckSpace(pos.x, (pos.y+32) + pl_speed.y) == 0)
 			{
@@ -1547,7 +1547,7 @@ void j1Player::Movement()
 				walk_dir = Down;
 			}
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_D))
+		else if (App->input->GetKey(App->input->controls[MOVE_RIGHT]))
 		{
 			if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y) == 0)
 			{
@@ -1576,7 +1576,7 @@ void j1Player::Slash_()
 		{
 			if (anim_override == false)
 			{
-				if (App->input->GetKey(SDL_SCANCODE_UP)) {
+				if (App->input->GetKey(App->input->controls[UP])) {
 					curr_dir = Up;
 					action_blit = Weapon_atk;
 					if (curr_weapon != nullptr)
@@ -1587,7 +1587,7 @@ void j1Player::Slash_()
 					pl_speed.x = pl_speed.x / PL_SPD_ATK;
 					pl_speed.y = pl_speed.y / PL_SPD_ATK;
 				}
-				else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
+				else if (App->input->GetKey(App->input->controls[DOWN])) {
 					curr_dir = Down;
 					action = false;
 					action_blit = Weapon_atk;
@@ -1599,7 +1599,7 @@ void j1Player::Slash_()
 					pl_speed.x = pl_speed.x / PL_SPD_ATK;
 					pl_speed.y = pl_speed.y / PL_SPD_ATK;
 				}
-				else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
+				else if (App->input->GetKey(App->input->controls[RIGHT])) {
 					curr_dir = Right;
 					action_blit = Weapon_atk;
 					if (curr_weapon != nullptr)
@@ -1610,7 +1610,7 @@ void j1Player::Slash_()
 					pl_speed.x = pl_speed.x / PL_SPD_ATK;
 					pl_speed.y = pl_speed.y / PL_SPD_ATK;
 				}
-				else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
+				else if (App->input->GetKey(App->input->controls[LEFT])) {
 					curr_dir = Left;
 					action_blit = Weapon_atk;
 					if (curr_weapon != nullptr)
@@ -1628,16 +1628,16 @@ void j1Player::Slash_()
 		else
 		{
 
-			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+			if (App->input->GetKey(App->input->controls[UP]) == KEY_DOWN) {
 				App->hud->inv->Move_Sel_up();
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+			else if (App->input->GetKey(App->input->controls[DOWN]) == KEY_DOWN) {
 				App->hud->inv->Move_Sel_down();
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+			else if (App->input->GetKey(App->input->controls[RIGHT]) == KEY_DOWN) {
 				App->hud->inv->Move_Sel_forward();
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+			else if (App->input->GetKey(App->input->controls[LEFT]) == KEY_DOWN) {
 				App->hud->inv->Move_Sel_backwards();
 			}
 		}

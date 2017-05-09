@@ -375,17 +375,7 @@ bool Main_Screen::Start()
 
 bool Main_Screen::Update(float dt)
 {
-	up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[UP]);
-	down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DOWN]);
-	left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[LEFT]);
-	right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[RIGHT]);
-	move_up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_UP]);
-	move_down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_DOWN]);
-	move_left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_LEFT]);
-	move_right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_RIGHT]);
-	menu_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MENU]);
-	action_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[ACTION]);
-	dash_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DASH]);
+
 
 	bool ret = true;
 	if (in_settings) {
@@ -522,82 +512,8 @@ bool Main_Screen::Update(float dt)
 		action_key->active = true;
 		dash_key->active = true;
 
-		if (changing_controls) {
-			if (selected == Up) {
-
-				if (App->input->returnkey() != 0) {
-					App->input->controls[UP] = App->input->returnkey();
-					changing_controls = false;
-				}
-				
-			}
-			if (selected == Down) {
-				if (App->input->returnkey() != 0) {
-
-					App->input->controls[DOWN] = App->input->returnkey();
-					changing_controls = false;
-				}
-			}
-			if (selected == Right) {
-
-				if (App->input->returnkey() != 0) {
-					App->input->controls[RIGHT] = App->input->returnkey();
-					changing_controls = false;
-				}
-			}
-			if (selected == Left) {
-				if (App->input->returnkey() != 0) {
-					App->input->controls[LEFT] = App->input->returnkey();
-					changing_controls = false;
-				}
-			}
-			if (selected == Move_left) {
-				if (App->input->returnkey() != 0) {
-					App->input->controls[MOVE_LEFT] = App->input->returnkey();
-					changing_controls = false;
-				}
-			}
-			if (selected == Move_up) {
-				if (App->input->returnkey() != 0) {
-					App->input->controls[MOVE_UP] = App->input->returnkey();
-					changing_controls = false;
-				}
-				
-			}
-			if (selected == Move_down) {
-				if (App->input->returnkey() != 0) {
-					App->input->controls[MOVE_DOWN] = App->input->returnkey();
-					changing_controls = false;
-				}
-				
-			}
-			if (selected == Move_right) {
-				if (App->input->returnkey() != 0) {
-					App->input->controls[MOVE_RIGHT] = App->input->returnkey();
-					changing_controls = false;
-				}
-			}
-			if (selected == Menu) {
-				if (App->input->returnkey() != 0) {
-					App->input->controls[MENU] = App->input->returnkey();
-					changing_controls = false;
-				}
-			}
-			if (selected == Action) {
-				if (App->input->returnkey() != 0) {
-					App->input->controls[ACTION] = App->input->returnkey();
-					changing_controls = false;
-				}
-			}
-			if (selected == Dash) {
-
-				if (App->input->returnkey() != 0) {
-					App->input->controls[DASH] = App->input->returnkey();
-					changing_controls = false;
-				}
-			}
-		}
-		else {
+		
+		
 			for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
 				if (selected == it._Ptr->_Myval) {
 					it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
@@ -606,6 +522,86 @@ bool Main_Screen::Update(float dt)
 					it._Ptr->_Myval->texture_rect = { 0, 514, 683, 36 };
 				}
 			}
+			if (changing_controls) {
+				SDL_Scancode code = App->input->returnkey();
+
+				if (code != SDL_SCANCODE_0) {
+					if (selected == Up) {
+
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[UP] = code;
+							changing_controls = false;
+						}
+
+					}
+					if (selected == Down) {
+						if (code != SDL_SCANCODE_0) {
+
+							App->input->controls[DOWN] = code;
+							changing_controls = false;
+						}
+					}
+					if (selected == Right) {
+
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[RIGHT] = code;
+							changing_controls = false;
+						}
+					}
+					if (selected == Left) {
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[LEFT] = code;
+							changing_controls = false;
+						}
+					}
+					if (selected == Move_left) {
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[MOVE_LEFT] = code;
+							changing_controls = false;
+						}
+					}
+					if (selected == Move_up) {
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[MOVE_UP] = code;
+							changing_controls = false;
+						}
+
+					}
+					if (selected == Move_down) {
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[MOVE_DOWN] = code;
+							changing_controls = false;
+						}
+
+					}
+					if (selected == Move_right) {
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[MOVE_RIGHT] = code;
+							changing_controls = false;
+						}
+					}
+					if (selected == Menu) {
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[MENU] = code;
+							changing_controls = false;
+						}
+					}
+					if (selected == Action) {
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[ACTION] = code;
+							changing_controls = false;
+						}
+					}
+					if (selected == Dash) {
+
+						if (code != SDL_SCANCODE_0) {
+							App->input->controls[DASH] = code;
+							changing_controls = false;
+						}
+					}
+				}
+			}
+			else{
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 				App->audio->PlayFx(fx);
 				selected = Controls_Prev();
@@ -622,54 +618,25 @@ bool Main_Screen::Update(float dt)
 
 			}
 			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-				App->audio->PlayFx(press_fx);
-				if (selected == Up) {
-					// go to change controls scene
-					changing_controls = true;
-				}
-				if (selected == Down) {
-					changing_controls = true;
-				}
-				if (selected == Right) {
-					changing_controls = true;
-				}
-				if (selected == Left) {
-					changing_controls = true;
-				}
-				if (selected == Move_left) {
-					changing_controls = true;
-				}
-				if (selected == Move_up) {
-					changing_controls = true;
-				}
-				if (selected == Move_down) {
-					changing_controls = true;
-				}
-				if (selected == Move_right) {
-					changing_controls = true;
-				}
-				if (selected == Menu) {
-					changing_controls = true;
-				}
-				if (selected == Action) {
-					changing_controls = true;
-				}
-				if (selected == Dash) {
-					changing_controls = true;
-				}
 				if (selected == Back_controls) {
+					App->audio->PlayFx(press_fx);
 					in_settings = true;
 					in_controls = false;
 					selected = settings_elements.front();
 					changing_controls = false;
 				}
+				else {
+					changing_controls = true;
+					App->audio->PlayFx(press_fx);
+				}
+			}
 
 
 			}
 		}
 
 
-	}
+	
 	else {
 
 		for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
@@ -758,7 +725,17 @@ bool Main_Screen::Update(float dt)
 
 
 
-
+	up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[UP]);
+	down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DOWN]);
+	left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[LEFT]);
+	right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[RIGHT]);
+	move_up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_UP]);
+	move_down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_DOWN]);
+	move_left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_LEFT]);
+	move_right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_RIGHT]);
+	menu_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MENU]);
+	action_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[ACTION]);
+	dash_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DASH]);
 
 
 	return ret;

@@ -5,6 +5,7 @@
 #include <vector>
 #include "Scene.h"
 #include "j1Gui.h"
+#include "SDL/include/SDL.h"
 
 struct SDL_Texture;
 //UI forward declarations
