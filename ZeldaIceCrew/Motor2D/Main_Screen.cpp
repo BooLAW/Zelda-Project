@@ -769,6 +769,7 @@ bool Main_Screen::CleanUp()
 	settings_elements.clear();
 	controls_elements.clear();
 
+	background->active = false;
 	up->active=false;
 	down->active=false;
 	right->active=false;
@@ -816,7 +817,7 @@ bool Main_Screen::CleanUp()
 
 
 
-
+	//App->gui->DeleteElement(background);
 	/*App->gui->DeleteElement(up);
 	App->gui->DeleteElement(down);
 	App->gui->DeleteElement(right);
@@ -858,5 +859,6 @@ bool Main_Screen::CleanUp()
 	App->gui->DeleteElement(Back);
 	App->gui->DeleteElement(back);*/
 	
+
 	return ret;
 }
