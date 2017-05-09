@@ -811,7 +811,7 @@ bool j1Player::Update(float dt)
 				if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 					App->hud->dialog->str = App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts[App->hud->dialog_num]->line->c_str();
 				}
-				if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+				if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
 					if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 						App->hud->dialog_num++;
 					}
@@ -890,17 +890,17 @@ bool j1Player::Update(float dt)
 							curr_dir = Down;
 						}*/
 
-						if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+						if (App->input->GetKey(App->input->controls[WPN_NEXT]) == KEY_DOWN) {
 							change_weapon = Q_Change;
 						}
-						if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+						if (App->input->GetKey(App->input->controls[WPN_PREV]) == KEY_DOWN) {
 							change_weapon = E_Change;
 						}
 						ChangeWeapon();
 
 						if (anim_override == false) {
-							if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-								if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_DOWN) {
+							if (App->input->GetKey(App->input->controls[MOVE_UP]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_LEFT]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_DOWN]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_RIGHT]) == KEY_REPEAT) {
+								if (App->input->GetKey(App->input->controls[DASH]) == KEY_DOWN) {
 									action_blit = Dash;
 									action = true;
 									//dir_override = true;
@@ -916,46 +916,46 @@ bool j1Player::Update(float dt)
 						if (action == true && action_blit == Dash) {
 							PlayerInmortal(1);
 							link_coll->active = false;
-							if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_A)) {
+							if (App->input->GetKey(App->input->controls[MOVE_UP]) && App->input->GetKey(App->input->controls[MOVE_LEFT])) {
 								if (CheckSpace(pos.x - pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y - pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
 									pos.x -= pl_speed.x * DASH_SPD * (sqrt(2) / 2);
 									pos.y -= pl_speed.y * DASH_SPD * (sqrt(2) / 2);
 								}
 							}
-							else if (App->input->GetKey(SDL_SCANCODE_W) && App->input->GetKey(SDL_SCANCODE_D)) {
+							else if (App->input->GetKey(App->input->controls[MOVE_UP]) && App->input->GetKey(App->input->controls[MOVE_RIGHT])) {
 								if (CheckSpace(pos.x + pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y - pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
 									pos.x += pl_speed.x * DASH_SPD * (sqrt(2) / 2);
 									pos.y -= pl_speed.y * DASH_SPD * (sqrt(2) / 2);
 								}
 							}
-							else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_A)) {
+							else if (App->input->GetKey(App->input->controls[MOVE_DOWN]) && App->input->GetKey(App->input->controls[MOVE_LEFT])) {
 								if (CheckSpace(pos.x - pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y + pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
 									pos.x -= pl_speed.x * DASH_SPD * (sqrt(2) / 2);
 									pos.y += pl_speed.y * DASH_SPD * (sqrt(2) / 2);
 								}
 							}
-							else if (App->input->GetKey(SDL_SCANCODE_S) && App->input->GetKey(SDL_SCANCODE_D)) {
+							else if (App->input->GetKey(App->input->controls[MOVE_DOWN]) && App->input->GetKey(App->input->controls[MOVE_RIGHT])) {
 								if (CheckSpace(pos.x + pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y + pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
 									pos.x += pl_speed.x * DASH_SPD * (sqrt(2) / 2);
 									pos.y += pl_speed.y * DASH_SPD * (sqrt(2) / 2);
 								}
 							}
-							else if (App->input->GetKey(SDL_SCANCODE_W)) {
+							else if (App->input->GetKey(App->input->controls[MOVE_UP])) {
 								if (CheckSpace(pos.x, pos.y - pl_speed.y * DASH_SPD) == 0) {
 									pos.y -= pl_speed.y * DASH_SPD;
 								}
 							}
-							else if (App->input->GetKey(SDL_SCANCODE_A)) {
+							else if (App->input->GetKey(App->input->controls[MOVE_LEFT])) {
 								if (CheckSpace(pos.x - pl_speed.x * DASH_SPD, pos.y) == 0) {
 									pos.x -= pl_speed.x * DASH_SPD;
 								}
 							}
-							else if (App->input->GetKey(SDL_SCANCODE_S)) {
+							else if (App->input->GetKey(App->input->controls[MOVE_DOWN])) {
 								if (CheckSpace(pos.x, pos.y + pl_speed.y * DASH_SPD) == 0) {
 									pos.y += pl_speed.y * DASH_SPD;
 								}
 							}
-							else if (App->input->GetKey(SDL_SCANCODE_D)) {
+							else if (App->input->GetKey(App->input->controls[MOVE_RIGHT])) {
 								if (CheckSpace(pos.x + pl_speed.x * DASH_SPD, pos.y) == 0) {
 									pos.x += pl_speed.x * DASH_SPD;
 								}
@@ -1021,7 +1021,7 @@ bool j1Player::Update(float dt)
 					//Actions
 					else if (action == true) {
 
-						if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
+						if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(App->input->controls[ACTION]) != KEY_REPEAT) {
 							action = false;
 							LOG("ACTION = FALSE");
 							action_test = false;
@@ -1042,14 +1042,14 @@ bool j1Player::Update(float dt)
 							else {
 								App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 							}
-							if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+							if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(App->input->controls[ACTION]) == KEY_REPEAT)
 								animations[action_blit][curr_dir].Reset();
 						}
 
 					}
 					//!_Actions	
 
-					if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+					if (App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN) {
 						if (!App->hud->inv->active) {
 							App->hud->inv->active = true;
 							App->audio->PlayFx(open_inv_fx);

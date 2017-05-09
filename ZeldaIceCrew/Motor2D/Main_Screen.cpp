@@ -420,38 +420,76 @@ bool Main_Screen::Update(float dt)
 		if (changing_controls) {
 			if (selected == Up) {
 
-				
+				if (App->input->returnkey() != 0) {
+					App->input->controls[UP] = App->input->returnkey();
+					changing_controls = false;
+				}
 				
 			}
 			if (selected == Down) {
-				
+				if (App->input->returnkey() != 0) {
+
+					App->input->controls[DOWN] = App->input->returnkey();
+					changing_controls = false;
+				}
 			}
 			if (selected == Right) {
-				
+
+				if (App->input->returnkey() != 0) {
+					App->input->controls[RIGHT] = App->input->returnkey();
+					changing_controls = false;
+				}
 			}
 			if (selected == Left) {
-				
+				if (App->input->returnkey() != 0) {
+					App->input->controls[LEFT] = App->input->returnkey();
+					changing_controls = false;
+				}
 			}
 			if (selected == Move_left) {
-				
+				if (App->input->returnkey() != 0) {
+					App->input->controls[MOVE_LEFT] = App->input->returnkey();
+					changing_controls = false;
+				}
 			}
 			if (selected == Move_up) {
+				if (App->input->returnkey() != 0) {
+					App->input->controls[MOVE_UP] = App->input->returnkey();
+					changing_controls = false;
+				}
 				
 			}
 			if (selected == Move_down) {
+				if (App->input->returnkey() != 0) {
+					App->input->controls[MOVE_DOWN] = App->input->returnkey();
+					changing_controls = false;
+				}
 				
 			}
 			if (selected == Move_right) {
-				
+				if (App->input->returnkey() != 0) {
+					App->input->controls[MOVE_RIGHT] = App->input->returnkey();
+					changing_controls = false;
+				}
 			}
 			if (selected == Menu) {
-				
+				if (App->input->returnkey() != 0) {
+					App->input->controls[MENU] = App->input->returnkey();
+					changing_controls = false;
+				}
 			}
 			if (selected == Action) {
-				
+				if (App->input->returnkey() != 0) {
+					App->input->controls[ACTION] = App->input->returnkey();
+					changing_controls = false;
+				}
 			}
 			if (selected == Dash) {
-				
+
+				if (App->input->returnkey() != 0) {
+					App->input->controls[DASH] = App->input->returnkey();
+					changing_controls = false;
+				}
 			}
 		}
 

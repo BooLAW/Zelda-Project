@@ -3,7 +3,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
-#include "SDL/include/SDL.h"
+
 
 #define MAX_KEYS 300
 
@@ -208,6 +208,9 @@ void j1Input::DefaultControls()
 		}
 		if (i == WPN_PREV) {
 			controls[i] = SDL_SCANCODE_Q;
+		}
+		if (i == DASH) {
+			controls[i] = SDL_SCANCODE_RCTRL;
 		}
 	}
 }
