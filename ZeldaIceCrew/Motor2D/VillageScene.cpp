@@ -39,7 +39,6 @@ bool VillageScene::Awake()
 // Called before the first frame
 bool VillageScene::Start()
 {
-
 	BROFILER_CATEGORY("StartVillage", Profiler::Color::DarkBlue);
 	curr_id = village;
 	stdStart();

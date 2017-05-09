@@ -179,6 +179,14 @@ public:
 	bool talking = false;
 	iPoint room;
 
+	//Completed Maps
+	bool map1_comp = false;
+	bool map2_comp = false;
+	bool map3_comp = false;
+	bool map4_comp = false;
+	bool map5_comp = false;
+
+
 	Collider* mov_coll = nullptr;
 
   // Weapon Related

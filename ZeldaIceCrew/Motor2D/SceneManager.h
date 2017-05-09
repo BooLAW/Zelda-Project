@@ -52,6 +52,8 @@ public:
 		target = new_scene;
 	}
 	Scene* GetCurrentScene();
+	Scene* SetCurrentScene();
+
 
 public:
 	bool to_change_scene = false;

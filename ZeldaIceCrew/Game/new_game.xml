@@ -36,7 +36,7 @@
           	weapon_sword="true"
           	weapon_bow="false"/>
     <!-- checkpoints are used to know in which room is link in the saving moment-->
-    <dungeon in="false" map = "1" room_x ="0" room_y="0" />
+    <dungeon in="false" map = "1" room_x ="0" room_y="0" map1_comp="false" map2_comp="false" map3_comp="false" map4_comp="false" map5_comp="false"/>
   </player>
 
 </game_state>

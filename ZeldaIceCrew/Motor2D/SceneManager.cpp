@@ -161,3 +161,8 @@ Scene * SceneManager::GetCurrentScene()
 {
 	return current_scene;
 }
+
+Scene * SceneManager::GetCurrentScene(Scene* new_scene)
+{
+	current_scene = new_scene;
+}

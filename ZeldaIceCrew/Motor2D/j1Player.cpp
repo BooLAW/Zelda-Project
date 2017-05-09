@@ -1657,7 +1657,16 @@ bool j1Player::Load(pugi::xml_node& data)
 	if (data.child("items").attribute("pegasus_boots").as_bool())
 		inventory.push_back(App->entitymanager->CreateItem(pegasus_boots));
 	//dungeon situation info
+	if (data.child("dungeon").attribute("in").as_bool(false) == true)
+		App->scene_manager->SetCurrentScene(App->scene_manager->dungeon_scene);
 
+	//maps completed in dungeon
+
+	map1_comp = data.child("dungeon").attribute("map1_comp").as_bool(false);
+	map2_comp = data.child("dungeon").attribute("map2_comp").as_bool(false);
+	map3_comp = data.child("dungeon").attribute("map3_comp").as_bool(false);
+	map4_comp = data.child("dungeon").attribute("map4_comp").as_bool(false);
+	map5_comp = data.child("dungeon").attribute("map5_comp").as_bool(false);
 
 	return true;
 }
@@ -1675,7 +1684,13 @@ bool j1Player::Save(pugi::xml_node& data) const
 		//items.append_attribute("pegasus_boots") = inventory.find();
 	pugi::xml_node dun = data.append_child("dungeon");
 		dun.append_attribute("in") = (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene);
+		dun.append_attribute("map1_comp") = map1_comp;
+		dun.append_attribute("map2_comp") = map2_comp;
+		dun.append_attribute("map3_comp") = map3_comp;
+		dun.append_attribute("map4_comp") = map4_comp;
+		dun.append_attribute("map5_comp") = map5_comp;
 
 
+		4                                                                                              
 	return true;
 }
