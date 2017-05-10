@@ -319,8 +319,15 @@ void Enemy::Hit(uint dir, uint dmg)
 
 void Enemy::Death()
 {
-	Reward();
-	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
+	//hit_pause_counter++;
+	//if (hit_pause_counter < 200) {
+		//if (hit_pause_counter % 2)
+			//SDL_Delay(1);
+	//}
+	//else {
+		Reward();
+		App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
+	//}
 }
 
 void Enemy::Reward()
