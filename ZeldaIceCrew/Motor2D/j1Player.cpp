@@ -1060,12 +1060,16 @@ bool j1Player::Update(float dt)
 						}
 					}
 
-					if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
-						if (toTalk != nullptr) {
-							App->hud->dialog->active = true;
-							talking = true;
+					if (App->player->toTalk != nullptr) {
+						if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
+							if (toTalk != nullptr) {
+								App->hud->dialog->active = true;
+								talking = true;
+							}
 						}
 					}
+
+					
 
 					//!_Graphics
 

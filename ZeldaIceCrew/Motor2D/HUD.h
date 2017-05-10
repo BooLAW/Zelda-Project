@@ -31,10 +31,10 @@ public:
 	void AddWeapon(Item* wep);
 	SDL_Texture* items;
 	GuiImage* rupees;
-	GuiImage* bombs;
+	//GuiImage* bombs;
 	GuiImage* life_icon;
 	GuiText* rupees_num;
-	GuiText* bombs_num;
+	//GuiText* bombs_num;
 	std::list<GuiImage*>lifes;
 	Window* inv;
 	Window* weapons;

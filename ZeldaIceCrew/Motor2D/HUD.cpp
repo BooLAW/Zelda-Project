@@ -14,11 +14,11 @@ bool HUD::Start()
 	rupees->pos = { 50,10 };
 	rupees->max_prior = true;
 
-	bombs = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	/*bombs = (GuiImage*)App->gui->CreateElement(GuiType::image);
 	bombs->texture_rect = { 702,411,32,32 };
 	bombs->active = true;
 	bombs->pos = { 125,10 };
-	bombs->max_prior = true;
+	bombs->max_prior = true;*/
 
 
 	life_icon = (GuiImage*)App->gui->CreateElement(GuiType::image);
@@ -33,11 +33,11 @@ bool HUD::Start()
 	rupees_num->str = std::to_string(App->player->rupees);
 	rupees_num->pos = { 50,40 };
 
-	bombs_num = (GuiText*)App->gui->CreateElement(GuiType::text);
+	/*bombs_num = (GuiText*)App->gui->CreateElement(GuiType::text);
 	bombs_num->active = true;
 	bombs_num->movable = true;
 	bombs_num->str = std::to_string(App->player->bombs);
-	bombs_num->pos = { 125,40 };
+	bombs_num->pos = { 125,40 };*/
 
 
 	inv = (Window*)App->gui->CreateElement(GuiType::window);
@@ -202,7 +202,7 @@ bool HUD::Update(float dt)
 
 
 	rupees_num->str = std::to_string(App->player->rupees);
-	bombs_num->str = std::to_string(App->player->bombs);
+	//bombs_num->str = std::to_string(App->player->bombs);
 	speed_num->str = std::to_string(App->player->pl_speed.x);
 	power_num->str = std::to_string(App->player->power);
 	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
@@ -210,10 +210,10 @@ bool HUD::Update(float dt)
 
 	if (App->player->inMainScreen) {
 		rupees->active = false;
-		bombs->active = false;
+//		bombs->active = false;
 		life_icon->active = false;
 		rupees_num->active = false;
-		bombs_num->active = false;
+		//bombs_num->active = false;
 		for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
 			it._Ptr->_Myval->active = false;
 		}
@@ -234,10 +234,10 @@ bool HUD::Update(float dt)
 	else {
 		Enable_keys();
 		rupees->active = true;
-		bombs->active = true;
+		//bombs->active = true;
 		life_icon->active = true;
 		rupees_num->active = true;
-		bombs_num->active = true;
+	//	bombs_num->active = true;
 		for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
 			it._Ptr->_Myval->active = true;
 		}
@@ -416,7 +416,7 @@ void HUD::GenerateHP()
 
 void HUD::GenerateKeys()
 {
-	iPoint pos = {bombs->pos.x+ 75 ,bombs->pos.y+5};
+	iPoint pos = {rupees->pos.x+ 75 ,rupees->pos.y+5};
 	for (uint i = 0; i < max_keys; i++) {
 		GuiImage* img = (GuiImage*)App->gui->CreateElement(image);
 		img->pos = pos;

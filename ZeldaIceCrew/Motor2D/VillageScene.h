@@ -6,6 +6,7 @@
 #include "j1Gui.h"
 #include "Scene.h"
 struct SDL_Texture;
+
 //UI forward declarations
 
 class VillageScene : public Scene
