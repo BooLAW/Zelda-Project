@@ -730,12 +730,12 @@ bool Main_Screen::Update(float dt)
 			if (selected == New_game) {
 				// start a new game, for now:
 				App->player->inMainScreen = false;
-				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+				App->scene_manager->ChangeScene((Scene*)App->scene_manager->village_scene);
 			}
 			if (selected == Continue) {
 				//continue with the current game, for now:
 				App->player->inMainScreen = false;
-				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+				App->scene_manager->ChangeScene((Scene*)App->scene_manager->village_scene);
 			}
 			if (selected == Settings) {
 				in_settings = true;

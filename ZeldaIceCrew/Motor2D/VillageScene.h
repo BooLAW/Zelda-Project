@@ -32,6 +32,8 @@ private:
 	bool ESC = false;
 	SDL_Texture* debug_tex;
 	
+	Collider* col_to_d = nullptr;
+
 	bool round02 = false;
 
 };

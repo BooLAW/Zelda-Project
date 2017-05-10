@@ -44,8 +44,8 @@ bool VillageScene::Start()
 	stdStart();
 	App->player->room = { 0,0 };
 
-	//GetRoom(2, 3)->AddNpc(NPC_ZELDA, 500, 400, 1);
-	
+	col_to_d = App->collisions->AddCollider({ 1950, 151, 100, 16 }, COLLIDER_TO_DUNGEON);
+
 	return true;
 };
 bool VillageScene::Update(float dt)

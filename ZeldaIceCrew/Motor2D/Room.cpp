@@ -6,61 +6,61 @@ void Room::Start()
 
 void Room::Update(float dt)
 {
-
-	for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++) {
-		if ((*it) != nullptr) {
-			if (PlayerInside() == true) {
-				enemies.empty() ? (*it)->state = DWSTATE::open : (*it)->state = DWSTATE::close;
-				if (boss_room == true)
-					App->SaveGame("save_game.xml");
-			}
-			else {
-				(*it)->state = DWSTATE::open;
-			}
-		}
-	}
-
-	if (App->debug)
-		App->render->DrawQuad(room_rect, 255, 0, 0, 10);
-
-	active = PlayerInside();
-
-	if (PlayerInside() == true && App->player->room != coords) {
-		App->player->room = coords;
-	}
-
-	EnemyActive(active);
-
-	if (doorways.empty() == false) {
-		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
-		{
-			if (it._Ptr->_Myval != nullptr) {
-				it._Ptr->_Myval->Update(dt);
-			}
-			else {
-				(*it)->Draw();
-			}
-		}
-	}
-
-	if (npcs.empty() == false) {
-		for (std::list<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
-		{
-			if (!App->IsPaused()) {
-				if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect) == 0) {
-					App->player->toTalk = it._Ptr->_Myval;
+	if (loaded) {
+		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++) {
+			if ((*it) != nullptr) {
+				if (PlayerInside() == true) {
+					enemies.empty() ? (*it)->state = DWSTATE::open : (*it)->state = DWSTATE::close;
+					if (boss_room == true)
+						App->SaveGame("save_game.xml");
 				}
-			
 				else {
-					App->player->toTalk = nullptr;
+					(*it)->state = DWSTATE::open;
 				}
 			}
-			else {
-				it._Ptr->_Myval->Draw();
+		}
+
+		if (App->debug)
+			App->render->DrawQuad(room_rect, 255, 0, 0, 10);
+
+		active = PlayerInside();
+
+		if (PlayerInside() == true && App->player->room != coords) {
+			App->player->room = coords;
+		}
+
+		EnemyActive(active);
+
+		if (doorways.empty() == false) {
+			for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
+			{
+				if (it._Ptr->_Myval != nullptr) {
+					it._Ptr->_Myval->Update(dt);
+				}
+			}
+		}
+
+		if (npcs.empty() == false) {
+			for (std::list<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
+			{
+				if (!App->IsPaused()) {
+					if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect) == 0) {
+						App->player->toTalk = it._Ptr->_Myval;
+					}
+
+					else {
+						App->player->toTalk = nullptr;
+					}
+				}
+				else {
+					it._Ptr->_Myval->Draw();
+				}
 			}
 		}
 	}
-
+	else {
+		loaded = true;
+	}
 }
 
 void Room::CleanUp()

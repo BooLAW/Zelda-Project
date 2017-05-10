@@ -1315,6 +1315,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		//App->explosion->AddExplosion(App->explosion->Player, position.x - 30, position.y - 30, { 0, 0 }, { 0, 0, 105, 115 }, COLLIDER_EXPLOSION);
 		//function to restart in the house()
 
+	if (link_coll == c1 && c2->type == COLLIDER_TO_DUNGEON) {
+		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
+	}
+
 }
 
 void j1Player::DyingRestart()

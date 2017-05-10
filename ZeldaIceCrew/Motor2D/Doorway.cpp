@@ -16,29 +16,28 @@ void Doorway::Start()
 void Doorway::SetUp(uint dir)
 {
 	direction = dir;
+	if (collider != nullptr) {
+		switch (direction) {
+		case Direction::Up:
+			collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.x, DOORWAY_SIZE.y };
+			break;
+		case Direction::Down:
+			collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.x, DOORWAY_SIZE.y };
+			break;
+		case Direction::Left:
+			collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.y, DOORWAY_SIZE.x };
+			break;
+		case Direction::Right:
+			collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.y, DOORWAY_SIZE.x };
+			break;
+		default:
 
-	switch (direction) {
-	case Direction::Up:
-		collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.x, DOORWAY_SIZE.y };
-		break;
-	case Direction::Down:
-		collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.x, DOORWAY_SIZE.y };
-		break;
-	case Direction::Left:
-		collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.y, DOORWAY_SIZE.x };
-		break;
-	case Direction::Right:
-		collider->rect = { (int)pos.x, (int)pos.y, DOORWAY_SIZE.y, DOORWAY_SIZE.x };
-		break;
-	default:
-		
-		break;
+			break;
+		}
 	}
 }
 void Doorway::Update(float dt)
 {
-
-	
 
 	bool end_animating = false;
 
@@ -111,6 +110,7 @@ void Doorway::Update(float dt)
 			}
 		if (crossing == true && state == open) {
 			if (crossed == false) {
+				LOG("CROSSING");
 				Cross();
 				crossed = true;
 			}
@@ -171,6 +171,7 @@ void DwDungeon::SetUp()
 void DwDungeon::Draw()
 {
 	if (App->render->IsCameraCull(collider->rect) == false) {
+		LOG("RENDER");
 		iPoint aux_pos = { collider->rect.x, collider->rect.y };
 		switch (direction) {
 		case Up:
@@ -230,12 +231,8 @@ void Doorway::Draw()
 
 bool DwScene::Cross()
 {
-	if (crossed == false) {
-		App->scene_manager->toChangeScene(target);
-		crossed = true;
-	}
-
-	App->player->pos = target_pos;
+	
+		App->scene_manager->ChangeScene(target);
 
 	return true;
 }

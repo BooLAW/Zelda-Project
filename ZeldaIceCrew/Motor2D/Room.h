@@ -67,6 +67,8 @@ public:
 	std::list<Doorway*> doorways;
 	std::list<Npc*> npcs;
 
+	bool loaded = false;
+
 protected:
 	Scene* parent;
 
