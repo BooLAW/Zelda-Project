@@ -17,6 +17,10 @@ private:
 	bool Update(float dt);
 	bool CleanUp();
 	void GenerateHP();
+	void GenerateKeys();
+	void UpdateKeys();
+	void Disable_keys();
+	void Enable_keys();
 	void UpdateHP();
 	UIElement* menu_next();
 	UIElement* menu_prev();
@@ -58,9 +62,10 @@ public:
 	UIElement* menu_selected;
 
 	std::list <UIElement*> menu;
-
+	std::list<UIElement*>pl_keys;
 
 	int dialog_num = 0;
+	uint max_keys = 5;
 };
 
 

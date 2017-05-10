@@ -5,6 +5,7 @@ bool HUD::Start()
 {
 
 	items = App->tex->Load("Sprites/Items32x32.png");
+	max_keys = 5;
 	bool ret = true;
 
 	rupees = (GuiImage*)App->gui->CreateElement(GuiType::image);
@@ -184,6 +185,8 @@ bool HUD::Start()
 	exit->active = false;
 	exit->movable = true;
 
+	GenerateKeys();
+
 	menu_selected = Continue;
 
 
@@ -203,6 +206,7 @@ bool HUD::Update(float dt)
 	speed_num->str = std::to_string(App->player->pl_speed.x);
 	power_num->str = std::to_string(App->player->power);
 	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
+	UpdateKeys();
 
 	if (App->player->inMainScreen) {
 		rupees->active = false;
@@ -223,10 +227,12 @@ bool HUD::Update(float dt)
 		title->active = false;
 		exit->active = false;
 		menu_selected = nullptr;
+		Disable_keys();
 
 	}
 
 	else {
+		Enable_keys();
 		rupees->active = true;
 		bombs->active = true;
 		life_icon->active = true;
@@ -244,6 +250,7 @@ bool HUD::Update(float dt)
 		else {
 			dialog_rect->active = false;
 		}
+
 		if (inv->active) {
 			descriptions_rect->active = true;
 			stats_rect->active = true;
@@ -358,6 +365,7 @@ bool HUD::CleanUp()
 	App->tex->UnLoad(Menu->texture);
 	menu.clear();
 	lifes.clear();
+	pl_keys.clear();
 	return true;
 }
 
@@ -403,6 +411,48 @@ void HUD::GenerateHP()
 
 		}
 
+	}
+}
+
+void HUD::GenerateKeys()
+{
+	iPoint pos = {rupees->pos.x,rupees->pos.y+75};
+	for (uint i = 0; i < max_keys; i++) {
+		GuiImage* img = (GuiImage*)App->gui->CreateElement(image);
+		img->pos = pos;
+		img->texture_rect = { 939,455,28,32 };
+		img->active = true;
+		img->movable = true;
+		pl_keys.push_back(img);
+		pos.x += 30;
+	}
+}
+
+void HUD::UpdateKeys()
+{
+	int i = 0;
+	for (std::list<UIElement*>::const_iterator it = pl_keys.cbegin(); it != pl_keys.cend(); it++) {
+		if (i < App->player->keys) {
+			it._Ptr->_Myval->texture_rect = { 977,455,28,32 };
+		}
+		else {
+			it._Ptr->_Myval->texture_rect = { 939,455,28,32 };
+		}
+		i++;
+	}
+}
+
+void HUD::Disable_keys()
+{
+	for (std::list<UIElement*>::const_iterator it = pl_keys.cbegin(); it != pl_keys.cend(); it++) {
+		it._Ptr->_Myval->active = false;
+	}
+}
+
+void HUD::Enable_keys()
+{
+	for (std::list<UIElement*>::const_iterator it = pl_keys.cbegin(); it != pl_keys.cend(); it++) {
+		it._Ptr->_Myval->active = true;
 	}
 }
 

@@ -30,7 +30,7 @@ bool j1Player::Start()
 	bool ret = true;
 	LOG("Player Start");
 	//CONTROLS
-	
+	keys = 0;
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
 	//Idle
 	{

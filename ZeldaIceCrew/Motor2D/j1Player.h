@@ -178,7 +178,7 @@ public:
 	bool camera_follow = false; 
 	bool talking = false;
 	iPoint room;
-
+	uint keys = 0;
 	//Completed Maps
 	bool map1_comp = false;
 	bool map2_comp = false;
