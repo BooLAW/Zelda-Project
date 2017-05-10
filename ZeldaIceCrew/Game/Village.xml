@@ -16,7 +16,6 @@
           <items>
           </items>
           <blocks>
-            <block subtype="pot" x="340" y="150"/>
           </blocks>
           <doorways>
             <doorway subtype="dw_cam" target_x="1700" target_y="1780" dir="Down" x="370" y="1820"/>
@@ -45,11 +44,9 @@
         <room x="0" y="2" w="200" h="200">
           
           <items>
-            <item subtype="heart_container" x="50" y="50"/>
           </items>
 
           <blocks>
-            <block subtype="bush" x="100" y="100"/>
           </blocks>
 
           <doorways>
