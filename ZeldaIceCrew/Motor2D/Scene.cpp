@@ -571,6 +571,7 @@ bool Scene::Load_new_map(int id)
 												r->AddSceneDoorway(target, dir, node_dw.attribute("x").as_float(), node_dw.attribute("y").as_float());
 											}
 										}
+							
 									}
 								}
 							}

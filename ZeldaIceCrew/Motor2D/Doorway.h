@@ -79,6 +79,8 @@ class DwScene : public Doorway {
 	public:
 	bool Cross();
 
+	void SetUp(uint dir);
+
 	void SetTarget(Scene* scene) { target = scene; };
 	Scene* GetTarget() { return target; };
 

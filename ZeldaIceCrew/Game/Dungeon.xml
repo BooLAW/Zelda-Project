@@ -48,19 +48,6 @@
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
           </doorways>
         </room>
-        <room x="2" y="4" w="1024" h="576">
-          <enemies>
-		<enemy subtype="t_boss_agahnim" x="100" y="100"/>
-	  </enemies>
-          <items>
-
-          </items>
-          <doorways>
-            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
-            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-          </doorways>
-        </room> <!-- estos van-->
         <room x="1" y="3" w="1024" h="576">
           <enemies>
             <enemy subtype="t_rope" x="192" y="192"/>
