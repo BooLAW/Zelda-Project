@@ -165,8 +165,10 @@ void Block::Update(float dt)
 		else
 			Move();
 
-		if (App->frame_count >= timer + 120)
+		if (App->frame_count >= timer + 180) {
 			recent = false;
+			anim = idle;
+		}
 	
 
 	Draw();
@@ -432,19 +434,15 @@ void Block::Activate() {
 		recent = true;
 		timer = App->frame_count;
 	}
-	else if (recent == false && anim == on)
-	{
-		anim = idle;
-		timer = App->frame_count;
-		recent = true;
-	}
 }
 
 void Torch_Bowl::Light() {
 	//changes the spire blitted, from idle to lit
-	App->player->action_blit = App->player->Light;
-	App->player->action = true;
-
+	//App->player->action_blit = App->player->Light;
+	//App->player->action = true;
+	anim = lit;
+	recent = true;
+	timer = App->frame_count;
 }
 
 void Bush::Break() {

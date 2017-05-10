@@ -7,7 +7,7 @@
 #include "Point.h"
 #include "j1Collision.h"
 #include "j1Render.h"
-
+#include "Puzzle_Manager.h"
 #include "j1Player.h"
 
 #include "Log.h"
@@ -22,7 +22,6 @@
 #include "Doorway.h"
 #include <map>
 #include <deque>
-#include "Puzzle_Manager.h"
 
 class Puzzle;
 class Entity;

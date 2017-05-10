@@ -73,6 +73,7 @@ public:
 	std::deque<Entity*>::iterator id;
 	iPoint room;
 
+	uint puzzle;
 };
 
 

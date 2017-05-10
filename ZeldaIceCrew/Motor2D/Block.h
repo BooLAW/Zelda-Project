@@ -25,6 +25,7 @@ enum BLOCKANIM {
 	idle,
 	broke,
 	on,
+	lit,
 
 	last__
 

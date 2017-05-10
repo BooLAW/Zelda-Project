@@ -23,9 +23,9 @@ public:
 	virtual ~Puzzle_Manager() {};
 	//bool LoadAttributes(pugi::xml_node attributes);
 	bool Start();
-	bool PreUpdate();
+	//bool PreUpdate();
 	bool Update(float dt);
-	bool PostUpdate();
+	//bool PostUpdate();
 	bool CleanUp();
 	void PushBlock(Block* block);
 	void PushPuzzle(Puzzle* puzzle);

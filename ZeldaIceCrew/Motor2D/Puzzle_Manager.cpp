@@ -6,7 +6,7 @@ Puzzle_Manager::Puzzle_Manager(){
 
 bool Puzzle_Manager::Start() {
 	bool ret = true;
-	
+
 	return ret;
 }
 
@@ -20,7 +20,7 @@ bool Puzzle_Manager::Update(float dt) {
 				if (puzzles[i] != nullptr) {
 					if (!App->IsPaused()) {
 						//LOG("PUZZLES UPDATE %d", i);
-						if (puzzles[i]->active == true)
+						if (puzzles[i]->started == true)
 							puzzles[i]->Update(dt);
 					}
 				}
