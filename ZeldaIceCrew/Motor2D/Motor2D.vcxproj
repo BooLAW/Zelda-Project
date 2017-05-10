@@ -160,6 +160,14 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="XMLFile.xml" />
+    <Xml Include="XMLFile1.xml" />
+    <Xml Include="XMLFile2.xml" />
+    <Xml Include="XMLFile3.xml" />
+    <Xml Include="XMLFile4.xml" />
+    <Xml Include="XMLFile5.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

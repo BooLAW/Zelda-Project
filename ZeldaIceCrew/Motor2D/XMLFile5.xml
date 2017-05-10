@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<file>
+
+  <!-- Regular Room enemy packs -->
+  <!-- One Freezor in the middle -->
+  <enemy subtype="t_freezor" x="1024" y="576"/>
+  
+  <!--  2 Green Soldier 2 Rope  divided in the 4 corners-->
+  <enemy subtype="t_greensoldier" x= "320"     y= "320"/>
+  <enemy subtype="t_greensoldier" x= "320"     y= "896"/>
+  <enemy subtype="t_rope"         x= "1536"    y= "320"/>
+  <enemy subtype="t_rope"         x= "1536"    y= "320"/>
+  
+  <!-- 2 Hinox 2 ranged divided in the 4 corners-->
+  <enemy subtype="t_hinox"              x= "320"     y= "320"/>
+  <enemy subtype="t_hinox"              x= "320"     y= "896"/>
+  <enemy subtype="t_bluearcher"         x= "1536"    y= "320"/>
+  <enemy subtype="t_bluearcher"         x= "1536"    y= "320"/>
+  
+  <!--  2 Geldman (sand guy)   Middle Left middle right -->
+  <enemy subtype="t_geldman" x= "320"     y= "576"/>
+  <enemy subtype="t_geldman" x= "1576"     y= "576"/>
+ 
+  <!-- 3 RedSoldier(top right top left middle)-->
+  <enemy subtype="t_redsoldier" x= "320"     y= "320"/>
+  <enemy subtype="t_redsoldier" x= "1024"     y= "576"/>
+  <enemy subtype="t_redsoldier" x= "1536"    y= "320"/>
+ 
+  <!-- 1 beamos in the middle 4 bat in the corners-->
+  <enemy subtype="t_GBat"              x= "320"     y= "320"/>
+  <enemy subtype="t_GBat"              x= "320"     y= "896"/>
+  <enemy subtype="t_GBat"              x= "1536"    y= "320"/>
+  <enemy subtype="t_GBat"              x= "1536"    y= "320"/>
+  <enemy subtype="t_beamos"            x= "1024"    y= "576"/>
+  
+  <!-- 6 blue soldier (4 corners 2 middles)-->
+  <enemy subtype="t_bluesoldier"              x= "320"     y= "320"/>
+  <enemy subtype="t_bluesoldier"              x= "320"     y= "896"/>
+  <enemy subtype="t_bluesoldier"              x= "1536"    y= "320"/>
+  <enemy subtype="t_bluesoldier"              x= "1536"    y= "320"/>
+  <enemy subtype="t_bluesoldier"              x= "320"     y= "576"/>
+  <enemy subtype="t_bluesoldier"              x= "1536"    y= "576"/>
+  
+  
+  
+  <!-- Usual coordinates -->
+  <!-- Left-top Corner: x= "320"     y= "320" -->
+  <!-- Left-bot Corner: x= "320"     y= "896" -->
+  <!-- Right-top Corner x= "1536"    y= "320" -->
+  <!-- Right- bot       x= "1536"    y= "320" -->
+  <!-- Middle           x= "1024"    y= "576" -->
+  <!-- Middle-left      x= "320"     y= "576" -->
+  <!-- Middle-Right     x= "1536"    y= "576" -->
+</file>

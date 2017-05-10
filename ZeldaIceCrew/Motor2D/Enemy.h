@@ -27,12 +27,12 @@ enum ENEMYTYPE {
 	t_bluearcher,
 	t_redsoldier,
 	t_greensoldier,
-	t_hinox,
+	t_hinox,  // ciclop
 	t_rope,
-	t_geldman,
-	t_freezor,
+	t_geldman, //sandman
+	t_freezor, //ghost
 	t_GBat,
-	t_beamos,
+	t_beamos, // eye
 	t_boss_ballandchain,
 	t_boss_agahnim,
 	t_boss_agahnimclone,

@@ -214,4 +214,12 @@
       <UniqueIdentifier>{3fec696e-4c9f-403d-ad04-1a77f94213a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="XMLFile.xml" />
+    <Xml Include="XMLFile1.xml" />
+    <Xml Include="XMLFile2.xml" />
+    <Xml Include="XMLFile3.xml" />
+    <Xml Include="XMLFile4.xml" />
+    <Xml Include="XMLFile5.xml" />
+  </ItemGroup>
 </Project>
