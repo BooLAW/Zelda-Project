@@ -4,7 +4,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
-#define N_ITEMS 15
+#define N_ITEMS 31
 
 enum BLOCKTYPE {
 	bush = 0,
