@@ -47,7 +47,7 @@ void Room::Update(float dt)
 		for (std::list<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
 		{
 			if (!App->IsPaused()) {
-				if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect) == 0) {
+				if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect) == 1) {
 					App->player->toTalk = it._Ptr->_Myval;
 				}
 			

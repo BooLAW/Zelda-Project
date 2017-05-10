@@ -252,6 +252,7 @@ Npc * EntityManager::CreateNPC(NPC_TYPE type, int id)
 		ret = new Npc_Zelda();
 		ret->type = type;
 		ret->npcId = id;
+		ret->pos = { 0,0 };
 		ret->SetTexture(App->tex->Load("Sprites/Npc.png"));
 		ret->SetRect({ 0,0,42,52 });
 		ret->HitBox = App->collisions->AddCollider({ 0, 0, 40, 25 }, COLLIDER_NPC);

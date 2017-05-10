@@ -43,9 +43,7 @@ bool VillageScene::Start()
 	curr_id = village;
 	stdStart();
 	App->player->room = { 0,0 };
-
-	//GetRoom(2, 3)->AddNpc(NPC_ZELDA, 500, 400, 1);
-	
+	GetRoom(0, 2)->AddNpc(NPC_ZELDA, 2000, 550, 1);
 	return true;
 };
 bool VillageScene::Update(float dt)
