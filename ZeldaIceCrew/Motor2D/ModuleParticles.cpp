@@ -518,6 +518,7 @@ void BounceBack::Start()
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);
 		anim[k].PushBack(g_rect[k][1]);
+		anim[k].speed = 0.1;
 	}
 
 	speed = { 1, 1 };
@@ -600,20 +601,8 @@ bool BounceBack::Update(float dt)
 		}
 		if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
 			state = back;
-			switch (App->player->curr_dir) {
-			case Up:
-				speed.y = -std::abs(speed.y);
-				break;
-			case Down:
-				speed.y = std::abs(speed.y);
-				break;
-			case Left:
-				speed.x = -std::abs(speed.x);
-				break;
-			case Right:
-				speed.x = std::abs(speed.x);
-				break;
-			}
+			speed.y = -speed.y;
+			speed.x = -speed.x;
 		}
 	}
 
@@ -645,6 +634,7 @@ void AgahnimBasic::Start()
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);
 		anim[k].PushBack(g_rect[k][1]);
+		anim[k].speed = 0.1;
 	}
 
 	speed = { STD_PROJ_SPD, STD_PROJ_SPD };
@@ -681,7 +671,7 @@ void AgahnimBasic::Start()
 
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
 	life = 10000;
-	damage = 4;
+	damage = 2;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
 
 
@@ -692,43 +682,44 @@ bool AgahnimBasic::Update(float dt)
 
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
 
-	collider->rect = HitBox;
+	if (collider != nullptr) {
+		collider->rect = HitBox;
 
-	collider->SetPos(HitBox.x, HitBox.y);
+		collider->SetPos(HitBox.x, HitBox.y);
 
-	Collider* aux = collider;
+		Collider* aux = collider;
 
-	if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
-	{
-		hit = true;
-		LOG("Player HIT");
-		if (App->player->link_coll->active == true) {
-			App->player->HitPlayer(damage);
-			App->particle->DestroyParticle(this);
-		}
-	}
-
-	//BLOCK INTERACTION
-	for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
-	{
-		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
 		{
-			Collider* aux = collider;
-			if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
-			{
-				hit = true;
-				LOG("BLOCK HIT");
+			hit = true;
+			LOG("Player HIT");
+			if (App->player->link_coll->active == true) {
+				App->player->HitPlayer(damage);
 				App->particle->DestroyParticle(this);
 			}
 		}
-	}
-	//TILED INTERACTION
-	if (this->CheckSpace(position.x, position.y) == 1)
-	{
-		LOG("ARROW HIT");
-		App->particle->DestroyParticle(this);
-	}
 
+		//BLOCK INTERACTION
+		for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
+		{
+			if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+			{
+				Collider* aux = collider;
+				if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+				{
+					hit = true;
+					LOG("BLOCK HIT");
+					App->particle->DestroyParticle(this);
+				}
+			}
+		}
+		//TILED INTERACTION
+		if (this->CheckSpace(position.x, position.y) == 1)
+		{
+			LOG("ARROW HIT");
+			App->particle->DestroyParticle(this);
+		}
+	}
 	return stdUpdate(dt);
 }
 
@@ -940,18 +931,19 @@ bool AgahnimBall::Update(float dt)
 {
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
 
-	collider->rect = HitBox;
+	if (collider != nullptr) {
+		collider->rect = HitBox;
 
-	collider->SetPos(HitBox.x, HitBox.y);
+		collider->SetPos(HitBox.x, HitBox.y);
 
-	Collider* aux = collider;
+		Collider* aux = collider;
 
-	for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
-	{
-		if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+		for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
 		{
-			Collider* aux = collider;
-				
+			if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+			{
+				Collider* aux = collider;
+
 				if (state == back) {
 					for (std::list<Enemy*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->enemies.end(); it++)
 					{
@@ -964,7 +956,7 @@ bool AgahnimBall::Update(float dt)
 								hit = true;
 								LOG("ENEMY HIT");
 								App->particle->DestroyParticle(this);
-								it._Ptr->_Myval->Hit(curr_dir, ORIGIN_PWR);
+								it._Ptr->_Myval->Hit(curr_dir, 1);
 							}
 						}
 					}
@@ -991,44 +983,32 @@ bool AgahnimBall::Update(float dt)
 						it._Ptr->_Myval->Hit(curr_dir, damage * ORIGIN_PWR);
 					}
 				}
-		}
-	}
-
-	if (state == go) {
-		if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
-		{
-			hit = true;
-			LOG("Player HIT");
-			App->player->HitPlayer(damage);
-			if (App->player->link_coll->active == true)
-				App->particle->DestroyParticle(this);
-		}
-		if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
-			state = back;
-			switch (App->player->curr_dir) {
-			case Up:
-				speed.y = -std::abs(speed.y);
-				break;
-			case Down:
-				speed.y = std::abs(speed.y);
-				break;
-			case Left:
-				speed.x = -std::abs(speed.x);
-				break;
-			case Right:
-				speed.x = std::abs(speed.x);
-				break;
 			}
 		}
+
+		if (state == go) {
+			if (aux->CheckCollision(App->player->link_coll->rect) && hit == false)
+			{
+				hit = true;
+				LOG("Player HIT");
+				App->player->HitPlayer(damage);
+				if (App->player->link_coll->active == true)
+					App->particle->DestroyParticle(this);
+			}
+			if (this->collider->CheckCollision(App->player->weapon_coll->rect)) {
+				state = back;
+				speed.y = -speed.y;
+				speed.x = -speed.x;
+			}
+		}
+
+		//TILED INTERACTION
+		if (this->CheckSpace(position.x, position.y) == 1)
+		{
+			App->particle->DestroyParticle(this);
+		}
+
 	}
-
-	//TILED INTERACTION
-	if (this->CheckSpace(position.x, position.y) == 1)
-	{
-		App->particle->DestroyParticle(this);
-	}
-
-
 	return stdUpdate(dt);
 }
 
@@ -1204,7 +1184,7 @@ bool Block_Skull::Update(float dt)
 					hit = true;
 					LOG("ENEMY HIT");
 					App->particle->DestroyParticle(this);
-					it._Ptr->_Myval->Hit(curr_dir, damage);
+					it._Ptr->_Myval->Hit(curr_dir, ORIGIN_PWR);
 				}
 		}
 	}
@@ -1293,7 +1273,7 @@ void AgahnimBall::Start()
 
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
 	life = -1;
-	damage = 4;
+	damage = 2;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
 
 }

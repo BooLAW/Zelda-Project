@@ -319,15 +319,8 @@ void Enemy::Hit(uint dir, uint dmg)
 
 void Enemy::Death()
 {
-	hit_pause_counter++;
-	if (hit_pause_counter < 200) {
-		if (hit_pause_counter % 2)
-			SDL_Delay(1);
-	}
-	else {
-		Reward();
-		App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
-	}
+	Reward();
+	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 
 void Enemy::Reward()
@@ -1725,6 +1718,11 @@ bool BossAgahnim::Start()
 
 	AIType = special;
 
+	phase = phase_1;
+	state = idle;
+
+	stats.Hp = 12;
+
 	subtype = ENEMYTYPE::t_boss_agahnim;
 
 	return ret;
@@ -1779,7 +1777,7 @@ void BossAgahnim::Update(float dt)
 
 	switch (phase) {
 	case phase_1:
-		if (stats.Hp <= 9 * ORIGIN_PWR) {
+		if (stats.Hp <= 9) {
 			phase = goto_phase_2;
 			state = move_start;
 		}
@@ -1792,7 +1790,7 @@ void BossAgahnim::Update(float dt)
 				disappear_a.Reset();
 				timer.SetFlag(false);
 				if (ball_counter < 2)
-					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, curr_dir);
+					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, Down);
 				state = attack;
 			}
 			break;
@@ -1810,7 +1808,7 @@ void BossAgahnim::Update(float dt)
 				timer.Start();
 				timer.SetFlag(true);
 
-				App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
+				App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, Down);
 
 				ball_counter++;
 			}
@@ -1895,7 +1893,7 @@ void BossAgahnim::Update(float dt)
 		}
 		break;
 	case phase_2:
-		if (stats.Hp <= 6 * ORIGIN_PWR) {
+		if (stats.Hp <= 6) {
 			phase = goto_phase_3;
 			state = disappear;
 		}
@@ -1907,7 +1905,7 @@ void BossAgahnim::Update(float dt)
 				appear_a.Reset();
 				disappear_a.Reset();
 				timer.SetFlag(false);
-				App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
+				App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, Down);
 				state = attack;
 			}
 			break;
@@ -2003,6 +2001,17 @@ void BossAgahnim::Update(float dt)
 		}
 		break;
 	case phase_3:
+		clones_ded = 0;
+		for (int i = 0; i < 2; i++) {
+			if (App->scene_manager->GetCurrentScene()->IsEnemy(clones[i]) == false) {
+				clones_ded++;
+			}
+		}
+		if (clones_ded >= 2) {
+			phase = phase_4;
+			state = attack_charge;
+			
+		}
 		switch (state) {
 		case idle:
 			timer.Start();
@@ -2057,6 +2066,59 @@ void BossAgahnim::Update(float dt)
 			break;
 		}
 		break;
+	case phase_4:
+		stats.Speed = 4;
+		move_timer.Start();
+		move_timer.SetFlag(true);
+		if (move_timer.Read() > 2000) {
+			path_to_follow.clear();
+			new_p.x = rand() % (r_a->room_rect.w - 250) + (r_a->room_rect.x + 200);
+			new_p.y = rand() % (r_a->room_rect.h - 250) + (r_a->room_rect.y + 200);
+			if (CheckSpace((float)new_p.x, (float)new_p.y) == 0) {
+				target = new_p;
+				path_to_follow.push_back(target);
+				move_timer.SetFlag(false);
+			}
+		}
+		switch (state) {
+		case attack_charge:
+			timer.Start();
+			timer.SetFlag(true);
+			if (timer.Read() > 500) {
+				timer.SetFlag(false);
+				if (ball_counter < 2)
+					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, Down);
+				state = attack;
+			}
+			break;
+		case attack:
+			timer.Start();
+			timer.SetFlag(true);
+			if (ball_counter < 2) {
+				if (timer.Read() > 200) {
+					timer.SetFlag(false);
+					ball_counter++;
+					state = attack_charge;
+				}
+			}
+			else if (ball_counter == 2) {
+				timer.Start();
+				timer.SetFlag(true);
+
+				App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, Down);
+
+				ball_counter++;
+			}
+			else if (ball_counter > 2)
+				if (timer.Read() > 500) {
+					timer.SetFlag(false);
+					ball_counter = 0;
+					state = attack_charge;
+				}
+			break;
+
+		}
+		break;
 	}
 }
 
@@ -2065,6 +2127,8 @@ bool AgahnimClones::Start()
 	bool ret = true;
 
 	SetReward();
+
+	phase = phase_2;
 
 	curr_dir = Enemy::EnDirection::Down;
 
@@ -2191,8 +2255,6 @@ void AgahnimClones::Update(float dt)
 	iPoint new_p;
 	Room* r_a = App->scene_manager->GetCurrentScene()->GetCurrentRoom();
 
-	LOG("%f %f", pos.x, pos.y);
-
 	stdUpdate(dt);
 
 		switch (state) {
@@ -2203,10 +2265,14 @@ void AgahnimClones::Update(float dt)
 				appear_a.Reset();
 				disappear_a.Reset();
 				timer.SetFlag(false);
-				if(state == phase_3)
-					App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, curr_dir);
-				else
-				App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, curr_dir);
+				if (phase == AGAHNIMCLONEPHASE::phase_3) {
+					
+					App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, Down);
+				}
+				else {
+			
+					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, Down);
+				}
 				state = attack;
 			}
 			break;

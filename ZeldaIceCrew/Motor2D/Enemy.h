@@ -335,9 +335,12 @@ public:
 
 	uint ball_counter = 0;
 
+	uint clones_ded = 0;
+
 	bool goandback = true;
 	bool updown = true;
 	j1Timer updowntime;
+	j1Timer move_timer;
 	AgahnimClones* clones[2];
 
 	uint n_deaths;
@@ -347,8 +350,9 @@ public:
 		goto_phase_2,
 		phase_2,
 		goto_phase_3,
-		phase_3
-	}phase = phase_1;
+		phase_3,
+		phase_4
+	}phase = phase_4;
 	enum AGAHNIMSTATE {
 		idle = 0,
 		attack_charge,
@@ -358,7 +362,7 @@ public:
 		move_start,
 		move,
 		appear,
-	}state = idle;
+	}state = attack_charge;
 
 	Animation appear_a, disappear_a, ticking_a, move_a, idle_a, attack_c_a, light_a_c;
 	SDL_Rect attack_sprites[3], light_a_sprites[2], ticking_sprites[2], disappear_sprites[6], idle_sprites[3];

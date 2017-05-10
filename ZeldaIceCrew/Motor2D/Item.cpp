@@ -88,7 +88,8 @@ void Item::Draw(float dt)
 	if (draw_pos.y < pos.y - FLOATING_OFFSET)
 		floating_up = false;
 
-	App->render->toDraw(tex, draw_pos.y + this->HitBox->rect.h ,draw_pos.x, draw_pos.y, &rect);
+	if(HitBox != nullptr)
+		App->render->toDraw(tex, draw_pos.y + this->HitBox->rect.h ,draw_pos.x, draw_pos.y, &rect);
 }
 
 void Item::CleanUp()
