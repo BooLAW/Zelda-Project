@@ -8,7 +8,7 @@
 
 bool Scene::stdStart()
 {
-	Load_new_map(0);
+	Load_new_map(App->scene_manager->dungeon_id);
 	App->player->pos = pl_start_pos;
 	
 	return true;
@@ -419,10 +419,14 @@ bool Scene::Load_new_map(int id)
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
 
-	for (pugi::xml_node temp = config.child("maps").child("map"); temp; temp = temp.next_sibling("map")) {
-		if (temp.attribute("id").as_int(0) == id)
-			{
+	pugi::xml_node temp;
 
+	for (temp = config.child("maps").child("map"); temp; temp = temp.next_sibling("map")) {
+		if (temp.attribute("id").as_int(0) != id)
+			continue;
+		else
+			break;
+	}
 			// Camera 
 			follow_cam = temp.child("camera").attribute("follow").as_bool(false);
 
@@ -612,7 +616,6 @@ bool Scene::Load_new_map(int id)
 						}
 					}
 				}
-			}
 
 			//map
 			std::string name_map = temp.child_value("file");
@@ -627,7 +630,6 @@ bool Scene::Load_new_map(int id)
 			App->render->camera.x = (App->win->GetWidth() / scale - size_pos.x);
 			App->render->camera.y = (App->win->GetHeight() / scale - size_pos.y);
 			//	}
-		}
 
 	return true;
 }

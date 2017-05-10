@@ -101,9 +101,6 @@ public:
 protected:
 
 	bool change_scene = false;
-	
-
-	
 
 public:
 	bool follow_cam = true;

@@ -729,11 +729,13 @@ bool Main_Screen::Update(float dt)
 			App->audio->PlayFx(press_fx);
 			if (selected == New_game) {
 				// start a new game, for now:
+				App->scene_manager->dungeon_id = 1;
 				App->player->inMainScreen = false;
 				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 			}
 			if (selected == Continue) {
 				//continue with the current game, for now:
+				App->scene_manager->dungeon_id = rand() % 2;
 				App->player->inMainScreen = false;
 				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 			}

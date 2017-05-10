@@ -54,6 +54,7 @@ public:
 	Scene* GetCurrentScene();
 	Scene* SetCurrentScene(Scene* new_scene);
 
+	uint dungeon_id = 0;
 
 public:
 	bool to_change_scene = false;
