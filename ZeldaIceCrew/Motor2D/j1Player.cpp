@@ -1093,6 +1093,9 @@ bool j1Player::Update(float dt)
 					}
 				}
 			}
+			if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+				App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
+			}
 		}
 		else {
 			App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
@@ -1316,7 +1319,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		//function to restart in the house()
 
 	if (link_coll == c1 && c2->type == COLLIDER_TO_DUNGEON) {
-		App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
+		if (App->input->GetKey(controls[MOVE_UP]) == KEY_DOWN)
+			App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
 	}
 
 }

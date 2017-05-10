@@ -6,7 +6,6 @@ void Room::Start()
 
 void Room::Update(float dt)
 {
-	if (loaded) {
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++) {
 			if ((*it) != nullptr) {
 				if (PlayerInside() == true) {
@@ -53,10 +52,6 @@ void Room::Update(float dt)
 				}
 			}
 		}
-	}
-	else {
-		loaded = true;
-	}
 }
 
 void Room::CleanUp()

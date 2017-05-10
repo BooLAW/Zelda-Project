@@ -75,15 +75,15 @@ void Enemy::stdUpdate(float dt)
 {
 	
 	if (App->IsPaused() == false) {
-
-		if (HitBox->type == COLLIDER_ENEMY) {
-			if (App->player->weapon_coll != nullptr)
-				if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
-					Hit(App->player->curr_dir, App->player->power);
-					App->audio->PlayFx(hit_fx);
-				}
+		if (HitBox != nullptr) {
+			if (HitBox->type == COLLIDER_ENEMY) {
+				if (App->player->weapon_coll != nullptr)
+					if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
+						Hit(App->player->curr_dir, App->player->power);
+						App->audio->PlayFx(hit_fx);
+					}
+			}
 		}
-
 		if (App->player->action_blit != j1Player::Weapon_atk)
 			hit = false;
 

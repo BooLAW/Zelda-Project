@@ -42,7 +42,7 @@ bool DungeonScene::Start()
 	BROFILER_CATEGORY("StartDungeon", Profiler::Color::DarkBlue);
 	curr_id = dungeon;
 	stdStart();
-	GetRoom(0, 2)->AddNpc(NPC_ZELDA,500, 400, 1);
+	//GetRoom(0, 2)->AddNpc(NPC_ZELDA,500, 400, 1);
 	boss_music = false;
 	chain_boss_defeated = false;
 
