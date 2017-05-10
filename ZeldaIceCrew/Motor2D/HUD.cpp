@@ -416,7 +416,7 @@ void HUD::GenerateHP()
 
 void HUD::GenerateKeys()
 {
-	iPoint pos = {rupees->pos.x,rupees->pos.y+75};
+	iPoint pos = {bombs->pos.x+ 75 ,bombs->pos.y+5};
 	for (uint i = 0; i < max_keys; i++) {
 		GuiImage* img = (GuiImage*)App->gui->CreateElement(image);
 		img->pos = pos;
