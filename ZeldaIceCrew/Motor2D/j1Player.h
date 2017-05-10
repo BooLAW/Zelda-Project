@@ -74,6 +74,7 @@ public:
 		Slash,
 		Sleep_Wake_up,
 		Wake_up,
+		Die,
 		Light,
 		Dash,
 		Unknown,

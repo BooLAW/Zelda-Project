@@ -335,6 +335,16 @@ bool j1Player::Start()
 		sprites[Wake_up][Down][17] = { link_x * 19, link_y * 15, link_width, link_height };
 		sprites[Wake_up][Down][18] = { link_x * 20, link_y * 15, link_width, link_height };
 	}
+	{
+		// Dying animation
+
+		sprites[Die][Right][0] = { link_x * 19, link_y * 11, link_width, link_height };
+		sprites[Die][Right][1] = { link_x * 20, link_y * 11, link_width, link_height };
+		sprites[Die][Right][2] = { link_x * 21, link_y * 11, link_width, link_height };
+
+		
+
+	}
 	//Sword Charge Idle
 
 	//Sword Charge Walk
@@ -474,6 +484,16 @@ bool j1Player::Start()
 			animations[Walk_Shield][Right].PushBack(sprites[Walk_Shield][Right][6]);
 			animations[Walk_Shield][Right].speed = PL_WALK_FPS;
 		}
+
+	}
+
+	{
+	// Dying
+
+	animations[Die][Right].PushBack(sprites[Die][Right][0]);
+	animations[Die][Right].PushBack(sprites[Die][Right][1]);
+	animations[Die][Right].PushBack(sprites[Die][Right][2]);
+	animations[Die][Right].speed = 0.1f;
 
 	}
 
@@ -885,6 +905,14 @@ bool j1Player::Update(float dt)
 							action = true;
 							action_blit = Wake_up;
 							curr_dir = Down;
+						}*/
+
+						/*if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+							dir_override = true;
+							anim_override = true;
+							action = true;
+							action_blit = Die;
+							curr_dir = Right;
 						}*/
 
 						if (App->input->GetKey(App->input->controls[WPN_NEXT]) == KEY_DOWN) {
