@@ -1673,9 +1673,16 @@ void j1Player::Slash_()
 }
 bool j1Player::Load(pugi::xml_node& data)
 {
-	//weapons info
+	//keys
+	map1_comp = data.child("keys").attribute("m1").as_bool(false);
+	map2_comp = data.child("keys").attribute("m2").as_bool(false);
+	map3_comp = data.child("keys").attribute("m3").as_bool(false);
+	map4_comp = data.child("keys").attribute("m4").as_bool(false);
+	map5_comp = data.child("keys").attribute("m5").as_bool(false);
+	//hp
 	curr_life_points = data.child("hp").attribute("curr").as_int();
 	max_life_points = data.child("hp").attribute("max").as_int();
+	///weapons
 	std::string curr_weapon = data.child("weapons").attribute("curr_weapon").as_string();
 		if (curr_weapon.c_str() == "t_sword")
 	if(data.child("weapons").attribute("sword").as_bool())
@@ -1690,20 +1697,20 @@ bool j1Player::Load(pugi::xml_node& data)
 	if (data.child("dungeon").attribute("in").as_bool(false) == true)
 		App->scene_manager->SetCurrentScene((Scene*)App->scene_manager->dungeon_scene);
 
-	//maps completed in dungeon
-
-	map1_comp = data.child("dungeon").attribute("map1_comp").as_bool(false);
-	map2_comp = data.child("dungeon").attribute("map2_comp").as_bool(false);
-	map3_comp = data.child("dungeon").attribute("map3_comp").as_bool(false);
-	map4_comp = data.child("dungeon").attribute("map4_comp").as_bool(false);
-	map5_comp = data.child("dungeon").attribute("map5_comp").as_bool(false);
-
 	return true;
 }
 
 // Save Game State
 bool j1Player::Save(pugi::xml_node& data) const
 {
+	//keys
+	pugi::xml_node keys = data.append_child("keys");
+		keys.append_attribute("m1") = map1_comp;
+		keys.append_attribute("m2") = map2_comp;
+		keys.append_attribute("m3") = map3_comp;
+		keys.append_attribute("m4") = map4_comp;
+		keys.append_attribute("m5") = map5_comp;
+	//hp
 	pugi::xml_node hp = data.append_child("hp");
 		hp.append_attribute("curr") = curr_life_points;
 		hp.append_attribute("max") = max_life_points;
@@ -1717,10 +1724,6 @@ bool j1Player::Save(pugi::xml_node& data) const
 		//items.append_attribute("pegasus_boots") = inventory.find();
 	pugi::xml_node dun = data.append_child("dungeon");
 		dun.append_attribute("in") = (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene);
-		dun.append_attribute("map1_comp") = map1_comp;
-		dun.append_attribute("map2_comp") = map2_comp;
-		dun.append_attribute("map3_comp") = map3_comp;
-		dun.append_attribute("map4_comp") = map4_comp;
-		dun.append_attribute("map5_comp") = map5_comp;                                                                                         
+		                                                                                   
 	return true;
 }
