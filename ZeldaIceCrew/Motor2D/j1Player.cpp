@@ -824,9 +824,6 @@ bool j1Player::Update(float dt)
 
 			}
 			else {
-				if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
-					App->Pause();
-				}
 				Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
 
 				if (App->debug_mode == true)
@@ -1053,10 +1050,12 @@ bool j1Player::Update(float dt)
 						if (!App->hud->inv->active) {
 							App->hud->inv->active = true;
 							App->audio->PlayFx(open_inv_fx);
+							App->Pause();
 						}
 						else {
 							App->hud->inv->active = false;
 							App->audio->PlayFx(close_inv_fx);
+							App->UnPause();
 						}
 					}
 
@@ -1103,8 +1102,26 @@ bool j1Player::Update(float dt)
 		}
 		else {
 			App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
-			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
-				App->UnPause();
+			if (App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN) {
+				if (App->hud->inv->active) {
+					App->hud->inv->active = false;
+					App->audio->PlayFx(close_inv_fx);
+					App->UnPause();
+				}
+			}
+			if (App->hud->inv->active) {
+				if (App->input->GetKey(App->input->controls[UP]) == KEY_DOWN) {
+					App->hud->inv->Move_Sel_up();
+				}
+				else if (App->input->GetKey(App->input->controls[DOWN]) == KEY_DOWN) {
+					App->hud->inv->Move_Sel_down();
+				}
+				else if (App->input->GetKey(App->input->controls[RIGHT]) == KEY_DOWN) {
+					App->hud->inv->Move_Sel_forward();
+				}
+				else if (App->input->GetKey(App->input->controls[LEFT]) == KEY_DOWN) {
+					App->hud->inv->Move_Sel_backwards();
+				}
 			}
 		}
 	}
