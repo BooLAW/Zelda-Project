@@ -9,7 +9,7 @@
   <enemy subtype="t_greensoldier" x= "320"     y= "320"/>
   <enemy subtype="t_greensoldier" x= "320"     y= "896"/>
   <enemy subtype="t_rope"         x= "1536"    y= "320"/>
-  <enemy subtype="t_rope"         x= "1536"    y= "320"/>
+  <enemy subtype="t_rope"         x= "1536"    y= "896"/>
   
   <!-- 2 Hinox 2 ranged divided in the 4 corners-->
   <enemy subtype="t_hinox"              x= "320"     y= "320"/>
@@ -47,7 +47,7 @@
   <!-- Left-top Corner: x= "320"     y= "320" -->
   <!-- Left-bot Corner: x= "320"     y= "896" -->
   <!-- Right-top Corner x= "1536"    y= "320" -->
-  <!-- Right- bot       x= "1536"    y= "320" -->
+  <!-- Right- bot       x= "1536"    y= "896" -->
   <!-- Middle           x= "1024"    y= "576" -->
   <!-- Middle-left      x= "320"     y= "576" -->
   <!-- Middle-Right     x= "1536"    y= "576" -->
