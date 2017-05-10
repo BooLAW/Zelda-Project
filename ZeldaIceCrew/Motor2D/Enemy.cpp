@@ -1996,8 +1996,10 @@ void BossAgahnim::Update(float dt)
 			if (appear_a.Finished() == true) {
 				clones[0] = (AgahnimClones*)App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddEnemy(t_boss_agahnimclone, 200, 420);
 				clones[1] = (AgahnimClones*)App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddEnemy(t_boss_agahnimclone, 824, 420);
-				clones[0]->stats.Hp = 1;
-				clones[1]->stats.Hp = 1;
+				clones[0]->stats.Hp = 3;
+				clones[1]->stats.Hp = 3;
+				clones[0]->phase = AgahnimClones::AGAHNIMCLONEPHASE::phase_3;
+				clones[1]->phase = AgahnimClones::AGAHNIMCLONEPHASE::phase_3;
 				phase = phase_3;
 				state = idle;
 				stats.Speed = 4;
