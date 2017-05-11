@@ -1006,10 +1006,10 @@ bool AgahnimBall::Update(float dt)
 		}
 
 		//TILED INTERACTION
-		if (this->CheckSpace(position.x, position.y) == 1)
-		{
-			App->particle->DestroyParticle(this);
-		}
+		//if (this->CheckSpace(position.x, position.y) == 1)
+		//{
+		//	App->particle->DestroyParticle(this);
+		//}
 
 	
 	return stdUpdate(dt);
@@ -1275,7 +1275,7 @@ void AgahnimBall::Start()
 	}
 
 	HitBox = { (int)position.x, (int)position.y, 32, 32 };
-	life = -1;
+	life = 6000;
 	damage = 2;
 	App->particle->AddParticle(this, COLLIDER_ENEMY_PROJECTILE, life, damage, NULL);
 
