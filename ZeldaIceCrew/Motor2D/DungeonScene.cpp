@@ -45,7 +45,6 @@ bool DungeonScene::Start()
 	stdStart();
 	//GetRoom(0, 2)->AddNpc(NPC_ZELDA,500, 400, 1);
 	App->player->PlayerInmortal(10);
-	App->LoadGame("save_game.xml");
 	boss_music = false;
 	chain_boss_defeated = false;
 

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<game_state>
+	<file_system />
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<map />
+	<pathfinding />
+	<fonts />
+	<gui />
+	<SceneManager />
+	<:anonymous />
+	<:anonymous />
+	<:anonymous />
+	<player>
+		<keys id="0" completed="true" />
+		<keys id="1" completed="false" />
+		<keys id="2" completed="false" />
+		<keys id="3" completed="false" />
+		<keys id="4" completed="false" />
+		<n_keys n="1" />
+		<hp curr="10" max="10" />
+		<weapons curr_weapon="2149.12109" sword="2434.74829" bow="2434.74829" />
+		<rupees n="true" />
+		<stats power="30" speed="2.5" />
+		<items pegasus_boots="true" />
+		<dungeon in="true" />
+	</player>
+	<:anonymous />
+	<dialogue />
+	<renderer>
+		<camera x="-2048" y="-2208" />
+	</renderer>
+</game_state>

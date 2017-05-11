@@ -242,6 +242,8 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* 
 		}
 	}
 
+	ret->to_delete = false;
+
 	return ret;
 }
 

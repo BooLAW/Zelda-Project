@@ -9,6 +9,7 @@
 #include "VillageScene.h"
 #include "MathHelpers.h"
 #include <list>
+#include <fstream>
 
 j1Player::j1Player()
 {
@@ -23,6 +24,8 @@ bool j1Player::Awake()
 {
 	bool ret = true;
 	//LOG("Player Awake Start");
+
+	
 
 	return ret;
 }
@@ -1294,7 +1297,6 @@ void j1Player::AddWeapon(uint weapon_t)
 		
 		//}
 	}
-
 }
 
 void j1Player::HitPlayer(int dmg)
@@ -1391,9 +1393,7 @@ void j1Player::DyingRestart()
 {
 	
 	alive = true;
-	pos = ORIGIN_RESTART;
 	App->LoadGame("save_game.xml");
-	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
 	//App->player->pos = App->scene_manager->village_scene->pl_start_pos;
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
@@ -1408,6 +1408,7 @@ void j1Player::DyingRestart()
 
 	//add more features to discuss by the designer
 	action = true;
+	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
 }
 
 
@@ -1716,13 +1717,9 @@ bool j1Player::LoadPlayer(int id,bool new_game)
 	pugi::xml_node		data;
 	data = LoadXML(data_file,new_game);
 	//keys
-	for (int i = 0; i < N_MAPS; i++) {
-		for (pugi::xml_node node_k = data.child("keys"); node_k; node_k = node_k.next_sibling("keys")) {
-			if (data.child("keys").attribute("id").as_int() == i) {
-				completed_maps[i] = data.child("keys").attribute("completed").as_bool(false);
-				LOG("LOADING COMPLETED MAPS %d %d", i, completed_maps[i]);
-			}
-		}
+	uint n_k = 0;
+	for (pugi::xml_node node_k = data.child("keys"); node_k; node_k = node_k.next_sibling("keys")) {
+			completed_maps[n_k++] = data.child("keys").attribute("completed").as_bool(false);
 	}
 
 	keys = data.child("n_keys").attribute("n").as_int(0);
@@ -1879,9 +1876,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 		hp.append_attribute("max") = max_life_points;
 	pugi::xml_node weap = data.append_child("weapons");
 
-		weap.append_attribute("curr_weapon") = pos.x;
-		weap.append_attribute("sword") = pos.y;
-		weap.append_attribute("bow") = pos.y;
+	weap.append_attribute("curr_weapon") = curr_weapon->subtype;
 
 	//rupees
 	pugi::xml_node rupees = data.append_child("rupees");
@@ -1944,58 +1939,35 @@ bool j1Player::Save(pugi::xml_node& data) const
 		case icon_of_valor:
 			items.append_attribute("icon_of_valor") = true;
 			break;
-		case boss_key:
-			items.append_attribute("boss_key") = true;
-			break;
 		}
-	}
-	
-	
-	pugi::xml_node dun = data.append_child("dungeon");
-		dun.append_attribute("in") = (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene);
-		                                                                                   
+	}                                                                                   
 	return true;
 }
 
 bool j1Player::Load(pugi::xml_node & data)
 {
-	//keys
-	for (int i = 0; i < N_MAPS; i++) {
-		for (pugi::xml_node node_k = data.child("keys"); node_k; node_k = node_k.next_sibling("keys")) {
-			if (data.child("keys").attribute("id").as_int() == i)
-				completed_maps[i] = data.child("keys").attribute("completed").as_bool(false);
-		}
+
+	pugi::xml_node hp = data.child("hp");
+	curr_life_points = hp.attribute("curr").as_int(6);
+	max_life_points = hp.attribute("max").as_int(6);
+
+	pugi::xml_node weap = data.child("weapons");
+
+	weapons.clear();
+	AddWeapon(weap.attribute("curr_weapon").as_int(t_sword));
+
+	for (pugi::xml_node node_keys = data.child("keys"); node_keys; node_keys = node_keys.next_sibling("keys")) {
+		completed_maps[node_keys.attribute("id").as_int(NULL)] = node_keys.attribute("completed").as_bool(false);
 	}
-	//rupees
-	rupees= data.child("rupees").attribute("n").as_int(0);
-	//keys
+
 	keys = data.child("n_keys").attribute("n").as_int(0);
 
-	//map1_comp = data.child("keys").attribute("m1").as_bool(false);
-	//map2_comp = data.child("keys").attribute("m2").as_bool(false);
-	//map3_comp = data.child("keys").attribute("m3").as_bool(false);
-	//map4_comp = data.child("keys").attribute("m4").as_bool(false);
-	//map5_comp = data.child("keys").attribute("m5").as_bool(false);
-	//stats
-	power = data.child("stats").attribute("power").as_int(30);
+	rupees = data.child("rupees").attribute("n").as_int();
 
-	pl_speed.x = data.child("stats").attribute("speed").as_float(2.5f);
-	pl_speed.y = data.child("stats").attribute("speed").as_float(2.5f);
-
-	//hp
-	curr_life_points = data.child("hp").attribute("max").as_int(6);
-	max_life_points = data.child("hp").attribute("max").as_int(6);
-	///weapons
-	std::string curr_weapon = data.child("weapons").attribute("curr_weapon").as_string("t_sword");
-	if (curr_weapon.c_str() == "t_sword")
-		if (data.child("weapons").attribute("sword").as_bool(true))
-			AddWeapon(t_sword);
-	if (curr_weapon.c_str() == "t_bow")
-		if (data.child("weapons").attribute("bow").as_bool(true))
-		AddWeapon(t_bow);
-
-	//items info
 	pugi::xml_node items = data.child("items");
+
+	inventory.clear();
+
 	if (items.attribute("power_gauntlet").as_bool(false) == true)
 	{
 		Item* aux = (Item*)App->entitymanager->CreateItem(power_gauntlet);
@@ -2072,14 +2044,7 @@ bool j1Player::Load(pugi::xml_node & data)
 	{
 		Item* aux = (Item*)App->entitymanager->CreateItem(icon_of_valor);
 		aux->PassToInventory();
-	}	if (items.attribute("boss_key").as_bool(false) == true)
-	{
-		Item* aux = (Item*)App->entitymanager->CreateItem(boss_key);
-		aux->PassToInventory();
 	}
-	//dungeon situation info
-	if (data.child("dungeon").attribute("in").as_bool(false) == true)
-		App->scene_manager->SetCurrentScene((Scene*)App->scene_manager->dungeon_scene);
 
 	return true;
 }

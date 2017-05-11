@@ -88,7 +88,7 @@
 	<item subtype="heart_container" x="200" y="200"/>
 </items>          
 <enemies>
-
+<enemy subtype="t_boss_agahnim" x="100" y="100"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>

@@ -15,11 +15,14 @@ bool Main_Screen::Awake()
 	LOG("Loading Scene");
 	bool ret = true;
 
+
+
 	return ret;;
 }
 
 bool Main_Screen::Start()
 {
+	App->LoadGame("save_game.xml");
 	AddRoom(0, 0);
 	App->player->room = { 0,0 };
 	bool ret = true;

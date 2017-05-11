@@ -374,7 +374,7 @@ void j1App::SaveGame(const char* file) const
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
 	want_to_save = true;
-	save_game.create(file);
+	save_game.create("%s%s", fs->GetSaveDirectory(), file);
 }
 
 // ---------------------------------------
@@ -475,6 +475,7 @@ bool j1App::SavegameNow() const
 	{
 		std::stringstream stream;
 		data.save(stream);
+		data.save_file(save_game.GetString());
 
 		// we are done, so write data to disk
 		fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
