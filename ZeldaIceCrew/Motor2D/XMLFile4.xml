@@ -16,7 +16,7 @@
 
       <Link>
 
-        <room x="2" y="4"/>
+        <room x="2" y="5"/>
 
         <pos x="238" y="512"/>
 
@@ -50,9 +50,9 @@
         </room>
         <room x="1" y="1" w="1024" h="576">
           <enemies><!-- One Archer at each side of the top door, one big enemy in the middle -->
-            <enemy subtype="t_bluearcher"         x= "1536"    y= "320"/>
-            <enemy subtype="t_bluearcher"         x= "1536"    y= "320"/>
-            <enemy subtype="t_beamos"            x= "1024"    y= "576"/>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+            <enemy subtype="t_beamos"            x= "503"    y= "359"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
@@ -61,9 +61,11 @@
         </room>
         <room x="1" y="2" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_rope" x="192" y="192"/>
-            <enemy subtype="t_rope" x="450" y="192"/>
-            <enemy subtype="t_rope" x="768" y="192"/>
+            <enemy subtype="t_rope"         x= "864"     y= "90" />
+            <enemy subtype="t_rope"         x= "864"     y= "448"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "448"/>
+           
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -73,8 +75,8 @@
         </room>
         <room x="1" y="3" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_freezor" x="192" y="275"/>
-            <enemy subtype="t_freezor" x="768" y="275"/>
+            <enemy subtype="t_freezor" x= "503"    y= "359"/>
+           
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -86,10 +88,12 @@
         <!-- REGULAR DOUBLETETRIS REGULAR BEGINING -->
         <room x="2" y="2" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_bluesoldier"              x= "1536"    y= "320"/>
-            <enemy subtype="t_bluesoldier"              x= "1536"    y= "320"/>
-            <enemy subtype="t_bluesoldier"              x= "320"     y= "576"/>
-            <enemy subtype="t_bluesoldier"              x= "1536"    y= "576"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "90"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "90" />
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "359"/>
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "359" />
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
@@ -99,8 +103,10 @@
         </room>
         <room x="2" y="3" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_GBat"              x= "320"     y= "320"/>
-            <enemy subtype="t_GBat"              x= "1536"    y= "896"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "864"    y= "90" />
+            <enemy subtype="t_GBat"             x= "864"    y= "448"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
@@ -111,10 +117,10 @@
         </room><!-- Bats in top left corner and bot right corner-->
         <room x="2" y="4" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_redsoldier" x= "320"     y= "320"/>
-            <enemy subtype="t_redsoldier" x= "1024"     y= "576"/>
-            <enemy subtype="t_redsoldier" x= "1536"    y= "320"/>
-            <enemy subtype="t_geldman" x= "1576"     y= "576"/>
+            <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "359"/>
+            <enemy subtype="t_geldman"  x= "134"     y= "359"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -123,10 +129,10 @@
         </room>
         <room x="2" y="5" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_GBat"              x= "320"     y= "320"/>
-            <enemy subtype="t_GBat"              x= "320"     y= "896"/>
-            <enemy subtype="t_GBat"              x= "1536"    y= "320"/>
-            <enemy subtype="t_GBat"              x= "1536"    y= "320"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "864"    y= "90" />
+            <enemy subtype="t_GBat"             x= "864"    y= "448"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -136,10 +142,10 @@
         <!-- REGULAR MIDDLEPIT REGULAR -->
         <room x="3" y="1" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_greensoldier" x= "320"     y= "320"/>
-            <enemy subtype="t_greensoldier" x= "320"     y= "896"/>
-            <enemy subtype="t_greensoldier" x= "1536"    y= "320"/>
-            <enemy subtype="t_greensoldier" x= "1536"    y= "896"/>
+            <enemy subtype="t_greensoldier"  x= "134"     y= "90" />
+            <enemy subtype="t_greensoldier"  x= "134"     y= "448"/>
+            <enemy subtype="t_greensoldier"  x= "864"     y= "90" />
+            <enemy subtype="t_greensoldier"  x= "864"     y= "448"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
@@ -147,11 +153,11 @@
         </room>
         <room x="3" y="2" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_bluearcher"    x= "320"     y= "320"/>
-            <enemy subtype="t_bluearcher"    x= "320"     y= "896"/>
-            <enemy subtype="t_bluearcher"    x= "1536"    y= "320"/>
-            <enemy subtype="t_bluearcher"    x= "1536"    y= "896"/>
-            <enemy subtype="t_hinox"              x= "1024"     y= "576"/>
+            <enemy subtype="t_bluearcher"        x= "134"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "134"     y= "448"/>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+            <enemy subtype="t_hinox"             x= "134"     y= "448"/>
            
           </enemies>
           <doorways>
@@ -162,8 +168,8 @@
         </room> <!-- One Hinox in the middle 4 wizard in corners-->
         <room x="3" y="3" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_bluearcher"   x="192" y="192"/>
-            <enemy subtype="t_bluearcher"   x="768" y="192"/>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
            
           </enemies>
           <doorways>
