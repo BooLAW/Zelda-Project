@@ -101,6 +101,11 @@ bool Room::isInside(SDL_Rect r)
 	return false;
 }
 
+bool Room::NoEnemies()
+{
+	return enemies.empty();
+}
+
 bool Room::PlayerInside()
 {
 	return isInside(App->player->mov_coll->rect);
