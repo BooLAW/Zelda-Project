@@ -49,7 +49,7 @@ bool Main_Screen::Start()
 	ui_elements.push_back(Continue);
 
 	cont = (GuiText*)App->gui->CreateElement(text);
-	cont->str = "Continue";
+	cont->str = "Dungeons";
 	cont->active = true;
 	cont->movable = true;
 	cont->pos = { Continue->pos.x + 550, Continue->pos.y + 2 };
@@ -659,12 +659,13 @@ bool Main_Screen::Update(float dt)
 			}
 			if (changing_controls) {
 				SDL_Scancode code = App->input->returnkey();
-
+				selected->texture_rect = { 0,555,685,34 };
 				if (code != SDL_SCANCODE_0) {
 					if (selected == Up) {
 
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[UP] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 
@@ -673,6 +674,7 @@ bool Main_Screen::Update(float dt)
 						if (code != SDL_SCANCODE_0) {
 
 							App->input->controls[DOWN] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 					}
@@ -680,24 +682,28 @@ bool Main_Screen::Update(float dt)
 
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[RIGHT] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 					}
 					if (selected == Left) {
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[LEFT] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 					}
 					if (selected == Move_left) {
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[MOVE_LEFT] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 					}
 					if (selected == Move_up) {
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[MOVE_UP] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 
@@ -705,6 +711,7 @@ bool Main_Screen::Update(float dt)
 					if (selected == Move_down) {
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[MOVE_DOWN] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 
@@ -712,18 +719,21 @@ bool Main_Screen::Update(float dt)
 					if (selected == Move_right) {
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[MOVE_RIGHT] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 					}
 					if (selected == Menu) {
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[MENU] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 					}
 					if (selected == Action) {
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[ACTION] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 					}
@@ -731,6 +741,7 @@ bool Main_Screen::Update(float dt)
 
 						if (code != SDL_SCANCODE_0) {
 							App->input->controls[DASH] = code;
+							selected->texture_rect = { 0, 514, 683, 36 };
 							changing_controls = false;
 						}
 					}
@@ -901,7 +912,7 @@ bool Main_Screen::Update(float dt)
 				}
 				if (selected == d1) {
 					App->scene_manager->dungeon_id = 0;
-					App->scene_manager->ChangeScene((Scene*)App->scene_manager->village_scene);
+					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 				}
 				if (selected == d2) {
 					App->scene_manager->dungeon_id = 1;

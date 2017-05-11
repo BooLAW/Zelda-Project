@@ -1376,6 +1376,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 
 void j1Player::DyingRestart()
 {
+	
 	alive = true;
 	pos = ORIGIN_RESTART;
 	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
