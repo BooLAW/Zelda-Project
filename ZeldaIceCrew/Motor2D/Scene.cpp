@@ -24,13 +24,6 @@ bool Scene::stdUpdate(float dt)
 {
 	if(App->debug)
 		ShowCoords();
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame("save_game.xml");
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		App->SaveGame("save_game.xml");
-
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->debug = !App->debug;
 

@@ -358,6 +358,7 @@ void BossKey::Upgrade()
 	App->player->curr_life_points = App->player->max_life_points;
 	App->player->completed_maps[App->scene_manager->dungeon_id] = true;
 	App->player->keys++;
+	App->SaveGame("save_game.xml");
 	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
 }
 

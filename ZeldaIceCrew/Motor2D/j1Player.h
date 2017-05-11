@@ -140,6 +140,10 @@ public:
 	bool Save(pugi::xml_node& data) const;
 	bool Load(pugi::xml_node& data);
 
+	bool LoadPlayer(int id);
+
+	pugi::xml_node LoadXML(pugi::xml_document& config_file,bool new_game) const;
+
 	void HitPlayer(int dmg);
 
 	void SetPos(float x, float y);

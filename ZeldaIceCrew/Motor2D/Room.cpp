@@ -10,8 +10,6 @@ void Room::Update(float dt)
 			if ((*it) != nullptr) {
 				if (PlayerInside() == true) {
 					enemies.empty() ? (*it)->state = DWSTATE::open : (*it)->state = DWSTATE::close;
-					if (boss_room == true)
-						App->SaveGame("save_game.xml");
 				}
 				else {
 					(*it)->state = DWSTATE::open;

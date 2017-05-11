@@ -1685,10 +1685,8 @@ void j1Player::Slash_()
 
 			}
 		}
-
 		else
 		{
-
 			if (App->input->GetKey(App->input->controls[UP]) == KEY_DOWN) {
 				App->hud->inv->Move_Sel_up();
 			}
@@ -1706,6 +1704,14 @@ void j1Player::Slash_()
 }
 bool j1Player::Load(pugi::xml_node& data)
 {
+	
+}
+
+bool j1Player::LoadPlayer(int id,bool new_game)
+{
+	pugi::xml_document	data_file;
+	pugi::xml_node		data;
+	data = LoadXML(data_file,new_game);
 	//keys
 	for (int i = 0; i < N_MAPS; i++) {
 		for (pugi::xml_node node_k = data.child("keys"); node_k; node_k = node_k.next_sibling("keys")) {
@@ -1723,16 +1729,16 @@ bool j1Player::Load(pugi::xml_node& data)
 	//map5_comp = data.child("keys").attribute("m5").as_bool(false);
 
 	//hp
-	curr_life_points = data.child("hp").attribute("curr").as_int();
+	curr_life_points = data.child("hp").attribute("max").as_int();
 	max_life_points = data.child("hp").attribute("max").as_int();
 	///weapons
 	std::string curr_weapon = data.child("weapons").attribute("curr_weapon").as_string();
-		if (curr_weapon.c_str() == "t_sword")
-	if(data.child("weapons").attribute("sword").as_bool())
+	if (curr_weapon.c_str() == "t_sword")
+		if (data.child("weapons").attribute("sword").as_bool())
 			AddWeapon(t_sword);
 	if (data.child("weapons").attribute("bow").as_bool())
-			AddWeapon(t_bow);
-		
+		AddWeapon(t_bow);
+
 	//items info
 	pugi::xml_node items = data.append_child("items");
 	if (items.attribute("power_gauntlet").as_bool() == true)
@@ -1821,6 +1827,32 @@ bool j1Player::Load(pugi::xml_node& data)
 		App->scene_manager->SetCurrentScene((Scene*)App->scene_manager->dungeon_scene);
 
 	return true;
+	pugi::xml_node temp;
+	return false;
+}
+
+
+
+pugi::xml_node j1Player::LoadXML(pugi::xml_document & config_file,bool new_game) const
+{
+	pugi::xml_node ret;
+	int size = 0;
+	pugi::xml_parse_result result;
+	char* buf = nullptr;
+	if(new_game == false)
+		size = App->fs->Load("save_game.xml", &buf);
+	else
+		size = App->fs->Load("new_game.xml", &buf);
+
+	if (size != 0 && buf != nullptr)
+		result = config_file.load_buffer(buf, size);
+	RELEASE(buf);
+
+	if (result == NULL)
+		LOG("Could not load player XML. pugi error: %s \n ---Offset: %d", result.description(), result.offset);
+
+
+	return ret;
 }
 
 // Save Game State
