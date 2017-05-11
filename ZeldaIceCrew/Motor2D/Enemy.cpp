@@ -35,11 +35,11 @@ void Enemy::SetRewards()
 	memset(reward_pool, 0, N_ITEMS);
 	
 	// Standard Reward Pool
-	reward_pool[drop_heart] = 5;
+	reward_pool[drop_heart] = 20;
 	reward_pool[drop_potion] = 0;
-	reward_pool[drop_rupee] = 10;
-	reward_pool[drop_fiverupee] = 0;
-	reward_pool[drop_tenrupee] = 0;
+	reward_pool[drop_rupee] = 30;
+	reward_pool[drop_fiverupee] = 15;
+	reward_pool[drop_tenrupee] = 1;
 
 	//SortRewardProbs();
 

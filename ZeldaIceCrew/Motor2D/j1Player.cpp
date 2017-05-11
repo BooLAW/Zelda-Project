@@ -1227,6 +1227,9 @@ void j1Player::UpgradeHP(int x)
 		max_life_points = MAX_HP;
 	if (max_life_points < MIN_HP)
 		max_life_points = MIN_HP;
+
+	curr_life_points += x;
+
 }
 
 void j1Player::ChangeWeapon()
