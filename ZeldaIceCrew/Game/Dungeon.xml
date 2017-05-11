@@ -4,6 +4,8 @@
 
 
   <maps>
+
+
     <map id="0">
 
       <file>Dungeon.tmx</file>
@@ -13,11 +15,16 @@
       <camera follow="0"/>
 
       <Link>
+
         <room x="2" y="4"/>
+
         <pos x="238" y="512"/>
+
       </Link>
 
+
       <rooms>
+
         <room x="0" y="2" w="1024" h="576">
           <enemies>
             <enemy subtype="t_bluearcher" x="320" y="192"/>
@@ -41,38 +48,6 @@
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
           </doorways>
         </room>
-<<<<<<< HEAD
-=======
-
-        <room x="1" y="2" w="1024" h="576">
-          <enemies>
-
-            <enemy subtype="t_bluesoldier" x="768" y="128"/>
-            <enemy subtype="t_bluesoldier" x="256" y="208"/>
-            <enemy subtype="t_bluesoldier" x="768" y="208"/>
-          </enemies>
-          <doorways>
-            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
-            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-          </doorways>
-        </room>
-       
-        
-        
-        <room x="2" y="4" w="1024" h="576">
-          <enemies>
-	        	<enemy subtype="t_boss_agahnim" x="100" y="100"/>
-	        </enemies>
-          <items>
-          </items>
-          <doorways>
-            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
-            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-          </doorways>
-        </room> <!-- estos van-->
->>>>>>> origin/Develop
         <room x="1" y="3" w="1024" h="576">
           <enemies>
             <enemy subtype="t_rope" x="192" y="192"/>
@@ -95,7 +70,15 @@
             <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
           </doorways>
         </room> <!-- estos van-->
-   
+        <room x="2" y="4" w="1024" h="576">
+          <enemies>
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+
         <room x="3" y="3" w="1024" h="576">
           <enemies>
             <enemy subtype="t_beamos" x="512" y="192"/>
@@ -210,24 +193,12 @@
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
           </doorways>
         </room>
-        <room x="1" y="2" w="1024" h="576">
-          <enemies>
-            <enemy subtype="t_bluesoldier" x="768" y="128"/>
-            <enemy subtype="t_bluesoldier" x="256" y="208"/>
-            <enemy subtype="t_bluesoldier" x="768" y="208"/>
-          </enemies>
-          <doorways>
-            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
-            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-          </doorways>
-        </room>
         <room x="2" y="4" w="1024" h="576">
           <enemies>
-	          	<enemy subtype="t_boss_agahnim" x="100" y="100"/>
-	        </enemies>
+		<enemy subtype="t_boss_agahnim" x="100" y="100"/>
+	  </enemies>
           <items>
-  
+
           </items>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -235,7 +206,6 @@
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
           </doorways>
         </room> <!-- estos van-->
-
         <room x="1" y="3" w="1024" h="576">
           <enemies>
             <enemy subtype="t_rope" x="192" y="192"/>
@@ -258,6 +228,15 @@
             <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
           </doorways>
         </room> <!-- estos van-->
+        <room x="2" y="4" w="1024" h="576">
+          <enemies>
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+
         <room x="3" y="3" w="1024" h="576">
           <enemies>
             <enemy subtype="t_beamos" x="512" y="192"/>

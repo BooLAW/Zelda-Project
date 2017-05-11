@@ -44,6 +44,8 @@ bool VillageScene::Start()
 	stdStart();
 	App->player->room = { 0,0 };
 
+	col_to_d = App->collisions->AddCollider({ 1950, 151, 100, 16 }, COLLIDER_TO_DUNGEON);
+
 	return true;
 };
 bool VillageScene::Update(float dt)

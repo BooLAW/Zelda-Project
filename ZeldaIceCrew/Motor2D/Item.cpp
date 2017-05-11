@@ -292,6 +292,56 @@ void ItemSword::Upgrade()
 }
 
 
+void BossKey::Update(float dt)
+{
+
+
+
+	if (grabbed == false) {
+		if (HitBox != nullptr) {
+			if (HitBox->rect.x != pos.x || HitBox->rect.y != pos.y)
+				HitBox->SetPos(pos.x, pos.y);
+
+			if (HitBox->CheckCollision(App->player->link_coll->rect)) {
+				if (App->player->rupees >= this->price) {
+					App->player->rupees -= price;
+					App->audio->PlayFx(this->fx);
+					App->gui->DeleteElement(this->priceTag);
+					if (type == ENTITYTYPE::drop) {
+						Upgrade();
+						App->scene_manager->GetCurrentScene()->DestroyItem(this);
+					}
+					else {
+						if (App->player->Find_inv(this)) {
+							Upgrade();
+							App->scene_manager->GetCurrentScene()->DestroyItem(this);
+						}
+						else if (App->player->Find_weapon(this)) {
+							App->scene_manager->GetCurrentScene()->DestroyItem(this);
+						}
+						else {
+							Upgrade();
+							PassToInventory();
+						}
+					}
+				}
+			}
+		}
+		if (set == false) {
+			draw_pos = pos;
+			set = true;
+		}
+
+	}
+
+
+	if (priceTag != nullptr)
+		priceTag->pos = { (int)this->pos.x, (int)this->pos.y };
+
+	Draw(dt);
+
+}
+
 void BossKey::SetUp()
 {
 	subtype = boss_key;
@@ -306,7 +356,9 @@ void BossKey::SetUp()
 void BossKey::Upgrade()
 {
 	App->player->curr_life_points = App->player->max_life_points;
-	App->scene_manager->toChangeScene((Scene*)App->scene_manager->house_scene);
+	App->player->completed_maps[App->scene_manager->dungeon_id] = true;
+	App->player->keys++;
+	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
 }
 
 void GoldenGauntlet::SetUp()

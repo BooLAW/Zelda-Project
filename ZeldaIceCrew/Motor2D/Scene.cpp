@@ -181,6 +181,9 @@ Item * Scene::AddItem(uint subtype, int coord_x, int coord_y, float x, float y)
 
 		ret->room = { coord_x, coord_y };
 
+		ret->coords.x = r->coords.x;
+		ret->coords.y = r->coords.y;
+
 		r->items.push_back(ret);
 	}
 	else
@@ -571,7 +574,6 @@ bool Scene::Load_new_map(int id)
 												r->AddSceneDoorway(target, dir, node_dw.attribute("x").as_float(), node_dw.attribute("y").as_float());
 											}
 										}
-							
 									}
 								}
 							}

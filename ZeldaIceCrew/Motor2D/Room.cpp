@@ -113,6 +113,9 @@ Item * Room::AddItem(uint subtype, float x, float y)
 	ret = App->entitymanager->CreateItem(subtype);
 	ret->pos = { x + ROOM_W * coords.x, y + ROOM_H * coords.y};
 
+	ret->coords.x = coords.x;
+	ret->coords.y = coords.y;
+
 	items.push_back(ret);
 
 	return ret;

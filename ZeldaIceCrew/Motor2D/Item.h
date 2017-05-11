@@ -110,6 +110,7 @@ public:
 	bool floating_up = false;
 	bool set = false;
 	std::string description;
+	iPoint coords;
 
 };
 
@@ -204,6 +205,7 @@ struct IconOfValor : public Item {
 
 struct BossKey : public Item {
 public:
+	void Update(float dt);
 	void SetUp();
 	void Upgrade();
 };

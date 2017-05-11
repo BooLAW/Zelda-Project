@@ -934,7 +934,7 @@ bool AgahnimBall::Update(float dt)
 	if (collider == nullptr) {
 		collider = App->collisions->AddCollider(HitBox, COLLIDER_ENEMY_PROJECTILE);
 	}
-		//CRASH
+		
 		collider->rect = HitBox;
 
 		collider->SetPos(HitBox.x, HitBox.y);

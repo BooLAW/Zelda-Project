@@ -237,30 +237,6 @@ bool DwScene::Cross()
 	return true;
 }
 
-void DwScene::SetUp(uint dir)
-{
-	direction = dir;
-	if (collider != nullptr) {
-		switch (direction) {
-		case Direction::Up:
-			collider->rect = { (int)pos.x, (int)pos.y, 120, 16 };
-			break;
-		case Direction::Down:
-			collider->rect = { (int)pos.x, (int)pos.y, 120, 16 };
-			break;
-		case Direction::Left:
-			collider->rect = { (int)pos.x, (int)pos.y, 16, 120 };
-			break;
-		case Direction::Right:
-			collider->rect = { (int)pos.x, (int)pos.y, 16, 120 };
-			break;
-		default:
-
-			break;
-		}
-	}
-}
-
 bool DwCam::Cross()
 {
 

@@ -18,6 +18,8 @@
 
 #define MAX_SPRITE_FRAMES 30
 
+#define N_MAPS 5
+
 #define DASH_SPD 1.77
 
 #define PL_OFFSET 12
@@ -187,6 +189,7 @@ public:
 	bool map4_comp = false;
 	bool map5_comp = false;
 
+	bool completed_maps[N_MAPS];
 
 	Collider* mov_coll = nullptr;
 

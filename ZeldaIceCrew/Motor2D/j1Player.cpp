@@ -1702,11 +1702,21 @@ void j1Player::Slash_()
 bool j1Player::Load(pugi::xml_node& data)
 {
 	//keys
-	map1_comp = data.child("keys").attribute("m1").as_bool(false);
-	map2_comp = data.child("keys").attribute("m2").as_bool(false);
-	map3_comp = data.child("keys").attribute("m3").as_bool(false);
-	map4_comp = data.child("keys").attribute("m4").as_bool(false);
-	map5_comp = data.child("keys").attribute("m5").as_bool(false);
+	for (int i = 0; i < N_MAPS; i++) {
+		for (pugi::xml_node node_k = data.child("keys"); node_k; node_k = node_k.next_sibling("keys")) {
+			if (data.child("keys").attribute("id").as_int() == i)
+				completed_maps[i] = data.child("keys").attribute("completed").as_bool(false);
+		}
+	}
+
+	keys = data.child("n_keys").attribute("n").as_int(0);
+
+	//map1_comp = data.child("keys").attribute("m1").as_bool(false);
+	//map2_comp = data.child("keys").attribute("m2").as_bool(false);
+	//map3_comp = data.child("keys").attribute("m3").as_bool(false);
+	//map4_comp = data.child("keys").attribute("m4").as_bool(false);
+	//map5_comp = data.child("keys").attribute("m5").as_bool(false);
+
 	//hp
 	curr_life_points = data.child("hp").attribute("curr").as_int();
 	max_life_points = data.child("hp").attribute("max").as_int();
@@ -1732,12 +1742,16 @@ bool j1Player::Load(pugi::xml_node& data)
 bool j1Player::Save(pugi::xml_node& data) const
 {
 	//keys
-	pugi::xml_node keys = data.append_child("keys");
-		keys.append_attribute("m1") = map1_comp;
-		keys.append_attribute("m2") = map2_comp;
-		keys.append_attribute("m3") = map3_comp;
-		keys.append_attribute("m4") = map4_comp;
-		keys.append_attribute("m5") = map5_comp;
+	
+	for (int i = 0; i < N_MAPS; i++) {
+		pugi::xml_node keys = data.append_child("keys");
+		keys.append_attribute("id") = i;
+		keys.append_attribute("completed") = completed_maps[i];
+	}
+
+	pugi::xml_node n_keys = data.append_child("n_keys");
+	n_keys.append_attribute("n") = keys;
+
 	//hp
 	pugi::xml_node hp = data.append_child("hp");
 		hp.append_attribute("curr") = curr_life_points;
