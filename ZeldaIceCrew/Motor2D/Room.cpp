@@ -25,6 +25,7 @@ void Room::Update(float dt)
 
 	if (PlayerInside() == true && App->player->room != coords) {
 		App->player->room = coords;
+		AddPuzzle(SimonSays_Dungeon_);
 	}
 
 	EnemyActive(active);
@@ -176,6 +177,12 @@ Npc * Room::AddNpc(NPC_TYPE type, float x, float y, int id)
 	npcs.push_back(ret);
 
 	return ret;
+}
+
+Puzzle * Room::AddPuzzle(uint puzzle)
+{
+	App->puzzle_manager->PushPuzzle(new SimonSays_Dungeon);
+	return nullptr;
 }
 
 void Room::EnemyActive(bool flag)

@@ -10,7 +10,7 @@ class Enemy;
 class Block;
 class Doorway;
 class Npc;
-
+class Puzzle;
 class Scene;
 
 #define ROOM_W 1024
@@ -47,7 +47,7 @@ public:
 	Doorway* AddSceneDoorway(Scene* target, uint dir, float x, float y);
 	Doorway* AddCamDoorway(float target_x, float target_y, uint dir, float x, float y);
 	Npc* AddNpc(NPC_TYPE type, float x, float y,int id);
-
+	Puzzle* AddPuzzle(uint puzzle);
 	void EnemyActive(bool flag);
 
 	Scene* GetParentScene();

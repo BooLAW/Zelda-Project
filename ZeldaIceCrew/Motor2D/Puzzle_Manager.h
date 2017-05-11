@@ -3,10 +3,10 @@
 
 #include "EntityManager.h"
 #include "Entity.h"
+#include "Block.h"
 
 
 #include "Puzzle.h"
-#include "Simon_Says_Puzzle.h"
 
 enum Puzzle_List {
 	no_puzzles = 0,
@@ -14,7 +14,10 @@ enum Puzzle_List {
 
 	_last_
 };
+
 class Puzzle;
+class SimonSays_Dungeon;
+class Block;
 
 class Puzzle_Manager : public j1Module
 {
@@ -33,7 +36,8 @@ public:
 	std::deque<Block*> blocks_used;
 	std::deque<Puzzle*> puzzles;
 
-	SimonSays_Dungeon SimonSays_Dungeon;
+	//SimonSays_Dungeon SimonSays_Dungeon_;
+
 private:
 	j1Timer time;
 	

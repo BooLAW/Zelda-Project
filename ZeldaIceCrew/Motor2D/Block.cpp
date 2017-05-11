@@ -284,7 +284,11 @@ bool Torch_Bowl::Start() {
 	subtype = torch_bowl;
 	Entity::SetTexture(App->tex->Load("Sprites/Blocks_Temp.png"));
 	anim = idle;
+	{
+		sprites[torch_bowl][idle][0] = {0,156,32,32};
 
+		sprites[torch_bowl][lit][0] = {96,156,32,32};
+	}
 	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 
 	subtype = torch_bowl;

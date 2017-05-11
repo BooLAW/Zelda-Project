@@ -261,7 +261,8 @@ Block * EntityManager::CreateBlock(uint type, uint linked_obj, uint puzzle)
 	
 	App->entitymanager->PushEntity(ret);
 	
-	App->puzzle_manager->PushBlock(ret);
+	if (puzzle > 0)
+		App->puzzle_manager->PushBlock(ret);
 
 	return ret;
 }

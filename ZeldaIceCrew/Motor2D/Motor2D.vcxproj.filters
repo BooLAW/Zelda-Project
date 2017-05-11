@@ -103,9 +103,6 @@
     <ClCompile Include="Puzzle.cpp">
       <Filter>Puzzles</Filter>
     </ClCompile>
-    <ClCompile Include="Simon_Says_Puzzle.cpp">
-      <Filter>Puzzles</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -219,9 +216,6 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Puzzle.h">
-      <Filter>Puzzles</Filter>
-    </ClInclude>
-    <ClInclude Include="Simon_Says_Puzzle.h">
       <Filter>Puzzles</Filter>
     </ClInclude>
   </ItemGroup>

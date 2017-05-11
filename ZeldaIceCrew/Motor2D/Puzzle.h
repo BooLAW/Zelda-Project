@@ -4,6 +4,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "j1App.h"
+#include "Block.h"
 
 class Puzzle
 {
@@ -23,6 +24,38 @@ public:
 	bool win_condition = false;
 	bool started = false;
 	bool lop_start = false;
+
 };
+
+
+//Simon Says Puzzle
+
+class SimonSays_Dungeon : public Puzzle {
+public:
+	void Start();
+
+	void Update();
+
+	void Loop();
+	//void CleanUp() {};
+
+public:
+	int check_loop = 0;
+	bool check_player = true;
+	bool loop_start = false;
+	int curr_block_check = 0;
+
+	int current_block = 0;
+	int phase = 0;
+	int first_block;
+	int condition[6][2];
+
+	iPoint room_puzzle = {1,1};
+	//std::deque<Block*> ssd_blocks;
+};
+
+
+
+
 
 #endif // !__PUZZL_H__

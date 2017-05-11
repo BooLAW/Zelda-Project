@@ -29,12 +29,6 @@ bool Puzzle_Manager::Update(float dt) {
 	return ret;
 }
 
-bool Puzzle_Manager::PostUpdate() {
-	bool ret = true;
-
-	return ret;
-}
-
 bool Puzzle_Manager::CleanUp() {
 	bool ret = true;
 

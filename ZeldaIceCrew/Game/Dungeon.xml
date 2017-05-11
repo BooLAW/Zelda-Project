@@ -39,12 +39,13 @@
         </room> <!-- estos van -->
 
         <room x="1" y="1" w="1024" h="576">
-          <enemies>
-            <!--enemy subtype="t_GBat" x="256" y="128"/>
-            <enemy subtype="t_GBat" x="768" y="128"/>
-            <enemy subtype="t_GBat" x="256" y="208"/>
-            <enemy subtype="t_GBat" x="768" y="208"/-->
-          </enemies>
+          <blocks>
+            <block subtype="button_wall" linked_obj="0" puzzle="1" x="500" y="50"/>
+			<block subtype="torch_bowl" linked_obj="0" puzzle="1" x="50" y="50"/>
+			<block subtype="torch_bowl" linked_obj="0" puzzle="1" x="800" y="50"/>
+			<block subtype="torch_bowl" linked_obj="0" puzzle="1" x="800" y="500"/>
+			<block subtype="torch_bowl" linked_obj="0" puzzle="1" x="50" y="500"/>
+          </blocks>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
           </doorways>
