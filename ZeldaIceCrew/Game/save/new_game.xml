@@ -3,7 +3,7 @@
 <game_state>
   <player>
 	  <hp curr="6" max="6"/>
-	  <stats power="30" speed"2.5"/>
+	  <stats power="30" speed="2.5"/>
     <keys>
       <key id="0" completed="false"/>
       <key id="1" completed="false"/>
@@ -13,8 +13,8 @@
     </keys>
     <rupees n="50"/>
     
-    <weapons curr_weapon ="t_sword" sword="true" bow ="true" />
-    <items power_gauntlet = "false"
+    <weapons curr_weapon="t_sword" sword="true" bow="true" />
+    <items power_gauntlet="false"
           	pegasus_boots="false"
           	heart_container="false"
           	gold_gauntlet="false"

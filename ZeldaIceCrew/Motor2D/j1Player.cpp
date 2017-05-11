@@ -1982,18 +1982,19 @@ bool j1Player::Load(pugi::xml_node & data)
 	//stats
 	power = data.child("stats").attribute("power").as_int();
 
-	pl_speed.x = data.child("stats").attribute("speed").as_float();
-	pl_speed.y = data.child("stats").attribute("speed").as_float();
+	pl_speed.x = data.child("stats").attribute("speed").as_float(2.5f);
+	pl_speed.y = data.child("stats").attribute("speed").as_float(2.5f);
 
 	//hp
-	curr_life_points = data.child("hp").attribute("max").as_int(1);
-	max_life_points = data.child("hp").attribute("max").as_int(1);
+	curr_life_points = data.child("hp").attribute("max").as_int(6);
+	max_life_points = data.child("hp").attribute("max").as_int(6);
 	///weapons
 	std::string curr_weapon = data.child("weapons").attribute("curr_weapon").as_string();
 	if (curr_weapon.c_str() == "t_sword")
 		if (data.child("weapons").attribute("sword").as_bool())
 			AddWeapon(t_sword);
-	if (data.child("weapons").attribute("bow").as_bool())
+	if (curr_weapon.c_str() == "t_bow")
+		if (data.child("weapons").attribute("bow").as_bool())
 		AddWeapon(t_bow);
 
 	//items info

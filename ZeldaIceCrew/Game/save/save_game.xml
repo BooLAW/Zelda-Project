@@ -7,6 +7,8 @@
   </renderer>
 
   <player>
+	<hp curr="6" max="6"/>
+	<stats power="30" speed="2.5"/>
     <keys>
       <key id="0" completed="false"/>
       <key id="1" completed="false"/>
@@ -14,9 +16,9 @@
       <key id="3" completed="false"/>
       <key id="4" completed="false"/>
     </keys>
-    <rupees n="0"/>
+    <rupees n="50"/>
     <hp curr="6" max="6"/>
-    <weapons curr_weapon ="t_sword" sword="true" bow ="true" />
+    <weapons curr_weapon="t_sword" sword="true" bow="true" />
     <items power_gauntlet="false"
         pegasus_boots="false"
         heart_container="false"
