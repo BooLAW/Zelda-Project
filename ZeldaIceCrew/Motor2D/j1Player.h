@@ -137,6 +137,8 @@ public:
 	void ChangeWeapon();
 	void AddWeapon(uint weapon_t);
 	
+	void SetToNewGame();
+
 	bool Save(pugi::xml_node& data) const;
 	bool Load(pugi::xml_node& data);
 

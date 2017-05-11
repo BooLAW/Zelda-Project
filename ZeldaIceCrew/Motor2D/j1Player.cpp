@@ -813,7 +813,6 @@ animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
 		pull[i] = false;
 
 	}
-	completed_maps[2] = true;
 	// !_Weapon SetUp
 	room = { 2,3 };
 	return ret;
@@ -1246,36 +1245,36 @@ void j1Player::UpgradeHP(int x)
 
 void j1Player::ChangeWeapon()
 {
-	if (change_weapon == true && action_blit != Weapon_atk) {
-		std::list<Weapon*>::iterator aux_it = std::find(weapons.begin(), weapons.end(), curr_weapon);
-
-		switch (change_weapon) {
-		case Q_Change:
-			if (aux_it == weapons.begin()) {
-				aux_it = weapons.end();
-				aux_it--;
-			}
-			else
-				aux_it--;
-			break;
-		case E_Change:
-			if (++aux_it == weapons.end()) {
-				aux_it = weapons.begin();
-			}
-			break;
-
-		}
-
-		curr_weapon = aux_it._Ptr->_Myval;
-
-		for (int i = 0; i < LastDir; i++) {
-			animations[Weapon_atk][i] = curr_weapon->anim[i];
-			animations[Weapon_atk][i] = curr_weapon->anim[i];
-		}
-
-		change_weapon = No_Change;
-
-	}
+	//if (change_weapon == true && action_blit != Weapon_atk) {
+	//	std::list<Weapon*>::iterator aux_it = std::find(weapons.begin(), weapons.end(), curr_weapon);
+	//
+	//	switch (change_weapon) {
+	//	case Q_Change:
+	//		if (aux_it == weapons.begin()) {
+	//			aux_it = weapons.end();
+	//			aux_it--;
+	//		}
+	//		else
+	//			aux_it--;
+	//		break;
+	//	case E_Change:
+	//		if (++aux_it == weapons.end()) {
+	//			aux_it = weapons.begin();
+	//		}
+	//		break;
+	//
+	//	}
+	//
+	//	curr_weapon = aux_it._Ptr->_Myval;
+	//
+	//	for (int i = 0; i < LastDir; i++) {
+	//		animations[Weapon_atk][i] = curr_weapon->anim[i];
+	//		animations[Weapon_atk][i] = curr_weapon->anim[i];
+	//	}
+	//
+	//	change_weapon = No_Change;
+	//
+	//}
 }
 
 void j1Player::AddWeapon(uint weapon_t)
@@ -1297,6 +1296,32 @@ void j1Player::AddWeapon(uint weapon_t)
 		
 		//}
 	}
+}
+
+void j1Player::SetToNewGame()
+{
+	for (int i = 0; i < N_MAPS; i++) {
+		completed_maps[i] = false;
+	}
+
+	keys = 0;
+
+	max_life_points = ORIGIN_HP;
+	curr_life_points = max_life_points;
+
+	weapons.clear();
+	AddWeapon(t_sword);
+
+	curr_weapon = weapons.front();
+
+	rupees = 50;
+	power = ORIGIN_PWR;
+	pl_speed = { ORIGIN_SPD, ORIGIN_SPD };
+
+	inventory.clear();
+
+	App->SaveGame("save_game.xml");
+
 }
 
 void j1Player::HitPlayer(int dmg)
@@ -1393,7 +1418,13 @@ void j1Player::DyingRestart()
 {
 	
 	alive = true;
-	App->LoadGame("save_game.xml");
+	std::ifstream f("save/save_game.xml");
+
+	if (f.good())
+		App->LoadGame("save_game.xml");
+	else
+		App->player->SetToNewGame();
+
 	//App->player->pos = App->scene_manager->village_scene->pl_start_pos;
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
@@ -1956,13 +1987,15 @@ bool j1Player::Load(pugi::xml_node & data)
 	weapons.clear();
 	AddWeapon(weap.attribute("curr_weapon").as_int(t_sword));
 
+	std::memset(completed_maps, false, N_MAPS);
+
 	for (pugi::xml_node node_keys = data.child("keys"); node_keys; node_keys = node_keys.next_sibling("keys")) {
 		completed_maps[node_keys.attribute("id").as_int(NULL)] = node_keys.attribute("completed").as_bool(false);
 	}
 
 	keys = data.child("n_keys").attribute("n").as_int(0);
 
-	rupees = data.child("rupees").attribute("n").as_int();
+	rupees = data.child("rupees").attribute("n").as_int(50);
 
 	pugi::xml_node items = data.child("items");
 
@@ -2012,7 +2045,7 @@ bool j1Player::Load(pugi::xml_node & data)
 	{
 		Item* aux = (Item*)App->entitymanager->CreateItem(magic_sphere);
 		aux->PassToInventory();
-	}	if (items.attribute("magic_mirror").as_bool() == true)
+	}	if (items.attribute("magic_mirror").as_bool(false) == true)
 	{
 		Item* aux = (Item*)App->entitymanager->CreateItem(magic_mirror);
 		aux->PassToInventory();

@@ -13,7 +13,7 @@
     </keys>
     <rupees n="50"/>
     
-    <weapons curr_weapon="t_sword" sword="true" bow="true" />
+    <weapons curr_weapon="1"/>
     <items power_gauntlet="false"
           	pegasus_boots="false"
           	heart_container="false"

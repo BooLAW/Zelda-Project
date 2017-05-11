@@ -22,7 +22,14 @@ bool Main_Screen::Awake()
 
 bool Main_Screen::Start()
 {
-	App->LoadGame("save_game.xml");
+
+	std::ifstream f("save/save_game.xml");
+	
+	if (f.good())
+		App->LoadGame("save_game.xml");
+	else
+		App->player->SetToNewGame();
+	
 	AddRoom(0, 0);
 	App->player->room = { 0,0 };
 	bool ret = true;
@@ -1019,11 +1026,9 @@ bool Main_Screen::Update(float dt)
 			App->audio->PlayFx(press_fx);
 			if (selected == New_game) {
 				// start a new game, for now:
+				App->player->SetToNewGame();
 				in_dungeons = true;
 				selected = dungeons.front();
-				App->LoadGame("new_game.xml");
-				App->player->keys = 0;
-				//std::memset(App->player->completed_maps, false, N_MAPS);
 			}
 			if (selected == Continue) {
 				//continue with the current game, for now:
