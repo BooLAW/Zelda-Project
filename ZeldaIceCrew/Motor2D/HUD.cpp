@@ -138,12 +138,13 @@ bool HUD::Start()
 
 	if (!App->player->inventory.empty()) {
 		for (std::list<Item*>::const_iterator it = App->player->inventory.cbegin(); it != App->player->inventory.cend(); it++) {
-			GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
-			img->texture = it._Ptr->_Myval->UI_tex;
-			img->texture_rect = it._Ptr->_Myval->UI_rect;
-			img->max_prior = true;
-
-			inv->AddElement(img);
+			if (!(App->player->Find_inv(it._Ptr->_Myval))) {
+				GuiImage* img = (GuiImage*)App->gui->CreateElement(GuiType::image);
+				img->texture = it._Ptr->_Myval->UI_tex;
+				img->texture_rect = it._Ptr->_Myval->UI_rect;
+				img->max_prior = true;
+				inv->AddElement(img);
+			}
 		}
 	}
 

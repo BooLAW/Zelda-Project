@@ -810,7 +810,7 @@ animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
 		pull[i] = false;
 
 	}
-
+	completed_maps[2] = true;
 	// !_Weapon SetUp
 	room = { 2,3 };
 	return ret;
