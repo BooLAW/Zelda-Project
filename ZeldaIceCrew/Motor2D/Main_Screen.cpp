@@ -474,7 +474,9 @@ bool Main_Screen::Start()
 	key5->active = false;
 	key5->movable = true;
 
+
 	
+
 
 	selected = Continue;
 
