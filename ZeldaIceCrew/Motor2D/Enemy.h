@@ -9,7 +9,7 @@
 
 #include "Item.h"
 
-#define N_ITEMS 15
+#define N_ITEMS 31
 
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50

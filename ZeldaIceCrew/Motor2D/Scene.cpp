@@ -430,6 +430,9 @@ bool Scene::Load_new_map(int id)
 		else
 			break;
 	}
+
+	LOG("MAP %d", temp.attribute("id").as_int());
+
 			// Camera 
 			follow_cam = temp.child("camera").attribute("follow").as_bool(false);
 

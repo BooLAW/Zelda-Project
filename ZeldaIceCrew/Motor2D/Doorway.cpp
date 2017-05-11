@@ -171,7 +171,6 @@ void DwDungeon::SetUp()
 void DwDungeon::Draw()
 {
 	if (App->render->IsCameraCull(collider->rect) == false) {
-		LOG("RENDER");
 		iPoint aux_pos = { collider->rect.x, collider->rect.y };
 		switch (direction) {
 		case Up:
