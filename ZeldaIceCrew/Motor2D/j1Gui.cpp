@@ -335,6 +335,7 @@ GuiInput::GuiInput() {
 
 Window::Window()
 {
+	selector = nullptr;
 
 }
 Window::~Window()

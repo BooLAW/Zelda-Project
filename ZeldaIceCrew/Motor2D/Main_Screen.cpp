@@ -901,7 +901,7 @@ bool Main_Screen::Update(float dt)
 				}
 				if (selected == d1) {
 					App->scene_manager->dungeon_id = 0;
-					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+					App->scene_manager->ChangeScene((Scene*)App->scene_manager->village_scene);
 				}
 				if (selected == d2) {
 					App->scene_manager->dungeon_id = 1;

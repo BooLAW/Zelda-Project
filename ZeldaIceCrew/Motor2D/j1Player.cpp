@@ -1074,7 +1074,7 @@ bool j1Player::Update(float dt)
 					}
 					//!_Actions	
 
-					if (App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN) {
+					if ((App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN)&&(!action)) {
 						if (!App->hud->inv->active) {
 							App->hud->inv->active = true;
 							App->audio->PlayFx(open_inv_fx);
