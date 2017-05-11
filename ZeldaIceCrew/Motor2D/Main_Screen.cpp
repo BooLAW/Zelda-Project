@@ -1,4 +1,5 @@
 #include "Main_Screen.h"
+#include "j1Player.h"
 
 Main_Screen::Main_Screen()
 {
@@ -473,7 +474,7 @@ bool Main_Screen::Start()
 	key5->active = false;
 	key5->movable = true;
 
-
+	App->player->completed_maps[0] = true;
 
 	selected = Continue;
 
@@ -835,7 +836,33 @@ bool Main_Screen::Update(float dt)
 			action_key->active = false;
 			dash_key->active = false;
 
-
+			for (int i = 0; i < 5; i++) {
+				if (i == 0) {
+					if ((App->player->completed_maps[i]) == true) {
+						key1->texture_rect = { 977,455,28,32 };
+					}
+				}
+				if (i == 1) {
+					if ((App->player->completed_maps[i]) == true) {
+						key2->texture_rect = { 977,455,28,32 };
+					}
+				}
+				if (i == 2) {
+					if ((App->player->completed_maps[i]) == true) {
+						key3->texture_rect = { 977,455,28,32 };
+					}
+				}
+				if (i == 3) {
+					if ((App->player->completed_maps[i]) == true) {
+						key4->texture_rect = { 977,455,28,32 };
+					}
+				}
+				if (i == 4) {
+					if ((App->player->completed_maps[i]) == true) {
+						key5->texture_rect = { 977,455,28,32 };
+					}
+				}
+			}
 			for (std::list<UIElement*>::const_iterator it = dungeons.cbegin(); it != dungeons.cend(); it++) {
 				if (selected == it._Ptr->_Myval) {
 					it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
@@ -863,22 +890,32 @@ bool Main_Screen::Update(float dt)
 
 			}
 			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-				/*if (selected == Back_controls) {
-				App->audio->PlayFx(press_fx);
-				in_settings = true;
-				in_controls = false;
-				selected = settings_elements.front();
-				changing_controls = false;
-				}
-				else {
-				changing_controls = true;
-				App->audio->PlayFx(press_fx);
-				}*/
+				
 				if (selected == Back_dung) {
 					in_controls = false;
 					in_settings = false;
 					in_dungeons = false;
 					selected = ui_elements.front();
+				}
+				if (selected == d1) {
+					App->scene_manager->dungeon_id = 0;
+					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+				}
+				if (selected == d2) {
+					App->scene_manager->dungeon_id = 1;
+					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+				}
+				if (selected == d3) {
+					App->scene_manager->dungeon_id = 2;
+					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+				}
+				if (selected == d4) {
+					App->scene_manager->dungeon_id = 3;
+					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+				}
+				if (selected == d5) {
+					App->scene_manager->dungeon_id = 4;
+					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 				}
 			}
 			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
