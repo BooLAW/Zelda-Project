@@ -15,12 +15,14 @@ void SimonSays_Dungeon::Start() {
 void SimonSays_Dungeon::Update() {
 
 	if (started == true) {
+		Room* r = App->scene_manager->GetCurrentScene()->GetRoom(1, 1);
+
 		if (loop_start == false && check_player == true) {
-			for (uint i = 0; i < App->puzzle_manager->blocks_used.size(); i++) {
-				if (App->puzzle_manager->blocks_used[i]->subtype == button_wall && App->puzzle_manager->blocks_used[i]->anim == on) {
+			for (std::list<Block*>::iterator it = r->blocks.begin(); it != r->blocks.end(); it++) {
+				if ((*it)->subtype == button_wall && (*it)->anim == on) {
 					loop_start = true;
 					frame_start = App->frame_count;
-					first_block = i;
+					first_block++;
 					break;
 				}
 			}
@@ -36,8 +38,14 @@ void SimonSays_Dungeon::Update() {
 		}
 
 		if (loop_start == false && check_player == false) {
-			for (int i = first_block; i < first_block + 4; i++)
-				if (App->puzzle_manager->blocks_used[i]->anim == lit && condition[curr_block_check][1] == 0) {
+			std::list<Block*>::iterator it = r->blocks.begin();
+			
+			for (int i = 0; i < first_block; i++) {
+				it++;
+			}
+
+			for (int i = 0; i < 4; i++)
+				if ((*it)->anim == lit && condition[curr_block_check][1] == 0) {
 					condition[curr_block_check][1] = i;
 					curr_block_check++;
 				}
@@ -64,7 +72,7 @@ void SimonSays_Dungeon::Update() {
 void SimonSays_Dungeon::Loop() {
 	if (check_loop < 3) {
 		if (App->frame_count = frame_start + interval * phase) {
-			App->puzzle_manager->blocks_used[current_block]->anim = idle;
+			(*it)->anim = idle;
 			current_block = condition[phase][0];
 		}
 

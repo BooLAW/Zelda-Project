@@ -54,8 +54,10 @@ void Puzzle_Manager::PushBlock(Block * block)
 
 void Puzzle_Manager::PushPuzzle(Puzzle * puzzle)
 {
-	if (puzzle != nullptr)
+	if (puzzle != nullptr) {
+		puzzle->Start();
 		puzzles.push_back(puzzle);
+	}
 	else
 		LOG("Error Pushing Puzzle to Puzzles List");
 }

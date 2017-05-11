@@ -5,6 +5,10 @@
 #include "Entity.h"
 #include "j1App.h"
 #include "Block.h"
+#include "Room.h"
+
+class Room;
+class Block;
 
 class Puzzle
 {
@@ -52,6 +56,16 @@ public:
 
 	iPoint room_puzzle = {1,1};
 	//std::deque<Block*> ssd_blocks;
+	
+	
+	/*
+	std::list<Block*>::iterator it = ...
+	for(int i = 0; i < first_block; i++) {
+		it++;
+	}
+	(*it)->
+	*/
+
 };
 
 

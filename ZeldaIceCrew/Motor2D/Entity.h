@@ -69,7 +69,7 @@ public:
 
 	Collider* HitBox = nullptr;
 	fPoint pos;
-	uint type;
+	uint {;
 	std::deque<Entity*>::iterator id;
 	iPoint room;
 

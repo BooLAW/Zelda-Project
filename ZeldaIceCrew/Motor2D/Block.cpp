@@ -165,7 +165,7 @@ void Block::Update(float dt)
 		else
 			Move();
 
-		if (App->frame_count >= timer + 180) {
+		if (App->frame_count >= timer + 180 && recent == true) {
 			recent = false;
 			anim = idle;
 		}
@@ -288,6 +288,10 @@ bool Torch_Bowl::Start() {
 		sprites[torch_bowl][idle][0] = {0,156,32,32};
 
 		sprites[torch_bowl][lit][0] = {96,156,32,32};
+
+		animations[torch_bowl][idle].PushBack(sprites[torch_bowl][idle][0]);
+
+		animations[torch_bowl][lit].PushBack(sprites[torch_bowl][lit][0]);
 	}
 	HitBox = App->collisions->AddCollider({ int(pos.x),int(pos.y), 32, 32 }, COLLIDER_BLOCK_A);
 

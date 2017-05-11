@@ -65,9 +65,11 @@ public:
 	Item* CreateItem(uint subtype);
 	Block* CreateBlock(uint subtype, uint linked_obj, uint puzzle);
 	Npc * CreateNPC(NPC_TYPE type, int id);
+
+	std::deque<Entity*> entities;
 private:
 	
-	std::deque<Entity*> entities;
+
 	std::map<ENTITYTYPE, std::string> dir;
 	j1Timer time;
 	SDL_Texture* npc_tex;

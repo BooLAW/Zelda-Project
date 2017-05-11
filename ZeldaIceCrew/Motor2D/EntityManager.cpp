@@ -254,7 +254,7 @@ Block * EntityManager::CreateBlock(uint type, uint linked_obj, uint puzzle)
 	Entity* aux = entities.back();
 	if (linked_obj > 0)
 		ret->Linked_Object = aux;
-
+	
 	ret->type = block;
 	
 	ret->Start();

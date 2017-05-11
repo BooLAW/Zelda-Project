@@ -545,7 +545,9 @@ bool Scene::Load_new_map(int id)
 										lo = pressure_plate;
 
 									if (strcmp(sub, "0") == 0)
-										lo = no_puzzles;
+										pz = no_puzzles;
+									if (strcmp(sub, "1") == 1)
+										pz = 1;
 									//posar altres puzzles...
 
 									r->AddBlock(st, lo, pz, node_block.attribute("x").as_float(), node_block.attribute("y").as_float());
