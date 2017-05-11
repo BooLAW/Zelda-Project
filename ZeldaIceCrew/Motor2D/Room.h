@@ -25,6 +25,8 @@ public:
 
 	bool isInside(SDL_Rect r);
 
+	bool NoEnemies();
+
 	bool PlayerInside();
 
 	bool findEnemy(Enemy* en) {
