@@ -28,7 +28,7 @@ bool Main_Screen::Start()
 	tex = App->tex->Load("Sprites/TitleScreen.png");
 	//App->render->camera.w = 1920;
 	//App->render->camera.h = 1200;
-
+	//App->render->cam_travel = true;
 	background = (GuiImage*)App->gui->CreateElement(image);
 	background->pos = { 0,0 };
 	background->texture = tex;

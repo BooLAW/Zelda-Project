@@ -459,8 +459,6 @@ bool Scene::Load_new_map(int id)
 
 									char* sub = (char*)node_item.attribute("subtype").as_string("");
 
-									LOG("SUB %s", sub);
-
 									if (strcmp(sub, "power_gauntlet") == 0)
 										st = power_gauntlet;
 									if (strcmp(sub, "pegasus_boots") == 0)

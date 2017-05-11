@@ -211,17 +211,17 @@ bool HUD::Update(float dt)
 	bool ret = true;
 
 	if (App->scene_manager->dungeon_id == 0) {
-		Minimap->texture = App->tex->Load("Sprites/mace_knight_minimap.png");
+		//Minimap->texture = App->tex->Load("Sprites/mace_knight_minimap.png");
 		Minimap->texture_rect = { 0,0,500,235 };
 		if ((App->player->room.x == 2) && (App->player->room.y == 4)) {
 			link_point->pos = { Minimap->pos.x + 200, Minimap->pos.y + 200 };
-
+	
 		}
 		if ((App->player->room.x == 2) && (App->player->room.y == 4)) {
 			link_point->pos = { Minimap->pos.x + 200, Minimap->pos.y + 200 };
-
+	
 		}
-
+	
 	}
 
 	rupees_num->str = std::to_string(App->player->rupees);

@@ -50,6 +50,7 @@ int Entity::CheckSpace(float new_x, float new_y)
 		Room* room = App->scene_manager->GetCurrentScene()->GetRoom(App->player->room.x, App->player->room.y);
 
 		// Enemy Check
+		if(room->enemies.empty() == false)
 		for (std::list<Enemy*>::iterator it = room->enemies.begin(); it != room->enemies.end(); it++) {
 			if (it._Ptr->_Myval != nullptr) {
 				if (it._Ptr->_Myval == this)

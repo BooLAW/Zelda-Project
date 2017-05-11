@@ -27,7 +27,7 @@ private:
 	
 public:
 
-	bool minimap = false;;
+	bool minimap = false;
 	void AddItem(Item* obj);
 	void AddWeapon(Item* wep);
 	SDL_Texture* items;

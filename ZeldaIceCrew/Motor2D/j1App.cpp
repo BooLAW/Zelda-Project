@@ -478,7 +478,7 @@ bool j1App::SavegameNow() const
 
 		// we are done, so write data to disk
 		fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
-		LOG("... finished saving", save_game.GetString());
+		LOG("... finished saving %s", save_game.GetString());
 	}
 	else
 		LOG("Save process halted from an error in module %s", (*item)->name.GetString());
