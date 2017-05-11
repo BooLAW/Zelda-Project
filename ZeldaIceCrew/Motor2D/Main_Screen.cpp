@@ -1,5 +1,6 @@
 #include "Main_Screen.h"
 #include "j1Player.h"
+#include <fstream>
 
 Main_Screen::Main_Screen()
 {
@@ -35,11 +36,6 @@ bool Main_Screen::Start()
 	background->texture_rect = { 0,0,1024,768 };
 	background->active = true;
 	background->movable = true;
-
-
-	
-
-	
 
 	Continue = (GuiImage*)App->gui->CreateElement(image);
 	Continue->pos = { 250, 350 };
@@ -1020,11 +1016,10 @@ bool Main_Screen::Update(float dt)
 			App->audio->PlayFx(press_fx);
 			if (selected == New_game) {
 				// start a new game, for now:
-				App->scene_manager->dungeon_id = rand() % 2;
-				App->player->inMainScreen = false;
+				in_dungeons = true;
+				selected = dungeons.front();
 				App->LoadGame("new_game.xml");
 				App->player->keys = 0;
-				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 			}
 			if (selected == Continue) {
 				//continue with the current game, for now:
