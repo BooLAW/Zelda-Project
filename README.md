@@ -21,12 +21,18 @@ Dash:
 UI:
 Inventory:
 - TAB
-
+Menu:
+-ESC
 Debug Mode:
 - F1
 Free Camera Movement: Arrow Keys
 - F2
 Collider Debug
+In Main- Menu:
+-UP-DOWN:move selector
+-ESC: back
+Change Controls:
+-press the desired control, when pressed, press the key you want to assign.
 
 =================================================================
 CHANGELIST:
