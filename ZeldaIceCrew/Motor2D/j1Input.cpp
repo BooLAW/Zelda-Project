@@ -342,6 +342,21 @@ SDL_Scancode j1Input::returnkey()
 	else if (GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
 		return SDL_SCANCODE_9;
 	}
+	else if (GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		return SDL_SCANCODE_SPACE;
+	}
+	else if (GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN) {
+		return SDL_SCANCODE_RSHIFT;
+	}
+	else if (GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN) {
+		return SDL_SCANCODE_LSHIFT;
+	}
+	else if (GetKey(SDL_SCANCODE_RCTRL) == KEY_DOWN) {
+		return SDL_SCANCODE_RCTRL;
+	}
+	else if (GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN) {
+		return SDL_SCANCODE_LCTRL;
+	}
 	else {
 		return SDL_SCANCODE_0;
 	}

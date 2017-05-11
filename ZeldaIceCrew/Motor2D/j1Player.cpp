@@ -8,6 +8,7 @@
 #include "DungeonScene.h"
 #include "VillageScene.h"
 #include "MathHelpers.h"
+#include <list>
 
 j1Player::j1Player()
 {
@@ -1074,7 +1075,7 @@ bool j1Player::Update(float dt)
 					}
 					//!_Actions	
 
-					if (App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN) {
+					if ((App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN)&&(!action)) {
 						if (!App->hud->inv->active) {
 							App->hud->inv->active = true;
 							App->audio->PlayFx(open_inv_fx);
@@ -1376,6 +1377,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 
 void j1Player::DyingRestart()
 {
+	
 	alive = true;
 	pos = ORIGIN_RESTART;
 	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
@@ -1729,8 +1731,88 @@ bool j1Player::Load(pugi::xml_node& data)
 			AddWeapon(t_bow);
 		
 	//items info
-	if (data.child("items").attribute("pegasus_boots").as_bool())
-		inventory.push_back(App->entitymanager->CreateItem(pegasus_boots));
+	pugi::xml_node items = data.append_child("items");
+	if (items.attribute("power_gauntlet").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(power_gauntlet);
+		aux->PassToInventory();
+	}
+	if (items.attribute("pegasus_boots").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(pegasus_boots);
+		aux->PassToInventory();
+	}
+	if (items.attribute("heart_container").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(heart_container);
+		aux->PassToInventory();
+	}
+	if (items.attribute("gold_gauntlet").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(gold_gauntlet);
+		aux->PassToInventory();
+	}
+	if (items.attribute("wind_cape").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(wind_cape);
+		aux->PassToInventory();
+	}
+	if (items.attribute("magic_hammer").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(magic_hammer);
+		aux->PassToInventory();
+	}
+	if (items.attribute("small_shield").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(small_shield);
+		aux->PassToInventory();
+	}
+	if (items.attribute("vanguard_emblem").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(vanguard_emblem);
+		aux->PassToInventory();
+	}
+	if (items.attribute("magic_sphere").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(magic_sphere);
+		aux->PassToInventory();
+	}	if (items.attribute("magic_mirror").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(magic_mirror);
+		aux->PassToInventory();
+	}	if (items.attribute("golden_shield").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(golden_shield);
+		aux->PassToInventory();
+	}	if (items.attribute("mysterious_dust").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(mysterious_dust);
+		aux->PassToInventory();
+	}	if (items.attribute("odd_mushroom").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(odd_mushroom);
+		aux->PassToInventory();
+	}	if (items.attribute("bag_of_rupees").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(bag_of_rupees);
+		aux->PassToInventory();
+	}	if (items.attribute("icon_of_power").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(icon_of_power);
+		aux->PassToInventory();
+	}	if (items.attribute("icon_of_wisdom").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(icon_of_wisdom);
+		aux->PassToInventory();
+	}	if (items.attribute("icon_of_valor").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(icon_of_valor);
+		aux->PassToInventory();
+	}	if (items.attribute("boss_key").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(boss_key);
+		aux->PassToInventory();
+	}
 	//dungeon situation info
 	if (data.child("dungeon").attribute("in").as_bool(false) == true)
 		App->scene_manager->SetCurrentScene((Scene*)App->scene_manager->dungeon_scene);
@@ -1758,12 +1840,72 @@ bool j1Player::Save(pugi::xml_node& data) const
 		hp.append_attribute("max") = max_life_points;
 	pugi::xml_node weap = data.append_child("weapons");
 
-	weap.append_attribute("curr_weapon") = pos.x;
-	weap.append_attribute("sword") = pos.y;
-	weap.append_attribute("bow") = pos.y;
-
+		weap.append_attribute("curr_weapon") = pos.x;
+		weap.append_attribute("sword") = pos.y;
+		weap.append_attribute("bow") = pos.y;
+	//items
 	pugi::xml_node items = data.append_child("items");
-		//items.append_attribute("pegasus_boots") = inventory.find();
+
+
+	for (std::list<Item*>::const_iterator it = inventory.cbegin(); it != inventory.cend(); it++) 
+	{
+		switch (it._Ptr->_Myval->type)
+		{
+		case power_gauntlet:
+			items.append_attribute("power_gauntlet") = true;
+			break;
+		case pegasus_boots:   
+			items.append_attribute("pegasus_boots") = true;
+			break;
+		case heart_container:
+			items.append_attribute("pegasus_boots") = true;
+			break;
+		case gold_gauntlet:
+			items.append_attribute("pegasus_boots") = true;
+			break;
+		case wind_cape:
+			items.append_attribute("pegasus_boots") = true;
+			break;
+		case magic_hammer:
+			items.append_attribute("magic_hammer") = true;
+			break;
+		case small_shield:
+			items.append_attribute("small_shield") = true;
+			break;
+		case vanguard_emblem:
+			items.append_attribute("vanguard_emblem") = true;
+			break;
+		case magic_sphere:
+			items.append_attribute("magic_sphere") = true;
+			break;
+		case magic_mirror:
+			items.append_attribute("magic_mirror") = true;
+			break;
+		case golden_shield:			
+			items.append_attribute("golden_shield") = true;
+			break;
+		case mysterious_dust:
+			items.append_attribute("mysterious_dust") = true;
+			break;
+		case odd_mushroom:
+			items.append_attribute("odd_mushroom") = true;
+			break;
+		case icon_of_power:
+			items.append_attribute("icon_of_power") = true;
+			break;
+		case  icon_of_wisdom:
+			items.append_attribute("icon_of_wisdom") = true;
+			break;
+		case icon_of_valor:
+			items.append_attribute("icon_of_valor") = true;
+			break;
+		case boss_key:
+			items.append_attribute("boss_key") = true;
+			break;
+		}
+	}
+	
+	
 	pugi::xml_node dun = data.append_child("dungeon");
 		dun.append_attribute("in") = (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene);
 		                                                                                   
