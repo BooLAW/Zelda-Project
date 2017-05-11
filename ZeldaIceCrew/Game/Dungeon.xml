@@ -18,7 +18,7 @@
 
         <room x="2" y="4"/>
 
-        <pos x="238" y="512"/>
+        <pos x="512" y="460"/>
 
       </Link>
 
@@ -46,6 +46,18 @@
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="1" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier" x="320" y="320"/>
+            <enemy subtype="t_bluesoldier" x="320" y="896"/>
+            <enemy subtype="t_bluesoldier" x="320" y="576"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
           </doorways>
         </room>
         <room x="1" y="3" w="1024" h="576">
@@ -206,6 +218,19 @@
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
           </doorways>
         </room> <!-- estos van-->
+        <room x="1" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier" x="320" y="320"/>
+            <enemy subtype="t_bluesoldier" x="320" y="896"/>
+            <enemy subtype="t_bluesoldier" x="320" y="576"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- esots van-->
         <room x="1" y="3" w="1024" h="576">
           <enemies>
             <enemy subtype="t_rope" x="192" y="192"/>
@@ -228,14 +253,7 @@
             <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
           </doorways>
         </room> <!-- estos van-->
-        <room x="2" y="4" w="1024" h="576">
-          <enemies>
 
-          </enemies>
-          <doorways>
-            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-          </doorways>
-        </room>
 
         <room x="3" y="3" w="1024" h="576">
           <enemies>
