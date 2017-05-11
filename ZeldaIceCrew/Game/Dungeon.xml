@@ -126,6 +126,9 @@
         </room>
 
         <room x="5" y="0" w="1024" h="576">
+	<items>
+		<item subtype="boss_key" x="500" y="200"/>
+	</items>
           <enemies>
             <enemy subtype="t_boss_ballandchain" x="512" y="320"/>
           </enemies>
