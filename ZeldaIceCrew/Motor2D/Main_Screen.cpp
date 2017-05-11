@@ -36,8 +36,25 @@ bool Main_Screen::Start()
 	background->movable = true;
 
 
+	
+
+	
+
+	Continue = (GuiImage*)App->gui->CreateElement(image);
+	Continue->pos = { 250, 350 };
+	Continue->texture_rect = { 0 , 514, 683,36 };
+	Continue->active = true;
+	Continue->movable = true;
+	ui_elements.push_back(Continue);
+
+	cont = (GuiText*)App->gui->CreateElement(text);
+	cont->str = "Continue";
+	cont->active = true;
+	cont->movable = true;
+	cont->pos = { Continue->pos.x + 550, Continue->pos.y + 2 };
+
 	New_game = (GuiImage*)App->gui->CreateElement(image);
-	New_game->pos = { 250 , 350 };
+	New_game->pos = { Continue->pos.x,Continue->pos.y + 100 };
 	New_game->texture_rect = { 0 , 514, 683,36 };
 	New_game->active = true;
 	New_game->movable = true;
@@ -50,24 +67,8 @@ bool Main_Screen::Start()
 	new_game->pos = { New_game->pos.x + 550, New_game->pos.y + 2 };
 
 
-
-	Continue = (GuiImage*)App->gui->CreateElement(image);
-	Continue->pos = { New_game->pos.x,New_game->pos.y + 100 };
-	Continue->texture_rect = { 0 , 514, 683,36 };
-	Continue->active = true;
-	Continue->movable = true;
-	ui_elements.push_back(Continue);
-
-	cont = (GuiText*)App->gui->CreateElement(text);
-	cont->str = "Continue";
-	cont->active = true;
-	cont->movable = true;
-	cont->pos = { Continue->pos.x + 550, Continue->pos.y + 2 };
-
-
-
 	Settings = (GuiImage*)App->gui->CreateElement(image);
-	Settings->pos = { Continue->pos.x,Continue->pos.y + 100 };
+	Settings->pos = { New_game->pos.x,New_game->pos.y + 100 };
 	Settings->texture_rect = { 0 , 514, 683,36 };;
 	Settings->active = true;
 	Settings->movable = true;
@@ -360,15 +361,126 @@ bool Main_Screen::Start()
 	dash_key->movable = true;
 	dash_key->pos = { dash->pos.x + 200, dash->pos.y };
 
+	
+
+	d1= (GuiImage*)App->gui->CreateElement(image);
+	d1->pos= { 250 , 150 };
+	d1->active = false;
+	d1->texture_rect = { 0, 514, 683, 36 };
+	d1->movable = true;
+	dungeons.push_back(d1);
+
+	d2 = (GuiImage*)App->gui->CreateElement(image);
+	d2->pos = { d1->pos.x , d1->pos.y+100 };
+	d2->active = false;
+	d2->texture_rect = { 0, 514, 683, 36 };
+	d2->movable = true;
+	dungeons.push_back(d2);
+
+	d3 = (GuiImage*)App->gui->CreateElement(image);
+	d3->pos = { d2->pos.x , d2->pos.y + 100 };
+	d3->active = false;
+	d3->texture_rect = { 0, 514, 683, 36 };
+	d3->movable = true;
+	dungeons.push_back(d3);
+
+	d4 = (GuiImage*)App->gui->CreateElement(image);
+	d4->pos = { d3->pos.x , d3->pos.y + 100 };
+	d4->active = false;
+	d4->texture_rect = { 0, 514, 683, 36 };
+	d4->movable = true;
+	dungeons.push_back(d4);
+
+	d5 = (GuiImage*)App->gui->CreateElement(image);
+	d5->pos = { d4->pos.x , d4->pos.y + 100 };
+	d5->active = false;
+	d5->texture_rect = { 0, 514, 683, 36 };
+	d5->movable = true;
+	dungeons.push_back(d5);
+
+	Back_dung = (GuiImage*)App->gui->CreateElement(image);
+	Back_dung->pos = { d5->pos.x , d5->pos.y + 100 };
+	Back_dung->active = false;
+	Back_dung->texture_rect = { 0, 514, 683, 36 };
+	Back_dung->movable = true;
+	dungeons.push_back(Back_dung);
+
+	D1 = (GuiText*)App->gui->CreateElement(text);
+	D1->pos = { d1->pos.x + 550, d1->pos.y + 2 };
+	D1->active = false;
+	D1->str = "Dungeon 1";
+	D1->movable = true;
+
+	D2 = (GuiText*)App->gui->CreateElement(text);
+	D2->pos = { d2->pos.x + 550, d2->pos.y + 2 };
+	D2->active = false;
+	D2->str = "Dungeon 2";
+	D2->movable = true;
 	App->audio->PlayMusic("Audio/Music/Opening.ogg");
 
+	D3 = (GuiText*)App->gui->CreateElement(text);
+	D3->pos = { d3->pos.x + 550, d3->pos.y + 2 };
+	D3->active = false;
+	D3->str = "Dungeon 3";
+	D3->movable = true;
+
+	D4 = (GuiText*)App->gui->CreateElement(text);
+	D4->pos = { d4->pos.x + 550, d4->pos.y + 2 };
+	D4->active = false;
+	D4->str = "Dungeon 4";
+	D4->movable = true;
+
+	D5 = (GuiText*)App->gui->CreateElement(text);
+	D5->pos = { d5->pos.x + 550, d5->pos.y + 2 };
+	D5->active = false;
+	D5->str = "Dungeon 5";
+	D5->movable = true;
+
+	back_dung = (GuiText*)App->gui->CreateElement(text);
+	back_dung->pos = { Back_dung->pos.x + 550, Back_dung->pos.y + 2 };
+	back_dung->active = false;
+	back_dung->str = "Back";
+	back_dung->movable = true;
 
 
-	selected = New_game;
+	key1 = (GuiImage*)App->gui->CreateElement(image);
+	key1->pos = { D1->pos.x - 50, D1->pos.y };
+	key1->texture_rect = { 939,455,28,32 };
+	key1->active = false;
+	key1->movable = true;
+
+	key2 = (GuiImage*)App->gui->CreateElement(image);
+	key2->pos = { D2->pos.x - 50, D2->pos.y };
+	key2->texture_rect = { 939,455,28,32 };
+	key2->active = false;
+	key2->movable = true;
+
+	key3 = (GuiImage*)App->gui->CreateElement(image);
+	key3->pos = { D3->pos.x - 50, D3->pos.y };
+	key3->texture_rect = { 939,455,28,32 };
+	key3->active = false;
+	key3->movable = true;
+
+	key4 = (GuiImage*)App->gui->CreateElement(image);
+	key4->pos = { D4->pos.x - 50, D4->pos.y };
+	key4->texture_rect = { 939,455,28,32 };
+	key4->active = false;
+	key4->movable = true;
+
+	key5 = (GuiImage*)App->gui->CreateElement(image);
+	key5->pos = { D5->pos.x - 50, D5->pos.y };
+	key5->texture_rect = { 939,455,28,32 };
+	key5->active = false;
+	key5->movable = true;
+
+
+
+	selected = Continue;
 
 	in_settings = false;
 	in_controls = false;
 	changing_controls = false;
+	in_dungeons = false;
 
 	return ret;
 }
@@ -383,7 +495,7 @@ bool Main_Screen::Update(float dt)
 		for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
 			it._Ptr->_Myval->active = false;
 		}
-
+		Disable_dungeons();
 		up->active = false;
 		down->active = false;
 		right->active = false;
@@ -429,9 +541,11 @@ bool Main_Screen::Update(float dt)
 		for (std::list<UIElement*>::const_iterator it = settings_elements.cbegin(); it != settings_elements.cend(); it++) {
 			if (selected == it._Ptr->_Myval) {
 				it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
+				it._Ptr->_Myval->pos.x = 300;
 			}
 			else {
 				it._Ptr->_Myval->texture_rect = { 0, 514, 683, 36 };
+				it._Ptr->_Myval->pos.x = 250;
 			}
 		}
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
@@ -482,6 +596,7 @@ bool Main_Screen::Update(float dt)
 	}
 	else if (in_controls) {
 
+		Disable_dungeons();
 		New_game->active = false;
 		new_game->active = false;
 		Continue->active = false;
@@ -532,9 +647,11 @@ bool Main_Screen::Update(float dt)
 			for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
 				if (selected == it._Ptr->_Myval) {
 					it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
+					it._Ptr->_Myval->pos.x = 300;
 				}
 				else {
 					it._Ptr->_Myval->texture_rect = { 0, 514, 683, 36 };
+					it._Ptr->_Myval->pos.x = 250;
 				}
 			}
 			if (changing_controls) {
@@ -616,6 +733,7 @@ bool Main_Screen::Update(float dt)
 					}
 				}
 			}
+
 			else{
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 				App->audio->PlayFx(fx);
@@ -651,13 +769,132 @@ bool Main_Screen::Update(float dt)
 				in_controls = false;
 				selected = settings_elements.front();
 				changing_controls = false;
+
+				
 			
 			}
 
 
 			}
 		}
+		else if (in_dungeons) {
 
+			Enable_dungeons();
+			Back_dung->active = true;
+			back_dung->active = true;
+			up->active = false;
+			down->active = false;
+			right->active = false;
+			left->active = false;
+			move_up->active = false;
+			move_down->active = false;
+			move_right->active = false;
+			move_left->active = false;
+			menu->active = false;
+			action->active = false;
+			dash->active = false;
+			back_controls->active = false;
+
+			Up->active = false;
+			Down->active = false;
+			Right->active = false;
+			Left->active = false;
+			Move_up->active = false;
+			Move_down->active = false;
+			Move_left->active = false;
+			Move_right->active = false;
+			Menu->active = false;
+			Action->active = false;
+			Dash->active = false;
+			Back_controls->active = false;
+
+			New_game->active = false;
+			new_game->active = false;
+			Continue->active = false;
+			cont->active = false;
+			Settings->active = false;
+			settings->active = false;
+			Exit->active = false;
+			exit->active = false;
+			Controls->active = false;
+			controls->active = false;
+			Mute->active = false;
+			mute->active = false;
+			Back->active = false;
+			back->active = false;
+
+			up_key->active = false;
+			down_key->active = false;
+			left_key->active = false;
+			right_key->active = false;
+			move_up_key->active = false;
+			move_down_key->active = false;
+			move_left_key->active = false;
+			move_right_key->active = false;
+			menu_key->active = false;
+			action_key->active = false;
+			dash_key->active = false;
+
+
+			for (std::list<UIElement*>::const_iterator it = dungeons.cbegin(); it != dungeons.cend(); it++) {
+				if (selected == it._Ptr->_Myval) {
+					it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
+					it._Ptr->_Myval->pos.x = 300;
+
+				}
+				else {
+					it._Ptr->_Myval->texture_rect = { 0, 514, 683, 36 };
+					it._Ptr->_Myval->pos.x = 250;
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+				App->audio->PlayFx(fx);
+				selected = Dungeons_Prev();
+				/*if (!IsInsideCam(selected)) {
+				Scroll_Down();
+				}*/
+			}
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+				App->audio->PlayFx(fx);
+				selected = Dungeons_Next();
+				/*if (!IsInsideCam(selected)) {
+				Scroll_Up();
+				}*/
+
+			}
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+				/*if (selected == Back_controls) {
+				App->audio->PlayFx(press_fx);
+				in_settings = true;
+				in_controls = false;
+				selected = settings_elements.front();
+				changing_controls = false;
+				}
+				else {
+				changing_controls = true;
+				App->audio->PlayFx(press_fx);
+				}*/
+				if (selected == Back_dung) {
+					in_controls = false;
+					in_settings = false;
+					in_dungeons = false;
+					selected = ui_elements.front();
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+				App->audio->PlayFx(press_fx);
+				in_settings = false;
+				in_controls = false;
+				changing_controls = false;
+				in_dungeons = false;
+				selected = ui_elements.front();
+				
+
+
+
+			}
+
+		}
 
 	
 	else {
@@ -666,6 +903,7 @@ bool Main_Screen::Update(float dt)
 			it._Ptr->_Myval->active = false;
 		}
 
+		Disable_dungeons();
 		up->active = false;
 		down->active = false;
 		right->active = false;
@@ -710,9 +948,11 @@ bool Main_Screen::Update(float dt)
 		for (std::list<UIElement*>::const_iterator it = ui_elements.cbegin(); it != ui_elements.cend(); it++) {
 			if (selected == it._Ptr->_Myval) {
 				it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
+				it._Ptr->_Myval->pos.x = 300;
 			}
 			else {
 				it._Ptr->_Myval->texture_rect = { 0, 514, 683, 36 };
+				it._Ptr->_Myval->pos.x = 250;
 			}
 		}
 
@@ -735,9 +975,8 @@ bool Main_Screen::Update(float dt)
 			}
 			if (selected == Continue) {
 				//continue with the current game, for now:
-				App->scene_manager->dungeon_id = rand() % 2;
-				App->player->inMainScreen = false;
-				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+				in_dungeons = true;
+				selected = dungeons.front();
 			}
 			if (selected == Settings) {
 				in_settings = true;
@@ -932,6 +1171,60 @@ UIElement * Main_Screen::Controls_Next()
 	}
 }
 
+UIElement * Main_Screen::Dungeons_Next()
+{
+	if (selected != nullptr) {
+		if (!dungeons.empty()) {
+			if (selected == dungeons.back()) {
+				return dungeons.back();
+			}
+			else {
+				for (std::list<UIElement*>::const_iterator it = dungeons.cbegin(); it != dungeons.cend(); it++) {
+					if (selected == it._Ptr->_Myval) {
+						if (selected == dungeons.back()) {
+							return dungeons.back();
+						}
+						else {
+							it++;
+							if (it._Ptr != nullptr)
+								return it._Ptr->_Myval;
+							else
+								return dungeons.back();
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+UIElement * Main_Screen::Dungeons_Prev()
+{
+	if (selected != nullptr) {
+		if (!dungeons.empty()) {
+			if (selected == dungeons.front()) {
+				return dungeons.front();
+			}
+			for (std::list<UIElement*>::const_iterator it = dungeons.cend(); it != dungeons.cbegin(); it--) {
+				if (selected == it._Ptr->_Myval) {
+					if (selected == dungeons.front()) {
+						return dungeons.front();
+					}
+					else {
+						it--;
+						if (it._Ptr != nullptr)
+							return it._Ptr->_Myval;
+						else
+							return dungeons.back();
+					}
+				}
+
+
+			}
+		}
+	}
+}
+
 void Main_Screen::Scroll_Up()
 {
 	for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
@@ -968,7 +1261,9 @@ bool Main_Screen::CleanUp()
 	ui_elements.clear();
 	settings_elements.clear();
 	controls_elements.clear();
+	dungeons.clear();
 
+	Disable_dungeons();
 	background->active = false;
 	up->active=false;
 	down->active=false;
@@ -1072,4 +1367,55 @@ bool Main_Screen::CleanUp()
 	
 
 	return ret;
+}
+
+void Main_Screen::Disable_dungeons()
+{
+	 d1->active = false;
+	 d2->active = false;
+	 d3->active = false;
+	 d4->active = false;
+	 d5->active = false;
+	 
+
+	 key1->active = false;
+	 key2->active = false;
+	 key3->active = false;
+	 key4->active = false;
+	 key5->active = false;
+
+
+	D1->active = false;
+	D2->active = false;
+	D3->active = false;
+	D4->active = false;
+	D5->active = false;
+	back_dung->active = false;
+	Back_dung->active = false;
+
+}
+
+void Main_Screen::Enable_dungeons()
+{
+
+	d1->active = true;
+	d2->active = true;
+	d3->active = true;
+	d4->active = true;
+	d5->active = true;
+
+	key1->active = true;
+	key2->active = true;
+	key3->active = true;
+	key4->active = true;
+	key5->active = true;
+
+
+	D1->active = true;
+	D2->active = true;
+	D3->active = true;
+	D4->active = true;
+	D5->active = true;
+	//Back_dung->active = true;
+	//back_dung->active = true;
 }

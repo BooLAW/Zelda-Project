@@ -40,6 +40,8 @@ public:
 	UIElement* Settings_Prev();
 	UIElement* Controls_Prev();
 	UIElement* Controls_Next();
+	UIElement* Dungeons_Next();
+	UIElement* Dungeons_Prev();
 	void Scroll_Up();
 	void Scroll_Down();
 
@@ -47,11 +49,15 @@ public:
 
 	bool CleanUp();
 
+	void Disable_dungeons();
+	void Enable_dungeons();
+
 private:
 
 	std::list<UIElement*> ui_elements;
 	std::list<UIElement*> settings_elements;
 	std::list<UIElement*> controls_elements;
+	std::list<UIElement*> dungeons;
 	UIElement* selected;
 	GuiImage* New_game;
 	GuiImage* Continue;
@@ -69,6 +75,7 @@ private:
 
 	bool in_settings;
 	bool in_controls;
+	bool in_dungeons;
 	bool changing_controls = false;
 
 	GuiImage* Controls;
@@ -117,6 +124,28 @@ private:
 	GuiText* menu_key;
 	GuiText* action_key;
 	GuiText* dash_key;
+
+	GuiImage* d1;
+	GuiImage* d2;
+	GuiImage* d3;
+	GuiImage* d4;
+	GuiImage* d5;
+	GuiImage* Back_dung;
+
+	GuiImage* key1;
+	GuiImage* key2;
+	GuiImage* key3;
+	GuiImage* key4;
+	GuiImage* key5;
+
+
+	GuiText* D1;
+	GuiText* D2;
+	GuiText* D3;
+	GuiText* D4;
+	GuiText* D5;
+	GuiText* back_dung;
+
 
 	SDL_Texture* tex;
 };
