@@ -27,6 +27,7 @@ private:
 	
 public:
 
+	bool minimap = false;;
 	void AddItem(Item* obj);
 	void AddWeapon(Item* wep);
 	SDL_Texture* items;
@@ -54,6 +55,8 @@ public:
 	GuiImage* Continue;
 	GuiImage* titlescreen;
 	GuiImage* Exit;
+	GuiImage* Minimap;
+	GuiImage* link_point;
 
 	GuiText* cont;
 	GuiText* title;

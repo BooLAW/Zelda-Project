@@ -8,6 +8,19 @@ bool HUD::Start()
 	max_keys = 5;
 	bool ret = true;
 
+	Minimap = (GuiImage*)App->gui->CreateElement(image);
+	Minimap->pos = { 250 ,150 };
+	Minimap->texture = App->tex->Load("Sprites/mace_knight_minimap.png");
+	Minimap->texture_rect = { 0,0,500,235 };
+	Minimap->active = false;
+	Minimap->movable = true;
+
+	link_point = (GuiImage*)App->gui->CreateElement(image);
+	link_point->pos = { Minimap->pos.x + 200, Minimap->pos.y + 115 };
+	link_point->texture_rect = { 1023,412,22,33 };
+	link_point->active = false;
+	link_point->movable = true;
+
 	rupees = (GuiImage*)App->gui->CreateElement(GuiType::image);
 	rupees->texture_rect = { 644,411,32,32 };
 	rupees->active = true;
@@ -183,7 +196,9 @@ bool HUD::Start()
 	GenerateKeys();
 
 	menu_selected = Continue;
-
+	minimap = false;
+	Minimap->active = false;
+	link_point->active = false;
 
 	
 	inv->SetOffset(30, 30);
@@ -195,6 +210,19 @@ bool HUD::Update(float dt)
 {
 	bool ret = true;
 
+	if (App->scene_manager->dungeon_id == 0) {
+		Minimap->texture = App->tex->Load("Sprites/mace_knight_minimap.png");
+		Minimap->texture_rect = { 0,0,500,235 };
+		if ((App->player->room.x == 2) && (App->player->room.y == 4)) {
+			link_point->pos = { Minimap->pos.x + 200, Minimap->pos.y + 200 };
+
+		}
+		if ((App->player->room.x == 2) && (App->player->room.y == 4)) {
+			link_point->pos = { Minimap->pos.x + 200, Minimap->pos.y + 200 };
+
+		}
+
+	}
 
 	rupees_num->str = std::to_string(App->player->rupees);
 	//bombs_num->str = std::to_string(App->player->bombs);
@@ -245,7 +273,14 @@ bool HUD::Update(float dt)
 		else {
 			dialog_rect->active = false;
 		}
-
+		if (minimap) {
+			Minimap->active = true;
+			link_point->active = true;
+		}
+		else {
+			Minimap->active = false;
+			link_point->active = false;
+		}
 		if (inv->active) {
 			descriptions_rect->active = true;
 			stats_rect->active = true;

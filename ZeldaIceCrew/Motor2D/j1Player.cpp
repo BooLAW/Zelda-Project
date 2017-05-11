@@ -845,6 +845,8 @@ bool j1Player::Update(float dt)
 				}
 
 			}
+			
+			
 			else {
 				Room* c_r = App->scene_manager->GetCurrentScene()->GetRoom(room.x, room.y);
 
@@ -1075,7 +1077,16 @@ bool j1Player::Update(float dt)
 
 					}
 					//!_Actions	
-
+					if (inMainScreen == false) {
+						if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+							if (App->hud->minimap) {
+								App->hud->minimap = false;
+							}
+							else {
+								App->hud->minimap = true;
+							}
+						}
+					}
 					if ((App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN)&&(!action)) {
 						if (!App->hud->inv->active) {
 							App->hud->inv->active = true;
@@ -1129,6 +1140,7 @@ bool j1Player::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 				App->scene_manager->toChangeScene((Scene*)App->scene_manager->dungeon_scene);
 			}
+
 		}
 		else {
 			App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
