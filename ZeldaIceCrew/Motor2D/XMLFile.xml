@@ -27,10 +27,10 @@
         <!-- REGULAR LABIRINTH REGULAR-->
         <room x="0" y="0" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_greensoldier" x= "320"     y= "320"/>
-            <enemy subtype="t_greensoldier" x= "320"     y= "896"/>
-            <enemy subtype="t_rope"         x= "1536"    y= "320"/>
-            <enemy subtype="t_rope"         x= "1536"    y= "320"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "448"/>
+            <enemy subtype="t_rope"         x= "864"     y= "90" />
+            <enemy subtype="t_rope"         x= "864"     y= "448"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
@@ -38,10 +38,10 @@
         </room>
         <room x="0" y="1" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_rope"        x= "320"     y= "320"/>
-            <enemy subtype="t_rope"        x= "320"     y= "896"/>
-            <enemy subtype="t_rope"        x= "1536"    y= "320"/>
-            <enemy subtype="t_rope"        x= "1536"    y= "320"/>
+            <enemy subtype="t_rope"         x= "134"     y= "90" />
+            <enemy subtype="t_rope"         x= "134"     y= "448"/>
+            <enemy subtype="t_rope"         x= "864"     y= "90" />
+            <enemy subtype="t_rope"         x= "864"     y= "448"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
@@ -51,12 +51,12 @@
         </room> <!-- 4 ROPES-->
         <room x="0" y="2" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_bluesoldier"              x= "320"     y= "320"/>
-            <enemy subtype="t_bluesoldier"              x= "320"     y= "896"/>
-            <enemy subtype="t_bluesoldier"              x= "1536"    y= "320"/>
-            <enemy subtype="t_bluesoldier"              x= "1536"    y= "320"/>
-            <enemy subtype="t_bluesoldier"              x= "320"     y= "576"/>
-            <enemy subtype="t_bluesoldier"              x= "1536"    y= "576"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "90"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "90" />
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "359"/>
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "359" />
           </enemies>
           <items>
 
@@ -69,9 +69,9 @@
         <!-- REGULAR -->
         <room x="1" y="1" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_redsoldier" x= "320"     y= "320"/>
-            <enemy subtype="t_redsoldier" x= "1024"     y= "576"/>
-            <enemy subtype="t_redsoldier" x= "1536"    y= "320"/>
+            <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "359"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
@@ -82,7 +82,7 @@
         <!-- VERTICALBRIDGE REGULAR-->
         <room x="2" y="0" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_freezor" x= "1024"    y= "576"/>
+            <enemy subtype="t_freezor" x= "503"    y= "359"/>
            
           </enemies>
           <doorways>          
@@ -91,10 +91,10 @@
         </room> <!-- 1 FREEZOR-->
         <room x="2" y="1" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_greensoldier" x= "320"     y= "320"/>
-            <enemy subtype="t_greensoldier" x= "320"     y= "896"/>
-            <enemy subtype="t_rope"         x= "1536"    y= "320"/>
-            <enemy subtype="t_rope"         x= "1536"    y= "320"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "448"/>
+            <enemy subtype="t_rope"         x= "864"     y= "90" />
+            <enemy subtype="t_rope"         x= "864"     y= "448"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -106,8 +106,8 @@
         <!-- 4CORNERS REGULAR BEGGINING-->
         <room x="3" y="1" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_beamos"x= "1536"    y= "320"/>
-            <enemy subtype="t_beamos"  x= "320"     y= "896"/>
+            <enemy subtype="t_beamos" x= "503"    y= "359"/>
+            <enemy subtype="t_beamos"  x= "134"     y= "90"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
@@ -141,7 +141,7 @@
         <!-- VERTICAL BRIDGE REGULAR-->
         <room x="4" y="0" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_geldman"   x= "1024"    y= "576"/>
+            <enemy subtype="t_geldman"  x= "134"     y= "359"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
@@ -149,15 +149,15 @@
         </room><!-- 1 SANDMAN -->
         <room x="4" y="1" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_bluearcher"   x="192" y="192"/>
-            <enemy subtype="t_bluearcher"   x="768" y="192"/>
-            <enemy subtype="t_redsoldier" x= "320"     y= "320"/>
-            <enemy subtype="t_redsoldier" x= "1024"     y= "576"/>
-            <enemy subtype="t_redsoldier" x= "1536"    y= "320"/>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+            <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "359"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-            <doorway subtype="dw_dungeon" dir="Left x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
           </doorways>
         </room>
       

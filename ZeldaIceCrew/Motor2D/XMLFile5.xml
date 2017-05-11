@@ -3,52 +3,52 @@
 
   <!-- Regular Room enemy packs -->
   <!-- One Freezor in the middle -->
-  <enemy subtype="t_freezor" x="1024" y="576"/>
+  <enemy subtype="t_freezor" x= "503"    y= "359"/>
   
   <!--  2 Green Soldier 2 Rope  divided in the 4 corners-->
-  <enemy subtype="t_greensoldier" x= "320"     y= "320"/>
-  <enemy subtype="t_greensoldier" x= "320"     y= "896"/>
-  <enemy subtype="t_rope"         x= "1536"    y= "320"/>
-  <enemy subtype="t_rope"         x= "1536"    y= "896"/>
+  <enemy subtype="t_greensoldier" x= "134"     y= "90"/>
+  <enemy subtype="t_greensoldier" x= "134"     y= "448"/>
+  <enemy subtype="t_rope"         x= "864"     y= "90" />
+  <enemy subtype="t_rope"         x= "864"     y= "448"/>
   
   <!-- 2 Hinox 2 ranged divided in the 4 corners-->
-  <enemy subtype="t_hinox"              x= "320"     y= "320"/>
-  <enemy subtype="t_hinox"              x= "320"     y= "896"/>
-  <enemy subtype="t_bluearcher"         x= "1536"    y= "320"/>
-  <enemy subtype="t_bluearcher"         x= "1536"    y= "320"/>
+  <enemy subtype="t_hinox"             x= "134"     y= "90"/>
+  <enemy subtype="t_hinox"             x= "134"     y= "448"/>
+  <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+  <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
   
   <!--  2 Geldman (sand guy)   Middle Left middle right -->
-  <enemy subtype="t_geldman" x= "320"     y= "576"/>
-  <enemy subtype="t_geldman" x= "1576"     y= "576"/>
+  <enemy subtype="t_geldman"  x= "134"     y= "359"/>
+  <enemy subtype="t_geldman"  x= "864"    y= "359" />
  
   <!-- 3 RedSoldier(top right top left middle)-->
-  <enemy subtype="t_redsoldier" x= "320"     y= "320"/>
-  <enemy subtype="t_redsoldier" x= "1024"     y= "576"/>
-  <enemy subtype="t_redsoldier" x= "1536"    y= "320"/>
+  <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+  <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
+  <enemy subtype="t_redsoldier" x= "503"    y= "359"/>
  
   <!-- 1 beamos in the middle 4 bat in the corners-->
-  <enemy subtype="t_GBat"              x= "320"     y= "320"/>
-  <enemy subtype="t_GBat"              x= "320"     y= "896"/>
-  <enemy subtype="t_GBat"              x= "1536"    y= "320"/>
-  <enemy subtype="t_GBat"              x= "1536"    y= "320"/>
-  <enemy subtype="t_beamos"            x= "1024"    y= "576"/>
+  <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+  <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+  <enemy subtype="t_GBat"             x= "864"    y= "90" />
+  <enemy subtype="t_GBat"             x= "864"    y= "448"/>
+  <enemy subtype="t_beamos"            x= "503"    y= "359"/>
   
   <!-- 6 blue soldier (4 corners 2 middles)-->
-  <enemy subtype="t_bluesoldier"              x= "320"     y= "320"/>
-  <enemy subtype="t_bluesoldier"              x= "320"     y= "896"/>
-  <enemy subtype="t_bluesoldier"              x= "1536"    y= "320"/>
-  <enemy subtype="t_bluesoldier"              x= "1536"    y= "320"/>
-  <enemy subtype="t_bluesoldier"              x= "320"     y= "576"/>
-  <enemy subtype="t_bluesoldier"              x= "1536"    y= "576"/>
+  <enemy subtype="t_bluesoldier"              x= "134"     y= "90"/>
+  <enemy subtype="t_bluesoldier"              x= "134"     y= "448"/>
+  <enemy subtype="t_bluesoldier"              x= "864"    y= "90" />
+  <enemy subtype="t_bluesoldier"              x= "864"    y= "448"/>
+  <enemy subtype="t_bluesoldier"              x= "134"     y= "359"/>
+  <enemy subtype="t_bluesoldier"              x= "864"    y= "359" />
   
   
   
   <!-- Usual coordinates -->
-  <!-- Left-top Corner: x= "320"     y= "320" -->
-  <!-- Left-bot Corner: x= "320"     y= "896" -->
-  <!-- Right-top Corner x= "1536"    y= "320" -->
-  <!-- Right- bot       x= "1536"    y= "896" -->
-  <!-- Middle           x= "1024"    y= "576" -->
-  <!-- Middle-left      x= "320"     y= "576" -->
-  <!-- Middle-Right     x= "1536"    y= "576" -->
+  <!-- Left-top Corner: x= "134"     y= "90" -->
+  <!-- Left-bot Corner: x= "134"     y= "448" -->
+  <!-- Right-top Corner x= "864"    y= "90" -->
+  <!-- Right- bot       x= "864"    y= "448" -->
+  <!-- Middle           x= "503"    y= "359" -->
+  <!-- Middle-left      x= "134"     y= "359" -->
+  <!-- Middle-Right     x= "864"    y= "359" -->
 </file>

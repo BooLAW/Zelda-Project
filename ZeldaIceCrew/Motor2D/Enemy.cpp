@@ -1661,8 +1661,8 @@ bool BossAgahnim::Start()
 		attack_sprites[1] = { 1306, 2, 161, 161 };
 		attack_sprites[2] = { 980, 328, 161, 161 };
 
-		light_a_sprites[0] = { 1469, 2, 161, 161 };
-		light_a_sprites[1] = { 1632, 2, 161, 161 };
+		light_a_sprites[0] = { 274, 2, 297, 444 };
+		light_a_sprites[1] = { 575, 2, 297, 444 };
 
 		idle_sprites[0] = { 817, 2, 161, 161 };
 		idle_sprites[1] = { 654, 2, 161, 161 };

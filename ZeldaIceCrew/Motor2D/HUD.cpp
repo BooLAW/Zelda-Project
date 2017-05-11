@@ -110,11 +110,6 @@ bool HUD::Start()
 	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
 	pl_weapon->max_prior = true;
 
-	weapons = (Window*)App->gui->CreateElement(GuiType::window);
-	weapons->active = false;
-	weapons->pos = { inv->pos.x+10+inv->texture_rect.w,inv->pos.y*2 };
-	weapons->texture_rect = { 498,5,218,214};
-	weapons->max_prior = true;
 
 	dialog_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
 	dialog_rect->texture_rect = { 625,733,613,77 };
@@ -258,7 +253,7 @@ bool HUD::Update(float dt)
 			speed_num->active = true;
 			power->active = true;
 			power_num->active = true;
-			weapons->active = true;
+			//weapons->active = true;
 			if (!inv->Empty()) {
 				if (inv->Selected() != nullptr) {
 					item_description->active = true;
@@ -276,7 +271,7 @@ bool HUD::Update(float dt)
 			speed_num->active = false;
 			power->active = false;
 			power_num->active = false;
-			weapons->active = false;
+			
 		}
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 			if (!Menu->active) {
@@ -288,7 +283,7 @@ bool HUD::Update(float dt)
 				speed_num->active = false;
 				power->active = false;
 				power_num->active = false;
-				weapons->active = false;
+				
 
 				menu_selected = Continue;
 				App->Pause();
@@ -554,7 +549,7 @@ void HUD::AddWeapon(Item* wep)
 			App->hud->weapons->AddElement(img);
 		}*/
 		
-			App->hud->weapons->AddElement(img);
+			//App->hud->weapons->AddElement(img);
 		
 	}
 }
