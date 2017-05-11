@@ -12,6 +12,7 @@
 
 j1Player::j1Player()
 {
+	name = "player";
 }
 
 j1Player::~j1Player()
@@ -1383,17 +1384,14 @@ void j1Player::DyingRestart()
 	
 	alive = true;
 	pos = ORIGIN_RESTART;
+	App->LoadGame("save_game.xml");
 	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
 	//App->player->pos = App->scene_manager->village_scene->pl_start_pos;
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
-	App->player->inventory.clear();
-	max_life_points = 6;
-	power = 1;
+
 	rupees = floor(rupees / 2);
-	bombs = 0;
 //	arrows = 0;
-	curr_life_points = max_life_points;
 	/*dir_override = true;
 	anim_override = true;
 	action = true;
@@ -1702,10 +1700,7 @@ void j1Player::Slash_()
 		}
 	}
 }
-bool j1Player::Load(pugi::xml_node& data)
-{
-	
-}
+
 
 bool j1Player::LoadPlayer(int id,bool new_game)
 {
@@ -1827,8 +1822,7 @@ bool j1Player::LoadPlayer(int id,bool new_game)
 		App->scene_manager->SetCurrentScene((Scene*)App->scene_manager->dungeon_scene);
 
 	return true;
-	pugi::xml_node temp;
-	return false;
+
 }
 
 
@@ -1878,10 +1872,16 @@ bool j1Player::Save(pugi::xml_node& data) const
 		weap.append_attribute("curr_weapon") = pos.x;
 		weap.append_attribute("sword") = pos.y;
 		weap.append_attribute("bow") = pos.y;
+
+	//rupees
+	pugi::xml_node rupees = data.append_child("rupees");
+	rupees.append_attribute("n") = rupees;
+	//stats
+	pugi::xml_node stats = data.append_child("stats");
+	stats.append_attribute("power") = power;
+	stats.append_attribute("speed") = pl_speed.x;
 	//items
 	pugi::xml_node items = data.append_child("items");
-
-
 	for (std::list<Item*>::const_iterator it = inventory.cbegin(); it != inventory.cend(); it++) 
 	{
 		switch (it._Ptr->_Myval->type)
@@ -1944,5 +1944,131 @@ bool j1Player::Save(pugi::xml_node& data) const
 	pugi::xml_node dun = data.append_child("dungeon");
 		dun.append_attribute("in") = (App->scene_manager->GetCurrentScene() == App->scene_manager->dungeon_scene);
 		                                                                                   
+	return true;
+}
+
+bool j1Player::Load(pugi::xml_node & data)
+{
+	//keys
+	for (int i = 0; i < N_MAPS; i++) {
+		for (pugi::xml_node node_k = data.child("keys"); node_k; node_k = node_k.next_sibling("keys")) {
+			if (data.child("keys").attribute("id").as_int() == i)
+				completed_maps[i] = data.child("keys").attribute("completed").as_bool(false);
+		}
+	}
+	//rupees
+	rupees= data.child("rupees").attribute("n").as_int();
+	//keys
+	keys = data.child("n_keys").attribute("n").as_int(0);
+
+	//map1_comp = data.child("keys").attribute("m1").as_bool(false);
+	//map2_comp = data.child("keys").attribute("m2").as_bool(false);
+	//map3_comp = data.child("keys").attribute("m3").as_bool(false);
+	//map4_comp = data.child("keys").attribute("m4").as_bool(false);
+	//map5_comp = data.child("keys").attribute("m5").as_bool(false);
+	//stats
+	power = data.child("stats").attribute("power").as_int();
+
+	pl_speed.x = data.child("stats").attribute("speed").as_float();
+	pl_speed.y = data.child("stats").attribute("speed").as_float();
+
+	//hp
+	curr_life_points = data.child("hp").attribute("max").as_int(1);
+	max_life_points = data.child("hp").attribute("max").as_int(1);
+	///weapons
+	std::string curr_weapon = data.child("weapons").attribute("curr_weapon").as_string();
+	if (curr_weapon.c_str() == "t_sword")
+		if (data.child("weapons").attribute("sword").as_bool())
+			AddWeapon(t_sword);
+	if (data.child("weapons").attribute("bow").as_bool())
+		AddWeapon(t_bow);
+
+	//items info
+	pugi::xml_node items = data.append_child("items");
+	if (items.attribute("power_gauntlet").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(power_gauntlet);
+		aux->PassToInventory();
+	}
+	if (items.attribute("pegasus_boots").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(pegasus_boots);
+		aux->PassToInventory();
+	}
+	if (items.attribute("heart_container").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(heart_container);
+		aux->PassToInventory();
+	}
+	if (items.attribute("gold_gauntlet").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(gold_gauntlet);
+		aux->PassToInventory();
+	}
+	if (items.attribute("wind_cape").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(wind_cape);
+		aux->PassToInventory();
+	}
+	if (items.attribute("magic_hammer").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(magic_hammer);
+		aux->PassToInventory();
+	}
+	if (items.attribute("small_shield").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(small_shield);
+		aux->PassToInventory();
+	}
+	if (items.attribute("vanguard_emblem").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(vanguard_emblem);
+		aux->PassToInventory();
+	}
+	if (items.attribute("magic_sphere").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(magic_sphere);
+		aux->PassToInventory();
+	}	if (items.attribute("magic_mirror").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(magic_mirror);
+		aux->PassToInventory();
+	}	if (items.attribute("golden_shield").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(golden_shield);
+		aux->PassToInventory();
+	}	if (items.attribute("mysterious_dust").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(mysterious_dust);
+		aux->PassToInventory();
+	}	if (items.attribute("odd_mushroom").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(odd_mushroom);
+		aux->PassToInventory();
+	}	if (items.attribute("bag_of_rupees").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(bag_of_rupees);
+		aux->PassToInventory();
+	}	if (items.attribute("icon_of_power").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(icon_of_power);
+		aux->PassToInventory();
+	}	if (items.attribute("icon_of_wisdom").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(icon_of_wisdom);
+		aux->PassToInventory();
+	}	if (items.attribute("icon_of_valor").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(icon_of_valor);
+		aux->PassToInventory();
+	}	if (items.attribute("boss_key").as_bool() == true)
+	{
+		Item* aux = (Item*)App->entitymanager->CreateItem(boss_key);
+		aux->PassToInventory();
+	}
+	//dungeon situation info
+	if (data.child("dungeon").attribute("in").as_bool(false) == true)
+		App->scene_manager->SetCurrentScene((Scene*)App->scene_manager->dungeon_scene);
+
 	return true;
 }

@@ -1021,6 +1021,7 @@ bool Main_Screen::Update(float dt)
 				// start a new game, for now:
 				App->scene_manager->dungeon_id = rand() % 2;
 				App->player->inMainScreen = false;
+				App->LoadGame("new_game.xml");
 				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 			}
 			if (selected == Continue) {
