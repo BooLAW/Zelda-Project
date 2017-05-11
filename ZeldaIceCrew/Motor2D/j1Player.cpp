@@ -1152,6 +1152,7 @@ bool j1Player::Update(float dt)
 					App->hud->inv->Move_Sel_backwards();
 				}
 			}
+			
 		}
 	}
 
@@ -1387,13 +1388,13 @@ void j1Player::DyingRestart()
 	//App->player->pos = App->scene_manager->village_scene->pl_start_pos;
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
-	App->player->inventory.clear();
-	max_life_points = 6;
-	power = 1;
-	rupees = floor(rupees / 2);
-	bombs = 0;
+//	App->player->inventory.clear();
+	//max_life_points = 6;
+	//power = 1;
+	//rupees = floor(rupees / 2);
+//	bombs = 0;
 //	arrows = 0;
-	curr_life_points = max_life_points;
+	//curr_life_points = max_life_points;
 	/*dir_override = true;
 	anim_override = true;
 	action = true;

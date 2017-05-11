@@ -930,6 +930,7 @@ bool Main_Screen::Update(float dt)
 					App->scene_manager->dungeon_id = 4;
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 				}
+				App->LoadGame("save_game.xml");
 			}
 			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 				App->audio->PlayFx(press_fx);
@@ -1021,6 +1022,8 @@ bool Main_Screen::Update(float dt)
 				// start a new game, for now:
 				App->scene_manager->dungeon_id = rand() % 2;
 				App->player->inMainScreen = false;
+				App->LoadGame("new_game.xml");
+				App->player->keys = 0;
 				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 			}
 			if (selected == Continue) {

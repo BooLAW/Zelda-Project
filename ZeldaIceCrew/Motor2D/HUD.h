@@ -37,7 +37,7 @@ public:
 	//GuiText* bombs_num;
 	std::list<GuiImage*>lifes;
 	Window* inv;
-	Window* weapons;
+	//Window* weapons;
 	GuiImage* descriptions_rect;
 	GuiText* item_description;
 	GuiImage* stats_rect;
