@@ -321,7 +321,7 @@ void BossKey::Update(float dt)
 							}
 							else {
 								Upgrade();
-								PassToInventory();
+								//PassToInventory();
 							}
 						}
 					}

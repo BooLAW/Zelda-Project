@@ -1020,6 +1020,7 @@ bool Main_Screen::Update(float dt)
 				selected = dungeons.front();
 				App->LoadGame("new_game.xml");
 				App->player->keys = 0;
+				//std::memset(App->player->completed_maps, false, N_MAPS);
 			}
 			if (selected == Continue) {
 				//continue with the current game, for now:
