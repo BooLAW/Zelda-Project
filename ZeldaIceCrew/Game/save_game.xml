@@ -7,7 +7,13 @@
   </renderer>
 
   <player>
-    <keys m1 ="false" m2="false" m3="false" m4="false" m5="false"/>
+    <keys>
+      <key id="0" completed="false"/>
+      <key id="1" completed="false"/>
+      <key id="2" completed="false"/>
+      <key id="3" completed="false"/>
+      <key id="4" completed="false"/>
+    </keys>
     <rupees n="0"/>
     <hp curr="6" max="6"/>
     <weapons curr_weapon ="t_sword" sword="true" bow ="true" />

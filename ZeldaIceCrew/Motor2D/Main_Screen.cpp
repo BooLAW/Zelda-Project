@@ -474,8 +474,6 @@ bool Main_Screen::Start()
 	key5->active = false;
 	key5->movable = true;
 
-	App->player->completed_maps[0] = true;
-
 	selected = Continue;
 
 	in_settings = false;
