@@ -939,7 +939,8 @@
       </rooms>
 
     </map>
- <map id ="5">
+    
+    <map id ="5">
       <file>BossRoom.tmx</file>
 
       <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
@@ -982,6 +983,40 @@
         </room>
 
       </rooms>
+    </map>
+  
+   <map id="6">
+
+      <file>Dungeon.tmx</file>
+
+      <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
+
+      <camera follow="1"/>
+
+      <Link>
+
+        <room x="0" y="0"/>
+
+        <pos x="512" y="460"/>
+
+      </Link>
+
+
+      <rooms>
+
+        <room x="0" y="0" w="1024" h="576">
+          <enemies>
+           
+          </enemies>
+          <doorways>
+            
+          </doorways>
+        </room> <!-- estos van -->
+
+        
+
+      </rooms>
+
     </map>
   </maps>
 

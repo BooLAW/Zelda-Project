@@ -15,7 +15,7 @@ bool Arena::Start()
 	starting = false;
 
 	BROFILER_CATEGORY("StartDungeon", Profiler::Color::DarkBlue);
-	curr_id = arena;
+	curr_id = dungeon;
 	stdStart();
 	//GetRoom(0, 2)->AddNpc(NPC_ZELDA,500, 400, 1);
 	App->player->PlayerInmortal(10);
