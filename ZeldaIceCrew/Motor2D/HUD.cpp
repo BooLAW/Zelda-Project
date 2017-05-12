@@ -217,7 +217,11 @@ bool HUD::Update(float dt)
 {
 	
 	bool ret = true;
-	
+	//AIDS here 
+	//#Pau
+	//Puto amo
+	//Guapo
+	//Sexy
 	if (App->scene_manager->dungeon_id == 0) {
 		Minimap->texture = map0;
 		Minimap->texture_rect = { 0,0,500,235 };
