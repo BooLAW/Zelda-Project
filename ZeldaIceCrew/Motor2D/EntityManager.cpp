@@ -179,8 +179,8 @@ Item * EntityManager::CreateItem(uint subtype)
 		ret = new ItemBow();
 		ret->type = weapon;
 	case t_rand_item:
-		rnd_i = rand() % 17;
-		CreateItem(rnd_i);
+		rnd_i = rand() % 16;
+		ret = CreateItem(rnd_i);
 		break;
 	default:
 		LOG("Unknown Item Type: %d", subtype);

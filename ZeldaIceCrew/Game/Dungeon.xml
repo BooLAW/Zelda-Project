@@ -89,6 +89,9 @@
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
           </doorways>
+		  <items>
+			
+		  </items>
         </room>
 
         <room x="3" y="3" w="1024" h="576">
