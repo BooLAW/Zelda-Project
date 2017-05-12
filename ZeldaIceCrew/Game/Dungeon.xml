@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 
 <dungeon>
 
@@ -83,12 +83,8 @@
           </doorways>
         </room> <!-- estos van-->
         <room x="2" y="4" w="1024" h="576">
-<items>
-	<item subtype="boss_key" x="100" y="100"/>
-	<item subtype="heart_container" x="200" y="200"/>
-</items>          
-<enemies>
-<enemy subtype="t_boss_agahnim" x="100" y="100"/>
+          <enemies>
+
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -181,7 +177,7 @@
 
       <Link>
 
-        <room x="0" y="1"/>
+        <room x="2" y="4"/>
 
         <pos x="238" y="512"/>
 
