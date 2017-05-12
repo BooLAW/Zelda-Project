@@ -487,7 +487,7 @@ bool Scene::Load_new_map(int id)
 										st = t_rand_item;
 
 									Item* item_p = nullptr;
-									item_p = r->AddItem(st, node_item.attribute("x").as_float(), node_item.attribute("y").as_float());
+									item_p = r->AddItem(st, node_item.attribute("x").as_float(), node_item.attribute("y").as_float());    
 									item_p->SetPrice(node_item.attribute("pricetag").as_uint(0));
 
 								}
