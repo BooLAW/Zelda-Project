@@ -109,11 +109,10 @@ void Doorway::Update(float dt)
 				}
 			}
 		if (crossing == true && state == open) {
-			if (crossed == false) {
-				LOG("CROSSING");
+			
 				Cross();
-				crossed = true;
-			}
+				
+			
 		}
 
 		Draw();

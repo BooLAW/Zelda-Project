@@ -93,8 +93,8 @@
 
         <room x="3" y="3" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_beamos" x="512" y="192"/>
-            <enemy subtype="t_beamos" x="512" y="384"/>
+            <enemy subtype="t_beamos" x= "503"    y= "130"/>
+            <enemy subtype="t_beamos" x= "503"    y= "305"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
@@ -177,7 +177,7 @@
 
       <Link>
 
-        <room x="2" y="4"/>
+        <room x="1" y="4"/>
 
         <pos x="238" y="512"/>
 

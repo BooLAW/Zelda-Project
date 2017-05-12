@@ -76,6 +76,8 @@ Item * EntityManager::CreateItem(uint subtype)
 {
 	Item* ret = nullptr;
 
+	uint rnd_i = 0;
+
 	switch (subtype) {
 	case power_gauntlet:
 		ret = new PowerGauntlet();
@@ -177,7 +179,7 @@ Item * EntityManager::CreateItem(uint subtype)
 		ret = new ItemBow();
 		ret->type = weapon;
 	case t_rand_item:
-		uint rnd_i = rand() % 17;
+		rnd_i = rand() % 17;
 		CreateItem(rnd_i);
 		break;
 	default:
