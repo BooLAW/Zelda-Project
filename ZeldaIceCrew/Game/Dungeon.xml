@@ -90,7 +90,7 @@
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
           </doorways>
 		  <items>
-			
+			<item subtype="rnd_item" x="100" y="100" pricetag="20"/>
 		  </items>
         </room>
 
