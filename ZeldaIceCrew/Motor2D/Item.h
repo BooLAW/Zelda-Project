@@ -47,6 +47,7 @@ enum ITEMTYPE {
 	weapon_sword,
 	weapon_bow,
 	__LASTWEAPON,
+	t_rand_item,
 	__LASTITEMTYPE
 };
 
