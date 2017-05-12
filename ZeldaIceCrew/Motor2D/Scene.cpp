@@ -483,10 +483,13 @@ bool Scene::Load_new_map(int id)
 										st = weapon_sword;
 									if (strcmp(sub, "weapon_bow") == 0)
 										st = weapon_bow;
-									if (strcmp(sub, "rnd_item") == 0)
-										//st = rand() % 15;
+									if (strcmp(sub, "rnd_item") == 0) {
+										do {
+											st = rand() % 15;
+										} while (st == boss_key);
+									}
 
-									item_p = r->AddItem(st, node_item.attribute("x").as_float(), node_item.attribute("y").as_float());    
+									item_p = r->AddItem(st, node_item.attribute("x").as_float(0), node_item.attribute("y").as_float(0));    
 									item_p->SetPrice(node_item.attribute("pricetag").as_uint(0));
 
 								}

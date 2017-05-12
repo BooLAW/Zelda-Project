@@ -371,9 +371,9 @@ void GoldenGauntlet::SetUp()
 	subtype = gold_gauntlet;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 36, 36, 34, 35 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 36, 360, 34, 35 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -388,9 +388,9 @@ void WindCape::SetUp()
 	subtype = wind_cape;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 34, 36, 34, 35 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 34, 360, 34, 35 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -405,9 +405,9 @@ void MagicHammer::SetUp()
 	subtype = magic_hammer;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 36, 108, 34, 35 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 36, 432, 34, 34 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -422,9 +422,9 @@ void MagicSphere::SetUp()
 	subtype = magic_sphere;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 108, 0, 34, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 108, 324, 34, 34 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -439,9 +439,9 @@ void VanguardEmblem::SetUp()
 	subtype = vanguard_emblem;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 37, 72, 34, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 36, 396, 34, 34 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -456,9 +456,9 @@ void SmallShield::SetUp()
 	subtype = small_shield;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 0, 72, 34, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 0, 396, 34, 34 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -473,9 +473,9 @@ void GoldenShield::SetUp()
 	subtype = small_shield;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 72, 72, 34, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 72, 396, 34, 34 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -507,9 +507,9 @@ void MagicMirror::SetUp()
 	subtype = small_shield;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 216, 0, 34, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 216, 324, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -539,9 +539,9 @@ void BagOfRupees::SetUp()
 	subtype = bag_of_rupees;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 289, 109, 34, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 289, 432, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -555,9 +555,9 @@ void OddMushroom::SetUp()
 	subtype = odd_mushroom;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 324, 72, 34, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 324, 396, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -613,9 +613,9 @@ void MysteriousDust::SetUp()
 	subtype = mysterious_dust;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 72, 216, 32, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 180, 470, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -645,9 +645,9 @@ void IconOfValor::SetUp()
 	subtype = icon_of_valor;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 216, 72, 34, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 216, 396, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -664,9 +664,9 @@ void IconOfWisdom::SetUp()
 	subtype = icon_of_wisdom;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 252, 72, 32, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 252, 396, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -706,9 +706,9 @@ void IconOfPower::SetUp()
 	subtype = icon_of_power;
 	type = ENTITYTYPE::item;
 	tex = App->tex->Load("Sprites/Items32x32.png");
-	rect = { 362, 144, 32, 34 };
+	rect = { 180, 72, 34, 34 };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { 180, 396, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
