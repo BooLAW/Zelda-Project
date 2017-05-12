@@ -940,27 +940,25 @@ void Rope::Update(float dt)
 		if (walk_timer.ReadSec() >= 1) {
 			target.x = (int)pos.x;
 			target.y = (int)pos.y;
-				dir = rand() % EnDirection::LastDir;
-				switch (dir) {
-				case EnDirection::Up:
-					target.y += 32 * ROPE_JMP;
-					break;
-				case EnDirection::Down:
-					target.y -= 32 * ROPE_JMP;
-					break;
-				case EnDirection::Left:
-					target.x -= 32 * ROPE_JMP;
-					break;
-				case EnDirection::Right:
-					target.x += 32 * ROPE_JMP;
-					break;
-				}
-				if (CheckSpace(target.x, target.y) != 1 && CheckSpace(target.x + HitBox->rect.w, target.y + HitBox->rect.h) != 1 && App->scene_manager->GetCurrentScene()->GetCurrentRoom()->isInside({target.x, target.y, 32, 32}) == true) {
-					LOG("ROPE DIR %d", dir);
-					path_to_follow.push_back(target);
-					walk_timer.SetFlag(false);
-					state = moving;
-				}
+			dir = rand() % EnDirection::LastDir;
+			switch (dir) {
+			case EnDirection::Up:
+				target.y += 32 * ROPE_JMP;
+				break;
+			case EnDirection::Down:
+				target.y -= 32 * ROPE_JMP;
+				break;
+			case EnDirection::Left:
+				target.x -= 32 * ROPE_JMP;
+				break;
+			case EnDirection::Right:
+				target.x += 32 * ROPE_JMP;
+				break;
+			}
+			LOG("ROPE DIR %d", dir);
+			path_to_follow.push_back(target);
+			walk_timer.SetFlag(false);
+			state = moving;
 		}
 		break;
 	case moving:
