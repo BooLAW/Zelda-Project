@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arena.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="Doorway.cpp" />
@@ -116,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Arena.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="DialogueManager.h" />
     <ClInclude Include="Doorway.h" />

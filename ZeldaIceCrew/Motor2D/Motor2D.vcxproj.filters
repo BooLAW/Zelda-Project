@@ -96,6 +96,9 @@
     <ClCompile Include="Room.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Arena.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -200,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="MathHelpers.h" />
     <ClInclude Include="Main_Screen.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Arena.h">
       <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>

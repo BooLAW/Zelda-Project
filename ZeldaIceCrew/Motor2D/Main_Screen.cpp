@@ -984,6 +984,13 @@ bool Main_Screen::Update(float dt)
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
 				}
+				if (selected == dungeon_boss) {
+					App->scene_manager->dungeon_id = 5;
+					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+					App->hud->Minimap->active = false;
+					App->hud->link_point->active = false;
+				}
+				
 				//App->LoadGame("save_game.xml");
 			}
 			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {

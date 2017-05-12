@@ -32,8 +32,8 @@ enum ENEMYTYPE {
 	t_geldman, //sandman
 	t_freezor, //ghost
 	t_GBat,
-	t_beamos, // eye
 	t_boss_ballandchain,
+	t_beamos, // eye
 	t_boss_agahnim,
 	t_boss_agahnimclone,
 	__LAST_ENEMYTYPE

@@ -217,7 +217,11 @@ bool HUD::Update(float dt)
 {
 	
 	bool ret = true;
-	
+	//AIDS here 
+	//#Pau
+	//Puto amo
+	//Guapo
+	//Sexy
 	if (App->scene_manager->dungeon_id == 0) {
 		Minimap->texture = map0;
 		Minimap->texture_rect = { 0,0,500,235 };
@@ -238,6 +242,10 @@ bool HUD::Update(float dt)
 	if (App->scene_manager->dungeon_id == 4) {
 		Minimap->texture = map4;
 		Minimap->texture_rect = { 0,0,340,278 };
+
+	}
+	if (App->scene_manager->dungeon_id == 5) {
+		Minimap->active = false;
 
 	}
 
@@ -295,9 +303,11 @@ bool HUD::Update(float dt)
 		if (!App->player->inMainScreen) {
 			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 				if (!Minimap->active) {
-					Minimap->active = true;
-					link_point->active = true;
-					App->Pause();
+					if (!App->scene_manager->dungeon_id == 5) {
+						Minimap->active = true;
+						link_point->active = true;
+						App->Pause();
+					}
 				}
 				else {
 					Minimap->active = false;
