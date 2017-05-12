@@ -1300,9 +1300,7 @@ void j1Player::AddWeapon(uint weapon_t)
 
 void j1Player::SetToNewGame()
 {
-	for (int i = 0; i < N_MAPS; i++) {
-		completed_maps[i] = false;
-	}
+	std::memset(completed_maps, false, N_MAPS);
 
 	keys = 0;
 

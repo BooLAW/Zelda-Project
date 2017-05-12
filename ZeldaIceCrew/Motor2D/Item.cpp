@@ -268,7 +268,9 @@ void ItemBow::SetUp()
 void ItemBow::Upgrade()
 {
 	if (!App->player->Find_weapon(this)) {
+		App->player->weapons.clear();
 		App->player->AddWeapon(t_bow);
+		App->player->curr_weapon = App->player->weapons.front();
 	}
 }
 
@@ -287,7 +289,9 @@ void ItemSword::SetUp()
 void ItemSword::Upgrade()
 {
 	if (!App->player->Find_weapon(this)) {
+		App->player->weapons.clear();
 		App->player->AddWeapon(t_sword);
+		App->player->curr_weapon = App->player->weapons.front();
 	}
 }
 
