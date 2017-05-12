@@ -563,9 +563,9 @@ void OddMushroom::SetUp()
 
 void OddMushroom::Upgrade()
 {
-	float a_s = App->player->pl_speed.x;
+	float a_s = App->player->pl_speed.x * 0.083;
 	float a_p = App->player->power;
-	float a_h = App->player->max_life_points;
+	float a_h = App->player->max_life_points * 5;
 
 	float a_temp;
 
@@ -582,6 +582,8 @@ void OddMushroom::Upgrade()
 		break;
 	}
 
+	a_s = a_s / 0.083;
+	a_h = a_h / 5;
 
 	App->player->pl_speed.x = a_s;
 	App->player->pl_speed.y = a_s;

@@ -1661,8 +1661,8 @@ bool BossAgahnim::Start()
 		attack_sprites[1] = { 1306, 2, 161, 161 };
 		attack_sprites[2] = { 980, 328, 161, 161 };
 
-		light_a_sprites[0] = { 274, 2, 297, 444 };
-		light_a_sprites[1] = { 575, 2, 297, 444 };
+		light_a_sprites[0] = { 1469, 2, 161, 161 };
+		light_a_sprites[1] = { 1632, 2, 161, 161 };
 
 		idle_sprites[0] = { 817, 2, 161, 161 };
 		idle_sprites[1] = { 654, 2, 161, 161 };
@@ -1739,7 +1739,7 @@ bool BossAgahnim::Start()
 
 void BossAgahnim::SetReward()
 {
-	reward_pool[heart_container] = 100;
+	reward_pool[icon_of_valor] = 100;
 }
 
 void BossAgahnim::Draw(float dt)
@@ -2060,7 +2060,7 @@ void BossAgahnim::Update(float dt)
 				appear_a.Reset();
 				disappear_a.Reset();
 				timer.SetFlag(false);
-				App->particle->CreateParticle(p_agahnim_lightning, pos.x - 60, pos.y + 48, Down);
+				App->particle->CreateParticle(p_agahnim_lightning, pos.x - 123, pos.y + 48, Down);
 				state = attack;
 			}
 			break;

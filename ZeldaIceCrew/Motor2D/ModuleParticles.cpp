@@ -1284,14 +1284,14 @@ void AgahnimBall::Start()
 void AgahnimLightning::Start()
 {
 	graphics = App->tex->Load("Sprites/BossProjectile.png");
-	g_rect[Up][0] =		{ 274, 2,  173, 339 };
-	g_rect[Up][1] =		{ 449, 2,  173, 339 };
-	g_rect[Down][0] =	{ 274, 2,  173, 339 };
-	g_rect[Down][1] =	{ 449, 2,  173, 339 };
-	g_rect[Right][0] =	{ 274, 2,  173, 339 };
-	g_rect[Right][1] =	{ 449, 2,  173, 339 };
-	g_rect[Left][0] =	{ 274, 2,  173, 339 };
-	g_rect[Left][1] =	{ 449, 2,  173, 339 };
+	g_rect[Up][0] =		{ 274, 2,  299, 444 };
+	g_rect[Up][1] =		{ 575, 2,  299, 444 };
+	g_rect[Down][0] =	{ 274, 2,  299, 444 };
+	g_rect[Down][1] =	{ 575, 2,  299, 444 };
+	g_rect[Right][0] =	{ 274, 2,  299, 444 };
+	g_rect[Right][1] =	{ 575, 2,  299, 444 };
+	g_rect[Left][0] =	{ 274, 2,  299, 444 };
+	g_rect[Left][1] =	{ 575, 2,  299, 444 };
 
 	for (int k = 0; k < LastDir; k++) {
 		anim[k].PushBack(g_rect[k][0]);

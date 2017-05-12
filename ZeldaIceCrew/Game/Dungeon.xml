@@ -84,7 +84,7 @@
         </room> <!-- estos van-->
         <room x="2" y="4" w="1024" h="576">
           <enemies>
-
+			<enemy subtype="t_boss_agahnim" x="100" y="100"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
