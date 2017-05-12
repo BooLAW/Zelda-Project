@@ -22,6 +22,7 @@ enum scene_id {
 	village,
 	dungeon,
 	intro,
+	arena,
 	mainscreen
 };
 class Item;

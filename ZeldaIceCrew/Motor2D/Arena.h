@@ -38,7 +38,7 @@ public:
 private:
 
 	//bool boss_music = false;
-
+	uint round;
 	j1Timer wave_time;
 	SDL_Texture* debug_tex;
 	bool ESC = false;
@@ -46,6 +46,18 @@ private:
 	Label* win_title;
 	Npc* test;
 	Enemy* en;
+
+	bool starting;
+
+	j1Timer round_timer;
+
+	uint to_round = 0;
+
+	iPoint spawn1;
+	iPoint spawn2;
+	iPoint spawn3;
+	iPoint spawn4;
+
 
 };
 
