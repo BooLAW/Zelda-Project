@@ -483,7 +483,7 @@ bool Scene::Load_new_map(int id)
 										st = weapon_sword;
 									if (strcmp(sub, "weapon_bow") == 0)
 										st = weapon_bow;
-									if (strcmp(sub, "rnd_item") == 0)
+									//if (strcmp(sub, "rnd_item") == 0)
 										//st = rand() % 15;
 
 									item_p = r->AddItem(st, node_item.attribute("x").as_float(), node_item.attribute("y").as_float());    

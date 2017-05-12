@@ -240,6 +240,10 @@ bool HUD::Update(float dt)
 		Minimap->texture_rect = { 0,0,340,278 };
 
 	}
+	if (App->scene_manager->dungeon_id == 5) {
+		Minimap->active = false;
+
+	}
 
 	rupees_num->str = std::to_string(App->player->rupees);
 	//bombs_num->str = std::to_string(App->player->bombs);
@@ -295,9 +299,11 @@ bool HUD::Update(float dt)
 		if (!App->player->inMainScreen) {
 			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 				if (!Minimap->active) {
-					Minimap->active = true;
-					link_point->active = true;
-					App->Pause();
+					if (!App->scene_manager->dungeon_id == 5) {
+						Minimap->active = true;
+						link_point->active = true;
+						App->Pause();
+					}
 				}
 				else {
 					Minimap->active = false;
