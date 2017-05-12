@@ -766,7 +766,7 @@
 
         <room x="2" y="5"/>
 
-        <pos x="238" y="512"/>
+        <pos x="498" y="422"/>
 
       </Link>
 
@@ -775,7 +775,7 @@
         <!-- ITEM ROOM -->
         <room x="0" y="3" w="1024" h="576">
           <items>
-
+            
           </items>
           <enemies>
 
@@ -869,7 +869,7 @@
           <enemies>
             <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
             <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
-            <enemy subtype="t_redsoldier" x= "503"    y= "359"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "309"/>
             <enemy subtype="t_geldman"  x= "134"     y= "359"/>
           </enemies>
           <doorways>
@@ -878,11 +878,9 @@
           </doorways>
         </room>
         <room x="2" y="5" w="1024" h="576">
+          <!-- Beginning of the dungeon map-->
           <enemies>
-            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
-            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
-            <enemy subtype="t_GBat"             x= "864"    y= "90" />
-            <enemy subtype="t_GBat"             x= "864"    y= "448"/>
+            
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
