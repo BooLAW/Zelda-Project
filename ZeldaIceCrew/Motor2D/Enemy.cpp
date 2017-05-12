@@ -422,7 +422,7 @@ bool BSoldier::Start()
 	}
 
 	stats.Hp = 3 * ORIGIN_PWR;
-	stats.Speed = 2;
+	stats.Speed = 1.5;
 	stats.Power = 1;
 
 	stats.Flying = false;
@@ -482,8 +482,8 @@ bool RSoldier::Start()
 
 	}
 
-	stats.Hp = 6 * ORIGIN_PWR;
-	stats.Speed = 1.5;
+	stats.Hp = 5 * ORIGIN_PWR;
+	stats.Speed = 0.75;
 	stats.Power = 2;
 
 	stats.Flying = false;
@@ -543,7 +543,7 @@ bool GSoldier::Start()
 
 	}
 
-	stats.Hp = 1.5 * ORIGIN_PWR;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 2.5;
 	stats.Power = 1;
 
@@ -826,7 +826,7 @@ bool Hinox::Start()
 
 	}
 
-	stats.Hp = 10 * ORIGIN_PWR;
+	stats.Hp = 7 * ORIGIN_PWR;
 	stats.Speed = 0.75;
 	stats.Power = 1;
 
@@ -901,7 +901,7 @@ bool Rope::Start()
 		nm_anim.speed = 0.05;
 	}
 
-	stats.Hp = 1.5 * ORIGIN_PWR;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 5;
 	stats.Power = 1;
 
@@ -1032,7 +1032,7 @@ bool BlueArcher::Start()
 
 	}
 
-	stats.Hp = 1.5 * ORIGIN_PWR;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 2;
 	stats.Power = 1;
 
@@ -1160,7 +1160,7 @@ bool GreyBat::Start()
 		}
 	}
 
-	stats.Hp = 1.5 * ORIGIN_PWR;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 2.5;
 	stats.Power = 1;
 
@@ -1215,7 +1215,7 @@ bool Geldman::Start()
 	}
 
 	stats.Hp = 3 * ORIGIN_PWR;
-	stats.Speed = 3;
+	stats.Speed = 2;
 	stats.Power = 1;
 
 	stats.Flying = false;
