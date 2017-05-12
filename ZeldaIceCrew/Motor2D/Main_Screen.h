@@ -44,6 +44,10 @@ public:
 	UIElement* Dungeons_Prev();
 	void Scroll_Up();
 	void Scroll_Down();
+	void Generatekeys();
+	void UpdateKeys();
+	void Enablekeys();
+	void Disablekeys();
 
 	bool IsInsideCam(UIElement* element);
 
@@ -58,6 +62,7 @@ private:
 	std::list<UIElement*> settings_elements;
 	std::list<UIElement*> controls_elements;
 	std::list<UIElement*> dungeons;
+	std::list<UIElement*> keys;
 	UIElement* selected;
 	GuiImage* New_game;
 	GuiImage* Continue;
@@ -130,6 +135,7 @@ private:
 	GuiImage* d3;
 	GuiImage* d4;
 	GuiImage* d5;
+	GuiImage* dungeon_boss;
 	GuiImage* Back_dung;
 
 	GuiImage* key1;
@@ -144,6 +150,7 @@ private:
 	GuiText* D3;
 	GuiText* D4;
 	GuiText* D5;
+	GuiText* DB;
 	GuiText* back_dung;
 
 

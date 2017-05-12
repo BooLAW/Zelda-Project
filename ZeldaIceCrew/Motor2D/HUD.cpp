@@ -209,8 +209,9 @@ bool HUD::Start()
 
 bool HUD::Update(float dt)
 {
+	
 	bool ret = true;
-
+	
 	if (App->scene_manager->dungeon_id == 0) {
 		//Minimap->texture = App->tex->Load("Sprites/mace_knight_minimap.png");
 		Minimap->texture_rect = { 0,0,500,235 };
@@ -251,6 +252,8 @@ bool HUD::Update(float dt)
 		title->active = false;
 		exit->active = false;
 		menu_selected = nullptr;
+		Minimap->active = false;
+		link_point->active = false;
 		Disable_keys();
 
 	}
@@ -274,13 +277,19 @@ bool HUD::Update(float dt)
 		else {
 			dialog_rect->active = false;
 		}
-		if (minimap) {
-			Minimap->active = true;
-			link_point->active = true;
-		}
-		else {
-			Minimap->active = false;
-			link_point->active = false;
+		if (!App->player->inMainScreen) {
+			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+				if (!Minimap->active) {
+					Minimap->active = true;
+					link_point->active = true;
+					App->Pause();
+				}
+				else {
+					Minimap->active = false;
+					link_point->active = false;
+					App->UnPause();
+				}
+			}
 		}
 		if (inv->active) {
 			descriptions_rect->active = true;
@@ -319,6 +328,7 @@ bool HUD::Update(float dt)
 				speed_num->active = false;
 				power->active = false;
 				power_num->active = false;
+				minimap = false;
 				
 
 				menu_selected = Continue;

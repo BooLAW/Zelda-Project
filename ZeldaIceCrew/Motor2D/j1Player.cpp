@@ -32,6 +32,7 @@ bool j1Player::Awake()
 
 bool j1Player::Start()
 {
+	
 	bool ret = true;
 	LOG("Player Start");
 	//CONTROLS
@@ -823,7 +824,7 @@ bool j1Player::Update(float dt)
 	bool ret = true;
 
 	if (inMainScreen) {
-
+		App->hud->minimap = false;
 	}
 	else {
 		if (!App->IsPaused()) {
@@ -1079,11 +1080,8 @@ bool j1Player::Update(float dt)
 
 					}
 					//!_Actions	
-					if (inMainScreen == false) {
-						if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-							App->hud->minimap = !App->hud->minimap;
-						}
-					}
+					
+
 					if ((App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN)&&(!action)) {
 						if (!App->hud->inv->active) {
 							App->hud->inv->active = true;
