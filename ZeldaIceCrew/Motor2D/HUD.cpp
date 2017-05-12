@@ -4,6 +4,12 @@
 bool HUD::Start()
 {
 
+	map0 = App->tex->Load("Sprites/mace_knight_minimap.png");
+	map1 = App->tex->Load("Sprites/id1.png");
+	map2 = App->tex->Load("Sprites/id2.png");
+	map3 = App->tex->Load("Sprites/id3.png");
+	map4 = App->tex->Load("Sprites/id4.png");
+
 	items = App->tex->Load("Sprites/Items32x32.png");
 	max_keys = 5;
 	bool ret = true;
@@ -213,17 +219,26 @@ bool HUD::Update(float dt)
 	bool ret = true;
 	
 	if (App->scene_manager->dungeon_id == 0) {
-		//Minimap->texture = App->tex->Load("Sprites/mace_knight_minimap.png");
+		Minimap->texture = map0;
 		Minimap->texture_rect = { 0,0,500,235 };
-		if ((App->player->room.x == 2) && (App->player->room.y == 4)) {
-			link_point->pos = { Minimap->pos.x + 200, Minimap->pos.y + 200 };
-	
-		}
-		if ((App->player->room.x == 2) && (App->player->room.y == 4)) {
-			link_point->pos = { Minimap->pos.x + 200, Minimap->pos.y + 200 };
-	
-		}
-	
+	}
+	if (App->scene_manager->dungeon_id == 1) {
+		Minimap->texture = map1;
+		Minimap->texture_rect = { 0,0,325,266 };
+	}
+	if (App->scene_manager->dungeon_id == 2) {
+		Minimap->texture = map2;
+		Minimap->texture_rect = { 0,0,667,187 };
+	}
+	if (App->scene_manager->dungeon_id == 3) {
+		Minimap->texture = map3;
+		Minimap->texture_rect = { 0,0,416,188 };
+
+	}
+	if (App->scene_manager->dungeon_id == 4) {
+		Minimap->texture = map4;
+		Minimap->texture_rect = { 0,0,340,278 };
+
 	}
 
 	rupees_num->str = std::to_string(App->player->rupees);

@@ -29,6 +29,6 @@
 	<:anonymous />
 	<dialogue />
 	<renderer>
-		<camera x="-2048" y="-2300" />
+		<camera x="-5120" y="96" />
 	</renderer>
 </game_state>

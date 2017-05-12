@@ -69,6 +69,11 @@ public:
 
 	int dialog_num = 0;
 	uint max_keys = 5;
+	SDL_Texture* map0;
+	SDL_Texture* map1;
+	SDL_Texture* map2;
+	SDL_Texture* map3;
+	SDL_Texture* map4;
 };
 
 
