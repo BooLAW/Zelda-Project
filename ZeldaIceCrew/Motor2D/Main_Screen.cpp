@@ -48,7 +48,7 @@ bool Main_Screen::Start()
 	background->movable = true;
 
 	Continue = (GuiImage*)App->gui->CreateElement(image);
-	Continue->pos = { 250, 350 };
+	Continue->pos = { 250, 250 };
 	Continue->texture_rect = { 0 , 514, 683,36 };
 	Continue->active = true;
 	Continue->movable = true;
@@ -73,9 +73,21 @@ bool Main_Screen::Start()
 	new_game->movable = true;
 	new_game->pos = { New_game->pos.x + 550, New_game->pos.y + 2 };
 
+	Arena = (GuiImage*)App->gui->CreateElement(image);
+	Arena->pos = { New_game->pos.x,New_game->pos.y + 100 };
+	Arena->texture_rect = { 0 , 514, 683,36 };
+	Arena->active = true;
+	Arena->movable = true;
+	ui_elements.push_back(Arena);
+
+	arena = (GuiText*)App->gui->CreateElement(text);
+	arena->str = "Arena";
+	arena->active = true;
+	arena->movable = true;
+	arena->pos = { Arena->pos.x + 550, Arena->pos.y + 2 };
 
 	Settings = (GuiImage*)App->gui->CreateElement(image);
-	Settings->pos = { New_game->pos.x,New_game->pos.y + 100 };
+	Settings->pos = { Arena->pos.x,Arena->pos.y + 100 };
 	Settings->texture_rect = { 0 , 514, 683,36 };;
 	Settings->active = true;
 	Settings->movable = true;
@@ -520,6 +532,8 @@ bool Main_Screen::Update(float dt)
 		}
 		Disablekeys();
 		Disable_dungeons();
+		Arena->active = false;
+		arena->active = false;
 		up->active = false;
 		down->active = false;
 		right->active = false;
@@ -621,6 +635,8 @@ bool Main_Screen::Update(float dt)
 	else if (in_controls) {
 		Disablekeys();
 		Disable_dungeons();
+		Arena->active = false;
+		arena->active = false;
 		New_game->active = false;
 		new_game->active = false;
 		Continue->active = false;
@@ -818,6 +834,8 @@ bool Main_Screen::Update(float dt)
 
 			Enable_dungeons();
 			Back_dung->active = true;
+			Arena->active = false;
+			arena->active = false;
 			back_dung->active = true;
 			up->active = false;
 			down->active = false;
@@ -1041,6 +1059,8 @@ bool Main_Screen::Update(float dt)
 		action_key->active = false;
 		dash_key->active = false;
 
+		Arena->active = true;
+		arena->active = true;
 		New_game->active = true;
 		new_game->active = true;
 		Continue->active = true;
@@ -1089,6 +1109,13 @@ bool Main_Screen::Update(float dt)
 				//continue with the current game, for now:
 				in_dungeons = true;
 				selected = dungeons.front();
+			}
+			if (selected == Arena) {
+				App->scene_manager->dungeon_id = 6;
+				App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+				App->hud->Minimap->active = false;
+				App->hud->link_point->active = false;
+
 			}
 			if (selected == Settings) {
 				in_settings = true;
@@ -1426,6 +1453,8 @@ bool Main_Screen::CleanUp()
 	Disablekeys();
 	Disable_dungeons();
 	background->active = false;
+	Arena->active = false;
+	arena->active = false;
 	up->active=false;
 	down->active=false;
 	right->active=false;

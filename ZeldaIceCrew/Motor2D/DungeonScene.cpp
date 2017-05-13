@@ -71,7 +71,24 @@ bool DungeonScene::Update(float dt)
 	stdUpdate(dt);
 
 	if (App->scene_manager->dungeon_id == 6) {
-		if (wave_time.Read() > 5000) {
+
+		wave_time.Start();
+		wave_time.SetFlag(true);
+
+		if (wave_time.Read() >= 10000) {
+
+			AddEnemy(t_bluesoldier, 0, 0, spawn1.x, spawn1.y);
+			AddEnemy(t_bluesoldier, 0, 0, spawn2.x, spawn2.y);
+			AddEnemy(t_bluesoldier, 0, 0, spawn3.x, spawn3.y);
+			AddEnemy(t_bluesoldier, 0, 0, spawn4.x, spawn4.y);
+			wave_time.SetFlag(false);
+
+		}
+	}
+
+
+		//AddEnemy(t_bluesoldier, 0, 0, spawn1.x, spawn1.y);
+		/*if (wave_time.Read() > 5000) {
 			wave_time.SetFlag(false);
 			starting = true;
 			round = 1;
@@ -104,8 +121,7 @@ bool DungeonScene::Update(float dt)
 
 		}
 
+	}*/
+
+		return true;
 	}
-
-	return true;
-
-}

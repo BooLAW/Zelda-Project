@@ -303,7 +303,7 @@ bool HUD::Update(float dt)
 		if (!App->player->inMainScreen) {
 			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 				if (!Minimap->active) {
-					if (!App->scene_manager->dungeon_id == 5) {
+					if ((!App->scene_manager->dungeon_id == 5)||(!App->scene_manager->dungeon_id==6)) {
 						Minimap->active = true;
 						link_point->active = true;
 						App->Pause();

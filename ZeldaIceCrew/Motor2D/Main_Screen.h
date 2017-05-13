@@ -152,6 +152,10 @@ private:
 	GuiText* D5;
 	GuiText* DB;
 	GuiText* back_dung;
+	GuiText* arena;
+
+	GuiImage* Arena;
+	
 
 
 	SDL_Texture* tex;
