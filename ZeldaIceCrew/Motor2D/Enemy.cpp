@@ -2135,8 +2135,11 @@ void BossAgahnim::Update(float dt)
 
 void BossAgahnim::Death()
 {
+	if(clones[0] != nullptr)
 	clones[0]->Death();
+	if(clones[1] != nullptr)
 	clones[1]->Death();
+
 	Reward();
 	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
