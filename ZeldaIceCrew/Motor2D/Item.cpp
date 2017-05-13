@@ -135,7 +135,7 @@ void PowerGauntlet::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { 40, 326, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Gauntlet test description";
+	description = "You feel the power";
 }
 
 void PegasusBoots::SetUp()
@@ -146,7 +146,7 @@ void PegasusBoots::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { 0, 326, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Boots test description";
+	description = "Light and comfortable";
 }
 
 void PegasusBoots::Upgrade()
@@ -162,6 +162,7 @@ void HeartContainer::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { 180, 362, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/heart_container_1.wav");
+	description = "You feel... more resistant";
 
 }
 
@@ -265,6 +266,7 @@ void ItemBow::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { 362, 326, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	
 }
 
 void ItemBow::Upgrade()
@@ -377,6 +379,7 @@ void GoldenGauntlet::SetUp()
 	UI_tex = tex;
 	UI_rect = { 36, 360, 34, 35 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "Empowered by the Din";
 }
 
 void GoldenGauntlet::Upgrade()
@@ -394,6 +397,7 @@ void WindCape::SetUp()
 	UI_tex = tex;
 	UI_rect = { 34, 360, 34, 35 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "By Nayru's light!";
 }
 
 void WindCape::Upgrade()
@@ -411,6 +415,7 @@ void MagicHammer::SetUp()
 	UI_tex = tex;
 	UI_rect = { 36, 432, 34, 34 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "Now with a 100% less magic!";
 }
 
 void MagicHammer::Upgrade()
@@ -428,6 +433,7 @@ void MagicSphere::SetUp()
 	UI_tex = tex;
 	UI_rect = { 108, 324, 34, 34 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "Now with a 100% more magic!";
 }
 
 void MagicSphere::Upgrade()
@@ -445,6 +451,7 @@ void VanguardEmblem::SetUp()
 	UI_tex = tex;
 	UI_rect = { 36, 396, 34, 34 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "A badge for true heroes";
 }
 
 void VanguardEmblem::Upgrade()
@@ -468,6 +475,7 @@ void SmallShield::Upgrade()
 {
 	App->player->UpgradePWR(-5);
 	App->player->UpgradeSPD(0.5);
+	description = "The faster you go... the weaker you hit?";
 }
 
 void GoldenShield::SetUp()
@@ -545,6 +553,7 @@ void BagOfRupees::SetUp()
 	UI_tex = tex;
 	UI_rect = { 289, 432, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "Get Greedier";
 }
 
 void BagOfRupees::Upgrade()
@@ -641,6 +650,7 @@ void MysteriousDust::Upgrade()
 		App->player->UpgradeSPD(rnd_up * 0.25);
 		break;
 	}
+	description = "You feel.. fuzzy :S";
 
 }
 
@@ -653,6 +663,7 @@ void IconOfValor::SetUp()
 	UI_tex = tex;
 	UI_rect = { 216, 396, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "An icon of true Valor";
 }
 
 void IconOfValor::Upgrade()
@@ -672,6 +683,8 @@ void IconOfWisdom::SetUp()
 	UI_tex = tex;
 	UI_rect = { 252, 396, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "An icon of true Wisdom";
+
 }
 
 void IconOfWisdom::Upgrade()
@@ -714,6 +727,8 @@ void IconOfPower::SetUp()
 	UI_tex = tex;
 	UI_rect = { 180, 396, 32, 32 };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "An icon of true Power";
+
 }
 
 void IconOfPower::Upgrade()
