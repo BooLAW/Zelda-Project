@@ -354,7 +354,7 @@ public:
 		goto_phase_3,
 		phase_3,
 		phase_4
-	}phase = phase_4;
+	}phase = phase_1;
 	enum AGAHNIMSTATE {
 		idle = 0,
 		attack_charge,
@@ -364,7 +364,7 @@ public:
 		move_start,
 		move,
 		appear,
-	}state = attack_charge;
+	}state = idle;
 
 	Animation appear_a, disappear_a, ticking_a, move_a, idle_a, attack_c_a, light_a_c;
 	SDL_Rect attack_sprites[3], light_a_sprites[2], ticking_sprites[2], disappear_sprites[6], idle_sprites[3];
