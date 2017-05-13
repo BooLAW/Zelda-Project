@@ -26,7 +26,7 @@
 #define PL_OFFSET_X 33
 #define PL_OFFSET_Y 51
 
-#define MAX_SPD 5
+#define MAX_SPD 4
 #define MAX_HP 24
 #define MAX_PWR 100
 

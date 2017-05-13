@@ -517,7 +517,7 @@ bool GSoldier::Start()
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
 		sprites[Enemy::EnDirection::Down][0] = { 2, 0,  100, 108 };
-		sprites[Enemy::EnDirection::Down][1] = { 104, 0, 100, 108 };
+		sprites[Enemy::EnDirection::Down][1] = { 104, 0, 100, 107 };
 
 		sprites[Enemy::EnDirection::Up][0] = { 614, 0, 100, 108 };
 		sprites[Enemy::EnDirection::Up][1] = { 716, 0, 100, 108 };
