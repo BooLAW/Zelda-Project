@@ -483,10 +483,38 @@ bool Scene::Load_new_map(int id)
 										st = weapon_sword;
 									if (strcmp(sub, "weapon_bow") == 0)
 										st = weapon_bow;
+									if (strcmp(sub, "gold_gauntlet") == 0)
+										st = gold_gauntlet;
+									if (strcmp(sub, "wind_cape") == 0)
+										st = wind_cape;
+									if (strcmp(sub, "magic_hammer") == 0)
+										st = magic_hammer;
+									if (strcmp(sub, "small_shield") == 0)
+										st = small_shield;
+									if (strcmp(sub, "vanguard_emblem") == 0)
+										st = vanguard_emblem;
+									if (strcmp(sub, "magic_sphere") == 0)
+										st = magic_sphere;
+									if (strcmp(sub, "magic_mirror") == 0)
+										st = magic_mirror;
+									if (strcmp(sub, "golden_shield") == 0)
+										st = golden_shield;
+									if (strcmp(sub, "mysterious_dust") == 0)
+										st = mysterious_dust;
+									if (strcmp(sub, "odd_mushroom") == 0)
+										st = odd_mushroom;
+									if (strcmp(sub, "bag_of_rupees") == 0)
+										st = bag_of_rupees;
+									if (strcmp(sub, "icon_of_power") == 0)
+										st = icon_of_power;
+									if (strcmp(sub, "icon_of_valor") == 0)
+										st = icon_of_valor;
+									if (strcmp(sub, "icon_of_wisdom") == 0)
+										st = icon_of_wisdom;
 									if (strcmp(sub, "rnd_item") == 0) {
 										do {
-											st = rand() % 15;
-										} while (st == boss_key);
+											st = rand() % 14;
+										} while (st == golden_shield || st == odd_mushroom);
 									}
 
 									item_p = r->AddItem(st, node_item.attribute("x").as_float(0), node_item.attribute("y").as_float(0));    

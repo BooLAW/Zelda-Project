@@ -113,6 +113,8 @@ void Item::Start()
 
 	SetUp();
 	
+	draw_pos = pos;
+
 	if(tex != nullptr)
 		HitBox = App->collisions->AddCollider({ 0, 0, rect.w, rect.h }, COLLIDER_ITEM);
 
