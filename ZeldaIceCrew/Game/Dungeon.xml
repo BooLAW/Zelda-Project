@@ -83,13 +83,15 @@
         </room> <!-- estos van-->
         <room x="2" y="4" w="1024" h="576">
           <enemies>
-			<enemy subtype="t_boss_agahnim" x="100" y="100"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
           </doorways>
 		  <items>
-			<item subtype="rnd_item" x="100" y="200"/>
+        <item subtype="rnd_item" x="100" y="100"/>
+        <item subtype="rnd_item" x="900" y="100"/>
+        <item subtype="rnd_item" x="100" y="400"/>
+        <item subtype="rnd_item" x="900" y="400"/>
 		  </items>
         </room>
 
@@ -253,6 +255,14 @@
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
           </doorways>
+
+          <items>
+            <item subtype="rnd_item" x="100" y="100"/>
+            <item subtype="rnd_item" x="900" y="100"/>
+            <item subtype="rnd_item" x="100" y="400"/>
+            <item subtype="rnd_item" x="900" y="400"/>
+          </items>
+         
         </room>
 
         <!-- REGULAR 4CORNERS REGULAR-->
@@ -499,6 +509,12 @@
           </doorways>
         </room>
         <room x="3" y="3" w="1024" h="576">
+          <items>
+            <item subtype="rnd_item" x="100" y="100"/>
+            <item subtype="rnd_item" x="900" y="100"/>
+            <item subtype="rnd_item" x="100" y="400"/>
+            <item subtype="rnd_item" x="900" y="400"/>
+          </items>
           <enemies>
             
           </enemies>
@@ -591,7 +607,7 @@
 
       <Link>
 
-        <room x="2" y="4"/>
+        <room x="3" y="3"/>
 
         <pos x="238" y="512"/>
 
@@ -626,8 +642,7 @@
             <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
           </doorways>
-        </room>
-        <!-- 4 ROPES-->
+        </room> <!-- 4 ROPES-->
         <room x="0" y="2" w="1024" h="576">
           <enemies>
             <enemy subtype="t_bluesoldier"              x= "134"     y= "90"/>
@@ -707,11 +722,15 @@
           </doorways>
         </room>
         <room x="3" y="3" w="1024" h="576">
+          <items>
+            <item subtype="rnd_item" x="100" y="100"/>
+            <item subtype="rnd_item" x="900" y="100"/>
+            <item subtype="rnd_item" x="100" y="400"/>
+            <item subtype="rnd_item" x="900" y="400"/>
+          </items>
+          
           <enemies>
-            <!--enemy subtype="t_redsoldier" x="192" y="192"/>
-            <enemy subtype="t_redsoldier" x="768" y="192"/>
-            <enemy subtype="t_redsoldier" x="192" y="384"/>
-            <enemy subtype="t_redsoldier" x="768" y="384"/-->
+         
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -772,7 +791,10 @@
         <!-- ITEM ROOM -->
         <room x="0" y="3" w="1024" h="576">
           <items>
-            
+            <items>
+              <item subtype="rnd_item" x="253" y="260"/>
+             
+            </items>
           </items>
           <enemies>
 
@@ -878,7 +900,12 @@
           </doorways>
         </room>
         <room x="2" y="5" w="1024" h="576">
-          <!-- Beginning of the dungeon map-->
+          <items>
+            <item subtype="rnd_item" x="100" y="100"/>
+            <item subtype="rnd_item" x="900" y="100"/>
+            <item subtype="rnd_item" x="100" y="400"/>
+            <item subtype="rnd_item" x="900" y="400"/>
+          </items>
           <enemies>
             
           </enemies>
@@ -975,7 +1002,12 @@
 
         <room x="0" y="2" w="1024" h="576">
           <enemies>
-          
+            <items>
+              <item subtype="rnd_item" x="100" y="100"/>
+              <item subtype="rnd_item" x="900" y="100"/>
+              <item subtype="rnd_item" x="100" y="400"/>
+              <item subtype="rnd_item" x="900" y="400"/>
+            </items>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
