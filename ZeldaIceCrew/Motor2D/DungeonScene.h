@@ -39,6 +39,7 @@ private:
 
 	uint round;
 	j1Timer wave_time;
+	j1Timer starting_time;
 
 	bool starting;
 

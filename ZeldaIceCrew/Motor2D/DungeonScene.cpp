@@ -60,6 +60,8 @@ bool DungeonScene::Start()
 
 	}
 
+	App->Pause();
+
 	return true;
 }
 
@@ -70,41 +72,48 @@ bool DungeonScene::Update(float dt)
 
 	stdUpdate(dt);
 
-	if (App->scene_manager->dungeon_id == 6) {
-		if (wave_time.Read() > 5000) {
-			wave_time.SetFlag(false);
-			starting = true;
-			round = 1;
-			LOG("STARTING");
-		}
+	starting_time.Start();
+	starting_time.SetFlag(true);
 
-		if (starting) {
-			wave_time.Start();
-			wave_time.SetFlag(true);
-
-			if (wave_time.Read() > 2000 && to_round <= round) {
-				LOG("WAVE");
-				round_timer.Start();
-				round_timer.SetFlag(true);
-				if (round_timer.Read() > 500) {
-					LOG("SPAWN");
-					AddEnemy(rand() % 10, 0, 0, spawn1.x, spawn1.y);
-					AddEnemy(rand() % 10, 0, 0, spawn2.x, spawn2.y);
-					AddEnemy(rand() % 10, 0, 0, spawn3.x, spawn3.y);
-					AddEnemy(rand() % 10, 0, 0, spawn4.x, spawn4.y);
-					to_round++;
-					round_timer.SetFlag(false);
-				}
-			}
-			else {
-				round++;
-				to_round = 0;
-				wave_time.SetFlag(false);
-			}
-
-		}
-
+	if (starting_time.Read() > 1500) {
+		App->UnPause();
 	}
+
+		if (App->scene_manager->dungeon_id == 6) {
+			if (wave_time.Read() > 5000) {
+				wave_time.SetFlag(false);
+				starting = true;
+				round = 1;
+				LOG("STARTING");
+			}
+
+			if (starting) {
+				wave_time.Start();
+				wave_time.SetFlag(true);
+
+				if (wave_time.Read() > 2000 && to_round <= round) {
+					LOG("WAVE");
+					round_timer.Start();
+					round_timer.SetFlag(true);
+					if (round_timer.Read() > 500) {
+						LOG("SPAWN");
+						AddEnemy(rand() % 10, 0, 0, spawn1.x, spawn1.y);
+						AddEnemy(rand() % 10, 0, 0, spawn2.x, spawn2.y);
+						AddEnemy(rand() % 10, 0, 0, spawn3.x, spawn3.y);
+						AddEnemy(rand() % 10, 0, 0, spawn4.x, spawn4.y);
+						to_round++;
+						round_timer.SetFlag(false);
+					}
+				}
+				else {
+					round++;
+					to_round = 0;
+					wave_time.SetFlag(false);
+				}
+
+			}
+
+		}
 
 	return true;
 
