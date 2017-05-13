@@ -955,7 +955,7 @@ bool Main_Screen::Update(float dt)
 					selected = ui_elements.front();
 				}
 				if (selected == d1) {
-					App->scene_manager->dungeon_id = 6;
+					App->scene_manager->dungeon_id = 0;
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
