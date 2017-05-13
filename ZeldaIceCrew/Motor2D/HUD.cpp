@@ -249,6 +249,12 @@ bool HUD::Update(float dt)
 
 	}
 
+	if (Minimap->active == true && link_point->active == true) {
+		link_point->pos = Minimap->pos;
+		link_point->pos.x += App->player->room.x * 20;
+		link_point->pos.y += App->player->room.y * 20;
+	}
+
 	rupees_num->str = std::to_string(App->player->rupees);
 	//bombs_num->str = std::to_string(App->player->bombs);
 	speed_num->str = std::to_string(App->player->pl_speed.x);
