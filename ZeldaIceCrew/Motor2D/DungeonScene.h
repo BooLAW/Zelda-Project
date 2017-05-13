@@ -37,13 +37,19 @@ public:
 
 private:
 
-	bool boss_music = false;
+	uint round;
+	j1Timer wave_time;
 
-	j1Timer boss_minions_spawn_time;
-	bool chain_boss_defeated = false;
+	bool starting;
 
-	Enemy* ChainBoss = nullptr;
-	Doorway* ChainBoss_dw = nullptr;
+	j1Timer round_timer;
+
+	uint to_round = 0;
+
+	iPoint spawn1;
+	iPoint spawn2;
+	iPoint spawn3;
+	iPoint spawn4;
 
 	SDL_Texture* debug_tex;
 	bool ESC = false;

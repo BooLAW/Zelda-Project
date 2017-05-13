@@ -243,7 +243,7 @@ bool j1Render::IsCameraCull(SDL_Rect rect)
 
 	SDL_Rect cam = culling_cam;
 
-	if (App->scene_manager->GetCurrentScene()->curr_id == dungeon) {
+	if (App->scene_manager->GetCurrentScene()->curr_id == dungeon && App->scene_manager->dungeon_id != 6) {
 		cam.h -= (culling_cam.h / 2 - ROOM_H / 2) * 2;
 		cam.y += (culling_cam.h / 2 - ROOM_H / 2);
 	}

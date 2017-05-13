@@ -28,15 +28,15 @@
 
 #define MAX_SPD 5
 #define MAX_HP 24
-#define MAX_PWR 99
+#define MAX_PWR 100
 
 #define ORIGIN_SPD 2.5
 #define ORIGIN_HP 6
 #define ORIGIN_PWR 30
 
-#define MIN_SPD 1
+#define MIN_SPD 1.5
 #define MIN_HP 2
-#define MIN_PWR 1
+#define MIN_PWR 15
 
 #define PL_WALK_FPS 0.2f
 
@@ -196,6 +196,8 @@ public:
 	bool map5_comp = false;
 
 	bool completed_maps[N_MAPS];
+
+	j1Timer w_a_timer;
 
 	Collider* mov_coll = nullptr;
 

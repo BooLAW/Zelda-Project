@@ -231,7 +231,7 @@ void Arrow::Start()
 	life = 10000;
 
 	HitBox = { (int)position.x, (int)position.y, g_rect[0][0].w, g_rect[0][0].h };
-	App->particle->AddParticle(this, COLLIDER_ARROW, life, App->player->power, NULL);
+	App->particle->AddParticle(this, COLLIDER_ARROW, life, App->player->power / 2, NULL);
 
 };
 

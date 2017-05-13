@@ -828,6 +828,29 @@ bool j1Player::Update(float dt)
 	}
 	else {
 		if (!App->IsPaused()) {
+			w_a_timer.Start();
+			w_a_timer.SetFlag(true);
+			if (App->player->power > MAX_PWR)
+				App->player->power = MAX_PWR;
+			if (App->player->power < MIN_PWR)
+				App->player->power = MIN_PWR;
+
+			if (App->player->pl_speed.x > MAX_SPD) {
+				App->player->pl_speed.x = MAX_SPD;
+				App->player->pl_speed.y = MAX_SPD;
+			}
+			if (App->player->pl_speed.x < MIN_SPD) {
+				App->player->pl_speed = { MIN_SPD, MIN_SPD };
+			}
+
+			if (App->player->max_life_points > MAX_HP)
+				App->player->max_life_points = MAX_HP;
+			if (App->player->max_life_points < MIN_HP)
+				App->player->max_life_points = MIN_HP;
+			
+			if (curr_life_points > max_life_points) {
+				curr_life_points = max_life_points;
+			}
 
 			if (talking) {
 				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
@@ -1666,21 +1689,29 @@ void j1Player::Movement()
 
 void j1Player::Slash_()
 {
+	uint a_time = 0;
+	if (curr_weapon->subtype == weapon_bow)
+		a_time = 500;
+
 	if (App->player->alive) {
+		
 		if (!App->hud->inv->active)
 		{
 			if (anim_override == false)
 			{
-				if (App->input->GetKey(App->input->controls[UP])) {
-					curr_dir = Up;
-					action_blit = Weapon_atk;
-					if (curr_weapon != nullptr)
-						curr_weapon->Attack();
-					App->audio->PlayFx(sword_fx);
-					dir_override = true;
-					anim_override = true;
-					pl_speed.x = pl_speed.x / PL_SPD_ATK;
-					pl_speed.y = pl_speed.y / PL_SPD_ATK;
+				if (w_a_timer.Read() > a_time) {
+					if (App->input->GetKey(App->input->controls[UP])) {
+						curr_dir = Up;
+						action_blit = Weapon_atk;
+						if (curr_weapon != nullptr)
+							curr_weapon->Attack();
+						App->audio->PlayFx(sword_fx);
+						dir_override = true;
+						anim_override = true;
+						pl_speed.x = pl_speed.x / PL_SPD_ATK;
+						pl_speed.y = pl_speed.y / PL_SPD_ATK;
+						w_a_timer.SetFlag(false);
+
 				}
 				else if (App->input->GetKey(App->input->controls[DOWN])) {
 					curr_dir = Down;
@@ -1693,6 +1724,8 @@ void j1Player::Slash_()
 					anim_override = true;
 					pl_speed.x = pl_speed.x / PL_SPD_ATK;
 					pl_speed.y = pl_speed.y / PL_SPD_ATK;
+					w_a_timer.SetFlag(false);
+
 				}
 				else if (App->input->GetKey(App->input->controls[RIGHT])) {
 					curr_dir = Right;
@@ -1704,6 +1737,8 @@ void j1Player::Slash_()
 					anim_override = true;
 					pl_speed.x = pl_speed.x / PL_SPD_ATK;
 					pl_speed.y = pl_speed.y / PL_SPD_ATK;
+					w_a_timer.SetFlag(false);
+
 				}
 				else if (App->input->GetKey(App->input->controls[LEFT])) {
 					curr_dir = Left;
@@ -1715,8 +1750,9 @@ void j1Player::Slash_()
 					anim_override = true;
 					pl_speed.x = pl_speed.x / PL_SPD_ATK;
 					pl_speed.y = pl_speed.y / PL_SPD_ATK;
+					w_a_timer.SetFlag(false);
 				}
-
+			}
 			}
 		}
 		else

@@ -333,6 +333,8 @@ public:
 	void Draw(float dt);
 	void Update(float dt);
 
+	void Death();
+
 	uint ball_counter = 0;
 
 	uint clones_ded = 0;

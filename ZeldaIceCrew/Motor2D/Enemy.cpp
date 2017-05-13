@@ -2133,6 +2133,14 @@ void BossAgahnim::Update(float dt)
 	}
 }
 
+void BossAgahnim::Death()
+{
+	clones[0]->Death();
+	clones[1]->Death();
+	Reward();
+	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
+}
+
 bool AgahnimClones::Start()
 {
 	bool ret = true;

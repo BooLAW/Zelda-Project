@@ -41,11 +41,6 @@ private:
 	uint round;
 	j1Timer wave_time;
 	SDL_Texture* debug_tex;
-	bool ESC = false;
-	Window* window;
-	Label* win_title;
-	Npc* test;
-	Enemy* en;
 
 	bool starting;
 

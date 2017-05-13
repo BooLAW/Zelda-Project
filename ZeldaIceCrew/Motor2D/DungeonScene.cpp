@@ -45,8 +45,20 @@ bool DungeonScene::Start()
 	stdStart();
 	//GetRoom(0, 2)->AddNpc(NPC_ZELDA,500, 400, 1);
 	App->player->PlayerInmortal(10);
-	boss_music = false;
-	chain_boss_defeated = false;
+	if (App->scene_manager->dungeon_id == 6) {
+		wave_time.Start();
+		wave_time.SetFlag(true);
+
+		starting = false;
+
+		spawn1 = { 1200, 500 };
+		spawn2 = { 1300, 500 };
+		spawn3 = { 1400, 500 };
+		spawn4 = { 1500, 500 };
+
+		to_round = 0;
+
+	}
 
 	return true;
 }
@@ -58,42 +70,41 @@ bool DungeonScene::Update(float dt)
 
 	stdUpdate(dt);
 
-	//if (chain_boss_defeated == false && IsEnemy(ChainBoss) == false)
-	//	chain_boss_defeated = true;
-	//
-	//if (chain_boss_defeated == false) {
-	//	if (GetRoom(0, 0)->PlayerInside() == true) {
-	//		
-	//		if (chain_boss_defeated == false)
-	//			ChainBoss_dw->open = false;
-	//		else
-	//			ChainBoss_dw->open = true;
-	//
-	//		if (boss_music == false) {
-	//			App->audio->PlayMusic("Audio/Music/Hyrule_Castle.ogg");
-	//			boss_music = true;
-	//		}
-	//
-	//		if (chain_boss_defeated == true && boss_music == true) {
-	//			App->audio->PlayMusic("");
-	//			boss_music = false;
-	//		}
-	//
-	//			boss_minions_spawn_time.Start();
-	//			boss_minions_spawn_time.SetFlag(true);
-	//			if (boss_minions_spawn_time.ReadSec() >= 5) {
-	//				GetRoom(0, 0)->AddEnemy(t_greensoldier, 150, 150);
-	//				GetRoom(0, 0)->AddEnemy(t_greensoldier, 850, 150);
-	//				boss_minions_spawn_time.SetFlag(false);
-	//			}
-	//	}
-	//	else {
-	//		if (boss_music == true) {
-	//			App->audio->PlayMusic("Audio/Music/Song_of_Storms.ogg");
-	//			boss_music = false;
-	//		}
-	//	}
-	//}
+	if (App->scene_manager->dungeon_id == 6) {
+		if (wave_time.Read() > 5000) {
+			wave_time.SetFlag(false);
+			starting = true;
+			round = 1;
+			LOG("STARTING");
+		}
+
+		if (starting) {
+			wave_time.Start();
+			wave_time.SetFlag(true);
+
+			if (wave_time.Read() > 2000 && to_round <= round) {
+				LOG("WAVE");
+				round_timer.Start();
+				round_timer.SetFlag(true);
+				if (round_timer.Read() > 500) {
+					LOG("SPAWN");
+					AddEnemy(rand() % 10, 0, 0, spawn1.x, spawn1.y);
+					AddEnemy(rand() % 10, 0, 0, spawn2.x, spawn2.y);
+					AddEnemy(rand() % 10, 0, 0, spawn3.x, spawn3.y);
+					AddEnemy(rand() % 10, 0, 0, spawn4.x, spawn4.y);
+					to_round++;
+					round_timer.SetFlag(false);
+				}
+			}
+			else {
+				round++;
+				to_round = 0;
+				wave_time.SetFlag(false);
+			}
+
+		}
+
+	}
 
 	return true;
 
