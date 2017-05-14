@@ -789,8 +789,8 @@ animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
 	action_coll = App->collisions->AddCollider({ FARLANDS.x,FARLANDS.y, WPN_COL_W / 4, WPN_COL_H / 4 }, COLLIDER_ACTION);
 	mov_coll = App->collisions->AddCollider({ (int)pos.x, (int)pos.y, 24, 24 }, COLLIDER_PLAYER, this);
 
-	pl_speed.x = 2.5;
-	pl_speed.y = 2.5;
+	pl_speed.x = ORIGIN_SPD;
+	pl_speed.y = ORIGIN_SPD;
 
 	power = 30;
 
@@ -834,15 +834,15 @@ bool j1Player::Update(float dt)
 				App->player->power = MAX_PWR;
 			if (App->player->power < MIN_PWR)
 				App->player->power = MIN_PWR;
-
+			
 			if (App->player->pl_speed.x > MAX_SPD) {
 				App->player->pl_speed.x = MAX_SPD;
 				App->player->pl_speed.y = MAX_SPD;
 			}
-			if (App->player->pl_speed.x < MIN_SPD) {
-				App->player->pl_speed = { MIN_SPD, MIN_SPD };
-			}
-
+			//if (App->player->pl_speed.x < MIN_SPD) {
+			//	App->player->pl_speed = { MIN_SPD, MIN_SPD };
+			//}
+			
 			if (App->player->max_life_points > MAX_HP)
 				App->player->max_life_points = MAX_HP;
 			if (App->player->max_life_points < MIN_HP)
@@ -1066,9 +1066,12 @@ bool j1Player::Update(float dt)
 							anim_override = false;
 							dir_override = false;
 							animations[action_blit][curr_dir].Reset();
+							if (action_blit == Weapon_atk) {
+								LOG("SPD %f", pl_speed.x);
+								pl_speed.x = (pl_speed.x * PL_SPD_ATK);
+								pl_speed.y = (pl_speed.y * PL_SPD_ATK);
+							}
 							action_blit = Idle;
-							pl_speed.x = pl_speed.x * PL_SPD_ATK;
-							pl_speed.y = pl_speed.y * PL_SPD_ATK;
 						}
 					}
 
@@ -1692,6 +1695,8 @@ void j1Player::Slash_()
 	uint a_time = 0;
 	if (curr_weapon->subtype == weapon_bow)
 		a_time = 500;
+	else
+		a_time = 0;
 
 	if (App->player->alive) {
 		
