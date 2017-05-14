@@ -249,6 +249,8 @@ bool HUD::Update(float dt)
 
 	}
 
+	link_point->pos = { Minimap->pos.x + 5 + 200 * App->player->room.x, Minimap->pos.y + 5 + 100 * App->player->room.y };
+
 	rupees_num->str = std::to_string(App->player->rupees);
 	//bombs_num->str = std::to_string(App->player->bombs);
 	speed_num->str = std::to_string(App->player->pl_speed.x);
@@ -303,10 +305,11 @@ bool HUD::Update(float dt)
 		if (!App->player->inMainScreen) {
 			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 				if (!Minimap->active) {
-					if ((!App->scene_manager->dungeon_id == 5)||(!App->scene_manager->dungeon_id==6)) {
+					if (!App->scene_manager->dungeon_id == 5){
 						Minimap->active = true;
 						link_point->active = true;
 						App->Pause();
+						LOG("fuckin minimap");
 					}
 				}
 				else {
@@ -476,7 +479,9 @@ void HUD::GenerateHP()
 			}
 
 		}
-
+		if (i >= 12) {
+			heart_pos.y += 20;
+		}
 	}
 }
 

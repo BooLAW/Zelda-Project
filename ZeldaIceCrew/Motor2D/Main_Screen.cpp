@@ -977,36 +977,42 @@ bool Main_Screen::Update(float dt)
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
+					App->player->inMainScreen = false;
 				}
 				if (selected == d2) {
 					App->scene_manager->dungeon_id = 1;
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
+					App->player->inMainScreen = false;
 				}
 				if (selected == d3) {
 					App->scene_manager->dungeon_id = 2;
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
+					App->player->inMainScreen = false;
 				}
 				if (selected == d4) {
 					App->scene_manager->dungeon_id = 3;
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
+					App->player->inMainScreen = false;
 				}
 				if (selected == d5) {
 					App->scene_manager->dungeon_id = 4;
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
+					App->player->inMainScreen = false;
 				}
 				if (selected == dungeon_boss) {
 					App->scene_manager->dungeon_id = 5;
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
+					App->player->inMainScreen = false;
 				}
 				
 				//App->LoadGame("save_game.xml");

@@ -1324,7 +1324,8 @@ void j1Player::SetToNewGame()
 	std::memset(completed_maps, false, N_MAPS);
 
 	keys = 0;
-
+	curr_life_points = 6;
+	max_life_points = 6;
 	max_life_points = ORIGIN_HP;
 	curr_life_points = max_life_points;
 
