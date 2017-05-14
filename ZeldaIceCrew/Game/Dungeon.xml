@@ -609,7 +609,7 @@
 
         <room x="3" y="3"/>
 
-        <pos x="238" y="512"/>
+        <pos x="512" y="460"/>
 
       </Link>
 
@@ -618,31 +618,38 @@
         <!-- REGULAR LABIRINTH REGULAR-->
         <room x="0" y="0" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_greensoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_greensoldier" x= "150"     y= "120"/>
             <enemy subtype="t_greensoldier" x= "134"     y= "448"/>
             <enemy subtype="t_rope"         x= "864"     y= "90" />
             <enemy subtype="t_rope"         x= "864"     y= "448"/>
+            <enemy subtype="t_beamos"         x= "100"     y= "90"/>
+            <enemy subtype="t_beamos"         x= "100"     y= "440"/>
+            <enemy subtype="t_beamos"         x= "512"     y= "90"/>
+            <enemy subtype="t_beamos"         x= "900"     y= "440"/>
+            <enemy subtype="t_beamos"         x= "900"     y= "90"/>
+
           </enemies>
-		  <items>
-		<item subtype="boss_key" x="500" y="200"/>
-		 </items>
+          <items>
+            <item subtype="boss_key" x="500" y="200"/>
+          </items>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
           </doorways>
         </room>
         <room x="0" y="1" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_rope"         x= "134"     y= "90" />
-            <enemy subtype="t_rope"         x= "134"     y= "448"/>
-            <enemy subtype="t_rope"         x= "864"     y= "90" />
-            <enemy subtype="t_rope"         x= "864"     y= "448"/>
+            <enemy subtype="t_GBat"         x= "134"     y= "90" />
+            <enemy subtype="t_GBat"         x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"         x= "864"     y= "90" />
+            <enemy subtype="t_GBat"         x= "864"     y= "448"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
             <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
           </doorways>
-        </room> <!-- 4 ROPES-->
+        </room>
+        <!-- 4 ROPES-->
         <room x="0" y="2" w="1024" h="576">
           <enemies>
             <enemy subtype="t_bluesoldier"              x= "134"     y= "90"/>
@@ -701,8 +708,8 @@
         <!-- 4CORNERS REGULAR BEGGINING-->
         <room x="3" y="1" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_beamos" x= "503"    y= "359"/>
-            <enemy subtype="t_beamos"  x= "134"     y= "90"/>
+            <enemy subtype="t_beamos" x= "900"    y= "50"/>
+            <enemy subtype="t_beamos"  x= "134"     y= "50"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
@@ -723,14 +730,14 @@
         </room>
         <room x="3" y="3" w="1024" h="576">
           <items>
-            <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
-            <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
-            <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
-            <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
+            <item subtype="rnd_item" x="100" y="100"/>
+            <item subtype="rnd_item" x="900" y="100"/>
+            <item subtype="rnd_item" x="100" y="400"/>
+            <item subtype="rnd_item" x="900" y="400"/>
           </items>
-          
+
           <enemies>
-         
+
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -768,6 +775,7 @@
       </rooms>
 
     </map>
+
 
     <map id="4">
 
