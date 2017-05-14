@@ -47,6 +47,8 @@ private:
 
 	uint to_round = 0;
 
+	uint change_round = 0;
+
 	iPoint spawn1;
 	iPoint spawn2;
 	iPoint spawn3;

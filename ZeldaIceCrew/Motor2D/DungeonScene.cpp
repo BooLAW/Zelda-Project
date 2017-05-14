@@ -85,6 +85,7 @@ bool DungeonScene::Update(float dt)
 				wave_time.SetFlag(false);
 				starting = true;
 				round = 1;
+				change_round = 0;
 				LOG("STARTING");
 			}
 
@@ -112,7 +113,12 @@ bool DungeonScene::Update(float dt)
 						}
 						else {
 							GetRoom(0, 0)->AddItem(rand() % 14, 1025, 622);
-							round++;
+							if (round < 3) {
+								if(change_round % 3 == 0)
+								round++;
+							}
+							else { round = 3; }
+							change_round++;
 							to_round = 0;
 							wave_time.SetFlag(false);
 							round_timer.SetFlag(false);
