@@ -854,7 +854,13 @@ bool j1Player::Update(float dt)
 			}
 			if(!App->hud->Minimap->active)
 			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
-				App->hud->Enable_map();
+				if ((App->scene_manager->dungeon_id == 5)||(App->scene_manager->dungeon_id == 6)) {
+					App->hud->Minimap->active = false;
+					App->hud->link_point->active = false;
+				}
+				else {
+					App->hud->Enable_map();
+				}
 			}
 			if (talking) {
 				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
@@ -1192,7 +1198,9 @@ bool j1Player::Update(float dt)
 			}
 			if (App->hud->Minimap->active) {
 				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
-					App->hud->Disable_map();
+					if ((App->scene_manager->dungeon_id != 5) || (App->scene_manager->dungeon_id != 6)) {
+						App->hud->Disable_map();
+					}
 				}
 			}
 			

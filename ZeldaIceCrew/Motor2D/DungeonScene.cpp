@@ -59,7 +59,7 @@ bool DungeonScene::Start()
 		to_round = 0;
 
 	}
-	if (App->scene_manager->dungeon_id == 0) {
+	/*if (App->scene_manager->dungeon_id == 0) {
 		App->scene_manager->GetCurrentScene()->GetRoom(2, 4)->AddNpc(NPC_ZELDA, 500,250, 1);
 	}
 	if (App->scene_manager->dungeon_id == 1) {
@@ -73,7 +73,7 @@ bool DungeonScene::Start()
 	}
 	if (App->scene_manager->dungeon_id == 4) {
 		App->scene_manager->GetCurrentScene()->GetRoom(2, 5)->AddNpc(NPC_ZELDA, 500, 250, 1);
-	}
+	}*/
 	if (App->scene_manager->dungeon_id == 5) {
 		App->scene_manager->GetCurrentScene()->GetRoom(0, 0)->AddNpc(NPC_ZELDA, 500, 250, 1);
 	}
