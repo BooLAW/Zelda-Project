@@ -62,9 +62,9 @@
         </room>
         <room x="1" y="3" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_rope" x="192" y="192"/>
-            <enemy subtype="t_rope" x="450" y="192"/>
-            <enemy subtype="t_rope" x="768" y="192"/>
+            <enemy subtype="t_greensoldier" x="192" y="192"/>
+            <enemy subtype="t_bluesoldier" x="450" y="192"/>
+            <enemy subtype="t_bluesoldier" x="768" y="192"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -74,7 +74,7 @@
 
         <room x="2" y="3" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_freezor" x="512" y="300"/>
+            <enemy subtype="t_bluesoldier" x="512" y="300"/>
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
@@ -88,10 +88,10 @@
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
           </doorways>
 		  <items>
-        <item subtype="rnd_item" x="100" y="100"/>
-        <item subtype="rnd_item" x="900" y="100"/>
-        <item subtype="rnd_item" x="100" y="400"/>
-        <item subtype="rnd_item" x="900" y="400"/>
+        <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+        <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+        <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+        <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
 		  </items>
         </room>
 
@@ -255,10 +255,10 @@
           </doorways>
 
           <items>
-            <item subtype="rnd_item" x="100" y="100"/>
-            <item subtype="rnd_item" x="900" y="100"/>
-            <item subtype="rnd_item" x="100" y="400"/>
-            <item subtype="rnd_item" x="900" y="400"/>
+            <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
           </items>
          
         </room>
@@ -510,10 +510,10 @@
         </room>
         <room x="3" y="3" w="1024" h="576">
           <items>
-            <item subtype="rnd_item" x="100" y="100"/>
-            <item subtype="rnd_item" x="900" y="100"/>
-            <item subtype="rnd_item" x="100" y="400"/>
-            <item subtype="rnd_item" x="900" y="400"/>
+            <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
           </items>
           <enemies>
             
@@ -723,10 +723,10 @@
         </room>
         <room x="3" y="3" w="1024" h="576">
           <items>
-            <item subtype="rnd_item" x="100" y="100"/>
-            <item subtype="rnd_item" x="900" y="100"/>
-            <item subtype="rnd_item" x="100" y="400"/>
-            <item subtype="rnd_item" x="900" y="400"/>
+            <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
           </items>
           
           <enemies>
@@ -904,10 +904,10 @@
         </room>
         <room x="2" y="5" w="1024" h="576">
           <items>
-            <item subtype="rnd_item" x="100" y="100"/>
-            <item subtype="rnd_item" x="900" y="100"/>
-            <item subtype="rnd_item" x="100" y="400"/>
-            <item subtype="rnd_item" x="900" y="400"/>
+            <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
           </items>
           <enemies>
             
@@ -1006,10 +1006,10 @@
         <room x="0" y="2" w="1024" h="576">
           <enemies>
             <items>
-              <item subtype="rnd_item" x="100" y="100"/>
-              <item subtype="rnd_item" x="900" y="100"/>
-              <item subtype="rnd_item" x="100" y="400"/>
-              <item subtype="rnd_item" x="900" y="400"/>
+              <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+              <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+              <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+              <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
             </items>
           </enemies>
           <doorways>

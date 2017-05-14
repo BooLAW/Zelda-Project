@@ -912,6 +912,8 @@ bool Rope::Start()
 		nm_anim.speed = 0.05;
 	}
 
+	jump_hit = 8;
+
 	stats.Hp = 1.5 * ORIGIN_PWR;
 	stats.Speed = 5;
 	stats.Power = 1;
