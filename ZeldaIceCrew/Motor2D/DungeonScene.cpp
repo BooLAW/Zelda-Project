@@ -62,6 +62,9 @@ bool DungeonScene::Start()
 
 	App->Pause();
 
+	starting_time.Start();
+	starting_time.SetFlag(true);
+
 	return true;
 }
 
@@ -72,11 +75,9 @@ bool DungeonScene::Update(float dt)
 
 	stdUpdate(dt);
 
-	starting_time.Start();
-	starting_time.SetFlag(true);
-
-	if (starting_time.Read() > 1500) {
+	if (starting_time.GetFlag() == true && starting_time.Read() > 1500) {
 		App->UnPause();
+		starting_time.SetFlag(false);
 	}
 
 		if (App->scene_manager->dungeon_id == 6) {
