@@ -448,6 +448,8 @@ bool Scene::Load_new_map(int id)
 						room_coords = { node_room.attribute("x").as_int(-999), node_room.attribute("y").as_int(-999), node_room.attribute("w").as_int(1024), node_room.attribute("h").as_int(576) };
 
 						Room* r = AddRoom(room_coords.x, room_coords.y);
+						r->room_rect.w = room_coords.w;
+						r->room_rect.h = room_coords.h;
 
 						if (r != nullptr) {
 

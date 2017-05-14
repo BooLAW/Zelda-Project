@@ -30,9 +30,9 @@ enum ENEMYTYPE {
 	t_hinox,  // ciclop
 	t_rope,
 	t_geldman, //sandman
-	t_freezor, //ghost
 	t_GBat,
 	t_boss_ballandchain,
+	t_freezor, //ghost
 	t_beamos, // eye
 	t_boss_agahnim,
 	t_boss_agahnimclone,

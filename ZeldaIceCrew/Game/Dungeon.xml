@@ -1036,7 +1036,7 @@
 
       <rooms>
 
-        <room x="0" y="0" w="1024" h="576">
+        <room x="0" y="0" w="3000" h="2000">
           <enemies>
            
           </enemies>

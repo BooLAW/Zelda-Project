@@ -742,7 +742,21 @@ bool BossChainBall::Attack()
 
 void BossChainBall::SetRewards()
 {
-	reward_pool[boss_key] = 100;
+	reward_pool[heart_container] = ceil(100 / 12);
+	reward_pool[power_gauntlet] = ceil(100 / 12);
+	reward_pool[gold_gauntlet] = ceil(100 / 12);
+	reward_pool[wind_cape] = ceil(100 / 12);
+	reward_pool[pegasus_boots] = ceil(100 / 12);
+	reward_pool[magic_hammer] = ceil(100 / 12);
+	reward_pool[magic_mirror] = ceil(100 / 12);
+	reward_pool[small_shield] = ceil(100 / 12);
+	reward_pool[magic_sphere] = ceil(100 / 12);
+	reward_pool[icon_of_power] = ceil(100 / 12);
+	reward_pool[icon_of_valor] = ceil(100 / 12);
+	reward_pool[icon_of_wisdom] = ceil(100 / 12);
+
+
+
 }
 
 void BossChainBall::Draw(float dt)

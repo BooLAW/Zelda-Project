@@ -51,10 +51,10 @@ bool DungeonScene::Start()
 
 		starting = false;
 
-		spawn1 = { 1200, 500 };
-		spawn2 = { 1300, 500 };
-		spawn3 = { 1400, 500 };
-		spawn4 = { 1500, 500 };
+		spawn1 = { 592, 393 };
+		spawn2 = { 592, ROOM_H + 297 };
+		spawn3 = { ROOM_W + 386, ROOM_H + 297 };
+		spawn4 = { ROOM_W + 386, 393 };
 
 		to_round = 0;
 
@@ -81,7 +81,7 @@ bool DungeonScene::Update(float dt)
 	}
 
 		if (App->scene_manager->dungeon_id == 6) {
-			if (wave_time.Read() > 5000) {
+			if (wave_time.Read() > 5000 && starting == false) {
 				wave_time.SetFlag(false);
 				starting = true;
 				round = 1;
@@ -89,31 +89,37 @@ bool DungeonScene::Update(float dt)
 			}
 
 			if (starting) {
-				wave_time.Start();
-				wave_time.SetFlag(true);
+					wave_time.Start();
+					if (GetRoom(0, 0)->NoEnemies() == true) {
+						wave_time.SetFlag(true);
+					}
 
-				if (wave_time.Read() > 2000 && to_round <= round) {
-					LOG("WAVE");
-					round_timer.Start();
-					round_timer.SetFlag(true);
-					if (round_timer.Read() > 500) {
-						LOG("SPAWN");
-						AddEnemy(rand() % 10, 0, 0, spawn1.x, spawn1.y);
-						AddEnemy(rand() % 10, 0, 0, spawn2.x, spawn2.y);
-						AddEnemy(rand() % 10, 0, 0, spawn3.x, spawn3.y);
-						AddEnemy(rand() % 10, 0, 0, spawn4.x, spawn4.y);
-						to_round++;
-						round_timer.SetFlag(false);
+					if (wave_time.Read() > 5000) {
+						LOG("WAVE");
+						if (to_round < round) {
+							LOG("ROUND");
+							round_timer.Start();
+							round_timer.SetFlag(true);
+							if (round_timer.Read() > 2000) {
+								LOG("SPAWN");
+								AddEnemy(rand() % 9, 0, 0, spawn1.x, spawn1.y);
+								AddEnemy(rand() % 9, 0, 0, spawn2.x, spawn2.y);
+								AddEnemy(rand() % 9, 0, 0, spawn3.x, spawn3.y);
+								AddEnemy(rand() % 9, 0, 0, spawn4.x, spawn4.y);
+								to_round++;
+								round_timer.SetFlag(false);
+							}
+						}
+						else {
+							GetRoom(0, 0)->AddItem(rand() % 14, 1025, 622);
+							round++;
+							to_round = 0;
+							wave_time.SetFlag(false);
+							round_timer.SetFlag(false);
+						}
 					}
 				}
-				else {
-					round++;
-					to_round = 0;
-					wave_time.SetFlag(false);
-				}
-
-			}
-
+			
 		}
 
 	return true;

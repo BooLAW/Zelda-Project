@@ -227,5 +227,6 @@
     <Xml Include="XMLFile3.xml" />
     <Xml Include="XMLFile4.xml" />
     <Xml Include="XMLFile5.xml" />
+    <Xml Include="..\Game\Dungeon.xml" />
   </ItemGroup>
 </Project>
