@@ -39,12 +39,15 @@ private:
 
 	uint round;
 	j1Timer wave_time;
+	j1Timer starting_time;
 
 	bool starting;
 
 	j1Timer round_timer;
 
 	uint to_round = 0;
+
+	uint change_round = 0;
 
 	iPoint spawn1;
 	iPoint spawn2;

@@ -17,6 +17,9 @@ public:
 	void SetFlag(bool state) {
 		flag = state;
 	}
+	bool GetFlag() {
+		return flag;
+	}
 
 private:
 	bool flag = false;

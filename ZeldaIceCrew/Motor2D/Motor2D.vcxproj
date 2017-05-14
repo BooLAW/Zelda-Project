@@ -163,6 +163,7 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="..\Game\Dungeon.xml" />
     <Xml Include="XMLFile.xml" />
     <Xml Include="XMLFile1.xml" />
     <Xml Include="XMLFile2.xml" />

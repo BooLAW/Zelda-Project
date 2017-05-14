@@ -309,7 +309,6 @@ bool HUD::Update(float dt)
 						Minimap->active = true;
 						link_point->active = true;
 						App->Pause();
-						LOG("fuckin minimap");
 					}
 				}
 				else {

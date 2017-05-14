@@ -27,13 +27,13 @@ enum ITEMTYPE {
 	vanguard_emblem,
 	magic_sphere,
 	magic_mirror,
-	golden_shield,
-	mysterious_dust,
-	odd_mushroom,
 	bag_of_rupees,
 	icon_of_power,
 	icon_of_wisdom,
 	icon_of_valor,
+	golden_shield,
+	mysterious_dust,
+	odd_mushroom,
 	boss_key,
 	__FIRSTDROP,
 	drop_heart,
@@ -101,6 +101,8 @@ protected:
 
 	uint price = NULL;
 	GuiText* priceTag;
+
+	j1Timer drop_timer;
 
 public:
 	

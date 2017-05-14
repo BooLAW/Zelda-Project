@@ -35,10 +35,10 @@ void Enemy::SetRewards()
 	memset(reward_pool, 0, N_ITEMS);
 	
 	// Standard Reward Pool
-	reward_pool[drop_heart] = 20;
-	reward_pool[drop_potion] = 0;
+	reward_pool[drop_heart] = 10;
+	reward_pool[drop_potion] = 1;
 	reward_pool[drop_rupee] = 30;
-	reward_pool[drop_fiverupee] = 15;
+	reward_pool[drop_fiverupee] = 5;
 	reward_pool[drop_tenrupee] = 1;
 
 	//SortRewardProbs();
@@ -321,40 +321,35 @@ void Enemy::Hit(uint dir, uint dmg)
 
 void Enemy::Death()
 {
-	//hit_pause_counter++;
-	//if (hit_pause_counter < 200) {
-		//if (hit_pause_counter % 2)
-			//SDL_Delay(1);
-	//}
-	//else {
-		Reward();
-		App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
-	//}
+	LOG("DEATH");
+	Reward();
+	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 
 void Enemy::Reward()
 {
-
-	srand(time(NULL));
-
+	LOG("REWARD");
 	uint aux = 0;
 	uint prob = (rand() % 100) + 1;
 	
 	int target = -1;
 
 	for (uint i = 0; i < N_ITEMS; i++) {
+		LOG("REWARD1");
 		if (prob <= aux + reward_pool[i] && prob > aux) {
+			LOG("REWARD2");
 			target = i;
 			break;
 		}
 		else {
+			LOG("REWARD3");
 			aux += reward_pool[i];
 		}
 	}
 
 	if (target != -1) {
-	
-		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, pos.x + HitBox->rect.w / 2 - 16, pos.y + +HitBox->rect.h / 2 - 16);
+		LOG("REWARD4");
+		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, (pos.x + HitBox->rect.w / 2 - 16) - ROOM_W * room.x, (pos.y + +HitBox->rect.h / 2 - 16) - ROOM_H * room.y);
 
 	}
 	else {}
@@ -517,7 +512,7 @@ bool GSoldier::Start()
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
 		sprites[Enemy::EnDirection::Down][0] = { 2, 0,  100, 108 };
-		sprites[Enemy::EnDirection::Down][1] = { 104, 0, 100, 108 };
+		sprites[Enemy::EnDirection::Down][1] = { 104, 0, 100, 107 };
 
 		sprites[Enemy::EnDirection::Up][0] = { 614, 0, 100, 108 };
 		sprites[Enemy::EnDirection::Up][1] = { 716, 0, 100, 108 };
@@ -747,7 +742,23 @@ bool BossChainBall::Attack()
 
 void BossChainBall::SetRewards()
 {
-	reward_pool[boss_key] = 100;
+	if (App->scene_manager->dungeon_id != 6) {
+		reward_pool[heart_container] = ceil(100 / 12);
+		reward_pool[power_gauntlet] = ceil(100 / 12);
+		reward_pool[gold_gauntlet] = ceil(100 / 12);
+		reward_pool[wind_cape] = ceil(100 / 12);
+		reward_pool[pegasus_boots] = ceil(100 / 12);
+		reward_pool[magic_hammer] = ceil(100 / 12);
+		reward_pool[magic_mirror] = ceil(100 / 12);
+		reward_pool[small_shield] = ceil(100 / 12);
+		reward_pool[magic_sphere] = ceil(100 / 12);
+		reward_pool[icon_of_power] = ceil(100 / 12);
+		reward_pool[icon_of_valor] = ceil(100 / 12);
+		reward_pool[icon_of_wisdom] = ceil(100 / 12);
+	}
+
+
+
 }
 
 void BossChainBall::Draw(float dt)
@@ -900,6 +911,8 @@ bool Rope::Start()
 		nm_anim.PushBack(RopeSprites_nm[0][1]);
 		nm_anim.speed = 0.05;
 	}
+
+	jump_hit = 8;
 
 	stats.Hp = 1.5 * ORIGIN_PWR;
 	stats.Speed = 5;
@@ -2135,8 +2148,11 @@ void BossAgahnim::Update(float dt)
 
 void BossAgahnim::Death()
 {
+	if(clones[0] != nullptr)
 	clones[0]->Death();
+	if(clones[1] != nullptr)
 	clones[1]->Death();
+
 	Reward();
 	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
