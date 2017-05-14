@@ -409,7 +409,7 @@ bool EntityManager::PreUpdate()
 bool EntityManager::Update(float dt) {
 
 	
-
+	
 		//LOG("ENTITY UPDT START");
 		if (entities.empty() == false)
 			for (int i = 0; i < entities.size(); i++) {

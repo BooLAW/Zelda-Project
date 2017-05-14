@@ -3,9 +3,10 @@
   
    <npc id="1">
      <dialogue state="0">
-       <text value=" Hi Link! I'm an NPC, you can do whatever you want with me. ;)"/>
-	<text value=" You look so good right now, it's hot in here, isn't it?"/>
-	<text value=" If you want me to do something you know where to find me. "/>
+       <text value=" Hi Link! See those objects here?"/>
+	<text value=" Pick one of them before you go on."/>
+	<text value=" If you cross that door you won't be able to come back. "/>
+	<text value=" Good luck!"/>
      </dialogue>
    </npc>
   
