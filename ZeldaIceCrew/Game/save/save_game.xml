@@ -22,7 +22,7 @@
 		<n_keys n="0" />
 		<hp curr="6" max="6" />
 		<weapons curr_weapon="27" />
-		<rupees n="true" />
+		<rupees n="50" />
 		<stats power="30" speed="2.5" />
 		<items />
 	</player>

@@ -6,6 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Gui.h"
+#include "HUD.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -222,6 +223,7 @@ void GuiText::Update()
 	if (texture != nullptr) {
 		App->tex->UnLoad(this->texture);
 	}
+	
 	if (active) {
 
 		this->texture = App->font->Print(str.c_str());
