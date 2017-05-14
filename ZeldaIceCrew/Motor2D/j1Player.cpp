@@ -37,6 +37,7 @@ bool j1Player::Start()
 	LOG("Player Start");
 	//CONTROLS
 	keys = 0;
+	rupees = 50;
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
 	//Idle
 	{

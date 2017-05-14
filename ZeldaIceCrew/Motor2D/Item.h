@@ -102,6 +102,8 @@ protected:
 	uint price = NULL;
 	GuiText* priceTag;
 
+	j1Timer drop_timer;
+
 public:
 	
 	SDL_Texture*	UI_tex = nullptr;

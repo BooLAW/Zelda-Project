@@ -27,11 +27,19 @@ void Item::PassToInventory()
 void Item::Update(float dt)
 {
 	//LOG("ITEM UPDATE");
-	
+
 		if (grabbed == false) {
 			if (HitBox != nullptr) {
 				if (HitBox->rect.x != pos.x || HitBox->rect.y != pos.y)
 					HitBox->SetPos(pos.x, pos.y);
+
+				if (type == ENTITYTYPE::drop) {
+					drop_timer.Start();
+					drop_timer.SetFlag(true);
+					if (drop_timer.Read() > 5000) {
+						App->scene_manager->GetCurrentScene()->DestroyItem(this);
+					}
+				}
 
 				if (HitBox->CheckCollision(App->player->link_coll->rect)) {
 					if (App->player->rupees >= this->price) {
