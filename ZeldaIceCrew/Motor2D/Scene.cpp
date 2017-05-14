@@ -149,6 +149,19 @@ void Scene::DestroyDoorway(Doorway * ent)
 		}
 	}
 }
+void Scene::DestroyNPC(Npc * npc)
+{
+	if (npc != nullptr) {
+		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
+			for (std::list<Npc*>::iterator it = room_it._Ptr->_Myval->npcs.begin(); it != room_it._Ptr->_Myval->npcs.end(); it++) {
+				if (it._Ptr->_Myval == npc) {
+					App->entitymanager->DestroyEnity(npc);
+					//it._Ptr->_Myval->to_delete = true;
+					room_it._Ptr->_Myval->npcs.erase(it);
+				}
+			}
+	}
+}
 void Scene::DestroyRoom(Room * ent)
 {
 	if (ent != nullptr) {

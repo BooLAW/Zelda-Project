@@ -62,6 +62,22 @@ bool DungeonScene::Start()
 	if (App->scene_manager->dungeon_id == 0) {
 		App->scene_manager->GetCurrentScene()->GetRoom(2, 4)->AddNpc(NPC_ZELDA, 500,250, 1);
 	}
+	if (App->scene_manager->dungeon_id == 1) {
+		App->scene_manager->GetCurrentScene()->GetRoom(1, 4)->AddNpc(NPC_ZELDA, 500, 250, 1);
+	}
+	if (App->scene_manager->dungeon_id == 2) {
+		App->scene_manager->GetCurrentScene()->GetRoom(3, 3)->AddNpc(NPC_ZELDA, 500, 250, 1);
+	}
+	if (App->scene_manager->dungeon_id == 3) {
+		App->scene_manager->GetCurrentScene()->GetRoom(3, 3)->AddNpc(NPC_ZELDA, 500, 250, 1);
+	}
+	if (App->scene_manager->dungeon_id == 4) {
+		App->scene_manager->GetCurrentScene()->GetRoom(2, 5)->AddNpc(NPC_ZELDA, 500, 250, 1);
+	}
+	if (App->scene_manager->dungeon_id == 5) {
+		App->scene_manager->GetCurrentScene()->GetRoom(0, 0)->AddNpc(NPC_ZELDA, 500, 250, 1);
+	}
+
 	App->player->rupees = 50;
 
 	App->Pause();

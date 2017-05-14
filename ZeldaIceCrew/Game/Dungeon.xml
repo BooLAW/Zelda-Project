@@ -987,7 +987,9 @@
 
       <rooms>
          <room x="0" y="0" w="1024" h="576">
-          
+	  <items>
+             <item subtype="boss_key" x="100" y="100" pricetag=""/>
+	  </items>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
           </doorways>
@@ -1046,6 +1048,8 @@
           <doorways>
             
           </doorways>
+
+	
         </room> <!-- estos van -->
 
         

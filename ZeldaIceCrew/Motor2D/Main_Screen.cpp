@@ -1,6 +1,7 @@
 #include "Main_Screen.h"
 #include "j1Player.h"
 #include <fstream>
+#include"j1Window.h"
 
 Main_Screen::Main_Screen()
 {
@@ -128,12 +129,7 @@ bool Main_Screen::Start()
 	Mute->movable = true;
 	settings_elements.push_back(Mute);
 
-	Back = (GuiImage*)App->gui->CreateElement(image);
-	Back->pos = { Mute->pos.x,Mute->pos.y + 100 };
-	Back->texture_rect = { 0, 514, 683, 36 };
-	Back->active = false;
-	Back->movable = true;
-	settings_elements.push_back(Back);
+	
 
 	controls = (GuiText*)App->gui->CreateElement(text);
 	controls->str = "Controls";
@@ -146,6 +142,27 @@ bool Main_Screen::Start()
 	mute->active = false;
 	mute->movable = true;
 	mute->pos = { Mute->pos.x + 550, Mute->pos.y + 2 };
+
+/*	Screen = (GuiImage*)App->gui->CreateElement(image);
+	Screen->pos = { Mute->pos.x, Mute->pos.y + 100 };
+	Screen->active = false;
+	Screen->movable = true;
+	Screen->texture_rect = { 0, 514, 683, 36 };
+	settings_elements.push_back(Screen);
+
+
+	screen = (GuiText*)App->gui->CreateElement(text);
+	screen->str = "Full Screen";
+	screen->active = false;
+	screen->movable = true;
+	screen->pos = { Screen->pos.x + 550, Screen->pos.y + 2 };*/
+	
+	Back = (GuiImage*)App->gui->CreateElement(image);
+	Back->pos = { Mute->pos.x,Mute->pos.y + 100 };
+	Back->texture_rect = { 0, 514, 683, 36 };
+	Back->active = false;
+	Back->movable = true;
+	settings_elements.push_back(Back);
 
 	back = (GuiText*)App->gui->CreateElement(text);
 	back->str = "Back";
@@ -530,6 +547,8 @@ bool Main_Screen::Update(float dt)
 		for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
 			it._Ptr->_Myval->active = false;
 		}
+		//Screen->active = true;
+		//screen->active = true;
 		Disablekeys();
 		Disable_dungeons();
 		Arena->active = false;
@@ -615,6 +634,16 @@ bool Main_Screen::Update(float dt)
 					App->audio->SetVolume(1, -1);
 				}
 			}
+		/*	if (selected == Screen) {
+				if (App->fullscreen) {
+					SDL_SetWindowFullscreen(App->win->window, SDL_FALSE);
+					App->fullscreen = false;
+				}
+				else {
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
+					App->fullscreen = true;
+				}
+			}*/
 			if (selected == Back) {
 
 				selected = ui_elements.front();
@@ -633,6 +662,8 @@ bool Main_Screen::Update(float dt)
 
 	}
 	else if (in_controls) {
+		//Screen->active =false;
+		//screen->active =false;
 		Disablekeys();
 		Disable_dungeons();
 		Arena->active = false;
@@ -832,6 +863,8 @@ bool Main_Screen::Update(float dt)
 			UpdateKeys();
 			Enablekeys();
 
+			//Screen->active =false;
+		//	screen->active =false;
 			Enable_dungeons();
 			Back_dung->active = true;
 			Arena->active = false;
@@ -1038,6 +1071,8 @@ bool Main_Screen::Update(float dt)
 		for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
 			it._Ptr->_Myval->active = false;
 		}
+		//Screen->active = false;
+		//screen->active = false;
 		Disablekeys();
 		Disable_dungeons();
 		up->active = false;
@@ -1473,6 +1508,8 @@ bool Main_Screen::CleanUp()
 	action->active = false;
 	dash->active = false;
 	back_controls->active= false;
+	//Screen->active = false;
+	//screen->active = false;
 
 	Up->active= false;
 	Down->active= false;

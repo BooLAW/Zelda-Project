@@ -144,6 +144,8 @@ private:
 	GuiImage* key4;
 	GuiImage* key5;
 
+	GuiImage* Screen;
+	GuiText* screen;
 
 	GuiText* D1;
 	GuiText* D2;

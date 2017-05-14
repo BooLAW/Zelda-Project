@@ -68,6 +68,7 @@ public:
 	virtual void DestroyEnemy(Enemy* ent);
 	virtual void DestroyBlock(Block* ent);
 	virtual void DestroyDoorway(Doorway* ent);
+	virtual void DestroyNPC(Npc* npc);
 
 	virtual void DestroyRoom(Room* ent);
 

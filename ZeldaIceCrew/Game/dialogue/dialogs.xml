@@ -3,12 +3,12 @@
   
    <npc id="1">
      <dialogue state="0">
-       <text value=" Hi Link! See those objects here?"/>
-	<text value=" Pick one of them before you go on."/>
-	<text value=" If you cross that door you won't be able to come back. "/>
-	<text value=" Good luck!"/>
+       <text value=" Oh Link you saved me!"/>
+	<text value=" Follow us on twitter and don't miss new dungeons"/>
+	<text value=" Regards, Ice Crew Coorp. "/>
      </dialogue>
    </npc>
+
   
    
 

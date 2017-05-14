@@ -125,6 +125,7 @@ public:
 	DialogManager*       dialog = NULL;
 
 	bool			    debug_mode = false;
+	bool fullscreen = true;
 
 	std::list<j1Module*>	modules;
 private:
