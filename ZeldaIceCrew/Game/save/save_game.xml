@@ -22,13 +22,13 @@
 		<n_keys n="0" />
 		<hp curr="6" max="6" />
 		<weapons curr_weapon="27" />
-		<rupees n="50" />
+		<rupees n="true" />
 		<stats power="30" speed="2.5" />
 		<items />
 	</player>
 	<:anonymous />
 	<dialogue />
 	<renderer>
-		<camera x="-5120" y="96" />
+		<camera x="0" y="96" />
 	</renderer>
 </game_state>

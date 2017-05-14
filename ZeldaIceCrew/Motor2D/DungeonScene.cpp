@@ -62,6 +62,7 @@ bool DungeonScene::Start()
 	if (App->scene_manager->dungeon_id == 0) {
 		App->scene_manager->GetCurrentScene()->GetRoom(2, 4)->AddNpc(NPC_ZELDA, 500,250, 1);
 	}
+	App->player->rupees = 50;
 
 	App->Pause();
 
