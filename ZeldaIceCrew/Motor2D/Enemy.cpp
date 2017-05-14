@@ -1045,7 +1045,7 @@ bool BlueArcher::Start()
 
 	}
 
-	stats.Hp = 1.5 * ORIGIN_PWR;
+	stats.Hp = 1 * ORIGIN_PWR;
 	stats.Speed = 2;
 	stats.Power = 1;
 
