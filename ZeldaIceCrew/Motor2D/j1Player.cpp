@@ -825,7 +825,7 @@ bool j1Player::Update(float dt)
 	bool ret = true;
 
 	if (inMainScreen) {
-		App->hud->minimap = false;
+
 	}
 	else {
 		if (!App->IsPaused()) {
@@ -852,7 +852,10 @@ bool j1Player::Update(float dt)
 			if (curr_life_points > max_life_points) {
 				curr_life_points = max_life_points;
 			}
-
+			if(!App->hud->Minimap->active)
+			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+				App->hud->Enable_map();
+			}
 			if (talking) {
 				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 				App->hud->dialog->active = true;
@@ -1185,6 +1188,11 @@ bool j1Player::Update(float dt)
 				}
 				else if (App->input->GetKey(App->input->controls[LEFT]) == KEY_DOWN) {
 					App->hud->inv->Move_Sel_backwards();
+				}
+			}
+			if (App->hud->Minimap->active) {
+				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+					App->hud->Disable_map();
 				}
 			}
 			

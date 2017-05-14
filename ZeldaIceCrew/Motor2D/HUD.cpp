@@ -249,7 +249,7 @@ bool HUD::Update(float dt)
 
 	}
 
-	link_point->pos = { Minimap->pos.x + 5 + 200 * App->player->room.x, Minimap->pos.y + 5 + 100 * App->player->room.y };
+	link_point->pos = { Minimap->pos.x + 5 + 100 * App->player->room.x, Minimap->pos.y  + 50 * App->player->room.y };
 
 	rupees_num->str = std::to_string(App->player->rupees);
 	//bombs_num->str = std::to_string(App->player->bombs);
@@ -302,22 +302,7 @@ bool HUD::Update(float dt)
 		else {
 			dialog_rect->active = false;
 		}
-		if (!App->player->inMainScreen) {
-			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
-				if (!Minimap->active) {
-					if (!App->scene_manager->dungeon_id == 5){
-						Minimap->active = true;
-						link_point->active = true;
-						App->Pause();
-					}
-				}
-				else {
-					Minimap->active = false;
-					link_point->active = false;
-					App->UnPause();
-				}
-			}
-		}
+
 		if (inv->active) {
 			descriptions_rect->active = true;
 			stats_rect->active = true;
@@ -588,6 +573,20 @@ UIElement * HUD::menu_prev()
 			}
 		}
 	}
+}
+
+void HUD::Enable_map()
+{
+	Minimap->active = true;
+	link_point->active = true;
+	App->Pause();
+}
+
+void HUD::Disable_map()
+{
+	Minimap->active = false;
+	link_point->active = false;
+	App->UnPause();
 }
 
 void HUD::AddItem(Item* obj)

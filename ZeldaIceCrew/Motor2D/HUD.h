@@ -25,6 +25,12 @@ private:
 	UIElement* menu_next();
 	UIElement* menu_prev();
 	
+	
+public:
+
+	void Enable_map();
+	void Disable_map();
+
 public:
 
 	bool minimap = false;
