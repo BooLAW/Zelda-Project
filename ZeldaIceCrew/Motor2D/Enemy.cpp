@@ -35,11 +35,11 @@ void Enemy::SetRewards()
 	memset(reward_pool, 0, N_ITEMS);
 	
 	// Standard Reward Pool
-	reward_pool[drop_heart] = 20;
-	reward_pool[drop_potion] = 15;
+	reward_pool[drop_heart] = 10;
+	reward_pool[drop_potion] = 1;
 	reward_pool[drop_rupee] = 30;
-	reward_pool[drop_fiverupee] = 15;
-	reward_pool[drop_tenrupee] = 5;
+	reward_pool[drop_fiverupee] = 5;
+	reward_pool[drop_tenrupee] = 1;
 
 	//SortRewardProbs();
 
@@ -321,40 +321,35 @@ void Enemy::Hit(uint dir, uint dmg)
 
 void Enemy::Death()
 {
-	//hit_pause_counter++;
-	//if (hit_pause_counter < 200) {
-		//if (hit_pause_counter % 2)
-			//SDL_Delay(1);
-	//}
-	//else {
-		Reward();
-		App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
-	//}
+	LOG("DEATH");
+	Reward();
+	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 
 void Enemy::Reward()
 {
-
-	srand(time(NULL));
-
+	LOG("REWARD");
 	uint aux = 0;
 	uint prob = (rand() % 100) + 1;
 	
 	int target = -1;
 
 	for (uint i = 0; i < N_ITEMS; i++) {
+		LOG("REWARD1");
 		if (prob <= aux + reward_pool[i] && prob > aux) {
+			LOG("REWARD2");
 			target = i;
 			break;
 		}
 		else {
+			LOG("REWARD3");
 			aux += reward_pool[i];
 		}
 	}
 
 	if (target != -1) {
-	
-		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, pos.x + HitBox->rect.w / 2 - 16, pos.y + +HitBox->rect.h / 2 - 16);
+		LOG("REWARD4");
+		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, (pos.x + HitBox->rect.w / 2 - 16) - ROOM_W * room.x, (pos.y + +HitBox->rect.h / 2 - 16) - ROOM_H * room.y);
 
 	}
 	else {}

@@ -116,6 +116,8 @@ Item * Room::AddItem(uint subtype, float x, float y)
 	ret = App->entitymanager->CreateItem(subtype);
 	ret->pos = { x + ROOM_W * coords.x, y + ROOM_H * coords.y};
 
+	LOG("ITEM &d %d", ret->pos.x, ret->pos.y);
+
 	ret->coords.x = coords.x;
 	ret->coords.y = coords.y;
 
@@ -129,6 +131,7 @@ Enemy * Room::AddEnemy(uint subtype, float x, float y)
 	Enemy* ret = nullptr;
 
 	ret = App->entitymanager->CreateEnemy(subtype);
+	ret->room = { coords.x, coords.y };
 	ret->pos = { x + coords.x * ROOM_W, y + coords.y * ROOM_H };
 
 	enemies.push_back(ret);
