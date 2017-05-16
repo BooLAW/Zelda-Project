@@ -961,6 +961,9 @@ bool Main_Screen::Update(float dt)
 					it._Ptr->_Myval->pos.x = 250;
 				}
 			}
+			if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+				App->player->keys = 5;
+			}
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 				App->audio->PlayFx(fx);
 				if (selected == Back_dung) {
