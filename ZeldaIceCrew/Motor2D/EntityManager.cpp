@@ -372,6 +372,9 @@ bool EntityManager::Start(){
 	
 	npc_tex = App->tex->Load("Sprites/Npc.png");
 	
+	die_fx = App->audio->LoadFx("Audio/Fx/enemy dies.wav");
+	hit_fx = App->audio->LoadFx("Audio/Fx/flap.wav");
+
 	return true;
 }
 

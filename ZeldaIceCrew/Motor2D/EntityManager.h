@@ -63,6 +63,10 @@ public:
 	Item* CreateItem(uint subtype);
 	Block* CreateBlock(uint subtype);
 	Npc * CreateNPC(NPC_TYPE type, int id);
+
+	uint die_fx; 
+	uint hit_fx;
+
 private:
 	
 	std::deque<Entity*> entities;

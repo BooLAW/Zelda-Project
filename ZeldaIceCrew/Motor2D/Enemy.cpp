@@ -25,7 +25,8 @@ bool Enemy::Start()
 	memset(DmgType, false, __LAST_DMGTYPE);
 	AIType = no_move;	
 	type = ENEMYTYPE::__LAST_ENEMYTYPE;
-	hit_fx = App->audio->LoadFx("Audio/Fx/enemy_hit.wav");
+	
+
 	return ret;
 
 }
@@ -81,7 +82,7 @@ void Enemy::stdUpdate(float dt)
 					if (App->player->weapon_coll != nullptr)
 						if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
 							Hit(App->player->curr_dir, App->player->power);
-							App->audio->PlayFx(hit_fx);
+								App->audio->PlayFx(App->entitymanager->hit_fx);
 						}
 				}
 			}
@@ -318,33 +319,29 @@ void Enemy::Hit(uint dir, uint dmg)
 void Enemy::Death()
 {
 	LOG("DEATH");
+	App->audio->PlayFx(App->entitymanager->die_fx);
 	Reward();
 	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 
 void Enemy::Reward()
 {
-	LOG("REWARD");
 	uint aux = 0;
 	uint prob = (rand() % 100) + 1;
 	
 	int target = -1;
 
 	for (uint i = 0; i < N_ITEMS; i++) {
-		LOG("REWARD1");
 		if (prob <= aux + reward_pool[i] && prob > aux) {
-			LOG("REWARD2");
 			target = i;
 			break;
 		}
 		else {
-			LOG("REWARD3");
 			aux += reward_pool[i];
 		}
 	}
 
 	if (target != -1) {
-		LOG("REWARD4");
 		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, (pos.x + HitBox->rect.w / 2 - 16) - ROOM_W * room.x, (pos.y + +HitBox->rect.h / 2 - 16) - ROOM_H * room.y);
 
 	}
@@ -398,6 +395,7 @@ bool BSoldier::Start()
 	bool ret = true;
 
 	SetRewards();
+
 
 	curr_dir = Enemy::EnDirection::Down;
 
@@ -459,7 +457,6 @@ bool RSoldier::Start()
 	bool ret = true;
 
 	SetRewards();
-
 	curr_dir = Enemy::EnDirection::Down;
 
 	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
@@ -520,7 +517,6 @@ bool GSoldier::Start()
 	bool ret = true;
 
 	SetRewards();
-
 	curr_dir = Enemy::EnDirection::Down;
 
 	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
@@ -583,7 +579,6 @@ bool BossChainBall::Start()
 	int cb_n = 0;
 
 	SetRewards();
-
 	curr_dir = Enemy::EnDirection::Down;
 
 	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Mace knight.png"));
