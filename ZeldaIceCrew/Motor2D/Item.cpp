@@ -103,7 +103,6 @@ void Item::Draw(float dt)
 void Item::CleanUp()
 {
 
-	LOG("CLEANING %d", subtype);
 
 	if (HitBox != nullptr)
 		HitBox->to_delete = true;

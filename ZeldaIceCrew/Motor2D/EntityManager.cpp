@@ -459,14 +459,14 @@ void EntityManager::DestroyEnity(Entity * ent)
 
 	if (ent != nullptr) {
 
-			LOG("ENTITY CLEAR");
+			
 			std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
 				if (aux != entities.end()) {
 					entities.erase(aux);
 				}
-			LOG("ENTITY TYPE %d", ent->type);
+			
 			ent->CleanUp();
-			LOG("ENT CLEAR");
+			
 			//std::deque<Entity*>::iterator aux = std::find(entities.begin(), entities.end(), ent);
 			//if(ent != nullptr)
 			//	RELEASE(ent);
@@ -474,8 +474,6 @@ void EntityManager::DestroyEnity(Entity * ent)
 			//ent = nullptr;
 
 	}
-
-	LOG("ENTITY DESTROYED");
 }
 
 void EntityManager::OnCollision(Collider * c1, Collider * c2)

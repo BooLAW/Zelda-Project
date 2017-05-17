@@ -86,4 +86,4 @@ int Entity::CheckSpace(float new_x, float new_y)
 	}
 
 	return ret;
-};
+}

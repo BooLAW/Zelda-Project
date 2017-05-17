@@ -102,6 +102,8 @@ public:
 	virtual void Death();
 	virtual void Reward();
 
+	virtual fPoint CheckSpaceTo(float x, float y);
+
 	void SortRewardProbs() {
 		uint total = 0;
 

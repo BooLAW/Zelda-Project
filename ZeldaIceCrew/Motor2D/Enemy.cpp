@@ -298,20 +298,16 @@ void Enemy::Hit(uint dir, uint dmg)
 
 		switch (dir) {
 		case Direction::Up:
-			if (CheckSpace(pos.x, pos.y - jump_hit)==0)
-				pos.y -= jump_hit;
+			pos = CheckSpaceTo(pos.x, pos.y - jump_hit);
 			break;
 		case Direction::Down:
-			if (CheckSpace(pos.x, pos.y + jump_hit)==0)
-				pos.y += jump_hit;
+			pos = CheckSpaceTo(pos.x, pos.y + jump_hit);
 			break;
 		case Direction::Left:
-			if (CheckSpace(pos.x - jump_hit, pos.y)==0)
-				pos.x -= jump_hit;
+			pos = CheckSpaceTo(pos.x - jump_hit, pos.y);
 			break;
 		case Direction::Right:
-			if (CheckSpace(pos.x + jump_hit, pos.y)==0)
-				pos.x += jump_hit;
+			pos = CheckSpaceTo(pos.x + jump_hit, pos.y);
 			break;
 		}
 		
@@ -357,10 +353,30 @@ void Enemy::Reward()
 
 }
 
+fPoint Enemy::CheckSpaceTo(float x, float y)
+{
+	fPoint ret = pos;
+
+	while (x != ret.x || y != ret.y) {
+		if (CheckSpace(ret.x, ret.y) == 1) {
+			break;
+		}
+		if (x > ret.x)
+			ret.x++;
+		else if(x < ret.x)
+			ret.x--;
+		if (y > ret.y)
+			ret.y++;
+		else if (y < ret.y)
+			ret.y--;
+	}
+
+	return ret;
+}
+
 
 void Enemy::CleanUp()
 {
-	LOG("ENEMY CLEANUP %d", EnemyType);
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
 

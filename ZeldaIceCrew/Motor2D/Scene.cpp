@@ -10,9 +10,19 @@ bool Scene::stdStart()
 {
 	Load_new_map(App->scene_manager->dungeon_id);
 	App->player->pos = pl_start_pos;
-	
+
+	scene_node = LoadConfig(scene_file);
+
+	for (scene = scene_node.child("maps").child("map"); scene; scene = scene.next_sibling("map")) {
+		if (scene.attribute("id").as_int(0) != App->scene_manager->dungeon_id)
+			continue;
+		else
+			break;
+	}
+
 	return true;
 
+	enemy_selector = t_bluesoldier;
 }
 
 bool Scene::Update(float dt)
@@ -37,6 +47,72 @@ bool Scene::stdUpdate(float dt)
 			//LOG("ROOM_UPDATE N� %d", i);
 			it._Ptr->_Myval->Update(dt);
 			i++;
+		}
+	}
+
+	switch (App->input->returnkey()) {		
+		case SDL_SCANCODE_1:
+			enemy_selector = t_bluesoldier;
+			break;
+		case SDL_SCANCODE_2:
+			enemy_selector = t_greensoldier;
+			break;
+		case SDL_SCANCODE_3:
+			enemy_selector = t_redsoldier;
+			break;
+		case SDL_SCANCODE_4:
+			enemy_selector = t_bluearcher;
+			break;
+		case SDL_SCANCODE_5:
+			enemy_selector = t_geldman;
+			break;
+		case SDL_SCANCODE_6:
+			enemy_selector = t_freezor;
+			break;
+		case SDL_SCANCODE_7:
+			enemy_selector = t_beamos;
+			break;
+		case SDL_SCANCODE_8:
+			enemy_selector = t_GBat;
+			break;
+		case SDL_SCANCODE_9:
+			enemy_selector = t_hinox;
+			break;
+
+	}
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+		Room* aux_r = nullptr;
+		int mx = 0, my = 0;
+	
+		App->input->GetMousePosition(mx, my);
+
+		aux_r = GetCurrentRoom();
+
+		if (aux_r != nullptr) {
+			Enemy* new_en = nullptr;
+			new_en = AddEnemy(enemy_selector, aux_r->coords.x, aux_r->coords.y, mx, my - (App->render->camera.h / 2 - ROOM_H / 2));
+		//	if (new_en != nullptr) {
+		//		pugi::xml_node node_room;
+		//		for (pugi::xml_node node_rooms = scene.child("rooms"); node_rooms; node_rooms = node_rooms.next_sibling("rooms")) {
+		//			for (node_room = node_rooms.child("room"); node_room; node_room = node_room.next_sibling("room")) {
+		//				if (node_room.attribute("x").as_int() != aux_r->coords.x || (node_room.attribute("y").as_int() != aux_r->coords.y))
+		//					continue;
+		//				else
+		//					break;
+		//			}
+		//		}
+		//		LOG("ROOM %d %d", node_room.attribute("x").as_int(), node_room.attribute("y").as_int());
+		//		pugi::xml_node enemies_node = node_room.child("enemies");
+		//		if (enemies_node == NULL) {
+		//			enemies_node = node_room.append_child("enemies");
+		//		}
+		//		pugi::xml_node enemy_node = enemies_node.append_child("enemy");
+		//		enemy_node.append_attribute("subtype") = new_en->subtype;
+		//		enemy_node.append_attribute("x") = new_en->pos.x - aux_r->coords.x * ROOM_W;
+		//		enemy_node.append_attribute("y") = new_en->pos.y - aux_r->coords.y * ROOM_H;
+		//		LOG("ENEMY %d", enemy_node.attribute("subtype").as_int(22));
+		//	}
 		}
 	}
 
@@ -351,6 +427,8 @@ void Scene::ShowCoords()
 {
 	iPoint mouse_pos;
 	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
+
+	mouse_pos.y -= (App->render->camera.h / 2 - ROOM_H / 2);
 
 	std::string title = "MOUSE x: ";
 	title.append(std::to_string(mouse_pos.x));

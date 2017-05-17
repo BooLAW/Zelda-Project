@@ -103,6 +103,12 @@ protected:
 
 	bool change_scene = false;
 
+	pugi::xml_document scene_file;
+	pugi::xml_node scene_node;
+	pugi::xml_node scene;
+
+	uint enemy_selector;
+
 public:
 	bool follow_cam = true;
 	std::list<Room*> rooms;

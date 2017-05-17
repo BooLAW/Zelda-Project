@@ -54,7 +54,6 @@ public:
 	}
 
 	virtual int CheckSpace(float new_x, float new_y);
-
 protected:
 	SDL_Texture* tex = nullptr;
 	SDL_Rect rect;
