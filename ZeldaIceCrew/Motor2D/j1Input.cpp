@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
+#include <vector>
 
 
 #define MAX_KEYS 300
@@ -14,6 +15,7 @@ j1Input::j1Input() : j1Module()
 	keyboard = new j1KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
+	memset(gamepad_connected, -1, sizeof(int)*MAX_GAMECONTROLLERS);
 }
 
 // Destructor
@@ -34,6 +36,8 @@ bool j1Input::Awake(pugi::xml_node& config)
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+	if (SDL_Init(SDL_INIT_GAMECONTROLLER) != 0)
+		LOG("Error on SDL_Init");
 
 	return ret;
 }
@@ -80,6 +84,19 @@ bool j1Input::PreUpdate()
 		if(mouse_buttons[i] == KEY_UP)
 			mouse_buttons[i] = KEY_IDLE;
 	}
+
+	for (std::vector<GamePad*>::iterator it = gamepads.begin(); it != gamepads.end(); it++)
+	{
+		for (int i = 0; i < NUM_CONTROLLER_BUTTONS; ++i)
+		{
+			if ((*it)->gamecontroller_buttons[i] == KEY_DOWN)
+				(*it)->gamecontroller_buttons[i] = KEY_REPEAT;
+
+			if ((*it)->gamecontroller_buttons[i] == KEY_UP)
+				(*it)->gamecontroller_buttons[i] = KEY_IDLE;
+		}
+	}
+
 
 	while(SDL_PollEvent(&event) != 0)
 	{
@@ -131,6 +148,46 @@ bool j1Input::PreUpdate()
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
+
+			case SDL_CONTROLLERDEVICEADDED:
+				AddController(event.cdevice.which);
+				break;
+
+			case SDL_CONTROLLERDEVICEREMOVED:
+				RemoveController(event.cdevice.which);
+				break;
+
+			case SDL_CONTROLLERBUTTONDOWN :
+				{
+					for (std::vector<GamePad*>::iterator it = gamepads.begin(); it != gamepads.end(); it++)
+					{
+						if ((*it)->id == event.cbutton.which)
+						{
+							(*it)->gamecontroller_buttons[event.cbutton.button] = KEY_DOWN;
+							break;
+						}
+					}
+				}
+				break;
+
+			case SDL_CONTROLLERBUTTONUP:
+			{
+				for (std::vector<GamePad*>::iterator it = gamepads.begin(); it != gamepads.end(); it++)
+				{
+					if ((*it)->id == event.cbutton.which)
+					{
+						(*it)->gamecontroller_buttons[event.cbutton.button] = KEY_UP;
+						break;
+					}
+				}
+			}
+			break;
+
+			case SDL_CONTROLLERAXISMOTION:
+			{
+				AxisReaction(event.caxis.which, event.caxis.axis, event.caxis.value);
+			}
+			break;
 		}
 	}
 
@@ -140,6 +197,7 @@ bool j1Input::PreUpdate()
 // Called before quitting
 bool j1Input::CleanUp()
 {
+	gamepads.clear();
 	LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
@@ -216,6 +274,52 @@ void j1Input::DefaultControls()
 		}
 		if (i == DASH) {
 			controls[i] = SDL_SCANCODE_RCTRL;
+		}
+	}
+}
+void j1Input::PadDefaultControls()
+{
+	if (App->player->controller_index != 0) {
+		for (int i = 0; i < __LAST_CONTROLS; i++) {
+			if (i == MOVE_UP) {
+				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_UP;
+			}
+			if (i == MOVE_DOWN) {
+				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
+			}
+			if (i == MOVE_RIGHT) {
+				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
+			}
+			if (i == MOVE_LEFT) {
+				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
+			}
+			if (i == UP) {
+				controls[i] = SDL_CONTROLLER_BUTTON_Y;
+			}
+			if (i == DOWN) {
+				controls[i] = SDL_CONTROLLER_BUTTON_A;
+			}
+			if (i == RIGHT) {
+				controls[i] = SDL_CONTROLLER_BUTTON_B;
+			}
+			if (i == LEFT) {
+				controls[i] = SDL_CONTROLLER_BUTTON_X;
+			}
+			if (i == ACTION) {
+				controls[i] = SDL_CONTROLLER_AXIS_TRIGGERRIGHT;
+			}
+			if (i == MENU) {
+				controls[i] = SDL_CONTROLLER_BUTTON_LEFTSHOULDER;
+			}
+			if (i == WPN_NEXT) {
+				controls[i] = SDL_SCANCODE_E;
+			}
+			if (i == WPN_PREV) {
+				controls[i] = SDL_SCANCODE_Q;
+			}
+			if (i == DASH) {
+				controls[i] = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER;
+			}
 		}
 	}
 }
@@ -361,5 +465,157 @@ SDL_Scancode j1Input::returnkey()
 		return SDL_SCANCODE_0;
 	}
 	return SDL_SCANCODE_0;
+}
+
+j1KeyState j1Input::GetControllerButton(int pad, int id) const
+{
+	for (std::vector<GamePad*>::const_iterator it = gamepads.begin(); it != gamepads.end(); it++)
+	{
+		if ((*it)->id == gamepad_connected[pad]) {
+			return (*it)->gamecontroller_buttons[id];
+		}
+	}
+	return j1KeyState_null;
+}
+
+uint j1Input::GetControllerJoystickMove(int pad, int id) const
+{
+	for (std::vector<GamePad*>::const_iterator it = gamepads.begin(); it != gamepads.end(); it++)
+	{
+		if ((*it)->id == gamepad_connected[pad]) {
+			return (*it)->joystick_moves[id];
+		}
+	}
+	return 0;
+}
+
+void j1Input::AxisReaction(int pad, int axis, int value)
+{
+	for (std::vector<GamePad*>::iterator it = gamepads.begin(); it != gamepads.end(); it++)
+	{
+		if ((*it)->id == pad) {
+			switch (axis)
+			{
+			case 0:
+				if (value > 0)
+				{
+					(*it)->joystick_moves[LEFTJOY_RIGHT] = value;
+					(*it)->joystick_moves[LEFTJOY_LEFT] = 0;
+				}
+				else
+				{
+					(*it)->joystick_moves[LEFTJOY_LEFT] = -value;
+					(*it)->joystick_moves[LEFTJOY_RIGHT] = 0;
+				}
+				break;
+			case 1:
+				if (value > 0)
+				{
+					(*it)->joystick_moves[LEFTJOY_DOWN] = value;
+					(*it)->joystick_moves[LEFTJOY_UP] = 0;
+				}
+				else
+				{
+					(*it)->joystick_moves[LEFTJOY_UP] = -value;
+					(*it)->joystick_moves[LEFTJOY_DOWN] = 0;
+				}
+				break;
+			case 2:
+				if (value > 0)
+				{
+					(*it)->joystick_moves[RIGHTJOY_RIGHT] = value;
+					(*it)->joystick_moves[RIGHTJOY_LEFT] = 0;
+				}
+				else
+				{
+					(*it)->joystick_moves[RIGHTJOY_LEFT] = -value;
+					(*it)->joystick_moves[RIGHTJOY_RIGHT] = 0;
+				}
+				break;
+			case 3:
+				if (value > 0)
+				{
+					(*it)->joystick_moves[RIGHTJOY_DOWN] = value;
+					(*it)->joystick_moves[RIGHTJOY_UP] = 0;
+				}
+				else
+				{
+					(*it)->joystick_moves[RIGHTJOY_UP] = -value;
+					(*it)->joystick_moves[RIGHTJOY_DOWN] = 0;
+				}
+				break;
+			case 4:
+				(*it)->joystick_moves[LEFT_TRIGGER] = value;
+				break;
+			case 5:
+				(*it)->joystick_moves[RIGHT_TRIGGER] = value;
+				break;
+			}
+			break;
+		}
+	}
+}
+
+void j1Input::AddController(int id)
+{
+	if (SDL_IsGameController(id) && connected_gamepads < MAX_GAMECONTROLLERS)
+	{
+		SDL_GameController *pad = SDL_GameControllerOpen(id);
+
+		if (pad)
+		{
+			SDL_Joystick *joy = SDL_GameControllerGetJoystick(pad);
+			int instanceID = SDL_JoystickInstanceID(joy);
+			GamePad* new_pad = new GamePad();
+			new_pad->id = instanceID;
+			ConnectGamePad(instanceID);
+			memset(new_pad->gamecontroller_buttons, KEY_IDLE, sizeof(j1KeyState)*NUM_CONTROLLER_BUTTONS);
+			memset(new_pad->joystick_moves, 0, sizeof(uint)*JOY_MOVES_NULL);
+			new_pad->pad = pad;
+			new_pad->pad_num = connected_gamepads;
+			gamepads.push_back(new_pad);
+			connected_gamepads++;
+			App->player->controller_index = id;
+			PadDefaultControls();
+		}
+	}
+}
+
+void j1Input::RemoveController(int id)
+{
+	for (std::vector<GamePad*>::iterator it = gamepads.begin(); it != gamepads.end() && gamepads.size()>0; it++)
+	{
+		if ((*it)->id == id)
+		{
+			DisconectGamePad(id);
+			SDL_GameControllerClose((*it)->pad);
+			RELEASE(*it);
+			gamepads.erase(it);
+			connected_gamepads--;
+			break;
+		}
+	}
+}
+
+void j1Input::ConnectGamePad(int instanceID)
+{
+	for (int i = 0; i < MAX_GAMECONTROLLERS; i++) {
+		if (gamepad_connected[i] == -1)
+		{
+			gamepad_connected[i] = instanceID;
+			break;
+		}
+	}
+}
+
+void j1Input::DisconectGamePad(int instanceID)
+{
+	for (int i = 0; i < MAX_GAMECONTROLLERS; i++) {
+		if (gamepad_connected[i] == instanceID)
+		{
+			gamepad_connected[i] = -1;
+			break;
+		}
+	}
 }
 

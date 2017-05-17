@@ -194,6 +194,7 @@ public:
 	bool map3_comp = false;
 	bool map4_comp = false;
 	bool map5_comp = false;
+	uint controller_index = 0;
 
 	bool completed_maps[N_MAPS];
 

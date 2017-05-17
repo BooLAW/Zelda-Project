@@ -3,11 +3,30 @@
 
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
+#include "j1Player.h"
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
+#define NUM_CONTROLLER_BUTTONS 15
+#define MAX_GAMECONTROLLERS 4
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
+struct _SDL_GameController;
+
+enum JOYSTICK_MOVES
+{
+	LEFTJOY_LEFT = 0,
+	LEFTJOY_RIGHT,
+	LEFTJOY_UP,
+	LEFTJOY_DOWN,
+	RIGHTJOY_LEFT,
+	RIGHTJOY_RIGHT,
+	RIGHTJOY_UP,
+	RIGHTJOY_DOWN,
+	LEFT_TRIGGER,
+	RIGHT_TRIGGER,
+	JOY_MOVES_NULL
+};
 
 enum Controls {
 	UP = 0,
@@ -39,7 +58,8 @@ enum j1KeyState
 	KEY_IDLE = 0,
 	KEY_DOWN,
 	KEY_REPEAT,
-	KEY_UP
+	KEY_UP,
+	j1KeyState_null
 };
 
 enum Modules {
@@ -64,13 +84,13 @@ enum Modules {
 	last_module_
 };
 
-enum Pause_Type {
-
-	General_ = 0,
-	Inventory_,
-
-	last_pause_type_
-
+struct GamePad
+{
+	j1KeyState				gamecontroller_buttons[NUM_CONTROLLER_BUTTONS];
+	uint					joystick_moves[JOY_MOVES_NULL];
+	int						pad_num = -1;
+	int						id = -1;
+	_SDL_GameController*	pad = nullptr;
 };
 
 
@@ -111,7 +131,17 @@ public:
 	{
 		return mouse_buttons[id - 1];
 	}
+	j1KeyState GetControllerButton(int pad, int id) const;
 
+	// Return the motion value (form 0 to 32767) for a joystick direction
+
+	uint GetControllerJoystickMove(int pad, int id) const;
+	void AxisReaction(int pad, int axis, int value);
+	void AddController(int id);
+	void RemoveController(int id);
+
+	void ConnectGamePad(int instanceID);
+	void DisconectGamePad(int instanceID);
 	// Check if a certain window event happened
 	bool GetWindowEvent(int code);
 
@@ -120,6 +150,7 @@ public:
 	void GetMouseMotion(int& x, int& y);
 	std::string GetString();
 	void DefaultControls();
+	void PadDefaultControls();
 	int controls [__LAST_CONTROLS];
 	
 	//Pause things
@@ -136,6 +167,10 @@ private:
 	int			mouse_x;
 	int			mouse_y;
 	std::string   text;
+
+	std::vector<GamePad*>	gamepads;
+	int			connected_gamepads = 0;
+	int			gamepad_connected[MAX_GAMECONTROLLERS];
 };
 
 #endif // __j1INPUT_H__
