@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
 #include "j1Player.h"
+#include <vector>
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
 #define NUM_CONTROLLER_BUTTONS 15

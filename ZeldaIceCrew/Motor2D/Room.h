@@ -10,9 +10,9 @@ class Enemy;
 class Block;
 class Doorway;
 class Npc;
-
+enum NPC_TYPE;
 class Scene;
-
+class Npc;
 #define ROOM_W 1024
 #define ROOM_H 576
 

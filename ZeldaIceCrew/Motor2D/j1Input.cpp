@@ -3,7 +3,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
-#include <vector>
+
 
 
 #define MAX_KEYS 300
@@ -100,55 +100,60 @@ bool j1Input::PreUpdate()
 
 	while(SDL_PollEvent(&event) != 0)
 	{
-		switch(event.type)
+		while (SDL_PollEvent(&event) != 0)
 		{
+			switch (event.type)
+			{
 			case SDL_QUIT:
 				windowEvents[WE_QUIT] = true;
-			break;
-
-			case SDL_TEXTINPUT:
-				/* Add new text onto the end of our text */
-				text += event.text.text;
 				break;
+
 			case SDL_WINDOWEVENT:
-				switch(event.window.event)
+				switch (event.window.event)
 				{
 					//case SDL_WINDOWEVENT_LEAVE:
-					case SDL_WINDOWEVENT_HIDDEN:
-					case SDL_WINDOWEVENT_MINIMIZED:
-					case SDL_WINDOWEVENT_FOCUS_LOST:
+				case SDL_WINDOWEVENT_HIDDEN:
+				case SDL_WINDOWEVENT_MINIMIZED:
+				case SDL_WINDOWEVENT_FOCUS_LOST:
 					windowEvents[WE_HIDE] = true;
 					break;
 
 					//case SDL_WINDOWEVENT_ENTER:
-					case SDL_WINDOWEVENT_SHOWN:
-					case SDL_WINDOWEVENT_FOCUS_GAINED:
-					case SDL_WINDOWEVENT_MAXIMIZED:
-					case SDL_WINDOWEVENT_RESTORED:
+				case SDL_WINDOWEVENT_SHOWN:
+				case SDL_WINDOWEVENT_FOCUS_GAINED:
+				case SDL_WINDOWEVENT_MAXIMIZED:
+				case SDL_WINDOWEVENT_RESTORED:
 					windowEvents[WE_SHOW] = true;
 					break;
 				}
-			break;
+				break;
 
 			case SDL_MOUSEBUTTONDOWN:
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
 				//LOG("Mouse button %d down", event.button.button-1);
-			break;
+				break;
 
 			case SDL_MOUSEBUTTONUP:
 				mouse_buttons[event.button.button - 1] = KEY_UP;
 				//LOG("Mouse button %d up", event.button.button-1);
-			break;
+				break;
 
 			case SDL_MOUSEMOTION:
+			{
 				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
+			}
 			break;
 
+			// GUI -------------------
+			
+			// ------------------------
+
+			// GamePads Events --------
 			case SDL_CONTROLLERDEVICEADDED:
 				AddController(event.cdevice.which);
 				break;
@@ -157,18 +162,18 @@ bool j1Input::PreUpdate()
 				RemoveController(event.cdevice.which);
 				break;
 
-			case SDL_CONTROLLERBUTTONDOWN :
+			case SDL_CONTROLLERBUTTONDOWN:
+			{
+				for (std::vector<GamePad*>::iterator it = gamepads.begin(); it != gamepads.end(); it++)
 				{
-					for (std::vector<GamePad*>::iterator it = gamepads.begin(); it != gamepads.end(); it++)
+					if ((*it)->id == event.cbutton.which)
 					{
-						if ((*it)->id == event.cbutton.which)
-						{
-							(*it)->gamecontroller_buttons[event.cbutton.button] = KEY_DOWN;
-							break;
-						}
+						(*it)->gamecontroller_buttons[event.cbutton.button] = KEY_DOWN;
+						break;
 					}
 				}
-				break;
+			}
+			break;
 
 			case SDL_CONTROLLERBUTTONUP:
 			{
@@ -188,6 +193,9 @@ bool j1Input::PreUpdate()
 				AxisReaction(event.caxis.which, event.caxis.axis, event.caxis.value);
 			}
 			break;
+			// ------------------------
+
+			}
 		}
 	}
 

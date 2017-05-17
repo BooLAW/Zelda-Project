@@ -28,14 +28,13 @@ class Entity;
 class j1Player;
 struct SDL_Texture;
 struct SDL_Rect;
-
+enum NPC_TYPE;
 class Doorway;
 
 class Item;
 class Enemy;
 class Block;
 class Drop;
-class Npc;
 
 class EntityManager : public j1Module {
 public:
