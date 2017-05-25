@@ -39,6 +39,7 @@ bool j1Player::Start()
 	keys = 0;
 	rupees = 50;
 	controller_index = 0;
+	dash_fx = App->audio->LoadFx("Audio/Fx/break.wav");
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
 	//Idle
 	{
@@ -967,6 +968,7 @@ bool j1Player::Update(float dt)
 						if (anim_override == false) {
 							if (App->input->GetKey(App->input->controls[MOVE_UP]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_LEFT]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_DOWN]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_RIGHT]) == KEY_REPEAT) {
 								if (App->input->GetKey(App->input->controls[DASH]) == KEY_DOWN) {
+									App->audio->PlayFx(dash_fx);
 									action_blit = Dash;
 									action = true;
 									//dir_override = true;

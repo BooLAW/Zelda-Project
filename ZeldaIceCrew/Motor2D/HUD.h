@@ -61,12 +61,42 @@ public:
 	GuiImage* Continue;
 	GuiImage* titlescreen;
 	GuiImage* Exit;
+	GuiImage* Controls;
 	GuiImage* Minimap;
 	GuiImage* link_point;
 
 	GuiText* cont;
 	GuiText* title;
 	GuiText* exit;
+	GuiText* controls;
+
+	//CONTROLS
+
+	GuiText* up;
+	GuiText* down;
+	GuiText* right;
+	GuiText* left;
+	GuiText* move_up;
+	GuiText* move_down;
+	GuiText* move_right;
+	GuiText* move_left;
+	GuiText* menu_inv;
+	GuiText* action;
+	GuiText* dash;
+
+	GuiText* up_key;
+	GuiText* down_key;
+	GuiText* left_key;
+	GuiText* right_key;
+	GuiText* move_up_key;
+	GuiText* move_down_key;
+	GuiText* move_left_key;
+	GuiText* move_right_key;
+	GuiText* menu_key;
+	GuiText* action_key;
+	GuiText* dash_key;
+
+	bool in_controls=false;
 
 	UIElement* menu_selected;
 

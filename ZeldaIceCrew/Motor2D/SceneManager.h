@@ -65,6 +65,8 @@ public:
 	DungeonScene*					dungeon_scene = nullptr;
 	ShopScene*						shop_scene = nullptr;
 	Main_Screen*					main_screen = nullptr;
+	uint							 close_fx;
+	uint						     open_fx;
 
 private:
 
@@ -76,6 +78,7 @@ private:
 	std::string			folder;
 	std::list<Scene*>				 scenes;
 	Scene*							 current_scene = nullptr;
+	
 
 };					
 
