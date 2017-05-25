@@ -19,11 +19,11 @@
 		<keys id="2" completed="false" />
 		<keys id="3" completed="false" />
 		<keys id="4" completed="false" />
-		<n_keys n="3" />
-		<hp curr="14" max="14" />
+		<n_keys n="4" />
+		<hp curr="18" max="18" />
 		<weapons curr_weapon="27" />
 		<rupees n="true" />
-		<stats power="30" speed="2" />
+		<stats power="30" speed="2.5" />
 		<items pegasus_boots="true" pegasus_boots="true" />
 	</player>
 	<:anonymous />
