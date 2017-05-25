@@ -375,6 +375,10 @@ bool EntityManager::Start(){
 	die_fx = App->audio->LoadFx("Audio/Fx/enemy dies.wav");
 	hit_fx = App->audio->LoadFx("Audio/Fx/flap.wav");
 
+	charge_fx = App->audio->LoadFx("Audio/Fx/agahnim_charge.wav");
+	shoot_fx = App->audio->LoadFx("Audio/Fx/agahnim_shoot.wav");
+	boss_die_fx = App->audio->LoadFx("Audio/Fx/boss_dies.wav");
+
 	return true;
 }
 

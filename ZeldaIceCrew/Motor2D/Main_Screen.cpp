@@ -23,7 +23,7 @@ bool Main_Screen::Awake()
 
 bool Main_Screen::Start()
 {
-
+	
 	std::ifstream f("save/save_game.xml");
 	
 	if (f.good())
@@ -38,6 +38,7 @@ bool Main_Screen::Start()
 	fx = App->audio->LoadFx("Audio/Fx/cursor.wav");
 	press_fx = App->audio->LoadFx("Audio/Fx/button.wav");
 	tex = App->tex->Load("Sprites/TitleScreen.png");
+	error = App->audio->LoadFx("Audio/Fx/error.wav");
 	//App->render->camera.w = 1920;
 	//App->render->camera.h = 1200;
 	App->render->cam_travel = true;
@@ -1077,7 +1078,7 @@ bool Main_Screen::Update(float dt)
 
 			}
 			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-				App->audio->PlayFx(press_fx);
+				
 				if (selected == Back_dung) {
 					in_controls = false;
 					in_settings = false;
@@ -1085,41 +1086,72 @@ bool Main_Screen::Update(float dt)
 					selected = ui_elements.front();
 				}
 				if (selected == d1) {
-					App->scene_manager->dungeon_id = 0;
-					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
-					App->hud->Minimap->active = false;
-					App->hud->link_point->active = false;
-					App->player->inMainScreen = false;
+					if (App->player->completed_maps[0] == false) {
+						App->audio->PlayFx(press_fx);
+						App->scene_manager->dungeon_id = 0;
+						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+						App->hud->Minimap->active = false;
+						App->hud->link_point->active = false;
+						App->player->inMainScreen = false;
+					}
+					else {
+						App->audio->PlayFx(error);
+					}
 				}
 				if (selected == d2) {
-					App->scene_manager->dungeon_id = 1;
-					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
-					App->hud->Minimap->active = false;
-					App->hud->link_point->active = false;
-					App->player->inMainScreen = false;
+					if (App->player->completed_maps[1] == false) {
+						App->audio->PlayFx(press_fx);
+						App->scene_manager->dungeon_id = 1;
+						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+						App->hud->Minimap->active = false;
+						App->hud->link_point->active = false;
+						App->player->inMainScreen = false;
+					}
+					else {
+						App->audio->PlayFx(error);
+					}
 				}
 				if (selected == d3) {
-					App->scene_manager->dungeon_id = 2;
-					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
-					App->hud->Minimap->active = false;
-					App->hud->link_point->active = false;
-					App->player->inMainScreen = false;
+					if (App->player->completed_maps[2] == false) {
+						App->audio->PlayFx(press_fx);
+						App->scene_manager->dungeon_id = 2;
+						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+						App->hud->Minimap->active = false;
+						App->hud->link_point->active = false;
+						App->player->inMainScreen = false;
+					}
+					else {
+						App->audio->PlayFx(error);
+					}
 				}
 				if (selected == d4) {
-					App->scene_manager->dungeon_id = 3;
-					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
-					App->hud->Minimap->active = false;
-					App->hud->link_point->active = false;
-					App->player->inMainScreen = false;
+					if (App->player->completed_maps[3] == false) {
+						App->audio->PlayFx(press_fx);
+						App->scene_manager->dungeon_id = 3;
+						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+						App->hud->Minimap->active = false;
+						App->hud->link_point->active = false;
+						App->player->inMainScreen = false;
+					}
+					else {
+						App->audio->PlayFx(error);
+					}
 				}
 				if (selected == d5) {
-					App->scene_manager->dungeon_id = 4;
-					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
-					App->hud->Minimap->active = false;
-					App->hud->link_point->active = false;
-					App->player->inMainScreen = false;
+					if (App->player->completed_maps[4] == false) {
+						App->audio->PlayFx(press_fx);
+						App->scene_manager->dungeon_id = 4;
+						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
+						App->hud->Minimap->active = false;
+						App->hud->link_point->active = false;
+						App->player->inMainScreen = false;
+					}
+					else {
+						App->audio->PlayFx(error);
+					}
 				}
 				if (selected == dungeon_boss) {
+					App->audio->PlayFx(press_fx);
 					App->scene_manager->dungeon_id = 5;
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 					App->hud->Minimap->active = false;

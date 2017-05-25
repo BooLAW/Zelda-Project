@@ -110,6 +110,9 @@ public:
 	SDL_Texture* map2;
 	SDL_Texture* map3;
 	SDL_Texture* map4;
+
+	uint move_fx;
+	uint press_fx;
 };
 
 

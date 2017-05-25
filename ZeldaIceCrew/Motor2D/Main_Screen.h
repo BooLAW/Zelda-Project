@@ -75,6 +75,7 @@ private:
 	GuiText* exit;
 	uint fx;
 	uint press_fx;
+	uint error;
 
 	///////
 

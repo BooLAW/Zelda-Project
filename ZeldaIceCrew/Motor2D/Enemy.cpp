@@ -1816,18 +1816,25 @@ void BossAgahnim::Update(float dt)
 		}
 		switch (state) {
 		case attack_charge:
+			
 			timer.Start();
 			timer.SetFlag(true);
-			if (timer.Read() > 1000) {
+			//App->audio->PlayFx(App->entitymanager->charge_fx);
+			if (timer.Read() > 990) {
 				appear_a.Reset();
 				disappear_a.Reset();
 				timer.SetFlag(false);
-				if (ball_counter < 2)
+				if (ball_counter < 2) {
+					
 					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, Down);
+				}
+			//	App->audio->PlayFx(App->entitymanager->shoot_fx);
 				state = attack;
 			}
+			
 			break;
 		case attack:
+			
 			timer.Start();
 			timer.SetFlag(true);
 			if (ball_counter < 2) {

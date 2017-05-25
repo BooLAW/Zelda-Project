@@ -13,7 +13,8 @@ bool HUD::Start()
 	items = App->tex->Load("Sprites/Items32x32.png");
 	max_keys = 5;
 	bool ret = true;
-
+	move_fx = App->audio->LoadFx("Audio/Fx/cursor.wav");
+	press_fx = App->audio->LoadFx("Audio/Fx/button.wav");
 	Minimap = (GuiImage*)App->gui->CreateElement(image);
 	Minimap->pos = { 250 ,150 };
 	Minimap->texture = App->tex->Load("Sprites/mace_knight_minimap.png");
@@ -492,6 +493,7 @@ bool HUD::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 			if (!in_controls) {
 				if (!Menu->active) {
+					App->audio->PlayFx(App->player->open_inv_fx);
 					inv->Disable();
 					descriptions_rect->active = false;
 					item_description->active = false;
@@ -504,7 +506,6 @@ bool HUD::Update(float dt)
 
 
 					menu_selected = Continue;
-					App->Pause();
 					Menu->active = true;
 					Continue->active = true;
 					titlescreen->active = true;
@@ -515,8 +516,10 @@ bool HUD::Update(float dt)
 					Controls->active = true;
 					controls->active = true;
 					Disable_map();
+					App->Pause();
 				}
 				else {
+					App->audio->PlayFx(App->player->close_inv_fx);
 					App->UnPause();
 					menu_selected = Continue;
 					Menu->active = false;
@@ -532,6 +535,7 @@ bool HUD::Update(float dt)
 			}
 		}
 		if (Menu->active) {
+			App->Pause();
 			for (std::list<UIElement*>::const_iterator it = menu.cbegin(); it != menu.cend(); it++) {
 				if (menu_selected == it._Ptr->_Myval) {
 					it._Ptr->_Myval->texture_rect = { 109,601,336,36 };
@@ -575,6 +579,7 @@ bool HUD::Update(float dt)
 
 				if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 					in_controls = false;
+					App->audio->PlayFx(press_fx);
 				}
 			}
 			else {
@@ -611,12 +616,15 @@ bool HUD::Update(float dt)
 				
 				if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 					menu_selected = menu_prev();
+					App->audio->PlayFx(move_fx);
 				}
 				if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
 					menu_selected = menu_next();
+					App->audio->PlayFx(move_fx);
 				}
 				if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 					if (menu_selected == Continue) {
+						App->audio->PlayFx(press_fx);
 						App->UnPause();
 						Menu->active = false;
 						Continue->active = false;
@@ -651,17 +659,84 @@ bool HUD::Update(float dt)
 						dash_key->active = false;
 					}
 					if (menu_selected == titlescreen) {
+						App->audio->PlayFx(press_fx);
 						App->player->inMainScreen = true;
 						if (App->IsPaused()) {
 							App->UnPause();
 						}
+						App->UnPause();
+						Menu->active = false;
+						Continue->active = false;
+						titlescreen->active = false;
+						Exit->active = false;
+						cont->active = false;
+						title->active = false;
+						exit->active = false;
+						up->active = false;
+						down->active = false;
+						right->active = false;
+						left->active = false;
+						move_up->active = false;
+						move_down->active = false;
+						move_right->active = false;
+						move_left->active = false;
+						menu_inv->active = false;
+						action->active = false;
+						dash->active = false;
+						Controls->active = false;
+						controls->active = false;
+						up_key->active = false;
+						down_key->active = false;
+						left_key->active = false;
+						right_key->active = false;
+						move_up_key->active = false;
+						move_down_key->active = false;
+						move_left_key->active = false;
+						move_right_key->active = false;
+						menu_key->active = false;
+						action_key->active = false;
+						dash_key->active = false;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->main_screen);
 					}
 					if (menu_selected == Controls) {
+						App->audio->PlayFx(press_fx);
 						in_controls = true;
 					}
 					if (menu_selected == Exit) {
+						App->audio->PlayFx(press_fx);
 						ret = false;
+						App->UnPause();
+						Menu->active = false;
+						Continue->active = false;
+						titlescreen->active = false;
+						Exit->active = false;
+						cont->active = false;
+						title->active = false;
+						exit->active = false;
+						up->active = false;
+						down->active = false;
+						right->active = false;
+						left->active = false;
+						move_up->active = false;
+						move_down->active = false;
+						move_right->active = false;
+						move_left->active = false;
+						menu_inv->active = false;
+						action->active = false;
+						dash->active = false;
+						Controls->active = false;
+						controls->active = false;
+						up_key->active = false;
+						down_key->active = false;
+						left_key->active = false;
+						right_key->active = false;
+						move_up_key->active = false;
+						move_down_key->active = false;
+						move_left_key->active = false;
+						move_right_key->active = false;
+						menu_key->active = false;
+						action_key->active = false;
+						dash_key->active = false;
 					}
 				}
 
