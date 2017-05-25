@@ -192,10 +192,10 @@
         <!-- ITEM -->
         <room x="0" y="1" w="1024" h="576">
           <enemies>
-            <enemy subtype="t_bluearcher"       x= "134"     y= "90"/>
-            <enemy subtype="t_bluearcher"       x= "134"     y= "448"/>
-            <enemy subtype="t_bluearcher"       x= "864"    y= "90" />
-            <enemy subtype="t_bluearcher"       x= "864"    y= "448"/>
+            <enemy subtype="t_greensoldier"       x= "864"    y= "90"/>
+            <enemy subtype="t_greensoldier"       x= "864"    y= "448"/>
+            <enemy subtype="t_bluearcher"       x= "350"    y= "70" />
+            <enemy subtype="t_bluearcher"       x= "334"    y= "458"/>
 
 
           </enemies>
@@ -224,7 +224,7 @@
             <enemy subtype="t_GBat"             x= "134"     y= "448"/>
             <enemy subtype="t_GBat"             x= "864"    y= "90" />
             <enemy subtype="t_GBat"             x= "864"    y= "448"/>
-            <enemy subtype="t_redsoldier" x= "503"     y= "359"/>
+            <enemy subtype="t_redsoldier" x= "490"     y= "329"/>
           </enemies>
           <items>
 
@@ -347,7 +347,6 @@
         <room x="3" y="4" w="1024" h="576">
           <enemies>
             <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
-            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
             <enemy subtype="t_freezor" x= "503"    y= "359"/>
           </enemies>
           <doorways>
@@ -596,7 +595,7 @@
 
     </map>
 
-    <map id="3">
+     <map id="3">
 
       <file>Layout4.tmx</file>
 
