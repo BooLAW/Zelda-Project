@@ -69,6 +69,11 @@ public:
 	std::list<Doorway*> doorways;
 	std::list<Npc*> npcs;
 
+	SDL_Texture* retro_enemies;
+	SDL_Texture* retro_items;
+	SDL_Texture* items_nonretro;
+	SDL_Texture* enemies_nonretro;
+
 protected:
 	Scene* parent;
 

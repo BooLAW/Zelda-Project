@@ -363,7 +363,7 @@ bool j1Player::Start()
 	// Load Textures
 
 	Link_Movement = App->tex->Load("Sprites/Link_Movement.png");
-	
+	Link_retro = App->tex->Load("Sprites/Link_MovementRetro.png");
 
 	// !_Textures
 
@@ -825,7 +825,12 @@ animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
 bool j1Player::Update(float dt)
 {
 	bool ret = true;
-
+	if (App->scene_manager->dungeon_id == 1) {
+		curr_texture = Link_retro;
+	}
+	else {
+		curr_texture = Link_Movement;
+	}
 	if (inMainScreen) {
 
 	}
@@ -1064,7 +1069,7 @@ bool j1Player::Update(float dt)
 						if (inmortal == true) {
 							animations[action_blit][curr_dir].GetCurrentFrame();
 							if (ticking_effect > 0) {
-								App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+								App->render->toDraw(curr_texture, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 								//!_Movement ""
 								ticking_effect = 0;
 							}
@@ -1073,7 +1078,7 @@ bool j1Player::Update(float dt)
 							}
 						}
 						else {
-							App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+							App->render->toDraw(curr_texture, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 						}
 						if (anim_override == true && animations[action_blit][curr_dir].Finished()) {
 							anim_override = false;
@@ -1097,13 +1102,13 @@ bool j1Player::Update(float dt)
 							LOG("ACTION = FALSE");
 							action_test = false;
 							animations[action_blit][curr_dir].Reset();
-							App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[Idle][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
+							App->render->toDraw(curr_texture, pos.y - PL_OFFSET_Y + animations[Idle][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[Idle][curr_dir].GetCurrentFrame());
 						}
 						else {
 							if (inmortal == true) {
 								animations[action_blit][curr_dir].GetCurrentFrame();
 								if (ticking_effect > 0) {
-									App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+									App->render->toDraw(curr_texture, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 									ticking_effect = 0;
 								}
 								else {
@@ -1111,7 +1116,7 @@ bool j1Player::Update(float dt)
 								}
 							}
 							else {
-								App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+								App->render->toDraw(curr_texture, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 							}
 							if (animations[action_blit][curr_dir].Finished() && App->input->GetKey(App->input->controls[ACTION]) == KEY_REPEAT)
 								animations[action_blit][curr_dir].Reset();
@@ -1230,6 +1235,7 @@ bool j1Player::CleanUp()
 
 	// Unloading All Textures
 	App->tex->UnLoad(Link_Movement);
+	App->tex->UnLoad(Link_retro);
 	if (link_coll != nullptr)
 		link_coll->to_delete = true;
 	if (weapon_coll != nullptr)

@@ -2,10 +2,18 @@
 
 void Room::Start()
 {
+	retro_enemies = App->tex->Load("Sprites/Enemies/EnemiesRetro.png");
+	retro_items = App->tex->Load("Sprites/Items32x32Retro.png");
+	enemies_nonretro = App->tex->Load("Sprites/Enemies/Enemies.png");
+	items_nonretro = App->tex->Load("Sprites/Items32x32.png");
 }
 
 void Room::Update(float dt)
 {
+
+	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
+		if()
+	}
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++) {
 			if ((*it) != nullptr) {
 				if (PlayerInside() == true) {

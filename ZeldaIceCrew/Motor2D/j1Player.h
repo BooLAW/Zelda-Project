@@ -106,7 +106,8 @@ public:
 
 private:
 	SDL_Texture* Link_Movement = nullptr;
-	
+	SDL_Texture* Link_retro = nullptr;
+	SDL_Texture* curr_texture = nullptr;
 
 	// All player sprites / animations
 	Animation animations[Sprites::__LAST][Direction::LastDir];
