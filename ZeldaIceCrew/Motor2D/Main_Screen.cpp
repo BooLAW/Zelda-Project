@@ -1077,11 +1077,8 @@ bool Main_Screen::Update(float dt)
 				}*/
 
 			}
-<<<<<<< HEAD
-			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-=======
+
 			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
->>>>>>> origin/Develop
 				
 				if (selected == Back_dung) {
 					in_controls = false;

@@ -68,6 +68,7 @@ public:
 	uint							 close_fx;
 	uint						     open_fx;
 
+
 private:
 
 	Animation		ChangeAnimation;
