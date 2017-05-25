@@ -1000,7 +1000,7 @@ bool j1Player::Update(float dt)
 								if (CheckSpace(pos.x - pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y + pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
 									pos.x -= pl_speed.x * DASH_SPD * (sqrt(2) / 2);
 									pos.y += pl_speed.y * DASH_SPD * (sqrt(2) / 2);
-								}
+							}
 							}
 							else if (App->input->GetKey(App->input->controls[MOVE_DOWN]) && App->input->GetKey(App->input->controls[MOVE_RIGHT])) {
 								if (CheckSpace(pos.x + pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y + pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
@@ -1008,22 +1008,22 @@ bool j1Player::Update(float dt)
 									pos.y += pl_speed.y * DASH_SPD * (sqrt(2) / 2);
 								}
 							}
-							else if (App->input->GetKey(App->input->controls[MOVE_UP])) {
+							else if (App->input->GetKey(App->input->controls[MOVE_UP]) || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_IDLE) {
 								if (CheckSpace(pos.x, pos.y - pl_speed.y * DASH_SPD) == 0) {
 									pos.y -= pl_speed.y * DASH_SPD;
 								}
 							}
-							else if (App->input->GetKey(App->input->controls[MOVE_LEFT])) {
+							else if (App->input->GetKey(App->input->controls[MOVE_LEFT]) || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == KEY_IDLE) {
 								if (CheckSpace(pos.x - pl_speed.x * DASH_SPD, pos.y) == 0) {
 									pos.x -= pl_speed.x * DASH_SPD;
 								}
 							}
-							else if (App->input->GetKey(App->input->controls[MOVE_DOWN])) {
+							else if (App->input->GetKey(App->input->controls[MOVE_DOWN]) || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_IDLE) {
 								if (CheckSpace(pos.x, pos.y + pl_speed.y * DASH_SPD) == 0) {
 									pos.y += pl_speed.y * DASH_SPD;
 								}
 							}
-							else if (App->input->GetKey(App->input->controls[MOVE_RIGHT])) {
+							else if (App->input->GetKey(App->input->controls[MOVE_RIGHT]) || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == KEY_IDLE) {
 								if (CheckSpace(pos.x + pl_speed.x * DASH_SPD, pos.y) == 0) {
 									pos.x += pl_speed.x * DASH_SPD;
 								}
@@ -1121,7 +1121,7 @@ bool j1Player::Update(float dt)
 					//!_Actions	
 					
 
-					if ((App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN)&&(!action)) {
+					if ((App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN) || App->input->GetControllerButton(0,SDL_CONTROLLER_BUTTON_BACK)== KEY_DOWN &&(!action)) {
 						if (!App->hud->inv->active) {
 							App->hud->inv->active = true;
 							App->audio->PlayFx(open_inv_fx);
@@ -1178,7 +1178,7 @@ bool j1Player::Update(float dt)
 		}
 		else {
 			App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
-			if (App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN) {
+			if (App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_BACK) == KEY_DOWN) {
 				if (App->hud->inv->active) {
 					App->hud->inv->active = false;
 					App->audio->PlayFx(close_inv_fx);
@@ -1186,21 +1186,21 @@ bool j1Player::Update(float dt)
 				}
 			}
 			if (App->hud->inv->active) {
-				if (App->input->GetKey(App->input->controls[UP]) == KEY_DOWN) {
+				if (App->input->GetKey(App->input->controls[UP]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
 					App->hud->inv->Move_Sel_up();
 				}
-				else if (App->input->GetKey(App->input->controls[DOWN]) == KEY_DOWN) {
+				else if (App->input->GetKey(App->input->controls[DOWN]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
 					App->hud->inv->Move_Sel_down();
 				}
-				else if (App->input->GetKey(App->input->controls[RIGHT]) == KEY_DOWN) {
+				else if (App->input->GetKey(App->input->controls[RIGHT]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == KEY_DOWN) {
 					App->hud->inv->Move_Sel_forward();
 				}
-				else if (App->input->GetKey(App->input->controls[LEFT]) == KEY_DOWN) {
+				else if (App->input->GetKey(App->input->controls[LEFT]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == KEY_DOWN) {
 					App->hud->inv->Move_Sel_backwards();
 				}
 			}
 			if (App->hud->Minimap->active) {
-				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_Y) == KEY_DOWN) {
 					if ((App->scene_manager->dungeon_id != 5) || (App->scene_manager->dungeon_id != 6)) {
 						App->hud->Disable_map();
 					}
