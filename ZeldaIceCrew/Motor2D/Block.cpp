@@ -82,7 +82,7 @@ void Block::Reward()
 
 	if (target != -1) {
 
-		App->scene_manager->GetCurrentScene()->AddItem(target, room.x, room.y, pos.x - room.x * ROOM_W, pos.y - room.y * ROOM_H);
+		App->scene_manager->GetCurrentScene()->AddItem(target, room.x, room.y, (pos.x + 8) - room.x * ROOM_W, (pos.y + 8) - room.y * ROOM_H);
 
 	}
 	else {}
