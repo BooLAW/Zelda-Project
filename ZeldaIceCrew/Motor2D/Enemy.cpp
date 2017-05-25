@@ -343,7 +343,7 @@ void Enemy::Reward()
 	}
 
 	if (target != -1) {
-		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, (pos.x + HitBox->rect.w / 2 - 16) - ROOM_W * room.x, (pos.y + +HitBox->rect.h / 2 - 16) - ROOM_H * room.y);
+		App->scene_manager->GetCurrentScene()->GetCurrentRoom()->AddItem(target, (HitBox->rect.x + HitBox->rect.w / 2 - 16) - ROOM_W * room.x, (HitBox->rect.y + HitBox->rect.h / 2 - 16) - ROOM_H * room.y);
 
 	}
 	else {}
