@@ -983,7 +983,7 @@ bool j1Player::Update(float dt)
 							PlayerInmortal(1);
 							link_coll->active = false;
 							if (App->input->GetKey(App->input->controls[MOVE_UP]) && App->input->GetKey(App->input->controls[MOVE_LEFT])) {
-								if (CheckSpace(pos.x - pl_speed.x * DASH_SPD * (sqrt(2) / 2), pos.y - pl_speed.y * DASH_SPD * (sqrt(2) / 2)) == 0) {
+								if (CheckSpace(pos.x - pl_speed.x * (sqrt(2) / 2), pos.y - pl_speed.y * (sqrt(2) / 2)) == 0) {
 									pos.x -= pl_speed.x * DASH_SPD * (sqrt(2) / 2);
 									pos.y -= pl_speed.y * DASH_SPD * (sqrt(2) / 2);
 								}
@@ -1537,8 +1537,11 @@ int j1Player::CheckSpace(float new_x, float new_y)
 	int ret = true;
 
 	// TileCheck
-		if (App->map->active == true)
-			ret = App->map->TileCheck(new_x, new_y);
+	if (App->map->active == true) {
+		ret = App->map->TileCheck(new_x, new_y);
+		if(ret != 1)
+		ret = App->map->TileCheck(new_x + mov_coll->rect.w, new_y + mov_coll->rect.h);
+	}
 		if (ret != 1) {
 			SDL_Rect r = mov_coll->rect;
 			r.x = new_x;

@@ -33,11 +33,19 @@ bool Entity::LoadAnimations(std::string file)
 int Entity::CheckSpace(float new_x, float new_y)
 
 {
-	int ret = true;
+	int ret = 0;
 
 	// TileCheck
 	
-	ret = App->map->TileCheck(new_x, new_y);
+	for (int x = new_x; x < new_x + HitBox->rect.w; x += 10) {
+		for (int y = new_y; y < new_y + HitBox->rect.h; y += 10) {
+			ret = App->map->TileCheck(x, y);
+			if (ret != 0) {
+				return ret;
+			}
+		}
+	}
+
 	//0 walkable
 	//1 wall
 	//2 hole

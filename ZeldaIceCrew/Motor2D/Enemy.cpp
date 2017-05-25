@@ -82,7 +82,7 @@ void Enemy::stdUpdate(float dt)
 					if (App->player->weapon_coll != nullptr)
 						if (this->HitBox->CheckCollision(App->player->weapon_coll->rect) == true) {
 							Hit(App->player->curr_dir, App->player->power);
-								App->audio->PlayFx(App->entitymanager->hit_fx);
+								//App->audio->PlayFx(App->entitymanager->hit_fx);
 						}
 				}
 			}
