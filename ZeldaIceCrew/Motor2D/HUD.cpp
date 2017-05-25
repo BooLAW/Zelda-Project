@@ -140,6 +140,8 @@ bool HUD::Start()
 	dialog->movable = true;
 	dialog->pos = { dialog_rect->pos.x + 10, dialog_rect->pos.y + 10 };
 
+
+
 	GenerateHP();
 
 	if (!App->player->inventory.empty()) {
@@ -175,8 +177,16 @@ bool HUD::Start()
 	titlescreen->movable = true;
 	menu.push_back(titlescreen);
 
+	Controls = (GuiImage*)App->gui->CreateElement(image);
+	Controls->pos = { titlescreen->pos.x,titlescreen->pos.y + 100 };
+	Controls->texture_rect = { 108,680,336,36 };
+	Controls->active = false;
+	Controls->movable = true;
+	menu.push_back(Controls);
+
+
 	Exit = (GuiImage*)App->gui->CreateElement(image);
-	Exit->pos = { titlescreen->pos.x,titlescreen->pos.y + 100 };
+	Exit->pos = { Controls->pos.x,Controls->pos.y + 100 };
 	Exit->texture_rect = { 108,680,336,36 };
 	Exit->active = false;
 	Exit->movable = true;
@@ -194,11 +204,149 @@ bool HUD::Start()
 	title->active = false;
 	title->movable = true;
 
+	controls = (GuiText*)App->gui->CreateElement(text);
+	controls->pos = { Controls->pos.x + 50, Controls->pos.y + 2 };
+	controls->str = "Controls";
+	controls->active = false;
+	controls->movable = true;
+
 	exit = (GuiText*)App->gui->CreateElement(text);
 	exit->pos = { Exit->pos.x + 50, Exit->pos.y + 2 };
 	exit->str = "Exit";
 	exit->active = false;
 	exit->movable = true;
+
+	up = (GuiText*)App->gui->CreateElement(text);
+	up->pos = { Menu->pos.x + 75 ,Menu->pos.y + 50 };
+	up->active = false;
+	up->movable = true;
+	up->str = "Up";
+
+	down = (GuiText*)App->gui->CreateElement(text);
+	down->pos = { up->pos.x,up->pos.y + 40 };
+	down->active = false;
+	down->movable = true;
+	down->str = "Down";
+
+	right = (GuiText*)App->gui->CreateElement(text);
+	right->pos = { down->pos.x,down->pos.y + 40 };
+	right->active = false;
+	right->movable = true;
+	right->str = "Right";
+
+	left = (GuiText*)App->gui->CreateElement(text);
+	left->pos = { right->pos.x,right->pos.y + 40 };
+	left->active = false;
+	left->movable = true;
+	left->str = "Left";
+
+	move_up = (GuiText*)App->gui->CreateElement(text);
+	move_up->pos = { left->pos.x,left->pos.y + 40 };
+	move_up->active = false;
+	move_up->movable = true;
+	move_up->str = "Move Up";
+
+	move_down = (GuiText*)App->gui->CreateElement(text);
+	move_down->pos = { move_up->pos.x, move_up->pos.y + 40 };
+	move_down->active = false;
+	move_down->movable = true;
+	move_down->str = "Move Down";
+
+	move_right = (GuiText*)App->gui->CreateElement(text);
+	move_right->pos = { move_down->pos.x,move_down->pos.y + 40 };
+	move_right->active = false;
+	move_right->movable = true;
+	move_right->str = "Move Right";
+
+	move_left = (GuiText*)App->gui->CreateElement(text);
+	move_left->pos = { move_right->pos.x,move_right->pos.y + 40 };
+	move_left->active = false;
+	move_left->movable = true;
+	move_left->str = "Move Left";
+
+	menu_inv = (GuiText*)App->gui->CreateElement(text);
+	menu_inv->pos = { move_left->pos.x,move_left->pos.y + 40 };
+	menu_inv->active = false;
+	menu_inv->movable = true;
+	menu_inv->str = "Menu";
+
+	action = (GuiText*)App->gui->CreateElement(text);
+	action->pos = { menu_inv->pos.x,menu_inv->pos.y + 40 };
+	action->active = false;
+	action->movable = true;
+	action->str = "Action";
+
+	dash = (GuiText*)App->gui->CreateElement(text);
+	dash->pos = { action->pos.x,action->pos.y + 40 };
+	dash->active = false;
+	dash->movable = true;
+	dash->str = "Dash";
+
+	up_key = (GuiText*)App->gui->CreateElement(text);
+	up_key->pos = { up->pos.x+200,up->pos.y};
+	up_key->active = false;
+	up_key->movable = true;
+	up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[UP]);
+
+	down_key = (GuiText*)App->gui->CreateElement(text);
+	down_key->pos = { down->pos.x + 200,down->pos.y };
+	down_key->active = false;
+	down_key->movable = true;
+	down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DOWN]);
+
+	left_key = (GuiText*)App->gui->CreateElement(text);
+	left_key->pos = { left->pos.x + 200,left->pos.y };
+	left_key->active = false;
+	left_key->movable = true;
+	left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[LEFT]);
+
+	right_key = (GuiText*)App->gui->CreateElement(text);
+	right_key->pos = { right->pos.x + 200,right->pos.y };
+	right_key->active = false;
+	right_key->movable = true;
+	right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[RIGHT]);
+
+	move_up_key = (GuiText*)App->gui->CreateElement(text);
+	move_up_key->pos = { move_up->pos.x + 200,move_up->pos.y };
+	move_up_key->active = false;
+	move_up_key->movable = true;
+	move_up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_UP]);
+
+	move_down_key = (GuiText*)App->gui->CreateElement(text);
+	move_down_key->pos = { move_down->pos.x + 200,move_down->pos.y };
+	move_down_key->active = false;
+	move_down_key->movable = true;
+	move_down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_DOWN]);
+
+	move_left_key = (GuiText*)App->gui->CreateElement(text);
+	move_left_key->pos = { move_left->pos.x + 200,move_left->pos.y };
+	move_left_key->active = false;
+	move_left_key->movable = true;
+	move_left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_LEFT]);
+
+	move_right_key = (GuiText*)App->gui->CreateElement(text);
+	move_right_key->pos = { move_right->pos.x + 200,move_right->pos.y };
+	move_right_key->active = false;
+	move_right_key->movable = true;
+	move_right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_RIGHT]);
+
+	menu_key = (GuiText*)App->gui->CreateElement(text);
+	menu_key->pos = { menu_inv->pos.x + 200,menu_inv->pos.y };
+	menu_key->active = false;
+	menu_key->movable = true;
+	menu_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MENU]);
+
+	action_key = (GuiText*)App->gui->CreateElement(text);
+	action_key->pos = { action->pos.x + 200,action->pos.y };
+	action_key->active = false;
+	action_key->movable = true;
+	action_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[ACTION]);
+
+	dash_key = (GuiText*)App->gui->CreateElement(text);
+	dash_key->pos = { dash->pos.x + 200,dash->pos.y };
+	dash_key->active = false;
+	dash_key->movable = true;
+	dash_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DASH]);
 
 	GenerateKeys();
 
@@ -209,12 +357,23 @@ bool HUD::Start()
 
 	
 	inv->SetOffset(30, 30);
-
+	in_controls = false;
 	return ret;
 }
 
 bool HUD::Update(float dt)
 {
+	up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[UP]);
+	down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DOWN]);
+	left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[LEFT]);
+	right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[RIGHT]);
+	move_up_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_UP]);
+	move_down_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_DOWN]);
+	move_left_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_LEFT]);
+	move_right_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MOVE_RIGHT]);
+	menu_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MENU]);
+	action_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[ACTION]);
+	dash_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DASH]);
 	
 	bool ret = true;
 	//AIDS here 
@@ -249,7 +408,7 @@ bool HUD::Update(float dt)
 
 	}
 
-	link_point->pos = { Minimap->pos.x + 5 + 100 * App->player->room.x, Minimap->pos.y  + 50 * App->player->room.y };
+	link_point->pos = { Minimap->pos.x + 100 * App->player->room.x, Minimap->pos.y  + 50 * App->player->room.y };
 
 	rupees_num->str = std::to_string(App->player->rupees);
 	//bombs_num->str = std::to_string(App->player->bombs);
@@ -289,7 +448,7 @@ bool HUD::Update(float dt)
 		//bombs->active = true;
 		life_icon->active = true;
 		rupees_num->active = true;
-	//	bombs_num->active = true;
+		//	bombs_num->active = true;
 		for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
 			it._Ptr->_Myval->active = true;
 		}
@@ -328,85 +487,189 @@ bool HUD::Update(float dt)
 			speed_num->active = false;
 			power->active = false;
 			power_num->active = false;
-			
+
 		}
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
-			if (!Menu->active) {
-				inv->Disable();
-				descriptions_rect->active = false;
-				item_description->active = false;
-				stats_rect->active = false;
-				speed->active = false;
-				speed_num->active = false;
-				power->active = false;
-				power_num->active = false;
-				minimap = false;
-				
+			if (!in_controls) {
+				if (!Menu->active) {
+					inv->Disable();
+					descriptions_rect->active = false;
+					item_description->active = false;
+					stats_rect->active = false;
+					speed->active = false;
+					speed_num->active = false;
+					power->active = false;
+					power_num->active = false;
+					minimap = false;
 
-				menu_selected = Continue;
-				App->Pause();
-				Menu->active = true;
+
+					menu_selected = Continue;
+					App->Pause();
+					Menu->active = true;
+					Continue->active = true;
+					titlescreen->active = true;
+					Exit->active = true;
+					cont->active = true;
+					title->active = true;
+					exit->active = true;
+					Controls->active = true;
+					controls->active = true;
+
+				}
+				else {
+					App->UnPause();
+					menu_selected = Continue;
+					Menu->active = false;
+					Continue->active = false;
+					titlescreen->active = false;
+					Exit->active = false;
+					cont->active = false;
+					title->active = false;
+					exit->active = false;
+					Controls->active = false;
+					controls->active = false;
+				}
+			}
+		}
+		if (Menu->active) {
+			for (std::list<UIElement*>::const_iterator it = menu.cbegin(); it != menu.cend(); it++) {
+				if (menu_selected == it._Ptr->_Myval) {
+					it._Ptr->_Myval->texture_rect = { 109,601,336,36 };
+				}
+				else {
+					it._Ptr->_Myval->texture_rect = { 108,680,336,36 };
+				}
+			}
+			if (in_controls) {
+
+				up_key->active = true;
+				down_key->active = true;
+				left_key->active = true;
+				right_key->active = true;
+				move_up_key->active = true;
+				move_down_key->active = true;
+				move_left_key->active = true;
+				move_right_key->active = true;
+				menu_key->active = true;
+				action_key->active = true;
+				dash_key->active = true;
+				cont->active = false;
+				title->active = false;
+				exit->active = false;
+				Continue->active = false;
+				titlescreen->active = false;
+				Exit->active = false;
+				Controls->active = false;
+				controls->active = false;
+				up->active = true;
+				down->active = true;
+				right->active = true;
+				left->active = true;
+				move_up->active = true;
+				move_down->active = true;
+				move_right->active = true;
+				move_left->active = true;
+				menu_inv->active = true;
+				action->active = true;
+				dash->active = true;
+
+				if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+					in_controls = false;
+				}
+			}
+			else {
+				up->active = false;
+				down->active = false;
+				right->active = false;
+				left->active = false;
+				move_up->active = false;
+				move_down->active = false;
+				move_right->active = false;
+				move_left->active = false;
+				menu_inv->active = false;
+				action->active = false;
+				dash->active = false;
+				Controls->active = true;
+				controls->active = true;
 				Continue->active = true;
 				titlescreen->active = true;
 				Exit->active = true;
 				cont->active = true;
 				title->active = true;
 				exit->active = true;
+				up_key->active = false;
+				down_key->active = false;
+				left_key->active = false;
+				right_key->active = false;
+				move_up_key->active = false;
+				move_down_key->active = false;
+				move_left_key->active = false;
+				move_right_key->active = false;
+				menu_key->active = false;
+				action_key->active = false;
+				dash_key->active = false;
+				
+				if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+					menu_selected = menu_prev();
+				}
+				if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+					menu_selected = menu_next();
+				}
+				if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+					if (menu_selected == Continue) {
+						App->UnPause();
+						Menu->active = false;
+						Continue->active = false;
+						titlescreen->active = false;
+						Exit->active = false;
+						cont->active = false;
+						title->active = false;
+						exit->active = false;
+						up->active = false;
+						down->active = false;
+						right->active = false;
+						left->active = false;
+						move_up->active = false;
+						move_down->active = false;
+						move_right->active = false;
+						move_left->active = false;
+						menu_inv->active = false;
+						action->active = false;
+						dash->active = false;
+						Controls->active = false;
+						controls->active = false;
+						up_key->active = false;
+						down_key->active = false;
+						left_key->active = false;
+						right_key->active = false;
+						move_up_key->active = false;
+						move_down_key->active = false;
+						move_left_key->active = false;
+						move_right_key->active = false;
+						menu_key->active = false;
+						action_key->active = false;
+						dash_key->active = false;
+					}
+					if (menu_selected == titlescreen) {
+						App->player->inMainScreen = true;
+						if (App->IsPaused()) {
+							App->UnPause();
+						}
+						App->scene_manager->ChangeScene((Scene*)App->scene_manager->main_screen);
+					}
+					if (menu_selected == Controls) {
+						in_controls = true;
+					}
+					if (menu_selected == Exit) {
+						ret = false;
+					}
+				}
 
-			}
-			else {
-				App->UnPause();
-				menu_selected = Continue;
-				Menu->active = false;
-				Continue->active = false;
-				titlescreen->active = false;
-				Exit->active = false;
-				cont->active = false;
-				title->active = false;
-				exit->active = false;
+
 			}
 		}
-				if (Menu->active) {
-					for (std::list<UIElement*>::const_iterator it = menu.cbegin(); it != menu.cend(); it++) {
-						if (menu_selected == it._Ptr->_Myval) {
-							it._Ptr->_Myval->texture_rect = { 109,601,336,36 };
-						}
-						else {
-							it._Ptr->_Myval->texture_rect = { 108,680,336,36 };
-						}
-					}
-					
-						if (App->input->GetKey(SDL_SCANCODE_UP)==KEY_DOWN) {
-							menu_selected = menu_prev();
-						}
-						if (App->input->GetKey(SDL_SCANCODE_DOWN)==KEY_DOWN) {
-							menu_selected = menu_next();
-				}
-						if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-							if (menu_selected == Continue) {
-								App->UnPause();
-								Menu->active = false;
-								Continue->active = false;
-								titlescreen->active = false;
-								Exit->active = false;
-								cont->active = false;
-								title->active = false;
-								exit->active = false;
-							}
-							if (menu_selected == titlescreen) {
-								App->player->inMainScreen = true;
-								if (App->IsPaused()) {
-									App->UnPause();
-								}
-								App->scene_manager->ChangeScene((Scene*)App->scene_manager->main_screen);
-							}
-							if (menu_selected == Exit) {
-								ret = false;
-							}
-
-						}
-			}
-		UpdateHP();
+			UpdateHP();
+		
 	}
 	return ret;
 }

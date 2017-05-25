@@ -491,6 +491,37 @@ bool Main_Screen::Start()
 	DB->active = false;
 	DB->str = "Boss Dungeon";
 	DB->movable = true;
+
+	d1_lvl= (GuiText*)App->gui->CreateElement(text);
+	d1_lvl->pos = { d1->pos.x + 400, d1->pos.y + 2 };
+	d1_lvl->active = false;
+	d1_lvl->str = "Easy";
+	d1_lvl->movable = true;
+
+	d2_lvl = (GuiText*)App->gui->CreateElement(text);
+	d2_lvl->pos = { d2->pos.x + 400, d2->pos.y + 2 };
+	d2_lvl->active = false;
+	d2_lvl->str = "Medium";
+	d2_lvl->movable = true;
+
+	d3_lvl = (GuiText*)App->gui->CreateElement(text);
+	d3_lvl->pos = { d3->pos.x +400, d3->pos.y + 2 };
+	d3_lvl->active = false;
+	d3_lvl->str = "Medium";
+	d3_lvl->movable = true;
+
+	d4_lvl = (GuiText*)App->gui->CreateElement(text);
+	d4_lvl->pos = { d4->pos.x +400, d4->pos.y + 2 };
+	d4_lvl->active = false;
+	d4_lvl->str = "Hard";
+	d4_lvl->movable = true;
+
+	d5_lvl = (GuiText*)App->gui->CreateElement(text);
+	d5_lvl->pos = { d5->pos.x +400, d5->pos.y + 2 };
+	d5_lvl->active = false;
+	d5_lvl->str = "Hard";
+	d5_lvl->movable = true;
+
 	
 
 	key1 = (GuiImage*)App->gui->CreateElement(image);
@@ -523,7 +554,10 @@ bool Main_Screen::Start()
 	key5->active = false;
 	key5->movable = true;
 
-
+	img_dung = (GuiImage*)App->gui->CreateElement(image);
+	img_dung->active = false;
+	img_dung->movable = true;
+	img_dung->pos = { 50,500 };
 	
 	Generatekeys();
 
@@ -551,6 +585,7 @@ bool Main_Screen::Update(float dt)
 		//screen->active = true;
 		Disablekeys();
 		Disable_dungeons();
+		img_dung->active = false;
 		Arena->active = false;
 		arena->active = false;
 		up->active = false;
@@ -593,6 +628,12 @@ bool Main_Screen::Update(float dt)
 		menu_key->active = false;
 		action_key->active = false;
 		dash_key->active = false;
+
+		d1_lvl->active = false;
+		d2_lvl->active = false;
+		d3_lvl->active = false;
+		d4_lvl->active = false;
+		d5_lvl->active = false;
 
 
 		for (std::list<UIElement*>::const_iterator it = settings_elements.cbegin(); it != settings_elements.cend(); it++) {
@@ -666,6 +707,7 @@ bool Main_Screen::Update(float dt)
 		//screen->active =false;
 		Disablekeys();
 		Disable_dungeons();
+		img_dung->active = false;
 		Arena->active = false;
 		arena->active = false;
 		New_game->active = false;
@@ -683,6 +725,11 @@ bool Main_Screen::Update(float dt)
 		mute->active = false;
 		Back->active = false;
 		back->active = false;
+		d1_lvl->active = false;
+		d2_lvl->active = false;
+		d3_lvl->active = false;
+		d4_lvl->active = false;
+		d5_lvl->active = false;
 
 		for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
 			it._Ptr->_Myval->active = true;
@@ -862,10 +909,39 @@ bool Main_Screen::Update(float dt)
 		else if (in_dungeons) {
 			UpdateKeys();
 			Enablekeys();
+			if (selected == d1) {
+				img_dung->texture = App->hud->map0;
+				img_dung->texture_rect = { 0,0,500,235 };
+			}
+			if (selected == d2) {
+				img_dung->texture = App->hud->map1;
+				img_dung->texture_rect = { 0,0,325,266 };
+			}
+			if (selected == d3) {
+				img_dung->texture = App->hud->map2;
+				img_dung->texture_rect = { 0,0,667,187 };
+			}
+			if (selected == d4) {
+				img_dung->texture = App->hud->map3;
+				img_dung->texture_rect = { 0,0,416,188 };
+			}
+			if (selected == d5) {
+				img_dung->texture = App->hud->map4;
+				img_dung->texture_rect = { 0,0,340,278 };
+			}
+			if (selected == dungeon_boss) {
+				img_dung->active = false;
+			}
 
 			//Screen->active =false;
 		//	screen->active =false;
 			Enable_dungeons();
+			d1_lvl->active = true;
+			d2_lvl->active = true;
+			d3_lvl->active = true;
+			d4_lvl->active = true;
+			d5_lvl->active = true;
+			img_dung->active = true;
 			Back_dung->active = true;
 			Arena->active = false;
 			arena->active = false;
@@ -1076,8 +1152,14 @@ bool Main_Screen::Update(float dt)
 		}
 		//Screen->active = false;
 		//screen->active = false;
+		img_dung->active = false;
 		Disablekeys();
 		Disable_dungeons();
+		d1_lvl->active = false;
+		d2_lvl->active = false;
+		d3_lvl->active = false;
+		d4_lvl->active = false;
+		d5_lvl->active = false;
 		up->active = false;
 		down->active = false;
 		right->active = false;
@@ -1495,6 +1577,7 @@ bool Main_Screen::CleanUp()
 	keys.clear();
 
 	Disablekeys();
+	img_dung->active = false;
 	Disable_dungeons();
 	background->active = false;
 	Arena->active = false;
@@ -1513,7 +1596,11 @@ bool Main_Screen::CleanUp()
 	back_controls->active= false;
 	//Screen->active = false;
 	//screen->active = false;
-
+	d1_lvl->active = false;
+	d2_lvl->active = false;
+	d3_lvl->active = false;
+	d4_lvl->active = false;
+	d5_lvl->active = false;
 	Up->active= false;
 	Down->active= false;
 	Right->active=false;

@@ -155,6 +155,14 @@ private:
 	GuiText* DB;
 	GuiText* back_dung;
 	GuiText* arena;
+	GuiImage* img_dung;
+
+	GuiText* d1_lvl;
+	GuiText* d2_lvl;
+	GuiText* d3_lvl;
+	GuiText* d4_lvl;
+	GuiText* d5_lvl;
+
 
 	GuiImage* Arena;
 	
