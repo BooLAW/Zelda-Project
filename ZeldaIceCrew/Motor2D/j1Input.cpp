@@ -36,6 +36,11 @@ bool j1Input::Awake(pugi::xml_node& config)
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+	// GUI -------------------------
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+		LOG("Error on SDL_Init");
+	// GameController --------------
+	/// To use PS3 Controller install this driver https://github.com/nefarius/ScpToolkit/releases/tag/v1.6.238.16010
 	if (SDL_Init(SDL_INIT_GAMECONTROLLER) != 0)
 		LOG("Error on SDL_Init");
 
@@ -47,7 +52,6 @@ bool j1Input::Start()
 {
 	SDL_StopTextInput();
 	DefaultControls();
-
 	return true;
 }
 
@@ -155,9 +159,11 @@ bool j1Input::PreUpdate()
 
 			// GamePads Events --------
 			case SDL_CONTROLLERDEVICEADDED:
+			{
 				AddController(event.cdevice.which);
+				PadDefaultControls();
+			}
 				break;
-
 			case SDL_CONTROLLERDEVICEREMOVED:
 				RemoveController(event.cdevice.which);
 				break;

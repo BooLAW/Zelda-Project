@@ -153,6 +153,7 @@ public:
 
 	uint reward_pool[N_ITEMS];
 
+
 };
 
 class BSoldier : public Enemy {

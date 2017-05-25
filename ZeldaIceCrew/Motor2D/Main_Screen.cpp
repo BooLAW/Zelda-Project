@@ -647,16 +647,16 @@ bool Main_Screen::Update(float dt)
 				it._Ptr->_Myval->pos.x = 250;
 			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
 			App->audio->PlayFx(fx);
 			selected = Settings_Prev();
 		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
 			App->audio->PlayFx(fx);
 			selected = Settings_Next();
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
 			App->audio->PlayFx(press_fx);
 			if (selected == Controls) {
 				in_settings = false;
@@ -694,7 +694,7 @@ bool Main_Screen::Update(float dt)
 			}
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
 			selected = ui_elements.front();
 			in_settings = false;
 			in_controls = false;
@@ -865,14 +865,14 @@ bool Main_Screen::Update(float dt)
 			}
 
 			else{
-			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
 				App->audio->PlayFx(fx);
 				selected = Controls_Prev();
 				/*if (!IsInsideCam(selected)) {
 				Scroll_Down();
 				}*/
 			}
-			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
 				App->audio->PlayFx(fx);
 				selected = Controls_Next();
 				/*if (!IsInsideCam(selected)) {
@@ -880,7 +880,7 @@ bool Main_Screen::Update(float dt)
 				}*/
 
 			}
-			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
 				if (selected == Back_controls) {
 					App->audio->PlayFx(press_fx);
 					in_settings = true;
@@ -893,7 +893,7 @@ bool Main_Screen::Update(float dt)
 					App->audio->PlayFx(press_fx);
 				}
 			}
-			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
 				App->audio->PlayFx(press_fx);
 				in_settings = true;
 				in_controls = false;
@@ -1041,7 +1041,7 @@ bool Main_Screen::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 				App->player->keys = 5;
 			}
-			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetControllerButton(0,SDL_CONTROLLER_BUTTON_DPAD_UP)==KEY_DOWN) {
 				App->audio->PlayFx(fx);
 				if (selected == Back_dung) {
 					if (App->player->keys >= 3) {
@@ -1058,7 +1058,7 @@ bool Main_Screen::Update(float dt)
 				Scroll_Down();
 				}*/
 			}
-			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
 				App->audio->PlayFx(fx);
 
 				if (selected == d5) {
@@ -1077,7 +1077,11 @@ bool Main_Screen::Update(float dt)
 				}*/
 
 			}
+<<<<<<< HEAD
 			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+=======
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
+>>>>>>> origin/Develop
 				
 				if (selected == Back_dung) {
 					in_controls = false;
@@ -1161,7 +1165,7 @@ bool Main_Screen::Update(float dt)
 				
 				//App->LoadGame("save_game.xml");
 			}
-			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
 				App->audio->PlayFx(press_fx);
 				in_settings = false;
 				in_controls = false;
@@ -1246,16 +1250,16 @@ bool Main_Screen::Update(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetControllerButton(0,SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
 			App->audio->PlayFx(fx);
 			selected = Prev();
 		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
 			App->audio->PlayFx(fx);
 			selected = Next();
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetControllerButton(0,SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
 			App->audio->PlayFx(press_fx);
 			if (selected == New_game) {
 				// start a new game, for now:

@@ -75,6 +75,9 @@ Particle * ModuleParticles::CreateParticle(uint p_type, int x, int y, uint dir)
 		case p_agahnim_lightning:
 			ret = new AgahnimLightning();
 			break;
+		case p_da:
+			ret = new DA();
+			break;
 		default:
 			LOG("Unknown Particle Type");
 			break;
@@ -175,7 +178,7 @@ void Particle::CleanUp()
 
 void Particle::Draw(float dt)
 {
-	App->render->toDraw(graphics, position.y + anim[curr_dir].GetCurrentFrame().h, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
+	App->render->toDraw(graphics, -99999, position.x, position.y, &anim[curr_dir].GetCurrentFrame());
 }
 
 int Particle::CheckSpace(float new_x, float new_y)
@@ -1329,4 +1332,27 @@ bool AgahnimLightning::Update(float dt)
 		}
 	}
 	return stdUpdate(dt);
+}
+
+void DA::Start()
+{
+	graphics = App->tex->Load("Sprites/Enemy Death Effects.png");
+	g_rect[Down][0] = { 155, 7, 51, 51};
+	g_rect[Down][1] = { 209, 7, 51, 51 };
+	g_rect[Down][2] = { 255, 7, 51, 51 };
+	g_rect[Down][3] = { 311, 7, 51, 51 };
+
+	for (int k = 0; k < LastDir; k++) {
+		anim[k].PushBack(g_rect[Down][0]);
+		anim[k].PushBack(g_rect[Down][1]);
+		anim[k].PushBack(g_rect[Down][2]);
+		anim[k].PushBack(g_rect[Down][3]);
+		anim[k].speed = 0.05;
+		anim[k].loop = false;
+	}
+
+	life = 500;
+
+	App->particle->AddParticle(this, COLLIDER_NONE, life, damage, NULL);
+
 }

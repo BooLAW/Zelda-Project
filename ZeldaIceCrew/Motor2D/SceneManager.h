@@ -67,7 +67,13 @@ public:
 	Main_Screen*					main_screen = nullptr;
 	uint							 close_fx;
 	uint						     open_fx;
+
 private:
+
+	Animation		ChangeAnimation;
+	SDL_Texture*	CA_tex = nullptr;
+	SDL_Rect		CA_Rect[8];
+
 	pugi::xml_document	scene_file;
 	std::string			folder;
 	std::list<Scene*>				 scenes;
