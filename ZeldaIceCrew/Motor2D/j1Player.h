@@ -220,6 +220,7 @@ public:
 	uint hurt;
 	uint open_inv_fx;
 	uint close_inv_fx;
+	uint dash_fx;
   // !_audio
   
 	int action_blit;
