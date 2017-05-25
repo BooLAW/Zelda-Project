@@ -489,7 +489,7 @@ bool HUD::Update(float dt)
 			power_num->active = false;
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetControllerButton(0,SDL_CONTROLLER_BUTTON_START) == KEY_DOWN) {
 			if (!in_controls) {
 				if (!Menu->active) {
 					inv->Disable();
@@ -573,7 +573,7 @@ bool HUD::Update(float dt)
 				action->active = true;
 				dash->active = true;
 
-				if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+				if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_START) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
 					in_controls = false;
 				}
 			}
@@ -609,13 +609,13 @@ bool HUD::Update(float dt)
 				action_key->active = false;
 				dash_key->active = false;
 				
-				if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+				if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
 					menu_selected = menu_prev();
 				}
-				if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+				if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
 					menu_selected = menu_next();
 				}
-				if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+				if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
 					if (menu_selected == Continue) {
 						App->UnPause();
 						Menu->active = false;
