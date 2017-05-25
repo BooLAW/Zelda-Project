@@ -726,8 +726,9 @@ void HUD::GenerateHP()
 			}
 
 		}
-		if (i >= 12) {
-			heart_pos.y += 20;
+		if ((i%12 ==0)&&(i!=0)) {
+			heart_pos.y += 40;
+			heart_pos.x = 750;
 		}
 	}
 }
