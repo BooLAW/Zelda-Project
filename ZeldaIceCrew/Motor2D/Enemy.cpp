@@ -319,6 +319,7 @@ void Enemy::Hit(uint dir, uint dmg)
 void Enemy::Death()
 {
 	LOG("DEATH");
+	App->particle->CreateParticle(p_da, HitBox->rect.x, HitBox->rect.y, Direction::Down);
 	App->audio->PlayFx(App->entitymanager->die_fx);
 	Reward();
 	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
@@ -955,6 +956,13 @@ void Rope::Update(float dt)
 
 	stdUpdate(dt);
 
+	for (int x = HitBox->rect.x; x < HitBox->rect.x + HitBox->rect.w; x++) {
+		for (int y = HitBox->rect.y; y < HitBox->rect.y + HitBox->rect.h; y++) {
+			if (App->map->TileCheck(x, y) != 0) {
+				pos = aux_pos;
+			}
+		}
+	}
 	uint dir;
 
 	switch (state) {

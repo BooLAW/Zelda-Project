@@ -1458,7 +1458,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 void j1Player::DyingRestart()
 {
 	
-	alive = true;
+	App->hud->inv->clear();
+	App->hud->inv->selected = nullptr;
+	rupees = floor(rupees / 2);
+
 	std::ifstream f("save/save_game.xml");
 
 	if (f.good())
@@ -1467,9 +1470,6 @@ void j1Player::DyingRestart()
 		App->player->SetToNewGame();
 
 	//App->player->pos = App->scene_manager->village_scene->pl_start_pos;
-	App->hud->inv->clear();
-	App->hud->inv->selected = nullptr;
-	rupees = floor(rupees / 2);
 //	arrows = 0;
 
 	/*dir_override = true;
@@ -1478,8 +1478,12 @@ void j1Player::DyingRestart()
 	action_blit = Sleep_Wake_up;
 	curr_dir = Down;*/
 
+	action_blit = idle;
+
 	//add more features to discuss by the designer
 	action = true;
+	alive = true;
+	curr_dir = Down;
 	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
 }
 

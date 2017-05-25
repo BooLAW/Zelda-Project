@@ -33,7 +33,8 @@ Enemy * EntityManager::CreateEnemy(uint subtype)
 		ret = new Hinox();
 		break;
 	case t_rope:
-		ret = new Rope();
+		//ret = new Rope(); -> Rope Removed from Game
+		ret = new BSoldier();
 		break;
 	case t_geldman:
 		ret = new Geldman();

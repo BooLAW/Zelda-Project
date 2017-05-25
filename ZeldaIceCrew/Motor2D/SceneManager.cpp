@@ -41,6 +41,28 @@ bool SceneManager::Start()
 
 	LOG("Start module scene");
 
+	CA_tex = App->tex->Load("Sprites/rain_and_circle.png");
+	CA_Rect[0] = { 5, 3911,		1039, 895 };
+	CA_Rect[1] = { 1059, 3911,	1039, 895 };
+	CA_Rect[2] = { 5, 4829,		1039, 895 };
+	CA_Rect[3] = { 1059, 4829,	1039, 895 };
+	CA_Rect[4] = { 5, 5747,		1039, 895 };
+	CA_Rect[5] = { 1059, 5747,	1039, 895 };
+	CA_Rect[6] = { 5, 6679,		1039, 895 };
+	CA_Rect[7] = { 1059, 6679,	1039, 895 };
+
+	ChangeAnimation.PushBack(CA_Rect[0]);
+	ChangeAnimation.PushBack(CA_Rect[1]);
+	ChangeAnimation.PushBack(CA_Rect[2]);
+	ChangeAnimation.PushBack(CA_Rect[3]);
+	ChangeAnimation.PushBack(CA_Rect[4]);
+	ChangeAnimation.PushBack(CA_Rect[5]);
+	ChangeAnimation.PushBack(CA_Rect[6]);
+	ChangeAnimation.PushBack(CA_Rect[7]);
+
+	ChangeAnimation.speed = 0.2;
+	ChangeAnimation.loop = false;
+
 	// Create scenes
 	village_scene = new VillageScene();
 	dungeon_scene = new DungeonScene();
@@ -115,6 +137,9 @@ bool SceneManager::CleanUp()
 
 	bool ret = false;
 
+	if(CA_tex != nullptr)
+		App->tex->UnLoad(CA_tex);
+
 	for (std::list<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++) {
 		if((*it) != nullptr) 
 			it._Ptr->_Myval->CleanUp();
@@ -147,8 +172,9 @@ bool SceneManager::LoadRooms(const char * file_name)
 void SceneManager::ChangeScene(Scene * new_scene)
 {
 	LOG("Changing current scene");
-	App->particle->DestroyParticles();
 	App->render->cam_travel = false;
+	ChangeAnimation.Reset();
+	App->particle->DestroyParticles();
 	Scene* prev_scene = current_scene;
 	current_scene = new_scene;
 	prev_scene->CleanUp();

@@ -25,6 +25,7 @@ enum PARTICLETYPE {
 	p_block_bush,
 	p_block_pot,
 	p_block_skull,
+	p_da,
 	__LAST_PARTICLE
 };
 
@@ -85,6 +86,10 @@ public:
 	std::deque<Particle*> particles;
 	j1Timer time;
 
+};
+
+struct DA : public Particle {
+	void Start();
 };
 
 struct Arrow : public Particle {
