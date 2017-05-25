@@ -514,7 +514,7 @@ bool HUD::Update(float dt)
 					exit->active = true;
 					Controls->active = true;
 					controls->active = true;
-
+					Disable_map();
 				}
 				else {
 					App->UnPause();

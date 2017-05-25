@@ -12,6 +12,7 @@ void Room::Update(float dt)
 					enemies.empty() ? (*it)->state = DWSTATE::open : (*it)->state = DWSTATE::close;
 				}
 				else {
+					App->audio->PlayFx(App->scene_manager->open_fx);
 					(*it)->state = DWSTATE::open;
 				}
 			}

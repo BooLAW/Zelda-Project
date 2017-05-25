@@ -1077,7 +1077,7 @@ bool Main_Screen::Update(float dt)
 
 			}
 			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-				
+				App->audio->PlayFx(press_fx);
 				if (selected == Back_dung) {
 					in_controls = false;
 					in_settings = false;

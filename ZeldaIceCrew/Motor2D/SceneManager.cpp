@@ -41,6 +41,9 @@ bool SceneManager::Start()
 
 	LOG("Start module scene");
 
+	open_fx = App->audio->LoadFx("Audio/Fx/door_open.wav");
+	close_fx = App->audio->LoadFx("Audio/Fx/door_close.wav");
+
 	// Create scenes
 	village_scene = new VillageScene();
 	dungeon_scene = new DungeonScene();

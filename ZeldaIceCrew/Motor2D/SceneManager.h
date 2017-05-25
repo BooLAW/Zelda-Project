@@ -65,11 +65,14 @@ public:
 	DungeonScene*					dungeon_scene = nullptr;
 	ShopScene*						shop_scene = nullptr;
 	Main_Screen*					main_screen = nullptr;
+	uint							 close_fx;
+	uint						     open_fx;
 private:
 	pugi::xml_document	scene_file;
 	std::string			folder;
 	std::list<Scene*>				 scenes;
 	Scene*							 current_scene = nullptr;
+	
 
 };					
 
