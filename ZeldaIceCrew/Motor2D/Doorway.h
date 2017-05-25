@@ -19,6 +19,7 @@ class Scene;
 enum DWSTATE {
 	open = 0,
 	close,
+	half,
 	LASTDWSTATE
 };
 
@@ -55,6 +56,8 @@ public:
 	fPoint target_pos;
 
 	fPoint pos;
+
+	Animation open_anim[Direction::LastDir], close_anim[Direction::LastDir];
 
 	bool animating = false;
 

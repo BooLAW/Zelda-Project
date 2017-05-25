@@ -6,7 +6,28 @@
 #include "j1Input.h"
 void Doorway::Start()
 {
-	tex = App->tex->Load("Sprites/Door.png");
+	char* tex_str = nullptr;
+	switch (App->scene_manager->dungeon_id) {
+	case 0:
+		tex_str = "Sprites/Door.png";
+		break;
+	case 1:
+		tex_str = "Sprites/Door.png";
+		break;
+	case 2:
+		tex_str = "Sprites/Door.png";
+		break;
+	case 3:
+		tex_str = "Sprites/Doors forest.png";
+		break;
+	case 4:
+		tex_str = "Sprites/Doors cave.png";
+		break;
+	case 5:
+		tex_str = "Sprites/Door.png";
+		break;
+	}
+	tex = App->tex->Load(tex_str);
 	crossed = false;
 	state = open;
 	collider = App->collisions->AddCollider({ 0, 0, 0, 0 }, COLLIDER_DUNGEON_DOORWAY);
@@ -157,14 +178,99 @@ bool DwDungeon::Cross()
 
 void DwDungeon::SetUp()
 {
-	sprite[Up][open] = { 0, 0, 0, 0 };
-	sprite[Down][open] = { 0, 0, 0, 0 };
-	sprite[Left][open] = { 0, 0, 0, 0 };
-	sprite[Right][open] = { 0, 0, 0, 0 };
-	sprite[Up][close] = { 0, 0, 64, 48 };
-	sprite[Down][close] = { 72, 0, 64, 48 };
-	sprite[Right][close] = { 72, 56, 48, 64 };
-	sprite[Left][close] = { 16, 56, 48, 64 };
+
+	switch (App->scene_manager->dungeon_id) {
+	case 0:
+		//tex_str = "Sprites/Door.png";
+		sprite[Up][open] = { 0, 0, 0, 0 };
+		sprite[Down][open] = { 0, 0, 0, 0 };
+		sprite[Left][open] = { 0, 0, 0, 0 };
+		sprite[Right][open] = { 0, 0, 0, 0 };
+		sprite[Up][close] = { 0, 0, 64, 48 };
+		sprite[Down][close] = { 72, 0, 64, 48 };
+		sprite[Right][close] = { 72, 56, 48, 64 };
+		sprite[Left][close] = { 16, 56, 48, 64 };
+		break;
+	case 1:
+		//tex_str = "Sprites/Door.png";
+		sprite[Up][open] = { 0, 0, 0, 0 };
+		sprite[Down][open] = { 0, 0, 0, 0 };
+		sprite[Left][open] = { 0, 0, 0, 0 };
+		sprite[Right][open] = { 0, 0, 0, 0 };
+		sprite[Up][close] = { 0, 0, 64, 48 };
+		sprite[Down][close] = { 72, 0, 64, 48 };
+		sprite[Right][close] = { 72, 56, 48, 64 };
+		sprite[Left][close] = { 16, 56, 48, 64 };
+		break;
+	case 2:
+		//tex_str = "Sprites/Door.png";
+		sprite[Up][open] = { 0, 0, 0, 0 };
+		sprite[Down][open] = { 0, 0, 0, 0 };
+		sprite[Left][open] = { 0, 0, 0, 0 };
+		sprite[Right][open] = { 0, 0, 0, 0 };
+		sprite[Up][close] = { 0, 0, 64, 48 };
+		sprite[Down][close] = { 72, 0, 64, 48 };
+		sprite[Right][close] = { 72, 56, 48, 64 };
+		sprite[Left][close] = { 16, 56, 48, 64 };
+		break;
+	case 3:
+		//tex_str = "Sprites/Door forest.png";
+		sprite[Up][open] =			{ 0, 0, 0, 0 };
+		sprite[Down][open] =		{ 0, 0, 0, 0 };
+		sprite[Left][open] =		{ 0, 0, 0, 0 };
+		sprite[Right][open] =		{ 0, 0, 0, 0 };
+		sprite[Down][close] =		{ 0,	0,		94, 64};
+		sprite[Up][close] =			{ 0,	68,		94, 64};
+		sprite[Right][close] =		{ 98,	56,		64, 94};
+		sprite[Left][close] =		{ 166,	56,		64, 94};
+		sprite[Down][half] =		{ 0,	144,	94, 64 };
+		sprite[Up][half] =			{ 0,	212,	94, 64 };
+		sprite[Right][half] =		{ 98,	144,	64, 94 };
+		sprite[Left][half] =		{ 166,	144,	64, 94 };
+		break;
+	case 4:
+		//tex_str = "Sprites/Door cave.png";
+		sprite[Up][open] = { 0, 0, 0, 0 };
+		sprite[Down][open] = { 0, 0, 0, 0 };
+		sprite[Left][open] = { 0, 0, 0, 0 };
+		sprite[Right][open] = { 0, 0, 0, 0 };
+		sprite[Up][close] = { 0, 0, 64, 48 };
+		sprite[Down][close] = { 72, 0, 64, 48 };
+		sprite[Right][close] = { 72, 56, 48, 64 };
+		sprite[Left][close] = { 16, 56, 48, 64 };
+		break;
+	case 5:
+		//tex_str = "Sprites/Door.png";
+		sprite[Up][open] = { 0, 0, 0, 0 };
+		sprite[Down][open] = { 0, 0, 0, 0 };
+		sprite[Left][open] = { 0, 0, 0, 0 };
+		sprite[Right][open] = { 0, 0, 0, 0 };
+		sprite[Up][close] = { 0, 0, 64, 48 };
+		sprite[Down][close] = { 72, 0, 64, 48 };
+		sprite[Right][close] = { 72, 56, 48, 64 };
+		sprite[Left][close] = { 16, 56, 48, 64 };
+		break;
+	default:
+		sprite[Up][open] = { 0, 0, 0, 0 };
+		sprite[Down][open] = { 0, 0, 0, 0 };
+		sprite[Left][open] = { 0, 0, 0, 0 };
+		sprite[Right][open] = { 0, 0, 0, 0 };
+		sprite[Up][close] = { 0, 0, 64, 48 };
+		sprite[Down][close] = { 72, 0, 64, 48 };
+		sprite[Right][close] = { 72, 56, 48, 64 };
+		sprite[Left][close] = { 16, 56, 48, 64 };
+		break;
+	}
+
+	for (int k = 0; k < Direction::LastDir; k++) {
+		open_anim[k].PushBack(sprite[k][close]);
+		open_anim[k].PushBack(sprite[k][half]);
+		open_anim[k].PushBack(sprite[k][open]);
+		close_anim[k].PushBack(sprite[k][close]);
+		close_anim[k].PushBack(sprite[k][half]);
+		close_anim[k].PushBack(sprite[k][open]);
+	}
+
 }
 
 void DwDungeon::Draw()
