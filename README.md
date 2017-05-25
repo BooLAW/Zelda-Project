@@ -1,37 +1,22 @@
-## Welcome to GitHub Pages
+## The Legend of Zelda : A Dream to the Past
 
-You can use the [editor on GitHub](https://github.com/BooLAW/Zelda-Project/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+A dream to the Past is our take on the classic TLoZ: A link to the Past, where the core of the game will shift towards a more fast-paced, crammed with action style of game while maintaining the essence that makes TLoZ game. Fans as we are of roguelike games such as The Binding of Isaac, Enter the Gungeon , Roguelight and many more, we feel that the pace that TLoZ games can be pumped up a little bit in order to appeal to a different, more action driven demographic.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Developers 
 
-### Markdown
+We are a team of 7 students from the Upc who are working on a rogue like game keeping the essence of The Legend of Zelda a Link to the Past. We hope you like it!!
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+•	Team Leader: Asier Arellano
+•	Manager: Guillem Arman
+•	Game Designer: Pau Olive
+•	Code: Pau Bonet
+•	UI: Roger Busquets
+•	Art & Audio: Jan Fuentes
+•	QA: Marc Torres
 
-```markdown
-Syntax highlighted code block
+![](http://imgur.com/a/Dsugg.png)
 
-# Header 1
-## Header 2
-### Header 3
+[Facebook](https://www.facebook.com/icecrewupc/?notif_t=page_fan&notif_id=1495704480804013)
+[Twitter](https://twitter.com/IceCrew_)
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/BooLAW/Zelda-Project/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+[Gold Release (Alpha by now)](https://github.com/BooLAW/Zelda-Project/releases/tag/v0.9.1)
