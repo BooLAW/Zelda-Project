@@ -502,7 +502,7 @@ bool j1Player::Start()
 	animations[Die][Right].PushBack(sprites[Die][Right][0]);
 	animations[Die][Right].PushBack(sprites[Die][Right][1]);
 	animations[Die][Right].PushBack(sprites[Die][Right][2]);
-	animations[Die][Right].speed = 0.1f;
+	animations[Die][Right].speed = 0.05f;
 
 	}
 
@@ -1459,7 +1459,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 
 void j1Player::DyingRestart()
 {
-	
+	App->Pause();
+	for (int i = 0; i < 10000; i++) {
+		App->render->DrawQuad(App->render->culling_cam, 0, 0, 0);
+		//App->render->toDraw(Link_Movement, -99999, pos.x, pos.y, &sprites[Die][Right][2]);
+	}
+
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
 	rupees = floor(rupees / 2);
@@ -1486,6 +1491,7 @@ void j1Player::DyingRestart()
 	action = true;
 	alive = true;
 	curr_dir = Down;
+	App->UnPause();
 	App->scene_manager->toChangeScene((Scene*)App->scene_manager->main_screen);
 }
 

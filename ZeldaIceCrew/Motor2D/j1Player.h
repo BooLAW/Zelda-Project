@@ -167,6 +167,7 @@ public:
 	bool sword = false;  // as a flag to draw link with the sword sprite
 	bool action = false; // Actions: Throw, Pull, Slash,...	
 						 // --status VARs
+	uint diw_anim_bool = 0;
 	bool firstText = true;
 	Npc* toTalk = nullptr;
 	unsigned int curr_dir;
