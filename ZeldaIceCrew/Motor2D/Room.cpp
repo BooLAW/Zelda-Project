@@ -12,7 +12,7 @@ void Room::Update(float dt)
 {
 
 	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); it++) {
-		if()
+		
 	}
 		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++) {
 			if ((*it) != nullptr) {

@@ -15,22 +15,20 @@
 	<:anonymous />
 	<player>
 		<keys id="0" completed="false" />
-		<keys id="1" completed="true" />
-		<keys id="0" completed="true" />
 		<keys id="1" completed="false" />
 		<keys id="2" completed="false" />
 		<keys id="3" completed="false" />
 		<keys id="4" completed="false" />
-		<n_keys n="1" />
+		<n_keys n="0" />
 		<hp curr="6" max="6" />
 		<weapons curr_weapon="27" />
 		<rupees n="true" />
-		<stats power="32" speed="2.6559999" />
-		<items pegasus_boots="true" pegasus_boots="true" />
+		<stats power="30" speed="2.5" />
+		<items />
 	</player>
 	<:anonymous />
 	<dialogue />
 	<renderer>
-		<camera x="-2048" y="96" />
+		<camera x="-1024" y="96" />
 	</renderer>
 </game_state>
