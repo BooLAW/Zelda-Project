@@ -902,7 +902,7 @@ bool j1Player::Update(float dt)
 							}
 						}
 					}
-
+				//
 				//if (alive == false)
 				//{
 				//	DyingRestart();
