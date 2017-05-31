@@ -2,6 +2,8 @@
 #include "j1Player.h"
 #include <fstream>
 #include"j1Window.h"
+#include "Video.h"
+#include "j1App.h"
 
 Main_Screen::Main_Screen()
 {
@@ -577,6 +579,7 @@ bool Main_Screen::Start()
 	changing_controls = false;
 	in_dungeons = false;
 
+	App->video->PlayVideo("IntroLogo_1.ogv", { 0, 0, (int)App->win->GetWidth(), (int)App->win->GetHeight() });
 	
 	return ret;
 }
@@ -1051,6 +1054,7 @@ bool Main_Screen::Update(float dt)
 			}
 			if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 				App->player->keys = 5;
+				
 			}
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetControllerButton(0,SDL_CONTROLLER_BUTTON_DPAD_UP)==KEY_DOWN) {
 				App->audio->PlayFx(fx);

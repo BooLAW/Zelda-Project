@@ -104,6 +104,8 @@
     <ClCompile Include="MathHelpers.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="theoraplay.c" />
+    <ClCompile Include="Video.cpp" />
     <ClCompile Include="VillageScene.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
@@ -140,6 +142,8 @@
     <ClInclude Include="NPC.h" />
     <ClInclude Include="MathHelpers.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="theoraplay.h" />
+    <ClInclude Include="Video.h" />
     <ClInclude Include="VillageScene.h" />
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1Audio.h" />

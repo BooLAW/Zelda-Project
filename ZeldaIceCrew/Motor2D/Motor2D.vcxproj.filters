@@ -99,6 +99,8 @@
     <ClCompile Include="Arena.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="theoraplay.c" />
+    <ClCompile Include="Video.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -208,6 +210,8 @@
     <ClInclude Include="Arena.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="theoraplay.h" />
+    <ClInclude Include="Video.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

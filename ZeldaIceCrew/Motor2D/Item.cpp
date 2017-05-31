@@ -12,6 +12,8 @@ void Item::PassToInventory()
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
 
+	rect = { 0, 0, 0, 0 };
+
 	if (priceTag != nullptr)
 		priceTag->active = false;
 	if (this->type == weapon) {
