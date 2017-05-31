@@ -57,6 +57,7 @@ bool DungeonScene::Start()
 		spawn4 = { ROOM_W + 386, 393 };
 
 		to_round = 0;
+		round = 0;
 
 	}
 	/*if (App->scene_manager->dungeon_id == 0) {

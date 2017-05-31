@@ -34,10 +34,13 @@ public:
 
 	// Called each loop iteration
 	bool Update(float dt);
+public:
+	
+	uint round;
 
 private:
 
-	uint round;
+	
 	j1Timer wave_time;
 	j1Timer starting_time;
 

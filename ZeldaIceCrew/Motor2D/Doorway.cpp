@@ -129,7 +129,7 @@ void Doorway::Update(float dt)
 					break;
 				}
 			}
-		if (crossing == true && state == open) {
+		if (crossing == true && (state == open || state == half)) {
 			
 				Cross();
 				
@@ -230,14 +230,18 @@ void DwDungeon::SetUp()
 		break;
 	case 4:
 		//tex_str = "Sprites/Door cave.png";
-		sprite[Up][open] = { 0, 0, 0, 0 };
-		sprite[Down][open] = { 0, 0, 0, 0 };
-		sprite[Left][open] = { 0, 0, 0, 0 };
-		sprite[Right][open] = { 0, 0, 0, 0 };
-		sprite[Up][close] = { 0, 0, 64, 48 };
-		sprite[Down][close] = { 72, 0, 64, 48 };
-		sprite[Right][close] = { 72, 56, 48, 64 };
-		sprite[Left][close] = { 16, 56, 48, 64 };
+		sprite[Up][open] =		{ 0,	0,		0,		0 };
+		sprite[Down][open] =	{ 0,	0,		0,		0 };
+		sprite[Left][open] =	{ 0,	0,		0,		0 };
+		sprite[Right][open] =	{ 0,	0,		0,		0 };
+		sprite[Up][half] =		{ 136,	136,	96,		64 };
+		sprite[Down][half] =	{ 136,	204,	96,		64 };
+		sprite[Right][half] =	{ 68,	136,	64,		96 };
+		sprite[Left][half] =	{ 0,	136,	64,		96 };
+		sprite[Up][close] =		{ 136,	0,		96,		64 };
+		sprite[Down][close] =	{ 136,	68,		96,		64 };
+		sprite[Right][close] =	{ 68,	0,		64,		96 };
+		sprite[Left][close] =	{ 0,	0,		64,		96 };
 		break;
 	case 5:
 		//tex_str = "Sprites/Door.png";
@@ -266,9 +270,14 @@ void DwDungeon::SetUp()
 		open_anim[k].PushBack(sprite[k][close]);
 		open_anim[k].PushBack(sprite[k][half]);
 		open_anim[k].PushBack(sprite[k][open]);
+		open_anim[k].speed = 0.1;
+		open_anim[k].loop = false;
 		close_anim[k].PushBack(sprite[k][close]);
 		close_anim[k].PushBack(sprite[k][half]);
 		close_anim[k].PushBack(sprite[k][open]);
+		close_anim[k].speed = 0.1;
+		close_anim[k].loop = false;
+
 	}
 
 }
@@ -295,7 +304,23 @@ void DwDungeon::Draw()
 			aux_pos.y -= 16;
 			break;
 		}
-		App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[direction][state]);
+		if (state == half) {
+			App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &open_anim[direction].GetCurrentFrame());
+			if (open_anim[direction].Finished()) {
+				//open_anim[direction].Reset();
+				state = open;
+			}
+		}
+		else if (state == half_close) {
+			App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &close_anim[direction].GetCurrentFrame());
+			if (close_anim[direction].Finished()) {
+				//close_anim[direction].Reset();
+				state = close;
+			}
+		}
+		else {
+			App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &sprite[direction][state]);
+		}
 	}
 }
 

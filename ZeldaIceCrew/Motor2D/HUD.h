@@ -113,6 +113,10 @@ public:
 
 	uint move_fx;
 	uint press_fx;
+
+	GuiText* arena_round;
+	GuiText* round;
+
 };
 
 
