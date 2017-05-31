@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<game_state>
+	<file_system />
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<map />
+	<pathfinding />
+	<fonts />
+	<gui />
+	<SceneManager />
+	<:anonymous />
+	<:anonymous />
+	<:anonymous />
+	<player>
+		<keys id="0" completed="false" />
+		<keys id="1" completed="false" />
+		<keys id="2" completed="false" />
+		<keys id="3" completed="false" />
+		<keys id="4" completed="false" />
+		<n_keys n="0" />
+		<hp curr="6" max="6" />
+		<weapons curr_weapon="27" />
+		<rupees n="true" />
+		<stats power="30" speed="2.5" />
+		<items />
+	</player>
+	<:anonymous />
+	<dialogue />
+	<video />
+	<renderer>
+		<camera x="-2048" y="96" />
+	</renderer>
+</game_state>
