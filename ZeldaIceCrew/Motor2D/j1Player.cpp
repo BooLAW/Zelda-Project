@@ -40,6 +40,8 @@ bool j1Player::Start()
 	rupees = 50;
 	controller_index = 0;
 	dash_fx = App->audio->LoadFx("Audio/Fx/break.wav");
+	uint best_arena_score=0;
+	uint last_arena_score=0;
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
 	//Idle
 	{
@@ -1363,7 +1365,8 @@ void j1Player::SetToNewGame()
 	max_life_points = 6;
 	max_life_points = ORIGIN_HP;
 	curr_life_points = max_life_points;
-
+	best_arena_score = 0;
+	last_arena_score = 0;
 	weapons.clear();
 	AddWeapon(t_sword);
 

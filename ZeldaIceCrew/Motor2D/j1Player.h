@@ -231,7 +231,8 @@ public:
 	bool push[5];
 	bool pull[5];
 	bool action_test = false;
-
+	uint best_arena_score;
+	uint last_arena_score;
 	uint ticking_effect = 0;
 
 	Collider* link_coll;
