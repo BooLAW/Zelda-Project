@@ -23,6 +23,7 @@
 #include "HUD.h"
 #include "ModuleParticles.h"
 #include "DialogueManager.h"
+#include "Video.h"
 //#include "j1Console"
 #include "EntityManager.h"
 
@@ -49,6 +50,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	hud = new HUD();
 	particle = new ModuleParticles();
 	dialog = new DialogManager();
+	video = new Video();
 
 
 	// Ordered for awake / Start / Update
@@ -70,6 +72,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(hud);
 	AddModule(dialog);
+	AddModule(video);
 	
 
 	// render last to swap buffer

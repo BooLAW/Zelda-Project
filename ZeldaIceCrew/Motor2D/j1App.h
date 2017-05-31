@@ -28,6 +28,7 @@ class j1Player;
 class EntityManager;
 class ModuleParticles;
 class DialogManager;
+class Video;
 
 class j1App
 {
@@ -123,6 +124,7 @@ public:
 	HUD*				hud = NULL;
 	ModuleParticles*	particle = NULL;
 	DialogManager*       dialog = NULL;
+	Video*				video = NULL;
 
 	bool			    debug_mode = false;
 	bool fullscreen = true;

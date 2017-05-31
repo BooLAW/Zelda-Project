@@ -255,6 +255,7 @@ public:
 
 	const SDL_Texture* GetAtlas() const;
 public:
+	bool in_video = false;
 	std::list<UIElement*> elements;
 private:
 	

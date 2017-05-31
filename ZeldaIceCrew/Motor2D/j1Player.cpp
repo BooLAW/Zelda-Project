@@ -8,6 +8,7 @@
 #include "DungeonScene.h"
 #include "VillageScene.h"
 #include "MathHelpers.h"
+#include "Video.h"
 #include <list>
 #include <fstream>
 
@@ -1737,6 +1738,7 @@ void j1Player::Movement()
 
 	}
 		last_pos = pos;
+		
 }
 
 void j1Player::Slash_()

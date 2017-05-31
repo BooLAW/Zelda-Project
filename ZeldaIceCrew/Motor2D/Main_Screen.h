@@ -56,6 +56,7 @@ public:
 	void Disable_dungeons();
 	void Enable_dungeons();
 
+
 private:
 
 	std::list<UIElement*> ui_elements;
