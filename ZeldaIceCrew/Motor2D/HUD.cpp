@@ -143,6 +143,17 @@ bool HUD::Start()
 	dialog->pos = { dialog_rect->pos.x + 10, dialog_rect->pos.y + 10 };
 
 
+	item_desc = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	item_desc->texture_rect = { 625,733,613,77 };
+	item_desc->active = false;
+	item_desc->pos = { 250,500 };
+
+	desc = (GuiText*)App->gui->CreateElement(GuiType::text);
+	desc->active = false;
+	desc->movable = true;
+	desc->pos = { item_desc->pos.x + 20, item_desc->pos.y + 10 };
+	desc->str = "";
+
 
 	GenerateHP();
 
@@ -478,6 +489,7 @@ bool HUD::Update(float dt)
 	}
 
 	else {
+		check_item_collision();
 		Enable_keys();
 		rupees->active = true;
 		//bombs->active = true;
@@ -892,6 +904,24 @@ void HUD::UpdateHP()
 	lifes.clear();
 
 	GenerateHP();
+}
+
+void HUD::check_item_collision()
+{
+	Room* curr_room = App->scene_manager->GetCurrentScene()->GetCurrentRoom();
+	for (std::list<Item*>::const_iterator it = curr_room->items.cbegin(); it != curr_room->items.cend(); it++) {
+		if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect)) {
+			desc->str = it._Ptr->_Myval->description;
+			desc->active = true;
+			item_desc->active = true;
+			break;
+		}
+		else {
+			desc->active = false;
+			item_desc->active = false;
+		}
+	}
+	
 }
 
 UIElement * HUD::menu_next()

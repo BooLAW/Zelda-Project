@@ -42,7 +42,8 @@ void Item::Update(float dt)
 				}
 
 				if (HitBox->CheckCollision(App->player->link_coll->rect)) {
-					if (App->player->rupees >= this->price) {
+					if (App->input->GetKey(App->input->controls[ACTION])) {
+						if (App->player->rupees >= this->price) {
 						App->player->rupees -= price;
 						App->audio->PlayFx(this->fx);
 						App->gui->DeleteElement(this->priceTag);
@@ -64,6 +65,7 @@ void Item::Update(float dt)
 							}
 						}
 					}
+				}
 				}
 			}
 			if (set == false) {
