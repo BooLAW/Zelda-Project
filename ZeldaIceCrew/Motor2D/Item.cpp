@@ -137,7 +137,12 @@ void PowerGauntlet::Upgrade()
 void PowerGauntlet::SetUp()
 {
 	subtype = power_gauntlet;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 36, 0, 32, 32 };
 	UI_tex = App->hud->items;
 	UI_rect = { 40, 326, 32, 32 };
@@ -148,7 +153,12 @@ void PowerGauntlet::SetUp()
 void PegasusBoots::SetUp()
 {
 	subtype = pegasus_boots;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 0, 0, 32, 32 };
 	UI_tex = App->hud->items;
 	UI_rect = { 0, 326, 32, 32 };
@@ -164,7 +174,12 @@ void PegasusBoots::Upgrade()
 void HeartContainer::SetUp()
 {
 	subtype = heart_container;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 0, 146, 32, 32 };
 	UI_tex = App->hud->items;
 	UI_rect = { 180, 362, 32, 32 };
@@ -182,7 +197,12 @@ void DropHeart::SetUp()
 {
 	subtype = drop_heart;
 	type = ENTITYTYPE::drop;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 180, 40, 32, 26 };
 	fx = App->audio->LoadFx("Audio/Fx/heart.wav");
 	
@@ -201,7 +221,12 @@ void DropPotion::SetUp()
 {
 	subtype = drop_potion;
 	type = ENTITYTYPE::drop;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 144, 146, 28, 32 };
 
 }
@@ -217,7 +242,12 @@ void DropRupee::SetUp()
 {
 	subtype = drop_rupee;
 	type = ENTITYTYPE::drop;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 116, 254, 16, 28 };
 	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 
@@ -235,7 +265,12 @@ void DropFiveRupee::SetUp()
 {
 	subtype = drop_fiverupee;
 	type = ENTITYTYPE::drop;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 224, 254, 16, 28 };
 	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 }
@@ -251,7 +286,12 @@ void DropTenRupee::SetUp()
 {
 	subtype = drop_tenrupee;
 	type = ENTITYTYPE::drop;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 332, 254, 16, 28 };
 	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 }
@@ -268,7 +308,12 @@ void ItemBow::SetUp()
 {
 	subtype = weapon_bow;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 362, 74, 32, 32 };
 	UI_tex = App->hud->items;
 	UI_rect = { 362, 326, 32, 32 };
@@ -289,7 +334,12 @@ void ItemSword::SetUp()
 {
 	subtype = weapon_sword;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 252, 41, 32, 32 };
 	UI_tex = App->hud->items;
 	UI_rect = rect;
@@ -361,7 +411,12 @@ void BossKey::SetUp()
 {
 	subtype = boss_key;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 362, 144, 32, 34 };
 	UI_tex = tex;
 	UI_rect = { 360, 470, 32, 32 };
@@ -381,7 +436,12 @@ void GoldenGauntlet::SetUp()
 {
 	subtype = gold_gauntlet;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 36, 36, 34, 35 };
 	UI_tex = tex;
 	UI_rect = { 36, 360, 34, 35 };
@@ -399,7 +459,12 @@ void WindCape::SetUp()
 {
 	subtype = wind_cape;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 34, 36, 34, 35 };
 	UI_tex = tex;
 	UI_rect = { 34, 360, 34, 35 };
@@ -417,7 +482,12 @@ void MagicHammer::SetUp()
 {
 	subtype = magic_hammer;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 36, 108, 34, 35 };
 	UI_tex = tex;
 	UI_rect = { 36, 432, 34, 34 };
@@ -435,7 +505,12 @@ void MagicSphere::SetUp()
 {
 	subtype = magic_sphere;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 108, 0, 34, 34 };
 	UI_tex = tex;
 	UI_rect = { 108, 324, 34, 34 };
@@ -453,7 +528,12 @@ void VanguardEmblem::SetUp()
 {
 	subtype = vanguard_emblem;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 37, 72, 34, 34 };
 	UI_tex = tex;
 	UI_rect = { 36, 396, 34, 34 };
@@ -471,7 +551,12 @@ void SmallShield::SetUp()
 {
 	subtype = small_shield;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 0, 72, 34, 34 };
 	UI_tex = tex;
 	UI_rect = { 0, 396, 34, 34 };
@@ -489,7 +574,12 @@ void GoldenShield::SetUp()
 {
 	subtype = small_shield;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 72, 72, 34, 34 };
 	UI_tex = tex;
 	UI_rect = { 72, 396, 34, 34 };
@@ -523,7 +613,12 @@ void MagicMirror::SetUp()
 {
 	subtype = small_shield;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 216, 0, 34, 34 };
 	UI_tex = tex;
 	UI_rect = { 216, 324, 32, 32 };
@@ -555,7 +650,12 @@ void BagOfRupees::SetUp()
 {
 	subtype = bag_of_rupees;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 289, 109, 34, 34 };
 	UI_tex = tex;
 	UI_rect = { 289, 432, 32, 32 };
@@ -572,7 +672,12 @@ void OddMushroom::SetUp()
 {
 	subtype = odd_mushroom;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 324, 72, 34, 34 };
 	UI_tex = tex;
 	UI_rect = { 324, 396, 32, 32 };
@@ -632,7 +737,12 @@ void MysteriousDust::SetUp()
 {
 	subtype = mysterious_dust;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 72, 216, 32, 34 };
 	UI_tex = tex;
 	UI_rect = { 180, 470, 32, 32 };
@@ -665,7 +775,12 @@ void IconOfValor::SetUp()
 {
 	subtype = icon_of_valor;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 216, 72, 34, 34 };
 	UI_tex = tex;
 	UI_rect = { 216, 396, 32, 32 };
@@ -685,7 +800,12 @@ void IconOfWisdom::SetUp()
 {
 	subtype = icon_of_wisdom;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 252, 72, 32, 34 };
 	UI_tex = tex;
 	UI_rect = { 252, 396, 32, 32 };
@@ -729,7 +849,12 @@ void IconOfPower::SetUp()
 {
 	subtype = icon_of_power;
 	type = ENTITYTYPE::item;
-	tex = App->tex->Load("Sprites/Items32x32.png");
+	if (App->scene_manager->dungeon_id == 4) {
+		tex = App->tex->Load("Sprites/Items32x32Retro.png");
+	}
+	else {
+		tex = App->tex->Load("Sprites/Items32x32.png");
+	}
 	rect = { 180, 72, 34, 34 };
 	UI_tex = tex;
 	UI_rect = { 180, 396, 32, 32 };
