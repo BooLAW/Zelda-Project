@@ -621,7 +621,7 @@ bool BossChainBall::Start()
 		sprites[Enemy::EnDirection::Right][2] = { 2, 2, 211, 224 };
 		sprites[Enemy::EnDirection::Right][3] = { 215 * 2 - 2, 4, 211, 222 };
 
-
+		ballimg = { 1564,334,32,32 };
 		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 5 - 2, 226 * 9 + 2, 211, 224 };
 		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 4 - 2, 226 * 9 + 2, 211, 224 };
 		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 3 - 2, 226 * 9 + 2, 211, 224 };
@@ -794,7 +794,7 @@ void BossChainBall::Draw(float dt)
 	
 	switch (state) {
 	//case circle_ball:
-	//	draw_rect = &ball_anim[circle_ball][curr_dir].GetCurrentFrame();
+		// draw_rect = &ball_anim[circle_ball][curr_dir].GetCurrentFrame();
 	//	break;
 	default:
 		draw_rect = &animations[curr_dir].GetCurrentFrame();
@@ -807,7 +807,7 @@ void BossChainBall::Draw(float dt)
 
 	//App->render->Blit(GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
 	App->render->toDraw(GetTexture(), pos.y + HitBox->rect.h, aux_pos.x, aux_pos.y, draw_rect);
-	App->render->DrawQuad({ ball_collider->rect.x, ball_collider->rect.y, 32, 32 }, 255, 255, 255, 90);
+	App->render->toDraw(GetTexture(), -99999, ball_collider->rect.x, ball_collider->rect.y, &ballimg);
 
 }
 
