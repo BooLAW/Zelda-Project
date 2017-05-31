@@ -1,5 +1,8 @@
 #include "Item.h"
 
+#define Item_W_H 34
+#define Margin 2
+#define NextItemStart (Item_W_H + Margin)
 Item::Item(uint subtype)
 {
 	
@@ -145,9 +148,9 @@ void PowerGauntlet::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 36, 0, 32, 32 };
+	rect = { NextItemStart * 1, 0, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = { 40, 326, 32, 32 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "You feel the power";
 }
@@ -161,9 +164,9 @@ void PegasusBoots::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 0, 0, 32, 32 };
+	rect = { 0, 0, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = { 0, 326, 32, 32 };
+	UI_rect = { 0, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Light and comfortable";
 }
@@ -182,9 +185,9 @@ void HeartContainer::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 0, 146, 32, 32 };
+	rect = { 0, NextItemStart * 4, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = { 180, 362, 32, 32 };
+	UI_rect = { NextItemStart * 5, NextItemStart * 10, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/heart_container_1.wav");
 	description = "You feel... more resistant";
 
@@ -205,7 +208,7 @@ void DropHeart::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 180, 40, 32, 26 };
+	rect = { NextItemStart * 5, NextItemStart * 1, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/heart.wav");
 	
 	UI_tex = nullptr;
@@ -229,7 +232,7 @@ void DropPotion::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 144, 146, 28, 32 };
+	rect = { NextItemStart * 4, NextItemStart * 4, Item_W_H, Item_W_H };
 
 }
 
@@ -250,7 +253,7 @@ void DropRupee::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 116, 254, 16, 28 };
+	rect = { NextItemStart * 3, NextItemStart * 7, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 
 }
@@ -273,7 +276,7 @@ void DropFiveRupee::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 224, 254, 16, 28 };
+	rect = { NextItemStart * 6, NextItemStart * 7, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 }
 
@@ -294,7 +297,7 @@ void DropTenRupee::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 332, 254, 16, 28 };
+	rect = { NextItemStart * 9, NextItemStart * 7, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 }
 
@@ -316,9 +319,9 @@ void ItemBow::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 362, 74, 32, 32 };
+	rect = { NextItemStart * 10, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = { 362, 326, 32, 32 };
+	UI_rect = { NextItemStart * 10, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	
 }
@@ -342,9 +345,9 @@ void ItemSword::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 252, 41, 32, 32 };
+	rect = { NextItemStart * 7, NextItemStart * 1, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = rect;
+	UI_rect = { NextItemStart * 7, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "";
 }
@@ -419,9 +422,9 @@ void BossKey::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 362, 144, 32, 34 };
+	rect = { NextItemStart * 10, NextItemStart * 4, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { NextItemStart * 10, NextItemStart * 4 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -444,9 +447,9 @@ void GoldenGauntlet::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 36, 36, 34, 35 };
+	rect = { NextItemStart * 1, NextItemStart * 1, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 36, 360, 34, 35 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Empowered by the Din";
 }
@@ -467,9 +470,9 @@ void WindCape::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 34, 36, 34, 35 };
+	rect = { NextItemStart * 1, NextItemStart * 1, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 34, 360, 34, 35 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "By Nayru's light!";
 }
@@ -490,9 +493,9 @@ void MagicHammer::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 36, 108, 34, 35 };
+	rect = { NextItemStart * 1, NextItemStart * 3, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 36, 432, 34, 34 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Now with a 100% less magic!";
 }
@@ -513,9 +516,9 @@ void MagicSphere::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 108, 0, 34, 34 };
+	rect = { NextItemStart * 3, 0, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 108, 324, 34, 34 };
+	UI_rect = { NextItemStart * 3, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Now with a 100% more magic!";
 }
@@ -536,9 +539,9 @@ void VanguardEmblem::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 37, 72, 34, 34 };
+	rect = { NextItemStart * 1, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 36, 396, 34, 34 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "A badge for true heroes";
 }
@@ -559,9 +562,9 @@ void SmallShield::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 0, 72, 34, 34 };
+	rect = { 0, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 0, 396, 34, 34 };
+	UI_rect = { 0, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -582,9 +585,9 @@ void GoldenShield::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 72, 72, 34, 34 };
+	rect = { NextItemStart * 2, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 72, 396, 34, 34 };
+	UI_rect = { NextItemStart * 2, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -621,9 +624,9 @@ void MagicMirror::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 216, 0, 34, 34 };
+	rect = { NextItemStart * 6, 0, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 216, 324, 32, 32 };
+	UI_rect = { NextItemStart * 6, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -658,9 +661,9 @@ void BagOfRupees::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 289, 109, 34, 34 };
+	rect = { NextItemStart * 8, NextItemStart * 3, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 289, 432, 32, 32 };
+	UI_rect = { NextItemStart * 8, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Get Greedier";
 }
@@ -680,9 +683,9 @@ void OddMushroom::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 324, 72, 34, 34 };
+	rect = { NextItemStart * 9, NextItemStart * 3, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 324, 396, 32, 32 };
+	UI_rect = { NextItemStart * 9, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -745,9 +748,9 @@ void MysteriousDust::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 72, 216, 32, 34 };
+	rect = { NextItemStart * 2, NextItemStart * 6, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 180, 470, 32, 32 };
+	UI_rect = { NextItemStart * 5, NextItemStart * 6 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -783,9 +786,9 @@ void IconOfValor::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 216, 72, 34, 34 };
+	rect = { NextItemStart * 6, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 216, 396, 32, 32 };
+	UI_rect = { NextItemStart * 6, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "An icon of true Valor";
 }
@@ -808,9 +811,9 @@ void IconOfWisdom::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 252, 72, 32, 34 };
+	rect = { NextItemStart * 7, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 252, 396, 32, 32 };
+	UI_rect = { NextItemStart * 7, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "An icon of true Wisdom";
 
@@ -857,9 +860,9 @@ void IconOfPower::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 180, 72, 34, 34 };
+	rect = { NextItemStart * 5, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 180, 396, 32, 32 };
+	UI_rect = { NextItemStart * 5, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "An icon of true Power";
 
