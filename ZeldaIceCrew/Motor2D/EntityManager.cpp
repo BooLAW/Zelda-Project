@@ -481,6 +481,7 @@ void EntityManager::DestroyEnity(Entity * ent)
 			//
 			//ent = nullptr;
 
+
 	}
 }
 
