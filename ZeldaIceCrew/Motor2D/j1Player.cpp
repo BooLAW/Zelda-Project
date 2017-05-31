@@ -1094,7 +1094,6 @@ bool j1Player::Update(float dt)
 							dir_override = false;
 							animations[action_blit][curr_dir].Reset();
 							if (action_blit == Weapon_atk) {
-								LOG("SPD %f", pl_speed.x);
 								pl_speed.x = (pl_speed.x * PL_SPD_ATK);
 								pl_speed.y = (pl_speed.y * PL_SPD_ATK);
 							}
