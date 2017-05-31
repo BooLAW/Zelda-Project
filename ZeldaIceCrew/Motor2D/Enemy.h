@@ -214,6 +214,7 @@ public:
 	float ball_speed;
 	uint round_counter;
 	Collider* ball_collider;
+	SDL_Rect ballimg;
 };
 
 class Hinox : public Enemy {

@@ -399,7 +399,7 @@ bool BSoldier::Start()
 
 
 	curr_dir = Enemy::EnDirection::Down;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else{ 
@@ -465,13 +465,12 @@ bool RSoldier::Start()
 	SetRewards();
 	curr_dir = Enemy::EnDirection::Down;
 
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
 	}
-
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
 		sprites[Enemy::EnDirection::Down][0] = { 410, 219, 100,108 };
@@ -530,7 +529,7 @@ bool GSoldier::Start()
 	SetRewards();
 	curr_dir = Enemy::EnDirection::Down;
 
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else {
@@ -621,7 +620,7 @@ bool BossChainBall::Start()
 		sprites[Enemy::EnDirection::Right][2] = { 2, 2, 211, 224 };
 		sprites[Enemy::EnDirection::Right][3] = { 215 * 2 - 2, 4, 211, 222 };
 
-
+		ballimg = { 1564,334,32,32 };
 		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 5 - 2, 226 * 9 + 2, 211, 224 };
 		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 4 - 2, 226 * 9 + 2, 211, 224 };
 		//ball_rect[circle_ball][Up][cb_n++] = { 215 * 3 - 2, 226 * 9 + 2, 211, 224 };
@@ -794,7 +793,7 @@ void BossChainBall::Draw(float dt)
 	
 	switch (state) {
 	//case circle_ball:
-	//	draw_rect = &ball_anim[circle_ball][curr_dir].GetCurrentFrame();
+		// draw_rect = &ball_anim[circle_ball][curr_dir].GetCurrentFrame();
 	//	break;
 	default:
 		draw_rect = &animations[curr_dir].GetCurrentFrame();
@@ -807,7 +806,7 @@ void BossChainBall::Draw(float dt)
 
 	//App->render->Blit(GetTexture(), aux_pos.x, aux_pos.y, &draw_rect);
 	App->render->toDraw(GetTexture(), pos.y + HitBox->rect.h, aux_pos.x, aux_pos.y, draw_rect);
-	App->render->DrawQuad({ ball_collider->rect.x, ball_collider->rect.y, 32, 32 }, 255, 255, 255, 90);
+	App->render->toDraw(GetTexture(), -99999, ball_collider->rect.x, ball_collider->rect.y, &ballimg);
 
 }
 
@@ -833,7 +832,7 @@ bool Hinox::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else {
@@ -911,7 +910,7 @@ bool Rope::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else {
@@ -1058,7 +1057,7 @@ bool BlueArcher::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else {
@@ -1206,7 +1205,7 @@ bool GreyBat::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else {
@@ -1256,7 +1255,7 @@ bool Geldman::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else {
@@ -1421,7 +1420,7 @@ bool Freezor::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else {
@@ -1597,7 +1596,7 @@ bool Beamos::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
 	}
 	else {

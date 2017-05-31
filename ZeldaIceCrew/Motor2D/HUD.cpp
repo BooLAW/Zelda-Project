@@ -143,6 +143,17 @@ bool HUD::Start()
 	dialog->pos = { dialog_rect->pos.x + 10, dialog_rect->pos.y + 10 };
 
 
+	item_desc = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	item_desc->texture_rect = { 625,733,613,77 };
+	item_desc->active = false;
+	item_desc->pos = { 250,500 };
+
+	desc = (GuiText*)App->gui->CreateElement(GuiType::text);
+	desc->active = false;
+	desc->movable = true;
+	desc->pos = { item_desc->pos.x + 20, item_desc->pos.y + 10 };
+	desc->str = "";
+
 
 	GenerateHP();
 
@@ -352,6 +363,12 @@ bool HUD::Start()
 
 	GenerateKeys();
 
+	round_box = (GuiImage*)App->gui->CreateElement(image);
+	round_box->pos = { -10, 90 };
+	round_box->texture_rect = { 333,402,175,50 };
+	round_box->active = false;
+	round_box->movable = true;
+
 	arena_round = (GuiText*)App->gui->CreateElement(text);
 	arena_round->pos = { 100, 100 };
 	arena_round->active = false;
@@ -363,6 +380,9 @@ bool HUD::Start()
 	round->active = false;
 	round->movable = true;
 	round->str = "Round";
+
+	
+	
 
 
 	menu_selected = Continue;
@@ -400,11 +420,14 @@ bool HUD::Update(float dt)
 	if (App->scene_manager->dungeon_id == 6) {
 		arena_round->active = true;
 		round->active = true;
+		round_box->active = true;
 	}
 	else {
 		arena_round->active = false;
 		round->active = false;
+		round_box->active = false;
 	}
+	
 	if (App->scene_manager->dungeon_id == 0) {
 		Minimap->texture = map0;
 		Minimap->texture_rect = { 0,0,500,235 };
@@ -462,11 +485,14 @@ bool HUD::Update(float dt)
 		menu_selected = nullptr;
 		Minimap->active = false;
 		link_point->active = false;
+		desc->active = false;
+		item_desc->active = false;
 		Disable_keys();
 
 	}
 
 	else {
+		check_item_collision();
 		Enable_keys();
 		rupees->active = true;
 		//bombs->active = true;
@@ -881,6 +907,37 @@ void HUD::UpdateHP()
 	lifes.clear();
 
 	GenerateHP();
+}
+
+void HUD::check_item_collision()
+{
+	if (App->IsPaused()) {
+		desc->active = false;
+		item_desc->active = false;
+	}
+	else {
+		Room* curr_room = App->scene_manager->GetCurrentScene()->GetCurrentRoom();
+		for (std::list<Item*>::const_iterator it = curr_room->items.cbegin(); it != curr_room->items.cend(); it++) {
+			if (it._Ptr != nullptr) {
+				if (it._Ptr->_Myval->type == drop) {
+					desc->active = false;
+					item_desc->active = false;
+				}
+				else {
+					if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect)) {
+						desc->str = it._Ptr->_Myval->description;
+						desc->active = true;
+						item_desc->active = true;
+						break;
+					}
+					else {
+						desc->active = false;
+						item_desc->active = false;
+					}
+				}
+			}
+		}
+	}
 }
 
 UIElement * HUD::menu_next()

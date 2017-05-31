@@ -828,7 +828,7 @@ animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
 bool j1Player::Update(float dt)
 {
 	bool ret = true;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		curr_texture = Link_retro;
 	}
 	else {
@@ -839,7 +839,7 @@ bool j1Player::Update(float dt)
 	}
 	else {
 		if (!App->IsPaused()) {
-			if (App->scene_manager->dungeon_id == 4) {
+			if (App->scene_manager->dungeon_id == 1) {
 				curr_texture = Link_retro;
 			}
 			else {

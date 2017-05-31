@@ -1,5 +1,8 @@
 #include "Item.h"
 
+#define Item_W_H 34
+#define Margin 2
+#define NextItemStart (Item_W_H + Margin)
 Item::Item(uint subtype)
 {
 	
@@ -7,8 +10,10 @@ Item::Item(uint subtype)
 
 void Item::PassToInventory()
 {
-	if (HitBox != nullptr)
+	if (HitBox != nullptr) {
 		HitBox->to_delete = true;
+		HitBox->SetPos(0, 0);
+	}
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
 
@@ -44,28 +49,37 @@ void Item::Update(float dt)
 				}
 
 				if (HitBox->CheckCollision(App->player->link_coll->rect)) {
-					if (App->player->rupees >= this->price) {
-						App->player->rupees -= price;
+					if (type == drop) {
+						Upgrade();
+						App->scene_manager->GetCurrentScene()->DestroyItem(this);
 						App->audio->PlayFx(this->fx);
-						App->gui->DeleteElement(this->priceTag);
-						if (type == ENTITYTYPE::drop) {
-							Upgrade();
-							App->scene_manager->GetCurrentScene()->DestroyItem(this);
-						}
-						else {
-							if (App->player->Find_inv(this)) {
-								Upgrade();
-								App->scene_manager->GetCurrentScene()->DestroyItem(this);
-							}
-							else if (App->player->Find_weapon(this)) {
-								App->scene_manager->GetCurrentScene()->DestroyItem(this);
-							}
-							else {
-								Upgrade();
-								PassToInventory();
-							}
-						}
 					}
+					else{
+						if (App->input->GetKey(App->input->controls[ACTION])) {
+							if (App->player->rupees >= this->price) {
+								App->player->rupees -= price;
+								App->audio->PlayFx(this->fx);
+								App->gui->DeleteElement(this->priceTag);
+								if (type == ENTITYTYPE::drop) {
+									Upgrade();
+									App->scene_manager->GetCurrentScene()->DestroyItem(this);
+								}
+								else {
+									if (App->player->Find_inv(this)) {
+										Upgrade();
+										App->scene_manager->GetCurrentScene()->DestroyItem(this);
+									}
+									else if (App->player->Find_weapon(this)) {
+										App->scene_manager->GetCurrentScene()->DestroyItem(this);
+									}
+									else {
+										Upgrade();
+										PassToInventory();
+									}
+								}
+							}
+						}
+				}
 				}
 			}
 			if (set == false) {
@@ -139,15 +153,15 @@ void PowerGauntlet::Upgrade()
 void PowerGauntlet::SetUp()
 {
 	subtype = power_gauntlet;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 36, 0, 32, 32 };
+	rect = { NextItemStart * 1, 0, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = { 40, 326, 32, 32 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "You feel the power";
 }
@@ -155,15 +169,15 @@ void PowerGauntlet::SetUp()
 void PegasusBoots::SetUp()
 {
 	subtype = pegasus_boots;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 0, 0, 32, 32 };
+	rect = { 0, 0, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = { 0, 326, 32, 32 };
+	UI_rect = { 0, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Light and comfortable";
 }
@@ -176,15 +190,15 @@ void PegasusBoots::Upgrade()
 void HeartContainer::SetUp()
 {
 	subtype = heart_container;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 0, 146, 32, 32 };
+	rect = { 0, NextItemStart * 4, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = { 180, 362, 32, 32 };
+	UI_rect = { NextItemStart * 5, NextItemStart * 10, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/heart_container_1.wav");
 	description = "You feel... more resistant";
 
@@ -199,13 +213,13 @@ void DropHeart::SetUp()
 {
 	subtype = drop_heart;
 	type = ENTITYTYPE::drop;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 180, 40, 32, 26 };
+	rect = { NextItemStart * 5, NextItemStart * 1, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/heart.wav");
 	
 	UI_tex = nullptr;
@@ -223,13 +237,13 @@ void DropPotion::SetUp()
 {
 	subtype = drop_potion;
 	type = ENTITYTYPE::drop;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 144, 146, 28, 32 };
+	rect = { NextItemStart * 4, NextItemStart * 4, Item_W_H, Item_W_H };
 
 }
 
@@ -244,13 +258,13 @@ void DropRupee::SetUp()
 {
 	subtype = drop_rupee;
 	type = ENTITYTYPE::drop;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 116, 254, 16, 28 };
+	rect = { NextItemStart * 3, NextItemStart * 7, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 
 }
@@ -267,13 +281,13 @@ void DropFiveRupee::SetUp()
 {
 	subtype = drop_fiverupee;
 	type = ENTITYTYPE::drop;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 224, 254, 16, 28 };
+	rect = { NextItemStart * 6, NextItemStart * 7, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 }
 
@@ -288,13 +302,13 @@ void DropTenRupee::SetUp()
 {
 	subtype = drop_tenrupee;
 	type = ENTITYTYPE::drop;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 332, 254, 16, 28 };
+	rect = { NextItemStart * 9, NextItemStart * 7, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/Rupee1.wav");
 }
 
@@ -310,15 +324,15 @@ void ItemBow::SetUp()
 {
 	subtype = weapon_bow;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 362, 74, 32, 32 };
+	rect = { NextItemStart * 10, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = { 362, 326, 32, 32 };
+	UI_rect = { NextItemStart * 10, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	
 }
@@ -336,15 +350,15 @@ void ItemSword::SetUp()
 {
 	subtype = weapon_sword;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 252, 41, 32, 32 };
+	rect = { NextItemStart * 7, NextItemStart * 1, Item_W_H, Item_W_H };
 	UI_tex = App->hud->items;
-	UI_rect = rect;
+	UI_rect = { NextItemStart * 7, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "";
 }
@@ -413,15 +427,15 @@ void BossKey::SetUp()
 {
 	subtype = boss_key;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 362, 144, 32, 34 };
+	rect = { NextItemStart * 10, NextItemStart * 4, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 360, 470, 32, 32 };
+	UI_rect = { NextItemStart * 10, NextItemStart * 4 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -438,15 +452,15 @@ void GoldenGauntlet::SetUp()
 {
 	subtype = gold_gauntlet;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 36, 36, 34, 35 };
+	rect = { NextItemStart * 1, NextItemStart * 1, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 36, 360, 34, 35 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Empowered by the Din";
 }
@@ -461,15 +475,15 @@ void WindCape::SetUp()
 {
 	subtype = wind_cape;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 34, 36, 34, 35 };
+	rect = { NextItemStart * 1, NextItemStart * 1, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 34, 360, 34, 35 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "By Nayru's light!";
 }
@@ -484,15 +498,15 @@ void MagicHammer::SetUp()
 {
 	subtype = magic_hammer;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 36, 108, 34, 35 };
+	rect = { NextItemStart * 1, NextItemStart * 3, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 36, 432, 34, 34 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Now with a 100% less magic!";
 }
@@ -507,15 +521,15 @@ void MagicSphere::SetUp()
 {
 	subtype = magic_sphere;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 108, 0, 34, 34 };
+	rect = { NextItemStart * 3, 0, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 108, 324, 34, 34 };
+	UI_rect = { NextItemStart * 3, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Now with a 100% more magic!";
 }
@@ -530,15 +544,15 @@ void VanguardEmblem::SetUp()
 {
 	subtype = vanguard_emblem;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 37, 72, 34, 34 };
+	rect = { NextItemStart * 1, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 36, 396, 34, 34 };
+	UI_rect = { NextItemStart * 1, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "A badge for true heroes";
 }
@@ -553,15 +567,15 @@ void SmallShield::SetUp()
 {
 	subtype = small_shield;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 0, 72, 34, 34 };
+	rect = { 0, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 0, 396, 34, 34 };
+	UI_rect = { 0, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -576,15 +590,15 @@ void GoldenShield::SetUp()
 {
 	subtype = small_shield;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 72, 72, 34, 34 };
+	rect = { NextItemStart * 2, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 72, 396, 34, 34 };
+	UI_rect = { NextItemStart * 2, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -615,15 +629,15 @@ void MagicMirror::SetUp()
 {
 	subtype = small_shield;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 216, 0, 34, 34 };
+	rect = { NextItemStart * 6, 0, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 216, 324, 32, 32 };
+	UI_rect = { NextItemStart * 6, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -652,15 +666,15 @@ void BagOfRupees::SetUp()
 {
 	subtype = bag_of_rupees;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 289, 109, 34, 34 };
+	rect = { NextItemStart * 8, NextItemStart * 3, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 289, 432, 32, 32 };
+	UI_rect = { NextItemStart * 8, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "Get Greedier";
 }
@@ -674,15 +688,15 @@ void OddMushroom::SetUp()
 {
 	subtype = odd_mushroom;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 324, 72, 34, 34 };
+	rect = { NextItemStart * 9, NextItemStart * 3, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 324, 396, 32, 32 };
+	UI_rect = { NextItemStart * 9, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -739,15 +753,15 @@ void MysteriousDust::SetUp()
 {
 	subtype = mysterious_dust;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 72, 216, 32, 34 };
+	rect = { NextItemStart * 2, NextItemStart * 6, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 180, 470, 32, 32 };
+	UI_rect = { NextItemStart * 5, NextItemStart * 6 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 }
 
@@ -777,15 +791,15 @@ void IconOfValor::SetUp()
 {
 	subtype = icon_of_valor;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 216, 72, 34, 34 };
+	rect = { NextItemStart * 6, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 216, 396, 32, 32 };
+	UI_rect = { NextItemStart * 6, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "An icon of true Valor";
 }
@@ -802,15 +816,15 @@ void IconOfWisdom::SetUp()
 {
 	subtype = icon_of_wisdom;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 252, 72, 32, 34 };
+	rect = { NextItemStart * 7, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 252, 396, 32, 32 };
+	UI_rect = { NextItemStart * 7, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "An icon of true Wisdom";
 
@@ -851,15 +865,15 @@ void IconOfPower::SetUp()
 {
 	subtype = icon_of_power;
 	type = ENTITYTYPE::item;
-	if (App->scene_manager->dungeon_id == 4) {
+	if (App->scene_manager->dungeon_id == 1) {
 		tex = App->tex->Load("Sprites/Items32x32Retro.png");
 	}
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { 180, 72, 34, 34 };
+	rect = { NextItemStart * 5, NextItemStart * 2, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { 180, 396, 32, 32 };
+	UI_rect = { NextItemStart * 5, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
 	description = "An icon of true Power";
 

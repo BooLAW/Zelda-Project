@@ -22,6 +22,7 @@ private:
 	void Disable_keys();
 	void Enable_keys();
 	void UpdateHP();
+	void check_item_collision();
 	UIElement* menu_next();
 	UIElement* menu_prev();
 	
@@ -96,6 +97,8 @@ public:
 	GuiText* action_key;
 	GuiText* dash_key;
 
+	GuiImage* item_desc;
+	GuiText* desc;
 	bool in_controls=false;
 
 	UIElement* menu_selected;
@@ -116,6 +119,7 @@ public:
 
 	GuiText* arena_round;
 	GuiText* round;
+	GuiImage* round_box;
 
 };
 
