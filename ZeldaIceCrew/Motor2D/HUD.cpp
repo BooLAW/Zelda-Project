@@ -434,23 +434,27 @@ bool HUD::Update(float dt)
 	}
 	if (App->scene_manager->dungeon_id == 1) {
 		Minimap->texture = map1;
-		Minimap->texture_rect = { 0,0,325,266 };
+		Minimap->texture_rect = { 0,0,333,285 };
 	}
 	if (App->scene_manager->dungeon_id == 2) {
 		Minimap->texture = map2;
-		Minimap->texture_rect = { 0,0,667,187 };
+		Minimap->texture_rect = { 0,0,685,203 };
 	}
 	if (App->scene_manager->dungeon_id == 3) {
 		Minimap->texture = map3;
-		Minimap->texture_rect = { 0,0,416,188 };
+		Minimap->texture_rect = { 0,0,417,199 };
 
 	}
 	if (App->scene_manager->dungeon_id == 4) {
 		Minimap->texture = map4;
-		Minimap->texture_rect = { 0,0,340,278 };
+		Minimap->texture_rect = { 0,0,355,303 };
 
 	}
 	if (App->scene_manager->dungeon_id == 5) {
+		Minimap->active = false;
+
+	}
+	if (App->scene_manager->dungeon_id == 6) {
 		Minimap->active = false;
 
 	}
