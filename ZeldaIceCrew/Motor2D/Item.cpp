@@ -161,7 +161,7 @@ void PowerGauntlet::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { NextItemStart * 1, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "You feel the power";
+	description = "You feel the power. +5 Power";
 }
 
 void PegasusBoots::SetUp()
@@ -177,7 +177,7 @@ void PegasusBoots::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { 0, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Light and comfortable";
+	description = "Light and comfortable. +0.25 Speed";
 }
 
 void PegasusBoots::Upgrade()
@@ -198,7 +198,7 @@ void HeartContainer::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { NextItemStart * 5, NextItemStart * 10, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/heart_container_1.wav");
-	description = "You feel... more resistant";
+	description = "You feel... more resistant. +1HP";
 
 }
 
@@ -460,7 +460,7 @@ void GoldenGauntlet::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Empowered by the Din";
+	description = "Empowered by the Din. +15 Power, -0.25 Speed";
 }
 
 void GoldenGauntlet::Upgrade()
@@ -483,7 +483,7 @@ void WindCape::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "By Nayru's light!";
+	description = "By Nayru's light! -5 Power, +0.5 Speed";
 }
 
 void WindCape::Upgrade()
@@ -506,7 +506,7 @@ void MagicHammer::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Now with a 100% less magic!";
+	description = "Now with a 100% less magic! +15 Power, -2HP";
 }
 
 void MagicHammer::Upgrade()
@@ -529,7 +529,7 @@ void MagicSphere::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 3, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Now with a 100% more magic!";
+	description = "Now with a 100% more magic! +4HP, -0.25 Speed";
 }
 
 void MagicSphere::Upgrade()
@@ -552,7 +552,7 @@ void VanguardEmblem::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "A badge for true heroes";
+	description = "A badge for true heroes. +4 HP, -5 Power";
 }
 
 void VanguardEmblem::Upgrade()
@@ -575,13 +575,14 @@ void SmallShield::SetUp()
 	UI_tex = tex;
 	UI_rect = { 0, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "The faster you go... the weaker you hit? -5 Power, +0.5 Speed";
 }
 
 void SmallShield::Upgrade()
 {
 	App->player->UpgradePWR(-5);
 	App->player->UpgradeSPD(0.5);
-	description = "The faster you go... the weaker you hit?";
+	
 }
 
 void GoldenShield::SetUp()
@@ -598,6 +599,7 @@ void GoldenShield::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 2, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	
 }
 
 void GoldenShield::Upgrade()
@@ -637,6 +639,7 @@ void MagicMirror::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 6, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "Switches HP value for Power value";
 }
 
 void MagicMirror::Upgrade()
@@ -674,7 +677,7 @@ void BagOfRupees::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 8, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Get Greedier";
+	description = "Get Greedier. Max rupees now is 300!";
 }
 
 void BagOfRupees::Upgrade()
@@ -799,7 +802,7 @@ void IconOfValor::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 6, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "An icon of true Valor";
+	description = "An icon of true Valor. +2HP, +5 Power,+0.25 Speed.";
 }
 
 void IconOfValor::Upgrade()
@@ -824,7 +827,7 @@ void IconOfWisdom::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 7, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "An icon of true Wisdom";
+	description = "An icon of true Wisdom. ";
 
 }
 
