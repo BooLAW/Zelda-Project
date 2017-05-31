@@ -168,7 +168,7 @@ void Video::LoadVideo(const char *fname)
 
 	// Tip! Module Video needs "the control" of the sound. If not SDL_OpenAudio will not initialize.
 	// Right now module Audio has init the audio previously.
-	App->audio->active = false;
+	//App->audio->active = false;
 	//SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	//init_failed = quit = (init_failed || (SDL_OpenAudio(&spec, NULL) != 0));
 
