@@ -579,8 +579,11 @@ bool Main_Screen::Start()
 	changing_controls = false;
 	in_dungeons = false;
 
-	App->video->PlayVideo("IntroLogo_1.ogv", { 0, 0, (int)App->win->GetWidth(), (int)App->win->GetHeight() });
-	
+	if (App->first_open == false) {
+		App->video->PlayVideo("IntroLogo_1.ogv", { 0, 0, (int)App->win->GetWidth(), (int)App->win->GetHeight() });
+		App->first_open = true;
+	}
+
 	return ret;
 }
 
