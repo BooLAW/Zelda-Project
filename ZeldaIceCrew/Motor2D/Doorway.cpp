@@ -12,10 +12,10 @@ void Doorway::Start()
 		tex_str = "Sprites/Door.png";
 		break;
 	case 1:
-		tex_str = "Sprites/Door.png";
+		tex_str = "Sprites/DoorRetro.png";
 		break;
 	case 2:
-		tex_str = "Sprites/Door.png";
+		tex_str = "Sprites/DoorDesert.png";
 		break;
 	case 3:
 		tex_str = "Sprites/Doors forest.png";
@@ -192,7 +192,7 @@ void DwDungeon::SetUp()
 		sprite[Left][close] = { 16, 56, 48, 64 };
 		break;
 	case 1:
-		//tex_str = "Sprites/Door.png";
+		//tex_str = "Sprites/DoorRetro.png";
 		sprite[Up][open] = { 0, 0, 0, 0 };
 		sprite[Down][open] = { 0, 0, 0, 0 };
 		sprite[Left][open] = { 0, 0, 0, 0 };
@@ -203,7 +203,7 @@ void DwDungeon::SetUp()
 		sprite[Left][close] = { 16, 56, 48, 64 };
 		break;
 	case 2:
-		//tex_str = "Sprites/Door.png";
+		//tex_str = "Sprites/DoorDesert.png";
 		sprite[Up][open] = { 0, 0, 0, 0 };
 		sprite[Down][open] = { 0, 0, 0, 0 };
 		sprite[Left][open] = { 0, 0, 0, 0 };
@@ -286,24 +286,55 @@ void DwDungeon::Draw()
 {
 	if (App->render->IsCameraCull(collider->rect) == false) {
 		iPoint aux_pos = { collider->rect.x, collider->rect.y };
+		
+
 		switch (direction) {
 		case Up:
 			aux_pos.y -= 48;
 			aux_pos.x -= 16;
+			if (App->scene_manager->dungeon_id == 3 || App->scene_manager->dungeon_id == 4) {
+				aux_pos.y += 16;
+				aux_pos.x -= 16;
+				if (App->scene_manager->dungeon_id == 4) {
+					aux_pos.y -= 16;
+				}
+			}
 			break;
 		case Down:
 			aux_pos.x -= 16;
 			aux_pos.y += 16;
+			if (App->scene_manager->dungeon_id == 3 || App->scene_manager->dungeon_id == 4) {
+				aux_pos.y -= 32;
+				aux_pos.x -= 16;
+				if (App->scene_manager->dungeon_id == 4) {
+					aux_pos.y += 16;
+				}
+			}
 			break;
 		case Left:
 			aux_pos.x -= 48;
 			aux_pos.y -= 16;
+			if (App->scene_manager->dungeon_id == 3 || App->scene_manager->dungeon_id == 4) {
+				aux_pos.y -= 16;
+				aux_pos.x += 8;
+				if (App->scene_manager->dungeon_id == 4) {
+					aux_pos.x -= 16;
+				}
+			}
 			break;
 		case Right:
 			aux_pos.x += 16;
 			aux_pos.y -= 16;
+			if (App->scene_manager->dungeon_id == 3 || App->scene_manager->dungeon_id == 4) {
+				aux_pos.x -= 32;
+				aux_pos.y -= 16;
+				if (App->scene_manager->dungeon_id == 4) {
+					aux_pos.x += 16;
+				}
+			}
 			break;
 		}
+
 		if (state == half) {
 			App->render->toDraw(tex, -99999, aux_pos.x, aux_pos.y, &open_anim[direction].GetCurrentFrame());
 			if (open_anim[direction].Finished()) {
