@@ -40,6 +40,8 @@ bool j1Player::Start()
 	rupees = 50;
 	controller_index = 0;
 	dash_fx = App->audio->LoadFx("Audio/Fx/break.wav");
+	uint best_arena_score=0;
+	uint last_arena_score=0;
 	// Setting Up all SDL_Rects x is every 102p, y is every 110p
 	//Idle
 	{
@@ -825,7 +827,7 @@ animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
 bool j1Player::Update(float dt)
 {
 	bool ret = true;
-	if (App->scene_manager->dungeon_id == 1) {
+	if (App->scene_manager->dungeon_id == 4) {
 		curr_texture = Link_retro;
 	}
 	else {
@@ -836,6 +838,12 @@ bool j1Player::Update(float dt)
 	}
 	else {
 		if (!App->IsPaused()) {
+			if (App->scene_manager->dungeon_id == 4) {
+				curr_texture = Link_retro;
+			}
+			else {
+				curr_texture = Link_Movement;
+			}
 			w_a_timer.Start();
 			w_a_timer.SetFlag(true);
 			if (App->player->power > MAX_PWR)
@@ -1357,7 +1365,8 @@ void j1Player::SetToNewGame()
 	max_life_points = 6;
 	max_life_points = ORIGIN_HP;
 	curr_life_points = max_life_points;
-
+	best_arena_score = 0;
+	last_arena_score = 0;
 	weapons.clear();
 	AddWeapon(t_sword);
 

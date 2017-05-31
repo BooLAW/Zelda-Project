@@ -1,6 +1,7 @@
 #include "HUD.h"
 #include "Item.h"
 #include "j1Player.h"
+#include "DungeonScene.h"
 bool HUD::Start()
 {
 
@@ -351,6 +352,19 @@ bool HUD::Start()
 
 	GenerateKeys();
 
+	arena_round = (GuiText*)App->gui->CreateElement(text);
+	arena_round->pos = { 100, 100 };
+	arena_round->active = false;
+	arena_round->movable = true;
+	arena_round->str = std::to_string(App->scene_manager->dungeon_scene->round);
+	
+	round = (GuiText*)App->gui->CreateElement(text);
+	round->pos = { 50, 100 };
+	round->active = false;
+	round->movable = true;
+	round->str = "Round";
+
+
 	menu_selected = Continue;
 	minimap = false;
 	Minimap->active = false;
@@ -375,6 +389,7 @@ bool HUD::Update(float dt)
 	menu_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MENU]);
 	action_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[ACTION]);
 	dash_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DASH]);
+	arena_round->str = std::to_string(App->scene_manager->dungeon_scene->round);
 	
 	bool ret = true;
 	//AIDS here 
@@ -382,6 +397,14 @@ bool HUD::Update(float dt)
 	//Puto amo
 	//Guapo
 	//Sexy
+	if (App->scene_manager->dungeon_id == 6) {
+		arena_round->active = true;
+		round->active = true;
+	}
+	else {
+		arena_round->active = false;
+		round->active = false;
+	}
 	if (App->scene_manager->dungeon_id == 0) {
 		Minimap->texture = map0;
 		Minimap->texture_rect = { 0,0,500,235 };

@@ -399,8 +399,13 @@ bool BSoldier::Start()
 
 
 	curr_dir = Enemy::EnDirection::Down;
-
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else{ 
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png")); 
+	}
+	
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -460,7 +465,12 @@ bool RSoldier::Start()
 	SetRewards();
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	}
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -520,7 +530,12 @@ bool GSoldier::Start()
 	SetRewards();
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	}
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -818,7 +833,12 @@ bool Hinox::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	}
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -891,7 +911,12 @@ bool Rope::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	}
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -1033,7 +1058,12 @@ bool BlueArcher::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	}
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -1176,7 +1206,12 @@ bool GreyBat::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	}
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -1221,7 +1256,12 @@ bool Geldman::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	}
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -1381,7 +1421,12 @@ bool Freezor::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	}
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
@@ -1552,7 +1597,12 @@ bool Beamos::Start()
 
 	curr_dir = Enemy::EnDirection::Down;
 
-	Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	if (App->scene_manager->dungeon_id == 4) {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/EnemiesRetro.png"));
+	}
+	else {
+		Entity::SetTexture(App->tex->Load("Sprites/Enemies/Enemies.png"));
+	}
 
 	// All Animation Settup (you don't want to look into that, trust me :s)
 	{
