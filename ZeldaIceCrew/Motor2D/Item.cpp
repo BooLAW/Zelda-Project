@@ -384,25 +384,27 @@ void BossKey::Update(float dt)
 					HitBox->SetPos(pos.x, pos.y);
 
 				if (HitBox->CheckCollision(App->player->link_coll->rect)) {
-					if (App->player->rupees >= this->price) {
-						App->player->rupees -= price;
-						App->audio->PlayFx(this->fx);
-						App->gui->DeleteElement(this->priceTag);
-						if (type == ENTITYTYPE::drop) {
-							Upgrade();
-							App->scene_manager->GetCurrentScene()->DestroyItem(this);
-						}
-						else {
-							if (App->player->Find_inv(this)) {
+					if (App->input->GetKey(App->input->controls[ACTION])) {
+						if (App->player->rupees >= this->price) {
+							App->player->rupees -= price;
+							App->audio->PlayFx(this->fx);
+							App->gui->DeleteElement(this->priceTag);
+							if (type == ENTITYTYPE::drop) {
 								Upgrade();
-								App->scene_manager->GetCurrentScene()->DestroyItem(this);
-							}
-							else if (App->player->Find_weapon(this)) {
 								App->scene_manager->GetCurrentScene()->DestroyItem(this);
 							}
 							else {
-								Upgrade();
-								//PassToInventory();
+								if (App->player->Find_inv(this)) {
+									Upgrade();
+									App->scene_manager->GetCurrentScene()->DestroyItem(this);
+								}
+								else if (App->player->Find_weapon(this)) {
+									App->scene_manager->GetCurrentScene()->DestroyItem(this);
+								}
+								else {
+									Upgrade();
+									//PassToInventory();
+								}
 							}
 						}
 					}
@@ -437,6 +439,7 @@ void BossKey::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 10, NextItemStart * 4 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
+	description = "Gather 3 keys and try to beat the boss!";
 }
 
 void BossKey::Upgrade()
