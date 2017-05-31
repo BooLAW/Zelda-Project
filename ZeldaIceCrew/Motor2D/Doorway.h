@@ -20,6 +20,7 @@ enum DWSTATE {
 	open = 0,
 	close,
 	half,
+	half_close,
 	LASTDWSTATE
 };
 
