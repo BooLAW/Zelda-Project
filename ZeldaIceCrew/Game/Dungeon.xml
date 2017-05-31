@@ -724,7 +724,7 @@
             <enemy subtype="t_beamos"  x= "134"     y= "50"/>
           <enemy subtype="t_beamos"             x= "134"     y= "448"/>
              <enemy subtype="t_beamos" x= "900"    y= "448"/>
-             <enemy subtype="t_hinox" x= "503"    y= "329"/>
+             <enemy subtype="t_hinox" x= "490"    y= "239"/>
           
           </enemies>
           <doorways>
