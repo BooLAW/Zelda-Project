@@ -17,9 +17,12 @@ void Room::Update(float dt)
 			if ((*it) != nullptr) {
 				if (PlayerInside() == true) {
 					enemies.empty() ? (*it)->state = DWSTATE::open : (*it)->state = DWSTATE::close;
+					if((*it)->state == DWSTATE::half)
+						App->audio->PlayFx(App->scene_manager->open_fx);
+					if ((*it)->state == DWSTATE::half_close)
+						App->audio->PlayFx(App->scene_manager->close_fx);
 				}
 				else {
-					App->audio->PlayFx(App->scene_manager->open_fx);
 					(*it)->state = DWSTATE::open;
 				}
 			}
