@@ -149,6 +149,8 @@ private:
 public:
 	uint64				frame_count = 0;
 
+	bool				first_open = false;
+
 private:
 	j1Timer				startup_time;
 	j1Timer				frame_time;
