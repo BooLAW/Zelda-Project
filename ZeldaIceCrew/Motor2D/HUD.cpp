@@ -352,6 +352,12 @@ bool HUD::Start()
 
 	GenerateKeys();
 
+	round_box = (GuiImage*)App->gui->CreateElement(image);
+	round_box->pos = { -10, 90 };
+	round_box->texture_rect = { 333,402,175,50 };
+	round_box->active = false;
+	round_box->movable = true;
+
 	arena_round = (GuiText*)App->gui->CreateElement(text);
 	arena_round->pos = { 100, 100 };
 	arena_round->active = false;
@@ -363,6 +369,9 @@ bool HUD::Start()
 	round->active = false;
 	round->movable = true;
 	round->str = "Round";
+
+	
+	
 
 
 	menu_selected = Continue;
@@ -400,10 +409,12 @@ bool HUD::Update(float dt)
 	if (App->scene_manager->dungeon_id == 6) {
 		arena_round->active = true;
 		round->active = true;
+		round_box->active = true;
 	}
 	else {
 		arena_round->active = false;
 		round->active = false;
+		round_box->active = false;
 	}
 	if (App->scene_manager->dungeon_id == 0) {
 		Minimap->texture = map0;

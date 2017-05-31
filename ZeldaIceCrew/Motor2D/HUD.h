@@ -116,6 +116,7 @@ public:
 
 	GuiText* arena_round;
 	GuiText* round;
+	GuiImage* round_box;
 
 };
 
