@@ -82,7 +82,8 @@ bool DungeonScene::Start()
 	App->player->rupees = 50;
 
 	App->Pause();
-
+	
+	
 	starting_time.Start();
 	starting_time.SetFlag(true);
 
@@ -95,7 +96,6 @@ bool DungeonScene::Update(float dt)
 	BROFILER_CATEGORY("UpdateDungeon", Profiler::Color::Red)
 
 	stdUpdate(dt);
-
 
 	if (starting_time.GetFlag() == true && starting_time.Read() > 1500) {
 		App->UnPause();

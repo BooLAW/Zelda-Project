@@ -7,8 +7,10 @@ Item::Item(uint subtype)
 
 void Item::PassToInventory()
 {
-	if (HitBox != nullptr)
+	if (HitBox != nullptr) {
 		HitBox->to_delete = true;
+		HitBox->SetPos(0, 0);
+	}
 	if (tex != nullptr)
 		App->tex->UnLoad(tex);
 
@@ -42,29 +44,36 @@ void Item::Update(float dt)
 				}
 
 				if (HitBox->CheckCollision(App->player->link_coll->rect)) {
-					if (App->input->GetKey(App->input->controls[ACTION])) {
-						if (App->player->rupees >= this->price) {
-						App->player->rupees -= price;
+					if (type == drop) {
+						Upgrade();
+						App->scene_manager->GetCurrentScene()->DestroyItem(this);
 						App->audio->PlayFx(this->fx);
-						App->gui->DeleteElement(this->priceTag);
-						if (type == ENTITYTYPE::drop) {
-							Upgrade();
-							App->scene_manager->GetCurrentScene()->DestroyItem(this);
-						}
-						else {
-							if (App->player->Find_inv(this)) {
-								Upgrade();
-								App->scene_manager->GetCurrentScene()->DestroyItem(this);
-							}
-							else if (App->player->Find_weapon(this)) {
-								App->scene_manager->GetCurrentScene()->DestroyItem(this);
-							}
-							else {
-								Upgrade();
-								PassToInventory();
-							}
-						}
 					}
+					else{
+						if (App->input->GetKey(App->input->controls[ACTION])) {
+							if (App->player->rupees >= this->price) {
+								App->player->rupees -= price;
+								App->audio->PlayFx(this->fx);
+								App->gui->DeleteElement(this->priceTag);
+								if (type == ENTITYTYPE::drop) {
+									Upgrade();
+									App->scene_manager->GetCurrentScene()->DestroyItem(this);
+								}
+								else {
+									if (App->player->Find_inv(this)) {
+										Upgrade();
+										App->scene_manager->GetCurrentScene()->DestroyItem(this);
+									}
+									else if (App->player->Find_weapon(this)) {
+										App->scene_manager->GetCurrentScene()->DestroyItem(this);
+									}
+									else {
+										Upgrade();
+										PassToInventory();
+									}
+								}
+							}
+						}
 				}
 				}
 			}

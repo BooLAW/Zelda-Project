@@ -427,6 +427,7 @@ bool HUD::Update(float dt)
 		round->active = false;
 		round_box->active = false;
 	}
+	
 	if (App->scene_manager->dungeon_id == 0) {
 		Minimap->texture = map0;
 		Minimap->texture_rect = { 0,0,500,235 };
@@ -484,6 +485,8 @@ bool HUD::Update(float dt)
 		menu_selected = nullptr;
 		Minimap->active = false;
 		link_point->active = false;
+		desc->active = false;
+		item_desc->active = false;
 		Disable_keys();
 
 	}
@@ -908,20 +911,33 @@ void HUD::UpdateHP()
 
 void HUD::check_item_collision()
 {
-	Room* curr_room = App->scene_manager->GetCurrentScene()->GetCurrentRoom();
-	for (std::list<Item*>::const_iterator it = curr_room->items.cbegin(); it != curr_room->items.cend(); it++) {
-		if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect)) {
-			desc->str = it._Ptr->_Myval->description;
-			desc->active = true;
-			item_desc->active = true;
-			break;
-		}
-		else {
-			desc->active = false;
-			item_desc->active = false;
+	if (App->IsPaused()) {
+		desc->active = false;
+		item_desc->active = false;
+	}
+	else {
+		Room* curr_room = App->scene_manager->GetCurrentScene()->GetCurrentRoom();
+		for (std::list<Item*>::const_iterator it = curr_room->items.cbegin(); it != curr_room->items.cend(); it++) {
+			if (it._Ptr != nullptr) {
+				if (it._Ptr->_Myval->type == drop) {
+					desc->active = false;
+					item_desc->active = false;
+				}
+				else {
+					if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect)) {
+						desc->str = it._Ptr->_Myval->description;
+						desc->active = true;
+						item_desc->active = true;
+						break;
+					}
+					else {
+						desc->active = false;
+						item_desc->active = false;
+					}
+				}
+			}
 		}
 	}
-	
 }
 
 UIElement * HUD::menu_next()
