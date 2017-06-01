@@ -1492,6 +1492,8 @@ void j1Player::DyingRestart()
 	else
 		App->player->SetToNewGame();
 
+	pl_speed.x = pl_speed.y = ORIGIN_SPD;
+
 	//App->player->pos = App->scene_manager->village_scene->pl_start_pos;
 //	arrows = 0;
 
