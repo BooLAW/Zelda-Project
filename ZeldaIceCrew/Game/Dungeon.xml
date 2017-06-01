@@ -174,7 +174,7 @@
 
       <file>Layout6.tmx</file>
 
-      <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
+      <music volume="30">Audio/Music/Song_of_Storms.ogg</music>
 
       <camera follow="0"/>
 

@@ -39,6 +39,9 @@ bool SceneManager::Start()
 {
 	bool ret = false;
 
+	App->audio->SetVolumeMusic(App->audio->volume_std * App->audio->volume_percentatge);
+	App->audio->SetVolume(App->audio->volume_std * App->audio->volume_percentatge, -1);
+
 	LOG("Start module scene");
 
 	CA_tex = App->tex->Load("Sprites/rain_and_circle.png");

@@ -687,8 +687,8 @@ bool Main_Screen::Update(float dt)
 				}
 				else {
 					App->audio->volume_percentatge = 1;
-					App->audio->SetVolumeMusic(1);
-					App->audio->SetVolume(1, -1);
+					App->audio->SetVolumeMusic(App->audio->volume_std * App->audio->volume_percentatge);
+					App->audio->SetVolume(App->audio->volume_std * App->audio->volume_percentatge, -1);
 				}
 			}
 		/*	if (selected == Screen) {

@@ -38,6 +38,7 @@ public:
 	void SetVolume(uint32 vol, int channel);
 
 	float volume_percentatge = 1.0;
+	const float volume_std = 60;
 
 private:
 
