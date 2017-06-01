@@ -167,7 +167,7 @@ private:
 
 
 	GuiImage* Arena;
-	GuiImage* border;
+	
 
 
 	SDL_Texture* tex;

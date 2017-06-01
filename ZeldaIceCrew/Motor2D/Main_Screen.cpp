@@ -557,16 +557,12 @@ bool Main_Screen::Start()
 	key5->active = false;
 	key5->movable = true;
 
-	border = (GuiImage*)App->gui->CreateElement(image);
-	border->active = false;
-	border->movable = true;
-	border->pos = { 50,500};
-	border->texture_rect = { 766,80,378,230 };
 
 	img_dung = (GuiImage*)App->gui->CreateElement(image);
+	img_dung->texture = App->tex->Load("Sprites/MapImages.png");
 	img_dung->active = false;
 	img_dung->movable = true;
-	img_dung->pos = { 50,500 };
+	img_dung->pos = { 20,500 };
 
 	
 	
@@ -604,7 +600,7 @@ bool Main_Screen::Update(float dt)
 		Arena->active = false;
 		arena->active = false;
 		up->active = false;
-		border->active = false;
+		
 		down->active = false;
 		right->active = false;
 		left->active = false;
@@ -734,7 +730,7 @@ bool Main_Screen::Update(float dt)
 		settings->active = false;
 		Exit->active = false;
 		exit->active = false;
-		border->active = false;
+		
 
 		Controls->active = false;
 		controls->active = false;
@@ -927,33 +923,28 @@ bool Main_Screen::Update(float dt)
 			UpdateKeys();
 			Enablekeys();
 			if (selected == d1) {
-				img_dung->texture = App->hud->map0;
-				img_dung->texture_rect = { 0,0,500,235 };
+				img_dung->texture_rect = { 0,0,441,264};
 			}
 			if (selected == d2) {
-				img_dung->texture = App->hud->map1;
-				img_dung->texture_rect = { 0,0,325,266 };
+				img_dung->texture_rect = { 446,0,441,264 };
 			}
 			if (selected == d3) {
-				img_dung->texture = App->hud->map2;
-				img_dung->texture_rect = { 0,0,667,187 };
+				img_dung->texture_rect = { 0,273,441,264 };
 			}
 			if (selected == d4) {
-				img_dung->texture = App->hud->map3;
-				img_dung->texture_rect = { 0,0,416,188 };
+				img_dung->texture_rect = { 446,273,441,264 };
 			}
 			if (selected == d5) {
-				img_dung->texture = App->hud->map4;
-				img_dung->texture_rect = { 0,0,340,278 };
+				img_dung->texture_rect = { 0,544,441,264 };
 			}
 			if (selected == dungeon_boss) {
-				img_dung->active = false;
+				img_dung->texture_rect = { 446,544,441,264 };
 			}
 
 			//Screen->active =false;
 		//	screen->active =false;
 			Enable_dungeons();
-			border->active = true;
+			
 			d1_lvl->active = true;
 			d2_lvl->active = true;
 			d3_lvl->active = true;
@@ -1206,7 +1197,7 @@ bool Main_Screen::Update(float dt)
 		img_dung->active = false;
 		Disablekeys();
 		Disable_dungeons();
-		border->active = false;
+		
 		d1_lvl->active = false;
 		d2_lvl->active = false;
 		d3_lvl->active = false;
@@ -1642,7 +1633,7 @@ bool Main_Screen::CleanUp()
 	move_down->active = false;
 	move_right->active = false;
 	move_left->active = false;
-	border->active = false;
+	
 	menu->active = false;
 	action->active = false;
 	dash->active = false;
