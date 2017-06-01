@@ -453,34 +453,34 @@ bool Main_Screen::Start()
 	dungeons.push_back(Back_dung);
 
 	D1 = (GuiText*)App->gui->CreateElement(text);
-	D1->pos = { d1->pos.x + 550, d1->pos.y + 2 };
+	D1->pos = { d1->pos.x + 540, d1->pos.y + 2 };
 	D1->active = false;
-	D1->str = "Dungeon 1";
+	D1->str = "Hyrule Castle";
 	D1->movable = true;
 
 	D2 = (GuiText*)App->gui->CreateElement(text);
 	D2->pos = { d2->pos.x + 550, d2->pos.y + 2 };
 	D2->active = false;
-	D2->str = "Dungeon 2";
+	D2->str = "1989";
 	D2->movable = true;
 	App->audio->PlayMusic("Audio/Music/Opening.ogg");
 
 	D3 = (GuiText*)App->gui->CreateElement(text);
 	D3->pos = { d3->pos.x + 550, d3->pos.y + 2 };
 	D3->active = false;
-	D3->str = "Dungeon 3";
+	D3->str = "Lost Woods";
 	D3->movable = true;
 
 	D4 = (GuiText*)App->gui->CreateElement(text);
 	D4->pos = { d4->pos.x + 550, d4->pos.y + 2 };
 	D4->active = false;
-	D4->str = "Dungeon 4";
+	D4->str = "Dark Cave";
 	D4->movable = true;
 
 	D5 = (GuiText*)App->gui->CreateElement(text);
 	D5->pos = { d5->pos.x + 550, d5->pos.y + 2 };
 	D5->active = false;
-	D5->str = "Dungeon 5";
+	D5->str = "The desert";
 	D5->movable = true;
 
 	back_dung = (GuiText*)App->gui->CreateElement(text);
@@ -490,9 +490,9 @@ bool Main_Screen::Start()
 	back_dung->movable = true;
 
 	DB = (GuiText*)App->gui->CreateElement(text);
-	DB->pos = { dungeon_boss->pos.x + 550, dungeon_boss->pos.y + 2 };
+	DB->pos = { dungeon_boss->pos.x + 530, dungeon_boss->pos.y + 2 };
 	DB->active = false;
-	DB->str = "Boss Dungeon";
+	DB->str = "Agahnim Castle";
 	DB->movable = true;
 
 	d1_lvl= (GuiText*)App->gui->CreateElement(text);

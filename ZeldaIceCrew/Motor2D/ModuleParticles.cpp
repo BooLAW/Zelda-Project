@@ -206,7 +206,13 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
 
 void Arrow::Start()
 {
-	graphics = App->tex->Load("Sprites/Particles/Particles.png");
+
+	if (App->scene_manager->dungeon_id == 1) {
+		graphics = App->tex->Load("Sprites/Particles/ParticlesRetro.png");
+	}
+	else {
+		graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	}
 	g_rect[Up][0] = { 2, 2, 34, 34 };
 	g_rect[Down][0] = { 38, 2, 34, 34 };
 	g_rect[Right][0] = { 74, 2, 34, 34 };
@@ -306,7 +312,12 @@ bool Arrow::Update(float dt)
 
 void Enemy_Arrow::Start()
 {
-	graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	if (App->scene_manager->dungeon_id == 1) {
+		graphics = App->tex->Load("Sprites/Particles/ParticlesRetro.png");
+	}
+	else {
+		graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	}
 	g_rect[Up][0] = { 110, 38, 34, 34 };
 	g_rect[Up][1] = { 74, 38, 34, 34 };
 	g_rect[Down][0] = { 74, 74, 34, 34 };
@@ -405,7 +416,12 @@ bool Enemy_Arrow::Update(float dt)
 
 void Shadow_Projectile::Start()
 {
-	graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	if (App->scene_manager->dungeon_id == 1) {
+		graphics = App->tex->Load("Sprites/Particles/ParticlesRetro.png");
+	}
+	else {
+		graphics = App->tex->Load("Sprites/Particles/Particles.png");
+	}
 	g_rect[Up][0] = { 2, 146, 34, 34 };
 	g_rect[Up][1] = { 38, 146, 34, 34 };
 	g_rect[Down][0] = { 2, 110, 34, 34 };
