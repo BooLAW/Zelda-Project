@@ -647,7 +647,6 @@ bool Main_Screen::Update(float dt)
 		d4_lvl->active = false;
 		d5_lvl->active = false;
 
-
 		for (std::list<UIElement*>::const_iterator it = settings_elements.cbegin(); it != settings_elements.cend(); it++) {
 			if (selected == it._Ptr->_Myval) {
 				it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
@@ -676,6 +675,9 @@ bool Main_Screen::Update(float dt)
 
 			}
 			if (selected == Mute) {
+				if (App->audio->volume_percentatge == 0) {
+					Mute->texture_rect = { 0, 514, 683, 36 };
+				}
 				if (App->audio->volume_percentatge != 0) {
 					App->audio->volume_percentatge = 0;
 					App->audio->SetVolumeMusic(0);

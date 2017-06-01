@@ -81,40 +81,40 @@ bool Scene::stdUpdate(float dt)
 
 	}
 
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-		Room* aux_r = nullptr;
-		int mx = 0, my = 0;
-	
-		App->input->GetMousePosition(mx, my);
-
-		aux_r = GetCurrentRoom();
-
-		if (aux_r != nullptr) {
-			Enemy* new_en = nullptr;
-			new_en = AddEnemy(enemy_selector, aux_r->coords.x, aux_r->coords.y, mx, my - (App->render->camera.h / 2 - ROOM_H / 2));
-		//	if (new_en != nullptr) {
-		//		pugi::xml_node node_room;
-		//		for (pugi::xml_node node_rooms = scene.child("rooms"); node_rooms; node_rooms = node_rooms.next_sibling("rooms")) {
-		//			for (node_room = node_rooms.child("room"); node_room; node_room = node_room.next_sibling("room")) {
-		//				if (node_room.attribute("x").as_int() != aux_r->coords.x || (node_room.attribute("y").as_int() != aux_r->coords.y))
-		//					continue;
-		//				else
-		//					break;
-		//			}
-		//		}
-		//		LOG("ROOM %d %d", node_room.attribute("x").as_int(), node_room.attribute("y").as_int());
-		//		pugi::xml_node enemies_node = node_room.child("enemies");
-		//		if (enemies_node == NULL) {
-		//			enemies_node = node_room.append_child("enemies");
-		//		}
-		//		pugi::xml_node enemy_node = enemies_node.append_child("enemy");
-		//		enemy_node.append_attribute("subtype") = new_en->subtype;
-		//		enemy_node.append_attribute("x") = new_en->pos.x - aux_r->coords.x * ROOM_W;
-		//		enemy_node.append_attribute("y") = new_en->pos.y - aux_r->coords.y * ROOM_H;
-		//		LOG("ENEMY %d", enemy_node.attribute("subtype").as_int(22));
-		//	}
-		}
-	}
+	//if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+	//	Room* aux_r = nullptr;
+	//	int mx = 0, my = 0;
+	//
+	//	App->input->GetMousePosition(mx, my);
+	//
+	//	aux_r = GetCurrentRoom();
+	//
+	//	if (aux_r != nullptr) {
+	//		Enemy* new_en = nullptr;
+	//		new_en = AddEnemy(enemy_selector, aux_r->coords.x, aux_r->coords.y, mx, my - (App->render->camera.h / 2 - ROOM_H / 2));
+	//	//	if (new_en != nullptr) {
+	//	//		pugi::xml_node node_room;
+	//	//		for (pugi::xml_node node_rooms = scene.child("rooms"); node_rooms; node_rooms = node_rooms.next_sibling("rooms")) {
+	//	//			for (node_room = node_rooms.child("room"); node_room; node_room = node_room.next_sibling("room")) {
+	//	//				if (node_room.attribute("x").as_int() != aux_r->coords.x || (node_room.attribute("y").as_int() != aux_r->coords.y))
+	//	//					continue;
+	//	//				else
+	//	//					break;
+	//	//			}
+	//	//		}
+	//	//		LOG("ROOM %d %d", node_room.attribute("x").as_int(), node_room.attribute("y").as_int());
+	//	//		pugi::xml_node enemies_node = node_room.child("enemies");
+	//	//		if (enemies_node == NULL) {
+	//	//			enemies_node = node_room.append_child("enemies");
+	//	//		}
+	//	//		pugi::xml_node enemy_node = enemies_node.append_child("enemy");
+	//	//		enemy_node.append_attribute("subtype") = new_en->subtype;
+	//	//		enemy_node.append_attribute("x") = new_en->pos.x - aux_r->coords.x * ROOM_W;
+	//	//		enemy_node.append_attribute("y") = new_en->pos.y - aux_r->coords.y * ROOM_H;
+	//	//		LOG("ENEMY %d", enemy_node.attribute("subtype").as_int(22));
+	//	//	}
+	//	}
+	//}
 
 	return true;
 }

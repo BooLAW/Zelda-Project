@@ -10,7 +10,7 @@
 
       <file>Dungeon.tmx</file>
 
-      <music volume="30">Audio/Music/Song_of_Storms.ogg</music>
+      <music volume="20">Audio/Music/Song_of_Storms.ogg</music>
 
       <camera follow="0"/>
 
@@ -174,7 +174,7 @@
 
       <file>Layout6.tmx</file>
 
-      <music volume="30">Audio/Music/Song_of_Storms.ogg</music>
+      <music volume="20">Audio/Music/8BitMusic.ogg</music>
 
       <camera follow="0"/>
 
@@ -371,7 +371,7 @@
 
       <file>Layout7.tmx</file>
 
-      <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
+      <music volume="20">Audio/Music/GerudoValley.ogg</music>
 
       <camera follow="0"/>
 
@@ -599,7 +599,7 @@
 
       <file>Layout4.tmx</file>
 
-      <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
+      <music volume="20">Audio/Music/LostWoods.ogg</music>
 
       <camera follow="0"/>
 
@@ -799,7 +799,7 @@
 
       <file>Layout8.tmx</file>
 
-      <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
+      <music volume="15">Audio/Music/FullSteamGuitar.ogg</music>
 
       <camera follow="0"/>
 
@@ -1020,7 +1020,7 @@
     <map id ="5">
       <file>BossRoom.tmx</file>
 
-      <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
+      <music volume="30">Audio/Music/Hyrule_Castle.ogg</music>
 
       <camera follow="0"/>
 
@@ -1073,7 +1073,7 @@
 
       <file>ArenaMap.tmx</file>
 
-      <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
+      <music volume="30">Audio/Music/Song_of_Storms.ogg</music>
 
       <camera follow="1"/>
 
