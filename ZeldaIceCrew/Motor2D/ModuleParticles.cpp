@@ -1352,7 +1352,12 @@ bool AgahnimLightning::Update(float dt)
 
 void DA::Start()
 {
-	graphics = App->tex->Load("Sprites/Enemy Death Effects.png");
+	if (App->scene_manager->dungeon_id == 1) {
+		graphics = App->tex->Load("Sprites/Enemy Death Effects Retro.png");
+	}
+	else {
+		graphics = App->tex->Load("Sprites/Enemy Death Effects.png");
+	}
 	g_rect[Down][0] = { 155, 7, 51, 51};
 	g_rect[Down][1] = { 209, 7, 51, 51 };
 	g_rect[Down][2] = { 255, 7, 51, 51 };
