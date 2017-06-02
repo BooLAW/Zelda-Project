@@ -1148,7 +1148,7 @@ bool Main_Screen::Update(float dt)
 				if (selected == d4) {
 					if (App->player->completed_maps[2] == false) {
 						App->audio->PlayFx(press_fx);
-						App->scene_manager->dungeon_id = 4;
+						App->scene_manager->dungeon_id = 2;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 						App->hud->Minimap->active = false;
 						App->hud->link_point->active = false;
