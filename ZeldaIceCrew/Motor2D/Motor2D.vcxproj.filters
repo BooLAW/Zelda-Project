@@ -101,6 +101,15 @@
     </ClCompile>
     <ClCompile Include="theoraplay.c" />
     <ClCompile Include="Video.cpp" />
+    <ClCompile Include="GroundParticles.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -212,6 +221,15 @@
     </ClInclude>
     <ClInclude Include="theoraplay.h" />
     <ClInclude Include="Video.h" />
+    <ClInclude Include="GroundParticles.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
@@ -222,6 +240,9 @@
     </Filter>
     <Filter Include="Modules">
       <UniqueIdentifier>{3fec696e-4c9f-403d-ad04-1a77f94213a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{732e6d70-1c33-4837-bf78-fe046e65fa0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
