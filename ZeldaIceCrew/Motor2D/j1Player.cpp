@@ -1169,7 +1169,7 @@ bool j1Player::Update(float dt)
 					}*/
 					if (App->player->curr_life_points <= 0) {
 						//Here he should change the scene to the room scene
-						DyingRestart();
+						want_to_die = true;
 						App->audio->PlayFx(die_fx);
 					}
 
@@ -1233,6 +1233,11 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate(float dt)
 {
 	bool ret = true;
+
+	if (want_to_die == true) {
+		DyingRestart();
+		want_to_die = false;
+	}
 
 	return ret;
 }
@@ -1491,8 +1496,6 @@ void j1Player::DyingRestart()
 		App->LoadGame("save_game.xml");
 	else
 		App->player->SetToNewGame();
-
-	pl_speed.x = pl_speed.y = ORIGIN_SPD;
 
 	//App->player->pos = App->scene_manager->village_scene->pl_start_pos;
 //	arrows = 0;
