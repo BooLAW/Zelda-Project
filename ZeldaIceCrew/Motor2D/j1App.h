@@ -23,6 +23,7 @@ class j1Fonts;
 class j1Gui;
 class j1Collision;
 class HUD;
+class ParticleManager;
 //class j1Console;			
 class j1Player;
 class EntityManager;
@@ -121,6 +122,7 @@ public:
 	j1Collision*			collisions = NULL;
 	j1Player*			player = NULL;
 	EntityManager*      entitymanager = NULL;
+	ParticleManager*	particlemanager = NULL;
 	HUD*				hud = NULL;
 	ModuleParticles*	particle = NULL;
 	DialogManager*       dialog = NULL;

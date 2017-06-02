@@ -24,6 +24,7 @@
 #include "ModuleParticles.h"
 #include "DialogueManager.h"
 #include "Video.h"
+#include "ParticleManager.h"
 //#include "j1Console"
 #include "EntityManager.h"
 
@@ -51,6 +52,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	particle = new ModuleParticles();
 	dialog = new DialogManager();
 	video = new Video();
+	particlemanager = new ParticleManager();
 
 
 	// Ordered for awake / Start / Update
@@ -66,6 +68,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 	AddModule(scene_manager);
 	AddModule(entitymanager);
+	AddModule(particlemanager);
 	AddModule(collisions);
 	//AddModule(console);
 	AddModule(particle);
