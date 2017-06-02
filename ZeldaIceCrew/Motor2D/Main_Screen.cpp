@@ -1031,12 +1031,12 @@ bool Main_Screen::Update(float dt)
 					}
 				}
 				if (i == 2) {
-					if ((App->player->completed_maps[i]) == true) {
+					if ((App->player->completed_maps[i+1]) == true) {
 						key3->texture_rect = { 977,455,28,32 };
 					}
 				}
 				if (i == 3) {
-					if ((App->player->completed_maps[i]) == true) {
+					if ((App->player->completed_maps[i-1]) == true) {
 						key4->texture_rect = { 977,455,28,32 };
 					}
 				}
@@ -1133,9 +1133,9 @@ bool Main_Screen::Update(float dt)
 					}
 				}
 				if (selected == d3) {
-					if (App->player->completed_maps[2] == false) {
+					if (App->player->completed_maps[3] == false) {
 						App->audio->PlayFx(press_fx);
-						App->scene_manager->dungeon_id = 2;
+						App->scene_manager->dungeon_id = 3;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 						App->hud->Minimap->active = false;
 						App->hud->link_point->active = false;
@@ -1146,9 +1146,9 @@ bool Main_Screen::Update(float dt)
 					}
 				}
 				if (selected == d4) {
-					if (App->player->completed_maps[3] == false) {
+					if (App->player->completed_maps[2] == false) {
 						App->audio->PlayFx(press_fx);
-						App->scene_manager->dungeon_id = 3;
+						App->scene_manager->dungeon_id = 4;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 						App->hud->Minimap->active = false;
 						App->hud->link_point->active = false;
