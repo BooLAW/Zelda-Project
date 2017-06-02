@@ -176,6 +176,7 @@ void Scene::DestroyItem(Item * ent)
 			for (std::list<Item*>::iterator it = room_it._Ptr->_Myval->items.begin(); it != room_it._Ptr->_Myval->items.end(); it++) {
 				if (it._Ptr->_Myval == ent) {
 					//it._Ptr->_Myval->to_delete = true;
+					it._Ptr->_Myval->HitBox->SetPos(0, 0);
 					App->entitymanager->DestroyEnity(ent);
 					room_it._Ptr->_Myval->items.erase(it);
 				}
