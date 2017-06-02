@@ -58,7 +58,8 @@ bool DungeonScene::Start()
 		spawn2 = { 592, ROOM_H + 297 };
 		spawn3 = { ROOM_W + 386, ROOM_H + 297 };
 		spawn4 = { ROOM_W + 386, 393 };
-
+		App->player->pl_speed.x = ORIGIN_SPD;
+		App->player->pl_speed.y = ORIGIN_SPD;
 		to_round = 0;
 		round = 0;
 
