@@ -221,8 +221,8 @@ void DwDungeon::SetUp()
 		sprite[Right][open] =		{ 0, 0, 0, 0 };
 		sprite[Down][close] =		{ 0,	0,		94, 64};
 		sprite[Up][close] =			{ 0,	68,		94, 64};
-		sprite[Right][close] =		{ 98,	56,		64, 94};
-		sprite[Left][close] =		{ 166,	56,		64, 94};
+		sprite[Right][close] =		{ 98,	0,		64, 94};
+		sprite[Left][close] =		{ 166,	0,		64, 94};
 		sprite[Down][half] =		{ 0,	144,	94, 64 };
 		sprite[Up][half] =			{ 0,	212,	94, 64 };
 		sprite[Right][half] =		{ 98,	144,	64, 94 };
@@ -318,7 +318,7 @@ void DwDungeon::Draw()
 				aux_pos.y -= 16;
 				aux_pos.x += 8;
 				if (App->scene_manager->dungeon_id == 4) {
-					aux_pos.x -= 16;
+					aux_pos.x -= 8;
 				}
 			}
 			break;
