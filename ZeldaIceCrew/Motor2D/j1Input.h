@@ -4,11 +4,13 @@
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
 #include "j1Player.h"
+#include "SDL\include\SDL_joystick.h"
 #include <vector>
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
 #define NUM_CONTROLLER_BUTTONS 15
 #define MAX_GAMECONTROLLERS 1
+#define CONTROLLER_SENSIBILITY 12000
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
@@ -153,15 +155,12 @@ public:
 	void DefaultControls();
 	void PadDefaultControls();
 	int controls [__LAST_CONTROLS];
-	int pad_controls[__LAST_CONTROLS];
-
 	
 	//Pause things
 
 
 	
 private:
-
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
@@ -172,6 +171,9 @@ private:
 	std::string   text;
 
 	std::vector<GamePad*>	gamepads;
+public:
+	SDL_Joystick *joy = nullptr;
+	bool		preset_1 = true;
 	int			connected_gamepads = 0;
 	int			gamepad_connected[MAX_GAMECONTROLLERS];
 };

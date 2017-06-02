@@ -474,13 +474,13 @@ bool Main_Screen::Start()
 	D4 = (GuiText*)App->gui->CreateElement(text);
 	D4->pos = { d4->pos.x + 550, d4->pos.y + 2 };
 	D4->active = false;
-	D4->str = "Dark Cave";
+	D4->str = "Death Mountain";
 	D4->movable = true;
 
 	D5 = (GuiText*)App->gui->CreateElement(text);
 	D5->pos = { d5->pos.x + 550, d5->pos.y + 2 };
 	D5->active = false;
-	D5->str = "The desert";
+	D5->str = "Gerudo Valley";
 	D5->movable = true;
 
 	back_dung = (GuiText*)App->gui->CreateElement(text);
@@ -925,22 +925,31 @@ bool Main_Screen::Update(float dt)
 			UpdateKeys();
 			Enablekeys();
 			if (selected == d1) {
+				img_dung->active = true;
 				img_dung->texture_rect = { 0,0,441,264};
 			}
 			if (selected == d2) {
-				img_dung->texture_rect = { 446,0,441,264 };
+				img_dung->active = true;
+				img_dung->texture_rect = { 445,0,440,264 };
 			}
 			if (selected == d3) {
-				img_dung->texture_rect = { 0,273,441,264 };
+				img_dung->active = true;
+				img_dung->texture_rect = { 0,269,440,264 };
 			}
 			if (selected == d4) {
-				img_dung->texture_rect = { 446,273,441,264 };
+				img_dung->active = true;
+				img_dung->texture_rect = { 445,269,440,264 };
 			}
 			if (selected == d5) {
-				img_dung->texture_rect = { 0,544,441,264 };
+				img_dung->active = true;
+				img_dung->texture_rect = { 0,538,440,264 };
 			}
 			if (selected == dungeon_boss) {
-				img_dung->texture_rect = { 446,544,441,264 };
+				img_dung->active = true;
+				img_dung->texture_rect = { 445,538,440,264 };
+			}
+			if (selected == Back_dung) {
+				img_dung->active = false;
 			}
 
 			//Screen->active =false;
@@ -952,7 +961,7 @@ bool Main_Screen::Update(float dt)
 			d3_lvl->active = true;
 			d4_lvl->active = true;
 			d5_lvl->active = true;
-			img_dung->active = true;
+			//img_dung->active = true;
 			Back_dung->active = true;
 			Arena->active = false;
 			arena->active = false;
@@ -1022,12 +1031,12 @@ bool Main_Screen::Update(float dt)
 					}
 				}
 				if (i == 2) {
-					if ((App->player->completed_maps[i]) == true) {
+					if ((App->player->completed_maps[i+1]) == true) {
 						key3->texture_rect = { 977,455,28,32 };
 					}
 				}
 				if (i == 3) {
-					if ((App->player->completed_maps[i]) == true) {
+					if ((App->player->completed_maps[i-1]) == true) {
 						key4->texture_rect = { 977,455,28,32 };
 					}
 				}
@@ -1124,9 +1133,9 @@ bool Main_Screen::Update(float dt)
 					}
 				}
 				if (selected == d3) {
-					if (App->player->completed_maps[2] == false) {
+					if (App->player->completed_maps[3] == false) {
 						App->audio->PlayFx(press_fx);
-						App->scene_manager->dungeon_id = 2;
+						App->scene_manager->dungeon_id = 3;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 						App->hud->Minimap->active = false;
 						App->hud->link_point->active = false;
@@ -1137,9 +1146,9 @@ bool Main_Screen::Update(float dt)
 					}
 				}
 				if (selected == d4) {
-					if (App->player->completed_maps[3] == false) {
+					if (App->player->completed_maps[2] == false) {
 						App->audio->PlayFx(press_fx);
-						App->scene_manager->dungeon_id = 3;
+						App->scene_manager->dungeon_id = 2;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
 						App->hud->Minimap->active = false;
 						App->hud->link_point->active = false;

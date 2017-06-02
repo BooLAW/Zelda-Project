@@ -54,7 +54,6 @@ bool j1Input::Start()
 {
 	SDL_StopTextInput();
 	DefaultControls();
-	PadDefaultControls();
 	return true;
 }
 
@@ -164,6 +163,7 @@ bool j1Input::PreUpdate()
 			case SDL_CONTROLLERDEVICEADDED:
 			{
 				AddController(event.cdevice.which);
+				PadDefaultControls();
 			}
 				break;
 			case SDL_CONTROLLERDEVICEREMOVED:
@@ -295,49 +295,49 @@ void j1Input::DefaultControls()
 }
 void j1Input::PadDefaultControls()
 {
-	
+	if (App->player->controller_index != 0) {
 		for (int i = 0; i < __LAST_CONTROLS; i++) {
 			if (i == MOVE_UP) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_DPAD_UP;
+				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_UP;
 			}
 			if (i == MOVE_DOWN) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
+				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
 			}
 			if (i == MOVE_RIGHT) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
+				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
 			}
 			if (i == MOVE_LEFT) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
+				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
 			}
 			if (i == UP) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_Y;
+				controls[i] = SDL_CONTROLLER_BUTTON_Y;
 			}
 			if (i == DOWN) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_A;
+				controls[i] = SDL_CONTROLLER_BUTTON_A;
 			}
 			if (i == RIGHT) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_B;
+				controls[i] = SDL_CONTROLLER_BUTTON_B;
 			}
 			if (i == LEFT) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_X;
+				controls[i] = SDL_CONTROLLER_BUTTON_X;
 			}
 			if (i == ACTION) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_START;
+				controls[i] = SDL_CONTROLLER_AXIS_TRIGGERRIGHT;
 			}
 			if (i == MENU) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_BACK;
+				controls[i] = SDL_CONTROLLER_BUTTON_LEFTSHOULDER;
 			}
 			if (i == WPN_NEXT) {
-				pad_controls[i] = SDL_SCANCODE_E;
+				controls[i] = SDL_SCANCODE_E;
 			}
 			if (i == WPN_PREV) {
-				pad_controls[i] = SDL_SCANCODE_Q;
+				controls[i] = SDL_SCANCODE_Q;
 			}
 			if (i == DASH) {
-				pad_controls[i] = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER;
+				controls[i] = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER;
 			}
 		}
-	
+	}
 }
 SDL_Scancode j1Input::returnkey()
 {
@@ -580,7 +580,7 @@ void j1Input::AddController(int id)
 
 		if (pad)
 		{
-			SDL_Joystick *joy = SDL_GameControllerGetJoystick(pad);
+			joy = SDL_GameControllerGetJoystick(pad);
 			int instanceID = SDL_JoystickInstanceID(joy);
 			GamePad* new_pad = new GamePad();
 			new_pad->id = instanceID;
@@ -608,7 +608,6 @@ void j1Input::RemoveController(int id)
 			RELEASE(*it);
 			gamepads.erase(it);
 			connected_gamepads--;
-			DefaultControls();
 			break;
 		}
 	}

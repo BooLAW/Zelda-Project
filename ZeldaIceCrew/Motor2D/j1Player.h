@@ -107,6 +107,8 @@ public:
 private:
 	SDL_Texture* Link_Movement = nullptr;
 	SDL_Texture* Link_retro = nullptr;
+	SDL_Texture* Link_cave = nullptr;
+	SDL_Texture* Link_pink = nullptr;
 	SDL_Texture* curr_texture = nullptr;
 
 	// All player sprites / animations
@@ -148,6 +150,8 @@ public:
 	pugi::xml_node LoadXML(pugi::xml_document& config_file,bool new_game) const;
 
 	void HitPlayer(int dmg);
+
+	bool want_to_die = false;
 
 	void SetPos(float x, float y);
 	void MovePos(float x, float y);

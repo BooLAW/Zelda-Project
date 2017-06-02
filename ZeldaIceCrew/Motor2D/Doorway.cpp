@@ -112,19 +112,19 @@ void Doorway::Update(float dt)
 			if (collider->CheckCollision(App->player->link_coll->rect) == true) {
 				switch (direction) {
 				case Up:
-					if (App->input->GetKey(App->input->controls[MOVE_UP]))
+					if (App->input->GetKey(App->input->controls[MOVE_UP]) || SDL_JoystickGetAxis(App->input->joy, 1) < -CONTROLLER_SENSIBILITY)
 						crossing = true;
 					break;
 				case Down:
-					if (App->input->GetKey(App->input->controls[MOVE_DOWN]))
+					if (App->input->GetKey(App->input->controls[MOVE_DOWN]) || SDL_JoystickGetAxis(App->input->joy, 1) > CONTROLLER_SENSIBILITY)
 						crossing = true;
 					break;
 				case Left:
-					if (App->input->GetKey(App->input->controls[MOVE_LEFT]))
+					if (App->input->GetKey(App->input->controls[MOVE_LEFT]) || SDL_JoystickGetAxis(App->input->joy, 0) < -CONTROLLER_SENSIBILITY)
 						crossing = true;
 					break;
 				case Right:
-					if (App->input->GetKey(App->input->controls[MOVE_RIGHT]))
+					if (App->input->GetKey(App->input->controls[MOVE_RIGHT]) || SDL_JoystickGetAxis(App->input->joy, 0) > CONTROLLER_SENSIBILITY)
 						crossing = true;
 					break;
 				}
