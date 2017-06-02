@@ -42,6 +42,8 @@ public:
 	UIElement* Controls_Next();
 	UIElement* Dungeons_Next();
 	UIElement* Dungeons_Prev();
+	UIElement* Choosing_Next();
+	UIElement* Choosing_Prev();
 	void Scroll_Up();
 	void Scroll_Down();
 	void Generatekeys();
@@ -64,6 +66,7 @@ private:
 	std::list<UIElement*> controls_elements;
 	std::list<UIElement*> dungeons;
 	std::list<UIElement*> keys;
+	std::list<UIElement*> choosing;
 	UIElement* selected;
 	GuiImage* New_game;
 	GuiImage* Continue;
@@ -84,6 +87,8 @@ private:
 	bool in_controls;
 	bool in_dungeons;
 	bool changing_controls = false;
+	bool in_keyboard;
+	bool in_pad;
 
 	GuiImage* Controls;
 	GuiImage* Mute;
@@ -164,6 +169,12 @@ private:
 	GuiText* d3_lvl;
 	GuiText* d4_lvl;
 	GuiText* d5_lvl;
+
+	GuiImage* Key;
+	GuiImage* Pad;
+
+	GuiText* key;
+	GuiText* pad;
 
 
 	GuiImage* Arena;

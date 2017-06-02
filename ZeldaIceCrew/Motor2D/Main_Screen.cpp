@@ -564,7 +564,32 @@ bool Main_Screen::Start()
 	img_dung->movable = true;
 	img_dung->pos = { 20,500 };
 
+	Pad = (GuiImage*)App->gui->CreateElement(image);
+	Pad->pos = key3->pos;
+	Pad->texture_rect = { 939,455,28,32 };
+	Pad->active = false;
+	Pad->movable = true;
+	choosing.push_back(Pad);
+
+	Key = (GuiImage*)App->gui->CreateElement(image);
+	Key->pos = key4->pos;
+	Key->texture_rect = { 939,455,28,32 };
+	Key->active = false;
+	Key->movable = true;
+	choosing.push_back(Key);
 	
+	pad = (GuiText*)App->gui->CreateElement(text);
+	pad->pos = { Pad->pos.x , Pad->pos.y + 2 };
+	pad->active = false;
+	pad->str = "Gamepad";
+	pad->movable = true;
+
+	key = (GuiText*)App->gui->CreateElement(text);
+	key->pos = { Key->pos.x , Key->pos.y + 2 };
+	key->active = false;
+	key->str = "Keyboard";
+	key->movable = true;
+
 	
 	Generatekeys();
 
@@ -574,6 +599,8 @@ bool Main_Screen::Start()
 	in_controls = false;
 	changing_controls = false;
 	in_dungeons = false;
+	in_keyboard = false;
+	in_pad = false;
 
 	if (App->first_open == false) {
 		App->video->PlayVideo("IntroLogo_1.ogv", { 0, 0, (int)App->win->GetWidth(), (int)App->win->GetHeight() });
@@ -600,6 +627,10 @@ bool Main_Screen::Update(float dt)
 		Arena->active = false;
 		arena->active = false;
 		up->active = false;
+		Pad->active = false;
+		pad->active = false;
+		Key->active = false;
+		key->active = false;
 		
 		down->active = false;
 		right->active = false;
@@ -671,7 +702,7 @@ bool Main_Screen::Update(float dt)
 			if (selected == Controls) {
 				in_settings = false;
 				in_controls = true;
-				selected = controls_elements.front();
+				selected = choosing.front();
 
 			}
 			if (selected == Mute) {
@@ -717,6 +748,125 @@ bool Main_Screen::Update(float dt)
 
 	}
 	else if (in_controls) {
+		Pad->active = true;
+		Key->active = true;
+		pad->active = true;
+		key->active = true;
+		Disablekeys();
+		Disable_dungeons();
+		img_dung->active = false;
+		Arena->active = false;
+		arena->active = false;
+		New_game->active = false;
+		new_game->active = false;
+		Continue->active = false;
+		cont->active = false;
+		Settings->active = false;
+		settings->active = false;
+		Exit->active = false;
+		exit->active = false;
+
+
+		Controls->active = false;
+		controls->active = false;
+		Mute->active = false;
+		mute->active = false;
+		Back->active = false;
+		back->active = false;
+		d1_lvl->active = false;
+		d2_lvl->active = false;
+		d3_lvl->active = false;
+		d4_lvl->active = false;
+		d5_lvl->active = false;
+
+		for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
+			it._Ptr->_Myval->active = false;
+		}
+		up->active = false;
+		down->active = false;
+		right->active = false;
+		left->active = false;
+		move_up->active = false;
+		move_down->active = false;
+		move_right->active = false;
+		move_left->active = false;
+		menu->active = false;
+		action->active = false;
+		dash->active = false;
+		back_controls->active = false;
+
+		up_key->active = false;
+		down_key->active = false;
+		left_key->active = false;
+		right_key->active = false;
+		move_up_key->active = false;
+		move_down_key->active = false;
+		move_left_key->active = false;
+		move_right_key->active = false;
+		menu_key->active = false;
+		action_key->active = false;
+		dash_key->active = false;
+
+		for (std::list<UIElement*>::const_iterator it = choosing.cbegin(); it != choosing.cend(); it++) {
+			if (selected == it._Ptr->_Myval) {
+				it._Ptr->_Myval->texture_rect = { 0,473,683,36 };
+				it._Ptr->_Myval->pos.x = 300;
+			}
+			else {
+				it._Ptr->_Myval->texture_rect = { 0, 514, 683, 36 };
+				it._Ptr->_Myval->pos.x = 250;
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
+			App->audio->PlayFx(fx);
+			selected = Choosing_Prev();
+			/*if (!IsInsideCam(selected)) {
+			Scroll_Down();
+			}*/
+		}
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
+			App->audio->PlayFx(fx);
+			selected = Choosing_Next();
+			/*if (!IsInsideCam(selected)) {
+			Scroll_Up();
+			}*/
+
+		}
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
+			if (selected == Pad) {
+				App->audio->PlayFx(press_fx);
+				in_pad = true;
+				in_controls = false;
+				//selected = settings_elements.front();
+				changing_controls = false;
+			}
+			else if (selected == Key){
+				App->audio->PlayFx(press_fx);
+				in_keyboard = true;
+				in_controls = false;
+				changing_controls = false;
+				selected = controls_elements.front();
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
+			App->audio->PlayFx(press_fx);
+			in_settings = true;
+			in_controls = false;
+			selected = settings_elements.front();
+			changing_controls = false;
+
+
+
+		}
+	}
+	else if (in_pad) {
+
+	}
+	else if (in_keyboard) {
+		Pad->active = false;
+		pad->active = false;
+		Key->active = false;
+		key->active=false;
 		//Screen->active =false;
 		//screen->active =false;
 		Disablekeys();
@@ -897,9 +1047,9 @@ bool Main_Screen::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
 				if (selected == Back_controls) {
 					App->audio->PlayFx(press_fx);
-					in_settings = true;
-					in_controls = false;
-					selected = settings_elements.front();
+					in_keyboard = false;
+					in_controls = true;
+					selected = choosing.front();
 					changing_controls = false;
 				}
 				else {
@@ -909,9 +1059,9 @@ bool Main_Screen::Update(float dt)
 			}
 			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
 				App->audio->PlayFx(press_fx);
-				in_settings = true;
-				in_controls = false;
-				selected = settings_elements.front();
+				in_keyboard = false;
+				in_controls = true;
+				selected = choosing.front();
 				changing_controls = false;
 
 				
@@ -964,6 +1114,10 @@ bool Main_Screen::Update(float dt)
 			//img_dung->active = true;
 			Back_dung->active = true;
 			Arena->active = false;
+			Pad->active = false;
+			pad->active = false;
+			Key->active = false;
+			key->active = false;
 			arena->active = false;
 			back_dung->active = true;
 			up->active = false;
@@ -1215,6 +1369,10 @@ bool Main_Screen::Update(float dt)
 		Disablekeys();
 		Disable_dungeons();
 		
+		Pad->active = false;
+		pad->active = false;
+		Key->active = false;
+		key->active = false;
 		d1_lvl->active = false;
 		d2_lvl->active = false;
 		d3_lvl->active = false;
@@ -1550,6 +1708,60 @@ UIElement * Main_Screen::Dungeons_Prev()
 	}
 }
 
+UIElement * Main_Screen::Choosing_Next()
+{
+	if (selected != nullptr) {
+		if (!choosing.empty()) {
+			if (selected == choosing.back()) {
+				return choosing.back();
+			}
+			else {
+				for (std::list<UIElement*>::const_iterator it = choosing.cbegin(); it != choosing.cend(); it++) {
+					if (selected == it._Ptr->_Myval) {
+						if (selected == choosing.back()) {
+							return choosing.back();
+						}
+						else {
+							it++;
+							if (it._Ptr != nullptr)
+								return it._Ptr->_Myval;
+							else
+								return choosing.back();
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+UIElement * Main_Screen::Choosing_Prev()
+{
+	if (selected != nullptr) {
+		if (!choosing.empty()) {
+			if (selected == choosing.front()) {
+				return choosing.front();
+			}
+			for (std::list<UIElement*>::const_iterator it = choosing.cend(); it != choosing.cbegin(); it--) {
+				if (selected == it._Ptr->_Myval) {
+					if (selected == choosing.front()) {
+						return choosing.front();
+					}
+					else {
+						it--;
+						if (it._Ptr != nullptr)
+							return it._Ptr->_Myval;
+						else
+							return choosing.back();
+					}
+				}
+
+
+			}
+		}
+	}
+}
+
 void Main_Screen::Scroll_Up()
 {
 	for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
@@ -1675,7 +1887,10 @@ bool Main_Screen::CleanUp()
 	Action->active = false;
 	Dash->active = false;
 	Back_controls->active = false;
-
+	Pad->active = false;
+	pad->active = false;
+	Key->active = false;
+	key->active = false;
 	New_game->active = false;
 	new_game->active = false;
 	Continue->active = false;
