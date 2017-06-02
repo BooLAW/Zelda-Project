@@ -1185,6 +1185,7 @@ bool j1Player::Update(float dt)
 					if (App->player->curr_life_points <= 0) {
 						//Here he should change the scene to the room scene
 						want_to_die = true;
+						DyingRestart();
 						App->audio->PlayFx(die_fx);
 					}
 
