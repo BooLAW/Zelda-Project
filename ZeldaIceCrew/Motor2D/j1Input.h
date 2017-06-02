@@ -153,6 +153,8 @@ public:
 	void DefaultControls();
 	void PadDefaultControls();
 	int controls [__LAST_CONTROLS];
+	int pad_controls[__LAST_CONTROLS];
+
 	
 	//Pause things
 

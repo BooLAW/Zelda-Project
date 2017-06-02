@@ -43,6 +43,8 @@ bool j1Input::Awake(pugi::xml_node& config)
 	/// To use PS3 Controller install this driver https://github.com/nefarius/ScpToolkit/releases/tag/v1.6.238.16010
 	if (SDL_Init(SDL_INIT_GAMECONTROLLER) != 0)
 		LOG("Error on SDL_Init");
+	if (SDL_Init(SDL_INIT_JOYSTICK) != 0)
+		LOG("Error on SDL_Init JOYSTICK");
 
 	return ret;
 }
@@ -52,6 +54,7 @@ bool j1Input::Start()
 {
 	SDL_StopTextInput();
 	DefaultControls();
+	PadDefaultControls();
 	return true;
 }
 
@@ -161,7 +164,6 @@ bool j1Input::PreUpdate()
 			case SDL_CONTROLLERDEVICEADDED:
 			{
 				AddController(event.cdevice.which);
-				PadDefaultControls();
 			}
 				break;
 			case SDL_CONTROLLERDEVICEREMOVED:
@@ -293,49 +295,49 @@ void j1Input::DefaultControls()
 }
 void j1Input::PadDefaultControls()
 {
-	if (App->player->controller_index != 0) {
+	
 		for (int i = 0; i < __LAST_CONTROLS; i++) {
 			if (i == MOVE_UP) {
-				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_UP;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_DPAD_UP;
 			}
 			if (i == MOVE_DOWN) {
-				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
 			}
 			if (i == MOVE_RIGHT) {
-				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
 			}
 			if (i == MOVE_LEFT) {
-				controls[i] = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
 			}
 			if (i == UP) {
-				controls[i] = SDL_CONTROLLER_BUTTON_Y;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_Y;
 			}
 			if (i == DOWN) {
-				controls[i] = SDL_CONTROLLER_BUTTON_A;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_A;
 			}
 			if (i == RIGHT) {
-				controls[i] = SDL_CONTROLLER_BUTTON_B;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_B;
 			}
 			if (i == LEFT) {
-				controls[i] = SDL_CONTROLLER_BUTTON_X;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_X;
 			}
 			if (i == ACTION) {
-				controls[i] = SDL_CONTROLLER_AXIS_TRIGGERRIGHT;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_START;
 			}
 			if (i == MENU) {
-				controls[i] = SDL_CONTROLLER_BUTTON_LEFTSHOULDER;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_BACK;
 			}
 			if (i == WPN_NEXT) {
-				controls[i] = SDL_SCANCODE_E;
+				pad_controls[i] = SDL_SCANCODE_E;
 			}
 			if (i == WPN_PREV) {
-				controls[i] = SDL_SCANCODE_Q;
+				pad_controls[i] = SDL_SCANCODE_Q;
 			}
 			if (i == DASH) {
-				controls[i] = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER;
+				pad_controls[i] = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER;
 			}
 		}
-	}
+	
 }
 SDL_Scancode j1Input::returnkey()
 {
@@ -606,6 +608,7 @@ void j1Input::RemoveController(int id)
 			RELEASE(*it);
 			gamepads.erase(it);
 			connected_gamepads--;
+			DefaultControls();
 			break;
 		}
 	}

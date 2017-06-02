@@ -971,7 +971,7 @@ bool j1Player::Update(float dt)
 							curr_dir = Right;
 						}*/
 
-						if (App->input->GetKey(App->input->controls[WPN_NEXT]) == KEY_DOWN) {
+						if (App->input->GetKey(App->input->controls[WPN_NEXT]) == KEY_DOWN ) {
 							change_weapon = Q_Change;
 						}
 						if (App->input->GetKey(App->input->controls[WPN_PREV]) == KEY_DOWN) {
@@ -980,7 +980,7 @@ bool j1Player::Update(float dt)
 						ChangeWeapon();
 
 						if (anim_override == false) {
-							if (App->input->GetKey(App->input->controls[MOVE_UP]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_LEFT]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_DOWN]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_RIGHT]) == KEY_REPEAT) {
+							if (App->input->GetKey(App->input->controls[MOVE_UP]) == KEY_REPEAT || App->input->GetKey(App->input->pad_controls[MOVE_UP]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_LEFT]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_DOWN]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_RIGHT]) == KEY_REPEAT) {
 								if (App->input->GetKey(App->input->controls[DASH]) == KEY_DOWN) {
 									if(action_blit != Dash)
 										App->audio->PlayFx(dash_fx);
@@ -1192,7 +1192,7 @@ bool j1Player::Update(float dt)
 		}
 		else {
 			App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
-			if (App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_BACK) == KEY_DOWN) {
+			if (App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN ) {
 				if (App->hud->inv->active) {
 					App->hud->inv->active = false;
 					App->audio->PlayFx(close_inv_fx);
@@ -1200,21 +1200,21 @@ bool j1Player::Update(float dt)
 				}
 			}
 			if (App->hud->inv->active) {
-				if (App->input->GetKey(App->input->controls[UP]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
+				if (App->input->GetKey(App->input->controls[UP]) == KEY_DOWN) {
 					App->hud->inv->Move_Sel_up();
 				}
-				else if (App->input->GetKey(App->input->controls[DOWN]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
+				else if (App->input->GetKey(App->input->controls[DOWN]) == KEY_DOWN ) {
 					App->hud->inv->Move_Sel_down();
 				}
-				else if (App->input->GetKey(App->input->controls[RIGHT]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == KEY_DOWN) {
+				else if (App->input->GetKey(App->input->controls[RIGHT]) == KEY_DOWN ) {
 					App->hud->inv->Move_Sel_forward();
 				}
-				else if (App->input->GetKey(App->input->controls[LEFT]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == KEY_DOWN) {
+				else if (App->input->GetKey(App->input->controls[LEFT]) == KEY_DOWN ) {
 					App->hud->inv->Move_Sel_backwards();
 				}
 			}
 			if (App->hud->Minimap->active) {
-				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_Y) == KEY_DOWN) {
+				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN ) {
 					if ((App->scene_manager->dungeon_id != 5) || (App->scene_manager->dungeon_id != 6)) {
 						App->hud->Disable_map();
 					}
@@ -1682,7 +1682,7 @@ void j1Player::Movement()
 			if (anim_override == false)
 				action_blit = Walk;
 		}
-		else if (App->input->GetKey(App->input->controls[MOVE_UP])) {
+		else if (App->input->GetKey(App->input->controls[MOVE_UP]) || App->input->GetKey(App->input->pad_controls[MOVE_UP])) {
 			if (CheckSpace(pos.x, pos.y - pl_speed.y) == 0)
 			{
 				pos.y -= pl_speed.y;
