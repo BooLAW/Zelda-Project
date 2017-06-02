@@ -149,6 +149,8 @@ public:
 
 	void HitPlayer(int dmg);
 
+	bool want_to_die = false;
+
 	void SetPos(float x, float y);
 	void MovePos(float x, float y);
 	bool SetPosTile(int x, int y);

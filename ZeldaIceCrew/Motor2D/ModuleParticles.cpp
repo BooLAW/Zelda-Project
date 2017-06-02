@@ -984,26 +984,26 @@ bool AgahnimBall::Update(float dt)
 					}
 
 					//BLOCK INTERACTION
-					for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
-					{
-						if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
-						{
-							Collider* aux = collider;
-							if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
-							{
-								hit = true;
-								LOG("BLOCK HIT");
-								App->particle->DestroyParticle(this);
-							}
-						}
-					}
-					//TILED INTERACTION
-					if (this->CheckSpace(position.x, position.y) == 1)
-					{
-						LOG("ARROW HIT");
-
-						it._Ptr->_Myval->Hit(curr_dir, damage * ORIGIN_PWR);
-					}
+					//for (std::list<Block*>::iterator it = App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.begin(); it != App->scene_manager->GetCurrentScene()->GetCurrentRoom()->blocks.end(); it++)
+					//{
+					//	if (it._Ptr->_Myval != nullptr && it._Ptr->_Myval->HitBox != nullptr && collider != nullptr)
+					//	{
+					//		Collider* aux = collider;
+					//		if (aux->CheckCollision(it._Ptr->_Myval->HitBox->rect) && hit == false)
+					//		{
+					//			hit = true;
+					//			LOG("BLOCK HIT");
+					//			App->particle->DestroyParticle(this);
+					//		}
+					//	}
+					//}
+					////TILED INTERACTION
+					//if (this->CheckSpace(position.x, position.y) == 1)
+					//{
+					//	LOG("ARROW HIT");
+					//
+					//	//it._Ptr->_Myval->Hit(curr_dir, damage * ORIGIN_PWR);
+					//}
 				}
 			}
 		}
@@ -1030,7 +1030,15 @@ bool AgahnimBall::Update(float dt)
 		//	App->particle->DestroyParticle(this);
 		//}
 
-	
+		if (life > 0 || life == -1)
+		{
+			if ((SDL_GetTicks() - born) > life)
+				state = go;
+		}
+		else {
+			state = go;
+		}
+
 	return stdUpdate(dt);
 }
 
