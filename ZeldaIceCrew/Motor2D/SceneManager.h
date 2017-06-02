@@ -67,7 +67,7 @@ public:
 	Main_Screen*					main_screen = nullptr;
 	uint							 close_fx;
 	uint						     open_fx;
-
+	GuiImage*						 loading_screen;
 
 private:
 
@@ -79,6 +79,7 @@ private:
 	std::string			folder;
 	std::list<Scene*>				 scenes;
 	Scene*							 current_scene = nullptr;
+	
 	
 
 };					

@@ -1108,6 +1108,7 @@ bool Main_Screen::Update(float dt)
 				}
 				if (selected == d1) {
 					if (App->player->completed_maps[0] == false) {
+						App->scene_manager->loading_screen->active = true;
 						App->audio->PlayFx(press_fx);
 						App->scene_manager->dungeon_id = 0;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
@@ -1121,6 +1122,7 @@ bool Main_Screen::Update(float dt)
 				}
 				if (selected == d2) {
 					if (App->player->completed_maps[1] == false) {
+						App->scene_manager->loading_screen->active = true;
 						App->audio->PlayFx(press_fx);
 						App->scene_manager->dungeon_id = 1;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
@@ -1134,6 +1136,7 @@ bool Main_Screen::Update(float dt)
 				}
 				if (selected == d3) {
 					if (App->player->completed_maps[3] == false) {
+						App->scene_manager->loading_screen->active = true;
 						App->audio->PlayFx(press_fx);
 						App->scene_manager->dungeon_id = 3;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
@@ -1147,6 +1150,7 @@ bool Main_Screen::Update(float dt)
 				}
 				if (selected == d4) {
 					if (App->player->completed_maps[2] == false) {
+						App->scene_manager->loading_screen->active = true;
 						App->audio->PlayFx(press_fx);
 						App->scene_manager->dungeon_id = 2;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
@@ -1160,6 +1164,7 @@ bool Main_Screen::Update(float dt)
 				}
 				if (selected == d5) {
 					if (App->player->completed_maps[4] == false) {
+						App->scene_manager->loading_screen->active = true;
 						App->audio->PlayFx(press_fx);
 						App->scene_manager->dungeon_id = 4;
 						App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
@@ -1172,6 +1177,7 @@ bool Main_Screen::Update(float dt)
 					}
 				}
 				if (selected == dungeon_boss) {
+					App->scene_manager->loading_screen->active = true;
 					App->audio->PlayFx(press_fx);
 					App->scene_manager->dungeon_id = 5;
 					App->scene_manager->ChangeScene((Scene*)App->scene_manager->dungeon_scene);
@@ -1619,6 +1625,7 @@ bool Main_Screen::IsInsideCam(UIElement * element)
 
 bool Main_Screen::CleanUp()
 {
+	App->scene_manager->loading_screen->active = true;
 	bool ret = true;
 	App->player->inMainScreen = false;
 	App->tex->UnLoad(tex);
