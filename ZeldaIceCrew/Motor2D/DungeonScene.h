@@ -34,6 +34,8 @@ public:
 
 	// Called each loop iteration
 	bool Update(float dt);
+
+	//bool CleanUp();
 public:
 	
 	uint round;
@@ -63,6 +65,7 @@ private:
 	Label* win_title;
 	Npc* test;
 	Enemy* en;
+	
 	
 };
 

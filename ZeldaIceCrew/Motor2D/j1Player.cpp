@@ -367,6 +367,8 @@ bool j1Player::Start()
 
 	Link_Movement = App->tex->Load("Sprites/Link_Movement.png");
 	Link_retro = App->tex->Load("Sprites/Link_MovementRetro.png");
+	Link_cave = App->tex->Load("Sprites/Link_MovementCave.png");
+	Link_pink = App->tex->Load("Sprites/Link_MovementPink.png");
 
 	// !_Textures
 
@@ -831,6 +833,12 @@ bool j1Player::Update(float dt)
 	if (App->scene_manager->dungeon_id == 1) {
 		curr_texture = Link_retro;
 	}
+	else if (App->scene_manager->dungeon_id == 2) {
+		curr_texture = Link_cave;
+	}
+	else if (App->scene_manager->dungeon_id == 4) {
+		curr_texture = Link_pink;
+	}
 	else {
 		curr_texture = Link_Movement;
 	}
@@ -841,6 +849,12 @@ bool j1Player::Update(float dt)
 		if (!App->IsPaused()) {
 			if (App->scene_manager->dungeon_id == 1) {
 				curr_texture = Link_retro;
+			}
+			else if (App->scene_manager->dungeon_id == 2) {
+				curr_texture = Link_cave;
+			}
+			else if (App->scene_manager->dungeon_id == 4) {
+				curr_texture = Link_pink;
 			}
 			else {
 				curr_texture = Link_Movement;
@@ -1191,7 +1205,19 @@ bool j1Player::Update(float dt)
 
 		}
 		else {
-			App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
+			if (App->scene_manager->dungeon_id == 1) {
+				curr_texture = Link_retro;
+			}
+			else if (App->scene_manager->dungeon_id == 2) {
+				curr_texture = Link_cave;
+			}
+			else if (App->scene_manager->dungeon_id == 4) {
+				curr_texture = Link_pink;
+			}
+			else {
+				curr_texture = Link_Movement;
+			}
+			App->render->toDraw(curr_texture, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 			if (App->input->GetKey(App->input->controls[MENU]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_BACK) == KEY_DOWN) {
 				if (App->hud->inv->active) {
 					App->hud->inv->active = false;

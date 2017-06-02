@@ -465,7 +465,7 @@ void GoldenGauntlet::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Empowered by the Din. +15 Power, -0.25 Speed";
+	description = "Empowered by the Din.+15 Power -0.25 Speed";
 }
 
 void GoldenGauntlet::Upgrade()
@@ -488,7 +488,7 @@ void WindCape::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "By Nayru's light! -5 Power, +0.5 Speed";
+	description = "By Nayru's light!-5 Power +0.5 Speed";
 }
 
 void WindCape::Upgrade()
@@ -511,7 +511,7 @@ void MagicHammer::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Now with a 100% less magic! +15 Power, -2HP";
+	description = "Now with a 100% less magic!+15 Power -2HP";
 }
 
 void MagicHammer::Upgrade()
@@ -534,7 +534,7 @@ void MagicSphere::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 3, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Now with a 100% more magic! +4HP, -0.25 Speed";
+	description = "Now with a 100% more magic!+4HP -0.25 Speed";
 }
 
 void MagicSphere::Upgrade()
@@ -557,7 +557,7 @@ void VanguardEmblem::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "A badge for true heroes. +4 HP, -5 Power";
+	description = "A badge for true heroes.+4 HP -5 Power";
 }
 
 void VanguardEmblem::Upgrade()
@@ -580,7 +580,7 @@ void SmallShield::SetUp()
 	UI_tex = tex;
 	UI_rect = { 0, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "The faster you go... the weaker you hit? -5 Power, +0.5 Speed";
+	description = "Faster is weaker?-5 Power +0.5 Speed";
 }
 
 void SmallShield::Upgrade()

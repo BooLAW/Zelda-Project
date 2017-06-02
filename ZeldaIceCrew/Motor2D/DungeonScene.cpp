@@ -26,7 +26,9 @@ DungeonScene::DungeonScene()
 
 // Destructor
 DungeonScene::~DungeonScene()
-{}
+{
+
+}
 
 // Called before render is available
 bool DungeonScene::Awake()
@@ -40,6 +42,7 @@ bool DungeonScene::Awake()
 // Called before the first frame
 bool DungeonScene::Start()
 {
+	App->scene_manager->loading_screen->active = true;
 	BROFILER_CATEGORY("StartDungeon", Profiler::Color::DarkBlue);
 	curr_id = dungeon;
 	stdStart();
@@ -82,6 +85,7 @@ bool DungeonScene::Start()
 	App->player->rupees = 50;
 
 	App->Pause();
+
 	
 	
 	starting_time.Start();
@@ -93,13 +97,18 @@ bool DungeonScene::Start()
 // Called each loop iteration
 bool DungeonScene::Update(float dt)
 {
+	
+	
 	BROFILER_CATEGORY("UpdateDungeon", Profiler::Color::Red)
 
 	stdUpdate(dt);
-
+	if (starting_time.GetFlag() == true && starting_time.Read() < 1500) {
+		App->scene_manager->loading_screen->active = true;
+	}
 	if (starting_time.GetFlag() == true && starting_time.Read() > 1500) {
 		App->UnPause();
 		starting_time.SetFlag(false);
+		App->scene_manager->loading_screen->active = false;
 	}
 
 
@@ -153,6 +162,8 @@ bool DungeonScene::Update(float dt)
 
 		return true;
 	}
+
+
 
 
 
