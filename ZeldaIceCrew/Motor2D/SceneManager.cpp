@@ -37,6 +37,13 @@ bool SceneManager::Awake()
 // Called before the first frame
 bool SceneManager::Start()
 {
+	loading_screen = (GuiImage*)App->gui->CreateElement(image);
+	loading_screen->movable = false;
+	loading_screen->pos = { 0,0 };
+	loading_screen->texture = App->tex->Load("Sprites/LoadingScreen.png");
+	loading_screen->texture_rect = { 0,0,1024,768 };
+	loading_screen->active = false;
+
 	bool ret = false;
 
 	App->audio->SetVolumeMusic(App->audio->volume_std * App->audio->volume_percentatge);
@@ -140,7 +147,7 @@ bool SceneManager::PostUpdate()
 bool SceneManager::CleanUp()
 {
 	LOG("Freeing scene");
-
+	App->tex->UnLoad(loading_screen->texture);
 	bool ret = false;
 
 	if(CA_tex != nullptr)

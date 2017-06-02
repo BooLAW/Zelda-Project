@@ -8,6 +8,7 @@
 
 bool Scene::stdStart()
 {
+	App->scene_manager->loading_screen->active = true;
 	Load_new_map(App->scene_manager->dungeon_id);
 	App->player->pos = pl_start_pos;
 
