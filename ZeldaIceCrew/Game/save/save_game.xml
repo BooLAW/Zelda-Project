@@ -18,18 +18,18 @@
 		<keys id="1" completed="false" />
 		<keys id="2" completed="false" />
 		<keys id="3" completed="false" />
-		<keys id="4" completed="false" />
-		<n_keys n="6" />
-		<hp curr="8" max="8" />
+		<keys id="4" completed="true" />
+		<n_keys n="8" />
+		<hp curr="10" max="10" />
 		<weapons curr_weapon="27" />
 		<rupees n="true" />
-		<stats power="37" speed="2.9059999" />
-		<items pegasus_boots="true" />
+		<stats power="90" speed="2.5" />
+		<items pegasus_boots="true" pegasus_boots="true" />
 	</player>
 	<:anonymous />
 	<dialogue />
 	<video />
 	<renderer>
-		<camera x="0" y="96" />
+		<camera x="-1024" y="96" />
 	</renderer>
 </game_state>
