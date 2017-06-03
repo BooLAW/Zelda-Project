@@ -37,7 +37,7 @@ bool j1Player::Start()
 	bool ret = true;
 	LOG("Player Start");
 	//CONTROLS
-	App->input->preset_1 = true;
+	App->input->preset_1 = false;
 	keys = 0;
 	rupees = 50;
 	controller_index = 0;
@@ -884,7 +884,7 @@ bool j1Player::Update(float dt)
 				curr_life_points = max_life_points;
 			}
 			if(!App->hud->Minimap->active)
-			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || (App->input->ctrl_p == 1 && (App->input->preset_1 == true && (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_B))))) {
 				if ((App->scene_manager->dungeon_id == 5)||(App->scene_manager->dungeon_id == 6)) {
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
@@ -900,17 +900,45 @@ bool j1Player::Update(float dt)
 				if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 					App->hud->dialog->str = App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts[App->hud->dialog_num]->line->c_str();
 				}
-				if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
-					if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
-						App->hud->dialog_num++;
-					}
-					else {
-						App->hud->dialog_num = 0;
-						App->hud->dialog->active = false;
-						talking = false;
+				if (App->input->gamepad_connected <= 0) {
+					if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
+						if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
+							App->hud->dialog_num++;
+						}
+						else {
+							App->hud->dialog_num = 0;
+							App->hud->dialog->active = false;
+							talking = false;
+						}
 					}
 				}
+				else {
+					if (App->input->preset_1 == true) {
+						if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X)) {
+							if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
+								App->hud->dialog_num++;
+							}
+							else {
+								App->hud->dialog_num = 0;
+								App->hud->dialog->active = false;
+								talking = false;
+							}
+						}
+					}
+					else {
+						if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_RIGHTSTICK) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_LEFTSTICK)) {
+							if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
+								App->hud->dialog_num++;
+							}
+							else {
+								App->hud->dialog_num = 0;
+								App->hud->dialog->active = false;
+								talking = false;
+							}
+						}
 
+					}
+				}
 			}
 			
 			
@@ -996,7 +1024,7 @@ bool j1Player::Update(float dt)
 
 						if (anim_override == false) {
 							if (App->input->GetKey(App->input->controls[MOVE_UP]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_LEFT]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_DOWN]) == KEY_REPEAT || App->input->GetKey(App->input->controls[MOVE_RIGHT]) == KEY_REPEAT || SDL_JoystickGetAxis(App->input->joy, 0) != 0 || SDL_JoystickGetAxis(App->input->joy, 1) != 0) {
-								if (App->input->GetKey(App->input->controls[DASH]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == KEY_DOWN) {
+								if (App->input->GetKey(App->input->controls[DASH]) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == KEY_DOWN) {
 									if(action_blit != Dash)
 										App->audio->PlayFx(dash_fx);
 									action_blit = Dash;
@@ -1164,10 +1192,30 @@ bool j1Player::Update(float dt)
 					}
 
 					if (App->player->toTalk != nullptr) {
-						if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
-							if (toTalk != nullptr) {
-								App->hud->dialog->active = true;
-								talking = true;
+						if (App->input->gamepad_connected <= 0) {
+							if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
+								if (toTalk != nullptr) {
+									App->hud->dialog->active = true;
+									talking = true;
+								}
+							}
+						}
+						else {
+							if (App->input->preset_1 == true) {
+								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X)) {
+									if (toTalk != nullptr) {
+										App->hud->dialog->active = true;
+										talking = true;
+									}
+								}
+							}
+							else {
+								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_RIGHTSTICK) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_LEFTSTICK)) {
+									if (toTalk != nullptr) {
+										App->hud->dialog->active = true;
+										talking = true;
+									}
+								}
 							}
 						}
 					}
@@ -1242,7 +1290,7 @@ bool j1Player::Update(float dt)
 				}
 			}
 			if (App->hud->Minimap->active) {
-				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN ) {
+				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || (App->input->ctrl_p == 1 && ((App->input->preset_1 == true && (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_B)))))) {
 					if ((App->scene_manager->dungeon_id != 5) || (App->scene_manager->dungeon_id != 6)) {
 						App->hud->Disable_map();
 					}
@@ -1251,10 +1299,6 @@ bool j1Player::Update(float dt)
 			
 		}
 	}
-
-
-
-
 	return ret;
 }
 
@@ -1994,59 +2038,172 @@ void j1Player::Slash_()
 			if (anim_override == false)
 			{
 				if (w_a_timer.Read() > a_time) {
-					if (App->input->GetKey(App->input->controls[UP])) {
-						curr_dir = Up;
-						action_blit = Weapon_atk;
-						if (curr_weapon != nullptr)
-							curr_weapon->Attack();
-						App->audio->PlayFx(sword_fx);
-						dir_override = true;
-						anim_override = true;
-						pl_speed.x = pl_speed.x / PL_SPD_ATK;
-						pl_speed.y = pl_speed.y / PL_SPD_ATK;
-						w_a_timer.SetFlag(false);
+					if (App->input->connected_gamepads <= 0) {
+						if (App->input->GetKey(App->input->controls[UP])) {
+							curr_dir = Up;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+							w_a_timer.SetFlag(false);
 
-				}
-				else if (App->input->GetKey(App->input->controls[DOWN])) {
-					curr_dir = Down;
-					action = false;
-					action_blit = Weapon_atk;
-					if (curr_weapon != nullptr)
-						curr_weapon->Attack();
-					App->audio->PlayFx(sword_fx);
-					dir_override = true;
-					anim_override = true;
-					pl_speed.x = pl_speed.x / PL_SPD_ATK;
-					pl_speed.y = pl_speed.y / PL_SPD_ATK;
-					w_a_timer.SetFlag(false);
+						}
+						else if (App->input->GetKey(App->input->controls[DOWN])) {
+							curr_dir = Down;
+							action = false;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+							w_a_timer.SetFlag(false);
 
-				}
-				else if (App->input->GetKey(App->input->controls[RIGHT])) {
-					curr_dir = Right;
-					action_blit = Weapon_atk;
-					if (curr_weapon != nullptr)
-						curr_weapon->Attack();
-					App->audio->PlayFx(sword_fx);
-					dir_override = true;
-					anim_override = true;
-					pl_speed.x = pl_speed.x / PL_SPD_ATK;
-					pl_speed.y = pl_speed.y / PL_SPD_ATK;
-					w_a_timer.SetFlag(false);
+						}
+						else if (App->input->GetKey(App->input->controls[RIGHT])) {
+							curr_dir = Right;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+							w_a_timer.SetFlag(false);
 
+						}
+						else if (App->input->GetKey(App->input->controls[LEFT])) {
+							curr_dir = Left;
+							action_blit = Weapon_atk;
+							if (curr_weapon != nullptr)
+								curr_weapon->Attack();
+							App->audio->PlayFx(sword_fx);
+							dir_override = true;
+							anim_override = true;
+							pl_speed.x = pl_speed.x / PL_SPD_ATK;
+							pl_speed.y = pl_speed.y / PL_SPD_ATK;
+							w_a_timer.SetFlag(false);
+						}
+					}
+					else {
+						if (App->input->preset_1 == true) {
+							if (SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_RIGHTY) < -CONTROLLER_SENSIBILITY) {
+								curr_dir = Up;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+								w_a_timer.SetFlag(false);
+
+							}
+							else if (SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_RIGHTY) > CONTROLLER_SENSIBILITY) {
+								curr_dir = Down;
+								action = false;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+								w_a_timer.SetFlag(false);
+
+							}
+							else if (SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_RIGHTX) > CONTROLLER_SENSIBILITY) {
+								curr_dir = Right;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+								w_a_timer.SetFlag(false);
+
+							}
+							else if (SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_RIGHTX) < -CONTROLLER_SENSIBILITY) {
+								curr_dir = Left;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+								w_a_timer.SetFlag(false);
+							}
+						}
+						else {
+							if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_Y)) {
+								curr_dir = Up;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+								w_a_timer.SetFlag(false);
+
+							}
+							else if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A)) {
+								curr_dir = Down;
+								action = false;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+								w_a_timer.SetFlag(false);
+
+							}
+							else if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_B)) {
+								curr_dir = Right;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+								w_a_timer.SetFlag(false);
+
+							}
+							else if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X)) {
+								curr_dir = Left;
+								action_blit = Weapon_atk;
+								if (curr_weapon != nullptr)
+									curr_weapon->Attack();
+								App->audio->PlayFx(sword_fx);
+								dir_override = true;
+								anim_override = true;
+								pl_speed.x = pl_speed.x / PL_SPD_ATK;
+								pl_speed.y = pl_speed.y / PL_SPD_ATK;
+								w_a_timer.SetFlag(false);
+							}
+
+						}
+					}
 				}
-				else if (App->input->GetKey(App->input->controls[LEFT])) {
-					curr_dir = Left;
-					action_blit = Weapon_atk;
-					if (curr_weapon != nullptr)
-						curr_weapon->Attack();
-					App->audio->PlayFx(sword_fx);
-					dir_override = true;
-					anim_override = true;
-					pl_speed.x = pl_speed.x / PL_SPD_ATK;
-					pl_speed.y = pl_speed.y / PL_SPD_ATK;
-					w_a_timer.SetFlag(false);
-				}
-			}
 			}
 		}
 		else

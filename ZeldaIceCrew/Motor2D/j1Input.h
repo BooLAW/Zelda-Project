@@ -172,8 +172,15 @@ private:
 
 	std::vector<GamePad*>	gamepads;
 public:
+	SDL_GameController *pad;
 	SDL_Joystick *joy = nullptr;
-	bool		preset_1 = true;
+	SDL_Joystick *Rjoy = nullptr;
+	bool		preset_1 = false;
+	enum		 {
+		c_idle = 0,
+		c_pressed,
+		c_repeat
+	}ctrl_p;
 	int			connected_gamepads = 0;
 	int			gamepad_connected[MAX_GAMECONTROLLERS];
 };

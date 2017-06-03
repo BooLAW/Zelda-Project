@@ -55,26 +55,82 @@ void Item::Update(float dt)
 						App->audio->PlayFx(this->fx);
 					}
 					else{
-						if (App->input->GetKey(App->input->controls[ACTION])) {
-							if (App->player->rupees >= this->price) {
-								App->player->rupees -= price;
-								App->audio->PlayFx(this->fx);
-								App->gui->DeleteElement(this->priceTag);
-								if (type == ENTITYTYPE::drop) {
-									Upgrade();
-									App->scene_manager->GetCurrentScene()->DestroyItem(this);
-								}
-								else {
-									if (App->player->Find_inv(this)) {
+						if (App->input->gamepad_connected <= 0) {
+							if (App->input->GetKey(App->input->controls[ACTION])) {
+								if (App->player->rupees >= this->price) {
+									App->player->rupees -= price;
+									App->audio->PlayFx(this->fx);
+									App->gui->DeleteElement(this->priceTag);
+									if (type == ENTITYTYPE::drop) {
 										Upgrade();
-										App->scene_manager->GetCurrentScene()->DestroyItem(this);
-									}
-									else if (App->player->Find_weapon(this)) {
 										App->scene_manager->GetCurrentScene()->DestroyItem(this);
 									}
 									else {
-										Upgrade();
-										PassToInventory();
+										if (App->player->Find_inv(this)) {
+											Upgrade();
+											App->scene_manager->GetCurrentScene()->DestroyItem(this);
+										}
+										else if (App->player->Find_weapon(this)) {
+											App->scene_manager->GetCurrentScene()->DestroyItem(this);
+										}
+										else {
+											Upgrade();
+											PassToInventory();
+										}
+									}
+								}
+							}
+						}
+						else {
+							if (App->input->preset_1 == true) {
+								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X)) {
+									if (App->player->rupees >= this->price) {
+										App->player->rupees -= price;
+										App->audio->PlayFx(this->fx);
+										App->gui->DeleteElement(this->priceTag);
+										if (type == ENTITYTYPE::drop) {
+											Upgrade();
+											App->scene_manager->GetCurrentScene()->DestroyItem(this);
+										}
+										else {
+											if (App->player->Find_inv(this)) {
+												Upgrade();
+												App->scene_manager->GetCurrentScene()->DestroyItem(this);
+											}
+											else if (App->player->Find_weapon(this)) {
+												App->scene_manager->GetCurrentScene()->DestroyItem(this);
+											}
+											else {
+												Upgrade();
+												PassToInventory();
+											}
+										}
+									}
+								}
+							}
+							else {
+								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_RIGHTSTICK) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_LEFTSTICK)) {
+									if (App->player->rupees >= this->price) {
+										App->player->rupees -= price;
+										App->audio->PlayFx(this->fx);
+										App->gui->DeleteElement(this->priceTag);
+										if (type == ENTITYTYPE::drop) {
+											Upgrade();
+											App->scene_manager->GetCurrentScene()->DestroyItem(this);
+										}
+										else {
+											if (App->player->Find_inv(this)) {
+												Upgrade();
+												App->scene_manager->GetCurrentScene()->DestroyItem(this);
+											}
+											else if (App->player->Find_weapon(this)) {
+												App->scene_manager->GetCurrentScene()->DestroyItem(this);
+											}
+											else {
+												Upgrade();
+												PassToInventory();
+											}
+										}
 									}
 								}
 							}

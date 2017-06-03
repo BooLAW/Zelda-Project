@@ -60,6 +60,17 @@ bool j1Input::Start()
 // Called each loop iteration
 bool j1Input::PreUpdate()
 {
+
+	if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B)) {
+		if (ctrl_p != c_idle)
+			ctrl_p = c_repeat;
+		else
+			ctrl_p = c_pressed;
+	}
+	else {
+		ctrl_p = c_idle;
+	}
+
 	static SDL_Event event;
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
@@ -576,7 +587,7 @@ void j1Input::AddController(int id)
 {
 	if (SDL_IsGameController(id) && connected_gamepads < MAX_GAMECONTROLLERS)
 	{
-		SDL_GameController *pad = SDL_GameControllerOpen(id);
+		pad = SDL_GameControllerOpen(id);
 
 		if (pad)
 		{
