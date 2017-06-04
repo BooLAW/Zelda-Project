@@ -55,7 +55,7 @@ void Item::Update(float dt)
 						App->audio->PlayFx(this->fx);
 					}
 					else{
-						if (App->input->gamepad_connected <= 0) {
+					
 							if (App->input->GetKey(App->input->controls[ACTION])) {
 								if (App->player->rupees >= this->price) {
 									App->player->rupees -= price;
@@ -80,8 +80,8 @@ void Item::Update(float dt)
 									}
 								}
 							}
-						}
-						else {
+						
+						
 							if (App->input->preset_1 == true) {
 								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X)) {
 									if (App->player->rupees >= this->price) {
@@ -107,7 +107,7 @@ void Item::Update(float dt)
 										}
 									}
 								}
-							}
+							
 							else {
 								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_RIGHTSTICK) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_LEFTSTICK)) {
 									if (App->player->rupees >= this->price) {
