@@ -37,7 +37,7 @@ bool j1Player::Start()
 	bool ret = true;
 	LOG("Player Start");
 	//CONTROLS
-	App->input->preset_1 = false;
+	App->input->preset_1 = true;
 	keys = 0;
 	rupees = 50;
 	controller_index = 0;

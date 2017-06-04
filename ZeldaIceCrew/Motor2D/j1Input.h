@@ -175,7 +175,7 @@ public:
 	SDL_GameController *pad;
 	SDL_Joystick *joy = nullptr;
 	SDL_Joystick *Rjoy = nullptr;
-	bool		preset_1 = false;
+	bool		preset_1 = true;
 	enum		 {
 		c_idle = 0,
 		c_pressed,
