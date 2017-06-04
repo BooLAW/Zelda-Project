@@ -61,14 +61,27 @@ bool j1Input::Start()
 bool j1Input::PreUpdate()
 {
 
-	if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B)) {
-		if (ctrl_p != c_idle)
-			ctrl_p = c_repeat;
-		else
-			ctrl_p = c_pressed;
+	if (preset_1 == true) {
+		if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B)) {
+			if (ctrl_p != c_idle)
+				ctrl_p = c_repeat;
+			else
+				ctrl_p = c_pressed;
+		}
+		else {
+			ctrl_p = c_idle;
+		}
 	}
 	else {
-		ctrl_p = c_idle;
+		if (SDL_GameControllerGetAxis(pad, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 12000) {
+			if (ctrl_p != c_idle)
+				ctrl_p = c_repeat;
+			else
+				ctrl_p = c_pressed;
+		}
+		else {
+			ctrl_p = c_idle;
+		}
 	}
 
 	static SDL_Event event;

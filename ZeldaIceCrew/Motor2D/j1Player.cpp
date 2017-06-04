@@ -884,7 +884,7 @@ bool j1Player::Update(float dt)
 				curr_life_points = max_life_points;
 			}
 			if(!App->hud->Minimap->active)
-			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || (App->input->ctrl_p == 1 && (App->input->preset_1 == true && (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_B))))) {
+			if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || (App->input->ctrl_p == 1 && ( (App->input->preset_1 == false && (SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 12000)) || (App->input->preset_1 == true && (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_B)))))) {
 				if ((App->scene_manager->dungeon_id == 5)||(App->scene_manager->dungeon_id == 6)) {
 					App->hud->Minimap->active = false;
 					App->hud->link_point->active = false;
@@ -926,7 +926,7 @@ bool j1Player::Update(float dt)
 						}
 					}
 					else {
-						if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_RIGHTSTICK) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_LEFTSTICK)) {
+						if ((SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000)) {
 							if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 								App->hud->dialog_num++;
 							}
@@ -1210,7 +1210,7 @@ bool j1Player::Update(float dt)
 								}
 							}
 							else {
-								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_RIGHTSTICK) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_LEFTSTICK)) {
+								if ((SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000)) {
 									if (toTalk != nullptr) {
 										App->hud->dialog->active = true;
 										talking = true;
@@ -1290,7 +1290,7 @@ bool j1Player::Update(float dt)
 				}
 			}
 			if (App->hud->Minimap->active) {
-				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || (App->input->ctrl_p == 1 && ((App->input->preset_1 == true && (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_B)))))) {
+				if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || (App->input->ctrl_p == 1 && ((App->input->preset_1 == true && (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_B))))) || (App->input->ctrl_p == 1 && ((App->input->preset_1 == false && ((SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 12000)))))) {
 					if ((App->scene_manager->dungeon_id != 5) || (App->scene_manager->dungeon_id != 6)) {
 						App->hud->Disable_map();
 					}
@@ -1815,7 +1815,7 @@ void j1Player::Movement()
 
 		}
 		else {
-			if (App->input->preset_1 == true) {
+			if (App->input->preset_1 == true || App->input->preset_1 == false) {
 				if (SDL_JoystickGetAxis(App->input->joy, 1) < -CONTROLLER_SENSIBILITY && SDL_JoystickGetAxis(App->input->joy, 0) < -CONTROLLER_SENSIBILITY) {
 					if (CheckSpace(pos.x - pl_speed.x, pos.y - pl_speed.y) == 0) //change dir
 					{
@@ -1917,107 +1917,6 @@ void j1Player::Movement()
 				}
 
 			}
-			else
-			{
-				if (App->input->GetControllerJoystickMove(0, LEFTJOY_UP) > 12000 && App->input->GetControllerJoystickMove(0, RIGHTJOY_LEFT) > 12000) {
-					if (CheckSpace(pos.x - pl_speed.x, pos.y - pl_speed.y) == 0) //change dir
-					{
-						walk_dir = Up_L;
-						pos.y -= pl_speed.y * sqrt(2) / 2;
-						pos.x -= pl_speed.x * sqrt(2) / 2;
-					}
-					if (anim_override == false)
-						action_blit = Walk;
-				}
-				else if (App->input->GetControllerJoystickMove(0, LEFTJOY_DOWN) > 12000 && App->input->GetControllerJoystickMove(0, RIGHTJOY_LEFT) > 12000) {
-					if (CheckSpace(pos.x - pl_speed.x, (pos.y + 34) + pl_speed.y) == 0) //change dir
-					{
-						walk_dir = Down_L;
-						pos.y += pl_speed.y * sqrt(2) / 2;
-						pos.x -= pl_speed.x * sqrt(2) / 2;
-
-					}
-					if (anim_override == false)
-						action_blit = Walk;
-				}
-				else if (App->input->GetControllerJoystickMove(0, LEFTJOY_DOWN) > 12000 && App->input->GetControllerJoystickMove(0, RIGHTJOY_RIGHT) > 12000) {
-					if (CheckSpace((pos.x + 32) + pl_speed.x, (pos.y + 32) + pl_speed.y) == 0)//change dir
-					{
-						walk_dir = Down_R;
-						pos.y += pl_speed.y * sqrt(2) / 2;
-						pos.x += pl_speed.x * sqrt(2) / 2;
-					}
-					if (anim_override == false)
-						action_blit = Walk;
-
-				}
-				else if (App->input->GetControllerJoystickMove(0, LEFTJOY_UP) > 12000 && App->input->GetControllerJoystickMove(0, RIGHTJOY_RIGHT) > 12000) {
-					if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y - pl_speed.y) == 0)//change dir
-					{
-						walk_dir = Up_R;
-						pos.y -= pl_speed.y * sqrt(2) / 2;
-						pos.x += pl_speed.x * sqrt(2) / 2;
-					}
-					if (anim_override == false)
-						action_blit = Walk;
-				}
-				else if (App->input->GetControllerJoystickMove(0, LEFTJOY_UP) > 12000) {
-					if (CheckSpace(pos.x, pos.y - pl_speed.y) == 0)
-					{
-						pos.y -= pl_speed.y;
-					}
-					if (anim_override == false)
-						action_blit = Walk;
-					if (dir_override == false) {
-						curr_dir = Up;
-						walk_dir = Up;
-					}
-
-				}
-				else if (App->input->GetControllerJoystickMove(0, LEFTJOY_LEFT) > 12000) {
-					if (CheckSpace(pos.x - pl_speed.x, pos.y) == 0)
-					{
-						pos.x -= pl_speed.x;
-					}
-					if (anim_override == false)
-						action_blit = Walk;
-					if (dir_override == false) {
-						curr_dir = Left;
-						walk_dir = Left;
-					}
-				}
-				else if (App->input->GetControllerJoystickMove(0, LEFTJOY_DOWN) > 12000)
-				{
-					if (CheckSpace(pos.x, (pos.y + 32) + pl_speed.y) == 0)
-					{
-						pos.y += pl_speed.y;
-					}
-					if (anim_override == false)
-						action_blit = Walk;
-					if (dir_override == false) {
-						curr_dir = Down;
-						walk_dir = Down;
-					}
-				}
-				else if (App->input->GetControllerJoystickMove(0, LEFTJOY_RIGHT) > 12000)
-				{
-					if (CheckSpace((pos.x + 32) + pl_speed.x, pos.y) == 0)
-					{
-						pos.x += pl_speed.x;
-					}
-					if (anim_override == false)
-						action_blit = Walk;
-					if (dir_override == false) {
-						curr_dir = Right;
-						walk_dir = Right;
-					}
-				}
-				else {
-					if (anim_override == false)
-						action_blit = Idle;
-				}
-			}
-
 		}
 	}
 	last_pos = pos;
@@ -2091,7 +1990,7 @@ void j1Player::Slash_()
 							pl_speed.y = pl_speed.y / PL_SPD_ATK;
 							w_a_timer.SetFlag(false);
 						}
-					}
+					} 
 					else {
 						if (App->input->preset_1 == true) {
 							if (SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_RIGHTY) < -CONTROLLER_SENSIBILITY) {

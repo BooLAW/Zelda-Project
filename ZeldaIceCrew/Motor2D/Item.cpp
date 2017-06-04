@@ -109,7 +109,7 @@ void Item::Update(float dt)
 								}
 							
 							else {
-								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_RIGHTSTICK) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_LEFTSTICK)) {
+								if ((SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000)) {
 									if (App->player->rupees >= this->price) {
 										App->player->rupees -= price;
 										App->audio->PlayFx(this->fx);
