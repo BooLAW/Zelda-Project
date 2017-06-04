@@ -41,6 +41,9 @@ bool Main_Screen::Start()
 	press_fx = App->audio->LoadFx("Audio/Fx/button.wav");
 	tex = App->tex->Load("Sprites/TitleScreen.png");
 	error = App->audio->LoadFx("Audio/Fx/error.wav");
+	controlers = App->tex->Load("Sprites/ControllerControls.png");
+	controlers_sel = App->tex->Load("Sprites/ControllerControlsselected.png");
+
 	//App->render->camera.w = 1920;
 	//App->render->camera.h = 1200;
 	App->render->cam_travel = true;
@@ -590,6 +593,19 @@ bool Main_Screen::Start()
 	key->str = "Keyboard";
 	key->movable = true;
 
+	preset1 = (GuiImage*)App->gui->CreateElement(image);
+	preset1->pos = { 200,10 };
+	preset1->active = false;
+	preset1->movable = true;
+	preset1->texture = controlers;
+	preset1->texture_rect = { 0,0,500,293 };
+
+	preset2 = (GuiImage*)App->gui->CreateElement(image);
+	preset2->pos = { 200, 400 };
+	preset2->active = false;
+	preset2->movable = true;
+	preset2->texture = controlers;
+	preset2->texture_rect = { 0,335,500,293 };
 	
 	Generatekeys();
 
@@ -624,6 +640,8 @@ bool Main_Screen::Update(float dt)
 		Disablekeys();
 		Disable_dungeons();
 		img_dung->active = false;
+		preset1->active = false;
+		preset2->active = false;
 		Arena->active = false;
 		arena->active = false;
 		up->active = false;
@@ -748,6 +766,8 @@ bool Main_Screen::Update(float dt)
 
 	}
 	else if (in_controls) {
+		preset1->active = false;
+		preset2->active = false;
 		Pad->active = true;
 		Key->active = true;
 		pad->active = true;
@@ -837,7 +857,7 @@ bool Main_Screen::Update(float dt)
 				App->audio->PlayFx(press_fx);
 				in_pad = true;
 				in_controls = false;
-				//selected = settings_elements.front();
+				selected = preset1;
 				changing_controls = false;
 			}
 			else if (selected == Key){
@@ -861,8 +881,126 @@ bool Main_Screen::Update(float dt)
 	}
 	else if (in_pad) {
 
+		preset1->active = true;
+		preset2->active = true;
+		Pad->active = false;
+		Key->active = false;
+		pad->active = false;
+		key->active = false;
+		Disablekeys();
+		Disable_dungeons();
+		img_dung->active = false;
+		Arena->active = false;
+		arena->active = false;
+		New_game->active = false;
+		new_game->active = false;
+		Continue->active = false;
+		cont->active = false;
+		Settings->active = false;
+		settings->active = false;
+		Exit->active = false;
+		exit->active = false;
+
+
+		Controls->active = false;
+		controls->active = false;
+		Mute->active = false;
+		mute->active = false;
+		Back->active = false;
+		back->active = false;
+		d1_lvl->active = false;
+		d2_lvl->active = false;
+		d3_lvl->active = false;
+		d4_lvl->active = false;
+		d5_lvl->active = false;
+
+		
+
+		for (std::list<UIElement*>::const_iterator it = controls_elements.cbegin(); it != controls_elements.cend(); it++) {
+			it._Ptr->_Myval->active = false;
+		}
+		up->active = false;
+		down->active = false;
+		right->active = false;
+		left->active = false;
+		move_up->active = false;
+		move_down->active = false;
+		move_right->active = false;
+		move_left->active = false;
+		menu->active = false;
+		action->active = false;
+		dash->active = false;
+		back_controls->active = false;
+
+		up_key->active = false;
+		down_key->active = false;
+		left_key->active = false;
+		right_key->active = false;
+		move_up_key->active = false;
+		move_down_key->active = false;
+		move_left_key->active = false;
+		move_right_key->active = false;
+		menu_key->active = false;
+		action_key->active = false;
+		dash_key->active = false;
+
+		if (selected == preset1) {
+			preset1->texture = controlers_sel;
+			preset2->texture = controlers;
+		}
+		else {
+			preset1->texture = controlers;
+			preset2->texture = controlers_sel;
+		}
+
+		
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
+			App->audio->PlayFx(fx);
+			if (selected == preset1) {
+				selected = preset2;
+			}
+			else {
+				selected = preset1;
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
+			App->audio->PlayFx(fx);
+			if (selected == preset1) {
+				selected = preset2;
+			}
+			else {
+				selected = preset1;
+			}
+
+		}
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
+			if (selected == preset1) {
+				App->audio->PlayFx(press_fx);
+				App->input->preset_1 = true;
+			}
+			else if (selected == preset2) {
+				App->audio->PlayFx(press_fx);
+				App->input->preset_1 = false;
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
+			App->audio->PlayFx(press_fx);
+			in_controls = true;
+			in_pad = false;
+			selected = choosing.front();
+			
+
+
+
+		}
+
+
+
 	}
 	else if (in_keyboard) {
+		preset1->active = false;
+		preset2->active = false;
 		Pad->active = false;
 		pad->active = false;
 		Key->active = false;
@@ -1105,7 +1243,8 @@ bool Main_Screen::Update(float dt)
 			//Screen->active =false;
 		//	screen->active =false;
 			Enable_dungeons();
-			
+			preset1->active = false;
+			preset2->active = false;
 			d1_lvl->active = true;
 			d2_lvl->active = true;
 			d3_lvl->active = true;
@@ -1368,7 +1507,8 @@ bool Main_Screen::Update(float dt)
 		img_dung->active = false;
 		Disablekeys();
 		Disable_dungeons();
-		
+		preset1->active = false;
+		preset2->active = false;
 		Pad->active = false;
 		pad->active = false;
 		Key->active = false;
@@ -1863,6 +2003,8 @@ bool Main_Screen::CleanUp()
 	move_down->active = false;
 	move_right->active = false;
 	move_left->active = false;
+	preset1->active = false;
+	preset2->active = false;
 	
 	menu->active = false;
 	action->active = false;

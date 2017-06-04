@@ -144,6 +144,9 @@ private:
 	GuiImage* d5;
 	GuiImage* dungeon_boss;
 	GuiImage* Back_dung;
+	GuiImage* preset1;
+	GuiImage* preset2;
+
 
 	GuiImage* key1;
 	GuiImage* key2;
@@ -182,6 +185,8 @@ private:
 
 
 	SDL_Texture* tex;
+	SDL_Texture* controlers;
+	SDL_Texture* controlers_sel;
 };
 
 #endif //__Main_Screen_H__
