@@ -23,9 +23,9 @@
 		<n_keys n="0" />
 		<hp curr="10" max="10" />
 		<weapons curr_weapon="27" />
-		<rupees n="20" />
-		<stats power="25" speed="3" />
-		<items pegasus_boots="true" pegasus_boots="true" />
+		<rupees n="50" />
+		<stats power="30" speed="2.5" />
+		<items pegasus_boots="true" />
 	</player>
 	<:anonymous />
 	<dialogue />
