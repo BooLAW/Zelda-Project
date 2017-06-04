@@ -21,11 +21,11 @@
 		<keys id="3" completed="false" />
 		<keys id="4" completed="false" />
 		<n_keys n="0" />
-		<hp curr="10" max="10" />
+		<hp curr="6" max="6" />
 		<weapons curr_weapon="27" />
 		<rupees n="50" />
 		<stats power="30" speed="2.5" />
-		<items pegasus_boots="true" />
+		<items />
 	</player>
 	<:anonymous />
 	<dialogue />

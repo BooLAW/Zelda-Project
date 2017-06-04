@@ -180,7 +180,7 @@ public:
 		c_idle = 0,
 		c_pressed,
 		c_repeat
-	}ctrl_p;
+	}ctrl_p, dpad_p, mmenu_p;
 	int			connected_gamepads = 0;
 	int			gamepad_connected[MAX_GAMECONTROLLERS];
 };
