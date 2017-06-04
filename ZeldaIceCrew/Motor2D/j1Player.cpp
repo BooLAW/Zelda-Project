@@ -1560,7 +1560,7 @@ void j1Player::DyingRestart()
 
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
-	rupees = floor(rupees / 2);
+	App->SaveGame("save_game.xml");
 
 	std::ifstream f("save/save_game.xml");
 
@@ -2386,15 +2386,15 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	//hp
 	pugi::xml_node hp = data.append_child("hp");
-		hp.append_attribute("curr") = curr_life_points;
+		hp.append_attribute("curr") = max_life_points;
 		hp.append_attribute("max") = max_life_points;
 	pugi::xml_node weap = data.append_child("weapons");
 
 	weap.append_attribute("curr_weapon") = curr_weapon->subtype;
 
 	//rupees
-	pugi::xml_node rupees = data.append_child("rupees");
-	rupees.append_attribute("n") = rupees;
+	pugi::xml_node n_rupees = data.append_child("rupees");
+	n_rupees.append_attribute("n") = rupees;
 	//stats
 	pugi::xml_node stats = data.append_child("stats");
 	stats.append_attribute("power") = power;
