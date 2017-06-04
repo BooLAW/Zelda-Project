@@ -801,6 +801,8 @@ animations[Slash][Left].PushBack(sprites[Slash][Left][8]);
 	pl_speed.x = ORIGIN_SPD;
 	pl_speed.y = ORIGIN_SPD;
 
+	pl_curr_speed = pl_speed;
+
 	power = 30;
 
 	curr_dir = Down;
@@ -2297,7 +2299,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 	//stats
 	pugi::xml_node stats = data.append_child("stats");
 	stats.append_attribute("power") = power;
-	stats.append_attribute("speed") = pl_speed.x;
+	stats.append_attribute("speed") = pl_curr_speed.x;
 	//items
 	pugi::xml_node items = data.append_child("items");
 	for (std::list<Item*>::const_iterator it = inventory.cbegin(); it != inventory.cend(); it++) 
@@ -2311,13 +2313,13 @@ bool j1Player::Save(pugi::xml_node& data) const
 			items.append_attribute("pegasus_boots") = true;
 			break;
 		case heart_container:
-			items.append_attribute("pegasus_boots") = true;
+			items.append_attribute("heart_container") = true;
 			break;
 		case gold_gauntlet:
-			items.append_attribute("pegasus_boots") = true;
+			items.append_attribute("gold_gauntlet") = true;
 			break;
 		case wind_cape:
-			items.append_attribute("pegasus_boots") = true;
+			items.append_attribute("wind_cape") = true;
 			break;
 		case magic_hammer:
 			items.append_attribute("magic_hammer") = true;
@@ -2378,6 +2380,8 @@ bool j1Player::Load(pugi::xml_node & data)
 	keys = data.child("n_keys").attribute("n").as_int(0);
 
 	rupees = data.child("rupees").attribute("n").as_int(50);
+
+	pl_speed = pl_curr_speed;
 
 	pugi::xml_node items = data.child("items");
 

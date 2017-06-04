@@ -187,6 +187,7 @@ public:
 	//uint arrows = 100;
 	std::list<Item*> inventory;
 	Point<float> pl_speed;
+	Point<float> pl_curr_speed;
 	j1PerfTimer inmortal_timer;
 	float inmortal_time = 0;
 	bool inmortal = false;

@@ -668,7 +668,7 @@ void GoldenShield::Upgrade()
 	float aux = App->player->pl_speed.x;
 
 	App->player->pl_speed.x = App->player->pl_speed.y = ((float)App->player->power * 0.083);
-
+	App->player->pl_curr_speed = App->player->pl_speed;
 	if (App->player->pl_speed.x > MAX_SPD) {
 		App->player->pl_speed.x = MAX_SPD;
 		App->player->pl_speed.y = MAX_SPD;
@@ -788,6 +788,7 @@ void OddMushroom::Upgrade()
 
 	App->player->pl_speed.x = a_s;
 	App->player->pl_speed.y = a_s;
+	App->player->pl_curr_speed = App->player->pl_speed;
 	App->player->power = a_p;
 	App->player->max_life_points = a_h;
 
@@ -902,6 +903,8 @@ void IconOfWisdom::Upgrade()
 	App->player->max_life_points = round(aux / 5);
 	App->player->pl_speed.x = aux * 0.083;
 	App->player->pl_speed.y = aux * 0.083;
+	App->player->pl_curr_speed = App->player->pl_speed;
+
 
 	if (App->player->power > MAX_PWR)
 		App->player->power = MAX_PWR;
