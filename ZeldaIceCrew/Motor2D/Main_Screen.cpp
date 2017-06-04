@@ -766,6 +766,7 @@ bool Main_Screen::Update(float dt)
 
 	}
 	else if (in_controls) {
+		
 		preset1->active = false;
 		preset2->active = false;
 		Pad->active = true;
@@ -880,7 +881,7 @@ bool Main_Screen::Update(float dt)
 		}
 	}
 	else if (in_pad) {
-
+		//selected = preset1;
 		preset1->active = true;
 		preset2->active = true;
 		Pad->active = false;
@@ -978,10 +979,16 @@ bool Main_Screen::Update(float dt)
 			if (selected == preset1) {
 				App->audio->PlayFx(press_fx);
 				App->input->preset_1 = true;
+				in_controls = true;
+				in_pad = false;
+				selected = choosing.front();
 			}
 			else if (selected == preset2) {
 				App->audio->PlayFx(press_fx);
 				App->input->preset_1 = false;
+				in_controls = true;
+				in_pad = false;
+				selected = choosing.front();
 			}
 		}
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
@@ -1988,6 +1995,7 @@ bool Main_Screen::CleanUp()
 	dungeons.clear();
 	Disablekeys();
 	keys.clear();
+	choosing.clear();
 
 	Disablekeys();
 	img_dung->active = false;
