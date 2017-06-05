@@ -53,8 +53,8 @@ public:
 	GuiImage* power;
 	GuiText* speed_num;
 	GuiText* power_num;
-	GuiImage* weapon_rect;
-	GuiImage* pl_weapon;
+//	GuiImage* weapon_rect;
+//	GuiImage* pl_weapon;
 	GuiImage* dialog_rect;
 	GuiText* dialog;
 

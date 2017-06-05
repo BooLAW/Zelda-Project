@@ -115,21 +115,21 @@ bool HUD::Start()
 	power_num->pos = { power->pos.x + 40,power->pos.y };
 	power_num->max_prior = true;
 
-	weapon_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
-	weapon_rect->pos = { 900,700 };
-	weapon_rect->active = true;
-	weapon_rect->movable = true;
-	weapon_rect->texture_rect = { 539,402,46,48 };
-	weapon_rect->max_prior = true;
-
-	pl_weapon= (GuiImage*)App->gui->CreateElement(GuiType::image);
-	pl_weapon->pos.x = weapon_rect->pos.x + 10;
-	pl_weapon->pos.y = weapon_rect->pos.y + 10;
-	pl_weapon->active = true;
-	pl_weapon->movable = true;
-	pl_weapon->texture = App->hud->items;
-	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
-	pl_weapon->max_prior = true;
+	//weapon_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
+	//weapon_rect->pos = { 900,700 };
+	//weapon_rect->active = true;
+	//weapon_rect->movable = true;
+	//weapon_rect->texture_rect = { 539,402,46,48 };
+	//weapon_rect->max_prior = true;
+	//
+	//pl_weapon= (GuiImage*)App->gui->CreateElement(GuiType::image);
+	//pl_weapon->pos.x = weapon_rect->pos.x + 10;
+	//pl_weapon->pos.y = weapon_rect->pos.y + 10;
+	//pl_weapon->active = true;
+	//pl_weapon->movable = true;
+	//pl_weapon->texture = App->hud->items;
+	//pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
+	//pl_weapon->max_prior = true;
 
 
 	dialog_rect = (GuiImage*)App->gui->CreateElement(GuiType::image);
@@ -146,7 +146,7 @@ bool HUD::Start()
 	item_desc = (GuiImage*)App->gui->CreateElement(GuiType::image);
 	item_desc->texture_rect = { 625,733,613,77 };
 	item_desc->active = false;
-	item_desc->pos = { 250,500 };
+	item_desc->pos = { 250,600 };
 
 	desc = (GuiText*)App->gui->CreateElement(GuiType::text);
 	desc->active = false;
@@ -465,7 +465,7 @@ bool HUD::Update(float dt)
 	//bombs_num->str = std::to_string(App->player->bombs);
 	speed_num->str = std::to_string(App->player->pl_speed.x);
 	power_num->str = std::to_string(App->player->power);
-	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
+//	pl_weapon->texture_rect = App->player->curr_weapon->UI_rect;
 	UpdateKeys();
 
 	if (App->player->inMainScreen) {
@@ -477,8 +477,8 @@ bool HUD::Update(float dt)
 		for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
 			it._Ptr->_Myval->active = false;
 		}
-		pl_weapon->active = false;
-		weapon_rect->active = false;
+		//pl_weapon->active = false;
+	//	weapon_rect->active = false;
 		Menu->active = false;
 		Continue->active = false;
 		titlescreen->active = false;
@@ -506,8 +506,8 @@ bool HUD::Update(float dt)
 		for (std::list<GuiImage*>::const_iterator it = lifes.cbegin(); it != lifes.cend(); it++) {
 			it._Ptr->_Myval->active = true;
 		}
-		pl_weapon->active = true;
-		weapon_rect->active = true;
+		//pl_weapon->active = true;
+		//weapon_rect->active = true;
 
 		if (App->player->talking) {
 			dialog_rect->active = true;

@@ -565,7 +565,7 @@ bool Main_Screen::Start()
 	img_dung->texture = App->tex->Load("Sprites/MapImages.png");
 	img_dung->active = false;
 	img_dung->movable = true;
-	img_dung->pos = { 20,500 };
+	img_dung->pos = { 20,450 };
 
 	Pad = (GuiImage*)App->gui->CreateElement(image);
 	Pad->pos = key3->pos;
