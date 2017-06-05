@@ -23,14 +23,14 @@
 		<n_keys n="2" />
 		<hp curr="4" max="4" />
 		<weapons curr_weapon="27" />
-		<rupees n="16" />
-		<stats power="45" speed="2.5" />
-		<items pegasus_boots="true" pegasus_boots="true" />
+		<rupees n="26" />
+		<stats power="30" speed="2.5" />
+		<items pegasus_boots="true" />
 	</player>
 	<:anonymous />
 	<dialogue />
 	<video />
 	<renderer>
-		<camera x="-2048" y="96" />
+		<camera x="-1024" y="-1056" />
 	</renderer>
 </game_state>
