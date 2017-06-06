@@ -475,13 +475,13 @@ bool Main_Screen::Start()
 	D3->movable = true;
 
 	D4 = (GuiText*)App->gui->CreateElement(text);
-	D4->pos = { d4->pos.x + 550, d4->pos.y + 2 };
+	D4->pos = { d4->pos.x + 530, d4->pos.y + 2 };
 	D4->active = false;
 	D4->str = "Death Mountain";
 	D4->movable = true;
 
 	D5 = (GuiText*)App->gui->CreateElement(text);
-	D5->pos = { d5->pos.x + 550, d5->pos.y + 2 };
+	D5->pos = { d5->pos.x + 530, d5->pos.y + 2 };
 	D5->active = false;
 	D5->str = "Gerudo Valley";
 	D5->movable = true;
