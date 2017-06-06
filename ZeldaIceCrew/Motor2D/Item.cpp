@@ -220,7 +220,7 @@ void PowerGauntlet::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { NextItemStart * 1, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "+5 Power";
+	description = "Power Gauntlet: +5 Power";
 	type = ENTITYTYPE::item;
 }
 
@@ -237,7 +237,7 @@ void PegasusBoots::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { 0, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "+0.25 Speed";
+	description = "Pegasus Boots: +0.25 Speed";
 	type = ENTITYTYPE::item;
 }
 
@@ -259,7 +259,7 @@ void HeartContainer::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { NextItemStart * 5, NextItemStart * 10, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/heart_container_1.wav");
-	description = "+1HP";
+	description = "Heart Container: +1HP";
 	type = ENTITYTYPE::item;
 }
 
@@ -527,7 +527,7 @@ void GoldenGauntlet::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "+15 Power -0.25 Speed";
+	description = "Golden Gauntlet: +15 Power -0.25 Speed";
 	type = ENTITYTYPE::item;
 }
 
@@ -547,17 +547,17 @@ void WindCape::SetUp()
 	else {
 		tex = App->tex->Load("Sprites/Items32x32.png");
 	}
-	rect = { NextItemStart * 1, NextItemStart * 1, Item_W_H, Item_W_H };
+	rect = { NextItemStart * 0, NextItemStart * 1, Item_W_H, Item_W_H };
 	UI_tex = tex;
-	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
+	UI_rect = { NextItemStart * 0, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "-5 Power +0.5 Speed";
+	description = "Wind Cape: -1 HP +0.5 Speed";
 	type = ENTITYTYPE::item;
 }
 
 void WindCape::Upgrade()
 {
-	App->player->UpgradePWR(-5);
+	App->player->UpgradeHP(-2);
 	App->player->UpgradeSPD(0.5);
 }
 
@@ -575,7 +575,7 @@ void MagicHammer::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "+15 Power -2HP";
+	description = "M(agi)C Hammer: +15 Power -1HP";
 	type = ENTITYTYPE::item;
 }
 
@@ -599,7 +599,7 @@ void MagicSphere::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 3, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "+4HP -0.25 Speed";
+	description = "Magic Sphere: +2HP -0.25 Speed";
 	type = ENTITYTYPE::item;
 }
 
@@ -623,7 +623,7 @@ void VanguardEmblem::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "+4 HP -5 Power";
+	description = "Vanguard Emblem: +2 HP -5 Power";
 	type = ENTITYTYPE::item;
 }
 
@@ -647,7 +647,7 @@ void SmallShield::SetUp()
 	UI_tex = tex;
 	UI_rect = { 0, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "-5 Power +0.5 Speed";
+	description = "Small Shield: -5 Power +0.5 Speed";
 	type = ENTITYTYPE::item;
 }
 
@@ -713,7 +713,7 @@ void MagicMirror::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 6, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Switches HP value for Power value";
+	description = "Magic Mirror: Switches HP value for Power value";
 	type = ENTITYTYPE::item;
 }
 
@@ -752,7 +752,7 @@ void BagOfRupees::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 8, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Max rupees now is 300!";
+	description = "Bag of Ruppes: Max rupees now is 300!";
 	type = ENTITYTYPE::item;
 }
 
@@ -881,7 +881,7 @@ void IconOfValor::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 6, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "+2HP, +5 Power,+0.25 Speed.";
+	description = "Icon of Valor: All stats +1 lvl";
 	type = ENTITYTYPE::item;
 }
 
@@ -907,7 +907,7 @@ void IconOfWisdom::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 7, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Balance all stats";
+	description = "Icon of Wisdom: Balance all stats";
 	type = ENTITYTYPE::item;
 
 }
@@ -959,7 +959,7 @@ void IconOfPower::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 5, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Upgrades your best stat";
+	description = "Icon of Power: Upgrades your Best stat";
 	type = ENTITYTYPE::item;
 
 }
