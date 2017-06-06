@@ -103,11 +103,15 @@ v0.6 - New Enemies
      - New 'Room' System (not a visual change)
 
 
-v0.7 - 
+v0.7 - NPC
+     - Menu png
+     - Save & Load
 
 
 
-v0.8 - 
+v0.8 - All dungeons implemented 
+     - Mute option & Key remapping
+     
 
 
 v0.9 - Arena mode added
