@@ -144,8 +144,7 @@
           <enemies>
             <enemy subtype="t_hinox"   x="192" y="192"/>
             <enemy subtype="t_greensoldier"   x="768" y="192"/>
-            <!--enemy subtype="t_greensoldier" x="192" y="384"/>
-            <enemy subtype="t_greensoldier" x="768" y="384"/-->
+           
           </enemies>
           <doorways>
             <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
@@ -224,7 +223,7 @@
             <enemy subtype="t_GBat"             x= "134"     y= "448"/>
             <enemy subtype="t_GBat"             x= "864"    y= "90" />
             <enemy subtype="t_GBat"             x= "864"    y= "448"/>
-            <enemy subtype="t_redsoldier" x= "490"     y= "329"/>
+           
           </enemies>
           <items>
 
@@ -746,10 +745,11 @@
         </room>
         <room x="3" y="3" w="1024" h="576">
           <items>
-            <item subtype="rnd_item" x="100" y="100"/>
-            <item subtype="rnd_item" x="900" y="100"/>
-            <item subtype="rnd_item" x="100" y="400"/>
-            <item subtype="rnd_item" x="900" y="400"/>
+            <item subtype="rnd_item" x="100" y="100" pricetag="30"/>/>
+            <item subtype="rnd_item" x="900" y="100" pricetag="30"/>/>
+            <item subtype="rnd_item" x="100" y="400" pricetag="30"/>/>
+            <item subtype="rnd_item" x="900" y="400" pricetag="30"/>/>
+           
           </items>
 
           <enemies>
