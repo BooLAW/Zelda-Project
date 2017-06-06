@@ -220,7 +220,7 @@ void PowerGauntlet::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { NextItemStart * 1, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "You feel the power. +5 Power";
+	description = "+5 Power";
 	type = ENTITYTYPE::item;
 }
 
@@ -237,7 +237,7 @@ void PegasusBoots::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { 0, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Light and comfortable. +0.25 Speed";
+	description = "+0.25 Speed";
 	type = ENTITYTYPE::item;
 }
 
@@ -259,7 +259,7 @@ void HeartContainer::SetUp()
 	UI_tex = App->hud->items;
 	UI_rect = { NextItemStart * 5, NextItemStart * 10, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/heart_container_1.wav");
-	description = "You feel... more resistant. +1HP";
+	description = "+1HP";
 	type = ENTITYTYPE::item;
 }
 
@@ -526,7 +526,7 @@ void GoldenGauntlet::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Empowered by the Din.+15 Power -0.25 Speed";
+	description = "+15 Power -0.25 Speed";
 	type = ENTITYTYPE::item;
 }
 
@@ -550,7 +550,7 @@ void WindCape::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 1 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "By Nayru's light!-5 Power +0.5 Speed";
+	description = "-5 Power +0.5 Speed";
 	type = ENTITYTYPE::item;
 }
 
@@ -574,7 +574,7 @@ void MagicHammer::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Now with a 100% less magic!+15 Power -2HP";
+	description = "+15 Power -2HP";
 	type = ENTITYTYPE::item;
 }
 
@@ -598,7 +598,7 @@ void MagicSphere::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 3, NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Now with a 100% more magic!+4HP -0.25 Speed";
+	description = "+4HP -0.25 Speed";
 	type = ENTITYTYPE::item;
 }
 
@@ -622,7 +622,7 @@ void VanguardEmblem::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 1, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "A badge for true heroes.+4 HP -5 Power";
+	description = "+4 HP -5 Power";
 	type = ENTITYTYPE::item;
 }
 
@@ -646,7 +646,7 @@ void SmallShield::SetUp()
 	UI_tex = tex;
 	UI_rect = { 0, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Faster is weaker?-5 Power +0.5 Speed";
+	description = "-5 Power +0.5 Speed";
 	type = ENTITYTYPE::item;
 }
 
@@ -751,7 +751,7 @@ void BagOfRupees::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 8, NextItemStart * 3 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "Get Greedier. Max rupees now is 300!";
+	description = "Max rupees now is 300!";
 	type = ENTITYTYPE::item;
 }
 
@@ -880,7 +880,7 @@ void IconOfValor::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 6, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "An icon of true Valor. +2HP, +5 Power,+0.25 Speed.";
+	description = "+2HP, +5 Power,+0.25 Speed.";
 	type = ENTITYTYPE::item;
 }
 
@@ -906,7 +906,7 @@ void IconOfWisdom::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 7, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "An icon of true Wisdom. ";
+	description = "Balance all stats";
 	type = ENTITYTYPE::item;
 
 }
@@ -958,7 +958,7 @@ void IconOfPower::SetUp()
 	UI_tex = tex;
 	UI_rect = { NextItemStart * 5, NextItemStart * 2 + NextItemStart * 9, Item_W_H, Item_W_H };
 	fx = App->audio->LoadFx("Audio/Fx/item_get_1.wav");
-	description = "An icon of true Power";
+	description = "Upgrades your best stat";
 	type = ENTITYTYPE::item;
 
 }
