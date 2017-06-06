@@ -10,13 +10,13 @@ A dream to the Past is our take on the classic TLoZ: A link to the Past, where t
 
 We are a team of 7 students from the Upc who are working on a rogue like game keeping the essence of The Legend of Zelda a Link to the Past. We hope you like it!!
 
-•	Team Leader: [Asier Arellano](https://axiermo.github.io/AsierArellanoWeb/)
-•	Manager: [Guillem Arman](https://github.com/GuillemArman/GuillemArman)
-•	Game Designer: Pau Olive
-•	Code: Pau Bonet
-•	UI: Roger Busquets
-•	Art & Audio: Jan Fuentes
-•	QA: Marc Torres
+·	Team Leader: [Asier Arellano](https://axiermo.github.io/AsierArellanoWeb/)
+· Manager: [Guillem Arman](https://github.com/GuillemArman/GuillemArman)
+·	Game Designer: Pau Olive
+·	Code: Pau Bonet
+·	UI: Roger Busquets
+·	Art & Audio: Jan Fuentes
+·	QA: Marc Torres
 
 
 
