@@ -2114,7 +2114,7 @@ void BossAgahnim::Update(float dt)
 		if (clones_ded >= 2) {
 			phase = phase_4;
 			state = attack_charge;
-			
+			stats.Hp = 1;
 		}
 		switch (state) {
 		case idle:
