@@ -1,4 +1,3 @@
-
 # Zelda-Project
 Adaptation from Zelda "A link to the past" game made for our Videogames Degree
 
@@ -9,6 +8,8 @@ Fans as we are of roguelike games such as The Binding of Isaac, Enter the Gungeo
  Roguelight and many more, we feel that the pace that TLoZ games can be pumped up a 
 little bit in order to appeal to a different, more action driven demographic.
 
+
+=================================================================
 HOW TO INSTALL, PLAY AND WIN
 
 To donwload the game you need to go to (link) and click TLOZ.ADreamToThePast.zip, extract it in a folder and then
@@ -70,3 +71,70 @@ Pause:
 - Start
 Change Controls:
 Select Presset 2 and see the image.
+
+
+=================================================================
+CHANGELIST:
+
+v0.3 - Items Implemented
+- More Enemy Types: Blue Soldier, Green Soldier, Red Soldier
+- Enemy Interactions: Push, Get Pushed, Damage
+- Basic UI: shows Rupees, Hp and Arrows
+
+v0.4 - Weapons Implemented
+- Drops Implemented
+- Changing Scene
+- Fx implemented
+- Upgraded UI: Shows collected Items & Stats
+
+v0.5 - New layout for the dungeon
+- New blocks including bushes and columns
+- New enemies included
+
+v0.6 - New Enemies
+	*Beamos
+	*GreyBat
+	*Geldman (debug graphics)
+	*Freezor (debug graphics)
+	*Wizzrobe (debug graphics)
+     - Camera Shake (WIP)
+     - NPCs and Dialogues (Tested but not implemented on build scene)
+     - New Dungeon Map
+     - New 'Room' System (not a visual change)
+
+
+v0.7 - NPC
+     - Menu png
+     - Save & Load
+
+
+
+v0.8 - All dungeons implemented 
+     - Mute option & Key remapping
+     
+
+
+v0.9 - Arena mode added
+	- Boss Dungeon
+	- Removed Overworld
+	- System of keys to open the boss dungeons
+	- NPC
+	- Minimap
+	- Remapping Controls
+
+=================================================================
+CREDIT
+
+IceCrewCorp Team:
+
+Team Lead: Asier Arellano
+Code:      Pau Bonet
+Design:    Pau Olivé
+Manager:   Guillem Arman
+UI:        Roger Busquets
+Art:       Jan Fuentes
+QA:        Marc Torres
+
+Github: https://github.com/BooLAW/Zelda-Project
+Twitter: https://twitter.com/IceCrew_
+Facebook: https://www.facebook.com/icecrewupc/?ref=bookmarks
