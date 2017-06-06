@@ -898,11 +898,11 @@ bool j1Player::Update(float dt)
 			if (talking) {
 				App->render->toDraw(Link_Movement, pos.y - PL_OFFSET_Y + animations[action_blit][curr_dir].GetCurrentFrame().h, pos.x - PL_OFFSET_X, pos.y - PL_OFFSET_Y, &animations[action_blit][curr_dir].GetCurrentFrame());
 				App->hud->dialog->active = true;
-				App->render->DrawQuad({ App->hud->dialog->pos.x - 10, App->hud->dialog->pos.y - 10,500,50 }, 128, 128, 128, 100);
+				//App->render->DrawQuad({ App->hud->dialog->pos.x - 10, App->hud->dialog->pos.y - 10,500,50 }, 128, 128, 128, 100);
 				if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 					App->hud->dialog->str = App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts[App->hud->dialog_num]->line->c_str();
 				}
-				if (App->input->gamepad_connected <= 0) {
+				if (1) {
 					if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
 						if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 							App->hud->dialog_num++;
@@ -1194,7 +1194,7 @@ bool j1Player::Update(float dt)
 					}
 
 					if (App->player->toTalk != nullptr) {
-						if (App->input->gamepad_connected <= 0) {
+						if (1) {
 							if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
 								if (toTalk != nullptr) {
 									App->hud->dialog->active = true;
@@ -1659,6 +1659,15 @@ int j1Player::CheckSpace(float new_x, float new_y)
 			// Enemy Check
 			if (inmortal == false) {
 				for (std::list<Enemy*>::iterator it = c_r->enemies.begin(); it != c_r->enemies.end(); it++) {
+					if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
+						ret = 1;
+						break;
+					}
+				}
+			}
+			// NPC CHECK
+			if (ret != false) {
+				for (std::list<Npc*>::iterator it = c_r->npcs.begin(); it != c_r->npcs.end(); it++) {
 					if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
 						ret = 1;
 						break;

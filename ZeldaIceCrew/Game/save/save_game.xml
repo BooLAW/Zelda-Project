@@ -20,7 +20,7 @@
 		<keys id="2" completed="false" />
 		<keys id="3" completed="false" />
 		<keys id="4" completed="false" />
-		<n_keys n="2" />
+		<n_keys n="5" />
 		<hp curr="6" max="6" />
 		<weapons curr_weapon="27" />
 		<rupees n="17" />
@@ -31,6 +31,6 @@
 	<dialogue />
 	<video />
 	<renderer>
-		<camera x="-3072" y="-1056" />
+		<camera x="0" y="-480" />
 	</renderer>
 </game_state>
