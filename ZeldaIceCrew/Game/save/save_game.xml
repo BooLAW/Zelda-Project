@@ -24,13 +24,13 @@
 		<hp curr="8" max="8" />
 		<weapons curr_weapon="27" />
 		<rupees n="17" />
-		<stats power="35" speed="2.5" />
-		<items pegasus_boots="true" pegasus_boots="true" />
+		<stats power="30" speed="2.5" />
+		<items pegasus_boots="true" />
 	</player>
 	<:anonymous />
 	<dialogue />
 	<video />
 	<renderer>
-		<camera x="0" y="96" />
+		<camera x="0" y="-480" />
 	</renderer>
 </game_state>

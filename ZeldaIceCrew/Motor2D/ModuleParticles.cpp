@@ -979,6 +979,7 @@ bool AgahnimBall::Update(float dt)
 								LOG("ENEMY HIT");
 								App->particle->DestroyParticle(this);
 								it._Ptr->_Myval->Hit(curr_dir, 1);
+								App->audio->PlayFx(App->entitymanager->boss_hit_fx);
 							}
 						}
 					}

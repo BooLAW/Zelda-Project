@@ -1890,7 +1890,7 @@ void BossAgahnim::Update(float dt)
 					
 					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, Down);
 				}
-			//	App->audio->PlayFx(App->entitymanager->shoot_fx);
+				App->audio->PlayFx(App->entitymanager->shoot_fx);
 				state = attack;
 			}
 			
@@ -2142,6 +2142,7 @@ void BossAgahnim::Update(float dt)
 			if (timer.Read() > rand() % 1500 + 1500) {
 				timer.SetFlag(false);
 				path_to_follow.clear();
+				App->audio->PlayFx(App->entitymanager->charge_fx);
 				state = light_attack_charge;
 			}
 
@@ -2161,6 +2162,7 @@ void BossAgahnim::Update(float dt)
 			timer.Start();
 			timer.SetFlag(true);
 			App->render->Activate_Shake(2, 1);
+			App->audio->PlayFx(App->entitymanager->light_fx);
 			if (timer.Read() > 2900) {
 				timer.SetFlag(false);
 				state = idle;
@@ -2191,7 +2193,7 @@ void BossAgahnim::Update(float dt)
 			if (timer.Read() > 500) {
 				timer.SetFlag(false);
 				if (ball_counter < 2)
-					App->particle->CreateParticle(p_agahnim_4balls, pos.x, pos.y, Down);
+					App->particle->CreateParticle(p_agahnim_ball, pos.x, pos.y, Down);
 				state = attack;
 			}
 			break;
@@ -2203,6 +2205,7 @@ void BossAgahnim::Update(float dt)
 					timer.SetFlag(false);
 					ball_counter++;
 					state = attack_charge;
+					App->audio->PlayFx(App->entitymanager->shoot_fx);
 				}
 			}
 			else if (ball_counter == 2) {
@@ -2234,6 +2237,7 @@ void BossAgahnim::Death()
 	clones[1]->Death();
 
 	Reward();
+	App->audio->PlayFx(App->entitymanager->boss_die_fx);
 	App->scene_manager->GetCurrentScene()->DestroyEnemy(this);
 }
 

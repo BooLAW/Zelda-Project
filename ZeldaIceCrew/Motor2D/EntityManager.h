@@ -69,6 +69,8 @@ public:
 	uint charge_fx;
 	uint shoot_fx;
 	uint boss_die_fx;
+	uint light_fx;
+	uint boss_hit_fx;
 
 private:
 	
