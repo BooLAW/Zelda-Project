@@ -3,14 +3,16 @@
 
 #include "j1Player.h"
 #include "Scene.h"
+#include "NPC.h"
 
 class Item;
 class Enemy;
 class Block;
 class Doorway;
-
+class Npc;
+enum NPC_TYPE;
 class Scene;
-
+class Npc;
 #define ROOM_W 1024
 #define ROOM_H 576
 
@@ -22,6 +24,8 @@ public:
 	void CleanUp();
 
 	bool isInside(SDL_Rect r);
+
+	bool NoEnemies();
 
 	bool PlayerInside();
 
@@ -44,6 +48,7 @@ public:
 	Doorway* AddDungeonDoorway(uint dir);
 	Doorway* AddSceneDoorway(Scene* target, uint dir, float x, float y);
 	Doorway* AddCamDoorway(float target_x, float target_y, uint dir, float x, float y);
+	Npc* AddNpc(NPC_TYPE type, float x, float y,int id);
 
 	void EnemyActive(bool flag);
 
@@ -57,11 +62,17 @@ public:
 	SDL_Rect room_rect;
 
 	SDL_Rect cam_boundaries;
-
+	bool boss_room = false;
 	std::list<Enemy*> enemies;
 	std::list<Item*> items;
 	std::list<Block*> blocks;
 	std::list<Doorway*> doorways;
+	std::list<Npc*> npcs;
+
+	SDL_Texture* retro_enemies;
+	SDL_Texture* retro_items;
+	SDL_Texture* items_nonretro;
+	SDL_Texture* enemies_nonretro;
 
 protected:
 	Scene* parent;

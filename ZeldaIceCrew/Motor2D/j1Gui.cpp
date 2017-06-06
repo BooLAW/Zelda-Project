@@ -6,6 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Gui.h"
+#include "HUD.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -46,19 +47,22 @@ bool j1Gui::PreUpdate()
 		if (it._Ptr->_Myval->active)
 			it._Ptr->_Myval->PreUpdate();
 	}
-	
+
+	if (in_video)
+		App->render->DrawQuad({ 0, 0, 1024, 876 }, 255, 255, 255);
+
 	return true;
 }
 
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
+	if (in_video == false) {
+		for (std::list<UIElement*>::const_iterator it = elements.cbegin(); it != elements.cend(); it++) {
 
-
-	for (std::list<UIElement*>::const_iterator it = elements.cbegin(); it != elements.cend(); it++) {
-
-		if (it._Ptr->_Myval->active)
-			it._Ptr->_Myval->Update();
+			if (it._Ptr->_Myval->active)
+				it._Ptr->_Myval->Update();
+		}
 	}
 	return true;
 }
@@ -204,7 +208,7 @@ void GuiImage::Start()
 void GuiImage::Update()
 {
 	if (active) {
-		App->render->toDraw(texture,10000, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
+		App->render->toDraw(texture, 10000, pos.x - App->render->camera.x, pos.y - App->render->camera.y, &texture_rect);
 	}
 
 
@@ -222,6 +226,7 @@ void GuiText::Update()
 	if (texture != nullptr) {
 		App->tex->UnLoad(this->texture);
 	}
+	
 	if (active) {
 
 		this->texture = App->font->Print(str.c_str());
@@ -335,6 +340,7 @@ GuiInput::GuiInput() {
 
 Window::Window()
 {
+	selector = nullptr;
 
 }
 Window::~Window()

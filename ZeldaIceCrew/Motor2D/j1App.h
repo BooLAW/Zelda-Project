@@ -23,10 +23,13 @@ class j1Fonts;
 class j1Gui;
 class j1Collision;
 class HUD;
+class ParticleManager;
 //class j1Console;			
 class j1Player;
 class EntityManager;
 class ModuleParticles;
+class DialogManager;
+class Video;
 
 class j1App
 {
@@ -72,6 +75,9 @@ public:
 	void EndSDL();
 
 	void OpenWebPage(char* url);
+	bool IsPaused()const;
+	void Pause();
+	void UnPause();
 private:
 
 	// Load config file
@@ -116,13 +122,19 @@ public:
 	j1Collision*			collisions = NULL;
 	j1Player*			player = NULL;
 	EntityManager*      entitymanager = NULL;
+	ParticleManager*	particlemanager = NULL;
 	HUD*				hud = NULL;
 	ModuleParticles*	particle = NULL;
+	DialogManager*       dialog = NULL;
+	Video*				video = NULL;
 
 	bool			    debug_mode = false;
-private:
+	bool fullscreen = true;
 
 	std::list<j1Module*>	modules;
+private:
+
+	bool				paused=false;
 	int					argc;
 	char**				args;
 
@@ -135,7 +147,13 @@ private:
 	mutable p2SString	save_game;
 
 	j1PerfTimer			ptimer;
+
+public:
 	uint64				frame_count = 0;
+
+	bool				first_open = false;
+
+private:
 	j1Timer				startup_time;
 	j1Timer				frame_time;
 	j1Timer				last_sec_frame_time;

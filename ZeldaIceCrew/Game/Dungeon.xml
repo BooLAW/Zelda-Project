@@ -1,176 +1,1110 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
+
 <dungeon>
-  <!-- 
-       <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-       <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-       <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
-       <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>  -->
- <maps>
-  <map id="0">
-   <file>Dungeon.tmx</file>
 
-   <music volume="60">Audio/Music/Song_of_Storms.ogg</music>
 
-   <Link>
-    <room x="2" y="3"/>
-    <pos x="512" y="238"/>	
-   </Link>
+  <maps>
 
-   <rooms>
-   
-    <room x="0" y="1" w="1024" h="576">
 
-     <items>
-      <item subtype="heart_container" x="50" y="50"/>
-     </items>
+    <map id="0">
 
-     <blocks>
-      <block subtype="bush" x="0" y="0"/>
-     </blocks>
+      <file>Dungeon.tmx</file>
 
-     <doorways>
-       <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-     </doorways>
+      <music volume="20">Audio/Music/Song_of_Storms.ogg</music>
 
-     <enemies>
-     
-     </enemies>
+      <camera follow="0"/>
 
-    </room>
+      <Link>
 
-    <room x="0" y="2" w="1024" h="576">
+        <room x="2" y="4"/>
 
-     <items>
-      <item subtype="heart_container" x="50" y="50"/>
-     </items>
+        <pos x="512" y="460"/>
 
-     <blocks>
-      <block subtype="bush" x="100" y="100"/>
-     </blocks>
+      </Link>
 
-     <doorways>
-       <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
-       <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-     </doorways>
 
-     <enemies>
-   
-     </enemies>
+      <rooms>
 
-    </room>
+        <room x="0" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_GBat" x="320" y="192"/>
+            <enemy subtype="t_GBat" x="704" y="192"/>
+            <enemy subtype="t_GBat" x="320" y="416"/>
+            <enemy subtype="t_GBat" x="704" y="416"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room> <!-- estos van -->
+
+        <room x="1" y="1" w="1024" h="576">
+          <enemies>
+            
+            <enemy subtype="t_GBat" x="768" y="128"/>
+            <enemy subtype="t_GBat" x="256" y="208"/>
+            <enemy subtype="t_GBat" x="768" y="208"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="1" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier" x="320" y="320"/>
+            <enemy subtype="t_bluesoldier" x="320" y="100"/>
+            <enemy subtype="t_bluesoldier" x="576" y="320 "/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="1" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_greensoldier" x="192" y="192"/>
+            <enemy subtype="t_bluesoldier" x="450" y="192"/>
+            <enemy subtype="t_bluesoldier" x="768" y="192"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room> <!-- esots van-->
+
+        <room x="2" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier" x="512" y="300"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room> <!-- estos van-->
+        <room x="2" y="4" w="1024" h="576">
+          <enemies>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+		  <items>
+        <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+        <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+        <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+        <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
+		  </items>
+        </room>
+
+        <room x="3" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_beamos" x= "503"    y= "140"/>
+            <enemy subtype="t_beamos" x= "503"    y= "315"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room> <!-- estos van-->
+
+        <room x="4" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_hinox" x="651" y="460"/>
+            <enemy subtype="t_hinox" x="868" y="400"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="4" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier" x="192" y="192"/>
+            <enemy subtype="t_bluesoldier" x="768" y="192"/>
+            <enemy subtype="t_greensoldier" x="192" y="384"/>
+            <enemy subtype="t_greensoldier" x="768" y="384"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+
+         <room x="5" y="0" w="1024" h="576">
+	        <items>
+	         	<item subtype="boss_key" x="500" y="200"/>
+	        </items>
+          <enemies>
+            <enemy subtype="t_boss_ballandchain" x="512" y="120"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room> <!-- estos van-->
+        <room x="5" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_hinox"   x="192" y="192"/>
+            <enemy subtype="t_greensoldier"   x="768" y="192"/>
+            <!--enemy subtype="t_greensoldier" x="192" y="384"/>
+            <enemy subtype="t_greensoldier" x="768" y="384"/-->
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>  
+        <room x="5" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier" x="320" y="192"/>
+            <enemy subtype="t_bluesoldier" x="704" y="192"/>
+            <enemy subtype="t_redsoldier"  x="320" y="416"/>
+            <enemy subtype="t_redsoldier"  x="704" y="416"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+
+
+      </rooms>
+
+    </map>
+
+    <map id="1">
+
+      <file>Layout6.tmx</file>
+
+      <music volume="20">Audio/Music/8BitMusic.ogg</music>
+
+      <camera follow="0"/>
+
+
+      <Link>
+
+        <room x="1" y="4"/>
+
+        <pos x="512" y="460"/>
+
+      </Link>
+
+
+      <rooms>
+        <!-- ITEM -->
+        <room x="0" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_greensoldier"       x= "864"    y= "90"/>
+            <enemy subtype="t_greensoldier"       x= "864"    y= "448"/>
+            <enemy subtype="t_bluearcher"       x= "350"    y= "70" />
+            <enemy subtype="t_bluearcher"       x= "334"    y= "458"/>
+
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- REGULAR  MIDDLEPITJAN DOUBLE¬¬ REGULAR-->
+        <room x="1" y="1" w="1024" h="576">
+          <enemies>
+
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "864"    y= "90" />
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="1" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "864"    y= "90" />
+            <enemy subtype="t_GBat"             x= "864"    y= "448"/>
+            <enemy subtype="t_redsoldier" x= "490"     y= "329"/>
+          </enemies>
+          <items>
+
+          </items>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- BATS CORNERS MIDDLE REDGUY-->
+        <room x="1" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_geldman"  x= "134"     y= "359"/>
+            <enemy subtype="t_geldman"  x= "864"    y= "359" />
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- 2 SANDMANS -->
+        <room x="1" y="4" w="1024" h="576">
+          <enemies>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+
+          <items>
+            <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
+          </items>
+         
+        </room>
+
+        <!-- REGULAR 4CORNERS REGULAR-->
+        <room x="2" y="0" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "259"/>
+            <enemy subtype="t_bluearcher" x= "300"    y= "90"/>
+            <enemy subtype="t_bluearcher" x= "600"    y= "90"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+		  <items>
+		<item subtype="boss_key" x="500" y="200"/>
+		  </items>
+        </room>
+        <room x="2" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_beamos"            x= "102"    y= "50"/>
+            <enemy subtype="t_beamos"            x= "850"    y= "420"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!--BEAMOS OPPOSITE CORNERS-->
+        <room x="2" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "90"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "90" />
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "448"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- REGULAR LABERINTH REGULAR REGULAR BEGGINING -->
+        <room x="3" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_greensoldier" x= "135"     y= "160"/>
+            <enemy subtype="t_greensoldier" x= "800"     y= "160"/>
+            <enemy subtype="t_GBat"         x= "135"    y= "320"/>
+            <enemy subtype="t_GBat"         x= "800"    y= "320"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="3" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "864"    y= "90" />
+            <enemy subtype="t_GBat"             x= "864"    y= "448"/>
+            <enemy subtype="t_beamos" x= "134"     y= "80"/>
+            <enemy subtype="t_beamos" x= "930"     y= "250"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- BATS  GREENSOLDIERS-->
+        <room x="3" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+
+        </room>
+        <room x="3" y="4" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_freezor" x= "503"    y= "359"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="3" y="5" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_geldman"  x= "134"     y= "359"/>
+            <enemy subtype="t_geldman"  x= "864"    y= "359" />
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+      </rooms>
+
+    </map>
+
+    <map id="2">
+
+      <file>Layout7.tmx</file>
+
+      <music volume="20">Audio/Music/GerudoValley.ogg</music>
+
+      <camera follow="0"/>
+
+
+      <Link>
+
+        <room x="3" y="3"/>
+
+        <pos x="512" y="460"/>
+
+      </Link>
+
+
+      <rooms>
+        <!-- BOSS ITEM-->
+        <room x="0" y="0" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_freezor" x= "503"    y= "359"/>
+            <enemy subtype="t_freezor" x= "703"    y= "359"/>
+
+          </enemies>
+		  <items>
+		<item subtype="boss_key" x="500" y="200"/>
+		  </items>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="0" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_hinox"             x= "354"     y= "40"/>
+            <enemy subtype="t_hinox"             x= "324"     y= "448"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- REGULAR REGULAR REGULAR-->
+        <room x="1" y="0" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_greensoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "448"/>
+            <enemy subtype="t_greensoldier" x= "864"    y= "90" />
+            <enemy subtype="t_greensoldier" x= "864"    y= "448"/>
+          </enemies>
+          <items>
+
+          </items>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="1" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_GBat"         x= "864"     y= "90" />
+            <enemy subtype="t_GBat"         x= "864"     y= "448"/>
+            <enemy subtype="t_GBat"         x= "134"     y= "90" />
+
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="1" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_freezor" x="192" y="275"/>
+            <enemy subtype="t_geldman"  x= "134"     y= "359"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- DOUBLEPIT REGULAR-->
+        <room x="2" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "120" />
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- BATS TOPLEFT BOTRIGHT  MAGICIAN MID-->
+        <room x="2" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "90"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "90" />
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "359"/>
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "359" />
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- REGULAR REGULAR REGULAR -->
+        <room x="3" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="3" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_greensoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "448"/>
+            <enemy subtype="t_redsoldier"         x= "864"     y= "90" />
+            <enemy subtype="t_redsoldier"         x= "864"     y= "448"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="3" y="3" w="1024" h="576">
+          <items>
+            <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
+          </items>
+          <enemies>
+            
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- VERTICALBRIDGE REGULAR-->
+        <room x="4" y="0" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_freezor" x= "503"    y= "359"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- 1 FREEZOR CORNERS OF THE BRIDGE-->
+        <room x="4" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "359"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- DOUBLEBRIDGE-->
+        <room x="6" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_beamos"            x= "503"    y= "130"/>
+            <enemy subtype="t_beamos"            x= "503"    y= "305"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+
+        </room>
+        <!-- 1 BEAMOS IN THE MIDDLE OF EACH BRIDGE-->
+
+        <!-- DOUBLEBRIDGE-->
+        <room x="5" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "864"    y= "90" />
+            <enemy subtype="t_GBat"             x= "864"    y= "448"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- 1 BEAMOS IN THE MIDDLE OF EACH BRIDGE-->
+
+
+        <!-- 4CORNERSJAN-->
+        <room x="7" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_beamos"       x= "134"     y= "75" />
+            <enemy subtype="t_beamos"       x= "134"     y= "360"/>
+            <enemy subtype="t_beamos"       x= "869"     y= "75" />
+            <enemy subtype="t_beamos"       x= "869"     y= "360"/>
+		<enemy subtype="t_redsoldiers"       x= "450"     y= "280"/>
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+		<doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- 1 MAGICIAN EACH CORNER-->
+      </rooms>
+
+    </map>
+
+     <map id="3">
+
+      <file>Layout4.tmx</file>
+
+      <music volume="20">Audio/Music/LostWoods.ogg</music>
+
+      <camera follow="0"/>
+
+
+      <Link>
+
+        <room x="3" y="3"/>
+
+        <pos x="512" y="460"/>
+
+      </Link>
+
+
+      <rooms>
+        <!-- REGULAR LABIRINTH REGULAR-->
+        <room x="0" y="0" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_greensoldier" x= "150"     y= "120"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "448"/>
+            <enemy subtype="t_rope"         x= "864"     y= "90" />
+            <enemy subtype="t_rope"         x= "864"     y= "448"/>
+            <enemy subtype="t_beamos"         x= "100"     y= "90"/>
+            <enemy subtype="t_beamos"         x= "100"     y= "440"/>
+            <enemy subtype="t_beamos"         x= "512"     y= "90"/>
+            <enemy subtype="t_beamos"         x= "900"     y= "440"/>
+            <enemy subtype="t_beamos"         x= "900"     y= "90"/>
+
+          </enemies>
+          <items>
+            <item subtype="boss_key" x="500" y="200"/>
+          </items>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="0" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_GBat"         x= "134"     y= "90" />
+            <enemy subtype="t_GBat"         x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"         x= "864"     y= "90" />
+            <enemy subtype="t_GBat"         x= "864"     y= "448"/>
+            <enemy subtype="t_beamos"       x= "112"     y="188"/>
+            <enemy subtype="t_beamos"        x= "581"     y="322"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- 4 ROPES-->
+        <room x="0" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "90"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "90" />
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "359"/>
+            <enemy subtype="t_bluesoldier"              x= "864"    y= "359" />
+           <enemy subtype= "t_GBat"              x= "864"    y= "448"/>
+            <enemy subtype="t_GBat"              x= "134"     y= "359"/>
+            <enemy subtype="t_GBat"              x= "864"    y= "359" />
+          </enemies>
+          <items>
+
+          </items>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- REGULAR -->
+        <room x="1" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "359"/>
+           <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+          <enemy subtype="t_bluearcher"        x= "134"     y= "90" />
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- VERTICALBRIDGE REGULAR-->
+        <room x="2" y="0" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_freezor" x= "503"    y= "359"/>
+             <enemy subtype="t_bluearcher"        x= "503"     y= "290"/>
+  
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- 1 FREEZOR-->
+        <room x="2" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_greensoldier" x= "334"     y= "90"/>
+            <enemy subtype="t_greensoldier" x= "334"     y= "448"/>
+            <enemy subtype="t_bluesoldiers"         x= "864"     y= "90" />
+            <enemy subtype="t_bluesoldiers"         x= "864"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "864"    y= "90" />
+            <enemy subtype="t_GBat"             x= "864"    y= "448"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- 4CORNERS REGULAR BEGGINING-->
+        <room x="3" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_beamos" x= "900"    y= "50"/>
+            <enemy subtype="t_beamos"  x= "134"     y= "50"/>
+          <enemy subtype="t_beamos"             x= "134"     y= "448"/>
+             <enemy subtype="t_beamos" x= "900"    y= "448"/>
+             <enemy subtype="t_hinox" x= "490"    y= "239"/>
+          
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- 2 BEAMOS OPPOSED CORNERS-->
+        <room x="3" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_geldman" x= "320"     y= "576"/>
+            <enemy subtype="t_geldman" x= "1576"     y= "576"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="3" y="3" w="1024" h="576">
+          <items>
+            <item subtype="rnd_item" x="100" y="100"/>
+            <item subtype="rnd_item" x="900" y="100"/>
+            <item subtype="rnd_item" x="100" y="400"/>
+            <item subtype="rnd_item" x="900" y="400"/>
+          </items>
+
+          <enemies>
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+
+
+        <!-- VERTICAL BRIDGE REGULAR-->
+        <room x="4" y="0" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_geldman"  x= "134"     y= "359"/>
+             <enemy subtype="t_boss_ballandchain" x="512" y="120"/>
+          
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- 1 SANDMAN -->
+        <room x="4" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+            <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "359"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+
+
+
+
+      </rooms>
+
+    </map>
+
+
+    <map id="4">
+
+      <file>Layout8.tmx</file>
+
+      <music volume="15">Audio/Music/FullSteamGuitar.ogg</music>
+
+      <camera follow="0"/>
+
+
+      <Link>
+
+        <room x="2" y="5"/>
+
+        <pos x="498" y="422"/>
+
+      </Link>
+
+
+      <rooms>
+        <!-- ITEM ROOM -->
+        <room x="0" y="3" w="1024" h="576">
+          <items>
+            <items>
+             
+             
+            </items>
+          </items>
+          <enemies>
+            <enemy subtype="t_bluearcher"       x= "350"    y= "70" />
+            <enemy subtype="t_bluearcher"       x= "334"    y= "458"/>
+            <enemy subtype="t_bluearcher"       x= "550"    y= "70" />
+            <enemy subtype="t_bluearcher"       x= "534"    y= "458"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "359"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- BOSS, BRIDGE, REGULAR, REGULAR -->
+        <room x="1" y="0" w="1024" h="576">
+			<items>
+		<item subtype="boss_key" x="500" y="200"/>
+			</items>
+          <enemies>
+            <enemy subtype="t_bluearcher"       x= "350"    y= "70" />
+            <enemy subtype="t_bluearcher"       x= "334"    y= "458"/>
+            <enemy subtype="t_beamos" x="140" y="120"/>
+            <enemy subtype="t_beamos" x="845" y="120"/>
+            <enemy subtype="t_freezor" x="500" y="250"/>
+            <enemy subtype="t_geldman"  x= "864"    y= "359" />
+
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="1" y="1" w="1024" h="576">
+          <enemies>
+            <!-- One Archer at each side of the top door, one big enemy in the middle -->
+            <enemy subtype="t_bluearcher"        x= "400"     y= "85" />
+            <enemy subtype="t_bluearcher"        x= "590"     y= "85"/>
+            <enemy subtype="t_beamos"            x= "503"    y= "240"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="1" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+            <enemy subtype="t_bluearcher" x= "334"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "259"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_greensoldier" x= "134"     y= "448"/>
+            <enemy subtype="t_hinox"             x= "134"     y= "248"/>
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="1" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_freezor" x= "503"    y= "359"/>
+            <enemy subtype="t_geldman"  x= "134"     y= "359"/>
+            <enemy subtype="t_geldman"  x= "864"    y= "359" />
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- REGULAR DOUBLETETRIS REGULAR BEGINING -->
+        <room x="2" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "90"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "820"    y= "90" />
+            <enemy subtype="t_bluesoldier"              x= "820"    y= "448"/>
+            <enemy subtype="t_bluesoldier"              x= "134"     y= "359"/>
+            <enemy subtype="t_boss_ballandchain" x="512" y="120"/>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+            
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="2" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "864"    y= "90" />
+            <enemy subtype="t_GBat"             x= "864"    y= "448"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- Bats in top left corner and bot right corner-->
+        <room x="2" y="4" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_redsoldier" x= "864"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "134"     y= "90"/>
+            <enemy subtype="t_redsoldier" x= "503"    y= "200"/>
+            <enemy subtype="t_geldman"  x= "134"     y= "200"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="2" y="5" w="1024" h="576">
+          <items>
+            <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+            <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+            <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
+          </items>
+          <enemies>
+            
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+
+        <!-- REGULAR MIDDLEPIT REGULAR -->
+        <room x="3" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_greensoldier"  x= "134"     y= "90" />
+            <enemy subtype="t_greensoldier"  x= "134"     y= "448"/>
+            <enemy subtype="t_greensoldier"  x= "864"     y= "90" />
+            <enemy subtype="t_greensoldier"  x= "864"     y= "448"/>
+            <enemy subtype="t_geldman"  x= "134"     y= "359"/>
+            <enemy subtype="t_geldman"  x= "864"    y= "359" />
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
+        <room x="3" y="2" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluearcher"        x= "134"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "134"     y= "448"/>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+            <enemy subtype="t_hinox"             x= "488"     y= "250"/>
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
+        <!-- One Hinox in the middle 4 wizard in corners-->
+        <room x="3" y="3" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_bluearcher"        x= "864"     y= "90" />
+            <enemy subtype="t_bluearcher"        x= "864"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "90"/>
+            <enemy subtype="t_GBat"             x= "134"     y= "448"/>
+            <enemy subtype="t_GBat"             x= "864"    y= "90" />
+            <enemy subtype="t_GBat"             x= "864"    y= "448"/>
+            <enemy subtype="t_beamos"            x= "503"    y= "359"/>
+
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
+          </doorways>
+        </room>
+
+
+
+
+
+
+
+
+
+
+      </rooms>
+
+    </map>
     
+    <map id ="5">
+      <file>BossRoom.tmx</file>
 
-    <room x="0" y="3" w="1024" h="576">
-     <enemies>
-	<enemy subtype="t_bluearcher" x="500" y="120"/>
-     </enemies>
-     <blocks>
-      <block subtype="pot" x="100" y="100"/>
-     </blocks>
+      <music volume="30">Audio/Music/BalladOfGoddess.ogg</music>
 
-     <doorways>
-      <doorway subtype="dw_dungeon" dir="Up"/>
-      <doorway subtype="dw_cam" target_x="20" target_y="20" dir="Left" x="60" y="60"/>
-      <doorway subtype="dw_scene" scene="village" dir="Down" x="120" y ="400"/>
-     </doorways>
+      <camera follow="0"/>
 
-    </room>
+<Link>
 
-    <room x="1" y="1" w="1024" h="576">
+        <room x="0" y="2"/>
 
-     <items>
-       
-     </items>
+        <pos x="500" y="512"/>
 
-     <blocks>
-      
-     </blocks>
+      </Link>
 
-     <doorways>
-       <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
-     </doorways>
+      <rooms>
+         <room x="0" y="0" w="1024" h="576">
+	  <items>
+             <item subtype="boss_key" x="100" y="100" pricetag=""/>
+	  </items>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
 
-     <enemies>
+        <room x="0" y="1" w="1024" h="576">
+          <enemies>
+            <enemy subtype="t_boss_agahnim" x="500" y="200"/>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+            <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
+          </doorways>
+        </room>
 
-     </enemies>
+        <room x="0" y="2" w="1024" h="576">
+          <enemies>
+            <items>
+              <item subtype="rnd_item" x="100" y="100" pricetag="30"/>
+              <item subtype="rnd_item" x="900" y="100" pricetag="30"/>
+              <item subtype="rnd_item" x="100" y="400" pricetag="30"/>
+              <item subtype="rnd_item" x="900" y="400" pricetag="30"/>
+            </items>
+          </enemies>
+          <doorways>
+            <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
+          </doorways>
+        </room>
 
-    </room>
-     
-    <room x="1" y="2" w="1024" h="576">
+      </rooms>
+    </map>
+  
+   <map id="6">
 
-       <items>
-       </items>
-       <blocks>
-       </blocks>
-      <doorways>
-        <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
-        <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
-      </doorways>
-     </room>
+      <file>ArenaMap.tmx</file>
 
-    <room x="2" y="0" w="1024" h="576">
+      <music volume="30">Audio/Music/Hyrule_Castle.ogg</music>
 
-       <items>
-       </items>
-       <blocks>
-       </blocks>
-      <doorways>
-        <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-        <doorway subtype="dw_dungeon" dir="Right" x="0" y="0"/>
-      </doorways>
+      <camera follow="1"/>
 
-     </room>
+      <Link>
 
-    <room x="2" y="1" w="1024" h="576">
+        <room x="0" y="0"/>
 
-       <items>
-       </items>
-       <blocks>
-       </blocks>
-      <doorways>
-        <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-        <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-        <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
-      </doorways>
-     </room>
-     
-    <room x="2" y="2" w="1024" h="576">
+        <pos x="512" y="460"/>
 
-       <items>
-       </items>
-       <blocks>
-       </blocks>
-       <doorways>
-         <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-         <doorway subtype="dw_dungeon" dir="Down" x="0" y="0"/>
-         <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
-       </doorways>
-     </room>
-     
-    <room x="2" y="3" w="1024" h="576">
+      </Link>
 
-       <items>
-       </items>
-       <blocks>
-       </blocks>
-       <doorways>
-         <doorway subtype="dw_dungeon" dir="Up" x="0" y="0"/>
-       </doorways>
-     </room>
 
-    <room x="3" y="0" w="1024" h="576">
+      <rooms>
 
-       <items>
-       </items>
-       <blocks>
-       </blocks>
-       <doorways>
-         <doorway subtype="dw_dungeon" dir="Left" x="0" y="0"/>
-       </doorways>
-     </room>
-    
-   </rooms>
+        <room x="0" y="0" w="3000" h="2000">
+          <enemies>
+           
+          </enemies>
+          <doorways>
+            
+          </doorways>
 
-  </map>
- </maps>
+	
+        </room> <!-- estos van -->
+
+        
+
+      </rooms>
+
+    </map>
+  </maps>
+
+
 </dungeon>

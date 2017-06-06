@@ -51,11 +51,11 @@ void j1Map::Draw()
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
 
-					SDL_Rect cam = App->render->culling_cam;
-
-					if (pos.x + data.tile_width >= cam.x && pos.x <= cam.x + cam.w)
-						if (pos.y + data.tile_height * 2 > cam.y && pos.y < cam.y + cam.h)			// the "*2" is because of the ISOMETRIC view distorsion
+					SDL_Rect tile_r = { pos.x, pos.y, data.tile_width, data.tile_height };
+					if (App->render->IsCameraCull(tile_r) == false) {
 							App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+					}			
+					// the "*2" is because of the ISOMETRIC view distorsion
 				}
 			}
 		}
@@ -191,7 +191,7 @@ bool j1Map::CleanUp()
 
 int j1Map::TileCheck(float x, float y) const
 {
-	int ret = 0;
+  int ret = 0;
   if(App->map->active == true) {
 	//get the key navigation tiles(r)
 	//Note: aqui el que fa es guardarse el numero del tileset en el que estan 2 

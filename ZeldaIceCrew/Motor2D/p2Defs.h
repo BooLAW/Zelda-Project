@@ -26,29 +26,6 @@ enum Direction {
 	LastDir
 };
 
-inline fPoint CirclePoints(float cx, float cy, float x, float y, float angle) {
-	fPoint point;
-	
-	float s = sin(angle);
-	float c = cos(angle);
-
-	// translate point back to origin:
-	x -= cx;
-	y -= cy;
-
-	// rotate point
-	float xnew = x * c - y * s;
-	float ynew = x * s + y * c;
-
-	// translate point back:
-	x = xnew + cx;
-	y = ynew + cy;
-	
-	point = { x, y };
-
-	return point;
-};
-
 // Deletes a buffer
 #define RELEASE( x ) \
     {                        \

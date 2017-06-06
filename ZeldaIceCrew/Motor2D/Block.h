@@ -4,7 +4,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
-#define N_ITEMS 15
+#define N_ITEMS 31
 
 enum BLOCKTYPE {
 	bush = 0,
@@ -15,13 +15,15 @@ enum BLOCKTYPE {
 	slabs,
 	slabs_no_move,
 	slabs_spikes,
+	button_wall,
+	pressure_plate,
 	last_
 };
 
 enum BLOCKANIM {
 	idle,
 	broke,
-	lit,
+	on,
 
 	last__
 
@@ -40,6 +42,8 @@ public:
 	bool front = false;
 	bool back = false;
 	bool moving = false;
+	bool recent = false;
+	uint64 timer;
 
 public:
 	Block() {};
@@ -68,6 +72,7 @@ public:
 	virtual bool isBreakable() { return false; };
 	virtual bool isPickable() { return false; };
 	//virtual bool isOpenable() { return false; };
+	virtual bool isActivatable() { return false; };
 
 	virtual void Move();
 	virtual void Light() {};
@@ -75,7 +80,7 @@ public:
 	virtual void Pick() {};
 	virtual void Open() {};
 	virtual void Throw() {};
-
+	virtual void Activate();
 	virtual void SetRewards() {};
 
 	void SortRewardProbs() {
@@ -191,5 +196,25 @@ class Slab_Spikes : public Block {
 
 };
 
+class Pressure_Plate : public Block {
+	bool Start();
+
+	bool isActivatable() {
+		return true;
+	}
+
+	//void Activate();
+
+};
+
+class Button_Wall : public Block {
+	bool Start();
+
+	bool isActivatable() {
+		return true;
+	}
+
+	//void Activate();
+};
 
 #endif // !__BLOCK_H__

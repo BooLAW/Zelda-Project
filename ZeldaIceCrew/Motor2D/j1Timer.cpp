@@ -5,6 +5,7 @@
 
 #include "j1Timer.h"
 #include "SDL\include\SDL_timer.h"
+#include "Log.h"
 
 // ---------------------------------------------
 j1Timer::j1Timer()
@@ -16,7 +17,9 @@ j1Timer::j1Timer()
 void j1Timer::Start()
 {
 	if (flag == false) {
+		LOG("HELLO");
 		started_at = SDL_GetTicks();
+		LOG("HELLO2");
 	}
 }
 

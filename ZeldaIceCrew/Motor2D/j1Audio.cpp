@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1FileSystem.h"
 #include "j1Audio.h"
+#include "Video.h"
 
 #include "SDL/include/SDL.h"
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -133,6 +134,14 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 
 	LOG("Successfully playing %s", path);
 	return ret;
+}
+
+bool j1Audio::PostUpdate(float dt)
+{
+	//if (App->video->quit) {
+	//	SDL_InitSubSystem(SDL_INIT_AUDIO);
+	//}
+	return true;
 }
 
 // Load WAV

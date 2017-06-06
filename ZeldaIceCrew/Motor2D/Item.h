@@ -20,6 +20,20 @@ enum ITEMTYPE {
 	power_gauntlet = 0,
 	pegasus_boots,
 	heart_container,
+	gold_gauntlet,
+	wind_cape,
+	magic_hammer,
+	small_shield,
+	vanguard_emblem,
+	magic_sphere,
+	magic_mirror,
+	bag_of_rupees,
+	icon_of_power,
+	icon_of_wisdom,
+	icon_of_valor,
+	golden_shield,
+	mysterious_dust,
+	odd_mushroom,
 	boss_key,
 	__FIRSTDROP,
 	drop_heart,
@@ -33,6 +47,7 @@ enum ITEMTYPE {
 	weapon_sword,
 	weapon_bow,
 	__LASTWEAPON,
+	t_rand_item,
 	__LASTITEMTYPE
 };
 
@@ -87,6 +102,8 @@ protected:
 	uint price = NULL;
 	GuiText* priceTag;
 
+	j1Timer drop_timer;
+
 public:
 	
 	SDL_Texture*	UI_tex = nullptr;
@@ -96,6 +113,7 @@ public:
 	bool floating_up = false;
 	bool set = false;
 	std::string description;
+	iPoint coords;
 
 };
 
@@ -117,8 +135,80 @@ public:
 	void Upgrade();
 };
 
+struct GoldenGauntlet : public Item {
+public:
+	void SetUp();
+	void Upgrade();
+};
+
+struct WindCape : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct MagicHammer : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct SmallShield : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct VanguardEmblem : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct MagicSphere : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct MagicMirror : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct GoldenShield : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct MysteriousDust : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct OddMushroom : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct BagOfRupees : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct IconOfPower : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct IconOfWisdom : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
+struct IconOfValor : public Item {
+	void SetUp();
+	void Upgrade();
+};
+
 struct BossKey : public Item {
 public:
+	void Update(float dt);
 	void SetUp();
 	void Upgrade();
 };

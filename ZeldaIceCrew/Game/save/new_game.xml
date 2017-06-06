@@ -1,0 +1,45 @@
+<!-- Save game for the game -->
+
+<game_state>
+  <player>
+	  <hp curr="6" max="6"/>
+	  <stats power="30" speed="2.5"/>
+    <keys>
+      <key id="0" completed="false"/>
+      <key id="1" completed="false"/>
+      <key id="2" completed="false"/>
+      <key id="3" completed="false"/>
+      <key id="4" completed="false"/>
+    </keys>
+    <rupees n="50"/>
+    
+    <weapons curr_weapon="1"/>
+    <items power_gauntlet="false"
+          	pegasus_boots="false"
+          	heart_container="false"
+          	gold_gauntlet="false"
+          	wind_cape="false"
+          	magic_hammer="false"
+          	small_shield="false"
+          	vanguard_emblem="false"
+          	magic_sphere="false"
+          	magic_mirror="false"
+          	golden_shield="false"
+          	mysterious_dust="false"
+          	odd_mushroom="false"
+          	bag_of_rupees="false"
+          	icon_of_power="false"
+          	icon_of_wisdom="false"
+          	icon_of_valor="false"
+          	boss_key="false"
+          	drop_heart="false"
+          	drop_bomb="false"
+          	drop_potion="false"
+          	drop_rupee="false"
+          	drop_fiverupee="false"
+          	drop_tenrupee="false"
+          	weapon_sword="true"
+          	weapon_bow="false"/>
+    <!-- checkpoints are used to know in which room is link in the saving moment-->
+  </player>
+</game_state>

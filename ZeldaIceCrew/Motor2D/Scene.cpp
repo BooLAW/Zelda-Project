@@ -8,11 +8,22 @@
 
 bool Scene::stdStart()
 {
-	Load_new_map(0);
+	App->scene_manager->loading_screen->active = true;
+	Load_new_map(App->scene_manager->dungeon_id);
 	App->player->pos = pl_start_pos;
+
+	scene_node = LoadConfig(scene_file);
+
+	for (scene = scene_node.child("maps").child("map"); scene; scene = scene.next_sibling("map")) {
+		if (scene.attribute("id").as_int(0) != App->scene_manager->dungeon_id)
+			continue;
+		else
+			break;
+	}
 
 	return true;
 
+	enemy_selector = t_bluesoldier;
 }
 
 bool Scene::Update(float dt)
@@ -24,13 +35,6 @@ bool Scene::stdUpdate(float dt)
 {
 	if(App->debug)
 		ShowCoords();
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame("save_game.xml");
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		App->SaveGame("save_game.xml");
-
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->debug = !App->debug;
 
@@ -46,6 +50,72 @@ bool Scene::stdUpdate(float dt)
 			i++;
 		}
 	}
+
+	switch (App->input->returnkey()) {		
+		case SDL_SCANCODE_1:
+			enemy_selector = t_bluesoldier;
+			break;
+		case SDL_SCANCODE_2:
+			enemy_selector = t_greensoldier;
+			break;
+		case SDL_SCANCODE_3:
+			enemy_selector = t_redsoldier;
+			break;
+		case SDL_SCANCODE_4:
+			enemy_selector = t_bluearcher;
+			break;
+		case SDL_SCANCODE_5:
+			enemy_selector = t_geldman;
+			break;
+		case SDL_SCANCODE_6:
+			enemy_selector = t_freezor;
+			break;
+		case SDL_SCANCODE_7:
+			enemy_selector = t_beamos;
+			break;
+		case SDL_SCANCODE_8:
+			enemy_selector = t_GBat;
+			break;
+		case SDL_SCANCODE_9:
+			enemy_selector = t_hinox;
+			break;
+
+	}
+
+	//if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+	//	Room* aux_r = nullptr;
+	//	int mx = 0, my = 0;
+	//
+	//	App->input->GetMousePosition(mx, my);
+	//
+	//	aux_r = GetCurrentRoom();
+	//
+	//	if (aux_r != nullptr) {
+	//		Enemy* new_en = nullptr;
+	//		new_en = AddEnemy(enemy_selector, aux_r->coords.x, aux_r->coords.y, mx, my - (App->render->camera.h / 2 - ROOM_H / 2));
+	//	//	if (new_en != nullptr) {
+	//	//		pugi::xml_node node_room;
+	//	//		for (pugi::xml_node node_rooms = scene.child("rooms"); node_rooms; node_rooms = node_rooms.next_sibling("rooms")) {
+	//	//			for (node_room = node_rooms.child("room"); node_room; node_room = node_room.next_sibling("room")) {
+	//	//				if (node_room.attribute("x").as_int() != aux_r->coords.x || (node_room.attribute("y").as_int() != aux_r->coords.y))
+	//	//					continue;
+	//	//				else
+	//	//					break;
+	//	//			}
+	//	//		}
+	//	//		LOG("ROOM %d %d", node_room.attribute("x").as_int(), node_room.attribute("y").as_int());
+	//	//		pugi::xml_node enemies_node = node_room.child("enemies");
+	//	//		if (enemies_node == NULL) {
+	//	//			enemies_node = node_room.append_child("enemies");
+	//	//		}
+	//	//		pugi::xml_node enemy_node = enemies_node.append_child("enemy");
+	//	//		enemy_node.append_attribute("subtype") = new_en->subtype;
+	//	//		enemy_node.append_attribute("x") = new_en->pos.x - aux_r->coords.x * ROOM_W;
+	//	//		enemy_node.append_attribute("y") = new_en->pos.y - aux_r->coords.y * ROOM_H;
+	//	//		LOG("ENEMY %d", enemy_node.attribute("subtype").as_int(22));
+	//	//	}
+	//	}
+	//}
 
 	return true;
 }
@@ -107,6 +177,7 @@ void Scene::DestroyItem(Item * ent)
 			for (std::list<Item*>::iterator it = room_it._Ptr->_Myval->items.begin(); it != room_it._Ptr->_Myval->items.end(); it++) {
 				if (it._Ptr->_Myval == ent) {
 					//it._Ptr->_Myval->to_delete = true;
+					it._Ptr->_Myval->HitBox->SetPos(0, 0);
 					App->entitymanager->DestroyEnity(ent);
 					room_it._Ptr->_Myval->items.erase(it);
 				}
@@ -156,6 +227,19 @@ void Scene::DestroyDoorway(Doorway * ent)
 		}
 	}
 }
+void Scene::DestroyNPC(Npc * npc)
+{
+	if (npc != nullptr) {
+		for (std::list<Room*>::iterator room_it = rooms.begin(); room_it != rooms.end(); room_it++)
+			for (std::list<Npc*>::iterator it = room_it._Ptr->_Myval->npcs.begin(); it != room_it._Ptr->_Myval->npcs.end(); it++) {
+				if (it._Ptr->_Myval == npc) {
+					App->entitymanager->DestroyEnity(npc);
+					//it._Ptr->_Myval->to_delete = true;
+					room_it._Ptr->_Myval->npcs.erase(it);
+				}
+			}
+	}
+}
 void Scene::DestroyRoom(Room * ent)
 {
 	if (ent != nullptr) {
@@ -180,6 +264,9 @@ Item * Scene::AddItem(uint subtype, int coord_x, int coord_y, float x, float y)
 		ret->pos = { x + r->coords.x * ROOM_W , y + r->coords.y * ROOM_H };
 
 		ret->room = { coord_x, coord_y };
+
+		ret->coords.x = r->coords.x;
+		ret->coords.y = r->coords.y;
 
 		r->items.push_back(ret);
 	}
@@ -343,6 +430,8 @@ void Scene::ShowCoords()
 	iPoint mouse_pos;
 	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
 
+	mouse_pos.y -= (App->render->camera.h / 2 - ROOM_H / 2);
+
 	std::string title = "MOUSE x: ";
 	title.append(std::to_string(mouse_pos.x));
 	title.append(" y: ");
@@ -390,7 +479,7 @@ pugi::xml_node Scene::LoadConfig(pugi::xml_document& config_file) const
 	RELEASE(buf);
 
 	if (result == NULL)
-		LOG("Could not load map xml file config.xml. pugi error: %s \n ---Offset: %d", result.description(), result.offset);
+		LOG("Could not load map XML. pugi error: %s \n ---Offset: %d", result.description(), result.offset);
 	else
 	{
 		switch (curr_id)
@@ -419,17 +508,30 @@ bool Scene::Load_new_map(int id)
 	pugi::xml_node		config;
 	config = LoadConfig(config_file);
 
-	for (pugi::xml_node temp = config.child("maps").child("map"); temp; temp = temp.next_sibling("map")) {
-		if (temp.attribute("id").as_int(0) == id)
-			{
+	pugi::xml_node temp;
+
+	for (temp = config.child("maps").child("map"); temp; temp = temp.next_sibling("map")) {
+		if (temp.attribute("id").as_int(0) != id)
+			continue;
+		else
+			break;
+	}
+
+	LOG("MAP %d", temp.attribute("id").as_int());
+
+			// Camera 
+			follow_cam = temp.child("camera").attribute("follow").as_bool(false);
 
 				//Music
 				App->audio->PlayMusic(temp.child_value("music"));
-				App->audio->SetVolumeMusic(temp.child("music").attribute("volume").as_uint(60));
+				App->audio->SetVolumeMusic(temp.child("music").attribute("volume").as_uint(60)*App->audio->volume_percentatge);
 
 				//player position
 				pl_start_pos.x = temp.child("Link").child("pos").attribute("x").as_int(0) + ROOM_W * temp.child("Link").child("room").attribute("x").as_int(0);
 				pl_start_pos.y = temp.child("Link").child("pos").attribute("y").as_int(0) + ROOM_H * temp.child("Link").child("room").attribute("y").as_int(0);
+
+				App->player->room.x = temp.child("Link").child("room").attribute("x").as_int(0);
+				App->player->room.y = temp.child("Link").child("room").attribute("y").as_int(0);
 
 				//Rooms
 
@@ -439,6 +541,8 @@ bool Scene::Load_new_map(int id)
 						room_coords = { node_room.attribute("x").as_int(-999), node_room.attribute("y").as_int(-999), node_room.attribute("w").as_int(1024), node_room.attribute("h").as_int(576) };
 
 						Room* r = AddRoom(room_coords.x, room_coords.y);
+						r->room_rect.w = room_coords.w;
+						r->room_rect.h = room_coords.h;
 
 						if (r != nullptr) {
 
@@ -447,10 +551,8 @@ bool Scene::Load_new_map(int id)
 								for (pugi::xml_node node_item = node_items.child("item"); node_item; node_item = node_item.next_sibling("item")) {
 									LOG("XML ITEMS");
 									uint st = 0;
-
+									Item* item_p = nullptr;
 									char* sub = (char*)node_item.attribute("subtype").as_string("");
-
-									LOG("SUB %s", sub);
 
 									if (strcmp(sub, "power_gauntlet") == 0)
 										st = power_gauntlet;
@@ -476,8 +578,42 @@ bool Scene::Load_new_map(int id)
 										st = weapon_sword;
 									if (strcmp(sub, "weapon_bow") == 0)
 										st = weapon_bow;
+									if (strcmp(sub, "gold_gauntlet") == 0)
+										st = gold_gauntlet;
+									if (strcmp(sub, "wind_cape") == 0)
+										st = wind_cape;
+									if (strcmp(sub, "magic_hammer") == 0)
+										st = magic_hammer;
+									if (strcmp(sub, "small_shield") == 0)
+										st = small_shield;
+									if (strcmp(sub, "vanguard_emblem") == 0)
+										st = vanguard_emblem;
+									if (strcmp(sub, "magic_sphere") == 0)
+										st = magic_sphere;
+									if (strcmp(sub, "magic_mirror") == 0)
+										st = magic_mirror;
+									if (strcmp(sub, "golden_shield") == 0)
+										st = golden_shield;
+									if (strcmp(sub, "mysterious_dust") == 0)
+										st = mysterious_dust;
+									if (strcmp(sub, "odd_mushroom") == 0)
+										st = odd_mushroom;
+									if (strcmp(sub, "bag_of_rupees") == 0)
+										st = bag_of_rupees;
+									if (strcmp(sub, "icon_of_power") == 0)
+										st = icon_of_power;
+									if (strcmp(sub, "icon_of_valor") == 0)
+										st = icon_of_valor;
+									if (strcmp(sub, "icon_of_wisdom") == 0)
+										st = icon_of_wisdom;
+									if (strcmp(sub, "rnd_item") == 0) {
+										do {
+											st = rand() % 14;
+										} while (st == golden_shield || st == odd_mushroom);
+									}
 
-									r->AddItem(st, node_item.attribute("x").as_float(), node_item.attribute("y").as_float());
+									item_p = r->AddItem(st, node_item.attribute("x").as_float(0), node_item.attribute("y").as_float(0));    
+									item_p->SetPrice(node_item.attribute("pricetag").as_uint(0));
 
 								}
 							}
@@ -499,10 +635,18 @@ bool Scene::Load_new_map(int id)
 										st = statue;
 									if (strcmp(sub, "torch_bowl") == 0)
 										st = torch_bowl;
-									if (strcmp(sub, "torch_pillar") == 0)
-										st = torch_pillar;
+									//if (strcmp(sub, "torch_pillar") == 0)
+										//st = torch_pillar;
 									if (strcmp(sub, "slabs") == 0)
 										st = slabs;
+									if (strcmp(sub, "slabs_no_move") == 0)
+										st = slabs_no_move;
+									if (strcmp(sub, "slabs_spikes") == 0)
+										st = slabs_spikes;
+									if (strcmp(sub, "button_wall") == 0)
+										st = button_wall;
+									if (strcmp(sub, "pressure_plate") == 0)
+										st = pressure_plate;
 
 									r->AddBlock(st, node_block.attribute("x").as_float(), node_block.attribute("y").as_float());
 								}
@@ -578,10 +722,18 @@ bool Scene::Load_new_map(int id)
 										st = t_hinox;
 									if (strcmp(sub, "t_rope") == 0)
 										st = t_rope;
+									if (strcmp(sub, "t_geldman") == 0)
+										st = t_geldman;
+									if (strcmp(sub, "t_freezor") == 0)
+										st = t_freezor;
 									if (strcmp(sub, "t_GBat") == 0)
 										st = t_GBat;
+									if (strcmp(sub, "t_beamos") == 0)
+										st = t_beamos;
 									if (strcmp(sub, "t_boss_ballandchain") == 0)
 										st = t_boss_ballandchain;
+									if (strcmp(sub, "t_boss_agahnim") == 0)
+										st = t_boss_agahnim;
 
 									r->AddEnemy(st, node_en.attribute("x").as_float(), node_en.attribute("y").as_float());
 
@@ -590,7 +742,6 @@ bool Scene::Load_new_map(int id)
 						}
 					}
 				}
-			}
 
 			//map
 			std::string name_map = temp.child_value("file");
@@ -599,39 +750,12 @@ bool Scene::Load_new_map(int id)
 			//Camera position
 			int scale = App->win->GetScale();
 			App->player->camera_follow = temp.child("camera").attribute("follow").as_bool(false);
-			// ------------NEEDED???
-			//if (App->player->camera_follow == true)
-			//{
-			//	int h = App->win->GetHeight() / scale;
-			//	int w = App->win->GetWidth() / scale;
-			//	App->render->camera.x = -((player->position.x - (w / scale)) * scale);
-			//	App->render->camera.y = -((player->position.y - (h / scale)) * scale);
-
-			//	iPoint size_map = App->map->MapToWorld(App->map->data.width, App->map->data.height);
-			//	if (-App->render->camera.x < 0)
-			//	{
-			//		App->render->camera.x = 0;
-			//	}
-			//	if (-App->render->camera.y < 0)
-			//	{
-			//		App->render->camera.y = 0;
-			//	}
-			//	if (((-App->render->camera.x / scale) + App->win->GetWidth() / scale) > size_map.x)
-			//	{
-			//		App->render->camera.x = (-size_map.x + App->win->GetWidth() / scale) * scale;
-			//	}
-			//	if (((-App->render->camera.y / scale) + App->win->GetHeight() / scale) > size_map.y)
-			//	{
-			//		App->render->camera.y = (-size_map.y + App->win->GetHeight() / scale) * scale;
-			//	}
-			//}
-			//else
-			//{
+		
+	
 			iPoint size_pos = App->map->MapToWorld(App->map->data.width, App->map->data.height);
 			App->render->camera.x = (App->win->GetWidth() / scale - size_pos.x);
 			App->render->camera.y = (App->win->GetHeight() / scale - size_pos.y);
 			//	}
-		}
 
 	return true;
 }

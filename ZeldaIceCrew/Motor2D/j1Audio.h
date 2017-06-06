@@ -3,7 +3,7 @@
 
 #include "j1Module.h"
 
-#define DEFAULT_MUSIC_FADE_TIME 2.0f
+#define DEFAULT_MUSIC_FADE_TIME 0.0f
 
 struct _Mix_Music;
 struct Mix_Chunk;
@@ -26,6 +26,8 @@ public:
 	// Play a music file
 	bool PlayMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
 
+	bool PostUpdate(float dt);
+
 	// Load a WAV in memory
 	unsigned int LoadFx(const char* path);
 
@@ -34,6 +36,9 @@ public:
 
 	void SetVolumeMusic(uint32 vol);
 	void SetVolume(uint32 vol, int channel);
+
+	float volume_percentatge = 1.0;
+	const float volume_std = 60;
 
 private:
 

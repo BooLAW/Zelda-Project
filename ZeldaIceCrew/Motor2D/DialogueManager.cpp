@@ -24,6 +24,7 @@ bool DialogManager::Awake(pugi::xml_node & config)
 	int size = App->fs->Load(tmp.c_str(), &buf);
 	pugi::xml_parse_result result = dialogueDataFile.load_buffer(buf, size);
 
+	if(buf!=nullptr)
 	RELEASE_ARRAY(buf);
 
 	if (result == NULL)
@@ -59,7 +60,7 @@ bool DialogManager::Start()
 	}
 
 	//Prepare UI to print
-	screen = (GuiImage*)App->gui->CreateElement(image);
+	/*screen = (GuiImage*)App->gui->CreateElement(image);
 
 
 	text_on_screen = (UI_String*)App->gui->CreateElement(UI_string);
@@ -68,7 +69,7 @@ bool DialogManager::Start()
 	text_on_screen->SetBlitTimeMS(20);
 
 	//text on screen pos depen de la pos de la image
-
+	*/
 	return ret;
 }
 
@@ -97,6 +98,20 @@ bool DialogManager::BlitDialog(int id, int state)
 
 	return false;
 }
+
+Dialog * DialogManager::DialogtoPrint(int id)
+{
+	Dialog* ret = nullptr;
+	for (int i = 0; i < dialog.size(); i++)
+	{
+		if (dialog[i]->id == id) {
+			ret = dialog[i];
+		}
+		return ret;
+	}
+}
+
+
 
 DialogManager::~DialogManager()
 {

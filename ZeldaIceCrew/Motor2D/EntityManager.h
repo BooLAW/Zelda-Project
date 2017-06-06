@@ -13,21 +13,24 @@
 #include "Log.h"
 
 #include "Entity.h"
+#include "NPC.h"
 
-#include "Bomb.h"
 #include "Item.h"
 #include "Block.h"
 #include "Enemy.h"
 #include "Doorway.h"
+#include <map>
+#include <deque>
+
+
 
 class Entity;
 class j1Player;
 struct SDL_Texture;
 struct SDL_Rect;
-
+enum NPC_TYPE;
 class Doorway;
 
-class Bomb;
 class Item;
 class Enemy;
 class Block;
@@ -38,11 +41,9 @@ public:
 	EntityManager();
 	~EntityManager();
 	
-	bool CleanUp() {
-		DestroyEntities();
-		return true;
-	}
-
+	bool CleanUp();
+	bool Start();
+	bool Awake(pugi::xml_node & config);
 	bool PreUpdate();
 	bool Update(float dt);
 	void PushEntity(Entity* ent);
@@ -53,15 +54,30 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
+
 	uint fromEntoPlDir(uint EnDir);
+
 
 public:
 	Enemy* CreateEnemy(uint subtype);
 	Item* CreateItem(uint subtype);
 	Block* CreateBlock(uint subtype);
+	Npc * CreateNPC(NPC_TYPE type, int id);
+
+	uint die_fx; 
+	uint hit_fx;
+	uint charge_fx;
+	uint shoot_fx;
+	uint boss_die_fx;
+	uint light_fx;
+	uint boss_hit_fx;
+
 private:
+	
 	std::deque<Entity*> entities;
+	std::map<ENTITYTYPE, std::string> dir;
 	j1Timer time;
+	SDL_Texture* npc_tex;
 	
 };
 

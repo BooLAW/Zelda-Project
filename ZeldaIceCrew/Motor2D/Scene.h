@@ -21,7 +21,8 @@ enum scene_id {
 	null,
 	village,
 	dungeon,
-	intro
+	intro,
+	mainscreen
 };
 class Item;
 class Enemy;
@@ -43,8 +44,8 @@ public:
 	virtual bool Update(float dt);
 	virtual bool stdUpdate(float dt);
 	virtual bool PostUpdate() {
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-			return false;
+		/*if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+			return false;*/
 		return true;
 	};
 	virtual bool CleanUp();
@@ -67,6 +68,7 @@ public:
 	virtual void DestroyEnemy(Enemy* ent);
 	virtual void DestroyBlock(Block* ent);
 	virtual void DestroyDoorway(Doorway* ent);
+	virtual void DestroyNPC(Npc* npc);
 
 	virtual void DestroyRoom(Room* ent);
 
@@ -101,13 +103,16 @@ protected:
 
 	bool change_scene = false;
 
-	fPoint pl_start_pos;
+	pugi::xml_document scene_file;
+	pugi::xml_node scene_node;
+	pugi::xml_node scene;
+
+	uint enemy_selector;
 
 public:
 	bool follow_cam = true;
-  
 	std::list<Room*> rooms;
-
+	fPoint pl_start_pos;
 	char* music_path;
   
 	scene_id curr_id;// enum to use in the load_new_map scene function

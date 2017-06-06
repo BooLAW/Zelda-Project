@@ -20,14 +20,32 @@ void Entity::CleanUp()
 	//LOG("ENT HITBOX");
 }
 
+bool Entity::LoadAttributes(pugi::xml_node attributes)
+{
+	return true;
+}
+
+bool Entity::LoadAnimations(std::string file)
+{
+	return true;
+}
+
 int Entity::CheckSpace(float new_x, float new_y)
 
 {
-	int ret = true;
+	int ret = 0;
 
 	// TileCheck
 	
-	ret = App->map->TileCheck(new_x, new_y);
+	for (int x = new_x; x < new_x + HitBox->rect.w; x += 10) {
+		for (int y = new_y; y < new_y + HitBox->rect.h; y += 10) {
+			ret = App->map->TileCheck(x, y);
+			if (ret != 0) {
+				return ret;
+			}
+		}
+	}
+
 	//0 walkable
 	//1 wall
 	//2 hole
@@ -40,6 +58,7 @@ int Entity::CheckSpace(float new_x, float new_y)
 		Room* room = App->scene_manager->GetCurrentScene()->GetRoom(App->player->room.x, App->player->room.y);
 
 		// Enemy Check
+		if(room->enemies.empty() == false)
 		for (std::list<Enemy*>::iterator it = room->enemies.begin(); it != room->enemies.end(); it++) {
 			if (it._Ptr->_Myval != nullptr) {
 				if (it._Ptr->_Myval == this)
@@ -75,4 +94,4 @@ int Entity::CheckSpace(float new_x, float new_y)
 	}
 
 	return ret;
-};
+}

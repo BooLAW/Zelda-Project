@@ -15,7 +15,7 @@ class ShopScene;
 //add the forward declaration for each new scene
 
 class Scene;
-
+class Main_Screen;
 class SceneManager : public j1Module
 {
 public:
@@ -52,6 +52,9 @@ public:
 		target = new_scene;
 	}
 	Scene* GetCurrentScene();
+	Scene* SetCurrentScene(Scene* new_scene);
+
+	uint dungeon_id = 0;
 
 public:
 	bool to_change_scene = false;
@@ -61,11 +64,23 @@ public:
 	HouseScene*						house_scene = nullptr;
 	DungeonScene*					dungeon_scene = nullptr;
 	ShopScene*						shop_scene = nullptr;
+	Main_Screen*					main_screen = nullptr;
+	uint							 close_fx;
+	uint						     open_fx;
+	GuiImage*						 loading_screen;
+
 private:
+
+	Animation		ChangeAnimation;
+	SDL_Texture*	CA_tex = nullptr;
+	SDL_Rect		CA_Rect[8];
+
 	pugi::xml_document	scene_file;
 	std::string			folder;
 	std::list<Scene*>				 scenes;
 	Scene*							 current_scene = nullptr;
+	
+	
 
 };					
 

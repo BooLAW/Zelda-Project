@@ -76,8 +76,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arena.cpp" />
     <ClCompile Include="Block.cpp" />
-    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="Doorway.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
@@ -85,6 +85,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Functions.cpp" />
+    <ClCompile Include="GroundParticles.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="j1Collision.cpp" />
@@ -99,10 +100,15 @@
     <ClCompile Include="j1Pathfinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Player.cpp" />
+    <ClCompile Include="Main_Screen.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="MathHelpers.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="theoraplay.c" />
+    <ClCompile Include="Video.cpp" />
     <ClCompile Include="VillageScene.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
@@ -116,8 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Arena.h" />
     <ClInclude Include="Block.h" />
-    <ClInclude Include="Bomb.h" />
     <ClInclude Include="DialogueManager.h" />
     <ClInclude Include="Doorway.h" />
     <ClInclude Include="DungeonScene.h" />
@@ -125,6 +131,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Functions.h" />
+    <ClInclude Include="GroundParticles.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="j1Collision.h" />
@@ -135,9 +142,14 @@
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Player.h" />
+    <ClInclude Include="Main_Screen.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="MathHelpers.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="theoraplay.h" />
+    <ClInclude Include="Video.h" />
     <ClInclude Include="VillageScene.h" />
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1Audio.h" />
@@ -159,6 +171,15 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Weapon.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\Dungeon.xml" />
+    <Xml Include="XMLFile.xml" />
+    <Xml Include="XMLFile1.xml" />
+    <Xml Include="XMLFile2.xml" />
+    <Xml Include="XMLFile3.xml" />
+    <Xml Include="XMLFile4.xml" />
+    <Xml Include="XMLFile5.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,39 +3,37 @@
   <maps>
     <map id="0">
       <file>Village.tmx</file>
-
+      <camera follow ="true"/>
       <music volume="60">Audio/Music/Forest_Theme.ogg</music>
 
       <Link>
         <room x="0" y="0"/>
-        <pos x="100" y="100"/>
+        <pos x="335" y="1600"/>
       </Link>
 <!-- House -->
       <rooms>
-        <room x="0" y="0" w="1024" h="576">
+        <room x="0" y="0" w="200" h="200">
           <items>
           </items>
           <blocks>
-            <block subtype="pot" x="100" y="100"/>
           </blocks>
           <doorways>
-            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <doorway subtype="dw_cam" target_x="1700" target_y="1780" dir="Down" x="370" y="1820"/>
           </doorways>
 
         </room>
 <!-- Shop -->
-        <room x="0" y="1" w="1024" h="576">
-          
+        <room x="0" y="1" w="200" h="200">
           <items>
-            <item subtype="pegasus_boots" x="20" y="20"/>
-            <item subtype="weapon_bow" x="40" y="20"/>
+            <item subtype="pegasus_boots" x="3175" y="200"/>
+            <item subtype="weapon_bow" x="2975" y="200"/>
           </items>
 
           <blocks>
           </blocks>
 
           <doorways>
-            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <doorway subtype="dw_cam" target_x="2200" target_y="900" dir="Down" x="3090" y="350"/>
           </doorways>
 
           <enemies>
@@ -43,23 +41,21 @@
 
         </room>
 <!-- Overworld -->
-        <room x="0" y="2" w="1024" h="576">
+        <room x="0" y="2" w="200" h="200">
           
           <items>
-            <item subtype="heart_container" x="50" y="50"/>
           </items>
 
           <blocks>
-            <block subtype="bush" x="100" y="100"/>
           </blocks>
 
           <doorways>
             <!-- To House -->
-            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <doorway subtype="dw_cam" target_x="390" target_y="1600" dir="Up" x="1710" y="610"/>
             <!-- To Shop -->
-            <doorway subtype="dw_cam" target_x="0" target_y="0" dir="Down" x="20" y="20"/>
+            <doorway subtype="dw_cam" target_x="3090" target_y="850" dir="Up" x="2207" y="-305"/>
             <!-- To Dungeon -->
-            <doorway subtype="dw_scene" scene="dungeon" dir="up" x="120" y ="400"/>
+            <doorway subtype="dw_scene" scene="dungeon" dir="Up" x="2000" y ="-800"/>
           </doorways>
 
           <enemies>

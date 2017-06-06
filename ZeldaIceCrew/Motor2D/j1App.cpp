@@ -22,6 +22,9 @@
 #include "j1Collision.h"
 #include "HUD.h"
 #include "ModuleParticles.h"
+#include "DialogueManager.h"
+#include "Video.h"
+#include "ParticleManager.h"
 //#include "j1Console"
 #include "EntityManager.h"
 
@@ -47,6 +50,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entitymanager = new EntityManager();
 	hud = new HUD();
 	particle = new ModuleParticles();
+	dialog = new DialogManager();
+	video = new Video();
+	particlemanager = new ParticleManager();
 
 
 	// Ordered for awake / Start / Update
@@ -62,16 +68,20 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 	AddModule(scene_manager);
 	AddModule(entitymanager);
+	AddModule(particlemanager);
 	AddModule(collisions);
 	//AddModule(console);
 	AddModule(particle);
 	AddModule(player);
 	AddModule(hud);
+	AddModule(dialog);
+	AddModule(video);
 	
 
 	// render last to swap buffer
 	AddModule(render);
 
+	fullscreen = true;
 	PERF_PEEK(ptimer);
 }
 
@@ -159,7 +169,7 @@ bool j1App::Start()
 bool j1App::Update()
 {
 	BROFILER_CATEGORY("Update", Profiler::Color::Orange)
-
+	
 	bool ret = true;
 	PrepareUpdate();
 
@@ -256,11 +266,11 @@ bool j1App::PreUpdate()
 	bool ret = true;
 	j1Module* pModule = NULL;
 
-	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
 		pModule = (*item);
 
-		if(pModule->active == false) {
+		if (pModule->active == false) {
 			continue;
 		}
 
@@ -276,11 +286,11 @@ bool j1App::DoUpdate()
 	bool ret = true;
 	j1Module* pModule = NULL;
 
-	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
 		pModule = (*item);
 
-		if(pModule->active == false) {
+		if (pModule->active == false) {
 			continue;
 		}
 
@@ -296,11 +306,11 @@ bool j1App::PostUpdate()
 	bool ret = true;
 	j1Module* pModule = NULL;
 
-	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
 		pModule = (*item);
 
-		if(pModule->active == false) {
+		if (pModule->active == false) {
 			continue;
 		}
 
@@ -361,7 +371,6 @@ const char* j1App::GetOrganization() const
 void j1App::LoadGame(const char* file)
 {
 	// we should be checking if that file actually exist
-	// from the "GetSaveGames" list
 	want_to_load = true;
 	load_game.create("%s%s", fs->GetSaveDirectory(), file);
 }
@@ -371,9 +380,8 @@ void j1App::SaveGame(const char* file) const
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
-
 	want_to_save = true;
-	save_game.create(file);
+	save_game.create("%s%s", fs->GetSaveDirectory(), file);
 }
 
 // ---------------------------------------
@@ -474,10 +482,11 @@ bool j1App::SavegameNow() const
 	{
 		std::stringstream stream;
 		data.save(stream);
+		data.save_file(save_game.GetString());
 
 		// we are done, so write data to disk
 		fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
-		LOG("... finished saving", save_game.GetString());
+		LOG("... finished saving %s", save_game.GetString());
 	}
 	else
 		LOG("Save process halted from an error in module %s", (*item)->name.GetString());
@@ -490,3 +499,19 @@ void j1App::OpenWebPage(char * url)
 {
 	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWMAXIMIZED);
 }
+
+bool j1App::IsPaused() const
+{
+	return paused;
+}
+
+void j1App::Pause()
+{
+	paused = true;
+}
+
+void j1App::UnPause()
+{
+	paused = false;
+}
+

@@ -11,13 +11,13 @@ j1Collision::j1Collision()
 
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_WALL][COLLIDER_BLOCK] = true;
+	matrix[COLLIDER_WALL][COLLIDER_BLOCK_A] = true;
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_WALL][COLLIDER_PL_WEAPON] = false;
 	matrix[COLLIDER_WALL][COLLIDER_ITEM] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_BLOCK] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_BLOCK_A] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PL_WEAPON] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_ITEM] = true;
@@ -42,11 +42,20 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_ACTION][COLLIDER_WALL] = true;
 
 
-	matrix[COLLIDER_BLOCK][COLLIDER_BLOCK] = false;
-	matrix[COLLIDER_BLOCK][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_BLOCK][COLLIDER_PL_WEAPON] = true;
-	matrix[COLLIDER_BLOCK][COLLIDER_ITEM] = false;
-	matrix[COLLIDER_BLOCK][COLLIDER_ACTION] = true;
+	matrix[COLLIDER_BLOCK_A][COLLIDER_BLOCK_A] = false;
+	matrix[COLLIDER_BLOCK_A][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_BLOCK_A][COLLIDER_PL_WEAPON] = true;
+	matrix[COLLIDER_BLOCK_A][COLLIDER_ITEM] = false;
+	matrix[COLLIDER_BLOCK_A][COLLIDER_ACTION] = true;
+
+	matrix[COLLIDER_BLOCK_B][COLLIDER_BLOCK_B] = false;
+	matrix[COLLIDER_BLOCK_B][COLLIDER_BLOCK_A] = false;
+	matrix[COLLIDER_BLOCK_B][COLLIDER_WALL] = false;
+	matrix[COLLIDER_BLOCK_B][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_BLOCK_B][COLLIDER_PL_WEAPON] = true;
+	matrix[COLLIDER_BLOCK_B][COLLIDER_ACTION] = true;
+	matrix[COLLIDER_BLOCK_B][COLLIDER_PLAYER] = true;
+
 
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_PL_WEAPON] = true;
@@ -54,7 +63,7 @@ j1Collision::j1Collision()
 
 	matrix[COLLIDER_PL_WEAPON][COLLIDER_PL_WEAPON] = false;
 	matrix[COLLIDER_PL_WEAPON][COLLIDER_ITEM] = false;
-
+	
 	matrix[COLLIDER_ITEM][COLLIDER_ITEM] = false;
 
 }
@@ -139,7 +148,7 @@ void j1Collision::DebugDraw()
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
-		case COLLIDER_BLOCK: // red
+		case COLLIDER_BLOCK_A: // red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		case COLLIDER_ACTION:
@@ -193,6 +202,12 @@ void j1Collision::DebugDraw()
 		case COLLIDER_DUNGEON_RIGHT:
 			App->render->DrawQuad(colliders[i]->rect, 100, 100, 150, alpha);
 			break;
+		case COLLIDER_DMG_BY_BB:
+			App->render->DrawQuad(colliders[i]->rect, 204, 0, 204, alpha);
+			break;
+		case COLLIDER_NPC: // green
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
 
 		}
 	}
@@ -226,6 +241,8 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* 
 			break;
 		}
 	}
+
+	ret->to_delete = false;
 
 	return ret;
 }

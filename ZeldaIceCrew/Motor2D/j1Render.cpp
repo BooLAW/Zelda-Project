@@ -59,6 +59,15 @@ bool j1Render::Awake(pugi::xml_node& config)
 	cam_boundaries.w = App->win->screen_surface->w;
 	cam_boundaries.h = App->win->screen_surface->h;
 
+	//Camera Shake
+
+	quantity = 0;
+	duration = 0;
+	counter = 1;
+	shake_interval = 3;
+	shake_ret = 0;
+	trigger_shake = false;
+
 	return ret;
 }
 
@@ -100,10 +109,14 @@ bool j1Render::Update(float dt) {
 		if(App->scene_manager->GetCurrentScene()->follow_cam == true)
 			SetCamPos(-(App->player->GetPos().x - camera.w / 2), -(App->player->GetPos().y - camera.h / 2));
 		else {
-			SetCamPos(-(App->player->room.x * ROOM_W), -(App->player->room.y * ROOM_H));
+			SetCamPos(-(App->scene_manager->GetCurrentScene()->GetCurrentRoom()->coords.x * ROOM_W), -(App->scene_manager->GetCurrentScene()->GetCurrentRoom()->coords.y * ROOM_H - (camera.h/2 - ROOM_H/2)));
 		}
 
 	}
+	if(trigger_shake == true )
+		App->render->camera.x += shake_ret;
+	App->render->Coord_Shake();
+
 	return true;
 }
 
@@ -230,6 +243,12 @@ bool j1Render::IsCameraCull(SDL_Rect rect)
 
 	SDL_Rect cam = culling_cam;
 
+	if (App->scene_manager->GetCurrentScene()->curr_id == dungeon && App->scene_manager->dungeon_id != 6) {
+		cam.h -= (culling_cam.h / 2 - ROOM_H / 2) * 2;
+		cam.y += (culling_cam.h / 2 - ROOM_H / 2);
+	}
+
+
 	if (rect.x + rect.w >= cam.x && rect.x <= cam.x + cam.w)
 		if (rect.y + rect.h > cam.y && rect.y < cam.y + cam.h)
 			ret = false;
@@ -252,7 +271,52 @@ void j1Render::toDraw(SDL_Texture * texture, float priority, int x, int y, SDL_R
 	aux->pivot_y = pivot_y;
 
 	App->render->sprites_toDraw.push_back(aux);
+}
 
+void j1Render::Coord_Shake()
+{
+
+	counter++;
+	
+	if(counter % shake_interval == 0){
+		if ((counter % 2) == 0)
+			shake_ret = (camera.w / 10) * ( quantity / 100 );
+		else
+			shake_ret = -((camera.w / 10) * ( quantity / 100 ) );
+	}
+	else {
+		if(shake_ret < 0)
+			shake_ret = -((camera.w / 10) * (quantity / 100));
+		else
+			shake_ret = (camera.w / 10) * (quantity / 100);
+	}
+			
+	quantity -= quantity / (duration * 60);
+	
+
+	if (counter >= duration * 60) {
+		trigger_shake = false;
+		shake_ret = 0;
+		counter = 0;
+		duration = 0;
+	}
+	
+}
+
+void j1Render::Activate_Shake(float quantity_, float duration_) {
+	if (trigger_shake != true) {
+		trigger_shake = true;
+		quantity = quantity_;
+		duration = duration_;
+
+		//repair numbers
+
+		if (quantity > 100) quantity = 100;
+		if (quantity < 0) quantity = 0;
+
+		if (duration < 0) duration *= -1;
+		if (duration > 10) duration = 10;
+	}
 }
 
 void j1Render::SetViewPort(const SDL_Rect& rect)

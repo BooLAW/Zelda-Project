@@ -1,7 +1,7 @@
 #ifndef __ModuleCollision_H__
 #define __ModuleCollision_H__
 
-#define MAX_COLLIDERS 50
+#define MAX_COLLIDERS 10000
 
 #define FARLANDS iPoint({5000, 5000})
 
@@ -15,7 +15,8 @@ enum COLLIDER_TYPE
 	COLLIDER_WALL,
 	COLLIDER_PLAYER,
 	COLLIDER_ACTION,
-	COLLIDER_BLOCK,
+	COLLIDER_BLOCK_A,
+	COLLIDER_BLOCK_B,
 	COLLIDER_ENEMY,
 	COLLIDER_PL_WEAPON,
 	COLLIDER_ITEM,
@@ -30,8 +31,10 @@ enum COLLIDER_TYPE
 	COLLIDER_DUNGEON_DOWN,
 	COLLIDER_DUNGEON_LEFT,
 	COLLIDER_DUNGEON_RIGHT,
+	COLLIDER_DMG_BY_BB,
 
-	COLLIDER_ENEMY_PROJECTILE
+	COLLIDER_ENEMY_PROJECTILE,
+	COLLIDER_NPC
 };
 
 struct Collider
@@ -40,6 +43,8 @@ struct Collider
 	bool to_delete = false;
 	COLLIDER_TYPE type;
 	j1Module* callback = nullptr;
+
+	bool active = true;
 
 	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, j1Module* callback = nullptr) :
 		rect(rectangle),

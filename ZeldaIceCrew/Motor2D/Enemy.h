@@ -9,7 +9,7 @@
 
 #include "Item.h"
 
-#define N_ITEMS 15
+#define N_ITEMS 31
 
 #define ENEMY_SPRITES_PER_SPD 0.05f
 #define ENEMY_DIR_CHANGE_OFFSET 50
@@ -27,10 +27,15 @@ enum ENEMYTYPE {
 	t_bluearcher,
 	t_redsoldier,
 	t_greensoldier,
-	t_hinox,
+	t_hinox,  // ciclop
 	t_rope,
+	t_geldman, //sandman
 	t_GBat,
 	t_boss_ballandchain,
+	t_freezor, //ghost
+	t_beamos, // eye
+	t_boss_agahnim,
+	t_boss_agahnimclone,
 	__LAST_ENEMYTYPE
 };
 
@@ -50,6 +55,7 @@ protected:
 	enum DAMAGETYPE {
 		melee = 0,
 		projectile,
+		none,
 		__LAST_DMGTYPE
 	};
 
@@ -57,6 +63,7 @@ protected:
 		path = 0,
 		chase,
 		distance,
+		special,
 		no_move,
 		__LAST_AITYPE
 	};
@@ -76,6 +83,8 @@ public:
 
 	virtual void Spawn() {}
 
+	virtual uint GetPlayerDirection();
+
 	virtual void stdUpdate(float dt);
 	virtual void Update(float dt) { stdUpdate(dt); };
 
@@ -87,11 +96,13 @@ public:
 
 	virtual void SetAnimation(SDL_Rect spr[LastDir][2]);
 
-	virtual void Draw();
+	virtual void Draw(float dt);
 
 	virtual void Hit(uint dir, uint dmg);
 	virtual void Death();
 	virtual void Reward();
+
+	virtual fPoint CheckSpaceTo(float x, float y);
 
 	void SortRewardProbs() {
 		uint total = 0;
@@ -138,29 +149,35 @@ public:
 	// pathfinding related
 	std::list<iPoint> path_to_follow;
 
-	uint hit_fx;
 	bool hit = false;
 
 	uint reward_pool[N_ITEMS];
+
 
 };
 
 class BSoldier : public Enemy {
 public:
 	bool Start();
+	//void Draw(float dt);
+
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
 
 };
 
 class RSoldier : public Enemy {
 public:
 	bool Start();
-
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
 };
 
 class GSoldier : public Enemy {
 public:
 	bool Start();
-
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
 };
 
 class BossChainBall : public Enemy {
@@ -169,7 +186,7 @@ public:
 	bool Attack();
 	void SetRewards();
 
-	void Draw();
+	void Draw(float dt);
 
 	void CleanUp();
 
@@ -197,12 +214,15 @@ public:
 	float ball_speed;
 	uint round_counter;
 	Collider* ball_collider;
+	SDL_Rect ballimg;
 };
 
 class Hinox : public Enemy {
 public:
 	bool Start();
 	void SetRewards();
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
 };
 
 class BlueArcher : public Enemy {
@@ -215,7 +235,7 @@ class BlueArcher : public Enemy {
 		last_archerstate
 	}state = moving;
 
-	void Draw();
+	void Draw(float dt);
 
 	Animation shoot_anim;
 
@@ -236,7 +256,7 @@ class Rope : public Enemy {
 
 	void Update(float dt);
 
-	void Draw();
+	void Draw(float dt);
 
 	enum ROPESTATE{
 		moving = 0,
@@ -255,9 +275,163 @@ class Rope : public Enemy {
 
 };
 
+class Geldman : public Enemy {
+	bool Start();
+	void Draw(float dt);
+	void Update(float dt);
+
+	const int time_moving = 3500;
+
+	SDL_Rect appear_sprites[8], move_sprites[8];
+	Animation appear_anim, disappear_anim, move_anim;
+
+	enum GELDMANSTATE {
+		appear = 0,
+		appear_start,
+		disappear_start,
+		disappear,
+		move
+	}state = appear_start;
+
+	j1Timer move_time;
+
+};
+
+class Freezor : public Enemy {
+	bool Start();
+	void Draw(float dt);
+	void Update(float dt);
+	const int time_attack = 3500;
+
+	j1Timer attack_timer;
+
+	enum FREEZORSTATE {
+		appear = 0,
+		appear_start,
+		attack,
+		disappear,
+		disappear_start
+	}state = appear_start;
+
+	uint shadow_count = 0;
+
+	Animation appear_anim, disappear_anim, attack_anim;
+	SDL_Rect appear_sprites[8], attack_sprites[2];
+	j1Timer timer;
+};
+
 class GreyBat : public Enemy {
 public:
 	bool Start();
+	SDL_Rect b_sprites[LastDir][2];
+	Animation b_anim[LastDir];
+};
+
+class AgahnimClones;
+
+class BossAgahnim : public Enemy {
+public:
+	bool Start();
+	void SetReward();
+	void Draw(float dt);
+	void Update(float dt);
+
+	void Death();
+
+	uint ball_counter = 0;
+
+	uint clones_ded = 0;
+
+	bool goandback = true;
+	bool updown = true;
+	j1Timer updowntime;
+	j1Timer move_timer;
+	AgahnimClones* clones[2];
+
+	uint n_deaths;
+
+	enum AGAHNIMPHASE {
+		phase_1,
+		goto_phase_2,
+		phase_2,
+		goto_phase_3,
+		phase_3,
+		phase_4
+	}phase = phase_1;
+	enum AGAHNIMSTATE {
+		idle = 0,
+		attack_charge,
+		light_attack_charge,
+		attack,
+		disappear,
+		move_start,
+		move,
+		appear,
+	}state = idle;
+
+	Animation appear_a, disappear_a, ticking_a, move_a, idle_a, attack_c_a, light_a_c;
+	SDL_Rect attack_sprites[3], light_a_sprites[2], ticking_sprites[2], disappear_sprites[6], idle_sprites[3];
+	j1Timer timer;
+
+	const float org_spd = 2.5;
+
+};
+
+class AgahnimClones : public Enemy {
+	bool Start();
+	void SetReward();
+	void Draw(float dt);
+	void Update(float dt);
+
+	uint ball_counter = 0;
+
+	enum AGAHNIMCLONESTATE {
+		idle = 0,
+		attack_charge,
+		attack,
+		disappear,
+		move_start,
+		move,
+		appear,
+	}state = idle;
+
+public:
+	enum AGAHNIMCLONEPHASE {
+		phase_2 = 0,
+		phase_3
+	}phase = phase_2;
+
+private:
+	Animation appear_a, disappear_a, ticking_a, move_a, idle_a, attack_c_a;
+	SDL_Rect attack_sprites[3], ticking_sprites[2], disappear_sprites[6], idle_sprites[3];
+	j1Timer timer;
+
+	const float org_spd = 2.5;
+
+};
+
+class Beamos : public Enemy {
+public:
+	bool Start();
+	void Draw(float dt);
+	void Update(float dt);
+
+	SDL_Rect beamos_sprites[24];
+
+	uint n_proj = 0;
+
+	enum BEAMOSSTATE {
+		search = 0,
+		shooting
+	}state = search;
+
+	j1Timer timer;
+
+};
+
+class TrueBlueSoldier : public Enemy {
+	bool Start();
+	
 };
 
 #endif // !__ENEMY_H__

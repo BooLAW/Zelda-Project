@@ -65,7 +65,7 @@ bool Npc::Spawn(std::string file, fPoint pos, NPC_TYPE type)
 		}
 
 		//actionState = IDLE;
-		//LoadAttributes(attributes);
+		LoadAttributes(attributes);
 	}
 
 	return ret;
@@ -73,10 +73,17 @@ bool Npc::Spawn(std::string file, fPoint pos, NPC_TYPE type)
 
 void Npc::Update(float dt)
 {
-	/*switch (actionState)
-	{
-	case IDLE:
-		break;
-	}*/
+
+	Draw();
+	
+	
+	}
+
+
+void Npc::Draw()
+{
+	fPoint aux_pos = { pos.x - 16, pos.y - 14 };
+
+	App->render->toDraw(GetTexture(), HitBox->rect.y + HitBox->rect.h, aux_pos.x, aux_pos.y, &this->rect);
 }
 

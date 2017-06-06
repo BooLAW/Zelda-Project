@@ -2,31 +2,66 @@
 
 void Room::Start()
 {
+	retro_enemies = App->tex->Load("Sprites/Enemies/EnemiesRetro.png");
+	retro_items = App->tex->Load("Sprites/Items32x32Retro.png");
+	enemies_nonretro = App->tex->Load("Sprites/Enemies/Enemies.png");
+	items_nonretro = App->tex->Load("Sprites/Items32x32.png");
 }
 
 void Room::Update(float dt)
 {
-
-	if (App->debug)
-		App->render->DrawQuad(room_rect, 255, 0, 0, 10);
-
-	active = PlayerInside();
-
-	if (PlayerInside() == true && App->player->room != coords) {
-		App->player->room = coords;
-	}
-
-	EnemyActive(active);
-
-	if (doorways.empty() == false) {
-		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
-		{
-			if (it._Ptr->_Myval != nullptr) {
-				it._Ptr->_Myval->Update(dt);
+	
+	
+	
+		for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++) {
+			if ((*it) != nullptr) {
+				if (PlayerInside() == true) {
+					enemies.empty() ? (*it)->state = DWSTATE::open : (*it)->state = DWSTATE::close;
+					if((*it)->state == DWSTATE::half)
+						App->audio->PlayFx(App->scene_manager->open_fx);
+					if ((*it)->state == DWSTATE::half_close)
+						App->audio->PlayFx(App->scene_manager->close_fx);
+				}
+				else {
+					(*it)->state = DWSTATE::open;
+				}
 			}
 		}
-	}
 
+		if (App->debug)
+			App->render->DrawQuad(room_rect, 255, 0, 0, 10);
+
+		active = PlayerInside();
+
+		if (PlayerInside() == true && App->player->room != coords) {
+			App->player->room = coords;
+		}
+
+		EnemyActive(active);
+
+		if (doorways.empty() == false) {
+			for (std::list<Doorway*>::iterator it = doorways.begin(); it != doorways.end(); it++)
+			{
+				if (it._Ptr->_Myval != nullptr) {
+					it._Ptr->_Myval->Update(dt);
+				}
+			}
+		}
+
+		if (npcs.empty() == false) {
+			for (std::list<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
+			{
+				if (!App->IsPaused()) {
+					if (it._Ptr->_Myval->HitBox->CheckCollision(App->player->link_coll->rect) == 1) {
+						App->player->toTalk = it._Ptr->_Myval;
+					}
+					else {
+						it._Ptr->_Myval->Draw();
+						App->player->toTalk = nullptr;
+					}
+				}
+			}
+		}
 }
 
 void Room::CleanUp()
@@ -76,6 +111,11 @@ bool Room::isInside(SDL_Rect r)
 	return false;
 }
 
+bool Room::NoEnemies()
+{
+	return enemies.empty();
+}
+
 bool Room::PlayerInside()
 {
 	return isInside(App->player->mov_coll->rect);
@@ -88,6 +128,11 @@ Item * Room::AddItem(uint subtype, float x, float y)
 	ret = App->entitymanager->CreateItem(subtype);
 	ret->pos = { x + ROOM_W * coords.x, y + ROOM_H * coords.y};
 
+	LOG("ITEM &d %d", ret->pos.x, ret->pos.y);
+
+	ret->coords.x = coords.x;
+	ret->coords.y = coords.y;
+
 	items.push_back(ret);
 
 	return ret;
@@ -98,6 +143,7 @@ Enemy * Room::AddEnemy(uint subtype, float x, float y)
 	Enemy* ret = nullptr;
 
 	ret = App->entitymanager->CreateEnemy(subtype);
+	ret->room = { coords.x, coords.y };
 	ret->pos = { x + coords.x * ROOM_W, y + coords.y * ROOM_H };
 
 	enemies.push_back(ret);
@@ -130,6 +176,20 @@ Doorway * Room::AddSceneDoorway(Scene* target, uint dir, float x, float y)
 Doorway * Room::AddCamDoorway(float target_x, float target_y, uint dir, float x, float y)
 {
 	return parent->AddCamDoorway(target_x, target_y, coords.x, coords.y, dir, x, y);
+}
+
+Npc * Room::AddNpc(NPC_TYPE type, float x, float y, int id)
+{
+	Npc* ret = nullptr;
+
+	ret = App->entitymanager->CreateNPC(type,id);
+	ret->pos = { x + coords.x * ROOM_W, y + coords.y * ROOM_H };
+
+	ret->HitBox->SetPos((int)ret->pos.x, (int)ret->pos.y);
+
+	npcs.push_back(ret);
+
+	return ret;
 }
 
 void Room::EnemyActive(bool flag)

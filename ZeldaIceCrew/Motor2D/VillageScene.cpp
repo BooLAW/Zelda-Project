@@ -39,45 +39,19 @@ bool VillageScene::Awake()
 // Called before the first frame
 bool VillageScene::Start()
 {
+	BROFILER_CATEGORY("StartVillage", Profiler::Color::DarkBlue);
+	curr_id = village;
+	stdStart();
+	App->player->room = { 0,0 };
 
-	App->render->cam_travel = false;
-
-	if (App->map->Load("Village.tmx") == true)
-	{
-		// int w, h;
-		//uchar* data = NULL;
-		//if (App->map->CreateWalkabilityMap(w, h, &data))
-		//	App->pathfinding->SetMap(w, h, data);
-		//
-		//RELEASE_ARRAY(data);
-	}
-	//debug_tex = App->tex->Load("maps/Exteriors.png"); /// CHANGE THIS TO PROPER SPRITESHEET DON'T CHARGE FROM MAPS TEXTURE
-	//Colliders
-
-	AddRoom(0, 0, 1024, 5000);
-
-	//Doorway* dw = nullptr;
-	//dw = AddDoorway(dw_scene, 0, 0, Up, 23 * 16, 106 * 16);
-	//dw->SetTarget((Scene*)App->scene_manager->house_scene);
-	//dw->target_pos = {6'5 * 32, 8 * 32 };
-	//
-	//dw = AddDoorway(dw_scene, 0, 0, Up, 39 * 16, 6 * 16);
-	//dw->SetTarget((Scene*)App->scene_manager->dungeon_scene);
-	//dw->target_pos = { 500, 400 + ROOM_H * 3 };
-	//
-	//dw = AddDoorway(dw_scene, 0, 0, Up, 54 * 16, 50 * 16);
-	//dw->SetTarget((Scene*)App->scene_manager->shop_scene);
-	//dw->target_pos = { 8 * 32, 8 * 32 };
-
-	///App->render->CamBoundOrigin();
-
-	App->render->ScaleCamBoundaries(300);
-	
-	follow_cam = true;
-
-	App->audio->PlayMusic("Audio/Music/Forest_Theme.ogg");
-	App->audio->SetVolumeMusic(60);
-
+	col_to_d = App->collisions->AddCollider({ 1950, 151, 100, 16 }, COLLIDER_TO_DUNGEON);
 
 	return true;
 };
+bool VillageScene::Update(float dt)
+{
+	BROFILER_CATEGORY("UpdateDungeon", Profiler::Color::Red)
+
+		stdUpdate(dt);
+	return true;
+}

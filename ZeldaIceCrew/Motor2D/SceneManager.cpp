@@ -10,7 +10,7 @@
 #include "SceneManager.h"
 #include "VillageScene.h"
 #include "DungeonScene.h"
-
+#include "Main_Screen.h"
 #define NUMBER_OF_PLAYERS 4
 
 SceneManager::SceneManager() : j1Module()
@@ -37,22 +37,59 @@ bool SceneManager::Awake()
 // Called before the first frame
 bool SceneManager::Start()
 {
+	loading_screen = (GuiImage*)App->gui->CreateElement(image);
+	loading_screen->movable = false;
+	loading_screen->pos = { 0,0 };
+	loading_screen->texture = App->tex->Load("Sprites/LoadingScreen.png");
+	loading_screen->texture_rect = { 0,0,1024,768 };
+	loading_screen->active = false;
+
 	bool ret = false;
 
+	App->audio->SetVolumeMusic(App->audio->volume_std * App->audio->volume_percentatge);
+	App->audio->SetVolume(App->audio->volume_std * App->audio->volume_percentatge, -1);
+
 	LOG("Start module scene");
+
+	CA_tex = App->tex->Load("Sprites/rain_and_circle.png");
+	CA_Rect[0] = { 5, 3911,		1039, 895 };
+	CA_Rect[1] = { 1059, 3911,	1039, 895 };
+	CA_Rect[2] = { 5, 4829,		1039, 895 };
+	CA_Rect[3] = { 1059, 4829,	1039, 895 };
+	CA_Rect[4] = { 5, 5747,		1039, 895 };
+	CA_Rect[5] = { 1059, 5747,	1039, 895 };
+	CA_Rect[6] = { 5, 6679,		1039, 895 };
+	CA_Rect[7] = { 1059, 6679,	1039, 895 };
+
+	ChangeAnimation.PushBack(CA_Rect[0]);
+	ChangeAnimation.PushBack(CA_Rect[1]);
+	ChangeAnimation.PushBack(CA_Rect[2]);
+	ChangeAnimation.PushBack(CA_Rect[3]);
+	ChangeAnimation.PushBack(CA_Rect[4]);
+	ChangeAnimation.PushBack(CA_Rect[5]);
+	ChangeAnimation.PushBack(CA_Rect[6]);
+	ChangeAnimation.PushBack(CA_Rect[7]);
+
+	ChangeAnimation.speed = 0.2;
+	ChangeAnimation.loop = false;
+
+	open_fx = App->audio->LoadFx("Audio/Fx/door open.wav");
+	close_fx = App->audio->LoadFx("Audio/Fx/door close.wav");
 
 	// Create scenes
 	village_scene = new VillageScene();
 	dungeon_scene = new DungeonScene();
+	main_screen = new Main_Screen();
 
 	village_scene->curr_id = village;
 	dungeon_scene->curr_id = dungeon;
-
+	main_screen->curr_id = mainscreen;
 	scenes.push_back(village_scene);
 	scenes.push_back(dungeon_scene);
+	scenes.push_back(main_screen);
 	// -------------
 
-	current_scene = dungeon_scene;
+	current_scene = main_screen;
 
 	if (current_scene != nullptr)
 		ret = current_scene->Start();
@@ -99,8 +136,9 @@ bool SceneManager::PostUpdate()
 	if (current_scene != nullptr)
 		ret = current_scene->PostUpdate();
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	/*if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;*/
+
 
 	return ret;
 }
@@ -109,8 +147,11 @@ bool SceneManager::PostUpdate()
 bool SceneManager::CleanUp()
 {
 	LOG("Freeing scene");
-
+	App->tex->UnLoad(loading_screen->texture);
 	bool ret = false;
+
+	if(CA_tex != nullptr)
+		App->tex->UnLoad(CA_tex);
 
 	for (std::list<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++) {
 		if((*it) != nullptr) 
@@ -145,6 +186,8 @@ void SceneManager::ChangeScene(Scene * new_scene)
 {
 	LOG("Changing current scene");
 	App->render->cam_travel = false;
+	ChangeAnimation.Reset();
+	App->particle->DestroyParticles();
 	Scene* prev_scene = current_scene;
 	current_scene = new_scene;
 	prev_scene->CleanUp();
@@ -155,5 +198,11 @@ void SceneManager::ChangeScene(Scene * new_scene)
 
 Scene * SceneManager::GetCurrentScene()
 {
+	return current_scene;
+}
+
+Scene * SceneManager::SetCurrentScene(Scene* new_scene)
+{
+	current_scene = new_scene;
 	return current_scene;
 }

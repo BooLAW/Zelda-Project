@@ -6,6 +6,7 @@
 #include "j1Gui.h"
 #include "Scene.h"
 struct SDL_Texture;
+
 //UI forward declarations
 
 class VillageScene : public Scene
@@ -22,7 +23,8 @@ public:
 
 	// Called before the first frame
 	bool Start();
-
+	// Called each loop iteration
+	bool Update(float dt);
 public:
 	bool to_house = false;
 	bool to_dungeon = false;
@@ -31,6 +33,8 @@ private:
 	bool ESC = false;
 	SDL_Texture* debug_tex;
 	
+	Collider* col_to_d = nullptr;
+
 	bool round02 = false;
 
 };

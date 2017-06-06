@@ -23,9 +23,6 @@
     <ClCompile Include="Block.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Bomb.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Doorway.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
@@ -89,10 +86,29 @@
     <ClCompile Include="NPC.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Room.cpp" />
     <ClCompile Include="MathHelpers.cpp" />
     <ClCompile Include="j1Map.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Main_Screen.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Arena.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="theoraplay.c" />
+    <ClCompile Include="Video.cpp" />
+    <ClCompile Include="GroundParticles.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,9 +138,6 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Block.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Bomb.h">
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Doorway.h">
@@ -200,6 +213,23 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MathHelpers.h" />
+    <ClInclude Include="Main_Screen.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Arena.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="theoraplay.h" />
+    <ClInclude Include="Video.h" />
+    <ClInclude Include="GroundParticles.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
@@ -211,5 +241,17 @@
     <Filter Include="Modules">
       <UniqueIdentifier>{3fec696e-4c9f-403d-ad04-1a77f94213a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{732e6d70-1c33-4837-bf78-fe046e65fa0f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="XMLFile.xml" />
+    <Xml Include="XMLFile1.xml" />
+    <Xml Include="XMLFile2.xml" />
+    <Xml Include="XMLFile3.xml" />
+    <Xml Include="XMLFile4.xml" />
+    <Xml Include="XMLFile5.xml" />
+    <Xml Include="..\Game\Dungeon.xml" />
   </ItemGroup>
 </Project>

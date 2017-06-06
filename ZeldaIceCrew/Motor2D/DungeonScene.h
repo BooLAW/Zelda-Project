@@ -16,6 +16,7 @@ class Button;
 class Window;
 class Selector;
 class Windowed_Image;
+
 class DungeonScene : public Scene
 {
 public:
@@ -34,20 +35,39 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	//bool CleanUp();
+public:
+	
+	uint round;
+	uint change_round = 0;
+
 private:
 
-	bool boss_music = false;
+	uint round_counter = 0;
 
-	j1Timer boss_minions_spawn_time;
-	bool chain_boss_defeated = false;
+	j1Timer wave_time;
+	j1Timer starting_time;
 
-	Enemy* ChainBoss = nullptr;
-	Doorway* ChainBoss_dw = nullptr;
+	bool starting;
+
+	j1Timer round_timer;
+
+	uint to_round = 0;
+
+
+	iPoint spawn1;
+	iPoint spawn2;
+	iPoint spawn3;
+	iPoint spawn4;
 
 	SDL_Texture* debug_tex;
 	bool ESC = false;
 	Window* window;
 	Label* win_title;
+	Npc* test;
+	Enemy* en;
+	
+	
 };
 
 #endif //__DUNGEON_SCENE_H__
