@@ -127,6 +127,7 @@ Team Lead: Asier Arellano
 Code:      Pau Bonet
 Design:    Pau Olivé
 Manager:   Guillem Arman
+UI:        Roger Busquets
 Art:       Jan Fuentes
 QA:        Marc Torres
 
