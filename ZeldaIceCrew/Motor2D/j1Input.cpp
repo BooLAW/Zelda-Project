@@ -81,7 +81,7 @@ bool j1Input::PreUpdate()
 	}
 
 	if (preset_1 == true) {
-		if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B)) {
+		if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_X)) {
 			if (ctrl_p != c_idle)
 				ctrl_p = c_repeat;
 			else
@@ -92,7 +92,7 @@ bool j1Input::PreUpdate()
 		}
 	}
 	else {
-		if (SDL_GameControllerGetAxis(pad, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 12000) {
+		if (SDL_GameControllerGetAxis(pad, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 12000 || SDL_GameControllerGetAxis(pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000) {
 			if (ctrl_p != c_idle)
 				ctrl_p = c_repeat;
 			else

@@ -444,7 +444,7 @@ void BossKey::Update(float dt)
 					HitBox->SetPos(pos.x, pos.y);
 
 				if (HitBox->CheckCollision(App->player->link_coll->rect)) {
-					if (App->input->GetKey(App->input->controls[ACTION])) {
+					if (App->input->GetKey(App->input->controls[ACTION]) || (App->input->preset_1 == true && (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X))) || (App->input->preset_1 == false && (SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000))) {
 						if (App->player->rupees >= this->price) {
 							App->player->rupees -= price;
 							App->audio->PlayFx(this->fx);
@@ -454,6 +454,7 @@ void BossKey::Update(float dt)
 								App->scene_manager->GetCurrentScene()->DestroyItem(this);
 							}
 							else {
+
 								if (App->player->Find_inv(this)) {
 									Upgrade();
 									App->scene_manager->GetCurrentScene()->DestroyItem(this);

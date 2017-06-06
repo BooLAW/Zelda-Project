@@ -57,6 +57,7 @@ void Room::Update(float dt)
 					}
 					else {
 						it._Ptr->_Myval->Draw();
+						App->player->toTalk = nullptr;
 					}
 				}
 			}

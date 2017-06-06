@@ -902,7 +902,7 @@ bool j1Player::Update(float dt)
 				if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 					App->hud->dialog->str = App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts[App->hud->dialog_num]->line->c_str();
 				}
-				if (1) {
+				
 					if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
 						if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 							App->hud->dialog_num++;
@@ -911,12 +911,13 @@ bool j1Player::Update(float dt)
 							App->hud->dialog_num = 0;
 							App->hud->dialog->active = false;
 							talking = false;
+							App->player->toTalk = nullptr;
 						}
 					}
-				}
-				else {
+				
+		
 					if (App->input->preset_1 == true) {
-						if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X)) {
+						if (App->input->ctrl_p == 1 && (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X))) {
 							if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 								App->hud->dialog_num++;
 							}
@@ -924,11 +925,12 @@ bool j1Player::Update(float dt)
 								App->hud->dialog_num = 0;
 								App->hud->dialog->active = false;
 								talking = false;
+								App->player->toTalk = nullptr;
 							}
 						}
 					}
 					else {
-						if ((SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000)) {
+						if (App->input->ctrl_p == 1 && (SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000)) {
 							if (App->hud->dialog_num < App->dialog->DialogtoPrint(App->player->toTalk->npcId)->texts.size()) {
 								App->hud->dialog_num++;
 							}
@@ -936,10 +938,10 @@ bool j1Player::Update(float dt)
 								App->hud->dialog_num = 0;
 								App->hud->dialog->active = false;
 								talking = false;
+								App->player->toTalk = nullptr;
 							}
 						}
 
-					}
 				}
 			}
 			
@@ -1194,17 +1196,17 @@ bool j1Player::Update(float dt)
 					}
 
 					if (App->player->toTalk != nullptr) {
-						if (1) {
+		
 							if (App->input->GetKey(App->input->controls[ACTION]) == KEY_DOWN) {
 								if (toTalk != nullptr) {
 									App->hud->dialog->active = true;
 									talking = true;
 								}
 							}
-						}
-						else {
+						
+
 							if (App->input->preset_1 == true) {
-								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X)) {
+								if (App->input->ctrl_p == 1 && (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X))) {
 									if (toTalk != nullptr) {
 										App->hud->dialog->active = true;
 										talking = true;
@@ -1212,14 +1214,14 @@ bool j1Player::Update(float dt)
 								}
 							}
 							else {
-								if ((SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000)) {
+								if (App->input->ctrl_p == 1 && (SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000)) {
 									if (toTalk != nullptr) {
 										App->hud->dialog->active = true;
 										talking = true;
 									}
 								}
 							}
-						}
+						
 					}
 
 					
@@ -1666,14 +1668,20 @@ int j1Player::CheckSpace(float new_x, float new_y)
 				}
 			}
 			// NPC CHECK
-			if (ret != false) {
-				for (std::list<Npc*>::iterator it = c_r->npcs.begin(); it != c_r->npcs.end(); it++) {
-					if (CheckIntersec(r, it._Ptr->_Myval->HitBox->rect) == true) {
-						ret = 1;
-						break;
-					}
-				}
-			}
+			//if (c_r->npcs.empty() == false) {
+			//	for (std::list<Npc*>::iterator it = c_r->npcs.begin(); it != c_r->npcs.end(); it++)
+			//	{
+			//		SDL_Rect c_hn = App->player->link_coll->rect;;
+			//		c_hn.x -= 5;
+			//		c_hn.y -= 5;
+			//		c_hn.h += 10;
+			//		c_hn.w += 10;
+			//		if (it._Ptr->_Myval->HitBox->CheckCollision(c_hn) == 1) {
+			//				ret = 1;
+			//				break;
+			//			}
+			//	}
+			//}
 			// Block Check
 			if (ret != false) {
 				for (std::list<Block*>::iterator it = c_r->blocks.begin(); it != c_r->blocks.end(); it++) {
