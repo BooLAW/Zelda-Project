@@ -54,8 +54,8 @@ void Item::Update(float dt)
 						App->scene_manager->GetCurrentScene()->DestroyItem(this);
 						App->audio->PlayFx(this->fx);
 					}
-					else{
-					
+					else {
+						if (App->input->connected_gamepads <= 0) {
 							if (App->input->GetKey(App->input->controls[ACTION])) {
 								if (App->player->rupees >= this->price) {
 									App->player->rupees -= price;
@@ -80,8 +80,9 @@ void Item::Update(float dt)
 									}
 								}
 							}
-						
-						
+
+						}
+						else {
 							if (App->input->preset_1 == true) {
 								if (SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(App->input->pad, SDL_CONTROLLER_BUTTON_X)) {
 									if (App->player->rupees >= this->price) {
@@ -107,7 +108,8 @@ void Item::Update(float dt)
 										}
 									}
 								}
-							
+							}
+
 							else {
 								if ((SDL_GameControllerGetAxis(App->input->pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000)) {
 									if (App->player->rupees >= this->price) {
@@ -135,7 +137,7 @@ void Item::Update(float dt)
 								}
 							}
 						}
-				}
+					}
 				}
 			}
 			if (set == false) {
@@ -174,7 +176,6 @@ void Item::Draw(float dt)
 
 void Item::CleanUp()
 {
-
 
 	if (HitBox != nullptr)
 		HitBox->to_delete = true;

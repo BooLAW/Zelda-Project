@@ -225,6 +225,12 @@ void Enemy::HitPlayer()
 			break;
 		}
 
+		if (App->player->curr_life_points <= 0) {
+			//Here he should change the scene to the room scene
+			App->player->DyingRestart();
+			//App->audio->PlayFx(App->player->die_fx);
+		}
+		else
 		App->player->PlayerInmortal(HIT_INM_TIME);
 	}
 }

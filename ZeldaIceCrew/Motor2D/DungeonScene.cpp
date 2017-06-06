@@ -62,7 +62,7 @@ bool DungeonScene::Start()
 		App->player->pl_speed.y = ORIGIN_SPD;
 		to_round = 0;
 		round = 0;
-
+		round_counter = 0;
 	}
 
 	
@@ -113,10 +113,11 @@ bool DungeonScene::Update(float dt)
 
 
 		if (App->scene_manager->dungeon_id == 6) {
-			if (wave_time.Read() > 5000 && starting == false) {
+			if (wave_time.Read() > 1000 && starting == false) {
 				wave_time.SetFlag(false);
 				starting = true;
 				round = 1;
+				round_counter = 1;
 				change_round = 0;
 				LOG("STARTING");
 			}

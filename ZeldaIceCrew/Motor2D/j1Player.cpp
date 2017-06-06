@@ -1234,7 +1234,6 @@ bool j1Player::Update(float dt)
 					}*/
 					if (App->player->curr_life_points <= 0) {
 						//Here he should change the scene to the room scene
-						want_to_die = true;
 						DyingRestart();
 						App->audio->PlayFx(die_fx);
 					}
@@ -1555,10 +1554,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 void j1Player::DyingRestart()
 {
 	App->Pause();
-	for (int i = 0; i < 10000; i++) {
-		App->render->DrawQuad(App->render->culling_cam, 0, 0, 0);
-		//App->render->toDraw(Link_Movement, -99999, pos.x, pos.y, &sprites[Die][Right][2]);
-	}
+	SDL_Delay(500);
+	//for (int i = 0; i < 10000; i++) {
+	//	App->render->DrawQuad(App->render->culling_cam, 0, 0, 0);
+	//	//App->render->toDraw(Link_Movement, -99999, pos.x, pos.y, &sprites[Die][Right][2]);
+	//}
 
 	App->hud->inv->clear();
 	App->hud->inv->selected = nullptr;
