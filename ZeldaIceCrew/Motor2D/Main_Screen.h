@@ -44,6 +44,7 @@ public:
 	UIElement* Dungeons_Prev();
 	UIElement* Choosing_Next();
 	UIElement* Choosing_Prev();
+	void Erasekeys();
 	void Scroll_Up();
 	void Scroll_Down();
 	void Generatekeys();
