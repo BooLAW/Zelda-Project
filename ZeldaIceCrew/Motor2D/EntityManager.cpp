@@ -430,6 +430,7 @@ bool EntityManager::Update(float dt) {
 							entities[i]->Update(dt);
 					}
 					else {
+						if (entities[i]->type != item)
 						if (entities[i]->active == true)
 							entities[i]->Draw(dt);
 					}
