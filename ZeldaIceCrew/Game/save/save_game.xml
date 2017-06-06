@@ -21,9 +21,9 @@
 		<keys id="3" completed="false" />
 		<keys id="4" completed="false" />
 		<n_keys n="2" />
-		<hp curr="4" max="4" />
+		<hp curr="6" max="6" />
 		<weapons curr_weapon="27" />
-		<rupees n="26" />
+		<rupees n="17" />
 		<stats power="30" speed="2.5" />
 		<items pegasus_boots="true" />
 	</player>
@@ -31,6 +31,6 @@
 	<dialogue />
 	<video />
 	<renderer>
-		<camera x="-1024" y="-1056" />
+		<camera x="-3072" y="-1056" />
 	</renderer>
 </game_state>

@@ -373,15 +373,13 @@ bool HUD::Start()
 	arena_round->pos = { 100, 100 };
 	arena_round->active = false;
 	arena_round->movable = true;
-	arena_round->str = std::to_string(App->scene_manager->dungeon_scene->round);
+	arena_round->str = std::to_string(App->scene_manager->dungeon_scene->change_round);
 	
 	round = (GuiText*)App->gui->CreateElement(text);
 	round->pos = { 50, 100 };
 	round->active = false;
 	round->movable = true;
 	round->str = "Round";
-
-	
 	
 
 
@@ -409,7 +407,7 @@ bool HUD::Update(float dt)
 	menu_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[MENU]);
 	action_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[ACTION]);
 	dash_key->str = App->input->GetKeyString((SDL_Scancode)App->input->controls[DASH]);
-	arena_round->str = std::to_string(App->scene_manager->dungeon_scene->round);
+	arena_round->str = std::to_string(App->scene_manager->dungeon_scene->change_round);
 	
 	bool ret = true;
 	//AIDS here 
