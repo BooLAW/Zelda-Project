@@ -60,49 +60,50 @@ bool j1Input::Start()
 // Called each loop iteration
 bool j1Input::PreUpdate()
 {
-	if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_DPAD_UP) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
-		if (dpad_p != c_idle)
-			dpad_p = c_repeat;
-		else
-			dpad_p = c_pressed;
-		}
-	else {
-		dpad_p = c_idle;
-	}
-
-	if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B)) {
-		if (mmenu_p != c_idle)
-			mmenu_p = c_repeat;
-		else
-			mmenu_p = c_pressed;
-	}
-	else {
-		mmenu_p = c_idle;
-	}
-
-	if (preset_1 == true) {
-		if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_X)) {
-			if (ctrl_p != c_idle)
-				ctrl_p = c_repeat;
+	if (App->input->connected_gamepads > 0) {
+		if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_DPAD_UP) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
+			if (dpad_p != c_idle)
+				dpad_p = c_repeat;
 			else
-				ctrl_p = c_pressed;
+				dpad_p = c_pressed;
 		}
 		else {
-			ctrl_p = c_idle;
+			dpad_p = c_idle;
 		}
-	}
-	else {
-		if (SDL_GameControllerGetAxis(pad, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 12000 || SDL_GameControllerGetAxis(pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000) {
-			if (ctrl_p != c_idle)
-				ctrl_p = c_repeat;
+
+		if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B)) {
+			if (mmenu_p != c_idle)
+				mmenu_p = c_repeat;
 			else
-				ctrl_p = c_pressed;
+				mmenu_p = c_pressed;
 		}
 		else {
-			ctrl_p = c_idle;
+			mmenu_p = c_idle;
+		}
+
+		if (preset_1 == true) {
+			if (SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_Y) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_X)) {
+				if (ctrl_p != c_idle)
+					ctrl_p = c_repeat;
+				else
+					ctrl_p = c_pressed;
+			}
+			else {
+				ctrl_p = c_idle;
+			}
+		}
+		else {
+			if (SDL_GameControllerGetAxis(pad, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 12000 || SDL_GameControllerGetAxis(pad, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > 12000) {
+				if (ctrl_p != c_idle)
+					ctrl_p = c_repeat;
+				else
+					ctrl_p = c_pressed;
+			}
+			else {
+				ctrl_p = c_idle;
+			}
 		}
 	}
-
 	static SDL_Event event;
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);

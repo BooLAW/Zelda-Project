@@ -619,7 +619,7 @@ bool Main_Screen::Start()
 	in_pad = false;
 
 	if (App->first_open == false) {
-		App->video->PlayVideo("IntroLogo_1.ogv", { 0, 0, (int)App->win->GetWidth(), (int)App->win->GetHeight() });
+		App->video->PlayVideo("./IntroLogo_1.ogv", { 0, 0, (int)App->win->GetWidth(), (int)App->win->GetHeight() });
 		App->first_open = true;
 	}
 
