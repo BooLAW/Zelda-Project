@@ -1324,25 +1324,40 @@ bool Main_Screen::Update(float dt)
 					if ((App->player->completed_maps[i]) == true) {
 						key1->texture_rect = { 977,455,28,32 };
 					}
+					else {
+						key1->texture_rect = { 939,455,28,32 };
+					}
 				}
 				if (i == 1) {
 					if ((App->player->completed_maps[i]) == true) {
 						key2->texture_rect = { 977,455,28,32 };
+					}
+					else {
+						key2->texture_rect = { 939,455,28,32 };
 					}
 				}
 				if (i == 2) {
 					if ((App->player->completed_maps[i+1]) == true) {
 						key3->texture_rect = { 977,455,28,32 };
 					}
+					else {
+						key3->texture_rect = { 939,455,28,32 };
+					}
 				}
 				if (i == 3) {
 					if ((App->player->completed_maps[i-1]) == true) {
 						key4->texture_rect = { 977,455,28,32 };
 					}
+					else {
+						key4->texture_rect = { 939,455,28,32 };
+					}
 				}
 				if (i == 4) {
 					if ((App->player->completed_maps[i]) == true) {
 						key5->texture_rect = { 977,455,28,32 };
+					}
+					else {
+						key5->texture_rect = { 939,455,28,32 };
 					}
 				}
 			}
@@ -1906,6 +1921,13 @@ UIElement * Main_Screen::Choosing_Prev()
 
 			}
 		}
+	}
+}
+
+void Main_Screen::Erasekeys()
+{
+	for (std::list<UIElement*>::const_iterator it = keys.cbegin(); it != keys.cend(); it++) {
+		it._Ptr->_Myval->texture_rect = { 977,455,28,32 };
 	}
 }
 
