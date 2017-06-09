@@ -227,6 +227,7 @@ void Enemy::HitPlayer()
 
 		if (App->player->curr_life_points <= 0) {
 			//Here he should change the scene to the room scene
+			SDL_Delay(1000);
 			App->player->DyingRestart();
 			//App->audio->PlayFx(App->player->die_fx);
 		}
